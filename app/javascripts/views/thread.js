@@ -3,7 +3,8 @@
 
   var Thread = { tagName: 'div'
                , className: 'thread'
-               , template: Handlebars.compile(Templates.partials.thread) };
+               , template: Handlebars.compile(Templates.partials.thread)
+               };
 
   Thread.initialize = function (options) {
     _.bindAll(this, "render");
@@ -16,16 +17,16 @@
     var template = Handlebars.compile(Templates.partials.comment)
       , el = template(resp);
 
-    $(this.el)
-      .select('.comments')[0]
-      .insert({bottom: el});
+    this.el.select('.comments')[0].insert({bottom: el});
   };
 
   Thread.render = function () {
-    var comment_form = new Teambox.Views.CommentForm({ model: this.model });
+    var Views = Teambox.Views
+      , convert_to_task = new Views.ConvertToTask({model: new Teambox.Models.Conversation(this.model.attributes)})
+      , comment_form = new Views.CommentForm({ model: this.model, convert_to_task: convert_to_task});
 
     // Add data attributes to the DOM.
-    $(this.el).writeAttribute({
+    this.el.writeAttribute({
       'data-class': this.model.get('type').toLowerCase()
     , 'data-id': this.model.get('id')
     , 'data-project-id': this.model.get('project_id')
@@ -35,11 +36,13 @@
     this.model.attributes.is_task = this.model.get('type') === 'Task';
 
     // Prepare the thread DOM element
-    $(this.el).update(this.template(this.model.getAttributes()));
+    this.el.update(this.template(this.model.getAttributes()));
 
     // Insert the comment form at bottom of the thread element
-    // FIXME: This way of creating views could leak memory
-    $(this.el).insert({ bottom: comment_form.render().el });
+    this.el.insert({ bottom: comment_form.render().el });
+    if (this.model.isConversation()) {
+      this.el.insert({bottom: convert_to_task.render().el});
+    }
 
     return this;
   };

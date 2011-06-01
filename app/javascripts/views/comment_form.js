@@ -6,17 +6,19 @@
                     };
 
   CommentForm.events = {
-    'click a.attach_icon'                      : 'toggleAttach'
-  , 'click a.add_hours_icon'                   : 'toggleHours'
-  , 'click a.add_watchers'                     : 'toggleWatchers'
-  , 'focusin textarea'                         : 'revealCommentArea'
-  , 'submit .new_comment:not(.convert-to-task)': 'postComment'
-  , 'click span.convert_to_task a'             : 'toggleConvertToTask'
-  , 'click div.convert_to_task a.cancel'       : 'toggleConvertToTask'
+    'click a.attach_icon'               : 'toggleAttach'
+  , 'click a.add_hours_icon'            : 'toggleHours'
+  , 'click a.add_watchers'              : 'toggleWatchers'
+  , 'focusin textarea'                  : 'revealCommentArea'
+  , 'submit .new_comment'               : 'postComment'
+  , 'click span.convert_to_task a'      : 'toggleConvertToTask'
+  , 'click div.convert_to_task a.cancel': 'toggleConvertToTask'
   };
 
   CommentForm.initialize = function (options) {
     _.bindAll(this, "render");
+
+    this.convert_to_task = options.convert_to_task;
     // FIXME: bind to changes
   };
 
@@ -25,19 +27,12 @@
       'accept-charset': 'UTF-8'
     , 'action': this.model.url()
     , 'data-project-id': this.model.get('project_id')
-    , 'data-remote': 'true'
     , 'enctype': 'multipart/form-data'
     , 'method': 'post'
     });
 
-    $(this.el).addClassName("edit_" + this.model.get('type').toLowerCase());
-    $(this.el).update(this.template(this.model.getAttributes()));
-
-    // convert_to_task
-    if (this.model.isConversation()) {
-      this.convert_to_task = new Teambox.Views.ConvertToTask();
-      $(this.el).select('span.convert_to_task')[0].insert({after: this.convert_to_task.render().el});
-    }
+    this.el.addClassName("edit_" + this.model.get('type').toLowerCase());
+    this.el.update(this.template(this.model.getAttributes()));
 
     return this;
   };
@@ -48,7 +43,7 @@
    * @returns false;
    */
   CommentForm.reset = function () {
-    var form = $(this.el)
+    var form = this.el
       , hours = form.down('input[name*="[human_hours]"]');
 
     // clear comment and reset textarea height
@@ -125,33 +120,9 @@
    * @returns false;
    */
   CommentForm.toggleConvertToTask = function (evt) {
-    var el = $(this.el)
-      , target      = el.down('span.convert_to_task a')
-      , submit      = el.down('.submit', 1)
-      , google_docs = el.down('.google_docs_attachment')
-      , attach      = el.down('.attach');
-
     evt.stop();
-
     this.convert_to_task.toggle();
-
-    //Avoid default comment actions for convert to task
-    el.toggleClassName('not-new-comment');
-    el.toggleClassName('convert-to-task');
-
-    //Activate client-side validation for required inputs
-    el.toggleClassName('required');
-
-    // Normally, convert to task el submits to comments controller
-    // Ensure we change the action accordingly
-    if (el.action.endsWith('/convert_to_task')) {
-      el.action = el.action.gsub(/\/convert_to_task/, '/comments');
-    } else {
-      el.action = el.action.gsub(/\/comments/, '');
-      el.action = el.action + '/convert_to_task';
-    }
-
-    [target, submit, google_docs, attach].invoke('toggle');
+    this.el.toggle();
   };
 
   /* Toggle the "Add Watchers" area
