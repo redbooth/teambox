@@ -1,0 +1,43 @@
+{{#projects}}
+.el
+  %a.project{ :href => "/projects/{{permalink}}" } {{name}}
+.contained
+  .el
+    %a.recent_activity.ajax{ :href => "/projects/{{permalink}}" }= t('shared.navigation.recent_activity')
+  .el
+    %a.conversations.ajax{ :href => "/projects/{{permalink}}/conversations" }= t('shared.navigation.conversations')
+  .el
+    %a.tasks{ :href => "/projects/{{permalink}}/task_lists" }= t('shared.navigation.tasks')
+  {{#time_tracking}}
+  .el
+    %a.time.ajax{ :href => "/projects/{{permalink}}/time" }= t('shared.navigation.time')
+  {{/time_tracking}}
+  .el
+    %a.pages.ajax{ :href => "/projects/{{permalink}}/pages" }= t('shared.navigation.pages')
+  .el
+    %a.files.ajax{ :href => "/projects/{{permalink}}/uploads" }= t('shared.navigation.files')
+  {{#can_admin}}
+  .el
+    %a.settings{ :href => "/projects/{{permalink}}/settings" }= t('shared.navigation.settings')
+  .contained
+    .el
+      %a.general_settings.ajax{ :href => "/projects/{{permalink}}/settings" }= t('shared.project_settings_navigation.general')
+    .el
+      %a.deletion.ajax{ :href => "/projects/{{permalink}}/deletion" }= t('shared.project_settings_navigation.deletion')
+    {{#owner}}
+    .el
+      %a.ownership.ajax{ :href => "/projects/{{permalink}}/ownership" }= t('shared.project_settings_navigation.ownership')
+    {{/owner}}
+  .el
+    %a.people.ajax{ :href => "/projects/{{permalink}}/people" }= t('shared.navigation.people')
+  {{/can_admin}}
+{{/projects}}
+{{#show_more}}
+.el#show_all_projects
+  %a.more{ :href => "/my_projects" }= t('shared.navigation.show_all_projects')
+{{/show_more}}
+{{#new_project}}
+.el
+  %a.more.ajax{ :href => "/projects/new" }= t('shared.navigation.new_project')
+{{/new_project}}
+

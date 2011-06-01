@@ -4,40 +4,10 @@
   .el= link_to t('.recent_activity'), root_path, :class => 'recent_activity'
 
   -# All Projects
-  - show_only_recent = current_user.people.size > 3
-  - active_projects = current_user.projects.select{|p| !p.archived} #we select them in ruby because the query is done in the header already
-  - projects_to_show = show_only_recent ? current_user.recent_projects : active_projects
-  - projects_to_show << @current_project if can_access_as_org_admin?(projects_to_show)
-  - projects_archived = current_user.people.size - projects_to_show.size
-
   .el#my_projects
     = link_to t('.all_projects'), projects_path, :class => 'home'
-    %span= active_projects.size
-  .contained
-    - for project in projects_to_show
-      - next if project.new_record?
-      .el= link_to project, project, :class => 'project'
-      .contained
-        .el= link_to t('.recent_activity'), project_path(project), :class => 'recent_activity ajax'
-        .el= link_to t('.conversations'), project_conversations_path(project), :class => 'conversations ajax'
-        .el= link_to t('.tasks'), project_task_lists_path(project), :class => 'tasks'
-        - if time_tracking_enabled? and project.tracks_time
-          .el= link_to t('.time'), project_time_path(project), :class => 'time ajax'
-        .el= link_to t('.pages'), project_pages_path(project), :class => 'pages ajax'
-        .el= link_to t('.files'), project_uploads_path(project), :class => 'files ajax'
-        - if can?(:update, project)
-          .el= link_to t('.settings'), project_settings_path(project), :class => 'settings'
-          .contained
-            .el= link_to t('shared.project_settings_navigation.general'), project_settings_path(project.permalink), :class => 'general_settings ajax'
-            .el= link_to t('shared.project_settings_navigation.deletion'), project_deletion_path(project.permalink, :sub_action => 'deletion'), :class => 'deletion ajax'
-            - if project.owner?(current_user)
-              .el= link_to t('shared.project_settings_navigation.ownership'), project_ownership_path(project.permalink, :sub_action => 'ownership'), :class => 'ownership ajax'
-        - if can?(:admin, project)
-          .el= link_to t('.people'), project_people_path(project), :class => 'people ajax'
-    - if current_user.people.any?
-      .el#show_all_projects= link_to t('.show_all_projects'), all_projects_path, :class => 'more'
-    - if !Teambox.config.community || (@community_organization && @community_role)
-      .el= link_to t('.new_project'), new_project_path, :class => 'more ajax'
+    %span -
+  .contained#my_projects_list
 
   -# My Tasks
   - near_tasks = current_user.nearest_pending_tasks

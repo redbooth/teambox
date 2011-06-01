@@ -176,6 +176,7 @@ module UsersHelper
         :collapse_activities => !!current_user.settings["collapse_activities"],
         :keyboard_shortcuts => !!current_user.settings["keyboard_shortcuts"],
         :first_day_of_week => current_user.first_day_of_week,
+        :recent_projects => current_user.recent_projects_ids,
         :stats => {
           :projects => current_user.get_stat('projects'),
           :conversations => current_user.get_stat('conversations'),
@@ -185,18 +186,22 @@ module UsersHelper
         },
         :first_steps => current_user.show_first_steps,
         :badges => current_user.badges,
-        :show_badges => current_user.show_badges
+        :show_badges => current_user.show_badges,
+        :can_create_project => (!Teambox.config.community || (@community_organization && @community_role))
       }.to_json
     end
 
     def json_projects
+      # FIXME add current_project
       projects = {}
-      current_user.projects.except(:select).select("projects.id, projects.permalink, projects.organization_id, projects.archived, projects.name, people.role").each do |p|
+      current_user.projects.except(:select).select("projects.id, projects.permalink, projects.organization_id, projects.user_id, projects.archived, projects.tracks_time, projects.name, people.role").each do |p|
         projects[p.id] = {
           :permalink => p.permalink,
           :role => p.role,
           :organization_id => p.organization_id,
+          :owner => p.user_id,
           :archived => p.archived,
+          :time_tracking => p.tracks_time,
           :name => h(p.name) }
       end
       projects.to_json
