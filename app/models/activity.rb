@@ -184,21 +184,36 @@ class Activity < ActiveRecord::Base
   end
   
   def to_push_data(options={})
-    includes = [:project, :user]
+    target_includes = [:project, :user]
+    includes = [:target, :project, :user]
     case self.target_type
+    when 'User'
+      includes = []
+      target_includes = []
+    when 'Project'
+      includes = [:user]
+      target_includes = [:user]
     when 'Task'
-      includes << :comments
-      includes << :assigned
-      includes << :task_list
+      target_includes << :comments
+      target_includes << :assigned
+      target_includes << :task_list
     when 'Conversation'
-      includes << :comments
+      target_includes << :comments
+    when 'Page'
+      target_includes << :slots
+      target_includes << :objects
+    when 'Note'
+      target_includes << :page
+    when 'Divider'
+      target_includes << :page
     end
 
-    data = to_api_hash(:include => [:target],
-                         :target_options => {
-                           :emit_type => true,
-                           :include => includes
-                         })
+    data = to_api_hash(:include => includes,
+                       :emit_type => true,
+                       :target_options => {
+                         :emit_type => true,
+                         :include => target_includes
+                       })
     data
   end
 
