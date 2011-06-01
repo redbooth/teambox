@@ -196,6 +196,7 @@ class Activity < ActiveRecord::Base
 
     data = to_api_hash(:include => [:target],
                          :target_options => {
+                           :emit_type => true,
                            :include => includes
                          })
     data
