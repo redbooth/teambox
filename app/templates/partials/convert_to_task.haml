@@ -14,16 +14,11 @@
     %select{:id => 'conversation_task_list_id', :name => 'task_list_id'}
       %option{:value => ''} Loading...
 
-  // TODO: Jarvis says, this is harcode!
   .fields
     %label{:for => 'conversation_status'} Status:
     %select{:id => 'conversation_status', :name => 'status'}
-      %option{:value => '0'} new
-      %option{:value => '1'} open
-      %option{:value => '2'} hold
-      %option{:value => '3'} resolved
-      %option{:value => '4'} rejected
 
+    // TODO: Jarvis says, this is harcode!
     %select{:id => 'conversation_assigned_id', :name => 'assigned_id'}
       %option{:value => ''} Unassigned
       %option{:value => '1'} Frank Kramer

@@ -37,19 +37,14 @@
       %a{:href => '#watchers', :class => 'add_watchers hoverable', :title => 'Notify people'} Watchers
 
     {{#if is_task}}
-    // TODO: This is harcode! Use Task.status.status
     .task_actions
       %label{:for => 'task_status'} Status
       %select#task_status{ :name => "task[status]" }
-        <!-- TODO: Choose the right selected option -->
-        %option{:value => '0'} new
-        %option{:value => '1', :selected => 'selected'} open
-        %option{:value => '2'} hold
-        %option{:value => '3'} resolved
-        %option{:value => '4'} rejected
+
       %label{:for => 'task_assigned_id'} Assigned to:
       %select#task_assigned_id{ :'data-assigned' => "{{assigned_id}}", :name => "task[assigned_id]" }
         %option Unassigned
+
       %label{:for => 'task_due_on'} Due date
       .date_picker
         %img{:alt => 'Calendar', :class => 'calendar_date_select_popup_icon', :src => '/images/calendar_date_select/calendar.gif'}

@@ -73,11 +73,11 @@
               , assigned:        {order: 1, label: 'assigned'}
               , unassigned:      {order: 2, label: 'unassigned'}
               }
-  , status:   { 'new':             {order: 0, label: 'new'}
-              , open:              {order: 1, label: 'open'}
-              , hold:              {order: 2, label: 'hold'}
-              , resolved:          {order: 3, label: 'resolved'}
-              , rejected:          {order: 4, label: 'rejected'}
+  , status:   { 'new':             {order: 0, value: 0, label: 'new'}
+              , open:              {order: 1, value: 1, label: 'open'}
+              , hold:              {order: 2, value: 2, label: 'hold'}
+              , resolved:          {order: 3, value: 3, label: 'resolved'}
+              , rejected:          {order: 4, value: 4, label: 'rejected'}
               }
   }
 

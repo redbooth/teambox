@@ -26,6 +26,7 @@ src_files:
   - app/javascripts/helpers/handlebars.js
 
   - app/javascripts/models/base.js
+  - app/javascripts/models/conversation.js
   - app/javascripts/models/task.js
   - app/javascripts/models/thread.js
 
@@ -34,8 +35,10 @@ src_files:
 
   - app/javascripts/views/task.js
   - app/javascripts/views/comment_form.js
+  - app/javascripts/views/convert_to_task.js
   - app/javascripts/views/thread.js
   - app/javascripts/views/activities.js
+  - app/javascripts/views/tasks/select_status.js
   - app/javascripts/views/sidebar.js
 
   - app/javascripts/helpers/tasks.js

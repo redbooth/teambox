@@ -26,12 +26,29 @@ Handlebars.registerHelper('time_ago', function (time) {
   return time ? _.date(Date.parse(time)).fromNow() : '';
 });
 
+Handlebars.registerHelper('equal', function (a, b, truthy, falsy) {
+  truthy = typeof truthy === 'undefined' ? true: truthy;
+  falsy = typeof falsy === 'undefined' ? false: falsy;
+  return a === b ? truthy : falsy;
+});
+
+Handlebars.registerHelper('foreach', function (context, fn, inverse) {
+  if (!_.isEmpty(context)) {
+    return _.reduce(context, function (memo, value, key) {
+      memo += fn({key: key, value: value});
+      return memo;
+    }, '');
+  } else {
+    return inverse(this);
+  }
+});
+
 Handlebars.registerHelper('status_name', function () {
   return $w('new open hold resolved rejected')[this.status];
 });
 
 Handlebars.registerHelper('status_text', function () {
-  if(this.status == 1 && this.assigned) {
+  if (this.status === 1 && this.assigned) {
     return this.assigned.user.first_name + " " + this.assigned.user.last_name[0];
   } else {
     return $w('new open hold resolved rejected')[this.status];

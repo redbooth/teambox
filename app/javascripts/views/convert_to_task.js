@@ -22,6 +22,11 @@
 
     this.el.hide();
     this.el.update(this.template());
+
+    (new Teambox.Views.SelectStatus({
+      el: this.el.select('#conversation_status')[0]
+    })).render();
+
     return this;
   };
 
@@ -65,6 +70,7 @@
         var task = new Teambox.Models.Task({ id: transport.responseJSON.id
                                            , project_id: transport.responseJSON.project_id
                                            });
+
         window.location.hash = '#!' + task.public_url();
         // var person = this.el.select('conversation_assigned_id')[0].getValue()
         //   , task_count = +$('open_my_tasks').innerHTML

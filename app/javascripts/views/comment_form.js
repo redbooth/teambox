@@ -23,6 +23,7 @@
   };
 
   CommentForm.render = function () {
+
     $(this.el).writeAttribute({
       'accept-charset': 'UTF-8'
     , 'action': this.model.url()
@@ -32,7 +33,13 @@
     });
 
     this.el.addClassName("edit_" + this.model.get('type').toLowerCase());
+
     this.el.update(this.template(this.model.getAttributes()));
+
+    (new Teambox.Views.SelectStatus({
+      el: this.el.select('#task_status')[0]
+    , selected: this.model.get('status')
+    })).render();
 
     return this;
   };

@@ -1,4 +1,3 @@
-/*globals Templates*/
 (function () {
   var TodayTasks = { title: "Your Tasks for today"
                    , template: Handlebars.compile("<h2>What you need to do today</h2>" + Templates.tasks.index)
