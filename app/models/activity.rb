@@ -198,9 +198,6 @@ class Activity < ActiveRecord::Base
                          :target_options => {
                            :include => includes
                          })
-
-
-    data = to_api_hash(options)
     data
   end
 
