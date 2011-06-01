@@ -37,6 +37,7 @@
       %a{:href => '#watchers', :class => 'add_watchers hoverable', :title => 'Notify people'} Watchers
 
     {{#if is_task}}
+    // TODO: This is harcode! Use Task.status.status
     .task_actions
       %label{:for => 'task_status'} Status
       %select#task_status{ :name => "task[status]" }

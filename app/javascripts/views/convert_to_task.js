@@ -62,8 +62,10 @@
     this.model.convertToTask(
       this.el.serialize(true)
     , function onSuccess(transport) {
-        var task = new Teambox.Model.Task(transport.responseJSON);
-        // TODO: redirect_to task.get('public_url')
+        var task = new Teambox.Models.Task({ id: transport.responseJSON.id
+                                           , project_id: transport.responseJSON.project_id
+                                           });
+        window.location.hash = '#!' + task.public_url();
         // var person = this.el.select('conversation_assigned_id')[0].getValue()
         //   , task_count = +$('open_my_tasks').innerHTML
         //   , is_assigned_to_me = my_projects[person];
