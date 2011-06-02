@@ -147,7 +147,6 @@ GEM
       selenium-rc (>= 2.1.0)
     json (1.4.6)
     json_pure (1.4.6)
-    kgio (2.3.3)
     juggernaut (2.0.1)
       redis
     kgio (2.3.3)
