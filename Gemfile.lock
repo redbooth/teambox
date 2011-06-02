@@ -188,6 +188,7 @@ GEM
     paperclip (2.3.8)
       activerecord
       activesupport
+    pg (0.9.0)
     pickle (0.4.4)
       cucumber (>= 0.8)
       rake
@@ -324,6 +325,7 @@ DEPENDENCIES
   nokogiri
   oa-oauth
   paperclip (~> 2.3.6)
+  pg (~> 0.9.0)
   pickle (~> 0.4.4)
   rack-ssl-enforcer
   rails (~> 3.0.3)
