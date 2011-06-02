@@ -33,17 +33,3 @@ document.on('click', '.watchers .user input', function(e, el) {
   if (!target.checked)
     $('user_all').checked = false;
 });
-
-// Since the conversation comments form is now a form for 
-// an existing conversation (rather than just a new comment as previously)
-// when submitting a comment from a conversation form, we disable the _method input field
-// (which would be put for the conversation) as new Comments can only be POSTed.
-//
-var disableConversationHttpMethodField = function(e) {
-  $$('form.new_comment.edit_conversation input[name=_method]').each(function(input) {
-    input.disabled = true;
-  });
-}
-
-//disable _method input field for conversation forms on dom ready
-document.observe('dom:loaded', disableConversationHttpMethodField);
