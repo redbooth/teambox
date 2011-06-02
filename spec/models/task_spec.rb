@@ -394,6 +394,31 @@ describe Task do
       task.update_attributes(:is_private => false)
       task.is_private.should == false
     end
+    
+    it "should not remove the creator or assigned user from the watchers list" do
+      user = Factory.create(:user)
+      project = Factory.create(:project)
+      project.add_user(user)
+      
+      task = Factory.create(:task, :is_private => true, :project => project, :user => project.user, :assigned => project.people.last)
+      
+      current_watchers = task.watcher_ids.sort
+      current_watchers.sort.should == [project.user_id, user.id].sort
+      
+      # assigned cannot be cleared
+      task.comments.create_by_user task.user, {:is_private => true, :body => 'shouldclear', :private_ids => []}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.sort.should == [project.user_id, user.id].sort
+      
+      Task.find_by_id(task.id).update_attributes(:assigned_id => nil)
+      task = Task.find_by_id(task.id)
+      task.assigned.should == nil
+      
+      # unassigned user can now be cleared
+      task.comments.create_by_user task.user, {:is_private => true, :body => 'shouldclear', :private_ids => []}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.should == [project.user_id]
+    end
   end
 
   describe "google calendar system" do

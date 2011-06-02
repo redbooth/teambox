@@ -32,10 +32,12 @@ PrivateBox = {
     var watcher_ids = null;
     var is_private = false;
     var creator_id = null;
+    var assigned_id = null;
     if (thread) {
       watcher_ids = (thread.readAttribute('data-watcher-ids')||'').split(',');
       is_private = thread.hasClassName('private');
       creator_id = thread.readAttribute('data-creator-user-id');
+      assigned_id = thread.readAttribute('data-assigned-id');
     }
 
     // Update buttons & people list
@@ -45,7 +47,7 @@ PrivateBox = {
     if (private_input && private_input.checked) {
       box.insert({ bottom: this.peopleHTML(box.readAttribute('object-prefix'),
                                            box.readAttribute('object-type'),
-                                           project_id, watcher_ids) });
+                                           project_id, watcher_ids, assigned_id) });
       if (watchers) {
         watchers.select('input').invoke('disable');
         watchers.hide();
@@ -82,13 +84,13 @@ PrivateBox = {
     PrivateBox.redrawBox(form, project_id);
   },
 
-  peopleHTML: function(object_id, object_type, project_id, watcher_ids) {
+  peopleHTML: function(object_id, object_type, project_id, watcher_ids, assigned_id) {
     var people = _people[project_id];
     var html = "";
     html = "<div class='private_users'>";
     html += '<div class="private_all"><input id="'+object_id +'_private_all" name="'+object_type+'[all_private]" type="checkbox" value="true"/><label for="'+object_id +'_private_all">'+ I18n.translations.comments['private']['all'] +'</label></div>';
     html += people.collect(function(p) {
-      if (p[3] == my_user.id) return '<input type="hidden" name="'+object_type+'[private_ids][]" type="checkbox" value="'+p[3]+'"/>';
+      if (p[3] == my_user.id || p[0] == assigned_id) return '<input type="hidden" name="'+object_type+'[private_ids][]" type="checkbox" value="'+p[3]+'"/>';
       var ident = object_id +'_private_'+ p[3];
       var is_checked = (watcher_ids == null || watcher_ids.indexOf(p[3]) >= 0) ? 'checked="checked"' : '';
       return '<div class="private_user"><input '+is_checked+' name="'+object_type+'[private_ids][]" type="checkbox" value="'+p[3]+'" id="'+ ident + '"/><label for="' + ident + '">'+p[2]+'</label></div>';

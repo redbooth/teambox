@@ -4,7 +4,7 @@
 - comments = thread.comments
 - last_comment = comments.first
 
-.thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}", :'data-project-id' => thread.project.id, :'data-creator-user-id' => thread.try(:user_id), :'data-watcher-ids' => (thread.try(:watcher_ids)||[]).join(','), :class => thread.is_private ? 'private' : nil }
+.thread{ :'data-id' => thread.id, :'data-class' => thread_class, :id => "thread_#{thread_id}", :'data-project-id' => thread.project.id, :'data-creator-user-id' => thread.try(:user_id), :'data-watcher-ids' => (thread.try(:watcher_ids)||[]).join(','), :class => thread.is_private ? 'private' : nil, :'data-assigned-id' => thread.try(:assigned_id) }
   -# Title of the element
   .comment.comment_header
     %span.time= posted_date(comments.first ? comments.first.created_at : thread.created_at)

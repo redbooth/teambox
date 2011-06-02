@@ -142,6 +142,10 @@ class Task < RoleRecord
     @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
   
+  def required_watcher_ids
+    [user_id, assigned.try(:user_id)].compact
+  end
+  
   TRACKER_STATUS_MAP = {
     'unscheduled' => :new, 'started' => :open, 'delivered' => :hold, 'accepted' => :resolved, 'rejected' => :rejected
   }
