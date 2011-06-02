@@ -10,7 +10,7 @@ Projects = {
         projects.push(p);
       }
     }
-    return my_organizations.collect(function(org) {
+    return my_external_organizations.collect(function(org) {
       org.projects = projects.
         select(function(p) {
           return p.organization_id == org.id; }).

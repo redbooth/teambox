@@ -104,11 +104,21 @@ NavigationBar = {
     })
     $('my_projects').down('span').update(active_projects.size());
     $('my_projects_list').update(Mustache.to_html(Templates.navigation.project, { projects: projects, show_more: show_more, new_project: my_user.can_create_project }));
+  },
+
+  loadOrganizationsSidebar: function() {
+    var organizations = my_organizations.collect(function(o) {
+      return { name: o.name , permalink: o.permalink, can_admin: (o.role == 30) };
+    });
+    $('my_organizations_list').update(Mustache.to_html(Templates.navigation.organizations, {
+      organizations: organizations, no_community: !my_user.community
+    }));
   }
 }
 
 document.on("dom:loaded", function() {
   NavigationBar.loadProjectsSidebar()
+  NavigationBar.loadOrganizationsSidebar()
   $$('.nav_links .contained').invoke('hide')
   var column = window.$('column')
   if (!column)

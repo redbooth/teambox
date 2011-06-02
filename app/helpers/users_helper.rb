@@ -43,6 +43,7 @@ module UsersHelper
     javascript_tag %(
       my_user = #{json_user};
       my_projects = #{json_projects};
+      my_external_organizations = #{json_external_organizations};
       my_organizations = #{json_organizations};
       current_project = #{@current_project ? @current_project.id : 'null'};
     )
@@ -187,7 +188,8 @@ module UsersHelper
         :first_steps => current_user.show_first_steps,
         :badges => current_user.badges,
         :show_badges => current_user.show_badges,
-        :can_create_project => (!Teambox.config.community || (@community_organization && @community_role))
+        :can_create_project => (!Teambox.config.community || (@community_organization && @community_role)),
+        :community => Teambox.config.community
       }.to_json
     end
 
@@ -207,11 +209,17 @@ module UsersHelper
       projects.to_json
     end
 
-    def json_organizations
+    # FIXME refactor the next two methods in one
+    def json_external_organizations
       current_user.projects.joins(:organization).
         except(:select).except(:order).
         select('distinct(organizations.id), organizations.name, organizations.permalink').
         collect(&:attributes).to_json
     end
 
+    def json_organizations
+      current_user.memberships.joins(:organization).
+        select("organizations.id, organizations.name, organizations.permalink, memberships.role").
+        collect(&:attributes).to_json
+    end
 end
