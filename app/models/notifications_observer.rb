@@ -38,7 +38,7 @@ class NotificationsObserver < ActiveRecord::Observer
         end
 
         users.uniq.each do |user|
-          Juggernaut.publish("/users/#{user[0]}", activity_hash.to_json)
+          Juggernaut.publish("/users/#{user[0]}", activity_hash.to_json) unless user == activity.user
         end
       end
     end
