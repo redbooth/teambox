@@ -112,6 +112,9 @@ class TeamboxData
             
             task.updating_date = task.created_at
             task.updating_user = task.user
+            #In legacy data status can be nil, we transform it to 0
+            task.status = task.status.to_i
+
             task.save!
             
             import_log(task)
@@ -119,7 +122,9 @@ class TeamboxData
             
             task.updating_date = task.created_at
             task.updating_user = task.user
-            unpack_object(task, task_data).save!
+            task = unpack_object(task, task_data)
+            task.status = task.status.to_i
+            task.save!
           end
           
           unpack_object(task_list, task_list_data).save!

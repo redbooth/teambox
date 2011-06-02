@@ -59,7 +59,7 @@ class TeamboxData < ActiveRecord::Base
   def check_state
     @check_state = true
     if type_name == :import
-      case status_name
+      case status_name.to_sym
       when :uploading
         if self.processed_data_file_name and File.exists?("#{temp_upload_path}/#{processed_data_file_name}")
           self.status_name = :mapping
@@ -74,7 +74,7 @@ class TeamboxData < ActiveRecord::Base
         self.status_name = :processing
         if Teambox.config.delay_data_processing
           self.status_name = :pre_processing
-          TeamboxData.send_later(:delayed_import, self.id)
+          @dispatch = true
         else
           self.status_name = :processing
           do_import
@@ -85,7 +85,7 @@ class TeamboxData < ActiveRecord::Base
       when :selecting
         if Teambox.config.delay_data_processing
           self.status_name = :pre_processing
-          @dispatch_export = true
+          @dispatch = true
         else
           self.status_name = :processing
           do_export
@@ -95,13 +95,9 @@ class TeamboxData < ActiveRecord::Base
   end
   
   def post_check_state
-    if type_name == :export
-      Emailer.send_with_language(:notify_export, user.locale, self.id) if @dispatch_notification
-      TeamboxData.send_later(:delayed_export, self.id) if @dispatch_export
-    elsif type_name == :import
-      store_import_data if @do_store_import_data
-      Emailer.send_with_language(:notify_import, user.locale, self.id) if @dispatch_notification
-    end
+    TeamboxData.send_later(:"delayed_#{type_name}", self.id) if @dispatch
+    Emailer.send_with_language("notify_#{type_name}", user.locale, self.id) if @dispatch_notification
+    store_import_data if @do_store_import_data
   end
 
   def do_import
@@ -165,8 +161,7 @@ class TeamboxData < ActiveRecord::Base
   end
 
   def processing?
-    type_name == :import ? [IMPORT_STATUSES[:pre_processing], IMPORT_STATUSES[:processing]].include?(status) :
-                           [EXPORT_STATUSES[:pre_processing], EXPORT_STATUSES[:processing]].include?(status)
+    [:pre_processing, :processing].include?(status_name)
   end
 
   def error?
@@ -189,7 +184,7 @@ class TeamboxData < ActiveRecord::Base
     }
     
     base[:processed_at] = processed_at.to_s(:api_time) if processed_at
-    base[:target_organization] = target_organization if target_organization
+    base[:organization_id] = organization_id if organization_id
     base[:project_ids] = project_ids if project_ids
     base[:type] = self.class.to_s if options[:emit_type]
     
