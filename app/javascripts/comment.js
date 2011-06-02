@@ -24,11 +24,6 @@ Element.addMethods('form', {
   }
 })
 
-document.on('ajax:create', 'form.new_conversation, .thread form', function(e) {
-  // don't favor RJS; state we want HTML instead
-  e.memo.request.options.requestHeaders = {'Accept': 'text/html'}
-})
-
 // async file uploads in comments via iframe
 document.on('ajax:before', 'form.new_conversation, form.new_task, .thread form, #facebox form.edit_comment', function(e, form) {
   if (form.hasFileUploads()) {
