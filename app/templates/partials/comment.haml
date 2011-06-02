@@ -7,9 +7,16 @@
     {{/user}}
   .block
     .actions_menu
-      %span.actiondate
+      .actiondate
         %time.timeago{ :'data-msec' => "{{ms updated_at}}", :pubdate => "true" }
           {{time_ago updated_at}}
+      %img{:class => 'triangle', :src => '/images/triangle.png?1285939525', :alt => 'Triangle'}
+      .extra
+        %a.edit{:style => 'display:block;'} Edit
+        // this is harcode!
+        %a.reply_email{:rel => 'facebox', :href => '/email_posts_path?project_permalink=test_project-20&target_id=129196&target_type=Conversation'} Reply via email
+        // this is harcode!
+        %a.delete{:style => 'display:block;', :href => "/projects/test_project-20/conversations/129196/comments/1593438"} Delete
     .body.textilized
       .before
         {{#user}}

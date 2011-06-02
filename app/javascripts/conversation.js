@@ -1,12 +1,14 @@
+// TODO: whats this?
 document.on('click', '.conversation_header .text_actions a[href$="/edit"]', function(e, link) {
   e.stop()
   link.up('.conversation_header').hide().next('form.edit_conversation').forceShow()
-})
+});
 
+// TODO: whats this?
 document.on('click', '.edit_conversation a[href="#cancel"]', function(e, link) {
   e.stop()
   link.up('.edit_conversation').hide().previous('.conversation_header').show()
-})
+});
 
 document.on('ajax:success', 'form.edit_conversation:not(.convert-to-task)', function(e, form) {
   var name = form.down('input[name="conversation[name]"]').getValue()
@@ -20,6 +22,7 @@ document.on('ajax:success', 'form.edit_conversation:not(.convert-to-task)', func
   }
 });
 
+// TODO: whats this?
 document.on('click', '#user_all', function(e, el) {
   var target = e.element();
   var enabled = target.checked;
@@ -28,6 +31,7 @@ document.on('click', '#user_all', function(e, el) {
   });
 });
 
+// TODO: whats this?
 document.on('click', '.watchers .user input', function(e, el) {
   var target = e.element();
   if (!target.checked)

@@ -13,7 +13,7 @@ Handlebars.registerHelper('full_name', function (user) {
 });
 
 Handlebars.registerHelper('ms', function (time) {
-  return time ? _.date(time) : '';
+  return time ? Date.parse(time) : '';
 });
 
 Handlebars.registerHelper('date', function (time) {
@@ -23,7 +23,7 @@ Handlebars.registerHelper('date', function (time) {
 });
 
 Handlebars.registerHelper('time_ago', function (time) {
-  return time ? _.date(Date.parse(time)).fromNow() : '';
+  return time ? new Date(Date.parse(time)).timeAgo() : '';
 });
 
 Handlebars.registerHelper('equal', function (a, b, truthy, falsy) {
