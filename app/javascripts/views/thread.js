@@ -17,7 +17,19 @@
     var template = Handlebars.compile(Templates.partials.comment)
       , el = template(resp);
 
-    this.el.select('.comments')[0].insert({bottom: el});
+    this.el.select('.comments')[0]
+      .insert({bottom: el})
+      .childElements()
+      .last()
+      .highlight({duration: 1});
+
+    // update excerpt
+    this.el.down('.comment_header .excerpt')
+           .update('<strong>' + resp.user.first_name + ' ' + resp.user.last_name + '</strong> ' + resp.body);
+
+    // TODO: clean this
+    my_user.stats.conversations++;
+    document.fire("stats:update");
   };
 
   Thread.render = function () {

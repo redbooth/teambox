@@ -86,7 +86,7 @@
    */
   CommentForm.postComment = function (evt) {
     var self = this
-      , body = $(this.el).select('textarea')[0].value;
+      , body = this.el.select('textarea')[0].value;
 
     evt.stop();
     (new Teambox.Models.Comment({
@@ -96,6 +96,11 @@
       success: function (model, resp) {
         self.reset();
         self.model.trigger('comment:added', resp, _.clone(Teambox.models.user));
+      }
+    , failure: function (model, resp) {
+        resp.errors.each(function (error) {
+          self.el.down('div.text_area').insertOrUpdate('p.error', error.value);
+        })
       }
     });
     return false;

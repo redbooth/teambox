@@ -120,34 +120,6 @@ document.on('click', '.thread .comments .more_comments a', function(e, el) {
   el.update("<img src='/images/loading.gif'/>")
 })
 
-// insert new comment into thread after posting
-document.on('ajax:success', '.thread form:not(.not-new-comment)', function(e, form) {
-  resetCommentsForm(form)
-  var comment_data = e.memo.responseText
-  if (!e.memo.responseText.blank()) {
-    var thread = form.up('.thread')
-    var new_comment = thread.down('.comments').insert(e.memo.responseText).down('.comment:last-child')
-    new_comment.highlight({ duration: 1 })
-
-    // update excerpt in collapsed threads
-    var body = new_comment.down('.body'),
-        start = (body.down('.assigned_transition') || body.down('.before')),
-        excerpt = start.nextSiblings().map(function(e){return e.innerHTML}).join(' ').stripTags()
-    thread.down('.comment_header').
-           down('.excerpt').
-           update('<strong>' + body.down('.before').down('.user').innerHTML + '</strong> ' + excerpt)
-  }
-  my_user.stats.conversations++;
-  document.fire("stats:update");
-})
-
-document.on('ajax:failure', 'form.new_conversation, .thread form:not(.not-new-comment)', function(e, form) {
-  var message = $H(e.memo.responseJSON)
-	message.each( function(error) {
-		form.down('div.text_area').insertOrUpdate('p.error', error.value)
-	})
-})
-
 // update edited comment
 document.on('ajax:success', '#facebox form.edit_comment', function(e, form) {
   var commentID = form.readAttribute('action').match(/\d+/g).last()
@@ -163,9 +135,9 @@ document.on('ajax:success', '.comment:not(div[data-class=conversation].thread .c
 
 // when deleting comment, remove the conversation if empty: no comments, no title.
 document.on('ajax:success', 'div[data-class=conversation].thread .comment .actions_menu a[data-method=delete]', function(e, link) {
-	var conversation = e.findElement('.thread')
-	if (conversation.select('.comment').length == 1 && conversation.select('.title').length == 0) conversation.remove()
-	else e.findElement('.comment').remove()
+  var conversation = e.findElement('.thread')
+  if (conversation.select('.comment').length == 1 && conversation.select('.title').length == 0) conversation.remove()
+  else e.findElement('.comment').remove()
 })
 
 // Open links inside Comments and Notes textilized areas in new windows
