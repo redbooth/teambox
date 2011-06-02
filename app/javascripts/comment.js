@@ -79,38 +79,6 @@ document.on('ajax:before', 'form.new_conversation, form.new_task, .thread form, 
   }
 })
 
-function resetCommentsForm(form) {
-  // clear comment and reset textarea height
-  form.down('textarea[name*="[body]"]').setValue('').setStyle({ height: '' })
-  // clear populated file uploads
-  form.select('input[type=file]').each(function(input) {
-    if (input.getValue()) input.remove()
-  })
-  // clear hours
-  var hours = form.down('input[name*="[human_hours]"]')
-  if (hours) hours.setValue('')
-  // hide initially hidden areas
-  form.select('.hours_field, .upload_area').invoke('hide')
-  // clear errors
-  form.select('.error').invoke('remove')
-  //clear google docs hidden fields and list items in the file list
-  form.select('.google_docs_attachment .fields input').invoke('remove')
-  form.select('.google_docs_attachment .file_list li').invoke('remove')
-}
-
-// insert new simple conversation into stream after posting
-document.on('ajax:success', 'form.new_conversation', function(e, form) {
-  resetCommentsForm(form);
-  $('activities').insert({top: e.memo.responseText}).down('.thread').highlight({ duration: 1 });
-  Task.insertAssignableUsers();
-
-  my_user.stats.conversations++;
-  document.fire("stats:update");
-
-  //disable _method input field for conversation forms on inserting simple conversations
-  disableConversationHttpMethodField();
-})
-
 // "Show N previous comments" action in threads
 document.on('ajax:success', '.thread .comments .more_comments', function(e, el) {
   el.up('.comments').update(e.memo.responseText).blindDown({ duration: 0.5 })

@@ -27,7 +27,8 @@
     this.el.down('.comment_header .excerpt')
            .update('<strong>' + resp.user.first_name + ' ' + resp.user.last_name + '</strong> ' + resp.body);
 
-    // TODO: clean this
+    // TODO: backbonize this [leftovers from comment.js]
+    Task.insertAssignableUsers();
     my_user.stats.conversations++;
     document.fire("stats:update");
   };
