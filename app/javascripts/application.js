@@ -47,6 +47,7 @@
 //= require <models/user>
 //= require <collections/base>
 //= require <collections/comments>
+//= require <collections/people>
 //= require <collections/projects>
 //= require <collections/tasks>
 //= require <collections/task_lists>

@@ -1,45 +1,49 @@
-// This is the Add Watchers view that you get when replying in a thread
+(function () {
 
-Teambox.Views.Watchers = Backbone.View.extend({
+  var Watchers = { className: 'add_watchers_box'
+                 , template: Handlebars.compile(Templates.partials.add_watchers)
+                 };
 
-  className: "add_watchers_box",
+  Watchers.events = {
+    'click .watcher a': 'addWatcher'
+  };
 
-  template: Handlebars.compile(Templates.partials.add_watchers),
-
-  initialize: function(options) {
-    this.app = options.app;
-
+  Watchers.initialize = function (options) {
     _.bindAll(this, "render");
-  },
+
+    this.project = Teambox.collections.projects.get(this.model.get('project_id'));
+  };
 
   // Draw the Add Watchers box and populate it with watchers
-  render: function() {
-    $(this.el).update(
-      // using fake data for users, should use project's users
-      this.template({ users: [this.app.my_user.getAttributes()] })
-    );
-    // TODO: Add the list of people in the project here
+  Watchers.render = function () {
+    var users = _.map(this.project.get('people').models, function (person) {
+          return person.get('user');
+        });
+
+    this.el.update(this.template({users: users})).hide();
+
     return this;
-  },
+  };
 
+  /* Add @username to the textarea when clicking on a user
+   *
+   * @param {Event} evt
+   * @return false
+   */
+  Watchers.addWatcher = function (evt) {
+    var el = evt.currentTarget
+      , textarea = el.up("form").down("textarea")
+      , login = el.readAttribute('data-login');
 
-  /////////////////////////////////////////////////////////////////////////////
-  // Event handling
-
-  events: {
-    "click .watcher a": "addWatcher"
-  },
-
-  // Add @username to the textarea when clicking on a user
-  addWatcher: function(evt) {
-    var el = evt.currentTarget;
-    var textarea = el.up("form").down("textarea");
-    var login = el.readAttribute('data-login');
-    if (textarea.value.length > 0 && textarea.value[textarea.value.length-1] != " ") {
+    if (textarea.value.length > 0 && textarea.value[textarea.value.length - 1] !== ' ') {
       textarea.value += " ";
     }
-    textarea.value += "@"+login+" ";
+
+    textarea.value += '@' + login + ' ';
+
     return false;
   }
 
-});
+  // exports
+  Teambox.Views.Watchers = Backbone.View.extend(Watchers);
+}());

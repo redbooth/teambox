@@ -29,10 +29,28 @@
 
       // Fetch all data we're going to need
       // Uses the Loader class, which updates the progress bar
-      this.my_user.fetch({ success: _loader.load('user') });
-      this.my_tasks.fetch({ success: _loader.load('tasks') });
-      this.my_threads.fetch({ success: _loader.load('activities') });
-      this.my_projects.fetch({ success: _loader.load('projects') });
+      models.user.fetch({success: _loader.load('user')});
+      collections.tasks.fetch({success: _loader.load('tasks')});
+      collections.threads.fetch({success: _loader.load('activities')});
+
+      _loader.total++; // this is hackish, but the loader is a little bit too dumb
+      collections.projects.fetch({success: function (projects) {
+        var done = 0;
+        _.each(projects.models, function (project, i) {
+          _loader.total++;
+          (new Teambox.Collections.People({project_id: project.id})).fetch({
+            success: function (people) {
+              _loader.loaded++;
+              projects.models[i].set({people: people});
+              done += 1;
+              if (done === projects.length) {
+                _loader.loaded++;
+                _loader.load('projects')();
+              }
+            }
+          });
+        });
+      }});
     },
 
     build: function () {

@@ -36,10 +36,16 @@
 
     this.el.update(this.template(this.model.getAttributes()));
 
+    // select status
     (new Teambox.Views.SelectStatus({
       el: this.el.select('#task_status')[0]
     , selected: this.model.get('status')
     })).render();
+
+    // watchers box
+    $(this.el).down('.actions').insert({
+      before: (new Teambox.Views.Watchers({model: this.model})).render().el
+    });
 
     return this;
   };
@@ -140,19 +146,10 @@
   /* Toggle the "Add Watchers" area
    *
    * @param {Event} evt
-   * @returns false;
    */
   CommentForm.toggleWatchers = function (evt) {
-    var watchers = $(this.el).down('.add_watchers_box');
-    if (watchers) {
-      // Remove the box if there is one already
-      watchers.remove();
-    } else {
-      // Render it if it's not there
-      watchers = new Teambox.Views.Watchers({ model: this.model });
-      $(this.el).down('.actions').insert({ before: watchers.render().el });
-    }
-    return false;
+    evt.stop();
+    this.el.down('.add_watchers_box').toggle();
   };
 
   /* Reveal the extra controls when focusing on the textarea
