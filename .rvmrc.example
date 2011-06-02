@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# This is an RVM Project .rvmrc file, used to automatically load the ruby
+# development environment upon cd'ing into the directory
+
+# First we specify our desired <ruby>[@<gemset>], the @gemset name is optional.
+environment_id="ree-1.8.7-2011.03@teambox"
+
+#
+# First we attempt to load the desired environment directly from the environment
+# file. This is very fast and efficicent compared to running through the entire
+# CLI and selector. If you want feedback on which environment was used then
+# insert the word 'use' after --create as this triggers verbose mode.
+#
+if [[ -d "${rvm_path:-$HOME/.rvm}/environments" \
+  && -s "${rvm_path:-$HOME/.rvm}/environments/$environment_id" ]]
+then
+  \. "${rvm_path:-$HOME/.rvm}/environments/$environment_id"
+
+  if [[ -s ".rvm/hooks/after_use" ]]
+  then
+    . ".rvm/hooks/after_use"
+  fi
+else
+  # If the environment file has not yet been created, use the RVM CLI to select.
+  if ! rvm --create use  "$environment_id"
+  then
+    echo "Failed to create RVM environment 'ruby-1.8.7-p334@teambox'."
+  fi
+fi
+
+#
+# If you use an RVM gemset file to install a list of gems (*.gems), you can have
+# it be automatically loaded. Uncomment the following and adjust the filename if
+# necessary.
+#
+# filename=".gems"
+# if [[ -s "$filename" ]] ; then
+#   rvm gemset import "$filename" | grep -v already | grep -v listed | grep -v complete | sed '/^$/d'
+# fi
+
+#
+# If you use bundler and would like to run bundle each time you enter the
+# directory, you can uncomment the following code.
+#
+export PATH="./bin:$PATH"
+
+# Ensure that Bundler is installed. Install it if it is not.
+if ! command -v bundle >/dev/null; then
+   printf "The rubygem 'bundler' is not installed. Installing it now.\n"
+   gem install bundler
+fi
+
+# Bundle while reducing excess noise.
+printf "Bundling your gems. This may take a few minutes on a fresh clone.\n"
+bundle --binstubs | grep -v '^Using ' | grep -v ' is complete' | sed '/^$/d'
+
+# alias bundle="bundle --binstubs"
+#
+
