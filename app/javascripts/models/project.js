@@ -4,7 +4,7 @@ Teambox.Models.Project = Teambox.Models.Base.extend({
     * @return {String}
     */
     className: function () {
-      return this.get('type');
+      return 'Project';
     }
 
   , url: function() {

@@ -11,7 +11,7 @@ Teambox.Models.User = Teambox.Models.Base.extend({
     * @return {String} class_name
     */
   , className: function () {
-      return this.get('type');
+      return 'User';
     }
 
 

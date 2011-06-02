@@ -9,7 +9,7 @@
   * @return {String}
   */
   Conversation.className = function () {
-      return this.get('type');
+    return 'Conversation';
   };
 
 
