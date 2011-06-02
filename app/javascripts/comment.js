@@ -74,15 +74,6 @@ document.on('ajax:before', 'form.new_conversation, form.new_task, .thread form, 
   }
 })
 
-// "Show N previous comments" action in threads
-document.on('ajax:success', '.thread .comments .more_comments', function(e, el) {
-  el.up('.comments').update(e.memo.responseText).blindDown({ duration: 0.5 })
-})
-
-document.on('click', '.thread .comments .more_comments a', function(e, el) {
-  el.update("<img src='/images/loading.gif'/>")
-})
-
 // update edited comment
 document.on('ajax:success', '#facebox form.edit_comment', function(e, form) {
   var commentID = form.readAttribute('action').match(/\d+/g).last()
@@ -102,11 +93,6 @@ document.on('ajax:success', 'div[data-class=conversation].thread .comment .actio
   if (conversation.select('.comment').length == 1 && conversation.select('.title').length == 0) conversation.remove()
   else e.findElement('.comment').remove()
 })
-
-// Open links inside Comments and Notes textilized areas in new windows
-document.on('mouseover', '.textilized a', function(e, link) {
-  link.writeAttribute("target", "_blank");
-});
 
 // enable username autocompletion for main textarea in comment forms
 document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
@@ -150,4 +136,3 @@ document.on('focusin', 'form#new_invitation input#invitation_user_or_email', fun
     input.store('autocompleter', autocompleter)
   }
 })
-

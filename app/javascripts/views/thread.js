@@ -6,16 +6,61 @@
                , template: Handlebars.compile(Templates.partials.thread)
                };
 
+  Thread.events = {
+    'mouseover .textilized a': 'setTargetBlank'
+  , 'click .thread .comments .more_comments a': 'loadMoreComments'
+  };
+
   Thread.initialize = function (options) {
     _.bindAll(this, "render");
     this.model.bind('comment:added', Thread.addComment.bind(this));
   };
 
-  Thread.addComment = function (resp, user) {
-    resp.user = user.attributes;
+  /* sets the target attribute to '_blank'
+   *
+   * @param {Event} evt
+   */
+  Thread.loadMoreComments = function (evt) {
+    evt.stop();
+
+    var el = evt.element()
+      , options = {project_id: this.model.get('project_id')}
+      , template = Handlebars.compile(Templates.partials.comment)
+      , comments;
+
+    options[this.model.get('type').toLowerCase() + '_id'] = this.model.id;
+    comments = new Teambox.Collections.Comments(options);
+    el.update("<img src='/images/loading.gif' alt='Loading' />");
+
+    comments.fetch({
+      success: function (collection, response) {
+        var html = '';
+        _.each(collection.models.reverse(), function (model) {
+          html += template(model.attributes);
+        });
+        el.up('.comments').update(html).blindDown({duration: 0.5});
+      }
+    });
+  };
+
+  /* sets the target attribute to '_blank'
+   *
+   * @param {Event} evt
+   */
+  Thread.setTargetBlank = function (evt) {
+    evt.element().writeAttribute('target', '_blank');
+  };
+
+  /* adds a comment to the thread
+   *
+   * @param {Object} response
+   * @param {Object} user
+   */
+  Thread.addComment = function (response, user) {
+    response.user = user.attributes;
 
     var template = Handlebars.compile(Templates.partials.comment)
-      , el = template(resp);
+      , el = template(response);
 
     this.el.select('.comments')[0]
       .insert({bottom: el})
@@ -25,7 +70,8 @@
 
     // update excerpt
     this.el.down('.comment_header .excerpt')
-           .update('<strong>' + resp.user.first_name + ' ' + resp.user.last_name + '</strong> ' + resp.body);
+           .update('<strong>' + response.user.first_name + ' ' + response.user.last_name
+                 + '</strong> ' + response.body);
 
     // TODO: backbonize this [leftovers from comment.js]
     Task.insertAssignableUsers();
