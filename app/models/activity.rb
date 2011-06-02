@@ -197,6 +197,8 @@ class Activity < ActiveRecord::Base
       target_includes << :comments
       target_includes << :assigned
       target_includes << :task_list
+    when 'Comment'
+      target_includes << :target
     when 'Conversation'
       target_includes << :comments
     when 'Page'
