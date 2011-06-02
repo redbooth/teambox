@@ -217,9 +217,6 @@ GEM
     rcov (0.9.9)
     rdiscount (1.6.5)
     redis (2.1.1)
-    redis-store (1.0.0.beta4)
-      redis (>= 2.0.0)
-      redis (>= 2.0.0)
     riddle (1.2.2)
     rspec (2.3.0)
       rspec-core (~> 2.3.0)
@@ -330,7 +327,6 @@ DEPENDENCIES
   rails (~> 3.0.3)
   rcov
   rdiscount (~> 1.6.3)
-  redis-store (~> 1.0.0.beta4)
   rspec-rails (~> 2.3.1)
   ruby-debug (~> 0.10.3)
   sentient_user
