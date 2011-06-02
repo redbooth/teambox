@@ -139,20 +139,18 @@
         }
      }
     , onCommentActivity: function(activity) {
-        var thread, comment;
+        var thread, comment, 
+            id   = activity.comment_target_id, 
+            type = activity.comment_target_type;
 
         switch(activity.action) {
           case 'create':
-            thread = Teambox['my_' + activity.comment_target_type.toLowerCase()].get(activity.comment_target_id);
-            if (thread) {
-              //TODO: Add comment to thread's comments collection and trigger thread change event
-              thread.recent_comments.add(activity.changes);
-              thread.change();
-            }
+            thread = this.app.my_threads.getByIdAndClass(id, type);
+            if (thread) thread.trigger('comment:added', activity.target);
 
             break;
           case 'update':
-            thread = Teambox['my_' + activity.comment_target_type.toLowerCase()].get(activity.comment_target_id);
+            thread = this.app.my_threads.getByIdAndClass(id, type);
             if (thread) {
               //TODO: Update comment in thread's comments collection and trigger thread change event
               comment = thread.recent_comments.get(activity.target_id);
@@ -163,7 +161,7 @@
             }
             break;
           case 'delete':
-            thread = Teambox['my_' + activity.comment_target_type.toLowerCase()].get(activity.comment_target_id);
+            thread = this.app.my_threads.getByIdAndClass(id, type);
             if (thread) {
               //TODO: Update comment in thread's comments collection and trigger thread change event
               comment = thread.recent_comments.get(activity.target_id);
