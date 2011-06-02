@@ -37,7 +37,18 @@
     };
 
     this.fetch(options);
-  }
+  };
+
+  Threads.getByIdAndClass = function(id, className) {
+    var _id, _class;
+
+    if (id === null) return null;
+    if (className === null) return null;
+
+    _id = ( id.id != null ? id.id : id );
+    _class = ( id.className != null ? id.className() : className );
+    return _.detect(this.models, function(model) { return model.id === _id && model.className() === _class; });
+  };
 
   // exports
   Teambox.Collections.Threads = Teambox.Collections.Base.extend(Threads);
