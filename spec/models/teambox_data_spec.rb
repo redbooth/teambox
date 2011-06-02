@@ -277,7 +277,7 @@ describe TeamboxData do
       organization.add_member(user, Membership::ROLES[:admin])
       dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user;d.save}
       dump.data = @teambox_dump
-      dump.target_organization = organization
+      dump.organization = organization
       dump.user_map = user_map
       dump.status_name = :mapping
       
@@ -298,7 +298,7 @@ describe TeamboxData do
       organization.add_member(user, Membership::ROLES[:admin])
       dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user; d.save}
       dump.data = @teambox_dump
-      dump.target_organization = organization.permalink
+      dump.organization = organization.permalink
       dump.user_map = user_map
       dump.status_name = :mapping
       
@@ -330,7 +330,7 @@ describe TeamboxData do
       
       dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user}
       dump.data = @teambox_dump
-      dump.target_organization = organization.permalink
+      dump.organization = organization
       dump.user_map = user_map
       dump.status_name = :mapping
       
