@@ -4,6 +4,7 @@
   var Thread = { tagName: 'div'
                , className: 'thread'
                , template: Handlebars.compile(Templates.partials.thread)
+               , comment_template:  Handlebars.compile(Templates.partials.comment)
                };
 
   Thread.events = {
@@ -56,11 +57,10 @@
    * @param {Object} response
    * @param {Object} user
    */
-  Thread.addComment = function (response, user) {
-    response.user = user.attributes;
+  Thread.addComment = function (comment, user) {
+    if (user) comment.user = user.attributes;
 
-    var template = Handlebars.compile(Templates.partials.comment)
-      , el = template(response);
+    var el = this.comment_template(comment);
 
     this.el.select('.comments')[0]
       .insert({bottom: el})
@@ -70,8 +70,8 @@
 
     // update excerpt
     this.el.down('.comment_header .excerpt')
-           .update('<strong>' + response.user.first_name + ' ' + response.user.last_name
-                 + '</strong> ' + response.body);
+           .update('<strong>' + comment.user.first_name + ' ' + comment.user.last_name
+                 + '</strong> ' + comment.body);
 
     // TODO: backbonize this [leftovers from comment.js]
     Task.insertAssignableUsers();
