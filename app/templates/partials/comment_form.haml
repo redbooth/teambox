@@ -15,10 +15,6 @@
     %a{:href => 'http://help.teambox.com/faqs/advanced-features/time-tracking', :target => '_blank'} Learn more.
   {{/if}}
 
-  .upload_area{ :style => "display: none" }
-    %p Select a file to upload to Teambox
-    %input{:id => 'upload_file', :name => 'task[comments_attributes][0][uploads_attributes][0][asset]', :type => 'file'}
-
   .actions
     .attach
       %span= t('comments.fields.attach')

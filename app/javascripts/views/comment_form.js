@@ -24,7 +24,7 @@
 
   CommentForm.render = function () {
 
-    $(this.el).writeAttribute({
+    this.el.writeAttribute({
       'accept-charset': 'UTF-8'
     , 'action': this.model.url()
     , 'data-project-id': this.model.get('project_id')
@@ -42,10 +42,11 @@
     , selected: this.model.get('status')
     })).render();
 
-    // watchers box
-    $(this.el).down('.actions').insert({
-      before: (new Teambox.Views.Watchers({model: this.model})).render().el
-    });
+    this.el.down('.actions')
+      // upload area
+      .insert({before: (new Teambox.Views.UploadArea({comment_form: this})).render().el})
+      // watchers box
+      .insert({before: (new Teambox.Views.Watchers({model: this.model})).render().el});
 
     return this;
   };
@@ -89,6 +90,11 @@
       , body = this.el.select('textarea')[0].value;
 
     evt.stop();
+
+    if (this.hasFileUploads()) {
+      return this.uploadFile();
+    }
+
     (new Teambox.Models.Comment({
       parent_url: this.model.url()
     , body: body
@@ -109,27 +115,24 @@
   /* Toggle the attach files area
    *
    * @param {Event} evt
-   * @returns false;
    */
   CommentForm.toggleAttach = function (evt) {
+    evt.stop();
     $(this.el).down('.upload_area').toggle().highlight();
-    return false;
   };
 
   /* Toggle the time tracking area
    *
    * @param {Event} evt
-   * @returns false;
    */
   CommentForm.toggleHours = function (evt) {
+    evt.stop();
     $(this.el).down('.hours_field').toggle().down('input').focus();
-    return false;
   };
 
   /* Toggle the convert to task area
    *
    * @param {Event} evt
-   * @returns false;
    */
   CommentForm.toggleConvertToTask = function (evt) {
     evt.stop();
@@ -150,13 +153,11 @@
    * Assigns the autocompleter
    *
    * @param {Event} evt
-   * @returns false;
    */
   CommentForm.focusTextarea = function (evt) {
     var textarea = evt.element()
       , people = Teambox.collections.projects.get(this.model.get('project_id')).getAutocompleterUserNames()
       , container;
-    console.log(people);
 
     this.el.down('.extra').show();
 
@@ -167,8 +168,79 @@
       textarea.insert({after: container});
       this.autocompleter = new Autocompleter.Local(textarea, container, people, {tokens: [' ']});
     }
+  };
 
-    return false;
+  /* checks if the form has file uploads
+   *
+   * @return {Boolean}
+   */
+  CommentForm.hasFileUploads = function () {
+    console.log(this);
+    return this.el.select('input[type=file]').any(function (input) {
+      return input.getValue();
+    });
+  };
+
+  /* checks if the form has empty file uploads
+   *
+   * @return {Boolean}
+   */
+  CommentForm.hasEmptyFileUploads = function () {
+    return this.el.select('input[type=file]').any(function (input) {
+      return !input.getValue();
+    });
+  };
+
+  /* creates an iframe and uploads a file
+   */
+  CommentForm.uploadFile = function () {
+    var self = this
+      , iframe_id = 'file_upload_iframe' + (new Date())
+      , iframe = new Element('iframe', {id: iframe_id, name: iframe_id}).hide()
+      , authToken = $$('meta[name=csrf-token]').first().readAttribute('content')
+      , authParam = $$('meta[name=csrf-param]').first().readAttribute('content');
+
+    function callback() {
+      // contentDocument doesn't work in IE (7)
+      var iframe_body = (iframe.contentDocument || iframe.contentWindow.document).body
+        , extra_input = self.el.down('input[name=iframe]');
+
+      if (iframe_body.className === "error") {
+        self.el.fire('ajax:failure', {responseJSON: iframe_body.firstChild.innerHTML.evalJSON()});
+      } else {
+        self.el.fire('ajax:success', {responseText: iframe_body.innerHTML});
+      }
+
+      self.el.fire('ajax:complete');
+      iframe.remove();
+      self.el.target = null;
+      if (extra_input) {
+        extra_input.remove();
+      }
+    }
+
+    $(document.body).insert(iframe);
+    this.el.target = iframe_id;
+    this.el.insert(new Element('input', {type: 'hidden', name: 'iframe', value: true}));
+
+    if (this.el[authParam]) {
+      this.el[authParam].value = authToken;
+    } else {
+      this.el.insert(new Element('input', {type: 'hidden', name: authParam, value: authToken}).hide());
+    }
+
+    // for IE (7)
+    iframe.onreadystatechange = function () {
+      if (this.readyState === 'complete') {
+        callback();
+      }
+    };
+
+    // non-IE
+    iframe.onload = callback;
+
+    // we may have cancelled xhr, but we still need to trigger form submit manually
+    this.el.submit();
   };
 
   // exports

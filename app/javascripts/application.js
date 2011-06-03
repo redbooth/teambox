@@ -60,6 +60,7 @@
 //= require <views/projects>
 //= require <views/search>
 //= require <views/sidebar>
+//= require <views/upload_area>
 
 //= require <views/tasks/all_tasks>
 //= require <views/tasks/my_tasks>
@@ -119,6 +120,5 @@
 //= require <task_list>
 //= require <task_list_templates>
 //= require <threads>
-//= require <upload>
 //= require <watchers>
 //= require <push>

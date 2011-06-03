@@ -52,7 +52,6 @@
 
               done += 1;
               if (done === projects.length) {
-                console.log(collections.people);
                 _loader.loaded++;
                 _loader.load('projects')();
               }
