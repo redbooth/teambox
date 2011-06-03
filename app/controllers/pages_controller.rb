@@ -7,11 +7,15 @@ class PagesController < ApplicationController
   end
   
   def index
-    if @current_project
-      @pages = @current_project.pages
+    context = if @current_project
+      @current_project.pages
     else
-      @pages = current_user.projects.collect { |p| p.pages }
+      Page.where(:project_id => current_user.project_ids)
     end
+    
+    @pages = context.where(['pages.is_private = ? OR (pages.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                     joins("LEFT JOIN watchers ON (pages.id = watchers.watchable_id AND watchers.watchable_type = 'Page') AND watchers.user_id = #{current_user.id}")
+    
     
     respond_to do |f|
       f.any(:html, :m)
@@ -41,6 +45,7 @@ class PagesController < ApplicationController
   end
     
   def show
+    authorize! :show, @page
     @pages = @current_project.pages
     
     respond_to do |f|
@@ -65,6 +70,7 @@ class PagesController < ApplicationController
   
   def update
     authorize! :update, @page
+    @page.updating_user = current_user
     respond_to do |f|
       if @page.update_attributes(params[:page])
         f.any(:html, :m)  { redirect_to project_page_path(@current_project,@page) }

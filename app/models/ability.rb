@@ -35,21 +35,17 @@ class Ability
       api_write?(user) && project.commentable?(user) && private_access?(user, object)
     end
     
-    can :watch, [Task, Conversation] do |object|
+    can :watch, [Task, Conversation, Page] do |object|
       api_write?(user) && object.project.commentable?(user) && private_access?(user, object)
-    end
-    
-    can :watch, Page do |object|
-      api_write?(user) && object.project.commentable?(user)
     end
     
     # Core object permissions
     
-    can :update, [Conversation, Task] do |object|
+    can :update, [Conversation, Task, Page] do |object|
       api_write?(user) && object.editable?(user) && private_access?(user, object)
     end
     
-    can :update, [TaskList, Page] do |object|
+    can :update, TaskList do |object|
       api_write?(user) && object.editable?(user)
     end
     
@@ -155,8 +151,16 @@ class Ability
     end
     
     # OAuth :read_projects show permission
-    can :show, [Divider, Invitation, Membership, Note, Organization, Page, Person, Project, TaskList, User] do |object|
+    can :show, [Invitation, Membership, Organization, Person, Project, TaskList, User] do |object|
       api_read?(user)
+    end
+    
+    can :show, Page do |object|
+      api_read?(user) && private_access?(user, object)
+    end
+    
+    can :show, [Divider, Note] do
+      api_read?(user) && private_access?(user, object.page)
     end
     
     can :show, [Conversation, Task] do |object|

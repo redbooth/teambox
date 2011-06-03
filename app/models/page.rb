@@ -10,16 +10,28 @@ class Page < RoleRecord
   
   has_permalink :name, :scope => :project_id
   
-  attr_accessible :name, :description, :note_attributes
+  attr_accessible :name, :description, :note_attributes, :is_private
   attr_accessor :suppress_activity
+  attr_accessor :updating_user
   
   validates_presence_of :user
   validates_length_of :name, :minimum => 1
+  validate :check_updating_user, :on => :update
   
   default_scope :order => 'position ASC, created_at DESC, id DESC'
   
   after_create :log_create, :update_user_stats
   after_update :log_update
+  
+  def check_updating_user
+    return if @updating_user.nil?
+    @errors.add :is_private, 'cannot be set' if @is_private_set && (@updating_user != user)
+  end
+  
+  def is_private=(value)
+    self[:is_private] = value
+    @is_private_set = true
+  end
   
   def build_note(note = {})
     self.notes.build(note) do |note|
@@ -165,7 +177,9 @@ class Page < RoleRecord
       :name => name,
       :description => description,
       :created_at => created_at.to_s(:api_time),
-      :updated_at => updated_at.to_s(:api_time)
+      :updated_at => updated_at.to_s(:api_time),
+      :watchers => Array.wrap(watcher_ids),
+      :is_private => is_private
     }
     
     base[:type] = self.class.to_s if options[:emit_type]

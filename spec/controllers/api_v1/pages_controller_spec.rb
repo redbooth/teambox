@@ -99,6 +99,23 @@ describe ApiV1::PagesController do
 
       references.include?("#{@page.user_id}_User").should == true
     end
+    
+    it "only shows private pages the user can see" do
+      @page.is_private = true
+      @page.save!
+      
+      @other_page = @project.new_page(@project.user, {:name => 'Secret plans!', :is_private => true})
+      @other_page.save!
+      
+      login_as @user
+      
+      get :index, :project_id => @project.permalink
+      p response.body
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      data['objects'].map{|o| o['id'].to_i}.should == [@page.id]
+    end
   end
 
   describe "#show" do
@@ -123,6 +140,16 @@ describe ApiV1::PagesController do
       references.include?("#{@project.id}_Project").should == true
       references.include?("#{@page.user_id}_User").should == true
     end
+    
+    it "does not show an unwatched private page" do
+      @page.is_private = true
+      @page.save!
+      
+      login_as @project.user
+      
+      get :show, :project_id => @project.permalink, :id => @page.id
+      response.status.should == 401
+    end
   end
 
   describe "#update" do
@@ -142,6 +169,16 @@ describe ApiV1::PagesController do
       response.status.should == 401
 
       @page.reload.name.should == 'Important plans!'
+    end
+    
+    it "does not allow mystery users to update a private page" do
+      @page.is_private = true
+      @page.save!
+      
+      login_as @project.user
+      
+      get :update, :project_id => @project.permalink, :id => @page.id, :name => 'Unimportant Plans'
+      response.status.should == 401
     end
   end
 
