@@ -31,7 +31,9 @@
    * @return false
    */
   Watchers.addWatcher = function (evt) {
-    var el = evt.currentTarget
+    evt.stop();
+
+    var el = evt.element()
       , textarea = el.up("form").down("textarea")
       , login = el.readAttribute('data-login');
 
