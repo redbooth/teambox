@@ -151,7 +151,7 @@ class ApiV1::APIController < ApplicationController
       case ref_class
       when 'Person'
         people_ids += values
-        []
+        Person.where(:id => people_ids).all
       when 'Comment'
         comments = Comment.where(:id => values).includes(:target).all
         new_refs = comments.map{|c| load_reference_hashes(c.references, user_ids, people_ids)}.flatten

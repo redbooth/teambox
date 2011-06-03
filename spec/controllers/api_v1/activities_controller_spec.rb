@@ -89,11 +89,14 @@ describe ApiV1::ActivitiesController do
     it "returns comment references for conversation and task objects" do
       login_as @user
 
+      assigned_person = Factory(:person, :project => @project)
       task = Factory.create(:task, :project => @project)
       100.times { Factory.create(:comment, :target => task, :project => @project) }
+      # This ensures the first activities will not be on the first page
       conversation = Factory.create(:conversation, :project => @project)
       upload = Factory.build(:upload, :asset => mock_uploader('semicolons.js', 'application/javascript', "alert('what?!')"))
       Factory.create(:comment, :target => conversation, :project => @project, :uploads => [upload])
+      Factory :comment, :target => task, :project => @project, :assigned_id => assigned_person.id
 
       get :index, :project_id => @project.permalink
       response.should be_success
@@ -111,6 +114,7 @@ describe ApiV1::ActivitiesController do
       references.include?("#{task.first_comment.user.id}_User").should == true
       references.include?("#{task.user_id}_User").should == true
       references.include?("#{upload.id}_Upload").should == true
+      references.include?("#{assigned_person.id}_Person").should == true
 
       data['objects'].each do |obj|
         if obj['type'] == 'Conversation'
