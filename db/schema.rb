@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110524125342) do
+ActiveRecord::Schema.define(:version => 20110602230212) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -325,9 +325,11 @@ ActiveRecord::Schema.define(:version => 20110524125342) do
     t.integer  "position"
     t.string   "permalink"
     t.boolean  "deleted",         :default => false, :null => false
+    t.boolean  "is_private",      :default => false, :null => false
   end
 
   add_index "pages", ["deleted"], :name => "index_pages_on_deleted"
+  add_index "pages", ["is_private"], :name => "index_pages_on_is_private"
   add_index "pages", ["project_id"], :name => "index_pages_on_project_id"
 
   create_table "people", :force => true do |t|
@@ -448,8 +450,8 @@ ActiveRecord::Schema.define(:version => 20110524125342) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",                   :default => false, :null => false
-    t.string   "google_calendar_url_token"
     t.boolean  "is_private",                :default => false, :null => false
+    t.string   "google_calendar_url_token"
   end
 
   add_index "tasks", ["assigned_id"], :name => "index_tasks_on_assigned_id"
@@ -462,7 +464,6 @@ ActiveRecord::Schema.define(:version => 20110524125342) do
     t.integer  "user_id"
     t.integer  "type_id"
     t.text     "project_ids"
-    t.text     "map_data"
     t.string   "processed_data_file_name"
     t.string   "processed_data_content_type"
     t.integer  "processed_data_file_size"
