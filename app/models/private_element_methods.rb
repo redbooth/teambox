@@ -1,4 +1,4 @@
-module PrivateElements
+module PrivateElementMethods
 
   def user_can_access_private_target?(user)
     target = try(:comment).try(:target)
