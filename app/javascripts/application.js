@@ -52,6 +52,7 @@
 //= require <collections/tasks>
 //= require <collections/task_lists>
 //= require <collections/threads>
+//= require <collections/users>
 //= require <views/activities>
 //= require <views/comment_form>
 //= require <views/conversation>

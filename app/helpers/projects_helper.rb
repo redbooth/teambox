@@ -137,6 +137,7 @@ module ProjectsHelper
     projects.reject{|p| p.user_id != user.id}.map {|p| [ p.name, p.id ]}
   end
 
+  # TODO: delete, this is done client side now
   # FIXME eventually migrate that to just use the plain json from projects_people_data
   def autocomplete_projects_people_data
     projects = current_user.projects.reject{ |p| p.new_record? }

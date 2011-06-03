@@ -4,6 +4,7 @@
   };
 
   People.initialize = function (options) {
+    options = options || {};
     this.project_id = options.project_id;
   };
 

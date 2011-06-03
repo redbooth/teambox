@@ -36,4 +36,3 @@
   Teambox.Collections.Comments = Teambox.Collections.Base.extend(Comments);
 
 }());
-

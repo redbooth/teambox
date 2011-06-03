@@ -9,7 +9,7 @@
     'click a.attach_icon'               : 'toggleAttach'
   , 'click a.add_hours_icon'            : 'toggleHours'
   , 'click a.add_watchers'              : 'toggleWatchers'
-  , 'focusin textarea'                  : 'revealCommentArea'
+  , 'focusin textarea'                  : 'focusTextarea'
   , 'submit .new_comment'               : 'postComment'
   , 'click span.convert_to_task a'      : 'toggleConvertToTask'
   , 'click div.convert_to_task a.cancel': 'toggleConvertToTask'
@@ -69,18 +69,12 @@
       }
     });
 
-    // clear hours
     if (hours) {
       hours.setValue('');
     }
 
-    // hide initially hidden areas
     form.select('.hours_field, .upload_area').invoke('hide');
-
-    // clear errors
     form.select('.error').invoke('remove');
-
-    //clear google docs hidden fields and list items in the file list
     form.select('.google_docs_attachment .fields input').invoke('remove');
     form.select('.google_docs_attachment .file_list li').invoke('remove');
   };
@@ -153,12 +147,27 @@
   };
 
   /* Reveal the extra controls when focusing on the textarea
+   * Assigns the autocompleter
    *
    * @param {Event} evt
    * @returns false;
    */
-  CommentForm.revealCommentArea = function (evt) {
-    $(this.el).down('.extra').show();
+  CommentForm.focusTextarea = function (evt) {
+    var textarea = evt.element()
+      , people = Teambox.collections.projects.get(this.model.get('project_id')).getAutocompleterUserNames()
+      , container;
+    console.log(people);
+
+    this.el.down('.extra').show();
+
+    if (this.autocompleter) {
+      this.autocompleter.options.array = people;
+    } else {
+      container = new Element('div', {'class': 'autocomplete'}).hide();
+      textarea.insert({after: container});
+      this.autocompleter = new Autocompleter.Local(textarea, container, people, {tokens: [' ']});
+    }
+
     return false;
   };
 

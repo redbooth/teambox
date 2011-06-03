@@ -94,37 +94,15 @@ document.on('ajax:success', 'div[data-class=conversation].thread .comment .actio
   else e.findElement('.comment').remove()
 })
 
-// enable username autocompletion for main textarea in comment forms
-document.on('focusin', 'form textarea[name*="[body]"]', function(e, input) {
-  var form = e.findElement('form'),
-      project = form.readAttribute('data-project-id')
-  
-  // projects index page has a global comment box with projects selector
-  if (!project) {
-    var projectSelect = form.down('select[name=project_id]')
-    if (projectSelect) project = projectSelect.getValue()
-  }
-  
-  if (project) {
-    var people = _people_autocomplete[project],
-        autocompleter = input.retrieve('autocompleter')
-        
-    if (autocompleter) {
-      // update options array in case the projects selector changed value
-      autocompleter.options.array = people
-    } else {
-      var container = new Element('div', { 'class': 'autocomplete' }).hide()
-      input.insert({ after: container })
-      autocompleter = new Autocompleter.Local(input, container, people, { tokens:[' '] })
-      input.store('autocompleter', autocompleter)
-    }
-  }
-})
-
+// TODO: to test!
 document.on('focusin', 'form#new_invitation input#invitation_user_or_email', function(e, input) {
   var form = e.findElement('form')
-  var people = (new Hash(_people_autocomplete)).values().flatten().uniq().reject(function(e) { return e.match('@all') }),
-    autocompleter = input.retrieve('autocompleter')
+    , people = _.unique(_.flatten(_.map(Teambox.collections.projects, function (project) {
+        return project.getAutocompleterUserNames().reject(function(e) {
+          return e.match('@all');
+        });
+      })))
+    , autocompleter = input.retrieve('autocompleter');
 
   if (autocompleter) {
     // update options array in case the projects selector changed value
