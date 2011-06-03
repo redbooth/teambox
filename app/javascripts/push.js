@@ -40,6 +40,15 @@
         this.setApp(app);
         this.setSocket(socket);
 
+        //TODO: When we replace JQuery we need to update this code
+        jQuery.ajaxSetup({
+          beforeSend: function(xhr){
+            if (Teambox.controllers.application.push_session_id) {
+              xhr.setRequestHeader("X-PushSession-ID", Teambox.controllers.application.push_session_id);
+            }
+          }
+        });
+
         this.bind("activity:task", this.onThreadActivity);
         this.bind("activity:task:comment", this.onCommentActivity);
         this.bind("activity:conversation", this.onThreadActivity);
@@ -59,10 +68,12 @@
         var self = this;
 
         socket.on('connect', function() {
-          console.log("connected: ", this.socket.transport.sessionid);
+          self.app.setPushSessionId(socket.sessionID);
+          console.log("connected: ", socket.sessionID);
         });
 
         socket.on('disconnect', function() {
+          self.app.setPushSessionId(false);
           console.log("disconnected: ");
         });
 
@@ -77,21 +88,23 @@
 
           console.log("Received activity: ", activity);
 
+          if (activity.push_session_id === self.app.push_session_id) {
+            return;
+          }
+
           var matchPath = function(r) {
               return (r.exec(window.location.hash) || r.exec(window.location.pathname) || []).length > 0;
           };
 
-          if (activity.target_type === 'Person' || activity.user_id !== self.app.my_user.get('id')) {
-            if (ACTIVE_PATHS.any(matchPath)) {
-              var project_level_matches = /#!\/projects\/([^\/]+)\/?$/.exec(window.location.hash) ||
-                                          /^\/projects\/([^\/]+)\/?$/.exec(window.location.pathname);
+          if (ACTIVE_PATHS.any(matchPath)) {
+            var project_level_matches = /#!\/projects\/([^\/]+)\/?$/.exec(window.location.hash) ||
+                                        /^\/projects\/([^\/]+)\/?$/.exec(window.location.pathname);
 
-              if (project_level_matches && (project_level_matches[1] === activity.project.permalink)) {
-                self.notifyActivity(activity);
-              }
-              else if (!project_level_matches) {
-                self.notifyActivity(activity);
-              }
+            if (project_level_matches && (project_level_matches[1] === activity.project.permalink)) {
+              self.notifyActivity(activity);
+            }
+            else if (!project_level_matches) {
+              self.notifyActivity(activity);
             }
           }
 

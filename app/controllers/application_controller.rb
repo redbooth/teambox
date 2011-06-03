@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   
   include AuthenticatedSystem
   include SentientController
+  include PushSession
 
   before_filter :set_locale,
                 :rss_token,

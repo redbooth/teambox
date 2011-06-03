@@ -6,7 +6,7 @@ class User
 
   before_save :ensure_authentication_token
 
-  attr_accessor :current_token
+  attr_accessor :current_token, :push_session_id
   
   def self.authenticate(login, password)
     unless login.blank? or password.blank?

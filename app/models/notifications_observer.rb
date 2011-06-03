@@ -22,7 +22,7 @@ class NotificationsObserver < ActiveRecord::Observer
 
       #TODO: Also send none project-related activities
       if activity.project && !activity.is_first_comment? && activity.push?
-        activity_hash = activity.to_push_data()
+        activity_hash = activity.to_push_data(:push_session_id => User.current.push_session_id)
 
         users = User.select_auth_tokens activity.project.users
 
@@ -38,7 +38,7 @@ class NotificationsObserver < ActiveRecord::Observer
         end
 
         users.uniq.each do |user|
-          Juggernaut.publish("/users/#{user[0]}", activity_hash.to_json) unless user == activity.user
+          Juggernaut.publish("/users/#{user[0]}", activity_hash.to_json)
         end
       end
     end

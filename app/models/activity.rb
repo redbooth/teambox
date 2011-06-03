@@ -216,7 +216,7 @@ class Activity < ActiveRecord::Base
                          :emit_type => true,
                          :include => target_includes
                        })
-    data
+    data.merge(options)
   end
 
   def is_first_comment?
