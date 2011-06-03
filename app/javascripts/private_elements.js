@@ -195,3 +195,12 @@ document.on("change", ".private_options .option.private input", function(e,el) {
 document.on("change", "select#project_id", function(e,el) {
   PrivateBox.update(el);
 });
+
+document.on("dom:loaded", function (e,el) {
+  if (el.body.hasClassName('edit_pages') || el.body.hasClassName('new_pages')) {
+	var form = $(el.body).down('.content').down('form')
+    PrivateBox.activate(form, form)
+    PrivateBox.update(form.down('div'))
+    form.down('.private_options').select('input').invoke('enable');
+  }
+})

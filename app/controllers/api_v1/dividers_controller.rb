@@ -9,9 +9,11 @@ class ApiV1::DividersController < ApiV1::APIController
       target.dividers
     else
       Divider.where(:project_id => current_user.project_ids)
-    end
+    end.joins(:page)
     
     @dividers = context.except(:order).
+                        where(['pages.is_private = ? OR (pages.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                        joins("LEFT JOIN watchers ON (pages.id = watchers.watchable_id AND watchers.watchable_type = 'Page') AND watchers.user_id = #{current_user.id}").
                         where(api_range('dividers')).
                         limit(api_limit).
                         order('dividers.id DESC').

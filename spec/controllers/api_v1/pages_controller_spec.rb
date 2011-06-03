@@ -110,7 +110,6 @@ describe ApiV1::PagesController do
       login_as @user
       
       get :index, :project_id => @project.permalink
-      p response.body
       response.should be_success
       
       data = JSON.parse(response.body)
@@ -179,6 +178,43 @@ describe ApiV1::PagesController do
       
       get :update, :project_id => @project.permalink, :id => @page.id, :name => 'Unimportant Plans'
       response.status.should == 401
+    end
+
+    it "allows the creator to update the private_ids" do
+      @page.is_private = true
+      @page.save!
+
+      login_as @page.user
+
+      get :update, :project_id => @project.permalink, :id => @page.id, :is_private => true, :private_ids => [@owner.id]
+      response.should be_ok
+
+      @page.reload.watcher_ids.sort.should == [@owner.id, @page.user_id].sort
+    end
+
+    it "does not allow a watcher to update the private_ids" do
+      @page.is_private = true
+      @page.save!
+      @page.add_watcher(@owner)
+
+      login_as @owner
+
+      get :update, :project_id => @project.permalink, :id => @page.id, :is_private => true, :private_ids => []
+      response.status.should == 422
+
+      @page.reload.watcher_ids.sort.should == [@owner.id, @page.user_id].sort
+    end
+
+    it "does not allow a stranger to update the private_ids" do
+      @page.is_private = true
+      @page.save!
+
+      login_as @owner
+
+      get :update, :project_id => @project.permalink, :id => @page.id, :is_private => true, :private_ids => [@owner.id]
+      response.status.should == 401
+
+      @page.reload.watcher_ids.sort.should == [@page.user_id].sort
     end
   end
 

@@ -49,6 +49,16 @@ describe ApiV1::NotesController do
 
       references.include?("#{@page.id}_Page").should == true
     end
+
+    it "does not show private notes" do
+      login_as @user
+      @page.update_attribute(:is_private, true)
+
+      get :index
+      response.should be_success
+
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
   end
 
   describe "#show" do

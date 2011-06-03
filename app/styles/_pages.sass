@@ -96,6 +96,11 @@
         margin: 5px 0px
         font-size: 12px
         color: rgb(100, 100, 100)
+    .lock_icon
+      display: none
+    &.private
+      .lock_icon
+        display: none
 
 .show_pages
   .page_header
@@ -111,6 +116,11 @@
     .description
       font-size: 12px
       color: rgb(180, 180, 180)
+    .lock_icon
+      display: none
+    &.private
+      .lock_icon
+        display: inline-block
   h3
     font-size: 18px
     font-weight: normal

@@ -11,6 +11,11 @@ module PagesHelper
       :current_target => current_target
   end
   
+  def visible_pages_list(project)
+     @pages = project.pages.where(['pages.is_private = ? OR (pages.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                            joins("LEFT JOIN watchers ON (pages.id = watchers.watchable_id AND watchers.watchable_type = 'Page') AND watchers.user_id = #{current_user.id}")
+  end
+  
   def new_page_link(project)
     if can? :make_pages, project
       link_to content_tag(:span,t('.new_page')), new_project_page_path(project), :class => 'add_button'

@@ -39,6 +39,10 @@ class Ability
       api_write?(user) && object.project.commentable?(user) && private_access?(user, object)
     end
     
+    can :unwatch, [Task, Conversation, Page] do |object|
+      api_write?(user) && (object.is_private == false || !object.required_watcher_ids.include?(user.id))
+    end
+
     # Core object permissions
     
     can :update, [Conversation, Task, Page] do |object|
@@ -159,7 +163,7 @@ class Ability
       api_read?(user) && private_access?(user, object)
     end
     
-    can :show, [Divider, Note] do
+    can :show, [Divider, Note] do |object|
       api_read?(user) && private_access?(user, object.page)
     end
     

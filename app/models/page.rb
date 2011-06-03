@@ -10,9 +10,10 @@ class Page < RoleRecord
   
   has_permalink :name, :scope => :project_id
   
-  attr_accessible :name, :description, :note_attributes, :is_private
+  attr_accessible :name, :description, :note_attributes, :is_private, :private_ids
   attr_accessor :suppress_activity
   attr_accessor :updating_user
+  attr_accessor :private_ids
   
   validates_presence_of :user
   validates_length_of :name, :minimum => 1
@@ -20,12 +21,13 @@ class Page < RoleRecord
   
   default_scope :order => 'position ASC, created_at DESC, id DESC'
   
-  after_create :log_create, :update_user_stats
-  after_update :log_update
+  after_create :log_create, :update_user_stats, :set_private_ids
+  after_update :log_update, :set_private_ids
   
   def check_updating_user
     return if @updating_user.nil?
     @errors.add :is_private, 'cannot be set' if @is_private_set && (@updating_user != user)
+    @errors.add :private_ids, 'cannot be updated' if is_private && (@updating_user != user)
   end
   
   def is_private=(value)
@@ -123,6 +125,12 @@ class Page < RoleRecord
     project.log_activity(self, 'edit') unless @suppress_activity
   end
   
+  def set_private_ids
+    if is_private && @private_ids && @is_private_set
+      set_private_watchers(@private_ids)
+    end
+  end
+
   def references
     refs = { :users => [user_id], :projects => [project_id] }
     refs[:note] = note_ids

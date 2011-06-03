@@ -10,10 +10,11 @@
     = link_to "Join the project", project_path(@project)
     to receive community announcements or request support.
 
-- if @project.pages.any?
+- page_list = visible_pages_list(@project)
+- if page_list.any?
   .pages
     %h2 Documentation
-    - for page in @project.pages
+    - for page in page_list
       .page
         .icon
         = link_to h(page), public_project_page_path(@project, page), :class => :page

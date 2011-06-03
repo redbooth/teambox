@@ -25,7 +25,7 @@ class PagesController < ApplicationController
   
   def new
     authorize! :make_pages, @current_project
-    @page = Page.new
+    @page = @current_project.new_page(current_user, params[:page])
     
     respond_to do |f|
       f.any(:html, :m)

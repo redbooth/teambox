@@ -1,5 +1,7 @@
-.page
-  %h3= link_to page, project_page_path(@current_project, page)
+.page{:class => (page.is_private ? 'private' : '')}
+  %h3
+    .lock_icon
+    = link_to page, project_page_path(@current_project, page)
   %p= page.description
   - if page.slots.any?
     - groups = page.divided_slots

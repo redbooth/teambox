@@ -29,6 +29,8 @@ module NavigationHelpers
       developer_oauth_clients_path
     when /the pages of the "([^\"]*)" project/
       project_pages_path(Project.find_by_name($1))
+    when /the pages page/
+      project_pages_path(@current_project)
     when /the new page page/
       new_project_page_path(@current_project)
     when /the page named "([^\"]*)"/

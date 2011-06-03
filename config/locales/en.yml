@@ -921,6 +921,7 @@ en:
       name_description: Choose a short and descriptive title
       description: Description
       description_description: "Optional short notes about it. Doesn't allow text styles."
+      is_private: Privacy
     slots:
       insert_here: Insert Here
     column:
