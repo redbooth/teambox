@@ -143,6 +143,10 @@ class GoogleCalendar
       @hash
     end
     
+    def [](value)
+      @hash[value]
+    end
+
     protected
       def format_keys!
         @hash.keys.each do |key|

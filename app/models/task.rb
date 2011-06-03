@@ -239,6 +239,34 @@ class Task < RoleRecord
     !is_private or watchers.include? user
   end
 
+  def force_google_calendar_event_creation!
+    if self.google_calendar_url_token.blank?
+      event = add_google_calendar_event
+      self.save!
+      event
+    end
+  end
+
+  def delete_google_calendar_event!
+    if !self.google_calendar_url_token.blank? && self.assigned && self.assigned.user
+      begin
+        gcal = self.assigned.user.get_calendar_app
+        return if gcal.nil?
+
+        calendar = self.assigned.user.google_calendar(gcal)
+        return if calendar.nil?
+
+        event = gcal.find_event(calendar.url_token, self.google_calendar_url_token)
+        gcal.delete_event(event)
+      rescue => e
+        event = false
+      ensure
+        self.update_attribute(:google_calendar_url_token, nil)
+      end
+      event
+    end
+  end
+
   protected
 
   #don't store 0 when assigned_id was set by a string
@@ -363,6 +391,10 @@ class Task < RoleRecord
       delete_old_events_if_required
     end
     
+    add_google_calendar_event
+  end
+
+  def add_google_calendar_event
     # Perform the main add action if this calendar is suitable
     if self.assigned && self.assigned.user && !self.due_on.nil? && self.open? && self.assigned.user.try(:admin?)
       gcal = self.assigned.user.get_calendar_app
@@ -372,9 +404,12 @@ class Task < RoleRecord
       return if calendar.nil?
       
       if self.google_calendar_url_token.blank? # Create a new calendar entry
+        Rails.logger.info "[GCal] Creating new google calendar entry"
         event = gcal.create_event(calendar.url_token, self.to_google_calendar_event)
         self.google_calendar_url_token = event.url_token
+        event
       else # Update the exsiting entry with the new details
+        Rails.logger.info "[GCal] Updating exsisting google calendar entry"
         event = gcal.find_event(calendar.url_token, self.google_calendar_url_token)
         update_calendar_event(event)
         gcal.update_event(event)
