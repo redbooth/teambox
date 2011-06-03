@@ -165,3 +165,13 @@ def app
   Rails.application
 end
 
+RSpec.configure do |config|
+  if ENV['PROFILE']
+    config.around(:each) do |example|
+      start = Time.now.to_f
+      example.run
+      puts "\n#{example.metadata[:full_description]}: #{(Time.now.to_f - start)} s"
+    end
+  end
+end
+
