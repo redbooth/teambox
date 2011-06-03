@@ -46,7 +46,7 @@ class Task < RoleRecord
   before_save :save_changes_to_comment, :if => :track_changes?
   before_save :save_completed_at
   before_validation :remember_comment_created, :on => :update
-  before_save :update_google_calendar_event, :if => lambda {|t| t.assigned.try(:user).try(:admin?) }
+  before_save :update_google_calendar_event, :if => lambda {|t| t.assigned.try(:user).try(:admin?) || !t.google_calendar_url_token.blank? }
   
   def assigned
     @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
@@ -364,7 +364,7 @@ class Task < RoleRecord
     end
     
     # Perform the main add action if this calendar is suitable
-    if self.assigned && self.assigned.user && !self.due_on.nil? && self.open?
+    if self.assigned && self.assigned.user && !self.due_on.nil? && self.open? && self.assigned.user.try(:admin?)
       gcal = self.assigned.user.get_calendar_app
       return if gcal.nil?
       
@@ -383,6 +383,8 @@ class Task < RoleRecord
   end
   
   def delete_old_events_if_required
+    Rails.logger.info "[GCal] Deleting old events if required"
+    
     if !self.new_record? && self.assigned_id_changed? && !self.assigned_id_was.blank?
       # We need to remove the calendar entry from the old user if they exist
       Rails.logger.info "[GCal] Assigned user changed from #{self.assigned_id_was.inspect} to #{self.assigned_id.inspect}"
