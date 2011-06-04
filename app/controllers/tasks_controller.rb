@@ -148,7 +148,12 @@ class TasksController < ApplicationController
     @task.remove_watcher(current_user)
     respond_to do |f|
       f.js { render :layout => false }
+      f.any(:html, :m) { redirect_to_task }
     end
+  end
+
+  def e_unwatch
+    unwatch
   end
 
   private
