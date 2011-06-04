@@ -36,7 +36,8 @@ class UploadsController < ApplicationController
 
       response.headers['Cache-Control'] = 'private, max-age=31557600'
 
-      send_file(path, send_file_options)
+      path = Pathname.new(path)
+      send_file(path.realpath, send_file_options)
     end
   end
 
