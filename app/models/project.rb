@@ -162,9 +162,9 @@ class Project < ActiveRecord::Base
           dtstart.ical_params  = {"VALUE" => "DATE"}
           dtend.ical_params    = {"VALUE" => "DATE"}
           if projects.is_a?(Array) && projects.size > 1
-            summary "#{task} (#{task.project})"
+            summary "#{task.project}: #{task}"
           else
-            summary task.name
+            summary "#{task.project}: #{task}"
           end
           if host
             base_url = if port == 80
@@ -174,7 +174,7 @@ class Project < ActiveRecord::Base
             else
               "http://#{host}:#{port}"
             end
-            url         "#{base_url}/#{task.project.permalink}/tasks/#{task.id}"
+            url         "#{base_url}/projects/#{task.project.permalink}/tasks/#{task.id}"
           end
           klass         "PUBLIC"
           dtstamp       DateTime.civil(created_date.year,created_date.month,created_date.day,created_date.hour,created_date.min,created_date.sec,created_date.offset)
