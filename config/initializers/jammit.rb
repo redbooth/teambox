@@ -44,9 +44,8 @@ if Teambox.config.heroku?
   #We reload the config to get the tmp paths
 
   Jammit.load_configuration Jammit.config_path
-  Jammit.package! :output_folder => Rails.root.to_s + "/tmp/jammit" if ::Rails.env == 'production'
+  Jammit.package! :base_url => conf[:app_domain], :output_folder => Rails.root.to_s + "/tmp/jammit" if ::Rails.env == 'production'
 
 else
-  Jammit.package! if ::Rails.env == 'production'
+  Jammit.package! :base_url => conf[:app_domain] if ::Rails.env == 'production'
 end
-
