@@ -42,7 +42,7 @@ gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.4.1'
 gem 'immortal', '~> 0.1.6', :git=>"git://github.com/teambox/immortal.git"
 gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer' 
-gem 'jammit'
+gem 'jammit', '~> 0.6.3'
 
 group :development do
   gem 'sqlite3-ruby', '~> 1.2.5', :require => nil
