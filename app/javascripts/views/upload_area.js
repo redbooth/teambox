@@ -45,17 +45,17 @@
    */
   UploadArea.insertNewUpload = function (evt) {
 
-    function incrementLastNumber(str) {
-      var i = 0, matches = str.match(/\d+/g);
+    //function incrementLastNumber(str) {
+    //  var i = 0, matches = str.match(/\d+/g);
 
-      matches.push(parseInt(matches.pop(), 10) + 1);
-      return str.gsub(/\d+/, function (m) {
-        return matches[i++];
-      });
-    }
+    //  matches.push(parseInt(matches.pop(), 10) + 1);
+    //  return str.gsub(/\d+/, function (m) {
+    //    return matches[i++];
+    //  });
+    //}
 
     var el = evt.element()
-      , new_input = new Element('input', {type: 'file', name: incrementLastNumber(el.name)});
+      , new_input = new Element('input', {type: 'file', name: el.name /*incrementLastNumber(el.name)*/});
 
     if (!this.comment_form.hasEmptyFileUploads()) {
       el.insert({after: new_input});

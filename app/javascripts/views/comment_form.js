@@ -26,7 +26,7 @@
 
     this.el.writeAttribute({
       'accept-charset': 'UTF-8'
-    , 'action': this.model.url()
+    , 'action': this.model.comments_url()
     , 'data-project-id': this.model.get('project_id')
     , 'enctype': 'multipart/form-data'
     , 'method': 'post'
@@ -175,7 +175,6 @@
    * @return {Boolean}
    */
   CommentForm.hasFileUploads = function () {
-    console.log(this);
     return this.el.select('input[type=file]').any(function (input) {
       return input.getValue();
     });
@@ -195,12 +194,14 @@
    */
   CommentForm.uploadFile = function () {
     var self = this
-      , iframe_id = 'file_upload_iframe' + (new Date())
+      , iframe_id = 'file_upload_iframe' + Date.now()
       , iframe = new Element('iframe', {id: iframe_id, name: iframe_id}).hide()
       , authToken = $$('meta[name=csrf-token]').first().readAttribute('content')
       , authParam = $$('meta[name=csrf-param]').first().readAttribute('content');
 
     function callback() {
+
+      console.log(iframe);
       // contentDocument doesn't work in IE (7)
       var iframe_body = (iframe.contentDocument || iframe.contentWindow.document).body
         , extra_input = self.el.down('input[name=iframe]');
@@ -208,7 +209,7 @@
       if (iframe_body.className === "error") {
         self.el.fire('ajax:failure', {responseJSON: iframe_body.firstChild.innerHTML.evalJSON()});
       } else {
-        self.el.fire('ajax:success', {responseText: iframe_body.innerHTML});
+        self.el.fire('ajax:success', {responseText: iframe_body.innerHTML.evalJSON()});
       }
 
       self.el.fire('ajax:complete');

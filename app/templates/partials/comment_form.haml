@@ -3,7 +3,7 @@
 .field.text_area
   %a.micro_avatar.my_avatar
   .textarea
-    %textarea{:cols => '40', :name => 'task[comments_attributes][0][body]', :placeholder => 'Define what needs to be done, assign this task to somebody.', :rows => '20', :autocomplete => 'off', :style => ''}
+    %textarea{:cols => '40', :name => 'body', :placeholder => 'Define what needs to be done, assign this task to somebody.', :rows => '20', :autocomplete => 'off', :style => ''}
     .autocomplete{ :style => "display: none" }
 
 .extra{ :style => "display: none" }
@@ -11,7 +11,7 @@
   .field.text_field.hours_field{ :style => "display: none" }
     %label
       How many hours did you put into this task?
-      %input{:id => 'task_comments_attributes_0_human_hours', :name => 'task[comments_attributes][0][human_hours]', :size => '30', :type => 'text'}
+      %input{:id => 'task_comments_attributes_0_human_hours', :name => 'human_hours', :size => '30', :type => 'text'}
     %a{:href => 'http://help.teambox.com/faqs/advanced-features/time-tracking', :target => '_blank'} Learn more.
   {{/if}}
 
@@ -33,16 +33,16 @@
     {{#if is_task}}
     .task_actions
       %label{:for => 'task_status'} Status
-      %select#task_status{ :name => "task[status]" }
+      %select#task_status{ :name => "status" }
 
       %label{:for => 'task_assigned_id'} Assigned to:
-      %select#task_assigned_id{ :'data-assigned' => "{{assigned_id}}", :name => "task[assigned_id]" }
+      %select#task_assigned_id{ :'data-assigned' => "{{assigned_id}}", :name => "assigned_id" }
         %option Unassigned
 
       %label{:for => 'task_due_on'} Due date
       .date_picker
         %img{:alt => 'Calendar', :class => 'calendar_date_select_popup_icon', :src => '/images/calendar_date_select/calendar.gif'}
-        %input{:id => 'task_due_on', :name => 'task[due_on]', :type => 'hidden'}
+        %input{:id => 'task_due_on', :name => 'due_on', :type => 'hidden'}
         %span{:class => 'localized_date'}
           %i No date assigned
     {{else}}
@@ -56,4 +56,4 @@
   .submit
     %span.help
       %a{:href => '/text_styles', :class => 'style_icon', :rel => 'facebox', :title => 'Formatting help'}
-    %input{:id => 'task[comments_attributes][0]_submit', :name => 'commit', :type => 'submit', :value => 'Save'}
+    %input{:name => 'commit', :type => 'submit', :value => 'Save'}

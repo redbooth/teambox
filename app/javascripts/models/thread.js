@@ -21,10 +21,14 @@
   , url: function () {
       switch (this.get('type')) {
       case 'Conversation':
-        return "/projects/" + this.get('project_id') + "/conversations/" + this.id;
+        return '/api/1/projects/' + this.get('project_id') + "/conversations/" + this.id;
       case 'Task':
-        return "/projects/" + this.get('project_id') + "/tasks/" + this.id;
+        return '/api/1/projects/' + this.get('project_id') + "/tasks/" + this.id;
       }
+    }
+
+  , comments_url: function () {
+      return this.url() + '/comments';
     }
   });
 
