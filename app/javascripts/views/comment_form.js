@@ -205,13 +205,8 @@
       var iframe_body = (iframe.contentDocument || iframe.contentWindow.document).body
         , extra_input = self.el.down('input[name=iframe]');
 
-      if (iframe_body.className === "error") {
-        self.el.fire('ajax:failure', {responseJSON: iframe_body.firstChild.innerHTML.evalJSON()});
-      } else {
-        self.el.fire('ajax:success', {responseText: iframe_body.innerHTML.evalJSON()});
-      }
+      // TODO: Parse the response and add the comment client side
 
-      self.el.fire('ajax:complete');
       iframe.remove();
       self.el.target = null;
       if (extra_input) {
