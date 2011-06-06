@@ -201,7 +201,6 @@
 
     function callback() {
 
-      console.log(iframe);
       // contentDocument doesn't work in IE (7)
       var iframe_body = (iframe.contentDocument || iframe.contentWindow.document).body
         , extra_input = self.el.down('input[name=iframe]');
