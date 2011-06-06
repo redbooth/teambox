@@ -18,7 +18,6 @@ class Conversation
       t.created_at = created_at
       t.is_private = is_private
     end
-
     task.errors.each {|attr,msg| errors.add(attr, msg)}
 
     if task
@@ -32,8 +31,8 @@ class Conversation
         task.comments << comment
       end
 
-      task.class.update_counters(task.id, :comments_count => comments.size)
-      task.comments_count = comments.size
+      task.class.update_counters(task.id, :comments_count => task.comments.size)
+      task.comments_count = task.comments.size
 
       Activity.for_conversations.in_targets(self).each do |activity|
         activity.target = task if activity.target == self

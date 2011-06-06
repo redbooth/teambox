@@ -165,7 +165,20 @@ describe Conversation do
       task = conversation.convert_to_task!
 
       task.should_not be_nil
-      task.comments_count.should == task.comments.length
+      task.comments_count.should == 2
+    end
+
+    it "and when converted to a task with due date, it should update the comment counter cache" do
+      conversation = Factory.create(:conversation, :simple => false)
+      conversation.comments_attributes = {"0" => { :body => "Just sayin' hi" }}
+      conversation.updating_user = conversation.user # needed for the due_on change to be saved as a new comment
+      conversation.due_on = 3.days.since
+
+      task = conversation.convert_to_task!
+
+      task.should_not be_nil
+      task.comments(true).to_a.size.should == 3
+      task.comments_count.should == 3 # original conversation + changing date + new comment
     end
 
     it "and when converted to a task, any new comment which fails validation should not be transferred to the task" do
