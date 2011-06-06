@@ -6,10 +6,10 @@ describe Emailer do
       @owner = Factory.create(:user)
       @fred = Factory.create(:user)
       @janet = Factory.create(:user)
-      @project = Factory.create(:project, :user_id => @owner.id)
+      @project = Factory.create(:project, :user => @owner)
       @project.add_user(@fred)
-      @task = Factory(:task, :user_id => @owner.id, :project_id => @project.id)
-      @conversation = Factory(:conversation, :user_id => @owner.id, :project_id => @project.id)
+      @task = Factory(:task, :user => @owner, :project => @project)
+      @conversation = Factory(:conversation, :user => @owner, :project => @project)
       
       @email_template = Mail.new
       @email_template.from = @owner.email

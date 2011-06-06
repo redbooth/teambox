@@ -4,7 +4,7 @@ describe ApiV1::CommentsController do
   before do
     make_a_typical_project
 
-    @target = Factory.create(:conversation, :project_id => @project.id, :user_id => @user.id)
+    @target = Factory.create(:conversation, :project => @project, :user => @user)
     @comment = @target.comments.first
   end
 
@@ -168,12 +168,14 @@ describe ApiV1::CommentsController do
     it "returns references for linked objects" do
       login_as @user
 
+      controller.stub!(:api_limit).and_return(5)
+
       person = @project.people.find_by_user_id(@user.id)
       other_person = @project.people.find_by_user_id(@project.user_id)
 
       task = Factory.create(:task, :project => @project, :user => @user)
       task.comments.create_by_user(@user, {:body => 'TEST', :assigned => person}).save!
-      56.times { |i| task.comments.create_by_user(@user, {:body => "Errm #{i}", :assigned => nil}).save!}
+      6.times { |i| task.comments.create_by_user(@user, {:body => "Errm #{i}", :assigned => nil}).save!}
 
       task = Task.find_by_id(task.id)
       task.updating_user = @user

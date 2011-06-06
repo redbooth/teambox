@@ -121,7 +121,7 @@ def make_the_teambox_dump
   @project = Factory(:project)
   @task_list = Factory(:task_list, :project => @project)
   @conversation = Factory(:conversation, :project => @project)
-  @task = Factory(:task, :task_list_id => @task_list.id, :project => @project)
+  @task = Factory(:task, :task_list => @task_list, :project => @project)
   
   @project.add_user(@task_list.user)
   @project.add_user(@conversation.user)

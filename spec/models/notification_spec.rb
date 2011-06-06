@@ -12,12 +12,12 @@ describe Notification do
       @project = Factory.create(:project)
       
       [@charles, @pablo, @james, @jordi, @saimon].each do |user|
-        Factory(:person, :user => user, :project => @project)
+        @project.add_user(user)
       end
 
-      @task = Factory(:task, :user_id => @charles.id, :project_id => @project.id)
-      @conversation = Factory(:conversation, :user_id => @charles.id, :project_id => @project.id)
-      @page = Factory(:page, :user_id => @charles.id, :project_id => @project.id)
+      @task = Factory(:task, :user => @charles, :project => @project)
+      @conversation = Factory(:conversation, :user => @charles, :project => @project)
+      @page = Factory(:page, :user => @charles, :project => @project)
 
       @conversation.add_watchers([@charles, @pablo, @james, @saimon])
       @task.add_watchers([@charles, @pablo, @james, @saimon])

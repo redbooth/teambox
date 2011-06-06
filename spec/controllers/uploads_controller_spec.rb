@@ -10,7 +10,7 @@ describe UploadsController do
     @upload.user = @user
     @upload.save!
     
-    @page_upload = mock_file(@user, Factory.create(:page, :project_id => @project.id))
+    @page_upload = mock_file(@user, Factory.create(:page, :project => @project))
     @page = @page_upload.page
     @page.reload
   end

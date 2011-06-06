@@ -23,7 +23,7 @@ describe Project do
   describe "creating a project" do
     before do
       @owner = Factory.create(:user)
-      @project = Factory.create(:project, :user_id => @owner.id)
+      @project = Factory.create(:project, :user => @owner)
     end
 
     it "should belong to its owner" do
@@ -66,7 +66,7 @@ describe Project do
   describe "inviting users" do
     before do
       @owner = Factory.create(:user)
-      @project = Factory.create(:project, :user_id => @owner.id)
+      @project = Factory.create(:project, :user => @owner)
       @user = Factory.create(:user)
     end
 
@@ -134,7 +134,7 @@ describe Project do
   describe "removing users" do
     before do
       @owner = Factory.create(:user)
-      @project = Factory.create(:project, :user_id => @owner.id)
+      @project = Factory.create(:project, :user => @owner)
       @user = Factory.create(:user)
       @person = @project.add_user(@user)
     end

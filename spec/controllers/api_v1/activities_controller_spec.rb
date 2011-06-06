@@ -4,7 +4,7 @@ describe ApiV1::ActivitiesController do
   before do
     make_a_typical_project
 
-    @other_project = Factory.create(:project)
+    @other_project = Factory.create(:project, :user => @observer)
     @other_project.add_user(@user)
   end
 
@@ -89,14 +89,16 @@ describe ApiV1::ActivitiesController do
     it "returns comment references for conversation and task objects" do
       login_as @user
 
+      controller.stub!(:api_limit).and_return(5)
+
       assigned_person = Factory(:person, :project => @project)
-      task = Factory.create(:task, :project => @project)
-      100.times { Factory.create(:comment, :target => task, :project => @project) }
+      task = Factory.create(:task, :project => @project, :user => @project.user)
+      5.times { Factory.create(:comment, :target => task, :project => @project) }
       # This ensures the first activities will not be on the first page
-      conversation = Factory.create(:conversation, :project => @project)
-      upload = Factory.build(:upload, :asset => mock_uploader('semicolons.js', 'application/javascript', "alert('what?!')"))
-      Factory.create(:comment, :target => conversation, :project => @project, :uploads => [upload])
-      Factory :comment, :target => task, :project => @project, :assigned_id => assigned_person.id
+      conversation = Factory.create(:conversation, :project => @project, :user => task.user)
+      upload = Factory.build(:upload, :asset => mock_uploader('semicolons.js', 'application/javascript', "alert('what?!')"), :user => task.user)
+      Factory.create(:comment, :target => conversation, :project => @project, :uploads => [upload], :user => task.user)
+      Factory :comment, :target => task, :project => @project, :assigned_id => assigned_person.id, :user => task.user
 
       get :index, :project_id => @project.permalink
       response.should be_success
