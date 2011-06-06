@@ -26,6 +26,7 @@
 
     this.el.writeAttribute({
       'accept-charset': 'UTF-8'
+    , 'accept': 'text/plain'
     , 'action': this.model.comments_url()
     , 'data-project-id': this.model.get('project_id')
     , 'enctype': 'multipart/form-data'
