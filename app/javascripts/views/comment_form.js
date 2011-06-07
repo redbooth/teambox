@@ -6,12 +6,13 @@
                     };
 
   CommentForm.events = {
-    'click a.attach_icon'               : 'toggleAttach'
-  , 'click a.add_hours_icon'            : 'toggleHours'
-  , 'click a.add_watchers'              : 'toggleWatchers'
-  , 'focusin textarea'                  : 'focusTextarea'
-  , 'submit .new_comment'               : 'postComment'
-  , 'click span.convert_to_task a'      : 'toggleConvertToTask'
+    'click a.attach_icon'          : 'toggleAttach'
+  , 'click a.add_hours_icon'       : 'toggleHours'
+  , 'click a.add_watchers'         : 'toggleWatchers'
+  , 'focusin textarea'             : 'focusTextarea'
+  , 'submit .new_comment'          : 'postComment'
+  , 'click span.convert_to_task a' : 'toggleConvertToTask'
+  , 'click .date_picker'           : 'showCalendar'
   };
 
   CommentForm.initialize = function (options) {
@@ -143,6 +144,21 @@
    */
   CommentForm.toggleConvertToTask = function (evt) {
     this.convert_to_task.toggle(evt);
+  };
+
+  /* Displays the calendar
+   *
+   * @param {Event} evt
+   */
+  CommentForm.showCalendar = function (evt, element) {
+    evt.stop();
+
+    new CalendarDateSelect(element.down('input'), element.down('span'), {
+      buttons: true
+    , popup: 'force'
+    , time: false
+    , year_range: [2008, 2020]
+    });
   };
 
   /* Toggle the "Add Watchers" area

@@ -25,15 +25,6 @@ document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
   hideEditTaskFormAndShowHeader(form)
 })
 
-document.on('click', '.date_picker', function(e, element) {
-  new CalendarDateSelect(element.down('input'), element.down('span'), {
-    buttons: true,
-    popup: 'force',
-    time: false,
-    year_range: [2008, 2020]
-  })
-})
-
 Task = {
   
   sortableChange: function(draggable) {
