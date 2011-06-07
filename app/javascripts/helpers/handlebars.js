@@ -43,6 +43,40 @@ Handlebars.registerHelper('foreach', function (context, fn, inverse) {
   }
 });
 
+// keeps the global context
+Handlebars.registerHelper('context_if', function (to_eval, context, fn, inverse) {
+  if (!to_eval || to_eval === []) {
+    return inverse(context);
+  } else {
+    return fn(context);
+  }
+});
+
+Handlebars.registerHelper('human_hours', function (hours) {
+  console.log(hours);
+  if (!hours) {
+    return '';
+  }
+
+  var minutes;
+  hours = +hours.toFixed(2);
+
+  if (hours > 0) {
+    minutes = Math.round((hours % 1) * 60);
+
+    if (minutes === 60) {
+      hours++;
+      minutes = 0;
+    }
+
+    if (minutes === 0) {
+      return ~~hours + 'h';
+    } else {
+      return ~~hours + 'h ' + minutes+ 'm';
+    }
+  }
+});
+
 Handlebars.registerHelper('status_name', function () {
   return $w('new open hold resolved rejected')[this.status];
 });

@@ -58,27 +58,24 @@
    * @returns false;
    */
   CommentForm.reset = function () {
-    var form = this.el
-      , hours = form.down('input[name*="[human_hours]"]');
-
     // clear comment and reset textarea height
-    form.down('textarea[name*="[body]"]').setValue('').setStyle({height: ''});
+    this.el.down('textarea[name*="[body]"]').setValue('').setStyle({height: ''});
 
     // clear populated file uploads
-    form.select('input[type=file]').each(function (input) {
+    this.el.select('input[type=file]').each(function (input) {
       if (input.getValue()) {
         input.remove();
       }
     });
 
     if (hours) {
-      hours.setValue('');
+      this.el.select('.human_hours')[0].setValue('');
     }
 
-    form.select('.hours_field, .upload_area').invoke('hide');
-    form.select('.error').invoke('remove');
-    form.select('.google_docs_attachment .fields input').invoke('remove');
-    form.select('.google_docs_attachment .file_list li').invoke('remove');
+    this.el.select('.hours_field, .upload_area').invoke('hide');
+    this.el.select('.error').invoke('remove');
+    this.el.select('.google_docs_attachment .fields input').invoke('remove');
+    this.el.select('.google_docs_attachment .file_list li').invoke('remove');
   };
 
   /* Syncs the new comment and triggers `comment:added`
@@ -88,17 +85,20 @@
    */
   CommentForm.postComment = function (evt) {
     var self = this
-      , body = this.el.select('textarea')[0].value;
+      , body = this.el.select('textarea')[0].getValue()
+      , hours = this.el.select('.human_hours')[0].getValue();
 
     evt.stop();
 
     if (this.hasFileUploads()) {
-      return this.uploadFile();
+      console.log('HEY');
+      //return this.uploadFile();
     }
 
     (new Teambox.Models.Comment({
       parent_url: this.model.url()
     , body: body
+    , hours: hours
     })).save(null, {
       success: function (model, resp) {
         self.reset();
