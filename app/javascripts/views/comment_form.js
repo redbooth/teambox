@@ -75,10 +75,7 @@
       }
     });
 
-    if (hours) {
-      this.el.select('.human_hours')[0].setValue('');
-    }
-
+    this.el.select('.human_hours')[0].setValue('');
     this.el.select('.hours_field, .upload_area').invoke('hide');
     this.el.select('.error').invoke('remove');
     this.el.select('.google_docs_attachment .fields input').invoke('remove');

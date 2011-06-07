@@ -42,13 +42,9 @@
     })).render();
 
     select = this.el.select('#conversation_task_list_id')[0];
-
-    if (select.options[0].value === '') {
-      select.options.length = 0;
-      this.project.get('task_lists').models.each(function (task_list) {
-        select.options.add(new Option(task_list.get('name'), task_list.id));
-      });
-    }
+    this.project.get('task_lists').models.each(function (task_list) {
+      select.options.add(new Option(task_list.get('name'), task_list.id));
+    });
 
     return this;
   };

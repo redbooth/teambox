@@ -24,7 +24,8 @@
         %a.user{ :href => "{{user_url}}" }
           {{full_name}}
         {{/user}}
-        <!-- TODO: due on transition -->
+
+        {{transition_due_on due_on previous_due_on}}
 
         {{#context_if hours this}}
         %span.hours {{human_hours hours}}

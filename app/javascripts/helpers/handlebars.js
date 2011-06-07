@@ -32,6 +32,36 @@ Handlebars.registerHelper('equal', function (a, b, truthy, falsy) {
   return a === b ? truthy : falsy;
 });
 
+Handlebars.registerHelper('transition_due_on', function (due_on, previous_due_on) {
+  var out = '';
+
+  function taskDueOn(date) {
+    date = _.date(Date.parse(date));
+
+    if (date.fromNow(true, true) === 0) {
+      return 'today';
+    } else if (date.fromNow(true, true) === 1000 * 3600 * 24) {
+      return 'tomorrow';
+    } else if (date) {
+      return date.format('MMM Do');
+    }
+  }
+
+  function spanForDueDate(date) {
+    return '<span class="assigned_date">' + taskDueOn(date) + '</span>';
+  }
+
+  if (due_on !== previous_due_on) {
+    if (previous_due_on) {
+      out += spanForDueDate(previous_due_on);
+      out += '<span class="arr due_on_arr">&rarr;</span>';
+    }
+    out += spanForDueDate(due_on);
+  }
+
+  return new Handlebars.SafeString(out);
+});
+
 Handlebars.registerHelper('foreach', function (context, fn, inverse) {
   if (!_.isEmpty(context)) {
     return _.reduce(context, function (memo, value, key) {
