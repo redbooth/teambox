@@ -12,7 +12,7 @@
   , 'focusin textarea'                  : 'focusTextarea'
   , 'submit .new_comment'               : 'postComment'
   , 'click span.convert_to_task a'      : 'toggleConvertToTask'
-  , 'click div.convert_to_task a.cancel': 'toggleConvertToTask'
+  , 'click form.convert_to_task a.cancel': 'toggleConvertToTask'
   };
 
   CommentForm.initialize = function (options) {
