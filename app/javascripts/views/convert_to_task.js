@@ -7,10 +7,13 @@
 
   ConvertToTask.events = {
     'submit': 'convertToTask'
+  , 'click form.convert_to_task a.cancel': 'toggle'
   };
 
   ConvertToTask.initialize = function (options) {
     _.bindAll(this, "render");
+
+    this.comment_form = options.comment_form;
   };
 
   ConvertToTask.render = function () {
@@ -45,6 +48,7 @@
     var self = this;
 
     this.el.toggle();
+    this.comment_form.el.toggle();
 
     this.el.select('#conversation_task_list_id').each(function (select) {
       if (select.options[0].value === '') {

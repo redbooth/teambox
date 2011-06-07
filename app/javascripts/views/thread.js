@@ -84,6 +84,8 @@
       , convert_to_task = new Views.ConvertToTask({model: new Teambox.Models.Conversation(this.model.attributes)})
       , comment_form = new Views.CommentForm({ model: this.model, convert_to_task: convert_to_task});
 
+    convert_to_task.comment_form = comment_form;
+
     // Add data attributes to the DOM.
     this.el.writeAttribute({
       'data-class': this.model.get('type').toLowerCase()

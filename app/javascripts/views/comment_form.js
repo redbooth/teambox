@@ -12,7 +12,6 @@
   , 'focusin textarea'                  : 'focusTextarea'
   , 'submit .new_comment'               : 'postComment'
   , 'click span.convert_to_task a'      : 'toggleConvertToTask'
-  , 'click form.convert_to_task a.cancel': 'toggleConvertToTask'
   };
 
   CommentForm.initialize = function (options) {
@@ -145,7 +144,6 @@
   CommentForm.toggleConvertToTask = function (evt) {
     evt.stop();
     this.convert_to_task.toggle();
-    this.el.toggle();
   };
 
   /* Toggle the "Add Watchers" area
