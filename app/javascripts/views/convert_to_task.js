@@ -56,8 +56,10 @@
   /* Displays the form and fills the project select
    *
    */
-  ConvertToTask.toggle = function () {
+  ConvertToTask.toggle = function (evt) {
     var self = this;
+
+    evt.stop();
 
     this.el.toggle();
     this.comment_form.el.toggle();

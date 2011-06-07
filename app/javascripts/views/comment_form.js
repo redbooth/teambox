@@ -142,8 +142,7 @@
    * @param {Event} evt
    */
   CommentForm.toggleConvertToTask = function (evt) {
-    evt.stop();
-    this.convert_to_task.toggle();
+    this.convert_to_task.toggle(evt);
   };
 
   /* Toggle the "Add Watchers" area
