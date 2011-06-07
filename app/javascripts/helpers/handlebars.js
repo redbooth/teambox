@@ -53,7 +53,6 @@ Handlebars.registerHelper('context_if', function (to_eval, context, fn, inverse)
 });
 
 Handlebars.registerHelper('human_hours', function (hours) {
-  console.log(hours);
   if (!hours) {
     return '';
   }
