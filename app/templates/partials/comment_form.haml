@@ -33,11 +33,10 @@
     {{#if is_task}}
     .task_actions
       %label{:for => 'task_status'} Status
-      %select#task_status{ :name => "status" }
+      %select#task_status{:name => "status"}
 
       %label{:for => 'task_assigned_id'} Assigned to:
-      %select#task_assigned_id{ :'data-assigned' => "{{assigned_id}}", :name => "assigned_id" }
-        %option Unassigned
+      %select#task_assigned_id{:name => "assigned_id"}
 
       %label{:for => 'task_due_on'} Due date
       .date_picker

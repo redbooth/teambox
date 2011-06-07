@@ -43,6 +43,13 @@
     , selected: this.model.get('status')
     })).render();
 
+    // select assigned
+    (new Teambox.Views.SelectAssigned({
+      el: this.el.select('#task_assigned_id')[0]
+    , selected: this.model.get('assigned_id')
+    , project: Teambox.collections.projects.get(this.model.get('project_id'))
+    })).render();
+
     this.el.down('.actions')
       // upload area
       .insert({before: (new Teambox.Views.UploadArea({comment_form: this})).render().el})

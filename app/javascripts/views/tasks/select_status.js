@@ -10,10 +10,9 @@
   };
 
   SelectStatus.render = function () {
-    var el = this.el
-      , self = this;
+    var self = this;
 
-    el.update(_.reduce(TasksModel.status.status, function (memo, stat) {
+    this.el.update(_.reduce(TasksModel.status.status, function (memo, stat) {
       memo += '<option value="' + stat.value + '"' + (self.selected === stat.value ? ' selected="selected"' : '') + '>';
       memo += stat.label + '</option>';
       return memo;

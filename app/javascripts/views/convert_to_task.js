@@ -23,8 +23,16 @@
     this.el.hide();
     this.el.update(this.template());
 
+    // select status
     (new Teambox.Views.SelectStatus({
       el: this.el.select('#conversation_status')[0]
+    })).render();
+
+    // select assigned
+    (new Teambox.Views.SelectAssigned({
+      el: this.el.select('#conversation_assigned_id')[0]
+    , selected: null
+    , project: Teambox.collections.projects.get(this.model.get('project_id'))
     })).render();
 
     return this;

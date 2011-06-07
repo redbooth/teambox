@@ -13,26 +13,29 @@
       %img{:class => 'triangle', :src => '/images/triangle.png?1285939525', :alt => 'Triangle'}
       .extra
         %a.edit{:style => 'display:block;'} Edit
-        // this is harcode!
+        // TODO: this is harcode!
         %a.reply_email{:rel => 'facebox', :href => '/email_posts_path?project_permalink=test_project-20&target_id=129196&target_type=Conversation'} Reply via email
-        // this is harcode!
+        // TODO: this is harcode!
         %a.delete{:style => 'display:block;', :href => "/projects/test_project-20/conversations/129196/comments/1593438"} Delete
     .body.textilized
       .before
+
         {{#user}}
         %a.user{ :href => "{{user_url}}" }
           {{full_name}}
         {{/user}}
         <!-- TODO: due on transition -->
+
         {{#context_if hours this}}
         %span.hours {{human_hours hours}}
         {{/context_if}}
 
         {{status_transition}}
+
       {{#assigned}}
       %p.assigned_transition Assigned to {{full_name user}}
       {{/assigned}}
+
       {{{body_html}}}
-      <!-- TODO: uploads -->
       <!-- TODO: google docs -->
   .clear
