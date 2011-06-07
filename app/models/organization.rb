@@ -26,8 +26,8 @@ class Organization < ActiveRecord::Base
 
   before_destroy :prevent_if_projects
   
-  attr_accessor :is_example
-  attr_accessible :name, :permalink, :description, :logo, :settings
+  attr_accessor :is_example, :delete_logo
+  attr_accessible :name, :permalink, :description, :logo, :settings, :delete_logo
 
   LogoSizes = {
     :square   => [96, 96],
@@ -133,6 +133,10 @@ class Organization < ActiveRecord::Base
   end
 
   protected
+
+    def delete_logo= value
+      logo.clear if value
+    end
 
     def ensure_unicity_for_community_version
       if Teambox.config.community && new_record?
