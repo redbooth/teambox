@@ -24,6 +24,7 @@
       // Initialize models and collections
       models.user          = this.my_user     = new Teambox.Models.User();
       collections.people                      = new Teambox.Collections.People();
+      collections.tasks_lists                 = new Teambox.Collections.TaskLists();
       collections.tasks    = this.my_tasks    = new Teambox.Collections.Tasks();
       collections.threads  = this.my_threads  = new Teambox.Collections.Threads();
       collections.projects = this.my_projects = new Teambox.Collections.Projects();
@@ -34,11 +35,33 @@
       collections.tasks.fetch({success: _loader.load('tasks')});
       collections.threads.fetch({success: _loader.load('activities')});
 
-      _loader.total++; // this is hackish, but the loader is a little bit too dumb
+      _loader.total += 2; // this is hackish, but the loader is a little bit too dumb
       collections.projects.fetch({success: function (projects) {
-        var done = 0;
+        var task_list_done = 0, people_done = 0;
         _.each(projects.models, function (project, i) {
-          _loader.total++;
+          _loader.total += 2;
+
+          // preload task_lists
+          (new Teambox.Collections.TaskLists({project_id: project._id})).fetch({
+            success: function (task_lists) {
+              _loader.loaded++;
+              projects.models[i].set({task_lists: task_lists});
+
+              try {
+                collections.tasks_lists.add(task_lists.models, {silent: true});
+              } catch (e) {
+                // may try to add same task_list twice
+              }
+
+              task_list_done += 1;
+              if (task_list_done === projects.length) {
+                _loader.loaded++;
+                _loader.load('projects')();
+              }
+            }
+          });
+
+          // preload people
           (new Teambox.Collections.People({project_id: project.id})).fetch({
             success: function (people) {
               _loader.loaded++;
@@ -50,8 +73,8 @@
                 // may try to add same people twice
               }
 
-              done += 1;
-              if (done === projects.length) {
+              people_done += 1;
+              if (people_done === projects.length) {
                 _loader.loaded++;
                 _loader.load('projects')();
               }

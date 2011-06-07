@@ -14,9 +14,12 @@
     _.bindAll(this, "render");
 
     this.comment_form = options.comment_form;
+    this.project = Teambox.collections.projects.get(this.model.get('project_id'));
   };
 
   ConvertToTask.render = function () {
+    var select;
+
     this.el.writeAttribute({
       'accept-charset': 'UTF-8'
     , 'action': this.model.convert_to_task_url()
@@ -35,8 +38,17 @@
     (new Teambox.Views.SelectAssigned({
       el: this.el.select('#conversation_assigned_id')[0]
     , selected: null
-    , project: Teambox.collections.projects.get(this.model.get('project_id'))
+    , project: this.project
     })).render();
+
+    select = this.el.select('#conversation_task_list_id')[0];
+
+    if (select.options[0].value === '') {
+      select.options.length = 0;
+      this.project.get('task_lists').models.each(function (task_list) {
+        select.options.add(new Option(task_list.get('name'), task_list.id));
+      });
+    }
 
     return this;
   };
@@ -49,22 +61,6 @@
 
     this.el.toggle();
     this.comment_form.el.toggle();
-
-    this.el.select('#conversation_task_list_id').each(function (select) {
-      if (select.options[0].value === '') {
-        var task_lists = new Teambox.Collections.TaskLists({project_id: self.model.get('project_id')});
-
-        task_lists.fetch({
-          success: function (collection, response) {
-            select.options.length = 0;
-            select.options.add(new Option('Inbox', ''));
-            collection.models.each(function (taskList) {
-              select.options.add(new Option(taskList.get('name'), taskList.id));
-            });
-          }
-        });
-      }
-    });
   };
 
   /* Calls to convert to task API
