@@ -214,7 +214,7 @@ class Emailer < ActionMailer::Base
   end
 
   def bounce_message(exception_mail, pretty_exception)
-    info_url = 'http://help.teambox.com/faqs/advanced-features/email'
+    info_url = 'http://help.teambox.com/knowledgebase/articles/10243-using-teambox-via-email'
 
     mail(
       :to         => exception_mail,
