@@ -66,7 +66,7 @@
    */
   CommentForm.reset = function () {
     // clear comment and reset textarea height
-    this.el.down('textarea[name*="[body]"]').setValue('').setStyle({height: ''});
+    this.el.down('textarea').setValue('').setStyle({height: ''});
 
     // clear populated file uploads
     this.el.select('input[type=file]').each(function (input) {
