@@ -256,7 +256,7 @@ class Activity < ActiveRecord::Base
     end
     
     if Array(options[:include]).include? :target
-      base[:target] = target.to_api_hash(options[:target_options])
+      base[:target] = target.to_api_hash(options[:target_options] || {})
     end
     
     if Array(options[:include]).include? :user
