@@ -13,8 +13,7 @@
       %img{:class => 'triangle', :src => '/images/triangle.png?1285939525', :alt => 'Triangle'}
       .extra
         %a.edit{:style => 'display:block;'} Edit
-        // TODO: this is harcode!
-        %a.reply_email{:rel => 'facebox', :href => '/email_posts_path?project_permalink=test_project-20&target_id=129196&target_type=Conversation'} Reply via email
+        %a.reply_email{:rel => 'facebox', :href => '#email_post_{{id}}'} Reply via email
         // TODO: this is harcode!
         %a.delete{:style => 'display:block;', :href => "/projects/test_project-20/conversations/129196/comments/1593438"} Delete
     .body.textilized
@@ -39,4 +38,18 @@
 
       {{{body_html}}}
       <!-- TODO: google docs -->
+  %div{:id => 'email_post_{{id}}', :style => 'width: 600px;display: none;'}
+    %h1= t('.title')
+    %p= t('.send_replies_with_this_email')
+    %p= link_to "{{project.permalink}}+{{downcase target_type}}+{{target_id}}@#{Teambox.config.smtp_settings[:domain]}", "mailto:{{project.permalink}}+{{downcase target_type}}+{{target_id}}@#{Teambox.config.smtp_settings[:domain]}"
+    %p= t('.teambox_magic_happens')
+
+    %p= t('.other_shortcuts_available')
+    %table{:style => 'width: 580px'}
+      %tr
+        %td= link_to "{{project.permalink}}+conversation@#{Teambox.config.smtp_settings[:domain]}", "mailto:{{project.permalink}}+conversation@#{Teambox.config.smtp_settings[:domain]}"
+        %td= t('.will_create_conversation')
+      %tr
+        %td= link_to "{{project.permalink}}+task@#{Teambox.config.smtp_settings[:domain]}", "mailto:{{project.permalink}}+task@#{Teambox.config.smtp_settings[:domain]}"
+        %td= t('.will_create_task')
   .clear
