@@ -58,10 +58,17 @@ Feature: Search comments in projects
     Then I should see "Take care of the cats" in the results
     And I should see "Gold Digging" in the results
 
-  Scenario: Search for a page
+  Scenario: Search for a page in the title
     Given the project page "Minerals to watch for" exists in "Gold Digging"
     When the search index is reindexed
     And I search for "minerals"
+    Then I should see "Minerals to watch for" in the results
+
+  Scenario: Search for a page in the note content
+    Given the project page "Minerals to watch for" exists in "Gold Digging" with the body "I have a hammer"
+    When the search index is reindexed
+    And I search for "hammer"
+    And I wait for 10 seconds
     Then I should see "Minerals to watch for" in the results
 
   Scenario: Search for an upload in a task
