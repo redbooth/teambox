@@ -22,7 +22,7 @@
       return format(person.get('user').username, person.get('user').first_name + ' ' + person.get('user').last_name);
     }
 
-    return Array.concat(_.map(this.get('people').models, parse), [format('all', 'All people in project')]);
+    return _.map(this.get('people').models, parse).concat([format('all', 'All people in project')]);
   };
 
   Project.url = function () {
