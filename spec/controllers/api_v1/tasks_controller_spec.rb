@@ -285,6 +285,37 @@ describe ApiV1::TasksController do
       put :update, :project_id => @project.permalink, :id => @task.id, :name => 'Modified'
       response.status.should == 401
     end
+
+    it "should return updated task and any references" do
+      login_as @user
+
+      put :update, :project_id => @project.permalink, :id => @task.id,
+          :name => 'Modified',
+          :comments_attributes => { 0 => { :body => 'modified....',
+                                           :uploads_attributes => { 
+                                             0 => { 
+                                               :asset => mock_uploader("templates.txt", 'text/plain', "jade")
+                                             }
+                                           }
+                                         }
+                                   }
+
+      response.should be_success
+
+      data = JSON.parse(response.body)
+      objects = data['objects']
+      objects.should_not be_empty
+      objects['recent_comment_ids'].should include(@task.first_comment.id)
+
+      references = data['references']
+      references.should_not be_empty
+      references.map{|r| "#{r['id'].to_s}_#{r['type']}"}.include?("#{@task.first_comment.id}_Comment")
+      references.first.key?('uploads').should be_true
+      references.first['uploads'].should_not be_empty
+      references.first['uploads'].first['download'].include?('templates.txt').should be_true
+      references.first['uploads'].first['mime_type'].should == 'text/plain'
+      references.first['uploads'].first['filename'].should == 'templates.txt'
+    end
   end
 
   describe "#watch" do

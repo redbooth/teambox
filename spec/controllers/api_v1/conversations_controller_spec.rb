@@ -243,6 +243,39 @@ describe ApiV1::ConversationsController do
       put :update, :project_id => @project.permalink, :id => @conversation.id, :name => 'Modified'
       response.status.should == 401
     end
+
+    it "should return updated conversation and any references" do
+      login_as @user
+
+      put :update, :project_id => @project.permalink, :id => @conversation.id,
+          :name => 'Modified',
+          :comments_attributes => { 0 => { :body => 'modified....',
+                                           :uploads_attributes => { 
+                                             0 => { 
+                                               :asset => mock_uploader("templates.txt", 'text/plain', "jade")
+                                             }
+                                           }
+                                         }
+                                   }
+
+      response.should be_success
+
+      data = JSON.parse(response.body)
+      objects = data['objects']
+      objects.should_not be_empty
+      last_comment_id = @conversation.recent_comments(true).detect {|c| c.body.include?('modified')}.id
+      objects['recent_comment_ids'].should include(last_comment_id)
+
+      references = data['references']
+      references.should_not be_empty
+      references.map{|r| "#{r['id'].to_s}_#{r['type']}"}.include?("#{last_comment_id}_Comment")
+      comment = references.detect {|c| c['type'] == 'Comment' && c['id'] == last_comment_id}
+      comment.key?('uploads').should be_true
+      comment['uploads'].should_not be_empty
+      comment['uploads'].first['download'].include?('templates.txt').should be_true
+      comment['uploads'].first['mime_type'].should == 'text/plain'
+      comment['uploads'].first['filename'].should == 'templates.txt'
+    end
   end
 
   describe "#watch" do

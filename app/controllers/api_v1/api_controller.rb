@@ -218,13 +218,15 @@ class ApiV1::APIController < ApplicationController
   end
   
   def handle_api_success(object,options={})
+    is_new = options.delete(:is_new)
+    status = options.delete(:status) || is_new ? :created : :ok
     respond_to do |f|
-      if options.delete(:is_new) || false
-        f.json { render :json => api_wrap(object, options).to_json, :status => options.delete(:status) || :created }
-        f.js   { render :json => api_wrap(object, options).to_json, :status => options.delete(:status) || :created }
+      if is_new || options.delete(:wrap_objects) || false
+        f.json { render :json => api_wrap(object, options).to_json, :status => status }
+        f.js   { render :json => api_wrap(object, options).to_json, :status => status, :callback => params[:callback] }
       else
-        f.json { head(options.delete(:status) || :ok) }
-        f.js   { render :json => {:status => options.delete(:status) || :ok}.to_json, :callback => params[:callback] }
+        f.json { head(status) }
+        f.js   { render :json => {:status => status}.to_json, :callback => params[:callback] }
       end
     end
   end

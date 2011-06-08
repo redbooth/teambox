@@ -39,9 +39,9 @@ class ApiV1::ConversationsController < ApiV1::APIController
   
   def update
     authorize! :update, @conversation
-    
+
     if @conversation.update_attributes params
-      handle_api_success(@conversation)
+      handle_api_success(@conversation, :wrap_objects => true, :references => [:comments])
     else
       handle_api_error(@conversation)
     end
@@ -126,3 +126,4 @@ class ApiV1::ConversationsController < ApiV1::APIController
   end
   
 end
+
