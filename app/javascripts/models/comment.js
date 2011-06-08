@@ -3,7 +3,7 @@
   var Comment = {};
 
   Comment.url = function () {
-    return '/api/1' + this.get('parent_url') + '/comments';
+    return this.get('parent_url') + '/comments/' + this.id;
   };
 
   /* Returns the class name

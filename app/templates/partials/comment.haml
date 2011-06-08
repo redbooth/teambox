@@ -1,5 +1,5 @@
 .comment{ :'data-editable-before' => "{{ms updated_at}}", :id => "comment_{{id}}",
-    :'data-project' => "{{project_id}}", :'data-user' => "{{user_id}}" }
+    :'data-project' => "{{project_id}}", :'data-id' => "{{id}}", :'data-user' => "{{user_id}}" }
   .info
     {{#user}}
     %a.micro_avatar{ :href => "{{user_url}}",
@@ -14,8 +14,7 @@
       .extra
         %a.edit{:style => 'display:block;'} Edit
         %a.reply_email{:rel => 'facebox', :href => '#email_post_{{id}}'} Reply via email
-        // TODO: this is harcode!
-        %a.delete{:style => 'display:block;', :href => "/projects/test_project-20/conversations/129196/comments/1593438"} Delete
+        %a.delete{:style => 'display:block;', :href => "#"} Delete
     .body.textilized
       .before
 

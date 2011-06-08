@@ -10,6 +10,7 @@
   Thread.events = {
     'mouseover .textilized a': 'setTargetBlank'
   , 'click .thread .comments .more_comments a': 'loadMoreComments'
+  , 'click a.delete': 'deleteComment'
   };
 
   Thread.initialize = function (options) {
@@ -42,6 +43,25 @@
         el.up('.comments').update(html).blindDown({duration: 0.5});
       }
     });
+  };
+
+  /* alerts the user and deletes the comment if dangerous
+   *
+   * @param {Event} evt
+   */
+  Thread.deleteComment = function (evt) {
+    var element = evt.element().up('.comment')
+      , comment = new Teambox.Models.Comment({id: element.readAttribute('data-id'), parent_url: this.model.url()});
+
+    evt.stop();
+
+    if (confirm('Are you sure?')) {
+      comment.destroy({
+        success: function (model) {
+          element.hide();
+        }
+      });
+    }
   };
 
   /* sets the target attribute to '_blank'
