@@ -3,7 +3,9 @@
   var Comment = {};
 
   Comment.url = function () {
-    return this.get('parent_url') + '/comments/' + this.id;
+    var base = this.get('parent_url') + '/comments/';
+
+    return this.isNew() ? base : base + this.id;
   };
 
   /* Returns the class name
