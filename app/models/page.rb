@@ -204,6 +204,7 @@ class Page < RoleRecord
   end
 
   define_index do
+    set_property :group_concat_max_len => 1024 * 10
     where Page.undeleted_clause_sql
 
     indexes name, :sortable => true

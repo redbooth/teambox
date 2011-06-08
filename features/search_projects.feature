@@ -70,6 +70,12 @@ Feature: Search comments in projects
     And I search for "hammer"
     Then I should see "Minerals to watch for" in the results
 
+  Scenario: Search for a page in a very long note content
+    Given the project page "Minerals to watch for" exists in "Gold Digging" with the body "I have a hammer" that is huge
+    When the search index is reindexed
+    And I search for "hammer"
+    Then I should see "Minerals to watch for" in the results
+
   Scenario: Search for an upload in a task
     Given there is a task titled "See my lolcats" in the project "Gold Digging"
     And the task titled "See my lolcats" has a file named "lolcat1.png" attached
