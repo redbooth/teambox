@@ -30,6 +30,14 @@
   , comments_url: function () {
       return this.url() + '/comments';
     }
+  , parse: function(response) {
+      if (response.objects) {
+        return _.parseFromAPI(response.objects);
+      }
+      else {
+        return _.parseFromAPI(response)[0];
+      }
+    }
   });
 
 }());
