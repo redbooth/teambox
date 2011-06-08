@@ -10,8 +10,8 @@ describe("models/thread", function () {
   });
 
   it('`url` should get the correct url', function () {
-    expect(threads[0].url()).toEqual('/projects/10/conversations/1');
-    expect(threads[1].url()).toEqual('/projects/20/tasks/2');
+    expect(threads[0].url()).toEqual('/api/1/projects/10/conversations/1');
+    expect(threads[1].url()).toEqual('/api/1/projects/20/tasks/2');
   });
 });
 

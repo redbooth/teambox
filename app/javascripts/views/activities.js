@@ -18,14 +18,14 @@
     _.bindAll(this, 'render');
 
     this.collection.unbind('add');
-    this.collection.bind('add', Activities.appendThread.bind(this));
+    this.collection.bind('add', Activities.appendActivity.bind(this));
     this.collection.bind('no_more_pages', Activities.hidePagination.bind(this));
   };
 
-  Activities.appendThread = function appendThread(thread) {
+  Activities.appendActivity = function appendActivity(thread) {
     var template;
     if (thread.get('type') === "Conversation" || thread.get('type') === "Task") {
-      this.el.insert({ bottom: (new Teambox.Views.Thread({ model: thread })).render().el });
+      this.el.insert({bottom: (new Teambox.Views.Thread({ model: thread })).render().el});
     } else {
       template = (this.templates[thread.get('target_type').toLowerCase()] || {})[thread.get('action')]
         || this.templates.raw_activity;
@@ -46,7 +46,7 @@
 
     // Render each thread
     this.collection.each(function (thread) {
-      self.appendThread(thread);
+      self.appendActivity(thread);
     });
 
     $('content').update(this.el);
