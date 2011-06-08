@@ -21,9 +21,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
 
   def show
     authorize! :show, @conversation
-    # I changed this, which should break the tests, so I can develop for Backbone
-    # TODO: Take a look at the changes I did here
-    api_respond [@conversation], :include => api_include, :references => [:user, :project, :refs_comments]
+    api_respond @conversation, :include => api_include
   end
   
   def create
