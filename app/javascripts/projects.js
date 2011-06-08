@@ -61,8 +61,10 @@ Projects = {
     my_organizations.each(function(o) {
       var group = new Element('optgroup', { label: o.name });
       projects_in_orgs[o.id].each(function(p) {
-        var project = new Element('option', { value: p }).insert(my_projects[p].name);
-        group.insert(project);
+        if (!my_projects[p].archived) {
+          var project = new Element('option', { value: p }).insert(my_projects[p].name);
+          group.insert(project);
+        }
       });
       groups.push(group);
       $('project_id').insert(group);
