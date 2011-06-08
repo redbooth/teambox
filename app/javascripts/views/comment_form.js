@@ -88,9 +88,8 @@
    * @returns false;
    */
   CommentForm.postComment = function (evt) {
-    var self = this
-      , body = this.el.select('textarea')[0].getValue()
-      , hours = this.el.select('.human_hours')[0].getValue();
+    var self = this,
+        data = _.deparam(this.el.serialize(), true);
 
     evt.stop();
 
@@ -99,14 +98,27 @@
       //return this.uploadFile();
     }
 
-    (new Teambox.Models.Comment({
-      parent_url: this.model.url()
-    , body: body
-    , hours: hours
-    })).save(null, {
+    this.model.save(data[this.model.className().toLowerCase()], {
       success: function (model, resp) {
+        var task_attributes = resp.objects;
+        var comment_attributes = _.detect(resp.references, function(ref) {
+          return task_attributes.recent_comment_ids[0] === ref.id;
+        });
+
+        var assigned_user = _.detect(resp.references, function(ref) {
+          return ref.type === 'Person' && comment_attributes.assigned_id === ref.id
+        });
+
+        if (assigned_user) {
+          comment_attributes.assigned = assigned_user.user;
+        }
+
+        var comment = new Teambox.Models.Comment(comment_attributes);
+
         self.reset();
-        self.model.trigger('comment:added', resp, _.clone(Teambox.models.user));
+        self.model.attributes.last_comment = comment_attributes;
+        self.model.attributes.recent_comments.push(comment_attributes);
+        self.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user));
       }
     , failure: function (model, resp) {
         resp.errors.each(function (error) {

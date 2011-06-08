@@ -3,15 +3,15 @@
 .field.text_area
   %a.micro_avatar.my_avatar
   .textarea
-    %textarea{:cols => '40', :name => 'body', :placeholder => 'Define what needs to be done, assign this task to somebody.', :rows => '20', :autocomplete => 'off', :style => ''}
+    %textarea{:cols => '40', :name => '{{downcase type}}[comments_attributes][0][body]', :placeholder => 'Define what needs to be done, assign this task to somebody.', :rows => '20', :autocomplete => 'off', :style => ''}
     .autocomplete{ :style => "display: none" }
 
 .extra{ :style => "display: none" }
-  {{#if task_list}}
+  {{#if is_task}}
   .field.text_field.hours_field{ :style => "display: none" }
     %label
       How many hours did you put into this task?
-      %input{:class => 'human_hours', :name => 'human_hours', :size => '30', :type => 'text'}
+      %input{:class => 'human_hours', :name => '{{downcase type}}[comments_attributes][0][human_hours]', :size => '30', :type => 'text'}
     %a{:href => 'http://help.teambox.com/faqs/advanced-features/time-tracking', :target => '_blank'} Learn more.
   {{/if}}
 
@@ -22,7 +22,7 @@
       .google_docs_attachment
         %a{ :href => "/google_docs", :rel => "facebox" }
           %img{:alt => 'Icon_6_document', :class => 'google_docs_logo', :src => '/images/google_docs/icon_6_document.gif'}
-        .google_docs_attachment_form_area{ :'data-object-name' => "task[comments_attributes][0]" }
+        .google_docs_attachment_form_area{ :'data-object-name' => "{{downcase type}}[comments_attributes][0]" }
           .fields
           %ul.file_list
       {{#if is_task}}
@@ -33,15 +33,15 @@
     {{#if is_task}}
     .task_actions
       %label{:for => 'task_status'} Status
-      %select#task_status{:name => "status"}
+      %select#task_status{:name => "{{downcase type}}[status]"}
 
       %label{:for => 'task_assigned_id'} Assigned to:
-      %select#task_assigned_id{:name => "assigned_id"}
+      %select#task_assigned_id{:name => "{{downcase type}}[assigned_id]"}
 
       %label{:for => 'task_due_on'} Due date
       .date_picker
         %img{:alt => 'Calendar', :class => 'calendar_date_select_popup_icon', :src => '/images/calendar_date_select/calendar.gif'}
-        %input{:id => 'task_due_on', :name => 'due_on', :type => 'hidden'}
+        %input{:id => 'task_due_on', :name => '{{downcase type}}[due_on]', :type => 'hidden'}
         %span{:class => 'localized_date'}
           %i No date assigned
     {{else}}

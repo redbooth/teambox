@@ -29,6 +29,7 @@
 
 //= require <helpers/handlebars>
 //= require <helpers/tasks>
+//= require <helpers/deparam>
 //= require <controllers/base>
 //= require <controllers/bootstrap>
 //= require <controllers/app>
