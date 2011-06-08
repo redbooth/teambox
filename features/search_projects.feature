@@ -68,7 +68,6 @@ Feature: Search comments in projects
     Given the project page "Minerals to watch for" exists in "Gold Digging" with the body "I have a hammer"
     When the search index is reindexed
     And I search for "hammer"
-    And I wait for 10 seconds
     Then I should see "Minerals to watch for" in the results
 
   Scenario: Search for an upload in a task
