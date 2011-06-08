@@ -44,7 +44,12 @@ _.parseFromAPI = function(json) {
     }
     if (e.recent_comment_ids) {
       e.recent_comments = _(e.recent_comment_ids).chain()
-        .map(function(id) { return collection.findRef(id, "Comment"); })
+        .map(function(id) { 
+          var comment = collection.findRef(id, "Comment");
+          if (comment.assigned && comment.assigned.user) {
+            comment.assigned = comment.assigned.user;
+          }
+        })
         .compact() // In case there are no recent comments in references
         .sortBy(function(c) { return c.id; })
         .reject(function(c) { return c.id == e.first_comment_id; })
