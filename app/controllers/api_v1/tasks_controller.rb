@@ -39,8 +39,9 @@ class ApiV1::TasksController < ApiV1::APIController
   
   def update
     authorize! :update, @task
+
     if @task.update_attributes(params)
-      handle_api_success(@task)
+      handle_api_success(@task, :wrap_objects => true, :references => [:comments])
     else
       handle_api_error(@task)
     end
