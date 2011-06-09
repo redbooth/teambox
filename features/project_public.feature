@@ -18,6 +18,7 @@ Feature: Public projects
     And I should see "+ Log into Teambox to create a new conversation"
 
   Scenario: User visits a public project with private elements
+    Given @mislav exists and is logged in
     Given the following confirmed users exist
       | login  | email                    | first_name | last_name |
       | pablo  | pablo@teambox.com        | Pablo      | Villalba  |
