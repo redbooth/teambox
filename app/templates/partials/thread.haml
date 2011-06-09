@@ -20,10 +20,12 @@
       <a href="{{conversation_url}}">{{name}}</a>
       conversation
       {{/if}}
+
     {{#project}}
     .project_overlay
       <a href="{{project_url}}" data-project-id="{{id}}">{{name}}</a>
     {{/project}}
+
     {{#if is_task}}
     .task_summary
       {{status_transition}}

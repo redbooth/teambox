@@ -12,6 +12,9 @@
 #
 src_files:
   - app/javascripts/lib/prototype.js
+  - app/javascripts/lib/effects.js
+  - app/javascripts/lib/dragdrop.js
+  - app/javascripts/lib/controls.js
   - app/javascripts/lib/underscore.js
   - app/javascripts/lib/underscore.date.js
   - app/javascripts/lib/jquery.js
@@ -28,10 +31,12 @@ src_files:
 
   - app/javascripts/models/base.js
   - app/javascripts/models/conversation.js
+  - app/javascripts/models/comment.js
   - app/javascripts/models/task.js
   - app/javascripts/models/thread.js
 
   - app/javascripts/collections/base.js
+  - app/javascripts/collections/comments.js
   - app/javascripts/collections/threads.js
 
   - app/javascripts/views/task.js

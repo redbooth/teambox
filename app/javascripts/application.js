@@ -1,4 +1,7 @@
 //= require <lib/prototype>
+//= require <lib/effects>
+//= require <lib/controls>
+//= require <lib/dragdrop>
 //= require <lib/underscore>
 //= require <lib/underscore.date>
 //= require <lib/underscore.string>
@@ -11,14 +14,8 @@
 //= require <rails>
 //= require <html5>
 
-// Scriptaculous dependencies
-//= require <effects>
-//= require <controls>
-//= require <dragdrop>
 //= require <hackz>
 //= require <cookie>
-//= require <hackz>
-
 //= require <teambox>
 
 //= require <modules/loader>

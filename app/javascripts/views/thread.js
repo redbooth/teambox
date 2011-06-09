@@ -9,12 +9,14 @@
 
   Thread.events = {
     'mouseover .textilized a': 'setTargetBlank'
-  , 'click .thread .comments .more_comments a': 'loadMoreComments'
+  , 'click .thread .comments .more_comments a': 'reloadComments'
   , 'click a.delete': 'deleteComment'
   };
 
   Thread.initialize = function (options) {
     _.bindAll(this, "render");
+
+    this.model.attributes.is_task = this.model.get('type') === 'Task';
     this.model.bind('comment:added', Thread.addComment.bind(this));
   };
 
@@ -22,7 +24,7 @@
    *
    * @param {Event} evt
    */
-  Thread.loadMoreComments = function (evt) {
+  Thread.reloadComments = function (evt) {
     evt.stop();
 
     var el = evt.element()
@@ -35,7 +37,7 @@
     el.update("<img src='/images/loading.gif' alt='Loading' />");
 
     comments.fetch({
-      success: function (collection, response) {
+      success: function (collection) {
         var html = '';
         _.each(collection.models.reverse(), function (model) {
           html += template(model.attributes);
@@ -50,8 +52,8 @@
    * @param {Event} evt
    */
   Thread.deleteComment = function (evt) {
-    var element = evt.element().up('.comment')
-      , comment = new Teambox.Models.Comment({id: element.readAttribute('data-id'), parent_url: this.model.url()});
+    var element = evt.element().up('.comment'), comment;
+    comment = new Teambox.Models.Comment({id: element.readAttribute('data-id'), parent_url: this.model.url()});
 
     evt.stop();
 
@@ -94,15 +96,15 @@
                  + '</strong> ' + comment.body);
 
     // TODO: backbonize this [leftovers from comment.js]
-    Task.insertAssignableUsers();
-    my_user.stats.conversations++;
-    document.fire("stats:update");
+    //Task.insertAssignableUsers();
+    //my_user.stats.conversations++;
+    //document.fire("stats:update");
   };
 
   Thread.render = function () {
     var Views = Teambox.Views
       , convert_to_task = new Views.ConvertToTask({model: new Teambox.Models.Conversation(this.model.attributes)})
-      , comment_form = new Views.CommentForm({ model: this.model, convert_to_task: convert_to_task});
+      , comment_form = new Views.CommentForm({model: this.model, convert_to_task: convert_to_task});
 
     convert_to_task.comment_form = comment_form;
 
@@ -112,9 +114,6 @@
     , 'data-id': this.model.get('id')
     , 'data-project-id': this.model.get('project_id')
     });
-
-    // Introduce the is_task false attribute for thread rendering
-    this.model.attributes.is_task = this.model.get('type') === 'Task';
 
     // Prepare the thread DOM element
     this.el.update(this.template(this.model.getAttributes()));
