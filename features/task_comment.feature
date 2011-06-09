@@ -20,7 +20,8 @@ Feature: Commenting on a task
     And I select the day "25" with the date picker
     And I press "Save"
     And I wait for 2 second
-    Then I should see "Jan 25" within the last comment body
+    Then show me the page
+    Then I should see "JAN 25" within the last comment body
     But I fill in the comment box with "I change my mind, should be done ASAP."
     And I click on the date selector
     And I select the month of "January" with the date picker
@@ -28,4 +29,4 @@ Feature: Commenting on a task
     And I select the day "10" with the date picker
     And I press "Save"
     And I wait for 2 second
-    Then I should see "Jan 25" and "Jan 10" within the last comment body
+    Then I should see "JAN 25" and "JAN 10" within the last comment body
