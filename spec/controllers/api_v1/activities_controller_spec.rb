@@ -63,6 +63,17 @@ describe ApiV1::ActivitiesController do
       JSON.parse(response.body)['objects'].length.should == 1
     end
 
+    it "limits activities to the hard limit" do
+      login_as @user
+
+      10.times { Factory :person, :project => @project }
+
+      get :index, :project_id => @project.permalink, :count => 0
+      response.should be_success
+
+      JSON.parse(response.body)['objects'].length.should == 10
+    end
+
     it "limits and offsets activities" do
       login_as @user
 
@@ -88,8 +99,6 @@ describe ApiV1::ActivitiesController do
 
     it "returns comment references for conversation and task objects" do
       login_as @user
-
-      controller.stub!(:api_limit).and_return(5)
 
       assigned_person = Factory(:person, :project => @project)
       task = Factory.create(:task, :project => @project, :user => @project.user)

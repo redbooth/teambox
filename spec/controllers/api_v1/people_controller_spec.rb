@@ -37,6 +37,20 @@ describe ApiV1::PeopleController do
       JSON.parse(response.body)['objects'].length.should == 1
     end
 
+    it "limit can be overridden" do
+      login_as @user
+
+      10.times { Factory.create(:person, :project => @project) }
+
+      get :index, :project_id => @project.permalink, :count => 0
+      response.should be_success
+      JSON.parse(response.body)['objects'].length.should == 14
+
+      get :index, :project_id => @project.permalink, :count => 20
+      response.should be_success
+      JSON.parse(response.body)['objects'].length.should == 14
+    end
+
     it "limits and offsets people" do
       login_as @user
 

@@ -10,7 +10,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
       where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
       joins("LEFT JOIN watchers ON ((activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type)) AND watchers.user_id = #{current_user.id}").
       order('activities.id DESC').
-      limit(api_limit)
+      limit(api_limit(:hard => true))
 
     api_respond @activities, :references => true
   end

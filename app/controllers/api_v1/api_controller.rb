@@ -5,7 +5,11 @@ class ApiV1::APIController < ApplicationController
   skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token, :add_chrome_frame_header
   before_filter      :api_throttle
 
-  API_LIMIT = 50
+  if Rails.env.test?
+    API_LIMIT = 10
+  else
+    API_LIMIT = 20
+  end
   API_THROTTLE_LIMIT = 200
 
   protected
@@ -228,15 +232,17 @@ class ApiV1::APIController < ApplicationController
   def api_truth(value)
     ['true', '1'].include?(value) ? true : false
   end
-  
-  def api_limit
-    if params[:count]
-      [params[:count].to_i, API_LIMIT].min
+
+  def api_limit(options = {})
+    count = params[:count] && params[:count].to_i
+    return [count && count > 0 ? count : API_LIMIT, API_LIMIT].min if options[:hard]
+    if count
+      count == 0 ? nil : count
     else
       API_LIMIT
     end
   end
-  
+
   def api_range(table_name)
     since_id = params[:since_id]
     max_id = params[:max_id]
