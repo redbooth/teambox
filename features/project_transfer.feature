@@ -1,3 +1,4 @@
+@javascript
 Feature: Transfer Project
 
   Background: 
@@ -15,7 +16,7 @@ Feature: Transfer Project
   Scenario: Mislav transfers a project
     Then the user called "balint" should not administrate the project called "Ruby Rockstars"
     Given I follow "Ownership"
-    And I should see "Ownership" in the title
+    And I should see "Ownership of Ruby Rockstars"
     When I select "Balint Erdi" from "Owner"
     And I press "Change owner"
     Then I should see "Project ownership has been transferred."
