@@ -45,7 +45,10 @@ src_files:
   - app/javascripts/views/thread.js
   - app/javascripts/views/activities.js
   - app/javascripts/views/tasks/select_status.js
+  - app/javascripts/views/tasks/select_assigned.js
   - app/javascripts/views/sidebar.js
+  - app/javascripts/views/upload_area.js
+  - app/javascripts/views/watchers.js
 
   - app/javascripts/helpers/tasks.js
 

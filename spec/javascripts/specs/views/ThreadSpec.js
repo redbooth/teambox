@@ -149,7 +149,7 @@ describe("views/thread", function () {
     expect(thread_view.el).toContain('form.comment_form');
     expect(thread_view.el).toContain('form.convert_to_task');
 
-    expect($conversation_model).toHaveBeenCalled(thread_view.model.attributes);
+    expect($conversation_model).toHaveBeenCalledWith(thread_view.model.attributes);
     expect($convert_to_task_view).toHaveBeenCalledWith({model: conversation_model});
     expect($comment_form).toHaveBeenCalledWith({model: thread_view.model, convert_to_task: convert_to_task_view});
 

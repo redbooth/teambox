@@ -30,7 +30,7 @@
     , 'action': this.model.comments_url()
     , 'data-project-id': this.model.get('project_id')
     , 'enctype': 'multipart/form-data'
-    , 'method': 'post'
+    , 'method': 'POST'
     });
 
     this.el.addClassName("edit_" + this.model.get('type').toLowerCase());
