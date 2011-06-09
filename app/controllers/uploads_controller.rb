@@ -16,14 +16,14 @@ class UploadsController < ApplicationController
     head(:forbidden) and return unless upload.downloadable?(current_user)
 
     if !!Teambox.config.amazon_s3
-      unless upload.asset.exists?(params[:style]) && params[:filename].to_s == upload.asset_file_name
+      unless upload.asset.exists?(params[:style])
         head(:bad_request)
         raise "Unable to download file"
       end
       redirect_to upload.s3_url(params[:style])
     else
       path = upload.asset.path(params[:style])
-      unless File.exist?(path) && params[:filename].to_s == upload.asset_file_name
+      unless File.exist?(path)
         head(:bad_request)
         raise "Unable to download file"
       end  
