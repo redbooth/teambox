@@ -49,6 +49,7 @@ _.parseFromAPI = function(json) {
           if (comment.assigned && comment.assigned.user) {
             comment.assigned = comment.assigned.user;
           }
+          return comment;
         })
         .compact() // In case there are no recent comments in references
         .sortBy(function(c) { return c.id; })
