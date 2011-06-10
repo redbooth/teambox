@@ -258,32 +258,4 @@ describe("views/comment_form", function () {
     expect($save).toHaveBeenCalledOnce();
     expect($trigger).toHaveBeenCalledWith('comment:added', comment_attributes);
   });
-
-  //CommentForm.postComment = function (evt) {
-  //  var self = this
-  //    , data = _.deparam(this.el.serialize(), true);
-
-  //  evt.stop();
-
-  //  if (this.hasFileUploads()) {
-  //    console.log('HEY');
-  //    //return this.uploadFile();
-  //  }
-
-  //  this.model.save(data[this.model.className().toLowerCase()], {
-  //  success: function (model, response) {
-  //    var comment_attributes = this.model.parseComments();
-
-  //    self.reset();
-  //    self.model.attributes.last_comment = comment_attributes;
-  //    self.model.attributes.recent_comments.push(comment_attributes);
-  //    self.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user));
-  //  }
-  //, failure: function (model, response) {
-  //    response.errors.each(function (error) {
-  //      self.el.down('div.text_area').insertOrUpdate('p.error', error.value);
-  //    })
-  //  }
-  //  return false;
-  //};
 });
