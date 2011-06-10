@@ -112,8 +112,16 @@
           return ref.type === 'Person' && comment_attributes.assigned_id === ref.id
         });
 
+        var project = _.detect(resp.references, function(ref) {
+          return ref.type === 'Project' && comment_attributes.project_id === ref.id
+        });
+
         if (assigned_user) {
           comment_attributes.assigned = assigned_user.user;
+        }
+
+        if (project) {
+          comment_attributes.project = project;
         }
 
         var comment = new Teambox.Models.Comment(comment_attributes);
