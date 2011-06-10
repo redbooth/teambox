@@ -51,16 +51,16 @@ Projects = {
     (new Hash(my_projects)).each(function(p) {
       var org_id = p[1].organization_id;
       if (projects_in_orgs[org_id]) {
-        projects_in_orgs[org_id].push(p[0]);
+        projects_in_orgs[org_id].push([p[0], p[1].name]);
       }
       else {
-        projects_in_orgs[org_id] = [p[0]];
+        projects_in_orgs[org_id] = [[p[0], p[1].name]];
       }
     });
     var groups = [];
     my_organizations.each(function(o) {
       var group = new Element('optgroup', { label: o.name });
-      projects_in_orgs[o.id].each(function(p) {
+      projects_in_orgs[o.id].sortBy(function(p) {return p[1]}).collect(function(p) {return p[0]}).each(function(p) {
         if (!my_projects[p].archived) {
           var project = new Element('option', { value: p }).insert(my_projects[p].name);
           group.insert(project);
