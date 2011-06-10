@@ -43,7 +43,7 @@ class ApiV1::TasksController < ApiV1::APIController
     @task.updating_user = current_user
 
     if @task.update_attributes(params)
-      handle_api_success(@task, :wrap_objects => true, :references => [:comments, :assigned], :include => [:user])
+      handle_api_success(@task, :wrap_objects => true, :references => [:project, :user, :comments, :assigned], :include => [:user])
     else
       handle_api_error(@task)
     end

@@ -39,7 +39,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     authorize! :update, @conversation
 
     if @conversation.update_attributes params
-      handle_api_success(@conversation, :wrap_objects => true, :references => [:comments])
+      handle_api_success(@conversation, :wrap_objects => true, :references => [:project, :user, :comments], :include => [:user])
     else
       handle_api_error(@conversation)
     end
