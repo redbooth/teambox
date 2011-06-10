@@ -58,10 +58,10 @@ Projects = {
       }
     });
     var groups = [];
-    my_organizations.each(function(o) {
+    my_external_organizations.each(function(o) {
       var group = new Element('optgroup', { label: o.name });
       projects_in_orgs[o.id].sortBy(function(p) {return p[1]}).collect(function(p) {return p[0]}).each(function(p) {
-        if (!my_projects[p].archived) {
+        if (!my_projects[p].archived && (my_projects[p].role > 0)) {
           var project = new Element('option', { value: p }).insert(my_projects[p].name);
           group.insert(project);
         }
