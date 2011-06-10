@@ -211,7 +211,7 @@ jasmine.Prototype.matchersClass = {};
       }
 
     , toHaveValue: function (value) {
-        return this.actual.readAttribute('value') === value;
+        return this.actual.getValue() === value;
       }
 
   //, toHaveData: function (key, expectedValue) {

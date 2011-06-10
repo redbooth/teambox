@@ -11,8 +11,9 @@ describe("views/comment_form", function () {
                , updated_at: "2011-05-30 17:14:55 +0000"
                , id: 48
                , user_id: 1
-               , type: "Comment"
+               , type: "Task"
                , hours: null
+               , recent_comments: []
                , target_type: "Conversation"
                , project: { id: 1
                           , permalink: 'http://zpeaker.com'
@@ -25,7 +26,7 @@ describe("views/comment_form", function () {
   beforeEach(function () {
     setFixtures('');
     thread_model = new Thread(thread);
-    comment_form_view = new CommentFormView({model: thread_model});
+    comment_form_view = new CommentFormView({model: thread_model, convert_to_task: {toggle: function () {}}});
   });
 
   it('`render` should render the comment form', function () {
@@ -55,11 +56,11 @@ describe("views/comment_form", function () {
 
     expect(comment_form_view.el).toHaveAttr('accept-charset', 'UTF-8');
     expect(comment_form_view.el).toHaveAttr('accept', 'text/plain');
-    expect(comment_form_view.el).toHaveAttr('action', thread_model.comments_url());
+    expect(comment_form_view.el).toHaveAttr('action', thread_model.commentsUrl());
     expect(comment_form_view.el).toHaveAttr('data-project-id', thread_model.get('project_id') + "");
     expect(comment_form_view.el).toHaveAttr('enctype', 'multipart/form-data');
     expect(comment_form_view.el).toHaveAttr('method', 'POST');
-    expect(comment_form_view.el).toHaveClass('edit_comment');
+    expect(comment_form_view.el).toHaveClass('edit_task');
 
     expect($status_render).toHaveBeenCalled();
     expect($assigned_render).toHaveBeenCalled();
@@ -81,4 +82,208 @@ describe("views/comment_form", function () {
     , $status_render, $assigned_render, $project
     , $upload_area_view, $watchers_view ].invoke('restore');
   });
+
+  it('`reset` should reset the form', function () {
+    comment_form_view.el.update(
+      '<form>'
+    + '<textarea>fffuuu</textarea>'
+    + '<input type="file" value="it aint possible" />'
+    + '<input type="file" value="it aint possible" />'
+    + '<input type="text" class="human_hours" value="fffuuuu" />'
+    + '<div class="hours_field"></div>'
+    + '<div class="upload_area"></div>'
+    + '<div class="error"></div>'
+    + '<div class="google_docs_attachment">'
+    + '<div class="fields"><input name="fffuu" value="fuu" /></div><ul class="file_list"><li>fuu</li></ul>'
+    + '</div>'
+    + '</form>'
+    );
+
+    comment_form_view.reset();
+
+    expect(comment_form_view.el.down('textarea')).toHaveText('');
+    expect(comment_form_view.el).not.toContain('input[type=file]');
+    expect(comment_form_view.el.down('.human_hours')).toHaveValue('');
+    expect(comment_form_view.el.down('.hours_field')).toBeHidden();
+    expect(comment_form_view.el.down('.upload_area')).toBeHidden();
+    expect(comment_form_view.el).not.toContain('.error');
+    expect(comment_form_view.el).not.toContain('.google_docs_attachment .fields input');
+    expect(comment_form_view.el).not.toContain('.google_docs_attachment .file_list li');
+  });
+
+  it('`toggleAttach` should toggle the upload area', function () {
+    var evt = {stop: function () {}}
+      , $stop = sinon.stub(evt, 'stop')
+      , $highlight;
+
+    comment_form_view.el.update('<form><div class="upload_area"></div></form>');
+    $highlight = sinon.stub(comment_form_view.el.down('.upload_area'), 'highlight');
+
+    comment_form_view.toggleAttach(evt);
+    expect(comment_form_view.el.down('.upload_area')).toBeHidden();
+
+    comment_form_view.toggleAttach(evt);
+    expect(comment_form_view.el.down('.upload_area')).toBeVisible();
+
+    expect($stop).toHaveBeenCalledTwice();
+    expect($highlight).toHaveBeenCalledTwice();
+
+    $highlight.restore();
+  });
+
+  it('`toggleHours` should toggle the hours field', function () {
+    var evt = {stop: function () {}}
+      , $stop = sinon.stub(evt, 'stop')
+      , $focus;
+
+    comment_form_view.el.update('<form><div class="hours_field"><input /></div></form>');
+    $focus = sinon.stub(comment_form_view.el.down('input'), 'focus');
+
+    comment_form_view.toggleHours(evt);
+    expect(comment_form_view.el.down('.hours_field')).toBeHidden();
+
+    comment_form_view.toggleHours(evt);
+    expect(comment_form_view.el.down('.hours_field')).toBeVisible();
+
+    expect($stop).toHaveBeenCalledTwice();
+    expect($focus).toHaveBeenCalledTwice();
+
+    $focus.restore();
+  });
+
+  it('`toggleConvertToTask` should toggle the convert to task form', function () {
+    var evt = {stop: function () {}}
+      , $toggle = sinon.stub(comment_form_view.convert_to_task, 'toggle');
+
+    comment_form_view.toggleConvertToTask(evt);
+    expect($toggle).toHaveBeenCalledWith(evt);
+
+    $toggle.restore();
+  });
+
+  it('`toggleWatchers` should toggle the the watchers form', function () {
+    var evt = {stop: function () {}}
+      , $stop = sinon.stub(evt, 'stop');
+
+    comment_form_view.el.update('<form><div class="add_watchers_box"></div></form>');
+
+    comment_form_view.toggleWatchers(evt);
+    expect(comment_form_view.el.down('.add_watchers_box')).toBeHidden();
+
+    comment_form_view.toggleWatchers(evt);
+    expect(comment_form_view.el.down('.add_watchers_box')).toBeVisible();
+
+    expect($stop).toHaveBeenCalledTwice();
+  });
+
+  it('`showCalendar` should instantiate the calendar', function () {
+    var evt = {stop: function () {}}
+      , $stop = sinon.stub(evt, 'stop')
+      , $calendar = sinon.stub(Teambox.modules, 'CalendarDateSelect');
+
+    comment_form_view.el.update('<form><a><input /><span></span></a></form>');
+
+    comment_form_view.showCalendar(evt, comment_form_view.el.down('a'));
+
+    expect($calendar).toHaveBeenCalledOnce();
+    expect($stop).toHaveBeenCalledOnce();
+
+    $calendar.restore();
+  });
+
+  it('`focusTextarea` should reveal the extra controls and assign the autocompleter', function () {
+    var evt = {
+        stop: function () {},
+        element: function () {
+          return comment_form_view.el.down('textarea');
+        }
+      }
+      , project = {foo: 'bar', getAutocompleterUserNames: function () {}}
+      , people = {zemba: 'fleiba'}
+      , autocompleter = {options: {array: null}}
+      , $get_user_names = sinon.stub(project, 'getAutocompleterUserNames').returns(people)
+      , $local = sinon.stub(Autocompleter, 'Local').returns(autocompleter);
+
+    Teambox.collections = {projects: {get: function () {
+      return project;
+    }}};
+
+    comment_form_view.el.update('<textarea></textarea><div class="extra"></div>');
+
+    comment_form_view.focusTextarea(evt);
+    comment_form_view.focusTextarea(evt);
+
+    expect(comment_form_view.el.down('.extra')).toBeVisible();
+    expect($get_user_names).toHaveBeenCalledTwice();
+    expect(comment_form_view.el.down('.autocomplete')).toBeHidden();
+    expect($local).toHaveBeenCalledOnce();
+    expect(autocompleter.options.array).toEqual(people);
+
+    [$get_user_names, $local].invoke('restore');
+  });
+
+  it('`hasFileUploads` should return true if at least one file has uploads', function () {
+    // can't be tested
+  });
+
+  it('`hasEmptyFileUploads` should return true if at least one file doesnt uploads', function () {
+    // can't be tested
+  });
+
+  it('`postComment` should upload files if available and sync the model', function () {
+    var evt = {stop: function () {}}
+      , data = {task: {foo: 'bar'}}
+      , response = {im: 'a response'}
+      , comment_attributes = {im: 'comments attributez'}
+      , $stop = sinon.stub(evt, 'stop')
+      , $deparam = sinon.stub(_, 'deparam').returns(data)
+      , $reset = sinon.stub(comment_form_view, 'reset')
+      , $parse_comments = sinon.stub(comment_form_view.model, 'parseComments').returns(comment_attributes)
+      , $save = sinon.stub(comment_form_view.model, 'save', function (_data, _options) {
+          _options.success('whatever', response);
+          _options.failure('whatever', {errors: [{error: {value: 'foo'}}, {error: {value: 'bar'}}]});
+        })
+      , $trigger = sinon.stub(comment_form_view.model, 'trigger');
+
+    comment_form_view.el.update('<textarea></textarea><div class="text_area"></div>');
+
+    comment_form_view.postComment(evt);
+
+    expect(comment_form_view.el).toContain('p.error');
+
+    expect($stop).toHaveBeenCalledOnce();
+    expect($deparam).toHaveBeenCalledOnce();
+    expect($reset).toHaveBeenCalledOnce();
+    expect($parse_comments).toHaveBeenCalledWith(response);
+    expect($save).toHaveBeenCalledOnce();
+    expect($trigger).toHaveBeenCalledWith('comment:added', comment_attributes);
+  });
+
+  //CommentForm.postComment = function (evt) {
+  //  var self = this
+  //    , data = _.deparam(this.el.serialize(), true);
+
+  //  evt.stop();
+
+  //  if (this.hasFileUploads()) {
+  //    console.log('HEY');
+  //    //return this.uploadFile();
+  //  }
+
+  //  this.model.save(data[this.model.className().toLowerCase()], {
+  //  success: function (model, response) {
+  //    var comment_attributes = this.model.parseComments();
+
+  //    self.reset();
+  //    self.model.attributes.last_comment = comment_attributes;
+  //    self.model.attributes.recent_comments.push(comment_attributes);
+  //    self.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user));
+  //  }
+  //, failure: function (model, response) {
+  //    response.errors.each(function (error) {
+  //      self.el.down('div.text_area').insertOrUpdate('p.error', error.value);
+  //    })
+  //  }
+  //  return false;
+  //};
 });

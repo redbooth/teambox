@@ -23,11 +23,14 @@ src_files:
   - public/trimmer/en.js
   - app/javascripts/datetime.js
   - app/javascripts/teambox.js
+  - app/javascripts/util.js
 
   - app/javascripts/modules/loader.js
   - app/javascripts/modules/params.js
+  - app/javascripts/modules/calendar_date_select.js
 
   - app/javascripts/helpers/handlebars.js
+  - app/javascripts/helpers/deparam.js
 
   - app/javascripts/models/base.js
   - app/javascripts/models/conversation.js

@@ -19,6 +19,7 @@
 //= require <teambox>
 
 //= require <modules/loader>
+//= require <modules/calendar_date_select>
 //= require <modules/params>
 
 // TODO: move it to modules
@@ -76,7 +77,6 @@
 //= require <views/thread>
 //= require <views/watchers>
 
-//= require <calendar_date_select>
 //= require <facebox>
 //= require <showdown>
 //= require <modernizr>

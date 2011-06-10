@@ -27,7 +27,7 @@
     this.el.writeAttribute({
       'accept-charset': 'UTF-8'
     , 'accept': 'text/plain'
-    , 'action': this.model.comments_url()
+    , 'action': this.model.commentsUrl()
     , 'data-project-id': this.model.get('project_id')
     , 'enctype': 'multipart/form-data'
     , 'method': 'POST'
@@ -66,17 +66,15 @@
    */
   CommentForm.reset = function () {
     // clear comment and reset textarea height
-    this.el.down('textarea').setValue('').setStyle({height: ''});
+    this.el.down('textarea').update('').setStyle({height: ''});
 
     // clear populated file uploads
     this.el.select('input[type=file]').each(function (input) {
-      if (input.getValue()) {
-        input.remove();
-      }
+      input.remove();
     });
 
     if (this.model.className() === 'Task') {
-      this.el.select('.human_hours')[0].setValue('');
+      this.el.down('.human_hours').value = '';
       this.el.select('.hours_field, .upload_area').invoke('hide');
     }
 
@@ -91,8 +89,8 @@
    * @returns false;
    */
   CommentForm.postComment = function (evt) {
-    var self = this,
-        data = _.deparam(this.el.serialize(), true);
+    var self = this
+      , data = _.deparam(this.el.serialize(), true);
 
     evt.stop();
 
@@ -102,37 +100,16 @@
     }
 
     this.model.save(data[this.model.className().toLowerCase()], {
-      success: function (model, resp) {
-        var task_attributes = resp.objects;
-        var comment_attributes = _.detect(resp.references, function(ref) {
-          return task_attributes.recent_comment_ids[0] === ref.id;
-        });
-
-        var assigned_user = _.detect(resp.references, function(ref) {
-          return ref.type === 'Person' && comment_attributes.assigned_id === ref.id
-        });
-
-        var project = _.detect(resp.references, function(ref) {
-          return ref.type === 'Project' && comment_attributes.project_id === ref.id
-        });
-
-        if (assigned_user) {
-          comment_attributes.assigned = assigned_user.user;
-        }
-
-        if (project) {
-          comment_attributes.project = project;
-        }
-
-        var comment = new Teambox.Models.Comment(comment_attributes);
+      success: function (model, response) {
+        var comment_attributes = self.model.parseComments(response);
 
         self.reset();
         self.model.attributes.last_comment = comment_attributes;
         self.model.attributes.recent_comments.push(comment_attributes);
         self.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user));
       }
-    , failure: function (model, resp) {
-        resp.errors.each(function (error) {
+    , failure: function (model, response) {
+        response.errors.each(function (error) {
           self.el.down('div.text_area').insertOrUpdate('p.error', error.value);
         })
       }
@@ -166,21 +143,6 @@
     this.convert_to_task.toggle(evt);
   };
 
-  /* Displays the calendar
-   *
-   * @param {Event} evt
-   */
-  CommentForm.showCalendar = function (evt, element) {
-    evt.stop();
-
-    new CalendarDateSelect(element.down('input'), element.down('span'), {
-      buttons: true
-    , popup: 'force'
-    , time: false
-    , year_range: [2008, 2020]
-    });
-  };
-
   /* Toggle the "Add Watchers" area
    *
    * @param {Event} evt
@@ -188,6 +150,21 @@
   CommentForm.toggleWatchers = function (evt) {
     evt.stop();
     this.el.down('.add_watchers_box').toggle();
+  };
+
+  /* Displays the calendar
+   *
+   * @param {Event} evt
+   */
+  CommentForm.showCalendar = function (evt, element) {
+    evt.stop();
+
+    new Teambox.modules.CalendarDateSelect(element.down('input'), element.down('span'), {
+      buttons: true
+    , popup: 'force'
+    , time: false
+    , year_range: [2008, 2020]
+    });
   };
 
   /* Reveal the extra controls when focusing on the textarea
