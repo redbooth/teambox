@@ -69,7 +69,7 @@ describe("views/comment_form", function () {
     , selected: thread_model.get('status')
     });
     expect($select_assigned_view).toHaveBeenCalledWith({
-      el: comment_form_view.el.select('#task_status')[0]
+      el: comment_form_view.el.select('#task_assigned_id')[0]
     , project: project
     , selected: thread_model.get('assigned_id')
     });

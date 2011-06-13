@@ -22,7 +22,7 @@
 
     this.el.writeAttribute({
       'accept-charset': 'UTF-8'
-    , 'action': this.model.convert_to_task_url()
+    , 'action': this.model.convertToTaskUrl()
     , 'method': 'POST'
     });
 
@@ -53,8 +53,6 @@
    *
    */
   ConvertToTask.toggle = function (evt) {
-    var self = this;
-
     evt.stop();
 
     this.el.toggle();

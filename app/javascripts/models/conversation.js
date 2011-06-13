@@ -12,21 +12,34 @@
     return 'Conversation';
   };
 
-
-
-  Conversation.convert_to_task_url = function () {
+  /* return the `convert_to_task` url
+   *
+   * @return {String}
+   */
+  Conversation.convertToTaskUrl = function () {
     return '/api/1/projects/' + this.get('project_id') + '/conversations/' + this.get('id') + '/convert_to_task';
   };
 
+  /* return the resource url
+   *
+   * @return {String}
+   */
   Conversation.url = function () {
     return "/api/1/conversations/" + this.get('id');
   };
 
+  /* parses the incoming data from the API
+   *
+   * @return {Object}
+   */
   Conversation.parse = function (response) {
     return _.parseFromAPI(response)[0];
   };
 
-  // Check if the model has been loaded fully
+  /* Check if the model has been loaded fully
+   *
+   * @return {Boolean}
+   */
   Conversation.isLoaded = function () {
     // If it doesn't have a project_id, for example, it's not loaded
     return !!this.getAttributes().project_id;
@@ -39,7 +52,7 @@
    * @param {Function} onFailure
    */
   Conversation.convertToTask = function (parameters, onSuccess, onFailure) {
-    var url = this.convert_to_task_url()
+    var url = this.convertToTaskUrl()
       , a = new Ajax.Request(url, { method: 'post'
                                   , parameters: parameters
                                   , requestHeaders: {Accept: 'application/json'}
