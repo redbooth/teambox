@@ -57,6 +57,7 @@ class Comment < ActiveRecord::Base
 
   # was before_create, but must happen before format_attributes
   before_validation   :copy_ownership_from_target, :on => :create, :if => lambda { |c| c.target }
+  before_validation   :add_private_statechange, :on => :create
   after_create  :trigger_target_callbacks
   after_destroy :cleanup_activities, :cleanup_conversation
 
@@ -146,6 +147,35 @@ class Comment < ActiveRecord::Base
     can_change_private = self.user_id == target.user_id
     if target.respond_to?(:is_private)
       self[:is_private] = target.is_private unless can_change_private && @is_private_set
+    end
+    true
+  end
+  
+  def is_private_change?
+    target.is_private != is_private
+  end
+  
+  def span_for_is_private_html(is_private)
+    if is_private
+      "<span class=\"is_private_state\">PRIVATE</span>"
+    else
+      "<span class=\"is_public_state\">PRIVATE</span>"
+    end
+  end
+  
+  def task_is_private_html
+    [].tap do |out|
+      if is_private_change?
+        out << span_for_is_private_html(target.is_private)
+        out << "<span class=\"arr is_private_arr\">&rarr;</span>"
+        out << span_for_is_private_html(is_private)
+      end
+    end.join('')
+  end
+  
+  def add_private_statechange
+    if is_private_set && is_private_change?
+      self.body = "#{task_is_private_html}\n\n#{body}"
     end
     true
   end
