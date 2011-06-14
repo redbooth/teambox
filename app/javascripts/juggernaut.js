@@ -10,16 +10,14 @@ if (typeof window != 'undefined'){
 var Juggernaut = function(options){
   this.options = options || {};
   
-  this.host = this.options.host || window.location.hostname;
-  this.port = this.options.port || 8080;
-
+  this.options.host = this.options.host || window.location.hostname;
+  this.options.port = this.options.port || 8080;
+  
   this.handlers = {};
   this.state    = "disconnected";
   this.meta     = this.options.meta;
 
-  this.socket = new io.Socket(this.host,
-    {rememberTransport: false, port: this.port, secure: this.options.secure}
-  );
+  this.socket = new io.Socket(this.options.host, this.options);
 
   this.socket.on("connect",    this.proxy(this.onconnect));
   this.socket.on("message",    this.proxy(this.onmessage));
@@ -44,6 +42,11 @@ Juggernaut.fn.on = function(name, callback){
   this.handlers[name].push(callback);
 };
 Juggernaut.fn.bind = Juggernaut.fn.on;
+
+Juggernaut.fn.unbind = function(name){
+  if (!this.handlers) return;
+  delete this.handlers[name];
+};
 
 Juggernaut.fn.write = function(message){
   if (typeof message.toJSON == "function")
@@ -83,6 +86,8 @@ Juggernaut.fn.subscribe = function(channel, callback){
 
 Juggernaut.fn.unsubscribe = function(channel) {
   if ( !channel ) throw "Must provide a channel";
+  
+  this.unbind(channel + ":data");
   
   var message     = new Juggernaut.Message;
   message.type    = "unsubscribe";
@@ -138,14 +143,11 @@ Juggernaut.fn.onmessage = function(data){
 Juggernaut.fn.reconnect = function(){
   if (this.recInterval) return;
 
-  var clear = function(){
-    clearInterval(this.recInterval);
-    this.recInterval = null;
-  };
-
   this.recInterval = setInterval(this.proxy(function(){
-    if (this.state == "connected") clear()
-    else {
+    if (this.state == "connected") {
+      clearInterval(this.recInterval);
+      this.recInterval = null;      
+    } else {
       this.trigger("reconnect");
       this.connect();
     }
