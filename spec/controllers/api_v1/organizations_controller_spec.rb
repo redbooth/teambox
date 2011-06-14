@@ -17,12 +17,19 @@ describe ApiV1::OrganizationsController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
 
-    it "does not show organizations the user doesn't belong to" do
-      login_as Factory(:confirmed_user)
+    it "does not show organizations the user doesn't belong to unless specified" do
+      login_as @user
+      2.times { Factory :person, :user => @user }
 
       get :index
       response.should be_success
-      JSON.parse(response.body)['objects'].length.should == 0
+      objects = JSON.parse(response.body)['objects']
+      objects.length.should == 2
+
+      get :index, :external => true
+      response.should be_success
+      objects = JSON.parse(response.body)['objects']
+      objects.length.should == 4
     end
 
     it "returns references for linked objects" do

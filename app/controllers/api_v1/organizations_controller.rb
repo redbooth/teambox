@@ -4,12 +4,19 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   
   def index
     authorize! :show, current_user
-    
-    @organizations = current_user.organizations.except(:order).
-                                                where(api_range('organizations')).
-                                                limit(api_limit).
-                                                order('organizations.id DESC')
-    
+
+    if params[:external]
+      @organizations = Organization.select("DISTINCT organizations.*").
+                                    from("organizations, memberships, projects, people").
+                                    where(["((memberships.organization_id = organizations.id AND memberships.user_id = ?) OR (projects.organization_id = organizations.id AND people.project_id=projects.id AND people.user_id = ?))", current_user.id, current_user.id])
+    else
+      @organizations = current_user.organizations
+    end
+    @organizations = @organizations.except(:order).
+                                    where(api_range('organizations')).
+                                    limit(api_limit).
+                                    order('organizations.id DESC')
+
     api_respond @organizations, :references => true
   end
 
