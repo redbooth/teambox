@@ -2,7 +2,7 @@
 
   var CommentForm = { tagName: 'form'
                     , className: 'new_comment'
-                    , template: Handlebars.compile(Templates.partials.comment_form)
+                    , template: Teambox.modules.ViewCompiler('partials.comment_form')
                     };
 
   CommentForm.events = {

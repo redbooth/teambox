@@ -9,7 +9,9 @@
 //= require <juggernaut>
 //= require <lib/jquery>
 //= require <lib/backbone-prototype>
+
 //= require <lib/handlebars>
+//= require <lib/jade>
 
 //= require <rails>
 //= require <html5>
@@ -21,13 +23,17 @@
 //= require <modules/loader>
 //= require <modules/calendar_date_select>
 //= require <modules/params>
+//= require <modules/view_compiler>
 
 // TODO: move it to modules
 //= require <lib/teambox_api>
 
 //= require <helpers/handlebars>
+//= require <helpers/jade>
+
 //= require <helpers/tasks>
 //= require <helpers/deparam>
+
 //= require <controllers/base>
 //= require <controllers/bootstrap>
 //= require <controllers/app>

@@ -20,7 +20,7 @@ src_files:
   - app/javascripts/lib/jquery.js
   - app/javascripts/lib/backbone-prototype.js
   - app/javascripts/lib/handlebars.js
-  - public/trimmer/en.js
+  - app/javascripts/trimmer/en.js
   - app/javascripts/datetime.js
   - app/javascripts/teambox.js
   - app/javascripts/util.js

@@ -1,7 +1,7 @@
 (function () {
 
   var Watchers = { className: 'add_watchers_box'
-                 , template: Handlebars.compile(Templates.partials.add_watchers)
+                 , template: Teambox.modules.ViewCompiler('partials.add_watchers')
                  };
 
   Watchers.events = {

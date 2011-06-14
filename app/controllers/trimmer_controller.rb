@@ -92,7 +92,7 @@ class TrimmerController < ActionController::Base
 
     # TODO: how can I activate page cache on dev for a single controller? :(
     # we can't test having dynamic js
-    file = File.new(Rails.root.join('public', 'trimmer', "#{params[:locale]}.js"), 'w')
+    file = File.new(Rails.root.join('app', 'javascripts', 'trimmer', "#{params[:locale]}.js"), 'w')
     file.puts(template)
     render :text => template
   end

@@ -68,9 +68,9 @@ Recommended options.
   * Adopt the **module pattern** as much as possible, it helps to avoid global namespace pollution and allows privacy.
     Declaring dependencies as local variables helps the minifiers.
 
-  * [TO REVIEW] variables are under_scored.
-  * [TO REVIEW] Methods are camelCased.
-  * [TO REVIEW] Constuctors are CamelCased, and the first letter uppercased.
+  * variables are under_scored.
+  * Methods are camelCased.
+  * Constuctors are CamelCased, and the first letter uppercased.
 
 Example:
 
@@ -115,6 +115,33 @@ Any new file you need to test must be added to `spec/javascripts/support/jasmine
 
 To run the tests: `rake jasmine` and then open your browser to `0.0.0.0:8888`
 
+### Templating
+
+The templates are generated server side using trimmer + erb.
+We compile them client-side using [jade](https://github.com/visionmedia/jade)
+
+In order to make things easier and provide some defaults, there is a module at `app/javascripts/modules/view_compiler`
+use it to generate and cache a compiler.
+
+We are using the `self: true` option, so the only variable exposed on your views is `self`
+that refers to the `locals` object you passed to the compiler.
+
+``` javascript
+// view.jade
+p= self.foo
+```
+
+``` javascript
+// app.js
+var compiler = Teambox.modules.ViewCompiler('partials.comment_form');
+console.log(compiler({foo: 'bar'}));
+```
+
+There are no _helpers_ in jade. Although you can provide some functions on the `locals` object
+and they will be available. As a convention, the `view_compiler` will mixin the attributes
+found at `app/javascripts/helpers/jade.js`.
+
+You can overwrite any _helper_ by passing a local with the same new.
 
 ## CSS
 

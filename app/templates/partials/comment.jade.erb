@@ -1,0 +1,53 @@
+- var reply_email_url = self.project.permalink + '+' + self.target_type.toLowerCase() + '+' + self.target_id + '@<%= Teambox.config.smtp_settings[:domain]%>'
+- var conversation_url = self.project.permalink + '+' + 'conversation@<%= Teambox.config.smtp_settings[:domain]%>'
+- var task_url = self.project.permalink + '+' + 'task@<%= Teambox.config.smtp_settings[:domain]%>'
+
+.comment(data-editable-before= self.ms(self.updated_at), id= 'comment_' + self.id, data-project= self.project_id, data-id= self.id, data-user= self.user_id)
+  .info
+    a.micro_avatar(href= self.user.user_url, style= 'background: url(' + self.user.micro_avatar_url + ') no-repeat')
+  .block
+    .actions_menu
+      .actiondate
+        time.timeago(data-msec= self.ms(self.updated_at), pubdate= 'true')= self.time_ago(self.updated_at)
+      img(class= 'triangle', src= '/images/triangle.png?1285939525', alt= 'Triangle')
+      .extra
+        a.edit(style= 'display:block;') Edit
+        a.reply_email(rel= 'facebox', href= '#email_post_' + self.id) Reply via email
+        a.delete(style= 'display:block;', href= "#") Delete
+    .body.textilized
+      .before
+        a.user(href= self.user.user_url)= self.user.full_name
+
+        != self.transition_due_on(self.due_on, self.previous_due_on);
+
+        - if (self.hours)
+          span.hours= self.human_hours(self.hours)
+
+        != self.status_transition()
+
+      - if (self.assigned)
+        p.assigned_transition
+          | Assigned to
+          = self.full_name(self.assigned.user)
+
+      != self.body_html
+      // TODO: google docs
+  div(id= 'email_post_' + self.id, style= 'width: 600px;display: none;')
+    h1 <%= t('.title') %>
+    p <%= t('.send_replies_with_this_email') %>
+    p
+      a(href: 'mailto:' + reply_email_url)= reply_email_url
+    p <%= t('.teambox_magic_happens') %>
+
+    p <%= t('.other_shortcuts_available') %>
+
+    table(style= 'width: 580px')
+      tr
+        td
+          a(href: 'mailto:' + conversation_url)= conversation_url
+        td <%= t('.will_create_conversation') %>
+      tr
+        td
+          a(href: 'mailto:' + task_url)= task_url
+        td <%= t('.will_create_task') %>
+  .clear

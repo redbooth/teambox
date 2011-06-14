@@ -3,8 +3,8 @@
 
   var Thread = { tagName: 'div'
                , className: 'thread'
-               , template: Handlebars.compile(Templates.partials.thread)
-               , comment_template:  Handlebars.compile(Templates.partials.comment)
+               , template: Teambox.modules.ViewCompiler('partials.thread')
+               , comment_template: Teambox.modules.ViewCompiler('partials.comment')
                };
 
   Thread.events = {
@@ -28,8 +28,8 @@
     evt.stop();
 
     var el = evt.element()
+      , self = this
       , options = {project_id: this.model.get('project_id')}
-      , template = Handlebars.compile(Templates.partials.comment)
       , comments;
 
     options[this.model.get('type').toLowerCase() + '_id'] = this.model.id;
@@ -40,7 +40,7 @@
       success: function (collection) {
         var html = '';
         _.each(collection.models.reverse(), function (model) {
-          html += template(model.attributes);
+          html += self.comment_template(model.attributes);
         });
         el.up('.comments').update(html).blindDown({duration: 0.5});
       }
