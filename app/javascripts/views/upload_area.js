@@ -26,6 +26,26 @@
     return this;
   };
 
+  UploadArea.onFilesAdded = function(uploader, files) {
+    if (files.length === 1) {
+      this.comment_form.el.select('input[type=submit]').each(function(input) {
+        input.on('click', function(e) {
+          uploader.start();
+          e.stop();
+        }.bind(this));
+      }.bind(this));
+    }
+
+    var file_list = '';
+    _.each(files, function(file, i) {
+      file_list += '<li id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ')' + '</li>';
+    });
+
+    this.el.select('.file_list')[0].update(file_list);
+
+    uploader.refresh(); // Reposition Flash/Silverlight
+  };
+
   /* show new upload
    *
    * @param {Event} evt

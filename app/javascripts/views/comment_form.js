@@ -50,11 +50,14 @@
     , project: Teambox.collections.projects.get(this.model.get('project_id'))
     })).render();
 
+    this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
+    this.watchers = new Teambox.Views.Watchers({model: this.model});
+
     this.el.down('.actions')
       // upload area
-      .insert({before: (new Teambox.Views.UploadArea({comment_form: this})).render().el})
+      .insert({before: (this.upload_area).render().el})
       // watchers box
-      .insert({before: (new Teambox.Views.Watchers({model: this.model})).render().el});
+      .insert({before: (this.watchers).render().el});
 
     return this;
   };
@@ -154,7 +157,9 @@
     $(this.el).down('.upload_area').toggle().highlight();
 
     if (!this.uploader) {
-      this.uploader = new Teambox.modules.Uploader(this);
+      this.uploader = new Teambox.modules.Uploader(this, {
+        onFilesAdded: this.upload_area.onFilesAdded.bind(this.upload_area)
+      });
     }
 
     if (!this.uploader.inited) {

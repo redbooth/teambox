@@ -12,6 +12,8 @@
     this.view = view;
     this.opts = opts;
     this.inited = false;
+    this.onFilesAdded = opts.onFilesAdded;
+    delete opts.onFilesAdded;
   };
 
   Uploader.prototype.init = function () {
@@ -64,25 +66,7 @@
     }.bind(this));
 
 
-    this.uploader.bind('FilesAdded', function(uploader, files) {
-      if (files.length === 1) {
-        this.view.el.select('input[type=submit]').each(function(input) {
-          input.on('click', function(e) {
-            this.uploader.start();
-            e.stop();
-          }.bind(this));
-        }.bind(this));
-      }
-
-      var file_list = '';
-      _.each(files, function(file, i) {
-        file_list += '<li id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ')' + '</li>';
-      });
-
-      this.view.el.select('.file_list')[0].update(file_list);
-
-      uploader.refresh(); // Reposition Flash/Silverlight
-    }.bind(this));
+    this.uploader.bind('FilesAdded', this.onFilesAdded);
 
     this.uploader.bind('UploadProgress', function(up, file) {
       console.log("Uploading: " + file.percent + "%");
