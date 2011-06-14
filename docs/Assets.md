@@ -141,7 +141,7 @@ There are no _helpers_ in jade. Although you can provide some functions on the `
 and they will be available. As a convention, the `view_compiler` will mixin the attributes
 found at `app/javascripts/helpers/jade.js`.
 
-You can overwrite any _helper_ by passing a local with the same new.
+You can overwrite any _helper_ by passing a local with the same name.
 
 ## CSS
 
