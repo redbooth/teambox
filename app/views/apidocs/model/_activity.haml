@@ -4,6 +4,7 @@
           :example => example_api_wrap([@activity],
             :references => true) do
   %p=raw "Returns the most recent activities in the project. Related objects required to reconstruct a Teambox timeline are stored in <tt>references</tt>."
+  %p=raw "By default all the activities will be returned, but by providing <tt>threads=true</tt> as a <tt>GET</tt> parameter, comments inside threads won't be returned. This is ideal for apps that want to display a compact view of activities (such as the collapsed view on the web version)."
 
 - doc_for :show,
           :example => example_api_wrap(@activity, :references => true) do
