@@ -193,6 +193,19 @@ describe ApiV1::ActivitiesController do
 
       list["Conversation#{conversation.id}"].should == nil
     end
+
+    it "can ask only for unique threads" do
+      login_as @user
+
+      conversation = Factory(:conversation, :project => @project, :name => "Dogshit")
+      2.times { Factory.create(:comment, :target => conversation, :project => @project) }
+
+      get :index, :threads => true
+      response.should be_success
+      objects = JSON.parse(response.body)['objects']
+      objects.select{ |a| a['target_type'] == 'Conversation' }.should_not be_empty
+      objects.select{ |a| a['target_type'] == 'Comment' }.should be_empty
+    end
   end
 
   describe "#show" do

@@ -12,6 +12,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
       order('activities.id DESC').
       limit(api_limit(:hard => true))
 
+    @activities = @activities.threads if params[:threads]
     api_respond @activities, :references => true
   end
 
