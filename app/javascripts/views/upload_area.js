@@ -5,7 +5,7 @@
                    };
 
   UploadArea.events = {
-    'click #upload_file_button': 'showNewUpload'
+    'click .upload_file_button': 'showNewUpload'
   , 'change .upload_area input[type=file]': 'insertNewUpload'
   , 'click .uploads .upload .header': 'toggleReference'
   };
@@ -17,11 +17,12 @@
     this.comment_form = options.comment_form;
   };
 
+
   // Draw the Add UploadArea box and populate it with watchers
   UploadArea.render = function () {
     this.el
       .setStyle({display: 'none'})
-      .update(this.template({}));
+      .update(this.template(this.comment_form.model.getAttributes()));
     return this;
   };
 
@@ -30,12 +31,10 @@
    * @param {Event} evt
    */
   UploadArea.showNewUpload = function (evt) {
-    var el = evt.element;
-    if (!evt.isMiddleClick()) {
-      evt.preventDefault();
-      $('new_upload').show();
-      el.hide();
-    }
+    // var el = evt.element;
+    // if (!evt.isMiddleClick()) {
+    //   evt.preventDefault();
+    // }
   };
 
 

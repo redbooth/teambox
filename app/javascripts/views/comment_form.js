@@ -65,6 +65,7 @@
    * @returns false;
    */
   CommentForm.reset = function () {
+
     // clear comment and reset textarea height
     this.el.down('textarea').update('').setStyle({height: ''});
 
@@ -81,6 +82,38 @@
     this.el.select('.error').invoke('remove');
     this.el.select('.google_docs_attachment .fields input').invoke('remove');
     this.el.select('.google_docs_attachment .file_list li').invoke('remove');
+    this.el.select('.upload_area .file_list li').invoke('remove');
+    if (this.el.down('.upload_area').visible()) {
+      this.toggleAttach();
+    }
+  };
+
+  CommentForm.onFileUploaded = function(uploader, file, response) {
+    var resp = JSON.parse(response.response)
+    , status = response.status;
+
+    if (status === 200) {
+      this.model.set(resp.objects);
+      this.addComment(false, resp);
+    }
+    else {
+      this.handleError(false, resp);
+    }
+  };
+
+  CommentForm.addComment = function (m, resp) {
+    var comment_attributes = self.model.parseComments(response);
+
+    this.reset();
+    this.model.attributes.last_comment = comment_attributes;
+    this.model.attributes.recent_comments.push(comment_attributes);
+    this.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user));
+  };
+
+  CommentForm.handleError = function (m, resp) {
+    resp.errors.each(function (error) {
+      self.el.down('div.text_area').insertOrUpdate('p.error', error.value);
+    });
   };
 
   /* Syncs the new comment and triggers `comment:added`
@@ -89,31 +122,23 @@
    * @returns false;
    */
   CommentForm.postComment = function (evt) {
-    var self = this
-      , data = _.deparam(this.el.serialize(), true);
+    var self = this;
 
-    evt.stop();
-
-    if (this.hasFileUploads()) {
-      console.log('HEY');
-      //return this.uploadFile();
+    if (evt) {
+      evt.stop();
     }
 
-    this.model.save(data[this.model.className().toLowerCase()], {
-      success: function (model, response) {
-        var comment_attributes = self.model.parseComments(response);
+    // if (this.hasFileUploads()) {
+    //   console.log('HEY');
+    //   //return this.uploadFile();
+    // }
 
-        self.reset();
-        self.model.attributes.last_comment = comment_attributes;
-        self.model.attributes.recent_comments.push(comment_attributes);
-        self.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user));
-      }
-    , failure: function (model, response) {
-        response.errors.each(function (error) {
-          self.el.down('div.text_area').insertOrUpdate('p.error', error.value);
-        })
-      }
+    var data = _.deparam(this.el.serialize(), true);
+    this.model.save(data[this.model.className().toLowerCase()], {
+      success: this.addComment.bind(this)
+    , failure: this.handleError.bind(this)
     });
+
     return false;
   };
 
@@ -122,8 +147,19 @@
    * @param {Event} evt
    */
   CommentForm.toggleAttach = function (evt) {
-    evt.stop();
+    if (evt) {
+      evt.stop();
+    }
+
     $(this.el).down('.upload_area').toggle().highlight();
+
+    if (!this.uploader) {
+      this.uploader = new Teambox.modules.Uploader(this);
+    }
+
+    if (!this.uploader.inited) {
+      this.uploader.init();
+    }
   };
 
   /* Toggle the time tracking area
@@ -211,6 +247,7 @@
   /* creates an iframe and uploads a file
    */
   CommentForm.uploadFile = function () {
+
     var self = this
       , iframe_id = 'file_upload_iframe' + Date.now()
       , iframe = new Element('iframe', {id: iframe_id, name: iframe_id}).hide()

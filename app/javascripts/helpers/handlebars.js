@@ -130,6 +130,10 @@ Handlebars.registerHelper('status_transition', function () {
   return new Handlebars.SafeString(html);
 });
 
+Handlebars.registerHelper('downloadUrl', function(id, filename, type) {
+  return new Handlebars.SafeString("/downloads/#{id}/#{type}/#{filename}".interpolate({id: id, type: type, filename: escape(filename)}));
+});
+
 Handlebars.registerHelper('project_url', function(project) {
   project = project || this;
   var url = "#!/projects/" + project.permalink;

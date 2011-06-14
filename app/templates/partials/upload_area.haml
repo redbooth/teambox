@@ -1,2 +1,4 @@
+%div{:id => "file_list_{{downcase type}}_{{id}}"}
+%ol{:class => 'file_list'}
 %p Select a file to upload to Teambox
-%input{:id => 'upload_file', :name => 'uploads_attributes[0][asset]', :type => 'file'}
+%button{:id => 'upload_file_{{downcase type}}_{{id}}', :class => 'upload_file_button'}

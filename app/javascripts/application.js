@@ -12,6 +12,9 @@
 
 //= require <lib/handlebars>
 //= require <lib/jade>
+//= require <lib/plupload>
+//= require <lib/plupload.html5>
+//= require <lib/plupload.html4>
 
 //= require <rails>
 //= require <html5>
@@ -24,6 +27,7 @@
 //= require <modules/calendar_date_select>
 //= require <modules/params>
 //= require <modules/view_compiler>
+//= require <modules/uploader>
 
 // TODO: move it to modules
 //= require <lib/teambox_api>
