@@ -38,4 +38,7 @@
       Show {{hidden_comments_count}} previous comments
     {{/if}}
     {{#recent_comments}}{{> comment}}{{/recent_comments}}
-  {{> comment_form}}
+  -# TODO: I'm adding this %form.new_comment so the styles are right, feel free to change
+  -# so the style is more similar to the comment form on the thread view
+  %form.new_comment
+    {{> comment_form}}
