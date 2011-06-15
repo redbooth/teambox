@@ -16,7 +16,6 @@ class TeamboxDatasController < ApplicationController
     respond_to do |f|
       if @data.type_name == :import and @data.need_data? and @data.data == nil
         @data.status_name = :uploading
-        @data.processed_data_file_name = nil
         @data.save
         flash.now[:error] = t('teambox_datas.show_import.import_error')
         f.html { render view_for_data(:show) }

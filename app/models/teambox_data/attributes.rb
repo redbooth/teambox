@@ -70,15 +70,16 @@ class TeamboxData
       Organization.where(:projects => {:id => project_ids}).joins([:projects]).all
     end
   end
-  
-  def import_data_file_name
-    "#{temp_upload_path}/tbox-import-#{self.id}-#{processed_data_file_name}"
-  end
-  
+
   def data
     if @data.nil? and type_name == :import
       begin
-        File.open(import_data_file_name) do |f|
+        data_path = processed_data.path
+        if Teambox.config.amazon_s3
+          fetch_s3_upload
+          data_path = "#{Rails.root}/tmp/#{processed_data.path}"
+        end
+        File.open(data_path) do |f|
           @data = if service == 'basecamp'
             Hash.from_xml f.read
           else

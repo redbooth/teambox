@@ -8,8 +8,8 @@
     = f.label :service_basecamp, 'Basecamp'
   
   .many_fields
-    = f.label :asset, t('.select_file')
-    = f.file_field :import_data, :size => 20
+    = f.label :processed_data, t('.select_file')
+    = f.file_field :processed_data, :size => 20
     .clear
 - elsif @data.status_name == :mapping
   %p= t('.please_supply_user_map')
