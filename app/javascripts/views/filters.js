@@ -53,8 +53,8 @@
         tasks = TasksHelper[method](tasks, this.filters[filter]);
       }
 
-      if (view.tagName === 'select' && filter !== filter_name) {
-        _.each(view.el.options, function (option) {
+      if (view.tagName === 'select') {
+        _.each(view.el.select('option'), function (option) {
           var count = option.value
                       ? TasksHelper[method](tasks, option.value).length
                       : tasks.length;

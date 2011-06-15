@@ -126,7 +126,6 @@ jasmine.Prototype.matchersClass = {};
   namespace.events = {
     spyOn: function (element, eventName) {
       var handler = function (e) {
-        console.log('FLEIBA');
         data.spiedEvents[[element, eventName]] = e;
       };
       element.observe(eventName, handler);
@@ -134,8 +133,6 @@ jasmine.Prototype.matchersClass = {};
     }
 
   , wasTriggered: function (selector, eventName) {
-      console.log(selector, eventName);
-      console.log(data.spiedEvents);
       return !!(data.spiedEvents[[selector, eventName]]);
     }
 

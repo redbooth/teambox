@@ -3,11 +3,11 @@
   var FilterStatus = { tagName: 'select'
                      , id: 'filter_status'
                      , options_html: '<option value="">all status</option>'
-                                   + '<option value="0">new</option>'
-                                   + '<option value="1">open</option>'
-                                   + '<option value="2">hold</option>'
-                                   + '<option value="3">resolved</option>'
-                                   + '<option value="4">rejected</option>' };
+                                   + '<option value="status_0">new</option>'
+                                   + '<option value="status_1">open</option>'
+                                   + '<option value="status_2">hold</option>'
+                                   + '<option value="status_3">resolved</option>'
+                                   + '<option value="status_4">rejected</option>' };
 
   FilterStatus.initialize = function (options) {
     var el = $(this.el);
