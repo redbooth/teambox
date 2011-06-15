@@ -25,7 +25,7 @@
 
         != self.status_transition()
 
-      - if (self.assigned)
+      - if (self.assigned && self.assigned.user)
         p.assigned_transition
           | Assigned to
           = self.full_name(self.assigned.user)

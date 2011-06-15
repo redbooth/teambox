@@ -1,0 +1,45 @@
+- console.log(self);
+// CLEANME: taskStatus is deprecated and hidden
+.taskStatus
+  // <img src='drag.png' class='task_drag'/> if editable and !task.archived?
+  span.task_status.task_counter(data-task-id= self.id)= self.comments_count
+.status= self.status_text()
+.taskName
+  a.name(href= self.task_url)= self.name
+  form.edit_title(style= 'display:none;')
+    input(data-disable-with= '<%= t('common.saving')%>…', value= self.name)
+  .expanded_actions(style= 'display:none;')
+    a.full(href= self.task_url) <%= t('tasks.task.full_view')%>
+    a.edit(href= "#") <%= t('tasks.task.edit')%>
+
+  - if (self.due_on)
+    span.assigned_date(style= 'display:inline-block;')= self.date(self.due_on)
+
+  - if (self.assigned)
+    span.assigned_user
+      a(href= self.user_url(self.assigned.user))= self.short_name(self.assigned.user)
+
+  .extended
+    span.project
+      - if (self.project)
+        a(href= self.project.project_url)= self.project.name
+      &rarr;
+    span.task_list
+      a(href= self.task_list_url)= self.task_list.name
+.clear
+.thread(style= 'display:none;')
+  .comments
+    - if (self.first_comment)
+      != self.partial('partials.comment', self.first_comment)
+
+    - if (self.hidden_comments_count)
+      .more_comments
+        a(href= '/activities/' + self.id + '/show_thread?thread_type=' + self.type)= 'Show ' + self.hidden_comments_count + ' previous comments'
+
+    - each recent_comment in self.recent_comments
+      != self.partial('partials.comment', recent_comment)
+
+  // TODO: I'm adding this form.new_comment so the styles are right, feel free to change
+  // so the style is more similar to the comment form on the thread view
+  form.new_comment
+    != self.partial('partials.comment_form', self)
