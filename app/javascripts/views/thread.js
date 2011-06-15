@@ -53,6 +53,7 @@
    */
   Thread.deleteComment = function (evt) {
     var element = evt.element().up('.comment'), comment;
+
     comment = new Teambox.Models.Comment({id: element.readAttribute('data-id'), parent_url: this.model.url()});
 
     evt.stop();
@@ -80,7 +81,9 @@
    * @param {Object} user
    */
   Thread.addComment = function (comment, user) {
-    if (user) comment.user = user.attributes;
+    if (user) {
+      comment.user = user.attributes;
+    }
 
     var el = this.comment_template(comment);
 
@@ -101,6 +104,10 @@
     //document.fire("stats:update");
   };
 
+  /* updates thread el using a template
+   *
+   * @return {Object} self
+   */
   Thread.render = function () {
     var Views = Teambox.Views
       , convert_to_task = new Views.ConvertToTask({model: new Teambox.Models.Conversation(this.model.attributes)})

@@ -3,22 +3,6 @@ describe("views/thread", function () {
 
   var thread_model
     , thread_view
-    , thread = { body_html: "<p>qwer</p>\n"
-               , created_at: "2011-05-30 17:14:55 +0000"
-               , body: "qwer"
-               , target_id: 6
-               , project_id: 1
-               , updated_at: "2011-05-30 17:14:55 +0000"
-               , id: 48
-               , user_id: 1
-               , type: "Comment"
-               , hours: null
-               , target_type: "Conversation"
-               , project: { id: 1
-                          , permalink: 'http://zpeaker.com'
-                          , name: 'zpeaker'
-                          }
-      }
     , user = { avatar_url: "http://www.gravatar.com/avatar/49958537f28bbde1a14027f1a5cd06d8?size=48&default=identicon"
              , email: "example_corrina@teambox.com"
              , first_name: "Corrina"
@@ -28,7 +12,23 @@ describe("views/thread", function () {
              , url: "/user/1"
              , type: "User"
              , username: "corrina"
-             };
+             }
+    , thread = { id: 48
+               , body_html: '<p>qwer</p>\n'
+               , created_at: "2011-05-30 17:14:55 +0000"
+               , body: 'qwer'
+               , type: 'Conversation'
+               , target_type: 'project'
+               , target_id: 6
+               , action: 'create'
+               , project_id: 1
+               , recent_comments: []
+               , project: { id: 1
+                          , permalink: 'http://zpeaker.com'
+                          , name: 'zpeaker'
+                          }
+               , user: user
+               };
 
   beforeEach(function () {
     setFixtures('<div class="thread"><div class="comments">'
@@ -40,13 +40,7 @@ describe("views/thread", function () {
               + '</div>'
               + '</div></div>');
 
-    thread_model = new Teambox.Models.Thread({ id: 1
-                                             , type: 'Conversation'
-                                             , target_type: 'project'
-                                             , project: 'create'
-                                             , project_id: 1
-                                             });
-
+    thread_model = new Teambox.Models.Thread(thread);
     thread_view = new Teambox.Views.Thread({el: $$('.thread')[0], model: thread_model});
   })
 
@@ -104,7 +98,7 @@ describe("views/thread", function () {
 
     thread_view.deleteComment(evt);
 
-    expect($comment_model).toHaveBeenCalledWith({id: '48', parent_url: '/api/1/projects/1/conversations/1'});
+    expect($comment_model).toHaveBeenCalledWith({id: '48', parent_url: '/api/1/projects/1/conversations/48'});
     expect($stop).toHaveBeenCalledOnce();
     expect($confirm).toHaveBeenCalledOnce();
     expect($destroy).toHaveBeenCalledOnce();
@@ -143,7 +137,7 @@ describe("views/thread", function () {
     expect(thread_view.render()).toEqual(thread_view);
 
     expect(thread_view.el).toHaveAttr('data-class', 'conversation');
-    expect(thread_view.el).toHaveAttr('data-id', '1');
+    expect(thread_view.el).toHaveAttr('data-id', '48');
     expect(thread_view.el).toHaveAttr('data-project-id', '1');
     expect(thread_view.el).toContain('.comment_header');
     expect(thread_view.el).toContain('form.comment_form');

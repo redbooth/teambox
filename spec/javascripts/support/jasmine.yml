@@ -20,6 +20,7 @@ src_files:
   - app/javascripts/lib/jquery.js
   - app/javascripts/lib/backbone-prototype.js
   - app/javascripts/lib/handlebars.js
+  - app/javascripts/lib/jade.js
   - app/javascripts/trimmer/en.js
   - app/javascripts/datetime.js
   - app/javascripts/teambox.js
@@ -28,8 +29,10 @@ src_files:
   - app/javascripts/modules/loader.js
   - app/javascripts/modules/params.js
   - app/javascripts/modules/calendar_date_select.js
+  - app/javascripts/modules/view_compiler.js
 
   - app/javascripts/helpers/handlebars.js
+  - app/javascripts/helpers/jade.js
   - app/javascripts/helpers/deparam.js
 
   - app/javascripts/models/base.js
