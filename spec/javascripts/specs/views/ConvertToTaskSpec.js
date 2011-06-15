@@ -32,10 +32,13 @@ describe("views/convert_to_task", function () {
     Teambox.collections = {projects: {get: function () {
       return conversation.project;
     }}};
-    convert_to_task_view = new ConvertToTask({model: conversation_model, comment_form: {toggle: function () {}}});
+    convert_to_task_view = new ConvertToTask({
+      model: conversation_model
+    , comment_form: {el: new Element('form'), toggle: function () {}}
+    });
   });
 
-  it('`render` should render the comment form', function () {
+  it('`render` should render the convert to task form', function () {
 
     function mock_render() {
       return {el: 'foo'};
@@ -79,5 +82,33 @@ describe("views/convert_to_task", function () {
     expect($task_lists).toHaveBeenCalled();
 
     [$select_status_view, $select_assigned_view, $status_render, $assigned_render, $task_lists].invoke('restore');
+  });
+
+  it('`toggle` should toggle the `comment` and `convert to task` form', function () {
+    var evt = {stop: function () {}}
+      , $stop = sinon.stub(evt, 'stop');
+
+    convert_to_task_view.el.hide();
+
+    convert_to_task_view.toggle(evt);
+    expect(convert_to_task_view.el).toBeVisible();
+    expect(convert_to_task_view.comment_form.el).toBeHidden();
+
+    convert_to_task_view.toggle(evt);
+    expect(convert_to_task_view.el).toBeHidden();
+    expect(convert_to_task_view.comment_form.el).toBeVisible();
+
+    expect($stop).toHaveBeenCalledTwice();
+  });
+
+  it('`convertToTask` should sync the action to the server', function () {
+    var evt = {stop: function () {}}
+      , $stop = sinon.stub(evt, 'stop')
+      , $convert_to_task = sinon.stub(conversation_model, 'convertToTask');
+
+    convert_to_task_view.convertToTask(evt);
+
+    expect($stop).toHaveBeenCalledOnce();
+    expect($convert_to_task).toHaveBeenCalledOnce();
   });
 });

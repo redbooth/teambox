@@ -51,6 +51,7 @@
 
   /* Displays the form and fills the project select
    *
+   * @param {Event} evt
    */
   ConvertToTask.toggle = function (evt) {
     evt.stop();
