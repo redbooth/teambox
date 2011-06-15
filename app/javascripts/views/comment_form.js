@@ -91,18 +91,6 @@
     }
   };
 
-  CommentForm.onFileUploaded = function(uploader, file, response) {
-    var resp = JSON.parse(response.response)
-    , status = response.status;
-
-    if (status === 200) {
-      this.model.set(resp.objects);
-      this.addComment(false, resp);
-    }
-    else {
-      this.handleError(false, resp);
-    }
-  };
 
   CommentForm.addComment = function (m, resp) {
     var comment_attributes = self.model.parseComments(response);
@@ -154,11 +142,18 @@
       evt.stop();
     }
 
+    //TODO: Find a better place to init the uploader
+    //Currently, plupload checks for file list container in DOM sw we
+    //need to be sure it exists in DOM when intiting the uploader
+    this.initUploader();
     $(this.el).down('.upload_area').toggle().highlight();
+  };
 
+  CommentForm.initUploader = function() {
     if (!this.uploader) {
       this.uploader = new Teambox.modules.Uploader(this, {
-        onFilesAdded: this.upload_area.onFilesAdded.bind(this.upload_area)
+          onFilesAdded: this.upload_area.onFilesAdded.bind(this.upload_area)
+        , onFileUploaded: this.upload_area.onFileUploaded.bind(this.upload_area)
       });
     }
 

@@ -13,7 +13,9 @@
     this.opts = opts;
     this.inited = false;
     this.onFilesAdded = opts.onFilesAdded;
+    this.onFileUploaded = opts.onFileUploaded;
     delete opts.onFilesAdded;
+    delete opts.onFileUploaded;
   };
 
   Uploader.prototype.init = function () {
@@ -77,7 +79,7 @@
       uploader.refresh(); // Reposition Flash/Silverlight
     });
 
-    this.uploader.bind('FileUploaded', this.view.onFileUploaded.bind(this.view));
+    this.uploader.bind('FileUploaded', this.onFileUploaded);
 
 	  this.uploader.init();
     this.inited = true;

@@ -26,6 +26,19 @@
     return this;
   };
 
+  UploadArea.onFileUploaded = function(uploader, file, response) {
+    var resp = JSON.parse(response.response)
+    , status = response.status;
+
+    if (status === 200) {
+      this.comment_form.model.set(resp.objects);
+      this.comment_form.addComment(false, resp);
+    }
+    else {
+      this.comment_form.handleError(false, resp);
+    }
+  };
+
   UploadArea.onFilesAdded = function(uploader, files) {
     if (files.length === 1) {
       this.comment_form.el.select('input[type=submit]').each(function(input) {
