@@ -41,7 +41,7 @@ describe TeamboxData do
       user_map = user_list.inject({}){|a,key| a[key] = "  #{user.login}   "; a}
       org_map = org_list.inject({}){|a,key| a[key] = organization.permalink; a}
       
-      TeamboxData.new.tap{|d| d.data = data; d.user = user }.unserialize(
+      TeamboxData.new.tap{|d| d.type_name = 'import'; d.data = data; d.user = user }.unserialize(
         {'User' => user_map, 'Organization' => org_map}, {})
       
       Organization.count.should == 1
@@ -247,8 +247,8 @@ describe TeamboxData do
       user_map = @user_list.inject({}){|a,key| a[key] = user.login; a}
       
       organization.add_member(user, Membership::ROLES[:admin])
-      dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user; d.save}
-      dump.import_data = mock_uploader('dump.js', 'text/json', ActiveSupport::JSON.encode(@teambox_dump))
+      dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user}
+      dump.processed_data = mock_uploader('dump.js', 'text/json', ActiveSupport::JSON.encode(@teambox_dump))
       dump.save
       dump.organization = organization
       dump.user_map = user_map
@@ -298,7 +298,7 @@ describe TeamboxData do
       organization.add_member(user, Membership::ROLES[:admin])
       dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user; d.save}
       dump.data = @teambox_dump
-      dump.organization = organization.permalink
+      dump.organization = organization
       dump.user_map = user_map
       dump.status_name = :mapping
       
