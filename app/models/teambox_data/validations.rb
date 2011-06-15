@@ -14,7 +14,7 @@ class TeamboxData
       users = user.users_for_user_map.map(&:login)
 
       user_map.each do |login,dest_login|
-        if !users.include?(dest_login.strip)
+        if !users.include?(dest_login.to_s.strip)
           @errors.add "user_map_#{login}", "#{dest_login} Not known to user"
         end
       end

@@ -1,17 +1,18 @@
+require 'open-uri'
 class TeamboxData < ActiveRecord::Base
   include Immortal
 
   belongs_to :user
   belongs_to :organization
   concerned_with :serialization, :attributes, :teambox, :basecamp, :validations
-  
-  attr_accessible :project_ids, :type_name, :import_data, :user_map, :target_organization, :service, :organization_id
+
+  attr_accessible :project_ids, :type_name, :processed_data, :user_map, :target_organization, :service, :organization_id
 
   has_attached_file :processed_data,
-    :url  => "/exports/:id/:basename.:extension",
+    :url  => "/:data_type/:id/:basename.:extension",
     :path => Teambox.config.amazon_s3 ?
-      "exports/:id/:filename" :
-      ":rails_root/exports/:id/:filename"
+      ":data_type/:id/:filename" :
+      ":rails_root/:data_type/:id/:filename"
 
   before_validation :set_service, :on => :create
   after_save  :post_check_state
@@ -20,9 +21,20 @@ class TeamboxData < ActiveRecord::Base
 
   def clear_import_data
     if type_name == :import
-      fname = import_data_file_name
-      FileUtils.rm(fname) if processed_data_file_name and File.exists?(fname)
-      self.processed_data_file_name = nil
+      self.processed_data.clear
+    end
+  end
+
+  def fetch_s3_upload
+    target_file = "#{Rails.root}/tmp/#{processed_data.path}"
+    target_dir = File.dirname target_file
+
+    FileUtils.mkdir_p target_dir unless File.exists? target_dir
+
+    open(URI.escape processed_data.url) do |data|
+      File.open target_file, 'w' do |file|
+        file.write(data.read)
+      end
     end
   end
 
@@ -30,17 +42,12 @@ class TeamboxData < ActiveRecord::Base
     self.service ||= 'teambox'
   end
 
-  def temp_upload_path
-    "/tmp"
-  end
-
   def store_import_data
     begin
-      # store the import in a temporary file, since we don't need it for long
-      bytes = @import_data.read
-      File.open(import_data_file_name, 'w') do |f|
-        f.write bytes
-      end
+      upload = ActionDispatch::Http::UploadedFile.new(:type => 'application/json',
+                                                      :filename => "#{user.login}-import.json",
+                                                      :tempfile => @import_data)
+      self.processed_data = upload
       @import_data = nil
     rescue Exception => e
       @process_error = e.to_s
@@ -61,14 +68,10 @@ class TeamboxData < ActiveRecord::Base
     if type_name == :import
       case status_name.to_sym
       when :uploading
-        if self.processed_data_file_name and File.exists?("#{temp_upload_path}/#{processed_data_file_name}")
+        if self.processed_data_file_name and processed_data.exists?
           self.status_name = :mapping
-        elsif @import_data
-          self.processed_data_file_name = "#{user.login}.json"
-          @do_store_import_data = true
+        elsif processed_data
           self.status_name = :mapping
-        else
-          self.processed_data_file_name = nil
         end
       when :mapping
         self.status_name = :processing
@@ -122,7 +125,6 @@ class TeamboxData < ActiveRecord::Base
     end
 
     self.status_name = next_status
-    clear_import_data
     @dispatch_notification = true
 
     save unless new_record? or @check_state
@@ -190,4 +192,9 @@ class TeamboxData < ActiveRecord::Base
     
     base
   end
+
+  Paperclip.interpolates :data_type do |attachment,style|
+    attachment.instance.type_name.to_s.pluralize
+  end
+
 end
