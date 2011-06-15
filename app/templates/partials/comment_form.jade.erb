@@ -5,21 +5,21 @@ input(name= 'utf8', type= 'hidden', value= '✓')
 .field.text_area
   a.micro_avatar.my_avatar
   .textarea
-    textarea(cols= '40', name= type + '[comments_attributes][0][body]', placeholder= 'Define what needs to be done, assign this task to somebody.', rows= '20', autocomplete= 'off')
+    textarea(cols= '40', name= type + '[comments_attributes][0][body]', placeholder= '<%= t('comments.new.task') %>', rows= '20', autocomplete= 'off')
     .autocomplete(style= 'display: none')
 
 .extra(style= 'display: none')
   - if (self.is_task)
     .field.text_field.hours_field(style= 'display: none')
       label
-        | How many hours did you put into this task?
+        | <%= t('comments.hours.hours') %>
         input(class= 'human_hours', name= type + '[comments_attributes][0][human_hours]', size= '30', type= 'text')
-      a(href= 'http://help.teambox.com/faqs/advanced-features/time-tracking', target= '_blank') Learn more.
+      a(href= 'http://help.teambox.com/faqs/advanced-features/time-tracking', target= '_blank') <%= t('projects.fields.new.time_tracking_docs')%>.
 
   .actions
     .attach
       span <%= t('comments.fields.attach')%>
-      a(href= '#uploads', class= 'attach_icon hoverable', title= 'Attach a file') Attachment
+      a(href= '#uploads', class= 'attach_icon hoverable', title= '<%= t('uploads.tooltip')%>') Attachment
       .google_docs_attachment
         a(href= '/google_docs', rel= 'facebox')
           img(alt= 'Icon_6_document', class= 'google_docs_logo', src= '/images/google_docs/icon_6_document.gif')
@@ -28,31 +28,31 @@ input(name= 'utf8', type= 'hidden', value= '✓')
           ul.file_list
 
       - if (self.is_task)
-        a(href= '#hours', class= 'add_hours_icon hoverable', title= 'Log hours') Add hours to this task
+        a(href= '#hours', class= 'add_hours_icon hoverable', title= '<%= t('comments.hours.tooltip_short') %>') <%= t('comments.hours.tooltip') %>
 
-      a(href= '#', class= 'add_watchers hoverable', title= 'Notify people') Watchers
+      a(href= '#', class= 'add_watchers hoverable', title= '<%= t('shared.watchers.notify_people')%>') <%= t('comments.hours.watchers') %>
 
     - if (self.is_task)
       .task_actions
-        label(for= 'task_status') Status
+        label(for= 'task_status') <%= t('activerecord.attributes.task.status') %>
         select#task_status(name= type + '[status]')
 
-        label(for= 'task_assigned_id') Assigned to:
+        label(for= 'task_assigned_id') <%= t('comments.new.assigned_to') %>
         select#task_assigned_id(name= type + '[assigned_id]')
 
-        label(for= 'task_due_on') Due date
+        label(for= 'task_due_on') <%= t('activerecord.attributes.task.due_on') %>
         .date_picker
           img(alt= 'Calendar', class= 'calendar_date_select_popup_icon', src= '/images/calendar_date_select/calendar.gif')
           input(id= 'task_due_on', name= type + '[due_on]', type= 'hidden')
           span(class= 'localized_date')
-            i No date assigned
+            i <%= t('date_picker.no_date_assigned') %>
     - else
       span.convert_to_task
-        a(href= '#convert_to_task') Convert to task
+        a(href= '#convert_to_task') <%= t('comments.conversations.convert_to_task') %>
 
-    span.new(style= 'display: none') ← &nbsp;&nbsp; Select <b>Notify people</b> to send notifications for this conversation.
+    span.new(style= 'display: none') ← &nbsp;&nbsp; <%= t('comments.watchers.popup_note_html') %>
 
   .submit
     span.help
-      a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= 'Formatting help')
-    input(name= 'commit', type= 'submit', value= 'Save')
+      a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= '<%= t('projects.show.text_styling')%>')
+    input(name= 'commit', type= 'submit', value= '<%= t('common.save')%>')

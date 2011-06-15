@@ -1074,6 +1074,7 @@ en:
     hours:
       add_hours: Hours
       tooltip: Add hours to this task
+      tooltip_short: Log hours
       hours: How many hours did you put into this task?
       time_tracking_docs: Learn how to use time-tracking
     new:
@@ -1360,6 +1361,7 @@ en:
       nobody_watching: "Nobody is watching"
       started_watching: "You will now be notified of updates by email."
       stopped_watching: "You will no longer receive notifications for this item."
+      notify_people:    "Notify people"
     upgrade_browser:
       upgrade: You're using an outdated version of Internet Explorer. Teambox may not work properly under this version.
       ie: Upgrade to Internet Explorer 8
