@@ -10,6 +10,7 @@ config/database.yml
 config/teambox.local.yml
 /coverage
 /exports
+/imports
 db/*.sqlite3
 db/sphinx
 config/*.sphinx.conf
@@ -20,6 +21,8 @@ public/avatars
 public/logos
 public/stylesheets
 public/sprockets.js
+public/trimmer
+public/jammit
 /uploads
 webrat-*
 capybara-*
