@@ -25,4 +25,4 @@ webrat-*
 capybara-*
 rerun.txt
 teambox2
-app/javascripts/trimmer
+app/javascripts/trimmer/*
