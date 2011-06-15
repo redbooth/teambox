@@ -2,7 +2,7 @@
 
   var ConvertToTask = { tagName: 'form'
                       , className: 'convert_to_task'
-                      , template: Handlebars.compile(Templates.partials.convert_to_task)
+                      , template: Teambox.modules.ViewCompiler('partials.convert_to_task')
                       };
 
   ConvertToTask.events = {
