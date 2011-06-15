@@ -21,9 +21,9 @@ GIT
 
 GIT
   remote: git://github.com/teambox/choices.git
-  revision: 566a8cad6ddee26ed1529ad5bafc40aa8253add2
+  revision: 93d0cfb4e5fd4ae03b421b379a69ee00721f337b
   specs:
-    choices (0.2.0)
+    choices (0.2.4)
       hashie (>= 0.4.0)
 
 GIT
