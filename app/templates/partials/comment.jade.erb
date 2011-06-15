@@ -31,7 +31,14 @@
           = self.full_name(self.assigned.user)
 
       != self.body_html
-      // TODO: google docs
+    - if (self.uploads && self.uploads.length)
+      .upload_images
+        - each upload in self.uploads
+          div(class='upload_thumbnail', id="upload_#{upload.id}")
+            a(href= self.downloadUrl(upload.id, upload.filename, "original"), class="link_to_upload", rel="facebox")
+              img(alt="#{upload.description}", src=self.downloadUrl(upload.id, upload.filename, "thumb"))
+
+  // TODO: google docs
   div(id= 'email_post_' + self.id, style= 'width: 600px;display: none;')
     h1 <%= t('.title') %>
     p <%= t('.send_replies_with_this_email') %>

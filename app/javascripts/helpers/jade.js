@@ -142,6 +142,11 @@
     return '#!/users/' + user.username;
   };
 
+  JADE.downloadUrl = function(id, filename, type) {
+    return "/downloads/#{id}/#{type}/#{filename}".interpolate({id: id, type: type, filename: escape(filename)});
+  };
+
+
   // exports
   Teambox.helpers.jade = JADE;
 }());

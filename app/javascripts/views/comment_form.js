@@ -70,12 +70,7 @@
   CommentForm.reset = function () {
 
     // clear comment and reset textarea height
-    this.el.down('textarea').update('').setStyle({height: ''});
-
-    // clear populated file uploads
-    this.el.select('input[type=file]').each(function (input) {
-      input.remove();
-    });
+    this.el.down('textarea').update('').setStyle({height: ''}).value = '';
 
     if (this.model.className() === 'Task') {
       this.el.down('.human_hours').value = '';
@@ -92,7 +87,7 @@
 
 
   CommentForm.addComment = function (m, resp) {
-    var comment_attributes = self.model.parseComments(response);
+    var comment_attributes = this.model.parseComments(resp);
 
     this.reset();
     this.model.attributes.last_comment = comment_attributes;

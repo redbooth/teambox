@@ -1,7 +1,7 @@
 (function () {
 
   var UploadArea = { className: 'upload_area'
-                   , template: Handlebars.compile(Templates.partials.upload_area)
+                   , template: Teambox.modules.ViewCompiler('partials.upload_area')
                    , files: []
                    };
 
