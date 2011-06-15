@@ -85,6 +85,12 @@
     this.inited = true;
   };
 
+  /* Delegates to plupload.Uploader#start to start upload
+  * */
+  Uploader.prototype.start = function () {
+    this.uploader.start();
+  };
+
   // export
   Teambox.modules.Uploader = Uploader;
 

@@ -2,6 +2,7 @@
 
   var UploadArea = { className: 'upload_area'
                    , template: Handlebars.compile(Templates.partials.upload_area)
+                   , files: []
                    };
 
   UploadArea.events = {
@@ -26,6 +27,14 @@
     return this;
   };
 
+  /*  Handle the FileUploaded event
+   *
+   *  Updates the target model and adds a comment into the UI
+   *
+   * @param {plupload.Uploader} uploader
+   * @param {Object} file
+   * @param {Object} response
+   */
   UploadArea.onFileUploaded = function(uploader, file, response) {
     var resp = JSON.parse(response.response)
     , status = response.status;
@@ -39,15 +48,28 @@
     }
   };
 
-  UploadArea.onFilesAdded = function(uploader, files) {
-    if (files.length === 1) {
-      this.comment_form.el.select('input[type=submit]').each(function(input) {
-        input.on('click', function(e) {
-          uploader.start();
-          e.stop();
-        }.bind(this));
-      }.bind(this));
+  /*  Returns wether there are any files in the file list pending upload
+   */
+  UploadArea.hasFileUploads = function() {
+    return !(_.isEmpty(this.files));
+  };
+
+  UploadArea.reset = function() {
+    this.files = [];
+
+    if (this.el.visible()) {
+      this.comment_form.toggleAttach();
     }
+  };
+
+  /*
+   * Renders file list upon a file being added
+   *
+   * @param {plupload.Uploader} uploader
+   * @param {Object} file
+   */
+  UploadArea.onFilesAdded = function(uploader, files) {
+    this.files = files;
 
     var file_list = '';
     _.each(files, function(file, i) {

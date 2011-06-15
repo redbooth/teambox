@@ -86,9 +86,8 @@
     this.el.select('.google_docs_attachment .fields input').invoke('remove');
     this.el.select('.google_docs_attachment .file_list li').invoke('remove');
     this.el.select('.upload_area .file_list li').invoke('remove');
-    if (this.el.down('.upload_area').visible()) {
-      this.toggleAttach();
-    }
+
+    this.upload_area.reset();
   };
 
 
@@ -119,10 +118,9 @@
       evt.stop();
     }
 
-    // if (this.hasFileUploads()) {
-    //   console.log('HEY');
-    //   //return this.uploadFile();
-    // }
+    if (this.hasFileUploads()) {
+      return this.uploadFiles();
+    }
 
     var data = _.deparam(this.el.serialize(), true);
     this.model.save(data[this.model.className().toLowerCase()], {
@@ -229,9 +227,7 @@
    * @return {Boolean}
    */
   CommentForm.hasFileUploads = function () {
-    return this.el.select('input[type=file]').any(function (input) {
-      return input.getValue();
-    });
+    return this.upload_area.hasFileUploads();
   };
 
   /* checks if the form has empty file uploads
@@ -244,54 +240,61 @@
     });
   };
 
+
+  /*  Delegates to Uplaoder module to start files upload
+   */
+  CommentForm.uploadFiles = function () {
+    this.uploader.start();
+  };
+
   /* creates an iframe and uploads a file
    */
-  CommentForm.uploadFile = function () {
+  // CommentForm.uploadFiles = function () {
 
-    var self = this
-      , iframe_id = 'file_upload_iframe' + Date.now()
-      , iframe = new Element('iframe', {id: iframe_id, name: iframe_id}).hide()
-      , authToken = $$('meta[name=csrf-token]').first().readAttribute('content')
-      , authParam = $$('meta[name=csrf-param]').first().readAttribute('content');
+  //   var self = this
+  //     , iframe_id = 'file_upload_iframe' + Date.now()
+  //     , iframe = new Element('iframe', {id: iframe_id, name: iframe_id}).hide()
+  //     , authToken = $$('meta[name=csrf-token]').first().readAttribute('content')
+  //     , authParam = $$('meta[name=csrf-param]').first().readAttribute('content');
 
-    function callback() {
+  //   function callback() {
 
-      // contentDocument doesn't work in IE (7)
-      var iframe_body = (iframe.contentDocument || iframe.contentWindow.document).body
-        , extra_input = self.el.down('input[name=iframe]');
+  //     // contentDocument doesn't work in IE (7)
+  //     var iframe_body = (iframe.contentDocument || iframe.contentWindow.document).body
+  //       , extra_input = self.el.down('input[name=iframe]');
 
-      // TODO: Parse the response and add the comment client side
+  //     // TODO: Parse the response and add the comment client side
 
-      iframe.remove();
-      self.el.target = null;
-      if (extra_input) {
-        extra_input.remove();
-      }
-    }
+  //     iframe.remove();
+  //     self.el.target = null;
+  //     if (extra_input) {
+  //       extra_input.remove();
+  //     }
+  //   }
 
-    $(document.body).insert(iframe);
-    this.el.target = iframe_id;
-    this.el.insert(new Element('input', {type: 'hidden', name: 'iframe', value: true}));
+  //   $(document.body).insert(iframe);
+  //   this.el.target = iframe_id;
+  //   this.el.insert(new Element('input', {type: 'hidden', name: 'iframe', value: true}));
 
-    if (this.el[authParam]) {
-      this.el[authParam].value = authToken;
-    } else {
-      this.el.insert(new Element('input', {type: 'hidden', name: authParam, value: authToken}).hide());
-    }
+  //   if (this.el[authParam]) {
+  //     this.el[authParam].value = authToken;
+  //   } else {
+  //     this.el.insert(new Element('input', {type: 'hidden', name: authParam, value: authToken}).hide());
+  //   }
 
-    // for IE (7)
-    iframe.onreadystatechange = function () {
-      if (this.readyState === 'complete') {
-        callback();
-      }
-    };
+  //   // for IE (7)
+  //   iframe.onreadystatechange = function () {
+  //     if (this.readyState === 'complete') {
+  //       callback();
+  //     }
+  //   };
 
-    // non-IE
-    iframe.onload = callback;
+  //   // non-IE
+  //   iframe.onload = callback;
 
-    // we may have cancelled xhr, but we still need to trigger form submit manually
-    this.el.submit();
-  };
+  //   // we may have cancelled xhr, but we still need to trigger form submit manually
+  //   this.el.submit();
+  // };
 
   // exports
   Teambox.Views.CommentForm = Backbone.View.extend(CommentForm);
