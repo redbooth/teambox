@@ -21,6 +21,7 @@ src_files:
   - app/javascripts/lib/backbone-prototype.js
   - app/javascripts/lib/handlebars.js
   - app/javascripts/lib/jade.js
+  - app/javascripts/lib/teambox_api.js
   - app/javascripts/trimmer/en.js
   - app/javascripts/datetime.js
   - app/javascripts/teambox.js
@@ -38,11 +39,13 @@ src_files:
   - app/javascripts/models/base.js
   - app/javascripts/models/conversation.js
   - app/javascripts/models/comment.js
+  - app/javascripts/models/project.js
   - app/javascripts/models/task.js
   - app/javascripts/models/thread.js
 
   - app/javascripts/collections/base.js
   - app/javascripts/collections/comments.js
+  - app/javascripts/collections/projects.js
   - app/javascripts/collections/threads.js
 
   - app/javascripts/views/task.js

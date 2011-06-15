@@ -88,7 +88,7 @@ jasmine.Fixtures.prototype.loadFixtureIntoCache_ = function (relativeUrl) {
     , url = this.fixturesPath.match('/$') ? this.fixturesPath + relativeUrl : this.fixturesPath + '/' + relativeUrl;
 
   this.requestFixture_(url, function (data) {
-    self.fixturesCache_[relativeUrl] = data;
+    self.fixturesCache_[relativeUrl] = data.responseText;
   });
 };
 

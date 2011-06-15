@@ -14,7 +14,10 @@
     this.project = Teambox.collections.projects.get(this.model.get('project_id'));
   };
 
-  // Draw the Add Watchers box and populate it with watchers
+  /* Draw the Add Watchers box and populate it with watchers
+   *
+   * @return self
+   */
   Watchers.render = function () {
     var users = _.map(this.project.get('people').models, function (person) {
           return person.get('user');

@@ -18,12 +18,13 @@
     this.comment_form = options.comment_form;
   };
 
-
-  // Draw the Add UploadArea box and populate it with watchers
+  /* updated upload area element
+   */
   UploadArea.render = function () {
     this.el
       .setStyle({display: 'none'})
       .update(this.template(this.comment_form.model.getAttributes()));
+
     return this;
   };
 
@@ -54,7 +55,9 @@
     return !(_.isEmpty(this.files));
   };
 
-  UploadArea.reset = function() {
+  /*  Resets the form
+   */
+  UploadArea.reset = function () {
     this.files = [];
 
     if (this.el.visible()) {
@@ -91,7 +94,6 @@
     //   evt.preventDefault();
     // }
   };
-
 
   /* inserts new upload
    *

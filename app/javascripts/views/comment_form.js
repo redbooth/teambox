@@ -19,9 +19,14 @@
     _.bindAll(this, "render");
 
     this.convert_to_task = options.convert_to_task;
-    // FIXME: bind to changes
+    this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
+    this.watchers = new Teambox.Views.Watchers({model: this.model});
   };
 
+  /* Updates the comment_form el
+   *
+   * @returns self;
+   */
   CommentForm.render = function () {
 
     this.el.writeAttribute({
@@ -50,14 +55,12 @@
     , project: Teambox.collections.projects.get(this.model.get('project_id'))
     })).render();
 
-    this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
-    this.watchers = new Teambox.Views.Watchers({model: this.model});
 
     this.el.down('.actions')
       // upload area
-      .insert({before: (this.upload_area).render().el})
+      .insert({before: this.upload_area.render().el})
       // watchers box
-      .insert({before: (this.watchers).render().el});
+      .insert({before: this.watchers.render().el});
 
     return this;
   };
@@ -68,7 +71,6 @@
    * @returns false;
    */
   CommentForm.reset = function () {
-
     // clear comment and reset textarea height
     this.el.down('textarea').update('').setStyle({height: ''}).value = '';
 
@@ -84,7 +86,6 @@
 
     this.upload_area.reset();
   };
-
 
   CommentForm.addComment = function (m, resp) {
     var comment_attributes = this.model.parseComments(resp);
@@ -107,7 +108,8 @@
    * @returns false;
    */
   CommentForm.postComment = function (evt) {
-    var self = this;
+    var self = this
+      , data;
 
     if (evt) {
       evt.stop();
@@ -117,7 +119,8 @@
       return this.uploadFiles();
     }
 
-    var data = _.deparam(this.el.serialize(), true);
+    data = _.deparam(this.el.serialize(), true);
+
     this.model.save(data[this.model.className().toLowerCase()], {
       success: this.addComment.bind(this)
     , failure: this.handleError.bind(this)
@@ -142,6 +145,8 @@
     $(this.el).down('.upload_area').toggle().highlight();
   };
 
+  /* inits the uploader
+   */
   CommentForm.initUploader = function() {
     if (!this.uploader) {
       this.uploader = new Teambox.modules.Uploader(this, {
@@ -241,55 +246,6 @@
   CommentForm.uploadFiles = function () {
     this.uploader.start();
   };
-
-  /* creates an iframe and uploads a file
-   */
-  // CommentForm.uploadFiles = function () {
-
-  //   var self = this
-  //     , iframe_id = 'file_upload_iframe' + Date.now()
-  //     , iframe = new Element('iframe', {id: iframe_id, name: iframe_id}).hide()
-  //     , authToken = $$('meta[name=csrf-token]').first().readAttribute('content')
-  //     , authParam = $$('meta[name=csrf-param]').first().readAttribute('content');
-
-  //   function callback() {
-
-  //     // contentDocument doesn't work in IE (7)
-  //     var iframe_body = (iframe.contentDocument || iframe.contentWindow.document).body
-  //       , extra_input = self.el.down('input[name=iframe]');
-
-  //     // TODO: Parse the response and add the comment client side
-
-  //     iframe.remove();
-  //     self.el.target = null;
-  //     if (extra_input) {
-  //       extra_input.remove();
-  //     }
-  //   }
-
-  //   $(document.body).insert(iframe);
-  //   this.el.target = iframe_id;
-  //   this.el.insert(new Element('input', {type: 'hidden', name: 'iframe', value: true}));
-
-  //   if (this.el[authParam]) {
-  //     this.el[authParam].value = authToken;
-  //   } else {
-  //     this.el.insert(new Element('input', {type: 'hidden', name: authParam, value: authToken}).hide());
-  //   }
-
-  //   // for IE (7)
-  //   iframe.onreadystatechange = function () {
-  //     if (this.readyState === 'complete') {
-  //       callback();
-  //     }
-  //   };
-
-  //   // non-IE
-  //   iframe.onload = callback;
-
-  //   // we may have cancelled xhr, but we still need to trigger form submit manually
-  //   this.el.submit();
-  // };
 
   // exports
   Teambox.Views.CommentForm = Backbone.View.extend(CommentForm);
