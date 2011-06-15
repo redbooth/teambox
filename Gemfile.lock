@@ -7,13 +7,6 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/mislav/will_paginate.git
-  revision: b1a5beeec9f56ecbe3594fcdca76d92b6767ce50
-  branch: rails3
-  specs:
-    will_paginate (3.0.pre3)
-
-GIT
   remote: git://github.com/teambox/activesupport-i18n-patch.git
   revision: 2e835783c0ea7062ad280b71b04060bd9b89e1a4
   specs:
@@ -32,6 +25,12 @@ GIT
   specs:
     immortal (0.1.6)
       activerecord (~> 3.0.5)
+
+GIT
+  remote: git://github.com/teambox/will_paginate.git
+  revision: e69b364e79ce1fd24e3a10fcc87604969902f0a9
+  specs:
+    will_paginate (3.0.pre3)
 
 GIT
   remote: https://github.com/remi/rack-staticifier.git
