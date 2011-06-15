@@ -42,19 +42,6 @@ class TeamboxData < ActiveRecord::Base
     self.service ||= 'teambox'
   end
 
-  def store_import_data
-    begin
-      upload = ActionDispatch::Http::UploadedFile.new(:type => 'application/json',
-                                                      :filename => "#{user.login}-import.json",
-                                                      :tempfile => @import_data)
-      self.processed_data = upload
-      @import_data = nil
-    rescue Exception => e
-      @process_error = e.to_s
-      self.status_name = :uploading
-    end
-  end
-  
   def need_data?
     if type_name == :import
       status < IMPORT_STATUSES[:pre_processing]
