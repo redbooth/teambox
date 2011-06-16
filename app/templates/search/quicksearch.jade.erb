@@ -1,0 +1,7 @@
+ul#quicksearch_results
+  li.selected
+    a.submit_search(href= '#!/search/' + self.query) <%=t('search.quicksearch.search_all')%>
+  - each result in self.results
+    -var thread = new Teambox.Models.Thread(result)
+    li
+      a(href= '/#!' + thread.publicUrl())= thread.get('type') + ': ' + thread.get('name')

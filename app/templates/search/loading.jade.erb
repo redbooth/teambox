@@ -1,0 +1,6 @@
+h2 <%= t('search.results_for', :search_terms => "<strong>{{query}}</strong>")%>
+
+#search_results
+  p.loading
+    img(src= '/images/loading.gif')
+    | <%= t('common.loading')%>

@@ -1,0 +1,10 @@
+p <%= t('search.found_results', :length => '{{length}}')%>
+
+#results
+  - each result in self.results
+    .result
+      div(class= result.icon_class)
+      a(href= result.project.project_url)= result.project.name
+      | &rarr;
+      a(href= result.url)= result.name
+      span.time= self.time_ago(result.updated_at)
