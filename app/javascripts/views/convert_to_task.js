@@ -76,7 +76,7 @@
                                            , project_id: transport.responseJSON.project_id
                                            });
 
-        window.location.hash = '#!' + task.public_url();
+        window.location.hash = '#!' + task.publicUrl();
         // var person = this.el.select('conversation_assigned_id')[0].getValue()
         //   , task_count = +$('open_my_tasks').innerHTML
         //   , is_assigned_to_me = my_projects[person];

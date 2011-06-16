@@ -1,7 +1,7 @@
 (function () {
   var AllTasks = { title: "All tasks in your projects"
-                 , template: Handlebars.compile(Templates.tasks.index)
-                 , primer_template: Handlebars.compile(Templates.primers.all_tasks)
+                 , template: Teambox.modules.ViewCompiler('tasks.index')
+                 , primer_template: Teambox.modules.ViewCompiler('primers.all_tasks')
                  }
     , TasksHelper = Teambox.helpers.tasks;
 

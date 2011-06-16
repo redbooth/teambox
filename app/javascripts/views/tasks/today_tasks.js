@@ -1,7 +1,7 @@
 (function () {
   var TodayTasks = { title: "Your Tasks for today"
-                   , template: Handlebars.compile("<h2>What you need to do today</h2>" + Templates.tasks.index)
-                   , primer_template: Handlebars.compile(Templates.primers.today)
+                   , template: Teambox.modules.ViewCompiler('tasks.index')
+                   , primer_template: Teambox.modules.ViewCompiler('primers.today')
                    }
     , TasksHelper = Teambox.helpers.tasks;
 

@@ -59,7 +59,7 @@
     return this.get('due_on') && !this.is_overdue() && this.overdue(time_end) <= 0;
   };
 
-  Task.public_url = function () {
+  Task.publicUrl = function () {
     return '/projects/' + this.get('project_id') + '/tasks/' + this.get('id');
   };
 

@@ -1,10 +1,11 @@
 // CLEANME: taskStatus is deprecated and hidden
+- var task = new Teambox.Models.Task(self);
 .taskStatus
   // <img src='drag.png' class='task_drag'/> if editable and !task.archived?
   span.task_status.task_counter(data-task-id= self.id)= self.comments_count
 .status= self.status_text()
 .taskName
-  a.name(href= self.task_url)= self.name
+  a.name(href= '/#!' + task.publicUrl())= self.name
   form.edit_title(style= 'display:none;')
     input(data-disable-with= '<%= t('common.saving')%>…', value= self.name)
   .expanded_actions(style= 'display:none;')

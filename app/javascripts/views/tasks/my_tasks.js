@@ -1,7 +1,7 @@
 (function () {
   var MyTasks = { title: "Tasks assigned to you"
-                , template: Handlebars.compile(Templates.tasks.index)
-                , primer_template: Handlebars.compile(Templates.primers.today)
+                , template: Teambox.modules.ViewCompiler('tasks.index')
+                , primer_template: Teambox.modules.ViewCompiler('primers.today')
                 }
     , TasksHelper = Teambox.helpers.tasks;
 
