@@ -68,11 +68,9 @@
    * @param {Object} response
    */
   UploadArea.onUploadComplete = function(uploader, files) {
-    uploader.reset();
+    uploader.total.reset();
     this.reset();
   };
-
-
 
   /*  Handle the FileUploaded event
    *

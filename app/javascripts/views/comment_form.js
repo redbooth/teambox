@@ -76,7 +76,7 @@
 
     if (this.model.className() === 'Task') {
       this.el.down('.human_hours').value = '';
-      this.el.select('.hours_field, .upload_area').invoke('hide');
+      this.el.select('.hours_field').invoke('hide');
     }
 
     this.el.select('.error').invoke('remove');
@@ -87,9 +87,7 @@
   CommentForm.addComment = function (m, resp, upload) {
     var comment_attributes = this.model.parseComments(resp);
 
-    if (this.uploader.hasPendingUploads()) {
-      this.reset();
-    }
+    this.reset();
     this.model.attributes.last_comment = comment_attributes;
     this.model.attributes.recent_comments.push(comment_attributes);
     this.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user));

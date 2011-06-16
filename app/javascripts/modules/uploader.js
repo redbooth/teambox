@@ -75,8 +75,8 @@
 
     this.uploader.bind('FilesAdded', this.onFilesAdded);
     this.uploader.bind('FilesRemoved', this.onFilesRemoved);
-
     this.uploader.bind('UploadProgress', this.onUploadProgress);
+    this.uploader.bind('UploadComplete', this.onUploadComplete);
 
     this.uploader.bind('Error', function(uploader, err) {
       console.log('Error: ' + err.code + ", Message: " + err.message + (err.file ? ", File: " + err.file.name : ""));
