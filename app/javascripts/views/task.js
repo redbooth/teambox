@@ -6,7 +6,7 @@
              };
 
   Task.events = {
-    'click a.name': 'expandComments'
+    'click a.name': 'toggleComments'
   , 'click a.edit': 'editTitle'
   , 'blur form.edit_title input': 'updateTitle'
   , 'keyup form.edit_title input': 'keyupTitle'
@@ -35,23 +35,24 @@
    *
    * @param {Event} evt
    */
-  Task.expandComments = function (evt) {
-    var task = $(this.el)
-      , thread_block = task.down('.thread'), foo;
+  Task.toggleComments = function (evt) {
+    var thread_block = this.el.down('.thread'), foo;
 
-    if (task.hasClassName('expanded')) {
+    evt.stop();
+
+    if (this.el.hasClassName('expanded')) {
       foo = new Effect.BlindUp(thread_block, {duration: 0.3});
-      foo = new Effect.Fade(task.down('.expanded_actions'), {duration: 0.3});
+      foo = new Effect.Fade(this.el.down('.expanded_actions'), {duration: 0.3});
     } else {
       foo = new Effect.BlindDown(thread_block, {duration: 0.3});
-      foo = new Effect.Appear(task.down('.expanded_actions'), {duration: 0.3});
+      foo = new Effect.Appear(this.el.down('.expanded_actions'), {duration: 0.3});
       Date.format_posted_dates();
 
       // TODO: ?
-      Task.insertAssignableUsers();
+      // Task.insertAssignableUsers();
     }
 
-    task.toggleClassName('expanded');
+    this.el.toggleClassName('expanded');
   };
 
   /* get the classes according to the model's status

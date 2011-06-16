@@ -9,7 +9,7 @@
   form.edit_title(style= 'display:none;')
     input(data-disable-with= '<%= t('common.saving')%>…', value= self.name)
   .expanded_actions(style= 'display:none;')
-    a.full(href= self.task_url) <%= t('tasks.task.full_view')%>
+    a.full(href= '#!' + task.publicUrl()) <%= t('tasks.task.full_view')%>
     a.edit(href= "#") <%= t('tasks.task.edit')%>
 
   - if (self.due_on)

@@ -14,7 +14,7 @@
 
   TasksController.show = function (project, id) {
     var task = collections.tasks.get(id);
-    $('content').update((new Teambox.Views.Thread({ model: task })).render().el);
+    $('content').update((new Teambox.Views.Thread({model: new Teambox.Models.Thread(task.attributes)})).render().el);
     Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_task_lists');
   };
 
