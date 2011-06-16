@@ -97,21 +97,62 @@
 
   /*
    * Renders file list upon a file being added
+   */
+  UploadArea.renderFileList = function() {
+    var self = this
+    ,   li
+    ,   a
+    ,   text
+    ,   fileList = this.el.select('.file_list')[0]
+    ,   uploader = this.comment_form.uploader;
+
+    fileList.update('');
+
+    _.each(this.files, function(file, i) {
+      text = file.name + ' (' + plupload.formatSize(file.size) + ')';
+      li = new Element('li', {id: "file_" + file.id});
+      a = new Element('a', {id: file.id});
+      a.on('click', function(evt) {
+        evt.preventDefault();
+        uploader.removeFile(evt.target.id);
+      });
+
+      a.update('(X)');
+
+      li.update(text);
+      li.appendChild(a);
+      fileList.appendChild(li);
+    });
+  };
+
+  /*
+   * Concatenates new files to file queue
    *
    * @param {plupload.Uploader} uploader
-   * @param {Object} file
+   * @param {Array} files
    */
   UploadArea.onFilesAdded = function(uploader, files) {
-    this.files = files;
+    this.files = this.files.concat(files);
+    this.renderFileList();
+    uploader.refresh(); // Reposition Flash/Silverlight
+  };
 
-    var file_list = '';
-    _.each(files, function(file, i) {
-      file_list += '<li id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ')' + '</li>';
+  /*
+   * Removes files from file queue
+   *
+   * @param {plupload.Uploader} uploader
+   * @param {Array} files
+   */
+  UploadArea.onFilesRemoved = function(uploader, files) {
+    this.files = _.reject(this.files, function(file) {
+      return _.any(files, function(f) { return f.id === file.id});
     });
 
-    this.el.select('.file_list')[0].update(file_list);
+    this.renderFileList();
 
-    uploader.refresh(); // Reposition Flash/Silverlight
+    if (uploader) {
+      uploader.refresh(); // Reposition Flash/Silverlight
+    }
   };
 
   /* show new upload

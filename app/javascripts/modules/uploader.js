@@ -13,9 +13,11 @@
     this.opts = opts;
     this.inited = false;
     this.onFilesAdded = opts.onFilesAdded;
+    this.onFilesRemoved = opts.onFilesRemoved;
     this.onFileUploaded = opts.onFileUploaded;
     this.onInit = opts.onInit;
     delete opts.onFilesAdded;
+    delete opts.onFilesRemoved;
     delete opts.onFileUploaded;
     delete opts.onInit;
   };
@@ -68,6 +70,7 @@
 
 
     this.uploader.bind('FilesAdded', this.onFilesAdded);
+    this.uploader.bind('FilesRemoved', this.onFilesRemoved);
 
     this.uploader.bind('UploadProgress', function(up, file) {
       console.log("Uploading: " + file.percent + "%");
@@ -90,9 +93,15 @@
     this.uploader.start();
   };
 
+  /* Removes a file from the plupload.Uploader instance
+  * */
+  Uploader.prototype.removeFile = function (id) {
+    var file = this.uploader.getFile(id);
+    this.uploader.removeFile(file);
+  };
+
   // export
   Teambox.modules.Uploader = Uploader;
 
 }());
-
 
