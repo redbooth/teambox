@@ -22,4 +22,4 @@
   .target_project.many_fields
     %label{:for => 'teambox_data_organization_id'}= t('.in_organization')
     = select_tag "teambox_data[organization_id]", options_for_select(options_for_organization, @data.organization_id)
-    = errors_for @data, "target_organization"
+    = errors_for @data, "organization_id"

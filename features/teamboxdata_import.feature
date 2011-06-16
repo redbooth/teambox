@@ -17,7 +17,7 @@ Scenario: Mislav imports an historic project
     | gandalf| gandalf@middleearth.com  | Gandalf    | Grey      |
   And I follow "Import"
   And I choose "Teambox"
-  And I attach the file "spec/fixtures/teamboxdump.json" to "teambox_data_import_data"
+  And I attach the file "spec/fixtures/teamboxdump.json" to "teambox_data_processed_data"
   And I press "Import data"
   Then I should see "Andrew Wiggin (@gandhi_1)"
   And I should see "Andrew Wiggin (@gandhi_2)"
@@ -51,7 +51,7 @@ Scenario: Mislav imports another historic project
   And "frodo" is an administrator in the organization of the project called "Ruby Rockstars"
   And I follow "Import"
   And I choose "Teambox"
-  And I attach the file "spec/fixtures/teamboxdump_problem.json" to "teambox_data_import_data"
+  And I attach the file "spec/fixtures/teamboxdump_problem.json" to "teambox_data_processed_data"
   And I press "Import data"
   When I fill in the following:
     | Stevie Hobs (@steve_test2)            |  mislav      |
@@ -72,7 +72,7 @@ Scenario: Mislav gets fed up of Basecamp and moves to Teambox
   When I go to the your data page
   And I follow "Import"
   And I choose "Basecamp"
-  And I attach the file "spec/fixtures/campdump.xml" to "teambox_data_import_data"
+  And I attach the file "spec/fixtures/campdump.xml" to "teambox_data_processed_data"
   And I press "Import data"
   Then I should see "Frodo Baggins (@FrodoBaggins)"
   When I fill in the following:
@@ -89,21 +89,41 @@ Scenario: Mislav gets confused and uploads the wrong dump
   When I go to the your data page
   And I follow "Import"
   And I choose "Teambox"
-  And I attach the file "spec/fixtures/campdump.xml" to "teambox_data_import_data"
+  And I attach the file "spec/fixtures/campdump.xml" to "teambox_data_processed_data"
   And I press "Import data"
   Then I should see "There was an error loading your import. Please try again."
   And @mislav should receive no emails
 
-Scenario: Mislav forgets to map the data
+Scenario: Mislav forgets to map the users and the org
   When I go to the your data page
   And I follow "Import"
   And I choose "Teambox"
-  And I attach the file "spec/fixtures/teamboxdump.json" to "teambox_data_import_data"
+  And I attach the file "spec/fixtures/teamboxdump.json" to "teambox_data_processed_data"
   And I press "Import data"
   Then I should see "Andrew Wiggin (@gandhi_1)"
   And I should see "Andrew Wiggin (@gandhi_2)"
   And I should see "Andrew Wiggin (@gandhi_3)"
   And I should see "Andrew Wiggin (@gandhi_4)"
+  And I press "Import"
+  Then I should see "Not known to user"
+  Then I should see "Should be an admin"
+  And @mislav should receive no emails
+
+Scenario: Mislav forgets to map the organization
+  When I go to the your data page
+  And I follow "Import"
+  And I choose "Teambox"
+  And I attach the file "spec/fixtures/teamboxdump.json" to "teambox_data_processed_data"
+  And I press "Import data"
+  Then I should see "Andrew Wiggin (@gandhi_1)"
+  And I should see "Andrew Wiggin (@gandhi_2)"
+  And I should see "Andrew Wiggin (@gandhi_3)"
+  And I should see "Andrew Wiggin (@gandhi_4)"
+  When I fill in the following:
+    | Andrew Wiggin (@gandhi_1)             |  mislav     |
+    | Andrew Wiggin (@gandhi_2)             |  mislav     |
+    | Andrew Wiggin (@gandhi_3)             |  mislav     |
+    | Andrew Wiggin (@gandhi_4)             |  mislav     |
   And I press "Import"
   Then I should see "Should be an admin"
   And @mislav should receive no emails
@@ -112,7 +132,7 @@ Scenario: Mislav imports data with invalid records
   When I go to the your data page
   And I follow "Import"
   And I choose "Teambox"
-  And I attach the file "spec/fixtures/teamboxdump_invalid.json" to "teambox_data_import_data"
+  And I attach the file "spec/fixtures/teamboxdump_invalid.json" to "teambox_data_processed_data"
   And I press "Import data"
   Then I should see "Andrew Wiggin (@gandhi_1)"
   And I should see "Andrew Wiggin (@gandhi_2)"
