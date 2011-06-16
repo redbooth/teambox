@@ -101,9 +101,6 @@
    */
   UploadArea.renderFileList = function() {
     var self = this
-    ,   li
-    ,   a
-    ,   text
     ,   fileList = this.el.select('.file_list')[0]
     ,   uploader = this.comment_form.uploader;
 
