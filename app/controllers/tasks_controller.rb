@@ -130,8 +130,7 @@ class TasksController < ApplicationController
     task_ids = params[:task_ids].split(',').collect {|t| t.to_i}
     target_task_list.tasks.each do |t|
       next unless task_ids.include?(t.id)
-      t.position = task_ids.index(t.id)
-      t.save
+      Task.thin_model.find(t.id).update_attribute :position, task_ids.index(t.id)
     end
 
     head :ok
