@@ -152,6 +152,7 @@
       this.uploader = new Teambox.modules.Uploader(this, {
           onFilesAdded: this.upload_area.onFilesAdded.bind(this.upload_area)
         , onFileUploaded: this.upload_area.onFileUploaded.bind(this.upload_area)
+        , onInit: this.upload_area.onUploaderInit.bind(this.upload_area)
       });
     }
 

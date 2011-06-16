@@ -14,8 +14,10 @@
     this.inited = false;
     this.onFilesAdded = opts.onFilesAdded;
     this.onFileUploaded = opts.onFileUploaded;
+    this.onInit = opts.onInit;
     delete opts.onFilesAdded;
     delete opts.onFileUploaded;
+    delete opts.onInit;
   };
 
   Uploader.prototype.init = function () {
@@ -24,23 +26,20 @@
     , form    = this.view.el
     , opts    = this.opts;
 
-    var id = model.className().toLowerCase() + '_' + model.id;
+    var id = model.className().toLowerCase() + '_' + model.id
+    , drop_element_id = "file_drop_" + id;
 
     var options = {
         container: "file_list_" + id
       , browse_button: "upload_file_" + id
-      , drop_element: "upload_drop_" + id
+      , drop_element: drop_element_id
       , url: model.url()
     };
 
     this.options = _.extend(this.options, options, opts);
     this.uploader = new plupload.Uploader(this.options);
 
-    this.uploader.bind('Init', function(uploader, params) {
-      if (!!uploader.features.dragdrop) {
-        console.log('supports drag n drop....');
-      }
-    });
+    this.uploader.bind('Init', this.onInit);
 
     this.uploader.bind('UploadFile', function(uploader, file) {
       var data = this.view.el.serialize(true);

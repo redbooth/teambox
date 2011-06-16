@@ -28,6 +28,36 @@
     return this;
   };
 
+  /*  Enable/Disable functionality based on supported features
+   *
+   * @param {plupload.Uploader} uploader
+   * @param {Object} params
+   */
+  UploadArea.onUploaderInit = function(uploader, params) {
+    if (!!uploader.features.dragdrop) {
+      var drop_element = $(uploader.settings.drop_element);
+      this.drop_element = drop_element;
+      this.drop_element.addClassName('filedrop');
+
+      this.drop_element.on('dragenter', function(evt) {
+        drop_element.addClassName('filedroppable');
+      });
+
+      this.drop_element.on('dragover', function(evt) {
+        drop_element.addClassName('filedroppable');
+      });
+
+      this.drop_element.on('dragleave', function(evt) {
+        drop_element.removeClassName('filedroppable');
+      });
+
+      this.drop_element.on('drop', function(evt) {
+        drop_element.removeClassName('filedroppable');
+      });
+
+    }
+  };
+
   /*  Handle the FileUploaded event
    *
    *  Updates the target model and adds a comment into the UI
