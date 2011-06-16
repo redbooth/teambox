@@ -39,24 +39,26 @@
    */
   Filters.filter = function (filter_name, value) {
     var tasks = $$(".tasks div.task")
-      , filter, method, view;
+      , filter, view;
+
+    function getMethod(filter) {
+      return 'select' + _.camelize(_.capitalize(filter));
+    }
 
     if (filter_name) {
       this.filters[filter_name] = value;
+      if (value) {
+        tasks = TasksHelper[getMethod(filter_name)](tasks, value);
+      }
     }
 
     for (filter in this.filters) {
-      method = 'select' + _.camelize(_.capitalize(filter));
       view = this.views[filter];
 
-      if (this.filters[filter]) {
-        tasks = TasksHelper[method](tasks, this.filters[filter]);
-      }
-
-      if (view.tagName === 'select') {
+      if (view.tagName === 'select' && filter !== filter_name) {
         _.each(view.el.select('option'), function (option) {
           var count = option.value
-                      ? TasksHelper[method](tasks, option.value).length
+                      ? TasksHelper[getMethod(filter)](tasks, option.value).length
                       : tasks.length;
 
           if (!option.disabled) {
