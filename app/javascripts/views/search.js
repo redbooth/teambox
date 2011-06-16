@@ -12,9 +12,11 @@
                };
 
   Search.events = {
-    'keydown input#searchbox':  'navigateQuickResults'
-  , 'keyup input#searchbox':    'showQuickResults'
-  , 'focusout input#searchbox': 'hideQuickResults'
+    'keydown input#searchbox':      'navigateQuickResults'
+  , 'keyup input#searchbox':        'showQuickResults'
+  , 'focus input#searchbox':        'focus'            // Y U NO WORK?
+  , 'click #quicksearch_results a': 'reset'            // Y U NO WORK?
+  , 'focusout input#searchbox':     'hideQuickResults'
   }
 
   /* Updates current el
@@ -25,6 +27,14 @@
     this.el.update(this.template());
     return this;
   };
+
+  /* Keyboard navigation for quick results
+   *
+   * @param {Event} evt
+   */
+  Search.reset = function (evt) {
+    $('searchbox').value = '';
+  }
 
   /* Keyboard navigation for quick results
    *

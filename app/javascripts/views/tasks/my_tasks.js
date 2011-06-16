@@ -1,7 +1,7 @@
 (function () {
   var MyTasks = { title: "Tasks assigned to you"
                 , template: Teambox.modules.ViewCompiler('tasks.index')
-                , primer_template: Teambox.modules.ViewCompiler('primers.today')
+                , primer_template: Teambox.modules.ViewCompiler('primers.my_tasks')
                 }
     , TasksHelper = Teambox.helpers.tasks;
 
@@ -15,19 +15,24 @@
 
   };
 
+  /* updates the element
+   *
+   * @return self
+   */
   MyTasks.render = function () {
-    TasksHelper.render({ tasks: this.collection.mine()
-                       , title: this.title
-                       , template: this.template
-                       , primer_template: this.primer_template });
+    TasksHelper.render.call(this, { tasks: this.collection.mine()
+                                  , title: this.title
+                                  , template: this.template
+                                  , primer_template: this.primer_template });
 
     TasksHelper.group({ tasks: $$('#content .task')
                       , where: $$('#content .tasks')[0]
                       , by: 'due_date' });
+
+    return this;
   };
 
   // expose
   Teambox.Views.MyTasks = Backbone.View.extend(MyTasks);
 
 }());
-

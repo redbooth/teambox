@@ -4,4 +4,4 @@ ul#quicksearch_results
   - each result in self.results
     -var thread = new Teambox.Models.Thread(result)
     li
-      a(href= '/#!' + thread.publicUrl())= thread.get('type') + ': ' + thread.get('name')
+      a.result(href= '/#!' + thread.publicUrl())= thread.get('type') + ': ' + thread.get('name')

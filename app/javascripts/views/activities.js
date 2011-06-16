@@ -37,24 +37,17 @@
     $('activity_paginate_link').hide();
   };
 
-  // Build the activity feed by rendering every thread
+  /* Updates the element with each thread
+   *
+   * @return self
+   */
   Activities.render = function () {
-    var self = this;
-
     this.el.update('');
-    $('view_title').update('Recent activity');
+    this.collection.each(this.appendActivity.bind(this));
 
-    // Render each thread
-    this.collection.each(function (thread) {
-      self.appendActivity(thread);
-    });
-
-    $('content').update(this.el);
-    $('content').insert({bottom: '<a href="#" class="button" id="activity_paginate_link"><span>Show more</span></a>'});
-    $('activity_paginate_link').observe('click', this.collection.fetchNextPage.bind(this.collection));
+    return this;
   };
 
   // exports
   Teambox.Views.Activities = Backbone.View.extend(Activities);
-
 }());

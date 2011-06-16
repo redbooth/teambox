@@ -14,11 +14,16 @@
 
   };
 
+  /* updates the element
+   *
+   * @return self
+   */
   TodayTasks.render = function () {
-    TasksHelper.render({ tasks: this.collection.today()
-                       , title: this.title
-                       , template: this.template
-                       , primer_template: this.primer_template });
+    TasksHelper.render.call(this, { tasks: this.collection.today()
+                                  , title: this.title
+                                  , template: this.template
+                                  , primer_template: this.primer_template });
+    return this;
   };
 
   // expose

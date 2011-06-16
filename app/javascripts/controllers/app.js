@@ -2,50 +2,32 @@
 
   var Views = Teambox.Views
     , Controllers = Teambox.Controllers
-    , views = Teambox.views;
+    , views = Teambox.views
+    , AppController = {routes: { '/' : 'index'}};
 
-  Teambox.Controllers.AppController = Controllers.Bootstrap.extend({
-    routes: {
-      '/'                  : 'index',
-      '/today'             : 'today',
-      '/my_tasks'          : 'my_tasks',
-      '/all_tasks'         : 'all_tasks'
-    },
-    initialize: function (options) {
-      Controllers.Bootstrap.prototype.initialize.call(this, options);
+  AppController.initialize = function (options) {
+    Controllers.Bootstrap.prototype.initialize.call(this, options);
 
-      this.projects_controller = new Controllers.ProjectsController({app: this});
-      this.users_controller = new Controllers.UsersController({app: this});
-      this.tasks_controller = new Controllers.TasksController({app: this});
-      this.conversations_controller = new Controllers.ConversationsController({app: this});
-      this.search_controller = new Controllers.SearchController({app: this});
-      this.pages_controller = new Controllers.PagesController({app: this});
-    },
+    this.projects_controller = new Controllers.ProjectsController({app: this});
+    this.users_controller = new Controllers.UsersController({app: this});
+    this.tasks_controller = new Controllers.TasksController({app: this});
+    this.conversations_controller = new Controllers.ConversationsController({app: this});
+    this.search_controller = new Controllers.SearchController({app: this});
+    this.pages_controller = new Controllers.PagesController({app: this});
+  };
 
-    index: function () {
-      Views.Sidebar.highlightSidebar('activity_link');
-      views.activities  = new Teambox.Views.Activities({ collection: this.my_threads });
-      views.activities.render();
-    },
+  AppController.index = function () {
+    var threads = Teambox.collections.threads;
 
-    today: function () {
-      Views.Sidebar.highlightSidebar('today_link');
-      views.today_tasks = new Teambox.Views.TodayTasks({ collection: this.my_tasks });
-      views.today_tasks.render();
-    },
+    Views.Sidebar.highlightSidebar('activity_link');
+    $('view_title').update('Recent activity');
+    $('content').update((new Teambox.Views.Activities({collection: threads})).render().el);
+    $('content').insert({bottom: '<a href="#" class="button" id="activity_paginate_link"><span>Show more</span></a>'});
+    $('activity_paginate_link').observe('click', threads.fetchNextPage.bind(threads));
+  };
 
-    my_tasks: function () {
-      Views.Sidebar.highlightSidebar('my_tasks_link');
-      views.my_tasks    = new Teambox.Views.MyTasks({ collection: this.my_tasks });
-      views.my_tasks.render();
-    },
-
-    all_tasks: function () {
-      Views.Sidebar.highlightSidebar('all_tasks_link');
-      views.all_tasks   = new Teambox.Views.AllTasks({ collection: this.my_tasks });
-      views.all_tasks.render();
-    }
-  });
+  // exports
+  Teambox.Controllers.AppController = Controllers.Bootstrap.extend(AppController);
 
   document.on("dom:loaded", function () {
     Teambox.controllers.application = new Teambox.Controllers.AppController();

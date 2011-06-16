@@ -1,5 +1,5 @@
 (function () {
-  var AllTasks = { title: "All tasks in your projects"
+  var AllTasks = { title: 'All tasks in your projects'
                  , template: Teambox.modules.ViewCompiler('tasks.index')
                  , primer_template: Teambox.modules.ViewCompiler('primers.all_tasks')
                  }
@@ -14,24 +14,20 @@
     }.bind(this));
   };
 
+  /* updates the element
+   *
+   * @return this
+   */
   AllTasks.render = function () {
-    var filters = new Teambox.Views.Filters({ task_list: this
-                                            , filters: { name: null
-                                                       , assigned: null
-                                                       , due_date: null
-                                                       , status: null }});
-
-    TasksHelper.render({ tasks: this.collection
-                       , title: this.title
-                       , template: this.template
-                       , primer_template: this.primer_template });
+    TasksHelper.render.call(this, { tasks: this.collection
+                                  , template: this.template
+                                  , primer_template: this.primer_template });
 
     TasksHelper.group({ tasks: $$('#content .task')
                       , where: $$('#content .tasks')[0]
                       , by: 'assigned' });
 
-    // add filters
-    $('content').insert({top: filters.render().el});
+    return this;
   };
 
   // expose

@@ -2,18 +2,21 @@
 (function () {
   var TasksHelper = {};
 
+  /* updated the element
+   *
+   * @return self
+   */
   TasksHelper.render = function (options) {
-    $('view_title').update(options.title);
+    var self = this;
 
     if (options.tasks.length > 0) {
-      $('content').update(options.template());
+      this.el.update(options.template());
+
       options.tasks.each(function (task) {
-        var view = new Teambox.Views.Task({ model: task });
-        //TODO: render tasks on a document fragment and insert it only once to avoid reflow
-        $$('#content .tasks')[0].insert({ bottom: view.render().el });
+        self.el.select('.tasks')[0].insert({bottom: (new Teambox.Views.Task({model: task})).render().el});
       });
     } else {
-      $('content').update(options.primer_template());
+      this.el.update(options.primer_template());
     }
   };
 
