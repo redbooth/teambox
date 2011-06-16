@@ -2,6 +2,7 @@
 
   var UploadArea = { className: 'upload_area'
                    , template: Teambox.modules.ViewCompiler('partials.upload_area')
+                   , fileListEntrytemplate: Teambox.modules.ViewCompiler('partials.upload_entry')
                    , files: []
                    };
 
@@ -106,22 +107,14 @@
     ,   fileList = this.el.select('.file_list')[0]
     ,   uploader = this.comment_form.uploader;
 
-    fileList.update('');
+    var entries = this.fileListEntrytemplate({files: this.files});
 
-    _.each(this.files, function(file, i) {
-      text = file.name + ' (' + plupload.formatSize(file.size) + ')';
-      li = new Element('li', {id: "file_" + file.id});
-      a = new Element('a', {id: file.id});
-      a.on('click', function(evt) {
+    fileList.update(entries);
+    fileList.select('li a').each(function(link) {
+      link.on('click', function(evt) {
         evt.preventDefault();
         uploader.removeFile(evt.target.id);
       });
-
-      a.update('(X)');
-
-      li.update(text);
-      li.appendChild(a);
-      fileList.appendChild(li);
     });
   };
 

@@ -1,0 +1,9 @@
+- each file in self.files
+  li(id="file_#{file.id}")
+    | #{file.name} (#{plupload.formatSize(file.size)})
+    div(class='progressbar yellow', style='display:none')
+      div(class='bar1', style='width:0px')
+      div(class='bar2', style='width:0px')
+      div(class='bar3', style='width:0px')
+    a(id='#{file.id}')
+      | (X)
