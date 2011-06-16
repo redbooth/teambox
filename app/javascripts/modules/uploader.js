@@ -15,11 +15,15 @@
     this.onFilesAdded = opts.onFilesAdded;
     this.onFilesRemoved = opts.onFilesRemoved;
     this.onFileUploaded = opts.onFileUploaded;
+    this.onUploadProgress = opts.onUploadProgress;
+    this.onUploadComplete = opts.onUploadComplete;
     this.onInit = opts.onInit;
     delete opts.onFilesAdded;
     delete opts.onFilesRemoved;
     delete opts.onFileUploaded;
     delete opts.onInit;
+    delete opts.onUploadProgress;
+    delete opts.onUploadComplete;
   };
 
   Uploader.prototype.init = function () {
@@ -72,9 +76,7 @@
     this.uploader.bind('FilesAdded', this.onFilesAdded);
     this.uploader.bind('FilesRemoved', this.onFilesRemoved);
 
-    this.uploader.bind('UploadProgress', function(up, file) {
-      console.log("Uploading: " + file.percent + "%");
-    });
+    this.uploader.bind('UploadProgress', this.onUploadProgress);
 
     this.uploader.bind('Error', function(uploader, err) {
       console.log('Error: ' + err.code + ", Message: " + err.message + (err.file ? ", File: " + err.file.name : ""));
@@ -98,6 +100,10 @@
   Uploader.prototype.removeFile = function (id) {
     var file = this.uploader.getFile(id);
     this.uploader.removeFile(file);
+  };
+
+  Uploader.prototype.hasPendingUploads = function() {
+    return this.uploader.total.percent === 100;
   };
 
   // export

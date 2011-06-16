@@ -59,6 +59,21 @@
     }
   };
 
+  /* Handle the UploadComplete event
+   *
+   * Resets the upload area
+   *
+   * @param {plupload.Uploader} uploader
+   * @param {Object} file
+   * @param {Object} response
+   */
+  UploadArea.onUploadComplete = function(uploader, files) {
+    uploader.reset();
+    this.reset();
+  };
+
+
+
   /*  Handle the FileUploaded event
    *
    *  Updates the target model and adds a comment into the UI
@@ -73,7 +88,7 @@
 
     if (status === 200) {
       this.comment_form.model.set(resp.objects);
-      this.comment_form.addComment(false, resp);
+      this.comment_form.addComment(false, resp, true);
     }
     else {
       this.comment_form.handleError(false, resp);
@@ -91,6 +106,7 @@
   UploadArea.reset = function () {
     this.files = [];
 
+    this.el.select('.file_list li').invoke('remove');
     if (this.el.visible()) {
       this.comment_form.toggleAttach();
     }
@@ -112,6 +128,25 @@
         evt.preventDefault();
         uploader.removeFile(evt.target.id);
       });
+    });
+  };
+
+  /*
+   * Updates progress bars with upload progress
+   *
+   * @param {plupload.Uploader} uploader
+   * @param {Object} file
+   */
+  UploadArea.onUploadProgress = function(uploader, file) {
+    var self = this
+    ,   width = 100
+    ,   fileList = this.el.select('.file_list')[0];
+
+    fileList.select('li#file_' + file.id + ' div.progressbar')[0].show();
+    fileList.select('li#file_' + file.id + ' div.progressbar div').each(function(bar) {
+      var px = width*(file.percent/100)
+      ,   style = '' + px + 'px';
+      bar.setStyle('width', style);
     });
   };
 

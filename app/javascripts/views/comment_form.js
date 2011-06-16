@@ -82,15 +82,14 @@
     this.el.select('.error').invoke('remove');
     this.el.select('.google_docs_attachment .fields input').invoke('remove');
     this.el.select('.google_docs_attachment .file_list li').invoke('remove');
-    this.el.select('.upload_area .file_list li').invoke('remove');
-
-    this.upload_area.reset();
   };
 
-  CommentForm.addComment = function (m, resp) {
+  CommentForm.addComment = function (m, resp, upload) {
     var comment_attributes = this.model.parseComments(resp);
 
-    this.reset();
+    if (this.uploader.hasPendingUploads()) {
+      this.reset();
+    }
     this.model.attributes.last_comment = comment_attributes;
     this.model.attributes.recent_comments.push(comment_attributes);
     this.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user));
@@ -153,6 +152,8 @@
           onFilesAdded: this.upload_area.onFilesAdded.bind(this.upload_area)
         , onFilesRemoved: this.upload_area.onFilesRemoved.bind(this.upload_area)
         , onFileUploaded: this.upload_area.onFileUploaded.bind(this.upload_area)
+        , onUploadProgress: this.upload_area.onUploadProgress.bind(this.upload_area)
+        , onUploadComplete: this.upload_area.onUploadComplete.bind(this.upload_area)
         , onInit: this.upload_area.onUploaderInit.bind(this.upload_area)
       });
     }
