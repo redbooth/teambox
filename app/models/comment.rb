@@ -56,6 +56,7 @@ class Comment < ActiveRecord::Base
   validates_presence_of :user
 
   # was before_create, but must happen before format_attributes
+  before_save   :copy_ownership_from_target, :if => lambda { |c| c.new_record? and c.target_id? }
   before_validation   :copy_ownership_from_target, :on => :create, :if => lambda { |c| c.target }
   before_validation   :add_private_statechange, :on => :create
   after_create  :trigger_target_callbacks
