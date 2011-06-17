@@ -60,6 +60,7 @@
 //= require <collections/pages>
 //= require <collections/people>
 //= require <collections/projects>
+//= require <collections/search_results>
 //= require <collections/tasks>
 //= require <collections/task_lists>
 //= require <collections/threads>
@@ -69,6 +70,7 @@
 //= require <views/conversation>
 //= require <views/convert_to_task>
 //= require <views/projects>
+//= require <views/page_teaser>
 //= require <views/search>
 //= require <views/sidebar>
 //= require <views/upload_area>
