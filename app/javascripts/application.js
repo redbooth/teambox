@@ -50,12 +50,14 @@
 //= require <models/base>
 //= require <models/comment>
 //= require <models/conversation>
+//= require <models/page>
 //= require <models/project>
 //= require <models/task>
 //= require <models/thread>
 //= require <models/user>
 //= require <collections/base>
 //= require <collections/comments>
+//= require <collections/pages>
 //= require <collections/people>
 //= require <collections/projects>
 //= require <collections/tasks>

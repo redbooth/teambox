@@ -77,9 +77,11 @@
    */
   Search.showQuickResults = function (evt) {
     var search_term = $('searchbox').value
-      , regex = RegExp('\\W' + search_term, 'i')
-      , found = Teambox.collections.tasks.models.select(function (el) {
-          return el.get('name') && (' ' + el.get('name').toLowerCase()).match(regex);
+      , threads = Teambox.collections.threads
+      , pages = Teambox.collections.pages
+      , regex = RegExp(search_term, 'i')
+      , found = threads.models.concat(pages.models).select(function (el) {
+          return el.get('name') && regex.test(el.get('name'));
         }).sortBy(function (el) {
           return el.updated_at;
         }).slice(0, 20).collect(function (el) {

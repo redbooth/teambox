@@ -25,6 +25,7 @@
       models.user          = this.my_user     = new Teambox.Models.User();
       collections.people                      = new Teambox.Collections.People();
       collections.tasks_lists                 = new Teambox.Collections.TaskLists();
+      collections.pages                       = new Teambox.Collections.Pages();
       collections.tasks    = this.my_tasks    = new Teambox.Collections.Tasks();
       collections.threads  = this.my_threads  = new Teambox.Collections.Threads();
       collections.projects = this.my_projects = new Teambox.Collections.Projects();
@@ -34,6 +35,7 @@
       models.user.fetch({success: _loader.load('user')});
       collections.tasks.fetch({success: _loader.load('tasks')});
       collections.threads.fetch({success: _loader.load('activities')});
+      collections.pages.fetch({success: _loader.load('pages')});
 
       _loader.total += 2; // this is hackish, but the loader is a little bit too dumb
       collections.projects.fetch({success: function (projects) {
