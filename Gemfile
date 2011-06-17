@@ -43,6 +43,7 @@ gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
 gem 'jammit'
 gem 'juggernaut'
 gem 'sentient_user'
+gem 'flash_cookie_session'
 
 group :development do
   gem 'sqlite3-ruby', '~> 1.2.5', :require => nil

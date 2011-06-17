@@ -14,6 +14,7 @@
 //= require <lib/jade>
 //= require <lib/plupload>
 //= require <lib/plupload.html5>
+//= require <lib/plupload.flash>
 //= require <lib/plupload.html4>
 
 //= require <rails>

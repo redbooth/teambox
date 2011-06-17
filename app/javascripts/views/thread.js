@@ -111,7 +111,11 @@
   Thread.render = function () {
     var Views = Teambox.Views
       , convert_to_task = new Views.ConvertToTask({model: new Teambox.Models.Conversation(this.model.attributes)})
-      , comment_form = new Views.CommentForm({model: this.model, convert_to_task: convert_to_task});
+      , comment_form = new Views.CommentForm({
+          model: this.model
+        , convert_to_task: convert_to_task
+        , controller: this.controller
+      });
 
     convert_to_task.comment_form = comment_form;
 

@@ -316,4 +316,10 @@ BLOCK
       });
     JS
   end
+
+  def session_meta_tag
+    key = Rails.application.config.session_options[:key]
+    %(<meta name="session-key" content="#{Rack::Utils.escape_html(key)}"/>\n<meta name="session-id" content="#{Rack::Utils.escape_html(cookies[key])}"/>).html_safe
+  end
+
 end

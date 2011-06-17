@@ -152,6 +152,7 @@
         , onFileUploaded: this.upload_area.onFileUploaded.bind(this.upload_area)
         , onUploadProgress: this.upload_area.onUploadProgress.bind(this.upload_area)
         , onUploadComplete: this.upload_area.onUploadComplete.bind(this.upload_area)
+        , onUploadFile: this.upload_area.onUploadFile.bind(this.upload_area)
         , onInit: this.upload_area.onUploaderInit.bind(this.upload_area)
       });
     }
@@ -159,6 +160,7 @@
     if (!this.uploader.inited) {
       this.uploader.init();
     }
+    this.uploader.refresh();
   };
 
   /* Toggle the time tracking area

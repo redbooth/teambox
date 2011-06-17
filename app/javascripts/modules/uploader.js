@@ -2,12 +2,17 @@
 
   var Uploader = function(view, opts) {
 
+    var host = document.location.protocol + '//' + document.location.host + '/'
+    ,   flash_swf_url = host + 'plupload.flash.swf';
+
     this.options = {
-      runtimes : 'html5,html4'
+      runtimes : 'flash,html4'
       , required_features: 'multipart'
       , max_file_size : '10mb'
       , file_data_name: 'comments_attributes[0]uploads_attributes[0][asset]'
+      , flash_swf_url: flash_swf_url
       , multipart: true
+      , urlstream_upload: true
     };
     this.view = view;
     this.opts = opts;
@@ -17,6 +22,8 @@
     this.onFileUploaded = opts.onFileUploaded;
     this.onUploadProgress = opts.onUploadProgress;
     this.onUploadComplete = opts.onUploadComplete;
+    this.onBeforeUpload = opts.onBeforeUpload;
+    this.onUploadFile = opts.onUploadFile;
     this.onInit = opts.onInit;
     delete opts.onFilesAdded;
     delete opts.onFilesRemoved;
@@ -24,6 +31,8 @@
     delete opts.onInit;
     delete opts.onUploadProgress;
     delete opts.onUploadComplete;
+    delete opts.onBeforeUpload;
+    delete opts.onUploadFile;
   };
 
   Uploader.prototype.init = function () {
@@ -61,8 +70,27 @@
         data.name = this.view.model.get('name');
       }
 
+      //These params are required for maintaining authenticity and session when going through flash engine
+      var csrf_param = $$('meta[name=csrf-param]').first()
+      ,   csrf_token = $$('meta[name=csrf-token]').first()
+      ,   session_key = $$('meta[name=session-key]').first()
+      ,   session_id  = $$('meta[name=session-id]').first();
+
+      var fixed_opts = {
+          _method: 'put'
+        , '_x-pushsession-id': Teambox.controllers.application.push_session_id
+      };
+
+      if (csrf_param && csrf_token) {
+        fixed_opts[csrf_param.getAttribute('content')] = csrf_token.getAttribute('content');
+      }
+
+      if (session_key && session_id) {
+        fixed_opts[session_key.getAttribute('content')] = session_id.getAttribute('content');
+      }
+
       var opts = {
-          multipart_params: _.extend(data, { _method: 'put'})
+          multipart_params: _.extend(data, fixed_opts)
         , headers: {
               'Accept':           'application/json'
             , 'X-PushSession-ID': Teambox.controllers.application.push_session_id
@@ -70,6 +98,9 @@
       };
 
       _.extend(uploader.settings, opts);
+      if (this.onUploadFile) {
+        this.onUploadFile();
+      }
     }.bind(this));
 
 
@@ -105,6 +136,11 @@
   Uploader.prototype.hasPendingUploads = function() {
     return this.uploader.total.percent === 100;
   };
+
+  Uploader.prototype.refresh = function() {
+    return this.uploader.refresh();
+  };
+
 
   // export
   Teambox.modules.Uploader = Uploader;

@@ -70,6 +70,29 @@
   UploadArea.onUploadComplete = function(uploader, files) {
     uploader.total.reset();
     this.reset();
+    this.restoreDisabledInputs();
+  };
+
+  UploadArea.onUploadFile = function(uploader, file) {
+    this.showDisabledInput();
+  };
+
+  UploadArea.showDisabledInput = function() {
+    var inputs = this.comment_form.el.select("input[type=submit][data-disable-with]");
+    inputs.each(function(input) {
+      input.disabled = true;
+      input.writeAttribute('data-original-value', input.value);
+      input.value = input.readAttribute('data-disable-with');
+    });
+  };
+
+  UploadArea.restoreDisabledInputs = function() {
+    var inputs = this.comment_form.el.select("input[type=submit][disabled=true][data-disable-with]");
+    inputs.each(function(input) {
+      input.value = input.readAttribute('data-original-value');
+      input.writeAttribute('data-original-value', null);
+      input.disabled = false;
+    });
   };
 
   /*  Handle the FileUploaded event
@@ -83,6 +106,13 @@
   UploadArea.onFileUploaded = function(uploader, file, response) {
     var resp = JSON.parse(response.response)
     , status = response.status;
+
+    //TODO:
+    //html5 returns a status attribute
+    //flash does not
+    if (!response.status) {
+      status = 200;
+    }
 
     if (status === 200) {
       this.comment_form.model.set(resp.objects);
@@ -140,12 +170,17 @@
     ,   width = 100
     ,   fileList = this.el.select('.file_list')[0];
 
-    fileList.select('li#file_' + file.id + ' div.progressbar')[0].show();
-    fileList.select('li#file_' + file.id + ' div.progressbar div').each(function(bar) {
-      var px = width*(file.percent/100)
-      ,   style = '' + px + 'px';
-      bar.setStyle('width', style);
-    });
+    var progress_bar = fileList.select('li#file_' + file.id + ' div.progressbar')[0];
+
+    if (progress_bar) {
+      progress_bar.show();
+
+      fileList.select('li#file_' + file.id + ' div.progressbar div').each(function(bar) {
+        var px = width*(file.percent/100)
+        ,   style = '' + px + 'px';
+        bar.setStyle('width', style);
+      });
+    }
   };
 
   /*

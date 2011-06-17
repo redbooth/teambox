@@ -55,4 +55,4 @@ input(name= 'utf8', type= 'hidden', value= '✓')
   .submit
     span.help
       a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= '<%= t('projects.show.text_styling')%>')
-    input(name= 'commit', type= 'submit', value= '<%= t('common.save')%>')
+      input(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
