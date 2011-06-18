@@ -41,12 +41,19 @@ class UploadsController < ApplicationController
   end
 
   def index
+    parent_folder_id = params[:parent_folder]
+    @parent_folder = parent_folder_id ? Folder.find(parent_folder_id) : nil
+    # TODO: Ensure you are able to view this folder
     @uploads = @current_project.uploads.
                        where(['uploads.is_private = ? OR (uploads.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                       where(:parent_folder_id => parent_folder_id).
                        joins("LEFT JOIN comments ON comments.id = uploads.comment_id").
                        joins("LEFT JOIN watchers ON (comments.target_id = watchers.watchable_id AND watchers.watchable_type = comments.target_type) AND watchers.user_id = #{current_user.id}").
                        includes(:user).
                        order('updated_at DESC')
+    @folders = @current_project.folders.
+                       where(:parent_folder_id => parent_folder_id).
+                       order('name DESC')
     @upload ||= @current_project.uploads.new
   end
 

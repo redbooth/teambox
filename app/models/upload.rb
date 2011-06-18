@@ -8,6 +8,7 @@ class Upload < RoleRecord
   belongs_to :comment, :touch => true, :counter_cache => true
   belongs_to :project
   belongs_to :page
+  belongs_to :parent_folder, :class_name => 'Folder'
 
   has_one        :page_slot, :as => :rel_object
   before_destroy :clear_slot

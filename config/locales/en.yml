@@ -1325,6 +1325,8 @@ en:
       uploaded_by: Uploaded by
       remove: Delete
       on_: "on"
+    parent_folder:
+      parent_folder: Parent folder...
     errors:
       exceeded_storage_plan_limit_html: "You have exceeded your storage quota for %{organization_name}. To increase your storage limits, <a href='%{url}'>upgrade your plan now</a>."
       general:  "There was an error uploading the file"

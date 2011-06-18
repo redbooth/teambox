@@ -9,6 +9,7 @@ class Project
     delete.has_many :tasks
     delete.has_many :invitations
     delete.has_many :uploads
+    delete.has_many :folders
     delete.has_many :notes
     delete.has_many :dividers
     
