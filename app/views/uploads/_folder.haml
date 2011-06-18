@@ -1,0 +1,14 @@
+%div.upload{ :class => cycle('alternate', '') }
+  .header
+    .icon
+      = image_tag '/famfamfam/folder.png'
+    .file
+      = link_to folder.name, project_uploads_path(:parent_folder => folder)
+    .size
+      =# number_to_human_size upload.size
+    .author
+      =# upload.user
+    .more
+      [+]
+
+  .reference{ :style => 'display: none' }

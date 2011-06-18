@@ -162,6 +162,7 @@ Teambox::Application.routes.draw do
 
       match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
       match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
+
       resources :uploads do
         member do
           get :public_download
@@ -176,7 +177,6 @@ Teambox::Application.routes.draw do
         end
       end
       match 'uploads/folders/:id' => 'uploads#index', :via => :get
-
       match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
 
       match 'invite_people' => 'projects#invite_people', :as => :invite_people, :via => :get

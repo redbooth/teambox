@@ -180,7 +180,10 @@ ActiveRecord::Schema.define(:version => 20110725155921) do
 
   create_table "folders", :force => true do |t|
     t.string   "name"
+<<<<<<< HEAD
     t.integer  "user_id"
+=======
+>>>>>>> Introducing folders
     t.integer  "project_id"
     t.integer  "parent_folder_id"
     t.datetime "created_at"
@@ -504,10 +507,16 @@ ActiveRecord::Schema.define(:version => 20110725155921) do
     t.integer  "asset_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+<<<<<<< HEAD
     t.boolean  "deleted",                          :default => false, :null => false
     t.boolean  "is_private",                       :default => false, :null => false
     t.integer  "parent_folder_id"
     t.string   "token",              :limit => 16
+=======
+    t.boolean  "deleted",            :default => false, :null => false
+    t.boolean  "is_private",         :default => false, :null => false
+    t.integer  "parent_folder_id"
+>>>>>>> Introducing folders
   end
 
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
