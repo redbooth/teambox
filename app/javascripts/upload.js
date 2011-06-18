@@ -12,27 +12,32 @@ document.on('click', '#new_folder_button, #new_folder_form a.close', function(e,
 });
 
 String.prototype.incrementLastNumber = function() {
-  var i = 0, matches = this.match(/\d+/g)
-  matches.push(parseInt(matches.pop()) + 1)
-  return this.gsub(/\d+/, function(m) { return matches[i++] })
-}
+  var i = 0, matches = this.match(/\d+/g);
+  matches.push(parseInt(matches.pop()) + 1);
+  return this.gsub(/\d+/, function(m) { return matches[i++]; });
+};
 
 document.on('change', '.upload_area input[type=file]', function(e, input) {
   var newInput = new Element('input', {
     type: 'file',
     name: input.name.incrementLastNumber()
-  })
-  if (input.form.hasEmptyFileUploads() == false) input.insert({ after: newInput })
-})
+  });
+  if (input.form.hasEmptyFileUploads() === false) {
+    input.insert({ after: newInput });
+  }
+});
 
 document.on('click', '.uploads .upload .header', function(e, el) {
-  return;
-  e.stop()
-  var reference = el.up('.upload').down('.reference')
+  e.stop();
+  var upload = el.up('.upload');
+  var reference = upload.down('.reference');
   if (reference.visible()) {
-    reference.hide()
+    upload.removeClassName('selected');
+    reference.hide();
   } else {
-    $$('.uploads .upload .reference').invoke('hide')
-    reference.show()
+    $$('.uploads .upload').invoke('removeClassName', 'selected');
+    $$('.uploads .reference').invoke('hide');
+    upload.addClassName('selected');
+    reference.show();
   }
-})
+});
