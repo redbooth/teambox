@@ -11,9 +11,16 @@
 - else
   %p= t('.cant_create')
 
+- if @parent_folder
+  .breadcrumbs
+    = link_to @current_project, project_uploads_path
+    »
+    = @parent_folder
+
 .uploads
   - if @parent_folder
     = render 'uploads/parent_folder', :folder => @parent_folder
+  -# TODO: Show full path to the folder
   = render :collection => @folders, :partial => 'uploads/folder'
   = render @uploads
 

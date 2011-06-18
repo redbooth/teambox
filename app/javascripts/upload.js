@@ -21,6 +21,7 @@ document.on('change', '.upload_area input[type=file]', function(e, input) {
 })
 
 document.on('click', '.uploads .upload .header', function(e, el) {
+  return;
   e.stop()
   var reference = el.up('.upload').down('.reference')
   if (reference.visible()) {
