@@ -22,7 +22,6 @@
   - if @parent_folder
     = render 'uploads/parent_folder', :folder => @parent_folder
   = render 'uploads/new_folder'
-  -# TODO: Show full path to the folder
   = render :collection => @folders, :partial => 'uploads/folder'
   = render @uploads
 

@@ -3,7 +3,7 @@
     .icon
       = image_tag '/famfamfam/arrow_turn_left.png'
     .file
-      = link_to t('.parent_folder'), project_uploads_path(:parent_folder => @parent_folder.parent_folder)
+      = link_to t('.parent_folder'), project_uploads_path(:parent_folder => @parent_folder)
     .size
       =# number_to_human_size upload.size
     .author
