@@ -2,15 +2,13 @@ $upload_icon_width: 16px
 
 .uploads
   .upload, form.new_folder
-    position: relative
     font-size: 12px
     padding: 0 0 6px 5px
     border: 1px solid transparent
     &.alternate
       background: lighten($navbar, 30)
-    &.selected
+    &:hover
       background-color: #ffe
-    &:hover, &.selected
       border-color: #aaa
     .header
       display: block
@@ -54,23 +52,11 @@ $upload_icon_width: 16px
     &:hover .more
       display: inline-block
     .reference
-      display: inline-block
-      position: absolute
-      border: 1px solid #aaa
-      border-top: 0
-      top: 25px
-      right: -1px
-      background-color: #ffe
-      z-index: 100
+      display: block
+      padding: 7px 0px 2px 20px
       a
-        display: block
-        padding: 5px 15px
-        color: black
-        &:hover
-          background-color: $navbar
-          color: black
-          text-decoration: none
-          cursor: pointer
+        display: inline-block
+        margin-right: 10px
       a[data-method="delete"]
         color: red
 
@@ -130,8 +116,6 @@ $upload_icon_width: 16px
       width: 200px
     p.error
       margin: 0px
-  .description
-    margin: 30px 0
   .submit
     margin-top: 10px
 
@@ -147,3 +131,4 @@ $upload_icon_width: 16px
   font-size: 12px
   font-weight: bold
   a
+
