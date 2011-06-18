@@ -1,7 +1,8 @@
 - if can? :upload_files, @current_project
   - if @upload.errors.empty?
     .text_actions
-      = link_to content_tag(:span, t('.new_file')), new_project_upload_path(@current_project), :class => 'add_button', :id => 'upload_file_button'
+      = link_to content_tag(:span, t('.new_folder')), '#', :class => 'add_button', :id => 'new_folder_button'
+      = link_to content_tag(:span, t('.new_file')), '#', :class => 'add_button', :id => 'upload_file_button'
 
 %h2= t('.title', :project => @current_project)
 
@@ -20,6 +21,7 @@
 .uploads
   - if @parent_folder
     = render 'uploads/parent_folder', :folder => @parent_folder
+  = render 'uploads/new_folder'
   -# TODO: Show full path to the folder
   = render :collection => @folders, :partial => 'uploads/folder'
   = render @uploads

@@ -1,10 +1,15 @@
 document.on('click', '#upload_file_button', function(e, button) {
-  if (!e.isMiddleClick()) {
-    e.preventDefault()
-    $('new_upload').show()
-    button.hide()
+  e.preventDefault();
+  $('new_upload').toggle();
+});
+
+document.on('click', '#new_folder_button, #new_folder_form a.close', function(e, button) {
+  e.preventDefault();
+  $('new_folder_form').toggle();
+  if ($('new_folder_form').visible()) {
+    $('new_folder_form').down('#new_folder_name').focus();
   }
-})
+});
 
 String.prototype.incrementLastNumber = function() {
   var i = 0, matches = this.match(/\d+/g)

@@ -1,7 +1,7 @@
 $upload_icon_width: 16px
 
 .uploads
-  .upload
+  .upload, form.new_folder
     font-size: 12px
     padding: 0 0 6px 5px
     border: 1px solid transparent
@@ -16,7 +16,7 @@ $upload_icon_width: 16px
       padding: 0
       height: auto
       cursor: pointer
-    .icon, .file, .size, .author, .more
+    .icon, .file, .size, .author, .more, .full_row
       display: inline-block
       overflow: hidden
       white-space: nowrap
@@ -29,6 +29,17 @@ $upload_icon_width: 16px
       width: 400px
       a
         color: black
+    .full_row
+      width: 600px
+      input#new_folder_name
+        font-size: 12px
+        border: 1px solid #999
+        padding: 4px
+        margin: 5px 0 2px 2px
+        width: 200px
+      .actions
+        float: right
+        padding-top: 6px
     .size, .author
       width: 75px
       font-size: 10px

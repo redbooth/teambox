@@ -62,12 +62,6 @@ class UploadsController < ApplicationController
     redirect_to @upload.url
   end
 
-  def new
-    authorize! :upload_files, @current_project
-    @upload = @current_project.uploads.new
-    @upload.user = current_user
-  end  
-  
   def create
     authorize! :upload_files, @current_project
     authorize! :update, @page if @page
@@ -76,7 +70,7 @@ class UploadsController < ApplicationController
     @page = @upload.page
     calculate_position(@upload) if @page
     
-    @upload.save
+    @upload.save!
 
     respond_to do |wants|
       wants.any(:html, :m) {
