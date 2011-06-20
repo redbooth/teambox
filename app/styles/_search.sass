@@ -13,16 +13,32 @@
     input[type=submit]
       display: none
     input[type=text]
-      +rounded(4px)
-      border: 1px solid #CCC
-      padding: 4px
+      +rounded(3px)
+      border: $brd_gray
+      padding: 4px 4px 4px 5px
       width: 250px
-      padding-left: 24px
       font-size: 12px
+      display: block
+      float: left
+      clear: none
+      height: 18px
     img
       position: absolute
       top: 7px
       left: 5px
+    a
+      display: block
+      float: left
+      clear: none
+      margin-left: -2px
+      height: 28px
+      width: 32px
+      background: url(/img_3_2/sprite_btn.png) no-repeat
+      &:active
+        background-position: -32px 0px
+      
+      span
+        display: none
   .ignore
     .no-inputsearch &
       input[type=search]
