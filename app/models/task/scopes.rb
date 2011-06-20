@@ -5,12 +5,11 @@ class Task
   scope :unarchived, :conditions => ['status <  ?', 3], :include => [:project, :task_list, :assigned]
   
   scope :active, :conditions => {:status => ACTIVE_STATUS_CODES}
-  
+
   scope :assigned_to, lambda { |user|
-    people = user.people.from_unarchived.all(:select => 'people.id')
-    { :conditions => {:assigned_id => people} }
+    joins(:assigned => :project).where(:people => {:user_id => user.id}).where(:projects => {:archived => false})
   }
-  
+
   scope :due_sooner_than_two_weeks, lambda {
     { :conditions => ['tasks.due_on < ?', 2.weeks.from_now] }
   }
