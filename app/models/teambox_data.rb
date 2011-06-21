@@ -106,7 +106,7 @@ class TeamboxData < ActiveRecord::Base
 
     rescue Exception => e
       # Something went wrong?!
-      Rails.logger.warn "#{user} imported an invalid dump (#{self.id}) #{e.inspect} #{self.errors.inspect}"
+      logger.warn "#{user} imported an invalid dump (#{self.id}) #{e.inspect} #{self.errors.inspect}"
       self.processed_at = nil
       next_status = :uploading
     end
@@ -182,6 +182,12 @@ class TeamboxData < ActiveRecord::Base
 
   Paperclip.interpolates :data_type do |attachment,style|
     attachment.instance.type_name.to_s.pluralize
+  end
+
+  def self.logger
+    @logger ||= Logger.new(Rails.root.join("log/teambox_datas.log"))
+    @logger.formatter = Logger::Formatter.new
+    @logger
   end
 
 end
