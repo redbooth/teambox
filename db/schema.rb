@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110622151731) do
+ActiveRecord::Schema.define(:version => 20110622154231) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -245,6 +245,7 @@ ActiveRecord::Schema.define(:version => 20110622151731) do
 
   add_index "notes", ["deleted"], :name => "index_notes_on_deleted"
   add_index "notes", ["page_id"], :name => "index_notes_on_page_id"
+  add_index "notes", ["project_id"], :name => "index_notes_on_project_id"
 
   create_table "notifications", :force => true do |t|
     t.integer  "person_id"
