@@ -220,3 +220,15 @@ Given /^(?:he|she|I) tracks? (\d+) hours? on the task "([^"]*)" with the comment
  task.comments.create :body => comment, :human_hours => hours
 end
 
+Then /^(@.+) should( not)? be watching the task "([^\"]*)"$/ do |users, negate, name|
+  conversation = Task.find_by_name(name)
+  
+  each_user(users) do |user|
+    if negate.blank?
+      user.should be_watching(conversation)
+    else
+      user.should_not be_watching(conversation)
+    end
+  end
+end
+

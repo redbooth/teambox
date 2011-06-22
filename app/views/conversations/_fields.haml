@@ -13,7 +13,7 @@
         - comment_fields.object.uploads.build
         = comment_fields.fields_for :uploads do |uploads|
           = uploads.file_field :asset, :id => 'upload_file'
-      .private_options{ :style => 'display: none', 'object-prefix' => "conversation_new", 'object-type' => 'conversation' }
+      .private_options{ :style => 'display: none', 'object-prefix' => "conversation_new", 'object-type' => 'conversation[comments_attributes][0]' }
       .actions
         .attach
           %span= t('comments.fields.attach') + ": "

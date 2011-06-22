@@ -20,7 +20,7 @@
         - comment_fields.object.uploads.build unless comment_fields.object.uploads.any?
         = comment_fields.fields_for :uploads do |uploads|
           = uploads.file_field :asset, :id => 'upload_file'
-      .private_options{ :style => 'display: none', 'object-prefix' => "task_new", 'object-type' => 'task' }
+      .private_options{ :style => 'display: none', 'object-prefix' => "task_new", 'object-type' => 'task[comments_attributes][0]' }
       .actions
         .attach
           %span= t('comments.fields.attach') + ": "

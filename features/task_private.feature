@@ -26,11 +26,13 @@ Feature: Creating a private task
     Then the "This element is visible to everybody in this project" checkbox should be checked
     When I choose "This element is only visible to people you specify..."
     And I uncheck "Pablo Villalba"
+    And I check "Jordi Romero"
     And I press "Add Task"
     And I wait for 1 second
     Then I should see "Post lolcats" as a task name
-    And @pablo should receive no emails
-    And @mislav should receive no emails
+    Then @pablo should not be watching the task "Post lolcats"
+    Then @jordi should be watching the task "Post lolcats"
+    Then @mislav should be watching the task "Post lolcats"
     When I am logged in as @pablo
     And I go to the page of the "Post lolcats" task
     Then I should not see "Post lolcats"

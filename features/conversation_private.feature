@@ -26,13 +26,15 @@ Feature: Creating a private conversation
     When I follow "Privacy"
     Then the "This element is visible to everybody in this project" checkbox should be checked
     When I choose "This element is only visible to people you specify..."
-    And I uncheck "Jordi Romero"
+    And I check "Jordi Romero"
     And I uncheck "Pablo Villalba"
+    Then show me the page
     And I press "Create"
+    Then show me the page
     Then I should see "Top Secret" in the title
-    And "pablo@teambox.com" should receive no emails
-    And "mislav@fuckingawesome.com" should receive no emails
-    And "jordi@teambox.com" should receive no emails
+    Then @pablo should not be watching the conversation "Top Secret"
+    Then @jordi should be watching the conversation "Top Secret"
+    Then @mislav should be watching the conversation "Top Secret"
     When I am logged in as @pablo
     And I go to the page of the "Top Secret" conversation
     Then I should not see "Top Secret"
