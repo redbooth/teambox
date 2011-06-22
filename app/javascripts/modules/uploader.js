@@ -7,7 +7,7 @@
     ,   asset_max_file_size = Teambox.controllers.application.config.asset_max_file_size;
 
     this.options = {
-      runtimes : 'flash,html4'
+      runtimes : 'html5,flash,html4'
       , required_features: 'multipart'
       , max_file_size : asset_max_file_size + 'mb'
       , file_data_name: 'comments_attributes[0]uploads_attributes[0][asset]'
