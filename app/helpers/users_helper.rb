@@ -47,15 +47,14 @@ module UsersHelper
      window.my_tasks = #{json_tasks};
      window.current_project = #{@current_project ? @current_project.id : 'null'};
 
-      (function(){
-        var $app = Teambox.controllers.application;
-
-        document.on("dom:loaded", function () {
-          if($app) {
-            _.extend($app.config, #{json_config});
-          }
-        });
-      }());
+     (function(){
+       document.on("dom:loaded", function () {
+         var $app = Teambox.controllers.application;
+         if($app) {
+           _.extend($app.config, #{json_config});
+         }
+       });
+     }());
     )
   end
   
@@ -186,8 +185,7 @@ module UsersHelper
     def json_config
       config = {}
       config[:app_env] = Rails.env
-      config[:push_server] = {}
-      config[:push_server][:port] = Teambox.config.juggernaut.port
+      config[:asset_max_file_size] = Teambox.config.asset_max_file_size
       config.to_json
     end
 
