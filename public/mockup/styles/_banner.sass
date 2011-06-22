@@ -1,0 +1,83 @@
+.banner_item
+  .primer
+    font-size: 12px
+    text-align: center
+    padding: 10px 0px
+      top: 15px
+    color: rgb(160,160,160)
+
+=round_corners
+  -moz-border-radius: 5px
+  -webkit-border-radius: 5px
+
+.calendar_gantt
+  margin: 10px 0
+  .tabs
+    .tab
+      +rounded-top(5px)
+      border: 1px solid #C8C8C8
+      display: inline
+      padding: 0 5px
+      &.active
+        border-bottom: 1px solid white
+      a
+        color: #555
+        font-size: 12px
+        text-transform: none
+        padding: 2px 5px 0 25px
+        &.active
+          border-bottom: 1px solid white
+        &#show_calendar_link
+          +calendar_icon
+        &#show_gantt_chart_link
+          +gantt_icon
+        &:hover
+          text-decoration: none
+
+div.upcoming_events_banner
+  padding: 10px
+  table
+    width: 100%
+  th
+    font-size: 11px
+    color: #bbb
+    padding: 4px
+      top: 10px
+    border-bottom: 1px solid rgb(140, 140, 140)
+  th.today
+    font-weight: bold
+    border-bottom: dashed 1px rgb(0, 0, 0)
+  td.today
+    border: dashed 1px rgb(0, 0, 0)
+  td
+    font-size: 11px
+    padding: 0px
+    ul
+      margin: 0px
+      padding: 0px
+      min-height: 50px
+      list-style-type: none
+      a
+        display: block
+        padding: 3px 4px
+        border-bottom: solid 1px rgb(255, 255, 255)
+    .task_status_new
+      color: white
+  p.nada
+    font-size: 12px
+    padding-bottom: 0px
+
+div.banner_navigation
+  margin-top: 20px
+  ul
+    margin: 0px
+      bottom: 4px
+    padding: 0px
+    list-style-type: none
+    margin-left: 15px
+    color: rgb(60,60,60)
+  li
+    display: inline
+    a  
+    a:hover, a.active
+      color: rgb(60,60,60)

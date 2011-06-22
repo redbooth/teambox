@@ -1,0 +1,39 @@
+// This stylesheet is meant to be included from Talker's room view
+// It customizes the page to be closer to Teambox style
+
+body
+  background: white
+
+#sidebar
+  padding: 0
+  #utilities
+    display: none
+  .toggle_sidebar
+    position: absolute
+    top: 0
+    right: 4px
+    z-index: 100
+    b
+      width: 24px !important
+    &.expanded b.show
+      top: 0
+  #room
+    border-radius: 0 0
+    -webkit-box-shadow: none
+    .header
+      h3.name
+        color: #404040
+        font-size: 14px
+    .content
+      background: none
+      border-top: none
+      h4
+        font-size: 12px
+    .footer
+      border-top: none
+      background: none
+  a.logo
+    display: none !important
+
+#main
+  padding: 40px 0px

@@ -121,7 +121,7 @@ div.column p {
   margin: 10px 0; }
 
 a.loading_button {
-  background: url(../../images/loading_button_bg.gif) no-repeat left;
+  background: url(images/loading_button_bg.gif) no-repeat left;
   font-size: 12px;
   padding: 5px;
     padding-left: 20px; }
@@ -130,7 +130,7 @@ a.loading_button {
     padding: 5px;
       padding-right: 10px;
     font-weight: bold;
-    background: url(../../images/loading_button_wrap_bg.jpg) no-repeat right; }
+    background: url(images/loading_button_wrap_bg.jpg) no-repeat right; }
 
 a.button, a.unarchive_task_list_link, a.reorder_task_list_link, a.add_button, a.new_task_list_link, a.new_task_list_template {
   display: inline-block;
@@ -163,12 +163,12 @@ a.button, a.unarchive_task_list_link, a.reorder_task_list_link, a.add_button, a.
   .cssgradients a.button, .cssgradients a.unarchive_task_list_link, .cssgradients a.reorder_task_list_link, .cssgradients a.add_button, .cssgradients a.new_task_list_link, .cssgradients a.new_task_list_template {
     border: 1px solid silver; }
   .no-cssgradients a.button, .no-cssgradients a.unarchive_task_list_link, .no-cssgradients a.reorder_task_list_link, .no-cssgradients a.add_button, .no-cssgradients a.new_task_list_link, .no-cssgradients a.new_task_list_template {
-    background: url(../../images/button_bg.jpg) no-repeat left;
+    background: url(images/button_bg.jpg) no-repeat left;
     padding: 5px 0 5px 5px; }
     .no-cssgradients a.button span, .no-cssgradients a.unarchive_task_list_link span, .no-cssgradients a.reorder_task_list_link span, .no-cssgradients a.add_button span, .no-cssgradients a.new_task_list_link span, .no-cssgradients a.new_task_list_template span {
       padding: 6px 10px 5px 5px;
       font-weight: bold;
-      background: url(../../images/button_wrap_bg.jpg) no-repeat right; }
+      background: url(images/button_wrap_bg.jpg) no-repeat right; }
 
 .cssgradients a.add_button:before, .cssgradients a.new_task_list_link:before {
   content: "+ ";
@@ -176,11 +176,11 @@ a.button, a.unarchive_task_list_link, a.reorder_task_list_link, a.add_button, a.
   color: #555555;
   margin-right: 0.3em; }
 .no-cssgradients a.add_button, .no-cssgradients a.new_task_list_link {
-  background-image: url(../../images/add_button_bg.jpg);
+  background-image: url(images/add_button_bg.jpg);
   padding-left: 20px; }
   .no-cssgradients a.add_button span, .no-cssgradients a.new_task_list_link span {
     padding: 8px 7px 7px 7px;
-    background: url(../../images/button_wrap_bg.jpg) no-repeat right; }
+    background: url(images/button_wrap_bg.jpg) no-repeat right; }
 
 img {
   border: none; }
@@ -269,7 +269,8 @@ div.column_wrap {
   font-size: 12px;
   left: 0;
   width: 190px;
-  background: #e6edf5;
+  background: #eeeeee;
+  border-right: 1px solid white;
   overflow: hidden; }
   div.column_wrap div.column select {
     max-width: 170px; }
@@ -277,9 +278,9 @@ div.column_wrap {
     margin-left: 15px; }
 
 div.content_wrap {
-  left: 190px;
+  left: 191px;
   right: 200px;
-  border-left: 1px solid #b7b7b7; }
+  border-left: 1px solid #898989; }
   div.content_wrap .content {
     position: absolute;
     top: 23px;
@@ -335,42 +336,51 @@ div.header {
     padding-right: 18px;
     padding-top: 11px;
     float: left;
-    background: url(../img_3_2/sprite_vertical.png) top right no-repeat; }
+    background: url(img_3_2/sprite_v.png) top right no-repeat; }
     div.header h1 a {
       display: block;
       width: 134px;
       height: 36px; }
   div.header #user_utilities {
+    width: 160px;
     position: absolute;
+    z-index: 9999;
     display: block;
     height: 28px;
     top: 13px;
     right: 20px;
     float: right;
-    background: url(../img_3_2/sprite_btn.png) -126px 0 no-repeat;
     text-shadow: white 0px 1px 1px; }
     div.header #user_utilities h2 {
+      background: url(img_3_2/sprite_btn.png) -126px 0 no-repeat;
+      display: block;
+      float: left;
+      clear: none;
+      width: 108px;
+      height: 22px;
       color: #535353;
       font-size: 12px;
       margin: 0;
       padding-left: 10px;
-      padding-top: 6px; }
-      div.header #user_utilities h2 .dropdown_arrow {
-        margin-left: 10px;
-        display: block;
-        float: right;
-        clear: none;
-        width: 32px;
-        height: 28px;
-        background: url(../img_3_2/sprite_btn.png) -474px 0 no-repeat;
-        margin-left: 8px;
-        margin-top: -6px;
-        margin-right: -2px; }
+      padding-top: 6px;
+      padding-bottom: 0; }
+      div.header #user_utilities h2 a, div.header #user_utilities h2 a:hover, div.header #user_utilities h2 a:visited {
+        color: #535353;
+        text-decoration: none; }
+    div.header #user_utilities .dropdown_arrow {
+      margin: 0;
+      display: block;
+      float: left;
+      clear: none;
+      width: 32px;
+      height: 28px;
+      background: url(img_3_2/sprite_btn.png) -474px 0 no-repeat;
+      margin: 0; }
     div.header #user_utilities ol {
       position: absolute;
       display: none;
       top: 28px;
-      width: 100%;
+      width: 148px;
       left: 0;
       list-style-type: none;
       margin: 0;
@@ -396,10 +406,12 @@ div.header {
           -webkit-border-bottom-left-radius: 3px;
           -webkit-border-bottom-right-radius: 3px; }
       div.header #user_utilities ol li {
-        width: 100%;
+        width: 148px;
         border-top: 1px solid #f5f5f5;
-        border-bottom: 1px solid #a0a0a0; }
+        border-bottom: 1px solid #a0a0a0;
+        z-index: 501; }
         div.header #user_utilities ol li a {
+          position: relative;
           display: block;
           padding: 5px 0 0 10px;
           background: #e5e5e5;
@@ -410,12 +422,12 @@ div.header {
             background: #eeeeee;
             color: #535353;
             text-decoration: none; }
-    div.header #user_utilities:hover {
-      background: url(../img_3_2/sprite_btn.png) -126px -28px no-repeat; }
-      div.header #user_utilities:hover .dropdown_arrow {
-        background: url(../img_3_2/sprite_btn.png) -474px -28px no-repeat; }
-      div.header #user_utilities:hover ol {
-        display: block; }
+    div.header #user_utilities:hover h2 {
+      background: url(img_3_2/sprite_btn.png) -126px -28px no-repeat; }
+    div.header #user_utilities:hover .dropdown_arrow {
+      background: url(img_3_2/sprite_btn.png) -474px -28px no-repeat; }
+    div.header #user_utilities:hover ol {
+      display: block; }
   div.header #quick_add_buttons {
     float: left;
     clear: none;
@@ -435,7 +447,7 @@ div.header {
         height: 28px;
         width: 32px;
         padding: 0;
-        background: url(../img_3_2/sprite_btn.png) no-repeat 0px -28px; }
+        background: url(img_3_2/sprite_btn.png) no-repeat 0px -28px; }
         div.header #quick_add_buttons a.quick_add_btn:active {
           background-position: -63px -28px; }
         div.header #quick_add_buttons a.quick_add_btn span {
@@ -533,18 +545,17 @@ p.flash-notice {
   background-color: white; }
 
 .separator {
-  height: 20px;
+  height: 24px;
   margin: 0;
   padding: 0;
-    padding-left: 10px;
+    padding-left: 18px;
+    padding-top: 4px;
   line-height: 19px;
-  background: #e7e7e7;
+  background: #dcdcdc;
   background-image: -moz-linear-gradient(top, #f3f3f3, #d7d7d7);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f3f3f3), color-stop(1, #d7d7d7));
-  border-bottom: 1px solid #b7b7b7;
-  border-top: 1px solid #dddddd; }
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f3f3f3), color-stop(1, #d7d7d7)); }
   .separator.with_margin {
-    margin-top: 20px; }
+    margin-top: 10px; }
   .separator span {
     position: absolute;
     right: 0;
@@ -564,21 +575,20 @@ p.flash-notice {
       left: -11px;
       border-right: 1px solid #dddddd; }
   .column_wrap .separator {
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#d8dee5), to(#c6d1dd));
-    background-image: -moz-linear-gradient(#d8dee5, #c6d1dd);
-    border-top: 1px solid #a4acb3; }
-    .column_wrap .separator span {
-      border-left: 1px solid #a4acb3; }
+    background: url(img_3_2/sprite_v.png) repeat-x 0px -55px; }
+  .separator.first {
+    background-position: 0px -56px;
+    height: 23px; }
   .separator a:hover {
     color: black;
     text-decoration: none; }
 
 .separator, .separator a {
-  color: #777777;
+  color: #535353;
   text-shadow: white 0 1px 0;
   text-transform: uppercase;
   text-align: left;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: bold;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -1005,7 +1015,7 @@ body.loading {
       margin-left: -2px;
       height: 28px;
       width: 32px;
-      background: url(../img_3_2/sprite_btn.png) no-repeat; }
+      background: url(img_3_2/sprite_btn.png) no-repeat; }
       .search_bar form.search a:active {
         background-position: -32px 0px; }
       .search_bar form.search a span {
@@ -1212,11 +1222,11 @@ ul#quicksearch_results {
       float: none; }
 
   .recent_conversations a.conversation, .project_pages a.conversation {
-    background: url(../../images/comment.gif) no-repeat left;
+    background: url(images/comment.gif) no-repeat left;
     margin-left: 10px;
     padding-left: 25px; }
   .recent_conversations a.page, .project_pages a.page {
-    background: url(../../images/page.png) no-repeat left;
+    background: url(images/page.png) no-repeat left;
     margin-left: 10px;
     padding-left: 25px; }
   .recent_conversations a, .project_pages a {
@@ -2373,7 +2383,7 @@ form.new_task, form.edit_task, .task_list_form {
   #tasks_for_all_projects .task_list .task .extended a {
     color: #555555; }
 #tasks_for_all_projects .task_list .task .taskName a.loading {
-  background-image: url(../../images/loading.gif); }
+  background-image: url(images/loading.gif); }
 
 div.tasks {
   padding-bottom: 5px; }
@@ -2774,11 +2784,11 @@ form.task_list_template_form ul {
     display: block; }
 
 .page_slot.InsertBefore {
-  background-image: url(../../images/pins.gif);
+  background-image: url(images/pins.gif);
   background-repeat: repeat-x; }
 
 .divider {
-  background: url(../../images/divider.jpg) repeat-x center;
+  background: url(images/divider.jpg) repeat-x center;
   padding-left: 10px; }
   .divider h3 {
     padding-top: 3px; }
@@ -2814,7 +2824,7 @@ form.new_divider, form.edit_divider {
   margin-top: 5px;
   padding: 10px;
     padding-right: 0px;
-  background: url(../../images/divider.jpg) repeat-x center; }
+  background: url(images/divider.jpg) repeat-x center; }
   form.new_divider .area, form.edit_divider .area {
     border: solid 1px #e6e6e6;
     background: #f5f5f5;
@@ -3453,7 +3463,7 @@ div.banner_navigation {
       height: 10px;
       width: 5px;
       text-indent: 0.3em;
-      background: url(../../images/mark.jpg) no-repeat left; }
+      background: url(images/mark.jpg) no-repeat left; }
     .gantt .ruler .date {
       position: absolute;
       font-family: Courier, monospace;
@@ -4032,7 +4042,8 @@ ul.google_docs_list, .google_docs_attachment ul.file_list {
     width: 180px;
     padding-left: 10px;
     position: relative;
-    font-size: 11px; }
+    font-size: 11px;
+    background: url(img_3_2/sprite_h.png) bottom left no-repeat; }
     .nav_links .el span, .more_links .el span {
       position: absolute;
       right: 5px;
@@ -4055,9 +4066,8 @@ ul.google_docs_list, .google_docs_attachment ul.file_list {
       .nav_links .el span.red, .more_links .el span.red {
         background-color: #bb0000; }
     .nav_links .el.selected, .nav_links .el.children-selected, .nav_links .el.selected:hover, .nav_links .el.children-selected:hover, .more_links .el.selected, .more_links .el.children-selected, .more_links .el.selected:hover, .more_links .el.children-selected:hover {
-      background: #c7dcee;
-      background-image: -webkit-gradient(linear, left top, left bottom, from(#a0b0d0), to(#6f83ab));
-      background-image: -moz-linear-gradient(#a0b0d0, #6f83ab);
+      background-color: #a0a0a0;
+      background-position: -190px 24px;
       text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px;
       -webkit-font-smoothing: antialiased; }
       .nav_links .el.selected a, .nav_links .el.children-selected a, .nav_links .el.selected:hover a, .nav_links .el.children-selected:hover a, .more_links .el.selected a, .more_links .el.children-selected a, .more_links .el.selected:hover a, .more_links .el.children-selected:hover a {
@@ -4067,69 +4077,102 @@ ul.google_docs_list, .google_docs_attachment ul.file_list {
         background-color: white;
         color: #8597bb; }
     .nav_links .el:hover, .more_links .el:hover {
-      background: #eef5fa; }
+      background-color: #dcdcdc; }
     .nav_links .el.expanded a, .more_links .el.expanded a {
       font-weight: bold; }
+  .nav_links .last, .more_links .last {
+    background-image: none; }
+    .nav_links .last:hover, .more_links .last:hover {
+      background: url(img_3_2/sprite_h.png) bottom left no-repeat #dcdcdc; }
+  .nav_links .btn_new_project, .more_links .btn_new_project {
+    padding: 0;
+    margin-top: 10px;
+    margin-left: 15px;
+    margin-bottom: 18px;
+    width: 165px;
+    height: 28px;
+    background: url(img_3_2/sprite_btn.png) right -56px no-repeat; }
+    .nav_links .btn_new_project a, .more_links .btn_new_project a {
+      font-size: 11px;
+      color: red;
+      height: 16px;
+      width: 120px;
+      padding-top: 7px;
+      padding-left: 40px;
+      background: url(img_3_2/sprite_btn.png) -126px -56px no-repeat;
+      margin-left: -3px;
+      text-shadow: white 0px 1px 1px; }
+    .nav_links .btn_new_project:hover, .more_links .btn_new_project:hover {
+      background-position: right -84px; }
+      .nav_links .btn_new_project:hover a, .more_links .btn_new_project:hover a {
+        background-position: -126px -84px; }
   .nav_links .contained .el, .more_links .contained .el {
     width: 180px;
     font-size: 11px; }
     .nav_links .contained .el a, .more_links .contained .el a {
       padding-left: 30px; }
   .nav_links a, .more_links a {
+    height: 16px;
     padding: 5px;
     display: block;
-    color: #333333;
-    padding-left: 28px;
-    background-position: 3px 4px;
+    color: #535353;
+    padding-left: 30px;
+    background-position: 7px 4px;
     background-repeat: no-repeat; }
     .nav_links a:hover, .more_links a:hover {
       text-decoration: none; }
     .nav_links a:active, .more_links a:active {
       font-weight: bold; }
     .nav_links a.more, .more_links a.more {
-      color: #777777; }
+      color: #535353; }
     .nav_links a.home, .more_links a.home {
-      background-image: url(../../famfamfam/house.png); }
+      background-image: url(famfamfam/house.png); }
     .nav_links a.add, .more_links a.add {
-      background-image: url(../../famfamfam/add.png); }
+      background-image: url(famfamfam/add.png); }
     .nav_links a.recent_activity, .more_links a.recent_activity {
-      background-image: url(../../famfamfam/newspaper.png); }
+      background-image: url(img_3_2/ico/newspaper.png); }
     .nav_links a.conversations, .more_links a.conversations {
-      background-image: url(../../famfamfam/comment.png); }
+      background-image: url(img_3_2/ico/balloons-box.png); }
     .nav_links a.tasks, .more_links a.tasks {
-      background-image: url(../../famfamfam/tick.png); }
+      background-image: url(img_3_2/ico/tick-button-blue.png); }
     .nav_links a.today, .more_links a.today {
-      background-image: url(../../famfamfam/weather_sun.png); }
+      background-image: url(img_3_2/ico/brightness.png); }
     .nav_links a.all_tasks, .more_links a.all_tasks {
-      background-image: url(../../famfamfam/timeline_marker.png); }
+      background-image: url(img_3_2/ico/ui-list-box-blue.png); }
     .nav_links a.time, .more_links a.time {
-      background-image: url(../../famfamfam/time.png); }
+      background-image: url(img_3_2/ico/clock-frame.png); }
     .nav_links a.pages, .more_links a.pages {
-      background-image: url(../../famfamfam/layout_content.png); }
+      background-image: url(img_3_2/ico/blog-blue.png); }
     .nav_links a.files, .more_links a.files {
-      background-image: url(../../famfamfam/folder.png); }
+      background-image: url(img_3_2/ico/folder-horizontal.png); }
     .nav_links a.people, .more_links a.people {
-      background-image: url(../../famfamfam/group.png); }
+      background-image: url(img_3_2/ico/users.png); }
     .nav_links a.chat, .more_links a.chat {
-      background-image: url(../../famfamfam/emoticon_smile.png); }
+      background-image: url(img_3_2/ico/keyboard.png); }
     .nav_links a.contacts, .more_links a.contacts {
-      background-image: url(../../famfamfam/report_user.png); }
+      background-image: url(famfamfam/report_user.png); }
     .nav_links a.recent_activities, .more_links a.recent_activities {
-      background-image: url(../../famfamfam/user_comment.png); }
+      background-image: url(famfamfam/user_comment.png); }
     .nav_links a.advanced, .more_links a.advanced {
-      background-image: url(../../famfamfam/pill.png); }
+      background-image: url(famfamfam/pill.png); }
     .nav_links a.feeds, .more_links a.feeds {
-      background-image: url(../../famfamfam/feed.png); }
+      background-image: url(famfamfam/feed.png); }
     .nav_links a.calendar, .more_links a.calendar {
-      background-image: url(../../famfamfam/date.png); }
+      background-image: url(img_3_2/ico/calendar-blue.png); }
     .nav_links a.settings, .more_links a.settings {
-      background-image: url(../../famfamfam/cog.png); }
+      background-image: url(img_3_2/ico/gear.png); }
     .nav_links a.collapsed_mode, .nav_links a.expanded_mode, .more_links a.collapsed_mode, .more_links a.expanded_mode {
-      background-image: url(../../famfamfam/layers.png); }
+      background-image: url(famfamfam/layers.png); }
     .nav_links a.loading, .more_links a.loading {
-      background-image: url(../../images/loading.gif); }
-    .nav_links a.project, .nav_links a.more, .more_links a.project, .more_links a.more {
-      padding-left: 5px; }
+      background-image: url(images/loading.gif); }
+    .nav_links a.organizations, .more_links a.organizations {
+      background-image: url(img_3_2/ico/building.png); }
+    .nav_links a.project, .more_links a.project {
+      padding-left: 7px;
+      font-weight: bold;
+      font-size: 12px;
+      margin-top: 4px;
+      margin-bottom: 5px; }
 
 .more_links {
   margin-left: -15px; }
@@ -4170,19 +4213,19 @@ ul.google_docs_list, .google_docs_attachment ul.file_list {
           text-decoration: none;
           color: #df5249; }
         .project_overlay .overlay .sections p a.recent_activity {
-          background-image: url(../../famfamfam/newspaper.png); }
+          background-image: url(famfamfam/newspaper.png); }
         .project_overlay .overlay .sections p a.conversations {
-          background-image: url(../../famfamfam/comment.png); }
+          background-image: url(famfamfam/comment.png); }
         .project_overlay .overlay .sections p a.tasks {
-          background-image: url(../../famfamfam/tick.png); }
+          background-image: url(famfamfam/tick.png); }
         .project_overlay .overlay .sections p a.time {
-          background-image: url(../../famfamfam/time.png); }
+          background-image: url(famfamfam/time.png); }
         .project_overlay .overlay .sections p a.pages {
-          background-image: url(../../famfamfam/layout_content.png); }
+          background-image: url(famfamfam/layout_content.png); }
         .project_overlay .overlay .sections p a.files {
-          background-image: url(../../famfamfam/folder.png); }
+          background-image: url(famfamfam/folder.png); }
         .project_overlay .overlay .sections p a.people {
-          background-image: url(../../famfamfam/group.png); }
+          background-image: url(famfamfam/group.png); }
 
 .quick_add {
   position: relative; }
@@ -4912,7 +4955,7 @@ form.new_conversation div.preview {
   font-size: 12px;
   background-position: 3px 5px;
   background-repeat: no-repeat;
-  background-image: url(../famfamfam/star.png);
+  background-image: url(famfamfam/star.png);
   height: 20px;
   display: inline-block;
   margin-top: 4px;

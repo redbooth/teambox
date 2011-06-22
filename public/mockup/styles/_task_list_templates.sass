@@ -1,0 +1,57 @@
+body.controller_task_list_templates
+  font-size: 12px
+  a.new_task_list_template
+    margin-left: 450px
+
+.template_link
+  font-size: 12px
+
+.task_list_templates
+  margin-left: -50px
+  padding-left: 50px
+  img.drag
+    cursor: move
+    display: inline-block
+  .actions
+    display: none
+    position: absolute
+    margin-left: -45px
+  &:hover
+    .actions
+      display: block
+  .name
+    font-weight: bold
+    font-size: 1.2em
+    position: relative
+    top: -4px
+  ul
+    padding: 0 0 0 20px
+    li
+      list-style: none
+      padding-bottom: 10px
+      .title
+        font-weight: bold
+      .desc
+        font-style: italic
+        color: #666
+#traditional_task_list_form a.create_from_template
+  position: relative
+  top: 5px
+#template_task_list_form a.create_traditional
+  margin-left: 10px
+
+form.task_list_template_form
+  .name
+    margin-top: 20px
+  ul
+    padding: 0
+    li
+      img.drag
+        cursor: move
+        display: inline-block
+      list-style: none
+      input[name="task_list_template[titles][]"]
+        width: 40%
+      input[name="task_list_template[descs][]"]
+        width: 50%
+

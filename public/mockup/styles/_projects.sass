@@ -1,0 +1,365 @@
+@media screen
+  .people_list
+    .list
+      display: block
+    .person, .invite_people
+      font-size: 12px
+      margin-left: 10px
+      height: 30px
+    .invitations_pending
+      margin: 10px 0 5px 10px
+      font-weight: bold
+    .invite_people
+      margin-top: 10px
+    .person
+      span
+        display: inline
+      span.login
+        float: right
+        color: #777777
+    a
+      color: rgb(80, 80, 80)
+      text-decoration: none
+    a:hover
+      text-decoration: underline
+    &.compact
+      .person
+        display: inline
+        position: relative
+        .more, span
+          display: none
+        .micro_avatar
+          display: inline
+          margin: 0 0 7px 10px
+        &:hover
+          .more
+            display: block
+            position: absolute
+            background: rgb(50, 50, 50)
+            background: rgba(0, 0, 0, 0.7)
+            color: #fff
+            padding: 1px 8px 0 8px
+            border-radius: 9px 9px
+            font-size: 12px
+            font-weight: bold
+            text-shadow: black 0px 1px 1px
+            z-index: 10000
+            width: 200px
+            height: auto
+            top: 0
+            left: 0
+          span
+            display: block
+          span, a
+            color: #fff
+          span.login
+            float: none
+
+  .recent_conversations, .project_pages
+    a.conversation
+      background: url(images/comment.gif) no-repeat left
+      margin-left: 10px
+      padding-left: 25px
+    a.page
+      background: url(images/page.png) no-repeat left
+      margin-left: 10px
+      padding-left: 25px
+    a
+      display: block
+      margin-top: 5px
+      color: rgb(80, 80, 80)
+      text-decoration: none
+    a:hover
+      text-decoration: underline
+    a.view_all, a.new
+      margin:
+        top: 10px
+        left: 35px
+      color: rgb(150, 150, 150)
+    a.new
+      margin-top: 5px
+
+  #project_archived_link
+    color: #999999
+    font-size: 12px
+    margin: 15px 0
+    display: block
+
+  a.gantt_link, a.calendars_link, a.print_link, a.email_link, a.subscribe, a.public_link, a.leave_link, a.csv_link, a.join_link
+    display: block
+    margin-top: 5px
+    font-size: 13px
+    padding-left: 25px
+    color: #444
+  a.gantt_link
+    +gantt_icon
+  a.calendars_link
+    +calendar_icon
+  a.csv_link
+    +csv_icon
+  a.print_link
+    +print_icon
+  a.email_link
+    +mail_icon
+  a.public_link
+    +public_icon
+  a.leave_link
+    margin-top: 20px
+    +leave_icon
+  a.join_link
+    +sprite("/famfamfam/group_add.png", 0, 0, 16px, 16px)
+    display: block
+    width: auto
+  a.subscribe
+    margin-top: 15px
+    +feed_icon
+  .subscribe_all
+    font-weight: bold
+  span#email_help
+    display: block
+    margin-top: 10px
+    padding: 10px
+    color: #505050
+    border: 1px solid #C8C8C8
+    background-color: #F0F0F0
+    word-wrap: break-word
+    a
+      color: black
+      font-weight: bold
+
+  .calendar_links, .calendar_links_all
+    font-size: 13px
+    padding-left: 25px
+    margin: 8px 0
+    +calendar_icon
+  .calendar_links_all
+    margin-bottom: 15px
+    font-weight: bold
+
+
+@media print
+  .index_projects
+    .column
+      display: none
+    .info
+      display: none
+    h2
+      font-size: 20px
+      border-bottom: solid 3px rgb(0, 0, 0)
+      padding-bottom: 3px
+      span
+        display: none
+    .comment
+      clear: both
+      .block
+        float: none
+        width: 100%
+        .date
+          color: rgb(0, 0, 0)
+        .name
+          border-bottom: solid 1px rgb(0, 0, 0)
+          span
+            color: rgb(0, 0, 0)
+          a
+            color: rgb(0, 0, 0)
+            text-decoration: none
+          span.task_status
+            background: rgb(0, 0, 0)
+            color: rgb(255, 255, 255)
+            border: none
+            -moz-border-radius: 0px
+            -webkit-border-radius: 0px
+    .activity
+      display: block
+      width: 100%
+      clear: both
+      color: rgb(0, 0, 0)
+      span
+        color: rgb(0, 0, 0)
+      .clear
+        border-bottom: solid 1px rgb(0, 0, 0)
+        margin: 0px
+      a
+        color: rgb(0, 0, 0)
+        text-decoration: none
+      .date
+        color: rgb(0, 0, 0)
+    .upload
+      .info
+        display: none
+      .thumbnail
+        display: none
+
+.edit_projects, .update_projects
+  .owner
+    label
+      font-size: 12px
+    margin-bottom: 20px
+    .description
+      margin: 20px 0
+  .text_field
+    margin: 20px 0
+
+form#new_project
+  margin: 30px 0
+  .errors_for
+    font-size: 12px
+  .text_field
+    margin-bottom: 30px
+  .check_box
+    padding-left: 10px
+  .submit
+    margin-top: 20px
+  em
+    font-style: normal
+    font-size: 10px
+    color: #777
+  label
+    a
+      font-size: 10px
+  label, h3
+    font-weight: normal
+
+form#new_project, form.edit_project
+  padding:
+    left: 10px
+  .text_field label, h3
+    font-size: 14px
+    margin-bottom: 5px
+  .company
+    margin: 20px 0
+  #project_name, #project_organization_name
+    width: 220px
+    font-size: 20px
+  #project_permalink
+    width: 140px
+  .permalink
+    margin-bottom: 0px
+  #preview
+    font-size: 12px
+    padding: 10px 0px
+    span
+      font-weight: bold
+  .good
+    color: rgb(0, 140, 0)
+  .bad
+    color: rgb(200, 0, 0)
+  .archived
+    margin-bottom: 10px
+    label
+      float: none
+      font-size: 12px
+  .description
+    font-size: 12px
+    color: rgb(150, 150, 150)
+  p.invite_by_email
+    padding-left: 10px
+
+.new_projects, .create_projects
+  #project_organization_id
+    max-width: 200px
+  .preview
+    margin: 10px 0px
+      top: 15px
+    font-size: 12px
+  .column
+    -moz-border-radius:
+      topright: 5px
+    -webkit-border-top-right-radius: 5px
+    font-size: 12px
+    p
+      margin: 0 0 5px 0
+    ul
+      padding-left: 20px
+      margin-top: 5px
+      li
+        margin-bottom: 3px
+
+form#invite_contacts
+  margin-top: 30px
+  font-size: 12px
+  h3
+    font-size: 14px
+    margin:
+      top: 20px
+      bottom: 10px
+    font-weight: normal
+  .users
+    margin-left: 10px
+    .user
+      float: left
+      width: 190px
+  p
+    margin: 15px 0 5px
+  textarea
+    width: 550px
+    height: 40px
+    font-size: 12px
+    margin: 0 0 0 10px
+  .previewBox
+    display: none
+  .submit
+    margin-top: 20px
+
+.show_projects span.in_project
+  display: none
+
+.show_projects, .index_task_lists
+  h2
+    .help
+      float: right
+      font-size: 12px
+      font-weight: normal
+      padding-top: 3px
+      a
+        color: rgb(150, 150, 150)
+  .tip
+    margin: 10px 10px
+    font-size: 12px
+    color: rgb(150, 150, 150)
+  #activities
+    .comment, .activity, .upload, .thread
+      .project, .project_arr
+        display: none
+
+.index_conversations, .show_conversations, .show_tasks
+  .comment
+    .name
+      .project, .project_arr
+        display: none
+      .target, .target_arr
+        display: none
+
+#show_more_button
+  margin-top: 40px
+  width: 620px
+  text-align: center
+  .activity_paginate_link
+    text-align: center
+
+img#activity_paginate_loading
+  margin-left: 300px
+
+.projects_pane
+  h4
+    font-size: 12px
+    margin: 30px 0 10px
+    a
+      color: black
+  p
+    font-size: 13px
+    margin: 6px 0 6px 10px
+    &.none
+      color: #999
+    a
+      color: #333
+      &.show_archived
+        color: #999
+        text-decoration: underline
+    span.status
+      color: #777
+      font-size: 12px
+      float: right
+      a
+        color: #777
+        text-decoration: underline

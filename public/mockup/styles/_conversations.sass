@@ -1,0 +1,125 @@
+#column
+  .conversations
+    clear: both
+    margin-top: 20px
+    .conversation
+      padding-top: 2px
+      font-size: 12px
+      a
+        padding: 3px 0
+      span.comment_count
+        color: rgb(150, 150, 150)
+
+.index_conversations
+  #conversations
+    .conversation
+      color: rgb(30, 30, 30)
+      margin-bottom: 30px
+      .comment
+        h2.title
+          font-family: "Lucida Grande", "Helvetica Neue", Verdana, Arial, Helvetica, sans-serif
+          margin: 0px
+            bottom: 8px
+          padding: 0px
+          font-size: 16px
+          a
+            text-decoration: underline
+            color: #333
+            &:hover
+              color: red
+          span
+            padding: 1px 5px
+            color: #999
+        -moz-border-radius: 6px
+        -webkit-border-radius: 6px
+        padding: 5px 8px
+        margin: 0px
+          top: 2px
+        .body
+          margin-top: 0
+          overflow: auto
+        .info
+          width: 54px
+        .info .info, .name
+          display: none
+        .go_to_thread
+          font-size: 11px
+          color: #999
+          margin: 0
+          a
+            color: #999
+            text-decoration: underline
+
+body.new_conversations, body.create_conversations
+  .column
+    font-size: 12px
+    ul
+      padding-left: 2.1em
+    p, ul
+      margin-bottom: 10px
+
+  form.new_conversation
+    padding-left: 10px
+    label
+      padding: 0px
+    .name
+      input
+        width: 610px
+        font-size: 24px
+    textarea
+      width: 610px
+      height: 240px
+      font-size: 12px
+    .watchers
+      background: rgb(255, 255, 200)
+      border: 1px rgb(220, 220, 150) solid
+      margin: 10px
+        left: 0px
+      padding: 10px
+        top: 0px
+      font-size: 12px
+      h3
+        font-size: 14px
+        margin:
+          top: 7px
+          bottom: 10px
+      .user
+        float: left
+        width: 185px
+        label
+          width: 155px
+          white-space: nowrap
+          overflow-x: hidden
+          display: inline-block
+          text-overflow: ellipsis
+      p
+        margin-top: 10px
+    div.attach
+      display: inline
+    .actions
+      display: inline-block
+      span
+        font-size: 12px
+        margin-right: 5px
+      .attach_icon
+        text-indent: -9999em
+        margin-right: 5px
+        top: 2px
+        *:first-child+html &
+          text-indent: 16px
+          overflow: hidden
+          top: -2px
+      *:first-child+html & .attach_icon
+        margin-left: -16px
+    .preview
+      margin: 4px 8px 4px 0
+
+.show_conversations
+  #comments
+    font-size: 12px
+
+.conversation_header
+  display: block
+
+.create_bar
+  margin: 20px 0

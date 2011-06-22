@@ -1,0 +1,36 @@
+div.user_navigation, div.project_settings_navigation, div.project_column_navigation
+  ul
+    list-style-type: none
+    margin: 0px
+    padding: 0px
+    a
+      display: block
+      +rounded(8px)
+      border: solid 1px rgb(200, 200, 200)
+      background: rgb(240, 240, 240)
+      color: rgb(80, 80, 80)
+      padding: 5px 10px
+      margin-bottom: 5px
+      &:hover
+        color: #555555
+        background: #ffe967
+        border: solid 1px #dfa927
+        text-decoration: none
+      &.active
+        color: #555555
+        background: #ffc947
+        border: solid 1px #dfa927
+
+div.task_navigation
+  ul
+    list-style-type: none
+    margin: 0px
+      bottom: 10px
+    padding: 0px
+    a
+      font-size: 12px
+
+div.project_settings_navigation
+  li.deletion
+    a
+      border: dashed 1px rgb(230, 230, 230)

@@ -1,0 +1,149 @@
+.nav_links, .more_links
+  padding: 0
+  margin: 0
+    bottom: 20px
+  .el
+    display: inline-block
+    width: $column_width - 10px
+    padding-left: 10px
+    position: relative
+    font-size: 11px
+    background: url(img_3_2/sprite_h.png) bottom left no-repeat
+    
+    span
+      position: absolute
+      right: 5px
+      top: 4px
+      min-width: 8px
+      text-align: center
+      padding: 1px 4px
+      background-color: #8597BB
+      color: white
+      font-weight: bold
+      text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px
+      font-family: Helvetica, Arial, sans-serif
+      font-size: 11px
+      +rounded(10px)
+      +box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.5))
+      &.red
+        background-color: #b00
+    &.selected, &.children-selected, &.selected:hover, &.children-selected:hover
+      background-color: $clr_gray_50
+      background-position: -190px 24px
+      //+gradient(#a0b0d0, #6f83ab)
+      text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px
+      -webkit-font-smoothing: antialiased
+      a
+        color: white
+        font-weight: bold
+      span
+        background-color: white
+        color: #8597BB
+    &:hover
+      background-color: $clr_gray_20
+    &.expanded
+      a
+        font-weight: bold
+  .last
+    background-image: none
+    &:hover
+      background: url(img_3_2/sprite_h.png) bottom left no-repeat $clr_gray_20
+  .btn_new_project
+    padding: 0
+    margin:
+      top: 10px
+      left: 15px
+      bottom: 18px
+    width: 165px
+    height: 28px
+    background: url(img_3_2/sprite_btn.png) right -56px no-repeat
+    a
+      font-size: 11px
+      color: red
+      height: 16px
+      width: 120px
+      padding:
+        top: 7px
+        left: 40px
+      background: url(img_3_2/sprite_btn.png) -126px -56px no-repeat
+      margin-left: -3px
+      text-shadow: rgba(255, 255, 255, 1) 0px 1px 1px
+    &:hover
+      background-position: right -84px
+      a
+        background-position: -126px -84px
+  .contained
+    .el
+      width: $column_width - 10px
+      font-size: 11px
+      a
+        padding-left: 30px
+
+  a
+    height: 16px
+    padding: 5px
+    display: block
+    color: $clr_gray_80
+    padding-left: 30px
+    background-position: 7px 4px
+    background-repeat: no-repeat
+    &:hover
+      text-decoration: none
+    &:active
+      font-weight: bold
+    &.more
+      color: $clr_gray_80
+    &.home
+      background-image: url(famfamfam/house.png)
+    &.add
+      background-image: url(famfamfam/add.png)
+    &.recent_activity
+      background-image: url(img_3_2/ico/newspaper.png)
+    &.conversations
+      background-image: url(img_3_2/ico/balloons-box.png)
+    &.tasks
+      background-image: url(img_3_2/ico/tick-button-blue.png)
+    &.today
+      background-image: url(img_3_2/ico/brightness.png)
+    &.all_tasks
+      background-image: url(img_3_2/ico/ui-list-box-blue.png)
+    &.time
+      background-image: url(img_3_2/ico/clock-frame.png)
+    &.pages
+      background-image: url(img_3_2/ico/blog-blue.png)
+    &.files
+      background-image: url(img_3_2/ico/folder-horizontal.png)
+    &.people
+      background-image: url(img_3_2/ico/users.png)
+    &.chat
+      background-image: url(img_3_2/ico/keyboard.png)
+    &.contacts
+      background-image: url(famfamfam/report_user.png)
+    &.recent_activities
+      background-image: url(famfamfam/user_comment.png)
+    &.advanced
+      background-image: url(famfamfam/pill.png)
+    &.feeds
+      background-image: url(famfamfam/feed.png)
+    &.calendar
+      background-image: url(img_3_2/ico/calendar-blue.png)
+    &.settings
+      background-image: url(img_3_2/ico/gear.png)
+    &.collapsed_mode, &.expanded_mode
+      background-image: url(famfamfam/layers.png)
+    &.loading
+      background-image: url(images/loading.gif)
+    &.organizations
+      background-image: url(img_3_2/ico/building.png)
+    &.more
+
+    &.project
+      padding-left: 7px
+      font-weight: bold
+      font-size: 12px
+      margin:
+        top: 4px
+        bottom: 5px
+
+.more_links
+  margin-left: -15px

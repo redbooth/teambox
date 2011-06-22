@@ -1,0 +1,116 @@
+$upload_icon_width: 16px
+
+.uploads
+  .upload
+    font-size: 12px
+    padding: 0 0 6px 5px
+    border: 1px solid transparent
+    &.alternate
+      background: lighten($navbar, 30)
+    &:hover
+      background-color: #ffe
+      border-color: #aaa
+    .header
+      display: block
+      margin: 0
+      padding: 0
+      height: auto
+      cursor: pointer
+    .icon, .file, .size, .author, .more
+      display: inline-block
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+    .icon
+      width: $upload_icon_width
+      position: relative
+      top: 4px
+    .file
+      width: 400px
+      a
+        color: black
+    .size, .author
+      width: 75px
+      font-size: 10px
+      color: #777
+      margin: 0px 5px
+    .more
+      display: none
+      width: 20px
+      font-size: 10px
+    &:hover .more
+      display: inline-block
+    .reference
+      display: block
+      padding: 7px 0px 2px 20px
+      a
+        display: inline-block
+        margin-right: 10px
+      a[data-method="delete"]
+        color: red
+
+.uploads_current, .upload_images
+  margin: 5px
+    left: 0px
+  padding: 5px
+  clear: both
+  .upload_thumbnail
+    padding: 3px 0px
+    font-size: 12px
+    display: inline-block
+
+.upload_list
+  margin: 5px
+    left: 0px
+  padding: 5px
+    left: 0px
+  clear: both
+  .upload_file
+    font-size: 12px
+    img
+      margin-right: 5px
+      padding-top: 2px
+    span
+      position: relative
+      top: -2px
+    .size
+      color: rgb(120, 120, 120)
+
+.activity
+  .upload_list
+    margin:
+      left: 34px
+      bottom: 20px
+    .upload_file
+      img
+        vertical-align: bottom
+      span
+        position: static
+
+.index_uploads
+  .content
+    padding: 0px
+
+.upload_form
+  margin-bottom: 10px
+  .text_field
+    padding-right: 10px
+    input
+      font-size: 14px
+      width: 100%
+  .file
+    label
+      font-size: 12px
+      display: block
+      width: 200px
+    p.error
+      margin: 0px
+  .submit
+    margin-top: 10px
+
+.link_to_upload
+  display: inline-block
+  border: 1px solid rgb(230, 230, 230)
+  padding: 1px
+  &:hover
+    border: 1px solid rgb(160, 160, 160)

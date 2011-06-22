@@ -1,0 +1,33 @@
+.activity
+  margin: 20px 10px
+  font-size: 12px
+  +clearing
+  p
+    margin: 0
+  .date
+    float: right
+    margin-top: 2px
+    font-size: 10px
+    color: #9DA3A7
+    padding-left: 4px
+  .micro_avatar
+    +rounded(3px)
+    margin-right: 16px
+  a
+    font-weight: bold
+  img
+    vertical-align: middle
+    margin:
+      right: 3px
+  .clear
+    margin-left: 26px
+    padding-bottom: 1px
+  .upload_images
+    padding-left: 35px
+
+.activity.collapsed
+  margin: 2px 0
+  padding: 8px 5px
+  border-left: 4px solid white
+  background-color: $comments_bkg
+  +gradient($comments_left_border, $comments_bkg)

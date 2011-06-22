@@ -37,13 +37,10 @@
     </div>
     <div id="header_wrap">
       <div class="header">
-        <h1><a href="#!/"><img alt="Teambox" src="../logos/top/missing.png?1306709053"></a></h1><div class="search_bar"><form id="search" accept-charset="UTF-8" action="/search" method="get" class="search"><input id="searchbox" name="q" placeholder="Search all projects" type="text" autocomplete="off"><a class="ender_btn search_btn" href="#"></a></form></div>
-        <div id="user_utilities">
-          <ol class="global_navigation">
-            <!-- = micro_avatar(current_user) -->
-            <li class="quick_add">
-              <a href="#!/conversations/new">New conversation</a>
-              <a href="#!/tasks/new">New task</a>
+        <h1><a href="#!/"><img alt="Teambox" src="img_3_2/logo_teambox_3_2.png"></a></h1><div class="search_bar"><form id="search" accept-charset="UTF-8" action="/search" method="get" class="search"><input id="searchbox" name="q" placeholder="Search all projects" type="text" autocomplete="off"><a class="ender_btn search_btn" href="#"></a></form></div>
+        <div id="quick_add_buttons">
+              <a class="quick_add_btn conv" href="#!/conversations/new"><span>New conversation</span></a>
+              <a class="quick_add_btn task" href="#!/tasks/new"><span>New task</span></a>
               <div class="pane" style="display: none">
                 <form accept-charset="UTF-8" action="/projects/earthworks/task_lists/3/tasks.js" class="app_form new_task" data-mine="false" data-project-id="1" data-remote="true" enctype="multipart/form-data" id="new_task" method="post" style="display:none"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="t0WdMY+4uCeLGYU/WsPGcsqXQdRIuEWNNg8hT9DkwcE="></div>
                   <h3>New Task</h3>
@@ -84,7 +81,7 @@
                   </div>
                   <div class="pick_date">
                     <label for="task_due_on">Needs to be done before... <i>optional</i></label>
-                    <div class="date_picker "><img alt="Calendar" class="calendar_date_select_popup_icon" src="../images/calendar_date_select/calendar.gif?1306709053"><input id="task_due_on" name="task[due_on]" type="hidden"><span class="localized_date"><i>No date assigned</i></span></div>
+                    <div class="date_picker "><img alt="Calendar" class="calendar_date_select_popup_icon" src="images/calendar_date_select/calendar.gif?1306709053"><input id="task_due_on" name="task[due_on]" type="hidden"><span class="localized_date"><i>No date assigned</i></span></div>
                   </div>
                   <div class="submit">
                     <a href="#cancel">Cancel</a>
@@ -93,12 +90,16 @@
                   </div>
                 </form>
               </div>
-            </li>
-            <li id="username"><a href="/users/corrina">corrina</a></li>
+          </div>
+          <div class="dropdown_navigation" id="user_utilities">
+            <h2><a href="#">Settings</a></h2><a class="dropdown_arrow" href="#"></a>
+            <ol class="global_navigation">
+            <li id="username"><a href="/users/corrina">My profile</a></li>
             <li><a href="/account/settings">Settings</a></li>
             <li><a href="http://guide.teambox.com#interface" target="_blank">Help</a></li>
-            <li><a href="/logout">Logout</a></li>
+            <li class="last_item"><a href="/logout">Logout</a></li>
           </ol>
+          
         </div>
       </div>
     </div>
@@ -107,16 +108,15 @@
       <div class="wrapper">
         <div class="column_wrap">
           <div class="column" id="column">
-            <div class="separator">
+            <div class="separator first">
               Overview
-              <span class="fold_sidebar"><a href="#">←</a></span>
             </div>
             <div class="nav_links">
               <div class="el" id="activity_link"><a href="#!/" class="recent_activity backboned">Recent activity</a></div>
               <div class="el" id="today_link"><a href="#!/today" class="today backboned">Today</a></div>
               <div class="el" id="my_tasks_link"><a href="#!/my_tasks" class="tasks backboned">My Tasks</a></div>
               <div class="el selected" id="all_tasks_link"><a href="#!/all_tasks" class="all_tasks backboned">All Tasks</a></div>
-              <div class="el"><a href="/calendars" class="calendar ajax">Calendar</a></div>
+              <div class="el last"><a href="/calendars" class="calendar ajax">Calendar</a></div>
               <div class="separator with_margin">Projects</div>
               <div class="el"><a href="/projects/earthworks" class="project">Earthworks Yoga</a></div>
               <div class="contained" style="display: none; ">
@@ -136,9 +136,9 @@
                 <div class="el"><a href="/projects/earthworks/people" class="people ajax">People &amp; Permissions</a></div>
               </div>
               <div class="el" id="projects_link"><a href="#!/projects" class="more">Show all projects...</a></div>
-              <div class="el" id="new_project_link"><a href="/projects/new" class="more ajax">+ New Project</a></div>
+              <div class="btn_new_project" id="new_project_link"><a href="/projects/new" class="more ajax">New Project</a></div>
               <div class="separator with_margin">More...</div>
-              <div class="el" id="my_organizations"><a href="/organizations" class="people">Organizations</a></div>
+              <div class="el" id="my_organizations"><a href="/organizations" class="organizations">Organizations</a></div>
               <div class="contained" style="display: none; ">
                 <div class="el"><a href="/organizations/design-projects">Design projects</a></div>
                 <div class="contained" style="display: none; ">
@@ -151,15 +151,13 @@
                 </div>
               </div>
               <div class="el"><a href="/time" class="ajax time">Time tracking</a></div>
-              <div class="el"><a href="/chat" class="chat">Chat</a></div>
+              <div class="el last"><a href="/chat" class="chat">Chat</a></div>
             </div>
           </div>
         </div>
         <div class="content_wrap">
           <div class="separator">
-            <span class="left unfold_sidebar"><a href="#">→</a></span>
             <span id="view_title">All tasks in your projects</span>
-            <span class="unfold_aux"><a href="#">←</a></span>
           </div>
           <div class="content" id="content"><div class="filters"><strong>Filter tasks:</strong><input class="filter_tasks_by_name" type="search" placeholder="By name"><select id="filter_assigned"><option value="">anybody (6)</option><option value="mine">my tasks (0)</option><option value="unassigned">unassigned (3)</option></select><select id="filter_due_date"><option value="">anytime (6)</option><option value="overdue">late tasks (2)</option><option value="unassigned_date">no date assigned (4)</option><option value="divider" disabled="disabled">------</option><option value="due_today">today (0)</option><option value="due_tomorrow">tomorrow (0)</option><option value="due_week">this week (0)</option><option value="due_2weeks">next 2 weeks (0)</option><option value="due_3weeks">next 3 weeks (0)</option><option value="due_month">within 1 month (0)</option></select><select id="filter_status"><option value="">all status (6)</option><option value="status_0">new (0)</option><option value="status_1">open (4)</option><option value="status_2">hold (1)</option><option value="status_3">resolved (1)</option><option value="status_4">rejected (0)</option></select></div><div id="tasks_for_all_projects"><div class="task_list"><div class="tasks"><div class="group">assigned</div><div class="task overdue status_1 status_notopen due_on task_list_1 assigned user_4" id="task_6" data-task-id="6" style=""><!-- CLEANME: taskStatus is deprecated and hidden--><div class="taskStatus"><!-- <img src='drag.png' class='task_drag'/> if editable and !task.archived?--><span data-task-id="6" class="task_status task_counter">1</span></div><div class="status">Maya B</div><div class="taskName"><a href="/#!/projects/1/tasks/6" class="name">Contact area businesses for banner exchange</a><form style="display:none;" class="edit_title"><input data-disable-with="Saving…" value="Contact area businesses for banner exchange"></form><div style="display:none;" class="expanded_actions"><a href="function (task, project) {
     return '#!/projects/' + project.permalink + '/tasks/' + task.id;

@@ -1,0 +1,150 @@
+body
+  background: rgb(255, 255, 255)
+  font-family: "Lucida Grande", "Helvetica Neue", Verdana, Arial, Helvetica, sans-serif
+  font-size: 12px
+
+h1
+  font-size: 1.3em
+  img
+    vertical-align: middle
+
+h1,h2,h3,h4,h5,h6,p,textarea
+  font-family: "Lucida Grande", "Helvetica Neue", Verdana, Arial, Helvetica, sans-serif
+
+a
+  text-decoration: none
+  color: black
+  &:hover
+    text-decoration: none
+
+div.wrapper
+  background: rgb(255, 255, 255)
+  border: none
+
+div.content
+  width: 100%
+
+.header, .global_navigation, .column, #footer
+  display: none
+
+.comments_count
+  display: none
+
+img.drag
+  display: none
+
+.actions_menu
+  .triangle
+    display: none
+  .extra
+    display: none
+
+.task_list
+  margin: 30px 0
+  .head
+    text-align: left
+    span.actiondate
+      color: #afafaf
+      float: right
+    border-bottom: 1px solid #999
+    margin-bottom: 5px
+    font-weight: bold
+  .task
+    padding:
+      top: 4px
+      bottom: 2px
+    .taskStatus
+      text-align: right
+      float: left
+      width: 23px
+      padding-left: 22px
+      padding-right: 5px
+      line-height: 16px
+      span
+        display: inline-block
+        vertical-align: top
+        width: 23px
+        padding: 0
+        text-align: center
+    .taskName
+      span.assigned_date, span.assigned_user
+        display: none
+        color: rgb(100,100,100)
+        padding: 1px 5px
+        margin-right: 5px
+        font-size: 11px
+        -moz-border-radius: 4px
+        -webkit-border-radius: 4px
+        background: rgb(245,245,245)
+        border: solid 1px rgb(225,225,225)
+        text-transform: uppercase
+        a
+          color: rgb(100,100,100)
+      span.assigned_user
+        font-weight: bold
+        color: #999999
+      span.assigned_date
+        font-style: italic
+        color: #999999
+        a
+          color: #999999
+    &.mine
+      background: rgb(255, 255, 210)
+    &.due_on
+      .taskName
+        span.assigned_date
+          display: inline-block
+    &.assigned
+      .taskName
+        span.assigned_user
+          display: inline-block
+    &.overdue
+      .taskName
+        a.name
+          color: rgb(200,0,0)
+          font-weight: bold
+        span.assigned_date, span.assigned_user
+          color: rgb(200,0,0)
+          a
+            color: rgb(200,0,0)
+  .new_task
+    display: none
+  .task.overdue
+    a
+      color: red
+
+span.task_status
+  padding: 0 3px
+  text-transform: uppercase
+  font-size: 11px
+  -moz-border-radius: 4px
+  -webkit-border-radius: 4px
+  display: inline-block
+  line-height: 14px
+
+.task.status_new .taskStatus span.task_status, .task_status_new
+  background: #9da3a7
+  color: white
+.task.status_open .taskStatus span.task_status, .task_status_open
+  background: #ffc947
+  color: #333
+.task.status_hold .taskStatus span.task_status, .task_status_hold
+  background: #be3cff
+  color: white
+.task.status_resolved .taskStatus span.task_status, .task_status_resolved
+  background: #afd142
+  color: white
+.task.status_rejected .taskStatus span.task_status, .task_status_rejected
+  background: #e97063
+  color: white
+
+.task.status_rejected, .task.status_resolved
+  a.name
+    text-decoration: line-through
+    color: #999
+
+.text_actions
+  display: none
+
+.extended, .tooltip
+  display: none

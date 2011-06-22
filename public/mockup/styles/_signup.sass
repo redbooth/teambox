@@ -1,0 +1,97 @@
+$label_indent: 150px
+.new_users, .create_users
+  form
+    width: 500px
+    margin: 0px
+    font-size: 12px
+
+    div
+      display: inline-block
+
+    p
+      margin: 10px 0
+      font-size: 12px
+
+    .text_field
+      input
+        width: 236px
+        font-size: 16px
+        padding: 5px
+        border:
+          top: solid 1px rgb(196, 196, 196)
+          left: solid 1px rgb(233, 233, 233) 
+          bottom: solid 1px rgb(233, 233, 233)
+          right: solid 1px rgb(196, 196, 196)
+
+    .text_field, .select, .check_box
+      margin-bottom: 10px
+      label
+        display: inline-block
+        font-size: 12px
+        padding-bottom: 5px
+        text-align: right
+        display: inline-block
+        width: $label_indent
+        margin-right: 20px
+        font-weight: normal
+
+    .result_icon
+      margin-left: 10px
+
+    .field_with_errors
+      display: inline-block
+      input
+        background: rgb(255, 230, 230)
+        border: 1px rgb(200, 100, 100) solid
+
+    .text_field, .select
+      .field_note, .errors_for
+        font-size: 10px
+        padding-left: $label_indent + 30px
+      .field_note
+        color: #555
+      .errors_for
+        display: block
+
+    .check_box
+      padding-left: $label_indent - 5px
+      label
+        display: inline
+        margin-left: 15px
+
+    .errors_for
+      display: block
+      color: rgb(160,160,160)
+      padding-left: $label_indent + 30px
+      &.weak
+        color: rgb(100,100,0)
+      &.average
+        color: rgb(50,50,50)
+      &.strong
+        color: rgb(0,150,0)
+    .field_with_errors .errors_for
+      color: rgb(160,160,160)
+
+    fieldset
+      border: none
+      border-top: 1px solid #ccc
+      margin-top: 25px
+      padding-top: 15px
+      legend
+        margin-left: 30px
+        padding: 0 15px
+        font-weight: bold
+
+    fieldset.account
+      p
+        color: #555
+        font-size: 10px
+        margin: 5px 0 15px 90px
+
+    .submit
+      display: block
+      margin: 20px 0
+      padding-left: $label_indent + 30px
+      p
+        color: #555
+        margin-top: 10px

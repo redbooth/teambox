@@ -1,0 +1,126 @@
+$highlight: #fff9da
+$navbar: #78acd7
+$text: #010101
+$typeface: "Lucida Grande", Tahoma, Verdana, Helvetical, sans-serif
+$link: #259bad
+$link_hover: #df5249
+$comments_left_border: #f2f2f2
+$comments_bkg: #fafafa
+$sidebar_bkg: #e6edf5
+
+$column_width: 190px 
+$aux_width: 200px
+
+
+//Marcos vars for Teambox 3.2 GUI
+$header_height: 55px
+//Grayscale
+$white: #fff
+$clr_gray_05: #f5f5f5
+$clr_gray_10: #eeeeee
+$clr_gray_15: #e5e5e5
+$clr_gray_20: #dcdcdc
+$clr_gray_30: #c9c9c9
+$clr_gray_40: #b5b5b5
+$clr_gray_50: #a0a0a0
+$clr_gray_60: #898989
+
+$clr_gray_80: #535353
+$clr_gray_90: #313131
+$brd_gray: 1px solid $clr_gray_50
+
+
+
+// fix for IE7, http://flipc.blogspot.com/2009/02/damn-ie7-and-inline-block.html
+=inline-block($height)
+  display: inline-block
+  zoom: 1
+  *display: inline
+  _height: $height
+
+=rounded($n)
+  border-radius: $n
+  -moz-border-radius: $n
+  -webkit-border-radius: $n
+=rounded-top($n)
+  border-radius: $n $n 0 0
+  -moz-border-radius-topleft: $n
+  -moz-border-radius-topright: $n
+  -webkit-border-top-left-radius: $n
+  -webkit-border-top-right-radius: $n
+=rounded-bottom($n)
+  border-radius: 0 0 $n $n
+  -moz-border-radius-bottomleft: $n
+  -moz-border-radius-bottomright: $n
+  -webkit-border-bottom-left-radius: $n
+  -webkit-border-bottom-right-radius: $n
+=box-shadow($params)
+  box-shadow: $params
+  -webkit-box-shadow: $params
+  -moz-box-shadow: $params
+=transform($params)
+  -webkit-transform: $params
+  -moz-transform: $params
+  transform: $params
+=gradient($from, $to)
+  background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to))
+  background-image: -moz-linear-gradient($from, $to)
+=gradient-top($color)
+  +gradient($color, fade_out($color, 1))
+=gradient-bottom($color)
+  +gradient(fade_out($color, 1), $color)
+
+=clearing
+  &:after
+    content: " "
+    visibility: hidden
+    height: 0
+    font-size: 0
+    display: block
+    clear: both
+  * html &
+    height: 1px
+  *:first-child + html &
+    overflow: hidden
+    
+=small_caps
+  font-variant: small-caps
+  text-transform: capitalize
+
+// Show the image in *image* at the given *x_pos* and *y_pos*.
+// If the optional *x_size* or *y_size* arguments are passed in, the width and/or height
+// is set to that value.
+// Usage examples: In HAML, just call ".playlists-icon" to render
+// =player_sprite($x_pos, $y_pos, $x_size: 0, $y_size: 0)
+//   +sprite("http://teambox.com/images/header_logo_black.png", $x_pos, $y_pos, $x_size, $y_size)
+// .playlists-icon  
+//   +player_sprite(10px, 10px, 18px, 18px)
+
+=sprite($image, $x_pos, $y_pos, $x_size: 0, $y_size: 0)
+  background-image: url($image)
+  background-position: 0-$x_pos 0-$y_pos
+  background-repeat: no-repeat
+  +inline-block(16px)
+  @if $x_size > 0
+    width: $x_size
+  @if $y_size > 0
+    height: $y_size
+
+=light-box
+  border: 1px rgb(220, 220, 220) solid
+  background-color: rgb(240, 240, 240)
+
+.inline
+  display: inline
+
+.errors_for
+  font-size: 12px
+  color: #500
+  font-weight: bold
+
+label.error
+  margin-bottom: 3px
+
+span.error
+  color: red
+  font-variant: italic

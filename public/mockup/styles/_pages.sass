@@ -1,0 +1,334 @@
+=handle
+  position: relative
+  margin: 0px
+  float: none
+  span
+    background: rgb(255, 255, 255)
+    +rounded(4px)
+    padding: 3px 0px
+    left: -32px
+    bottom: 0px
+    position: absolute
+    display: block
+    width: 32px
+    height: 18px
+    top: 2px
+    img
+      cursor: move
+
+#column_pages
+  clear: both
+  margin-top: 10px
+  h2 a
+    float: right
+  div.page
+    padding: 3px
+    font-size: 12px
+    img.drag
+      display: none
+      padding-right: 3px
+  a.new
+    color: #777
+
+#column_pages.reordering
+  div.page
+    img.drag
+      display: block
+      float: left
+      cursor: move
+
+#pages
+  div.page
+    font-size: 12px
+    ul
+      margin: 5px 0
+      padding-left: 20px
+
+.new_pages, .create_pages, .edit_pages
+  .content
+    h2, form
+      margin-left: 20px
+    input#page_name, input#page_description
+      width: 580px
+    input#page_description
+      font-size: 12px
+    .watchers
+      width: 570px
+      background-color: rgb(255, 255, 200)
+      margin: 10px
+        left: 0px
+      padding: 10px
+        top: 0px
+      border: 1px rgb(220, 220, 150) solid
+      font-size: 12px
+      h3
+        font-size: 14px
+        margin-bottom: 10px
+      .user
+        float: left
+        width: 170px
+      p
+        margin-top: 10px
+  .column
+    font-size: 12px
+    ul
+      padding-left: 15px
+    p, ul
+      margin-bottom: 10px
+
+.index_pages
+  .content
+    .page
+      padding:
+        left: 20px
+        bottom: 5px
+      border-bottom: solid 1px rgb(230, 230, 230)
+      display: block
+      h3
+        font-size: 15px
+        margin: 0px
+          top: 10px
+      a
+        text-decoration: none
+      a:hover
+        text-decoration: underline
+      p
+        margin: 5px 0px
+        font-size: 12px
+        color: rgb(100, 100, 100)
+
+.show_pages
+  .page_header
+    display: block
+    margin-bottom: 10px
+    .text_actions
+      margin-top: 5px
+      float: right
+      font-size: 12px
+      color: rgb(200, 200, 200)
+      a
+        text-decoration: underline
+    .description
+      font-size: 12px
+      color: rgb(180, 180, 180)
+  h3
+    font-size: 18px
+    font-weight: normal
+    margin: 0px
+      bottom: 5px
+  .note
+    h3
+      border: none
+      margin:
+        top: 10px
+        bottom: 10px
+  p
+    font-size: 12px
+    line-height: 1.4em
+  .buttons
+    padding: 6px 10px
+    -moz-border-radius: 8px
+    -webkit-border-radius: 8px
+
+#pageInsert
+  position: relative
+  margin: 0px
+  p
+    background: black
+    color: #e1e1e1
+    left: -70px
+    top: -12px
+    padding: 5px 5px 0px 5px
+    position: absolute
+    height: 25px
+    z-index: 100
+    cursor: pointer
+    margin: 0px
+
+#pageInsertItems
+  position: relative
+
+#pageInsertItemsBar
+  left: -70px
+  padding-left: 70px
+  padding-top: 0px
+  top: 0px
+  position: relative
+  z-index: 100
+  width: 100%
+  background-color: white
+  border-top: 1px dashed #ccc
+  border-bottom: 1px dashed #ccc
+  a
+    margin: 0px
+  .add_button
+    margin: 2px 3px
+  .buttons
+    padding: 0px
+
+#pageFormContainer
+  margin-left: 16px
+
+#pageInsertItemCancel
+  position: absolute
+  left: 15px
+  line-height: 28px
+
+#pageInsertItemCancel
+  a
+    color: red
+    font-size: 80%
+
+#pageInsertItemWidgets
+  padding-left: 11px
+
+#pageWidgetForms
+  display: none
+
+.page_slot
+  padding: 5px 0px
+  padding-left: 46px
+  margin-left: -46px
+  padding-bottom: 10px
+  div.actionContainer
+    height: 0px
+    float: left
+    width: 100%
+  .actions.handle
+    display: none
+  .actions
+    a
+      opacity: 0.4
+  &:hover .actions
+    a
+      opacity: 1
+    &.handle
+      display: block
+  .slotActions
+    display: none
+  &:hover .slotActions
+    display: block
+
+.page_slot.InsertBefore
+  background-image: url(images/pins.gif)
+  background-repeat: repeat-x
+
+.divider
+  background: url(images/divider.jpg) repeat-x center
+  padding-left: 10px
+  h3
+    padding-top: 3px
+    span
+      background: rgb(255, 255, 255)
+      padding: 0px 5px
+  p.actions
+    background: white
+    padding-left: 10px
+    float: right
+    margin: 0px
+  p.handle
+    +handle
+
+form.new_divider, form.edit_divider
+  margin-top: 5px
+  padding: 10px
+    right: 0px
+  background: url(images/divider.jpg) repeat-x center
+  .area
+    border: solid 1px rgb(230, 230, 230)
+    background: rgb(245, 245, 245)
+    width: 450px
+    +rounded(8px)
+    padding: 0px 10px
+      top: 5px
+  .text_field
+    padding-right: 10px
+    float: left
+    input
+      width: 180px
+  .submit
+    float: left
+    font-size: 12px
+    padding-top: 5px
+    width: 240px
+
+form.new_note, form.edit_note
+  margin-top: 5px
+  border: solid 1px rgb(230, 230, 230)
+  background: rgb(245, 245, 245)
+  padding: 10px
+  +rounded(8px)
+  .documentation
+    font-size: 12px
+    float: right
+  .text_area
+    padding-right: 10px
+    textarea
+      height: 5em
+      width: 100%
+  .submit
+    font-size: 12px
+    padding-top: 10px
+    img.loading
+      vertical-align: middle
+
+.note
+  padding-left: 16px
+  p.actions
+    float: right
+    margin: 0px
+    a.delete
+      color: red
+  p.handle
+    +handle
+
+.pageForm
+  a.cancel
+    float: right
+    font-size: 12px
+
+.show_pages
+  .upload
+    .info
+      float: left
+      width: 48px
+      height: 48px
+    padding-left: 0px
+    p.actions
+      float: right
+      margin: 0px
+      position: relative
+      z-index: 100
+      a.delete
+        color: red
+    p.handle
+      +handle
+      span
+        left: -18px
+    div.info
+      margin-left: 15px
+      margin-right: 8px
+    div.block
+      float: left
+    div.reference
+      .date
+        float: none
+  .upload.image
+    .thumb
+      overflow: hidden
+      float: left
+      width: 580px
+      margin-left: 15px
+      margin-right: 8px
+      img
+        max-width: 600px
+    .block
+      margin-top: 10px
+      margin-left: 15px
+      .date
+        display: inline
+
+.index_pages
+  h4
+    :margin-top 2px
+    :margin-bottom 2px

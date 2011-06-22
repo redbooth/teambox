@@ -1,0 +1,141 @@
+.search_bar
+  float: left
+  padding-top: 0
+  margin:
+    right: 34px
+    top: 13px
+  form.search
+    position: relative
+    margin:
+      left: 20px
+    padding: 0
+    background: transparent
+    border: none
+    input[type=submit]
+      display: none
+    input[type=text]
+      +rounded(3px)
+      border: $brd_gray
+      padding: 4px 4px 4px 5px
+      width: 284px
+      font-size: 12px
+      display: block
+      float: left
+      clear: none
+      height: 18px
+    img
+      position: absolute
+      top: 7px
+      left: 5px
+    a
+      display: block
+      float: left
+      clear: none
+      margin-left: -2px
+      height: 28px
+      width: 32px
+      background: url(img_3_2/sprite_btn.png) no-repeat
+      &:active
+        background-position: -32px 0px
+      
+      span
+        display: none
+  .ignore
+    .no-inputsearch &
+      input[type=search]
+        width: 10em
+        border: 1px solid silver
+    .no-inputsearch.borderradius &
+      input[type=search]
+        padding: 3px 1em 2px 1em
+        +rounded(10px)
+        +box-shadow(inset rgba(0,0,0,.2) 0px 1px 2px)
+    .no-inputsearch.no-borderradius &
+      input[type=search]
+        padding: 2px
+
+
+.search_results
+  h2
+    font-size: 14px
+    padding-bottom: 0
+    border-bottom: none
+    margin: 1.5em 0 1em 6px
+  p
+    font-size: 12px
+    margin: 1em 0 1em 6px
+
+  #results
+    .result
+      font-size: 12px
+      margin: 5px 0
+      span.time
+        float: right
+        font-size: 12px
+        color: #777
+      a
+        margin-left: 10px
+        color: #333
+    span.match
+      background-color: #ffc
+      font-weight: bold
+
+.pagination
+  text-align: left
+  margin-top: 1em
+  padding: .3em 0
+  +rounded(10px)
+  font-size: 12px
+
+  a, span, em
+    padding: .2em .5em
+  span.disabled
+    color: lighten($text, 40%)
+  em, span.current
+    font-weight: bold
+    color: $text
+  a
+    border: 1px solid #DDDDDD
+    +rounded(3px)
+    text-decoration: none
+    &:hover, &:focus
+      border-color: darken($navbar, 30%)
+      background: $navbar
+      color: black
+  .page_info
+    color: #aaa
+    padding-top: .8em
+  .prev_page, .next_page
+    border-width: 2px
+  .prev_page
+    margin-right: 1em
+  .next_page
+    margin-left: 1em
+
+ul#quicksearch_results
+  display: inline-block
+  width: 280px
+  padding: 0
+  border:
+    top: 1px solid #999
+  position: absolute
+  z-index: 1000
+  top: 22px
+  left: 211px
+  background: white
+  li
+    display: block
+    list-style-type: none
+    border: 1px solid #999
+      top: none
+    a
+      display: block
+      margin: 0
+      padding: 5px
+      color: #333
+      font-size: 12px
+    &:hover
+      background: $sidebar_bkg
+    &.selected
+      background: $sidebar_bkg
+      font-weight: bold

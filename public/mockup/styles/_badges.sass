@@ -1,0 +1,24 @@
+.overlay_badge
+  position: fixed
+  bottom: -250px
+  right: 50px
+  padding: 20px
+  border: 1px solid #999
+  background-color: white
+  +box-shadow(2px 2px 8px #888)
+  cursor: pointer
+  z-index: 10000
+  &:hover
+    background-color: #fffff0
+  img, .text
+    display: inline-block
+    float: left
+  .text
+    margin-left: 15px
+    width: 250px
+    h2
+      margin: 0 0 10px 0
+      font-weight: bold
+    p
+      font-size: 12px
+      margin: 10px 0
