@@ -13,7 +13,7 @@
       , file_data_name: 'comments_attributes[0]uploads_attributes[0][asset]'
       , flash_swf_url: flash_swf_url
       , multipart: true
-      , urlstream_upload: true
+      , urlstream_upload: true //so that flash runtime uses advanced upload which supports setting file's mime type
     };
     this.view = view;
     this.opts = opts;
