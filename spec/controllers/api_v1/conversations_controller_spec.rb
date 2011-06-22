@@ -33,6 +33,16 @@ describe ApiV1::ConversationsController do
       response.body.split('(')[0].should == 'lolCat'
     end
 
+    it "shows conversations as JSON when requested with :text format" do
+      login_as @user
+
+      get :index, :project_id => @project.permalink, :format => 'text'
+      response.should be_success
+      response.headers['Content-Type'][/text\/plain/].should_not be_nil
+
+      JSON.parse(response.body)['objects'].length.should == 2
+    end
+
     it "shows conversations in all projects" do
       login_as @user
 

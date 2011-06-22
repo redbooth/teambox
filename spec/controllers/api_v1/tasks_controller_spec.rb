@@ -36,6 +36,16 @@ describe ApiV1::TasksController do
       response.body.split('(')[0].should == 'lolCat'
     end
 
+    it "shows tasks as JSON when requested with :text format" do
+      login_as @user
+
+      get :index, :project_id => @project.permalink, :callback => 'lolCat', :format => 'text'
+      response.should be_success
+      response.headers['Content-Type'][/text\/plain/].should_not be_nil
+
+      JSON.parse(response.body)['objects'].length.should == 2
+    end
+
     it "shows tasks in a task list" do
       login_as @user
 

@@ -23,6 +23,7 @@
 %p <strong>2010-12-07</strong>: Pages#show now includes Dividers, Notes, and Uploads in <tt>objects</tt>. Querying using the /notes and /dividers routes was also fixed.
 %p <strong>2010-11-23</strong>: The first and the last 2 comments are now included when querying conversations and tasks in <tt>first_comment</tt> and <tt>recent_comments</tt> (<tt>recent_comment_ids</tt> and <tt>recent_comment_ids</tt> if listed in an index method).
 %p <strong>2010-11-10</strong>: Comments on tasks now have <tt>due_on</tt> and <tt>previous_due_on</tt> fields which track changes to the tasks due date.
+%p <strong>2011-06-22</strong>: JSON returned with the 'text/plain' content type is now supported in requests. Simply use ".text" as an extension in a route. 
 %p <strong>2010-11-01</strong>: JSONP is now supported in requests. Simply use ".js" as an extension in a route, and specify a callback to be invoked via the <tt>callback</tt> parameter. 
 %p <strong>2010-10-07</strong>: Object parameters for POST and PUT no longer need to be placed under the objects key. i.e. instead of <code>{'comment':{'body':'Test'}}</code>, use <code>{'body':'Test'}</code>.
 %p <strong>2010-10-06</strong>: To simplify routing, object paths no longer need to be prefixed by <code>/project/:permalink</code>. i.e. <code>/comments/123</code> now works instead of <code>/project/earthworks/comments/123</code>. Note that old routes will still work.

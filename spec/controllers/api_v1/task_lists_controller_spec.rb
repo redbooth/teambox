@@ -28,6 +28,16 @@ describe ApiV1::TaskListsController do
       references.include?("#{@other_task_list.user_id}_User").should == true
     end
 
+    it "shows task lists as JSON when requested with the :text format" do
+      login_as @user
+
+      get :index, :project_id => @project.permalink, :format => 'text'
+      response.should be_success
+      response.headers['Content-Type'][/text\/plain/].should_not be_nil
+
+      JSON.parse(response.body)['objects'].length.should == 2
+    end
+
     it "shows task lists with a JSONP callback" do
       login_as @user
 

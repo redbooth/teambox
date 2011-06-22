@@ -34,6 +34,18 @@ describe ApiV1::ProjectsController do
       response.body.split('(')[0].should == 'lolCat'
     end
 
+    it "shows projects as JSON when requested with the :text format" do
+      login_as @user
+
+      get :index, :format => 'text'
+      response.should be_success
+      response.headers['Content-Type'][/text\/plain/].should_not be_nil
+      list = JSON.parse(response.body)
+      list['type'].should == 'List'
+      list['objects'].each {|o| o['type'].should == 'Project'}
+      list['objects'].length.should == 2
+    end
+
     it "does not show projects the user doesn't belong to" do
       login_as Factory(:confirmed_user)
 
