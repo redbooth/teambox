@@ -85,16 +85,20 @@ class ApiV1::APIController < ApplicationController
   # Common api helpers
   
   def api_respond(object, options={})
+    content = {:json => api_wrap(object, options).to_json}
+    content[:callback] = params[:callback] if request.format.js?
+
     respond_to do |f|
-      f.json { render :json => api_wrap(object, options).to_json }
-      f.js   { render :json => api_wrap(object, options).to_json, :callback => params[:callback] }
+      f.any(:json, :js, :text) { render content }
     end
   end
   
   def api_status(status)
+    content = {:json => {:status => status}.to_json, :status => status}
+    content[:callback] = params[:callback] if request.format.js?
+
     respond_to do |f|
-      f.json { render :json => {:status => status}.to_json, :status => status }
-      f.js   { render :json => {:status => status}.to_json, :status => status, :callback => params[:callback] }
+      f.any(:json, :js, :text) { render content }
     end
   end
   
@@ -142,9 +146,11 @@ class ApiV1::APIController < ApplicationController
     errors = {}
     errors[:type] = opts[:type] if opts[:type]
     errors[:message] = opts[:message] if opts[:message]
+    content = {:json => {:errors => errors}.to_json, :status => status_code}
+    content[:callback] = params[:callback] if request.format.js?
+
     respond_to do |f|
-      f.json { render :json => {:errors => errors}.to_json, :status => status_code }
-      f.js { render :json => {:errors => errors}.to_json, :status => status_code, :callback => params[:callback] }
+      f.any(:json, :js, :text) { render content }
     end
   end
   
@@ -152,9 +158,11 @@ class ApiV1::APIController < ApplicationController
     errors = (object.try(:errors)||{}).to_hash
     errors[:type] = 'InvalidRecord'
     errors[:message] = 'One or more fields were invalid'
+    content = {:json => {:errors => errors}.to_json, :status => options.delete(:status) || :unprocessable_entity}
+    content[:callback] = params[:callback] if request.format.js?
+
     respond_to do |f|
-      f.json { render :json => {:errors => errors}.to_json, :status => options.delete(:status) || :unprocessable_entity }
-      f.js   { render :json => {:errors => errors}.to_json, :status => options.delete(:status) || :unprocessable_entity, :callback => params[:callback] }
+      f.any(:json, :js, :text) { render content }
     end
   end
   
@@ -163,11 +171,14 @@ class ApiV1::APIController < ApplicationController
     status = options.delete(:status) || is_new ? :created : :ok
     respond_to do |f|
       if is_new || options.delete(:wrap_objects) || false
-        f.json { render :json => api_wrap(object, options).to_json, :status => status }
-        f.js   { render :json => api_wrap(object, options).to_json, :status => status, :callback => params[:callback] }
+        content = {:json => api_wrap(object, options).to_json, :status => status}
+        content[:callback] = params[:callback] if request.format.js?
+
+        f.any(:json, :js, :text) { render content }
       else
         f.json { head(status) }
         f.js   { render :json => {:status => status}.to_json, :callback => params[:callback] }
+        f.text { head(status) }
       end
     end
   end
@@ -200,7 +211,7 @@ class ApiV1::APIController < ApplicationController
   end
   
   def set_client
-    request.format = :json unless request.format == :js
+    request.format = :json unless request.format == :js || params[:format]
   end
   
 end

@@ -26,6 +26,16 @@ describe ApiV1::CommentsController do
       
       response.body.split('(')[0].should == 'lolCat'
     end
+
+    it "shows comments as JSON when requested with the :text format" do
+      login_as @user
+
+      get :index, :project_id => @project.permalink, :format => 'text'
+      response.should be_success
+      response.headers['Content-Type'][/text\/plain/].should_not be_nil
+
+      JSON.parse(response.body)['objects'].length.should == 1
+    end
     
     it "shows comments in all projects" do
       login_as @user
