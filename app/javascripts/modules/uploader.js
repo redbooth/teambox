@@ -3,12 +3,13 @@
   var Uploader = function(view, opts) {
 
     var host = document.location.protocol + '//' + document.location.host + '/'
-    ,   flash_swf_url = host + 'plupload.flash.swf';
+    ,   flash_swf_url = host + 'plupload.flash.swf'
+    ,   asset_max_file_size = Teambox.controllers.application.config.asset_max_file_size;
 
     this.options = {
       runtimes : 'flash,html4'
       , required_features: 'multipart'
-      , max_file_size : '10mb'
+      , max_file_size : asset_max_file_size + 'mb'
       , file_data_name: 'comments_attributes[0]uploads_attributes[0][asset]'
       , flash_swf_url: flash_swf_url
       , multipart: true
