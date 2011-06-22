@@ -353,6 +353,8 @@ es:
     rename: Renombrar
     save: Guardar
     show_more: "Ver más"
+    loading: Cargando...
+    download_as_csv: Descargar como CSV
     signup: Identificarse
   confirm: 
     delete_group: "¿Estás seguro de que quieres borrar este grupo?"
