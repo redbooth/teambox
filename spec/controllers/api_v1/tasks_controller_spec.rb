@@ -251,11 +251,11 @@ describe ApiV1::TasksController do
       references = data['references']
       references.should_not be_empty
       references.map{|r| "#{r['id'].to_s}_#{r['type']}"}.include?("#{@task.first_comment.id}_Comment")
-      references.first.key?('uploads').should be_true
-      references.first['uploads'].should_not be_empty
-      references.first['uploads'].first['download'].include?('templates.txt').should be_true
-      references.first['uploads'].first['mime_type'].should == 'text/plain'
-      references.first['uploads'].first['filename'].should == 'templates.txt'
+      references.any? {|ref| ref.key?('uploads') }.should == true
+      references.detect{|ref| ref.key?('uploads')}['uploads'].should_not be_empty
+      references.detect{|ref| ref.key?('uploads')}['uploads'].first['download'].include?('templates.txt').should be_true
+      references.detect{|ref| ref.key?('uploads')}['uploads'].first['mime_type'].should == 'text/plain'
+      references.detect{|ref| ref.key?('uploads')}['uploads'].first['filename'].should == 'templates.txt'
     end
   end
   
