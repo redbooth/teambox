@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110620141747) do
+ActiveRecord::Schema.define(:version => 20110622145207) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20110620141747) do
     t.text     "credentials"
   end
 
+  add_index "app_links", ["provider", "app_user_id"], :name => "index_app_links_on_provider_and_app_user_id"
   add_index "app_links", ["user_id"], :name => "index_app_links_on_user_id"
 
   create_table "cards", :force => true do |t|
