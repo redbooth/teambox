@@ -139,7 +139,12 @@
     //Currently, plupload checks for file list container in DOM sw we
     //need to be sure it exists in DOM when intiting the uploader
     this.initUploader();
-    $(this.el).down('.upload_area').toggle().highlight();
+    var upload_area = $(this.el).down('.upload_area');
+    upload_area.toggle().highlight();
+
+    if (upload_area.visible()) {
+      this.uploader.refresh();
+    }
   };
 
   /* inits the uploader
@@ -160,7 +165,6 @@
     if (!this.uploader.inited) {
       this.uploader.init();
     }
-    this.uploader.refresh();
   };
 
   /* Toggle the time tracking area
