@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110622154231) do
+ActiveRecord::Schema.define(:version => 20110622155452) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -259,6 +259,7 @@ ActiveRecord::Schema.define(:version => 20110622154231) do
     t.datetime "updated_at"
   end
 
+  add_index "notifications", ["comment_id"], :name => "index_notifications_on_comment_id"
   add_index "notifications", ["person_id", "sent"], :name => "index_notifications_on_person_id_and_sent"
   add_index "notifications", ["user_id", "read"], :name => "index_notifications_on_user_id_and_read"
 
