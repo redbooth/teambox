@@ -25,6 +25,7 @@
       models.user          = this.my_user     = new Teambox.Models.User();
       collections.people                      = new Teambox.Collections.People();
       collections.tasks_lists                 = new Teambox.Collections.TaskLists();
+      collections.conversations               = new Teambox.Collections.Conversations();
       collections.pages                       = new Teambox.Collections.Pages();
       collections.tasks    = this.my_tasks    = new Teambox.Collections.Tasks();
       collections.threads  = this.my_threads  = new Teambox.Collections.Threads();
@@ -39,12 +40,12 @@
 
       _loader.total += 2; // this is hackish, but the loader is a little bit too dumb
       collections.projects.fetch({success: function (projects) {
-        var task_list_done = 0, people_done = 0;
+        var task_list_done = 0, people_done = 0, conversation_done = 0;
         _.each(projects.models, function (project, i) {
           _loader.total += 2;
 
           // preload task_lists
-          (new Teambox.Collections.TaskLists({project_id: project._id})).fetch({
+          (new Teambox.Collections.TaskLists([], {project_id: project._id})).fetch({
             success: function (task_lists) {
               _loader.loaded++;
               projects.models[i].set({task_lists: task_lists});
@@ -57,6 +58,27 @@
 
               task_list_done += 1;
               if (task_list_done === projects.length) {
+                _loader.loaded++;
+                _loader.load('projects')();
+              }
+            }
+          });
+
+          // preload conversations
+          console.log('id=',project.get('id'));
+          (new Teambox.Collections.Conversations([], {project_id: project.get('id')})).fetch({
+            success: function (conversations) {
+              _loader.loaded++;
+              projects.models[i].set({conversations: conversations});
+
+              try {
+                collections.conversations.add(conversations.models, {silent: true});
+              } catch (e) {
+                // may try to add same task_list twice
+              }
+
+              conversation_done += 1;
+              if (conversation_done === projects.length) {
                 _loader.loaded++;
                 _loader.load('projects')();
               }

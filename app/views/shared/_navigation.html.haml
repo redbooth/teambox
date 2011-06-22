@@ -24,7 +24,7 @@
     .el= link_to project, project, :class => 'project'
     .contained
       .el= link_to t('.recent_activity'), project_path(project), :class => 'recent_activity ajax'
-      .el{:id => "project_#{project.permalink}_conversations"}= link_to t('.conversations'), project_conversations_path(project), :class => 'conversations ajax'
+      .el{:id => "project_#{project.permalink}_conversations"}= link_to t('.conversations'), "#!#{project_conversations_path(project)}", :class => 'conversations backbone'
       .el{:id => "project_#{project.permalink}_task_lists"}
         = link_to t('.tasks'), "#!#{project_task_lists_path(project)}", :class => 'tasks backboned'
       - if time_tracking_enabled? and project.tracks_time

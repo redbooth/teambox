@@ -58,6 +58,7 @@
 //= require <models/user>
 //= require <collections/base>
 //= require <collections/comments>
+//= require <collections/conversations>
 //= require <collections/pages>
 //= require <collections/people>
 //= require <collections/projects>
@@ -90,6 +91,7 @@
 //= require <views/filters/status>
 //
 //= require <views/thread>
+//= require <views/thread_list>
 //= require <views/watchers>
 
 //= require <facebox>

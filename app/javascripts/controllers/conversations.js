@@ -8,9 +8,7 @@
 
     // Display 'loading', fetch the conversation and display it
   ConversationsController.show = function (project, id) {
-    var model = Teambox.collections.threads.detect(function (i) {
-          return ((i.id === +id) && (i.get('type') === "Conversation"));
-        });
+    var model = Teambox.collections.conversations.get(id);
 
     if (!model) {
       model = new Teambox.Models.Conversation({ id: id });
@@ -18,6 +16,13 @@
     }
 
     $('content').update((new Teambox.Views.Thread({model: model})).render().el);
+
+    Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_conversations');
+  };
+
+  ConversationsController.index = function (project, id) {
+    var collection = Teambox.collections.conversations;
+    $('content').update((new Teambox.Views.ThreadList({collection: collection})).render().el);
 
     Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_conversations');
   };

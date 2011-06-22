@@ -12,12 +12,22 @@
     return 'Conversation';
   };
 
+  Conversation.isConversation = function(){return true;}
+
   /* return the `convert_to_task` url
    *
    * @return {String}
    */
   Conversation.convertToTaskUrl = function () {
     return '/api/1/projects/' + this.get('project_id') + '/conversations/' + this.get('id') + '/convert_to_task';
+  };
+
+  /* return the `comments` url
+   *
+   * @return {String}
+   */
+  Conversation.commentsUrl = function () {
+    return '/api/1/projects/' + this.get('project_id') + '/conversations/' + this.get('id') + '/comments';
   };
 
   /* return the resource url
