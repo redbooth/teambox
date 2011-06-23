@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110622155452) do
+ActiveRecord::Schema.define(:version => 20110623083525) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -501,7 +501,7 @@ ActiveRecord::Schema.define(:version => 20110622155452) do
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
   add_index "uploads", ["deleted"], :name => "index_uploads_on_deleted"
   add_index "uploads", ["is_private"], :name => "index_uploads_on_is_private"
-  add_index "uploads", ["page_id"], :name => "index_uploads_on_page_id"
+  add_index "uploads", ["page_id", "asset_file_name"], :name => "index_uploads_on_page_id_and_asset_file_name"
   add_index "uploads", ["project_id", "deleted", "updated_at"], :name => "index_uploads_on_project_id_and_deleted_and_updated_at"
 
   create_table "users", :force => true do |t|
