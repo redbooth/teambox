@@ -2,7 +2,7 @@
 
   var SearchResults = {};
 
-  SearchResults.initialize = function (options) {
+  SearchResults.initialize = function (models, options) {
     options = options || {};
 
     this.project_id = options.project_id;

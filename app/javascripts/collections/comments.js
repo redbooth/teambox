@@ -4,7 +4,7 @@
     model: Teambox.Models.Comment
   };
 
-  Comments.initialize = function (options) {
+  Comments.initialize = function (models, options) {
     this.project_id = options.project_id;
     this.task_id = options.task_id;
     this.conversation_id = options.conversation_id;

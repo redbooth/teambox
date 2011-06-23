@@ -42,13 +42,15 @@
       collections.projects.fetch({success: function (projects) {
         var task_list_done = 0, people_done = 0, conversation_done = 0;
         _.each(projects.models, function (project, i) {
+          var collection;
           _loader.total += 2;
 
           // preload task_lists
-          (new Teambox.Collections.TaskLists([], {project_id: project._id})).fetch({
+          collection = new Teambox.Collections.TaskLists([], {project_id: project.id})
+          projects.models[i].set({task_lists:collection});
+          collection.fetch({
             success: function (task_lists) {
               _loader.loaded++;
-              projects.models[i].set({task_lists: task_lists});
 
               try {
                 collections.tasks_lists.add(task_lists.models, {silent: true});
@@ -65,11 +67,11 @@
           });
 
           // preload conversations
-          console.log('id=',project.get('id'));
-          (new Teambox.Collections.Conversations([], {project_id: project.get('id')})).fetch({
+          collection = new Teambox.Collections.Conversations([], {project_id: project.id});
+          projects.models[i].set({conversations:collection});
+          collection.fetch({
             success: function (conversations) {
               _loader.loaded++;
-              projects.models[i].set({conversations: conversations});
 
               try {
                 collections.conversations.add(conversations.models, {silent: true});
@@ -86,10 +88,11 @@
           });
 
           // preload people
-          (new Teambox.Collections.People({project_id: project.id})).fetch({
+          collection = new Teambox.Collections.People([], {project_id: project.id});
+          projects.models[i].set({people:collection});
+          collection.fetch({
             success: function (people) {
               _loader.loaded++;
-              projects.models[i].set({people: people});
 
               try {
                 collections.people.add(people.models, {silent: true});
