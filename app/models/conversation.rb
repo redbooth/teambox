@@ -106,11 +106,9 @@ class Conversation < RoleRecord
     indexes name, :sortable => true
 
     indexes comments.body, :as => :body
-    indexes comments.user.first_name, :as => :user_first_name
-    indexes comments.user.last_name, :as => :user_last_name
     indexes comments.uploads(:asset_file_name), :as => :upload_name
     indexes comments.google_docs(:title), :as => :google_doc_name
-    
+
     has project_id, created_at, updated_at
   end
 
