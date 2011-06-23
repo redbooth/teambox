@@ -48,12 +48,13 @@ div.content_wrap
   border-left: 1px solid $clr_gray_60
   .content
     position: absolute
-    top: 23px
+    top: 26px
     bottom: 0
     left: 0
     right: 0
     overflow-y: auto
     padding: 10px
+    background: url(img_3_2/bg_activity.gif) repeat
 div.aux_wrap
   width: $aux_width
   right: 0
@@ -146,7 +147,8 @@ p.flash-notice
     display: inline-block
     &#view_title
       right: none
-      left: 25px
+      left: 20px
+      top: 3px
       border: none
     a
       display: inline-block
@@ -157,10 +159,10 @@ p.flash-notice
       border-right: 1px solid #DDD
   .column_wrap &
     background: url(img_3_2/sprite_v.png) repeat-x 0px -55px
-    //+gradient($clr_gray_10, $clr_gray_20)
-    //border:
-      //top: 1px solid $clr_gray_05
-      //bottom: 1px solid $clr_gray_30
+    text-transform: uppercase
+  .content_wrap &
+    height: 24px
+    background: url(img_3_2/sprite_v.png) repeat-x 0px -83px
   &.first
     background-position: 0px -56px
     height: 23px
@@ -170,7 +172,7 @@ p.flash-notice
 .separator, .separator a
   color: $clr_gray_80
   text-shadow: white 0 1px 0
-  text-transform: uppercase
+  //text-transform: uppercase
   text-align: left
   font-size: 12px
   font-weight: bold

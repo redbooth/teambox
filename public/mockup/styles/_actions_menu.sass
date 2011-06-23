@@ -1,11 +1,13 @@
 .actions_menu
   position: relative
+  width: 20px
   float: right
   padding: 0
-    top: 4px
+    top: 2px
   font-size: 11px
   color: rgb(150,150,150)
     text-transform: none
+  text-align: left
   img
     opacity: 0.4
   &:hover
@@ -14,9 +16,8 @@
       opacity: 1
     .extra
       display: block
-  .actiondate
-    cursor: default
-    display: inline
+    .actiondate
+      color: $clr_gray_50
   .extra
     display: none
     position: absolute
@@ -28,7 +29,7 @@
     white-space: nowrap
     background: white
     border: 1px solid #ccc
-    +box-shadow(#EEE 3px 3px 3px)
+    //+box-shadow(#EEE 3px 3px 3px)
     a, span
       display: block
       padding: 3px 5px
@@ -40,3 +41,15 @@
       color: #aaa
     a.edit, a.delete
       display: none
+.actiondate
+  font-size: 10px
+  padding: 1px
+  color: $clr_gray_50
+  display: block
+  float: left
+  clear: none
+  position: relative
+  top: 5px
+  left: 590px
+  margin-right: -120px
+  cursor: default

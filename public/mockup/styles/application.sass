@@ -31,6 +31,7 @@
 @import calendar_date_select
 @import autocomplete
 @import facebox
+//Commented because it does problem in the mockup
 //@import progress_bars
 @import tooltips
 @import preview
@@ -56,6 +57,9 @@
   text-overflow: ellipsis
   white-space: nowrap
 
+.activity
+  width: 620px
+
 .header
   .upgrade
     font-size: 12px
@@ -74,6 +78,9 @@
 
 .activity_block a, .starter a, .thread_title a, .before a
   color: #333
+.activity_block
+  border-top: 1px solid $clr_gray_05
+  +rounded(3px)
 
 .text_actions
   float: right

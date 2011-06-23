@@ -1,8 +1,11 @@
 .thread
-  max-width: 800px
-  margin: 20px 0 35px
+  max-width: 620px
+  margin: 0 0 15px 11px
+  background: url(img_3_2/sprite_v.png) 0px -110px repeat-x #eee
+  border: 1px solid $clr_gray_50
+  +rounded(5px)
   .thread_title
-    margin: 4px 0 8px
+    margin: 4px 0 2px
     font-size: 12px
   .task_summary
     font-size: 11px
@@ -23,14 +26,25 @@
       span.assigned_date
         color: red
   .comments
-    border-left: 4px solid $comments_left_border
-    background-color: $comments_bkg
+    //border-left: 4px solid $comments_left_border
+    //background-color: $comments_bkg
   .comment_header
-    border-left: 4px solid $comments_left_border
-    background-color: $comments_left_border
-    +gradient($comments_left_border, $comments_bkg)
+    +rounded-top(5px)
+    border-top: 1px solid $white
+    //border-left: 4px solid $comments_left_border
+    //background-color: $comments_left_border
+    //+gradient($comments_left_border, $comments_bkg)
     .info
-      position: absolute
+      //position: absolute
+      float: left
+      display: block
+      clear: none
+      width: 32px
+      height: 32px
+      padding:
+        top: 3px
+        left: 7px
+      //border: 1px solid red
       .comment_count
         display: none
         text-align: center
@@ -43,6 +57,9 @@
           font-weight: bold
           +rounded(5px)
     .block
+      float: left
+      display: block
+      clear: none
       a
         font-weight: bold
         text-decoration: none
@@ -117,14 +134,14 @@
 #activities
   .thread.selected
     .comment_header
-      border-left-color: $navbar
-      +gradient($comments_left_border - #111, $comments_bkg - #111)
+      //border-left-color: $navbar
+      //+gradient($comments_left_border - #111, $comments_bkg - #111)
 
   .comment_header
     cursor: pointer
     &:hover
-      border-left-color: $navbar
-      +gradient($comments_left_border - #111, $comments_bkg - #111)
+      //border-left-color: $navbar
+      //+gradient($comments_left_border - #111, $comments_bkg - #111)
 
 #activities.collapsed
   .thread

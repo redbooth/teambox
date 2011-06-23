@@ -14,24 +14,26 @@
       position: absolute
       right: 5px
       top: 4px
-      min-width: 8px
+      min-width: 12px
       text-align: center
-      padding: 1px 4px
-      background-color: #8597BB
+      padding: 1px 5px 1px 4px
+      background-color: $clr_gray_40
       color: white
       font-weight: bold
-      text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px
+      text-shadow: rgba(0, 0, 0, 0.4) 1px 1px 1px
       font-family: Helvetica, Arial, sans-serif
       font-size: 11px
-      +rounded(10px)
-      +box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.5))
+      font-weight: bold
+      +rounded(9px)
+      +box-shadow(0 1px 1px rgba(255, 255, 255, 0.5))
       &.red
         background-color: #b00
+        text-shadow: rgba(100, 0, 0, 0.4) 1px 1px 1px
     &.selected, &.children-selected, &.selected:hover, &.children-selected:hover
       background-color: $clr_gray_50
       background-position: -190px 24px
       //+gradient(#a0b0d0, #6f83ab)
-      text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px
+      text-shadow: rgba(0, 0, 0, 0.8) 0px 1px 1px
       -webkit-font-smoothing: antialiased
       a
         color: white
@@ -68,10 +70,11 @@
       background: url(img_3_2/sprite_btn.png) -126px -56px no-repeat
       margin-left: -3px
       text-shadow: rgba(255, 255, 255, 1) 0px 1px 1px
-    &:hover
+    &:active
       background-position: right -84px
       a
         background-position: -126px -84px
+        font-weight: normal
   .contained
     .el
       width: $column_width - 10px
