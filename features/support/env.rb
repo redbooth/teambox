@@ -12,6 +12,9 @@ require 'cucumber/rails/rspec'
 require 'cucumber/rails/world'
 require 'cucumber/web/tableish'
 
+require 'capybara'
+require 'capybara/driver/webkit'
+
 require 'capybara/rails'
 require 'capybara/cucumber'
 require 'capybara/session'
@@ -39,6 +42,13 @@ Capybara.default_selector = :css
 ActionController::Base.allow_rescue = false
 
 Cucumber::Rails::World.use_transactional_fixtures = true
+
+
+Capybara.register_driver :webkit do |app|
+  Capybara::Driver::Webkit.new(app)
+end
+
+Capybara.javascript_driver = :webkit
 
 #Capybara.register_driver :selenium do |app|
   #Capybara::Driver::Selenium

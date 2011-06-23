@@ -58,6 +58,7 @@ group :test, :development do
   gem 'fuubar'
   gem 'faker', :require => nil
   gem 'timecop', :require => 'timecop'
+  gem 'capybara-webkit'
 end
 
 # we don't call the group :test because we don't want them auto-required
@@ -67,6 +68,5 @@ group :testing do
   gem 'factory_girl', '~> 1.3.2'
   gem 'pickle', '~> 0.4.4'
   gem 'cucumber-rails', '~> 0.3.2', :require => nil
-  gem 'capybara', '~> 0.4.0'
   gem 'launchy', '~> 0.3.7'
 end
