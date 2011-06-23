@@ -40,6 +40,7 @@ ActionController::Base.allow_rescue = false
 
 Cucumber::Rails::World.use_transactional_fixtures = true
 
+Capybara.javascript_driver = :webkit
 #Capybara.register_driver :selenium do |app|
   #Capybara::Driver::Selenium
   ##profile = Selenium::WebDriver::Firefox::Profile.new
