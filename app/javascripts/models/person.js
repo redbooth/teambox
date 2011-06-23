@@ -9,7 +9,7 @@ Teambox.Models.Person = Teambox.Models.Base.extend({
     }
 
   , url: function() {
-      return "/api/1/projects/" + this.get('project_id') +  "/people/" + this.get('id');
+      return "/api/1/projects/" + this.get('project_id') +  "/people/" + this.id;
     }
 
 });

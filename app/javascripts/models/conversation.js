@@ -19,7 +19,7 @@
    * @return {String}
    */
   Conversation.convertToTaskUrl = function () {
-    return '/api/1/projects/' + this.get('project_id') + '/conversations/' + this.get('id') + '/convert_to_task';
+    return '/api/1/projects/' + this.get('project_id') + '/conversations/' + this.id + '/convert_to_task';
   };
 
   /* return the `comments` url
@@ -27,7 +27,7 @@
    * @return {String}
    */
   Conversation.commentsUrl = function () {
-    return '/api/1/projects/' + this.get('project_id') + '/conversations/' + this.get('id') + '/comments';
+    return '/api/1/projects/' + this.get('project_id') + '/conversations/' + this.id + '/comments';
   };
 
   /* return the resource url
@@ -35,7 +35,7 @@
    * @return {String}
    */
   Conversation.url = function () {
-    return "/api/1/conversations/" + this.get('id');
+    return "/api/1/conversations/" + this.id;
   };
 
   /* parses the incoming data from the API
