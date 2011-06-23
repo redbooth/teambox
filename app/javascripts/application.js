@@ -53,6 +53,7 @@
 //= require <models/conversation>
 //= require <models/page>
 //= require <models/project>
+//= require <models/person>
 //= require <models/task>
 //= require <models/thread>
 //= require <models/user>
