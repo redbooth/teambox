@@ -15,8 +15,8 @@ document.on('dom:loaded', function() {
   Hotkeys.key('h', function() { Keyboard.showHelp(); });
 
   // Map search
-  Hotkeys.key('s', function() { Teambox.search_view.focus(); });
-  Hotkeys.key('/', function() { Teambox.search_view.focus(); });
+  Hotkeys.key('s', function() { Teambox.views.search_view.focus(); });
+  Hotkeys.key('/', function() { Teambox.views.search_view.focus(); });
 
   // Map navigation
   Hotkeys.key('q', '#!/');
