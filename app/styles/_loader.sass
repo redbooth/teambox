@@ -1,3 +1,4 @@
+$loading_bar_width: 130px
 div.loading
   display: none
 body.loading
@@ -13,15 +14,13 @@ body.loading
   div.loading
     display: inline-block
     margin-top: 100px
-    width: 300px
+    width: $loading_bar_width + 100px
     height: 100px
-    border: 1px solid #999
-    background-color: white
     .bar
       display: inline-block
       height: 14px
       border: 1px solid #CCC
-      width: 202px
+      width: $loading_bar_width + 2px
       text-align: left
       margin-top: 10px
       .fill

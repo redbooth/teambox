@@ -33,7 +33,7 @@
             return callback();
           }
         } else {
-          var width = 200 * LOADER.loaded / (LOADER.total - 1);
+          var width = 130 * LOADER.loaded / (LOADER.total - 1);
           _loading_bar.setStyle({width: width + "px"});
         }
       };
