@@ -48,6 +48,8 @@
       } else { // or navigate to the selected element
         var a = $('quicksearch_results').down('li.selected a');
         document.location = a.readAttribute('href');
+        this.hideQuickResults();
+        $('searchbox').blur();
       }
       evt.stop();
       return;
@@ -79,11 +81,15 @@
     var search_term = $('searchbox').value
       , threads = Teambox.collections.threads
       , pages = Teambox.collections.pages
+      , projects = Teambox.collections.projects
       , regex = RegExp(search_term, 'i')
-      , found = threads.models.concat(pages.models).select(function (el) {
+      , found = threads.models.concat(pages.models).concat(projects.models).select(function (el) {
           return el.get('name') && regex.test(el.get('name'));
         }).sortBy(function (el) {
-          return el.updated_at;
+          return el.get('updated_at');
+        }).sortBy(function (el) {
+          // Show Projects on top
+          return el.get('type') == "Project" ? 0 : 1;
         }).slice(0, 20).collect(function (el) {
           return el.getAttributes();
         });
@@ -147,7 +153,7 @@
   /* Fade out the quick results dialog
    */
   Search.hideQuickResults = function () {
-    $$('#quicksearch_results').invoke('fade');
+    $$('#quicksearch_results').invoke('fade', { duration: 0.2 });
   };
 
   /* Focus on the search box and select all
