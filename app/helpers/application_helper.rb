@@ -10,12 +10,6 @@ module ApplicationHelper
     image_tag(logo, :alt => "Teambox")
   end
 
-  def archived_project_strip(project)
-    if project.try(:archived)
-      render 'shared/strip', :project => project
-    end
-  end
-
   def submit_or_cancel(object, name, submit_id, loading_id)
     render 'shared/submit_or_cancel',
       :object => object,
@@ -125,10 +119,6 @@ module ApplicationHelper
     render 'shared/chrome_frame'
   end
 
-  def latest_announcement
-    render 'shared/latest_announcement'
-  end
-
   def errors_for(model, field)
     error = case errors = model.errors.on(field)
     when Array then errors.first
@@ -187,19 +177,6 @@ module ApplicationHelper
     if user
       path = project ? project_path(project, :format => :rss) : projects_path(:format => :rss)
       auto_discovery_link_tag(:rss, user_rss_token(path))
-    end
-  end
-  
-  def configure_this_organization
-    if Teambox.config.community && @community_role == :admin && @community_organization.description.blank? && params[:organization].nil?
-      message = if location_name != "appearance_organizations"
-        link_to("Click here", appearance_organization_path(@community_organization)) + " to configure your organization"
-      else
-        "Introduce some HTML code for your main site to configure your site"
-      end
-      %(<div style="background-color: rgb(255,255,220); border-bottom: 1px solid rgb(200,200,150); width: 100%; display: block; font-size: 12px; padding: 10px 0; text-align: center">
-        #{message}
-      </div>).html_safe
     end
   end
   

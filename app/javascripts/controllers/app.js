@@ -16,6 +16,7 @@
     this.pages_controller = new Controllers.PagesController({app: this});
   };
 
+  // Main activity feed
   AppController.index = function () {
     var threads = Teambox.collections.threads;
 

@@ -1,5 +1,0 @@
-.task{ :class => task_classes(task), :id => "task_list_task_#{task.id}" }
-  %span.taskStatus
-    = task_status(task, :content)
-  = render_due_on(task, current_user)
-  = link_to h(task.name), project_task_path(task.project, task), :class => "name"

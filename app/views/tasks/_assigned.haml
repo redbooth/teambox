@@ -1,3 +1,0 @@
-%span.assignment#assigned
-  - if task.assigned?
-    =raw t('.assigned_to', :user => link_to(h(task.assigned.user.name), task.assigned.user))

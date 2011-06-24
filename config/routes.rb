@@ -50,8 +50,6 @@ Teambox::Application.routes.draw do
     match '/forgetting' => 'reset_passwords#update_after_forgetting', :as => :update_after_forgetting, :method => :put
     match '/reset_password_sent' => 'reset_passwords#sent', :as => :sent_password
 
-    match '/format/:f' => 'sessions#change_format', :as => :change_format
-
     match '/projects/:project_id/invite/:login' => 'invitations#create', :as => :create_project_invitation, :method => :post
 
     match '/auth/:provider/callback' => 'auth#callback', :as => :auth_callback
@@ -118,12 +116,7 @@ Teambox::Application.routes.draw do
       resources :task_lists do
         resources :tasks
       end
-      match 'activities/users/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
     end
-
-    match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
-    match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
-    match 'activities/:id/show_thread(.:format)' => 'activities#show_thread', :as => :show_thread, :method => :get
 
     match 'projects/archived.:format' => 'projects#index', :as => :project_archived, :sub_action => 'archived'
 
@@ -153,8 +146,6 @@ Teambox::Application.routes.draw do
         end
       end
 
-      match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
-      match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
       resources :uploads
       match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
 
@@ -382,8 +373,6 @@ Teambox::Application.routes.draw do
     match 'time/:year/:month' => 'hours#index', :as => :hours_by_month, :via => :get
     match 'time/by_period' => 'hours#by_period', :as => :hours_by_period, :via => :get
     match 'time' => 'hours#index', :as => :time
-
-    match '/my_projects' => 'projects#list', :as => :all_projects
 
     match 'downloads/:id(/:style)/:filename' => 'uploads#download', :constraints => {:filename => /.*/}, :via => :get
 

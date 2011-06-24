@@ -7,16 +7,12 @@ class SessionsController < ApplicationController
   skip_before_filter :load_project
   skip_before_filter :verify_authenticity_token, :only => :create
   before_filter :set_page_title
-  before_filter :community_version_check, :except => [:create, :backdoor]
 
   def new
     clear_auth_session! unless @conflict = session[:conflict] and @profile = session[:profile]
 
     @signups_enabled = signups_enabled?
-    respond_to do |format|
-      format.html { redirect_to root_path if logged_in? }
-      format.m { redirect_to activities_path if logged_in? }
-    end
+    redirect_to root_path if logged_in?
   end
 
   def create
@@ -40,10 +36,7 @@ class SessionsController < ApplicationController
         clear_auth_session!
       end
 
-      respond_to do |format|
-        format.html { redirect_back_or_default root_url }
-        format.m { redirect_back_or_default activities_url }
-      end
+      redirect_back_or_default root_url
     else
       note_failed_signin
       @login       = params[:login]
@@ -65,18 +58,8 @@ class SessionsController < ApplicationController
     head :ok
   end
 
-  # This puts a parameter on your session to force mobile or web version
-  def change_format
-    if %w(m html).include? params[:f]
-      session[:format] = params[:f]
-    else
-      flash[:error] = "Invalid format"
-    end
-    
-    redirect_back_or_to root_path
-  end
+  protected
 
-protected
   # Track failed login attempts
   def note_failed_signin
     flash[:error] = t('sessions.new.login_failed', :login => params[:login])
@@ -89,26 +72,4 @@ protected
     session.delete :conflict
   end
 
-  def community_version_check
-    return if logged_in?
-    if Teambox.config.community
-      if User.count == 0
-        respond_to do |f|
-          f.html { render 'configure_your_deployment.haml' }
-          f.m { render 'configure_your_deployment.haml' }
-        end
-      elsif @organization = Organization.first
-        respond_to do |f|
-          f.html { render 'sites/show', :layout => 'sites' }
-          f.m { render 'sites/show', :layout => 'sites' }
-        end
-      else
-        flash[:error] = "The configuration didn't finish. Please log in as #{User.first} and complete it by creating an organization."
-        respond_to do |f|
-          f.html { render :new }
-          f.m { render :new }
-        end
-      end
-    end
-  end
 end

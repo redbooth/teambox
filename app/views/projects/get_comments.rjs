@@ -1,1 +1,0 @@
-page['comments'].update(list_comments(@comments,@target))

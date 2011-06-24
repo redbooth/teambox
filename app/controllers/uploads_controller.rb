@@ -65,22 +65,18 @@ class UploadsController < ApplicationController
     
     @upload.save
 
-    respond_to do |wants|
-      wants.any(:html, :m) {
-        if @upload.new_record?
-          flash.now[:error] = "There was an error uploading the file"
-          render :new
-        elsif @upload.page
-          if iframe?
-            code = render_to_string 'create.js.rjs', :layout => false
-            render :template => 'shared/iframe_rjs', :layout => false, :locals => { :code => code }
-          else
-            redirect_to [@current_project, @upload.page]
-          end
-        else
-          redirect_to [@current_project, :uploads]
-        end
-      }
+    if @upload.new_record?
+      flash.now[:error] = "There was an error uploading the file"
+      render :new
+    elsif @upload.page
+      if iframe?
+        code = render_to_string 'create.js.rjs', :layout => false
+        render :template => 'shared/iframe_rjs', :layout => false, :locals => { :code => code }
+      else
+        redirect_to [@current_project, @upload.page]
+      end
+    else
+      redirect_to [@current_project, :uploads]
     end
   end
 

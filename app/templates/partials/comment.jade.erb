@@ -9,12 +9,13 @@
     .actions_menu
       .actiondate
         time.timeago(data-msec= self.ms(self.updated_at), pubdate= 'true')= self.time_ago(self.updated_at)
-      img(class= 'triangle', src= '/images/triangle.png?1285939525', alt= 'Triangle')
+      img.triangle(src= '/images/triangle.png?1285939525', alt= 'Triangle')
       .extra
         a.edit(style= 'display:block;') Edit
         a.reply_email(rel= 'facebox', href= '#email_post_' + self.id) Reply via email
         a.delete(style= 'display:block;', href= "#") Delete
     .body.textilized
+
       .before
         a.user(href= self.user.user_url)= self.user.full_name
 

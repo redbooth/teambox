@@ -1,6 +1,0 @@
-#menubar
-  = link_to t('shared.project_navigation.overview'), activities_path, :class => (controller.controller_name == 'activities' ? 'selected' : '')
-  = link_to t('shared.navigation.all_projects'), projects_path, :class => (controller.controller_name == 'projects' && !@current_project ? 'selected' : '')
-  - if @current_project
-    = link_to h(@current_project), project_path(@current_project), :class => (@current_project ? 'selected' : '')
-  = #link_to "My tasks"

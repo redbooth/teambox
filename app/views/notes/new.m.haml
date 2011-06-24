@@ -1,6 +1,0 @@
-= form_for [@current_project,@page,@note], :html => { :id => "new_note_form" } do |f|
-  = note_fields(f)
-  .submit{ :id => "note_submit" }
-    = f.submit t('.submit')
-    or
-    = link_to t('common.cancel'), project_page_path(@current_project, @page), :class => 'cancelPageWidget'

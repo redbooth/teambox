@@ -15,10 +15,6 @@ class TasksController < ApplicationController
   def new
     authorize! :make_tasks, @current_project
     @task = @task_list.tasks.new
-    
-    respond_to do |f|
-      f.any(:html, :m)
-    end
   end
 
   def create
@@ -131,16 +127,12 @@ class TasksController < ApplicationController
   def watch
     authorize! :watch, @task
     @task.add_watcher(current_user)
-    respond_to do |f|
-      f.js { render :layout => false }
-    end
+    render :layout => false
   end
 
   def unwatch
     @task.remove_watcher(current_user)
-    respond_to do |f|
-      f.js { render :layout => false }
-    end
+    render :layout => false
   end
 
   private

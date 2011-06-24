@@ -101,7 +101,7 @@ class OrganizationsController < ApplicationController
     end
 
     def load_page_title
-      @page_title = h(@organization)
+      @page_title = @organization.name
     end
 
     def redirect_community

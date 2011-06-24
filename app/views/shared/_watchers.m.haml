@@ -1,7 +1,0 @@
-.watching#watching
-  - if target.watchers.empty?
-    = t('.nobody_watching')
-  - else
-    = t('.people_watching')
-    = target.watchers.collect {|u| h(u) }.to_sentence
-  = watch_link(project,user,target)

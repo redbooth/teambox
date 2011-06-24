@@ -6,15 +6,6 @@ class ConversationsController < ApplicationController
     handle_cancan_error(exception)
   end
 
-  def new
-    authorize! :converse, @current_project
-    @conversation = @current_project.conversations.new
-    
-    respond_to do |f|
-      f.any(:html, :m) { }
-    end
-  end
-
   def create
     authorize! :converse, @current_project
     @conversation = @current_project.conversations.new_by_user(current_user, params[:conversation])
@@ -41,23 +32,6 @@ class ConversationsController < ApplicationController
           end
         }
       end
-    end
-  end
-
-  def index
-    @conversations = @current_project.conversations.not_simple
-
-    respond_to do |f|
-      f.any(:html, :m)
-      f.rss   { render :layout => false }
-    end
-  end
-
-  def show
-    @conversations = @current_project.conversations.not_simple
-
-    respond_to do |f|
-      f.any(:html, :m)
     end
   end
 

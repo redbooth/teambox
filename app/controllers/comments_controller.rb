@@ -12,27 +12,21 @@ class CommentsController < ApplicationController
     
     comment = target.comments.create_by_user current_user, params[:comment]
     
-    respond_to do |wants|
-      wants.any(:html, :m)  {
-        if request.xhr? or iframe?
-          if comment.new_record?
-            output_errors_json(comment)
-          else
-            render :partial => 'comment', :locals => { :comment => comment }
-          end
-        else
-          redirect_back_or_to root_path
-        end
-      }
+    if request.xhr? or iframe?
+      if comment.new_record?
+        output_errors_json(comment)
+      else
+        render :partial => 'comment', :locals => { :comment => comment }
+      end
+    else
+      redirect_back_or_to root_path
     end
   end
   
   def edit
     authorize! :edit, @comment
     
-    respond_to do |wants|
-      wants.any(:html, :m) { render :layout => false if request.xhr? }
-    end
+    render :layout => false if request.xhr?
   end
   
   def update
@@ -40,14 +34,10 @@ class CommentsController < ApplicationController
     
     @comment.update_attributes params[:comment]
     
-    respond_to do |wants|
-      wants.any(:html, :m) {
-        if request.xhr? or iframe?
-          render :partial => 'comment', :locals => { :comment => @comment }
-        else
-          redirect_to [target.project, target]
-        end
-      }
+    if request.xhr? or iframe?
+      render :partial => 'comment', :locals => { :comment => @comment }
+    else
+      redirect_to [target.project, target]
     end
   end
   

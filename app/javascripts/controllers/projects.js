@@ -13,7 +13,7 @@
 
   , projects_index: function () {
       Teambox.Views.Sidebar.highlightSidebar('projects_link');
-      this.app.projects_view.render();
+      this.views.projects_view.render();
     }
 
   , projects_new: function () {

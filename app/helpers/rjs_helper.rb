@@ -1,21 +1,5 @@
 module RjsHelper
   
-  def ef(e)
-    page << "if($('#{e}')){"
-  end
-
-  def esf(e)
-    page << "}else if($('#{e}')){"
-  end
-
-  def els
-    page << "}else{"
-  end
-
-  def en
-    page << "}"
-  end
-
   def show_loading(action,id=nil)
     update_page do |page|
       if id

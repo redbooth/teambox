@@ -2,25 +2,17 @@ class ProjectsController < ApplicationController
   around_filter :set_time_zone, :only => [:index, :show]
   before_filter :load_projects, :only => [:index]
   before_filter :set_page_title
-  before_filter :disallow_for_community, :only => [:new, :create]
-  before_filter :load_pending_projects, :only => [:index, :show]
   
   rescue_from CanCan::AccessDenied do |exception|
-    respond_to do |f|
-      flash[:error] = t('common.not_allowed')
-      f.any(:html, :m) { redirect_to projects_path }
-    end
+    flash[:error] = t('common.not_allowed')
+    redirect_to root_path
   end
   
   def index
-    @new_conversation = Conversation.new(:simple => true)
     @activities = Activity.for_projects(@projects)
-    @threads = @activities.threads.all(:include => [:project, :target])
-    @last_activity = @threads.last
 
     respond_to do |f|
-      f.html
-      f.m     { redirect_to activities_path if request.path == '/' }
+      f.html  { redirect_to root_path }
       f.rss   { render :layout  => false }
       f.ics   { render :text    => Project.to_ical(@projects, params[:filter] == 'mine' ? current_user : nil, request.host, request.port) }
       f.print { render :layout  => 'print' }
@@ -29,16 +21,11 @@ class ProjectsController < ApplicationController
 
   def show
     @activities = Activity.for_projects(@current_project)
-    @threads = @activities.threads.all(:include => [:project, :target])
-    @last_activity = @threads.last
-    @recent_conversations = @current_project.conversations.not_simple.recent(4)
-    @new_conversation = @current_project.conversations.new(:simple => true)
 
     respond_to do |f|
-      f.any(:html, :m)
+      f.html  { redirect_to root_path }
       f.rss   { render :layout  => false }
       f.ics   { render :text    => @current_project.to_ical(params[:filter] == 'mine' ? current_user : nil) }
-      f.print { render :layout  => 'print' }
     end
   end
 
@@ -46,10 +33,6 @@ class ProjectsController < ApplicationController
     authorize! :create_project, current_user
     @project = Project.new
     @project.build_organization
-    
-    respond_to do |f|
-      f.any(:html, :m)
-    end
   end
 
   def create
@@ -58,13 +41,9 @@ class ProjectsController < ApplicationController
 
     respond_to do |f|
       if @project.save
-        redirect_path = redirect_to_invite_people? ? project_invite_people_path(@project) : @project
-
-        f.html { redirect_to redirect_path }
-        f.m { redirect_to @project }
+        redirect_to redirect_to_invite_people? ? project_invite_people_path(@project) : @project
       else
         flash.now[:error] = t('projects.new.invalid_project')
-        f.any(:html, :m) { render :new }
       end
     end
   end
@@ -72,10 +51,6 @@ class ProjectsController < ApplicationController
   def edit
     authorize! :update, @current_project
     @sub_action = params[:sub_action] || 'settings'
-    
-    respond_to do |f|
-      f.any(:html, :m)
-    end
   end
   
   def update
@@ -90,9 +65,7 @@ class ProjectsController < ApplicationController
       flash.now[:error] = t('projects.edit.error')
     end
     
-    respond_to do |f|
-      f.any(:html, :m) { render :edit }
-    end
+    render :edit
   end
  
   # Gets called from Project#create
@@ -124,27 +97,19 @@ class ProjectsController < ApplicationController
     end
     
     if saved
-      respond_to do |f|
-        flash[:notice] = I18n.t('projects.edit.transferred')
-        f.html { redirect_to project_path(@current_project) }
-      end
+      flash[:notice] = I18n.t('projects.edit.transferred')
+      redirect_to project_path(@current_project)
     else
-      respond_to do |f|
-        flash[:error] = I18n.t('projects.edit.invalid_transferred')
-        f.html { redirect_to project_path(@current_project) }
-      end
+      flash[:error] = I18n.t('projects.edit.invalid_transferred')
+      redirect_to project_path(@current_project)
     end
   end
 
   def destroy
     authorize! :destroy, @current_project
     @current_project.destroy
-    respond_to do |f|
-      f.any(:html, :m) {
-        flash[:success] = t('projects.edit.deleted')
-        redirect_to projects_path
-      }
-    end
+    flash[:success] = t('projects.edit.deleted')
+    redirect_to projects_path
   end
 
   skip_before_filter :belongs_to_project?, :only => [:join]
@@ -163,29 +128,10 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def list
-    # TODO: sort by organization name and then by project name
-  end
-
   protected
-  
-    def load_task_lists
-      @task_lists = @current_project.task_lists.unarchived
-    end
   
     def load_projects
       @projects = current_user.projects.unarchived
-    end
-
-    def load_pending_projects
-      @pending_projects = @current_user.invitations.pending_projects
-    end
-
-    # For community (single organization) version, disallow creating more than one organization
-    def disallow_for_community
-      if @community_organization && @community_role.nil?
-        render :text => "You're not authorized to create projects on this organization."
-      end
     end
 
     def redirect_to_invite_people?

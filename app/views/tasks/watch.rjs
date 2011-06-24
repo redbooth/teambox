@@ -1,1 +1,0 @@
-page.update_watching(@current_project,current_user,@task,:started_watching)

@@ -1,8 +1,0 @@
-if !@on_task
-  page.call "Task.removeTask",
-            js_id(@current_project,@task_list),
-            task_id(:item,@current_project,@task_list,@task)
-  page.show_destroy_task_message(@task)
-else
-  page.redirect_to project_task_lists_path(@current_project)
-end

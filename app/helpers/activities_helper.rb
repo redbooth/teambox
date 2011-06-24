@@ -40,24 +40,6 @@ module ActivitiesHelper
     activities.map { |activity| show_activity(activity) }.join('').html_safe
   end
 
-  def list_threads(activities)
-    activities.map { |activity| show_threaded_activity(activity) }.join('').html_safe
-  end
-
-  def show_threaded_activity(activity)
-    if activity.thread_id.starts_with? "Task_" or activity.thread_id.starts_with? "Conversation_"
-      mode = %w(projects activities).include?(controller.controller_name) ? "short" : "full"
-      Rails.cache.fetch("#{mode}-thread/#{activity.thread_id}/#{current_user.locale}") do
-        render('activities/thread', :activity => activity).to_s
-      end
-    else
-      Rails.cache.fetch("#{activity.cache_key}/#{current_user.locale}") do
-        show_activity(activity).to_s
-      end
-    end
-  end
-
-
   def show_activity(activity)
     if activity.target && ActivityTypes.include?(activity.action_type)
       render "activities/#{activity.action_type}", :activity => activity,
@@ -178,42 +160,11 @@ module ActivitiesHelper
     end
   end
   
-  def activities_paginate_link(*args)
-    options = args.extract_options!
-
-    if location_name == 'index_projects' or location_name == 'show_activities'
-      url = show_more_path(options[:last_activity].id)
-    elsif location_name == 'show_more_activities' and params[:project_id].nil? and params[:user_id].nil?
-      url = show_more_path(options[:last_activity].id)
-    elsif location_name == 'show_users'
-      url = user_show_more_path(@user.id, options[:last_activity].id)
-    elsif location_name == 'show_projects'
-      url = project_show_more_path(@current_project.permalink, options[:last_activity].id)
-    elsif location_name == 'show_more_activities' and params[:project_id]
-      url = project_show_more_path(params[:project_id], options[:last_activity].id)
-    elsif location_name == 'show_more_activities' and params[:user_id]
-      url = user_show_more_path(params[:user_id], options[:last_activity].id)
-    else
-      raise "unexpected location #{location_name}"
-    end
-    link_to(content_tag(:span, t('common.show_more')),
-            url,
-            :remote => true,
-            :class => 'activity_paginate_link button',
-            :id => 'activity_paginate_link'
-            )
-  end
-  
-  def show_more(after)
-    update_page do |page|
-      page['activities'].insert list_activities(@activities)
-    end
-  end
-  
   def show_more_button
     render 'activities/show_more' if @last_activity
   end
   
+  # TODO: Hook it up with push notifications
   def fluid_badge(count)
     badge = "if (typeof(badge_count) != 'undefined') 
                 { badge_count += #{count}; }
@@ -221,7 +172,8 @@ module ActivitiesHelper
     badge << "window.fluid.dockBadge = badge_count+'';"
     badge << "ClearBadge = window.onfocus=function(){window.fluid.dockBadge = ''; badge_count = 0};"
   end
-  
+
+  # TODO: Hook it up with push notifications
   def fluid_growl(project, user, body)
     "window.fluid.showGrowlNotification({
         title: '#{project}', 

@@ -8,13 +8,6 @@ class UsersController < ApplicationController
   before_filter :set_page_title
   before_filter :can_users_signup?, :only => [:new, :create]
 
-  def index
-    # show current user
-    respond_to do |f|
-      f.any(:html, :m)  { redirect_to root_path }
-    end
-  end
-  
   def new
     # Trying to accept a new account invitation, but you're already logged in
     if @invitation and logged_in?
@@ -37,29 +30,7 @@ class UsersController < ApplicationController
       end
     end
     
-    respond_to do |f|
-      f.any(:html, :m) { render :layout => 'sessions' }
-    end
-  end
-
-  def show
-    @card = @user.card
-    @projects_shared = @user.projects_shared_with(@current_user)
-    @shares_invited_projects = @projects_shared.empty? && @user.shares_invited_projects_with?(@current_user)
-    @activities = Activity.for_projects(@user.projects_shared_with(@current_user)).from_user(@user)
-    @threads = @activities.threads
-    @last_activity = @activities.all.last
-
-    respond_to do |format|
-      if @user != @current_user and (!@shares_invited_projects and @projects_shared.empty?)
-        format.any(:html, :m) {
-          flash[:error] = t('users.activation.invalid_user')
-          redirect_to root_path
-        }
-      else
-        format.any(:html, :m)
-      end
-    end
+    render :layout => 'sessions'
   end
 
   def create
@@ -109,53 +80,17 @@ class UsersController < ApplicationController
     @sub_action = params[:sub_action]
     success = current_user.update_attributes(params[:user])
     
-    respond_to do |wants|
-      wants.html {
-        if success
-          back = polymorphic_url [:account, @sub_action]
-          flash[:success] = t('users.update.updated', :locale => current_user.locale)
-          redirect_to back
-        else
-          flash.now[:error] = t('users.update.error')
-          render 'edit'
-        end
-      }
-    end
-  end
-
-  def unconfirmed_email
-    redirect_to root_path and return if current_user.is_active?
-
-    if params[:resend]
-      current_user.send_activation_email
-      flash[:success] = t('users.activation.resent')
-    end
-
-    @email = current_user.email
-    render :layout => 'sessions'
-  end
-
-  def confirm_email
-    logout_keeping_session!
-    if @user
-      if @user.is_login_token_valid? params[:token]
-        if @user.is_active?
-          flash[:success] = t('users.activation.already_done')
-        else
-          flash[:success] = t('users.activation.activated')
-          @user.activate!
-          @user.expire_login_code!
-          self.current_user = @user
-        end
-      else
-        flash[:error] = t('users.activation.invalid_html')
-      end
+    if success
+      back = polymorphic_url [:account, @sub_action]
+      flash[:success] = t('users.update.updated', :locale => current_user.locale)
+      redirect_to back
     else
-      flash[:error] = t('users.activation.invalid_user')
+      flash.now[:error] = t('users.update.error')
+      render 'edit'
     end
-    redirect_to root_path
   end
 
+  # TODO: Move to backbone
   def text_styles
     render :layout => false
   end
