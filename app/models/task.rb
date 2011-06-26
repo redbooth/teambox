@@ -247,7 +247,7 @@ class Task < RoleRecord
   end
   
   def set_comments_target
-    comments.each{|c|c.target = self if c.target.nil?}
+    comments.each{|c|c.target = self if c.target_id.nil? || c.target_type.nil?}
   end
 
   def save_changes_to_comment # before_save
