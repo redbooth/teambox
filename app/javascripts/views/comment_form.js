@@ -240,24 +240,6 @@
     }
   };
 
-  /* Displays the calendar
-   *
-   * @param {Event} evt
-   */
-  CommentForm.showCalendar = function (evt, element) {
-    evt.stop();
-
-    new Teambox.modules.CalendarDateSelect(element.down('input'), element.down('span'), {
-      buttons: true
-    , popup: 'force'
-    , time: false
-    , year_range: [2008, 2020]
-    });
-  };
-
-
-
-
   // exports
   Teambox.Views.CommentForm = Backbone.View.extend(CommentForm);
 }());
