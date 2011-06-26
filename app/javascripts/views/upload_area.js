@@ -17,6 +17,8 @@
     options = options || {};
 
     this.comment_form = options.comment_form;
+    this.form = this.comment_form.el;
+    this.model = this.comment_form.model;
   };
 
   /* updated upload area element
@@ -24,10 +26,103 @@
   UploadArea.render = function () {
     this.el
       .setStyle({display: 'none'})
-      .update(this.template(this.comment_form.model.getAttributes()));
+      .update(this.template(this.model.getAttributes()));
 
     return this;
   };
+
+  /* checks if the form has file uploads
+   *
+   * @return {Boolean}
+   */
+  UploadArea.hasFileUploads = function () {
+    return this.hasFileUploads();
+  };
+
+  /*  Delegates to Uploader module to start files upload
+   */
+  UploadArea.uploadFiles = function () {
+    this.uploader.start();
+  };
+
+  /* checks if the form has empty file uploads
+   *
+   * @return {Boolean}
+   */
+  UploadArea.hasEmptyFileUploads = function () {
+    return this.form.select('input[type=file]').any(function (input) {
+      return !input.getValue();
+    });
+  };
+
+  /* creates an iframe and uploads a file
+   */
+  UploadArea.uploadFile = function () {
+    var self = this
+      , iframe_id = 'file_upload_iframe' + Date.now()
+      , iframe = new Element('iframe', {id: iframe_id, name: iframe_id}).hide()
+      , authToken = $$('meta[name=csrf-token]').first().readAttribute('content')
+      , authParam = $$('meta[name=csrf-param]').first().readAttribute('content');
+
+    function changeFormat(action) {
+      if (action.endsWith('.text')) {
+        return action.gsub(/\.text$/, '');
+      }
+      else {
+        return action.gsub(/(\/?)$/, function(m) { return '.text';});
+      }
+    };
+
+    function callback() {
+      // contentDocument doesn't work in IE (7)
+      var iframe_body = (iframe.contentDocument || iframe.contentWindow.document).body
+        , extra_input = self.form.down('input[name=iframe]')
+        , response = JSON.parse(iframe_body.firstChild.innerHTML);
+
+      if (iframe_body.className !== "error") {
+        self.model.set(response.objects);
+        self.comment_form.addComment(false, response, true);
+      } else {
+        self.comment_form.handleError(false, response);
+      }
+
+      iframe.remove();
+      self.form.target = null;
+      self.form.action = changeFormat(self.form.action);
+      if (extra_input) {
+        extra_input.remove();
+      }
+      self.reset();
+      Teambox.helpers.forms.restoreDisabledInputs(self.form);
+    }
+
+    $(document.body).insert(iframe);
+    this.form.target = iframe_id;
+    this.form.action = changeFormat(this.form.action);
+    this.form.insert(new Element('input', {type: 'hidden', name: 'iframe', value: true}));
+    this.form.insert(new Element('input', {type: 'hidden', 'class': 'x-pushsession-id', name: '_x-pushsession-id', value: Teambox.controllers.application.push_session_id}));
+
+    if (this.form[authParam]) {
+      this.form[authParam].value = authToken;
+    } else {
+      this.form.insert(new Element('input', {type: 'hidden', name: authParam, value: authToken}).hide());
+    }
+
+    // for IE (7)
+    iframe.onreadystatechange = function () {
+      if (this.readyState === 'complete') {
+        callback();
+      }
+    };
+
+    // non-IE
+    iframe.onload = callback;
+
+    // we may have cancelled xhr, but we still need to trigger form submit manually
+    this.form.submit();
+    Teambox.helpers.forms.showDisabledInput(this.form);
+   };
+
 
   /*  Enable/Disable functionality based on supported features
    *
@@ -70,29 +165,11 @@
   UploadArea.onUploadComplete = function(uploader, files) {
     uploader.total.reset();
     this.reset();
-    this.restoreDisabledInputs();
+    Teambox.helpers.forms.restoreDisabledInputs(this.form);
   };
 
   UploadArea.onUploadFile = function(uploader, file) {
-    this.showDisabledInput();
-  };
-
-  UploadArea.showDisabledInput = function() {
-    var inputs = this.comment_form.el.select("input[type=submit][data-disable-with]");
-    inputs.each(function(input) {
-      input.disabled = true;
-      input.writeAttribute('data-original-value', input.value);
-      input.value = input.readAttribute('data-disable-with');
-    });
-  };
-
-  UploadArea.restoreDisabledInputs = function() {
-    var inputs = this.comment_form.el.select("input[type=submit][disabled=true][data-disable-with]");
-    inputs.each(function(input) {
-      input.value = input.readAttribute('data-original-value');
-      input.writeAttribute('data-original-value', null);
-      input.disabled = false;
-    });
+    Teambox.helpers.forms.showDisabledInput(this.form);
   };
 
   /*  Handle the FileUploaded event
@@ -115,7 +192,7 @@
     }
 
     if (status === 200) {
-      this.comment_form.model.set(resp.objects);
+      this.model.set(resp.objects);
       this.comment_form.addComment(false, resp, true);
     }
     else {
@@ -126,7 +203,12 @@
   /*  Returns wether there are any files in the file list pending upload
    */
   UploadArea.hasFileUploads = function() {
-    return !(_.isEmpty(this.files));
+    // For use with Teambox.modules.Uploader
+    // return !(_.isEmpty(this.files));
+    // For simple iframe uploads
+    return this.el.select('input[type=file]').any(function (input) {
+      return input.getValue();
+    });
   };
 
   /*  Resets the form
@@ -135,6 +217,16 @@
     this.files = [];
 
     this.el.select('.file_list li').invoke('remove');
+    // clear populated file uploads
+    this.el.select('input[type=file]').each(function (input) {
+      if (input.getValue()) {
+        input.remove();
+      }
+    });
+    this.el.select('input[type=file]').each(function (input) {
+      input.setAttribute('name', 'comments_attributes[0][uploads_attributes][0][asset]');
+    });
+
     if (this.el.visible()) {
       this.comment_form.toggleAttach();
     }
@@ -218,10 +310,12 @@
    * @param {Event} evt
    */
   UploadArea.showNewUpload = function (evt) {
-    // var el = evt.element;
-    // if (!evt.isMiddleClick()) {
-    //   evt.preventDefault();
-    // }
+    var el = evt.element;
+    if (!evt.isMiddleClick()) {
+      evt.preventDefault();
+      $('new_upload').show();
+      el.hide();
+    }
   };
 
   /* inserts new upload
@@ -231,18 +325,22 @@
   UploadArea.insertNewUpload = function (evt) {
 
     function incrementLastNumber(str) {
-      var i = 0, matches = str.match(/\d+/g);
+      var i = 0, matches = str.match(/\[(\d)\]([^\d]+)$/);
 
-      matches.push(parseInt(matches.pop(), 10) + 1);
-      return str.gsub(/\d+/, function (m) {
-        return matches[i++];
+      return str.gsub(/\[(\d)\]([^\d]+)$/, function (m) {
+        var rest = m.pop()
+        , number = m.pop();
+
+        m.push(parseInt(number, 10) + 1);
+        m.push(rest);
+        return "[" + m[1] + "]" + m[2];
       });
     }
 
     var el = evt.element()
-      , new_input = new Element('input', {type: 'file', name: el.name /*incrementLastNumber(el.name)*/});
+      , new_input = new Element('input', {type: 'file', name: incrementLastNumber(el.name)});
 
-    if (!this.comment_form.hasEmptyFileUploads()) {
+    if (!this.hasEmptyFileUploads()) {
       el.insert({after: new_input});
     }
   };

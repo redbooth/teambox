@@ -11,14 +11,3 @@ jQuery.ajaxSetup({
   }
 });
 
-$(function() {
-  $(document.body).submit(function(event) {
-    inputs.each(function(input) {
-      input.disabled = true;
-      input.writeAttribute('data-original-value', input.value);
-      input.value = input.readAttribute('data-disable-with');
-    });
-  });
-});
-
-

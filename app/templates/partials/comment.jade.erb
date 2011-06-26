@@ -4,7 +4,7 @@
 
 .comment(data-editable-before= self.ms(self.updated_at), id= 'comment_' + self.id, data-project= self.project_id, data-id= self.id, data-user= self.user_id)
   .info
-    a.micro_avatar(href= self.user.user_url, style= 'background: url(' + self.user.micro_avatar_url + ') no-repeat')
+    a.micro_avatar(href= self.user_url(self.user), style= 'background: url(' + self.user.micro_avatar_url + ') no-repeat')
   .block
     .actions_menu
       .actiondate
@@ -16,7 +16,7 @@
         a.delete(style= 'display:block;', href= "#") Delete
     .body.textilized
       .before
-        a.user(href= self.user.user_url)= self.user.full_name
+        a.user(href= self.user_url(self.user))= self.full_name(self.user)
 
         != self.transition_due_on(self.due_on, self.previous_due_on);
 
@@ -25,10 +25,10 @@
 
         != self.status_transition()
 
-      - if (self.assigned && self.assigned.user)
+      - if (self.assigned)
         p.assigned_transition
           | Assigned to
-          = self.full_name(self.assigned.user)
+          = self.full_name(self.assigned)
 
       != self.body_html
     - if (self.uploads && self.uploads.length)

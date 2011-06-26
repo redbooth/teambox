@@ -42,10 +42,11 @@
 
         //TODO: When we replace JQuery we need to update this code
         jQuery.ajaxSetup({
-          beforeSend: function(xhr){
+          beforeSend: function(xhr, settings){
             if (Teambox.controllers.application.push_session_id) {
               xhr.setRequestHeader("X-PushSession-ID", Teambox.controllers.application.push_session_id);
             }
+            return true;
           }
         });
 
@@ -88,7 +89,7 @@
 
           console.log("Received activity: ", activity);
 
-          if (activity.push_session_id === self.app.push_session_id) {
+          if (activity.push_session_id.toString() === self.app.push_session_id) {
             return;
           }
 

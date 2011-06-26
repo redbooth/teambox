@@ -38,6 +38,7 @@
 
 //= require <helpers/tasks>
 //= require <helpers/deparam>
+//= require <helpers/forms>
 
 //= require <controllers/base>
 //= require <controllers/bootstrap>

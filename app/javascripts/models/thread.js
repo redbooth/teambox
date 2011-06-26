@@ -75,6 +75,10 @@
       comment_attributes.project = project;
     }
 
+    if (typeof comment_attributes.body_html === 'string') {
+      comment_attributes.body_html = comment_attributes.body_html.unescapeHTML();
+    }
+
     return comment_attributes;
   };
 

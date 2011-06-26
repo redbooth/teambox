@@ -31,8 +31,7 @@
 
     this.el.writeAttribute({
       'accept-charset': 'UTF-8'
-    , 'accept': 'text/plain'
-    , 'action': this.model.commentsUrl()
+    , 'action': this.model.url()
     , 'data-project-id': this.model.get('project_id')
     , 'enctype': 'multipart/form-data'
     , 'method': 'POST'
@@ -54,6 +53,10 @@
     , selected: this.model.get('assigned_id')
     , project: Teambox.collections.projects.get(this.model.get('project_id'))
     })).render();
+
+    if (/\d+$/.test(this.model.url())) {
+      this.el.insert({top: new Element('input', {type: 'hidden', name: '_method', value: 'put'})});
+    }
 
 
     this.el.down('.actions')
@@ -82,6 +85,7 @@
     this.el.select('.error').invoke('remove');
     this.el.select('.google_docs_attachment .fields input').invoke('remove');
     this.el.select('.google_docs_attachment .file_list li').invoke('remove');
+    this.el.select('.x-pushsession-id').invoke('remove');
   };
 
   CommentForm.addComment = function (m, resp, upload) {
@@ -112,13 +116,18 @@
       evt.stop();
     }
 
-    if (this.hasFileUploads()) {
-      return this.uploadFiles();
+    if (this.upload_area.hasFileUploads()) {
+      //Uses Teambox.modules.Uploader
+      // return this.upload_area.uploadFiles();
+      //Uses simple iframe uploading
+      return this.upload_area.uploadFile();
     }
 
     data = _.deparam(this.el.serialize(), true);
 
-    this.model.save(data[this.model.className().toLowerCase()], {
+    Teambox.helpers.forms.showDisabledInput(this.el);
+
+    this.model.save(data, {
       success: this.addComment.bind(this)
     , failure: this.handleError.bind(this)
     });
@@ -138,13 +147,15 @@
     //TODO: Find a better place to init the uploader
     //Currently, plupload checks for file list container in DOM sw we
     //need to be sure it exists in DOM when intiting the uploader
-    this.initUploader();
+    //Disabling plupload
+    // this.initUploader();
+
     var upload_area = $(this.el).down('.upload_area');
     upload_area.toggle().highlight();
 
-    if (upload_area.visible()) {
-      this.uploader.refresh();
-    }
+    // if (upload_area.visible()) {
+    //   this.uploader.refresh();
+    // }
   };
 
   /* inits the uploader
@@ -229,30 +240,23 @@
     }
   };
 
-  /* checks if the form has file uploads
+  /* Displays the calendar
    *
-   * @return {Boolean}
+   * @param {Event} evt
    */
-  CommentForm.hasFileUploads = function () {
-    return this.upload_area.hasFileUploads();
-  };
+  CommentForm.showCalendar = function (evt, element) {
+    evt.stop();
 
-  /* checks if the form has empty file uploads
-   *
-   * @return {Boolean}
-   */
-  CommentForm.hasEmptyFileUploads = function () {
-    return this.el.select('input[type=file]').any(function (input) {
-      return !input.getValue();
+    new Teambox.modules.CalendarDateSelect(element.down('input'), element.down('span'), {
+      buttons: true
+    , popup: 'force'
+    , time: false
+    , year_range: [2008, 2020]
     });
   };
 
 
-  /*  Delegates to Uplaoder module to start files upload
-   */
-  CommentForm.uploadFiles = function () {
-    this.uploader.start();
-  };
+
 
   // exports
   Teambox.Views.CommentForm = Backbone.View.extend(CommentForm);
