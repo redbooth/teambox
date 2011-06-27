@@ -139,7 +139,7 @@ describe GoogleCalendar do
       event = GoogleCalendar::Event.new(:title => 'title_value', :details => 'details_value')
       post_body = GoogleCalendar.send(:create_post_data, event)
       
-      post_body.should be_equivelent_json_as '{"data":{"details":"details_value","title":"title_value"}}'
+      post_body.should be_equivelent_json_as '{"apiVersion":"2.6","data":{"details":"details_value","title":"title_value"}}'
     end
   end
 end
