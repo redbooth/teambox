@@ -66,7 +66,8 @@ describe ApiV1::SearchController do
     end
 
     it "reject searching in unauthorized project" do
-      get :index, :q => 'important', :project_id => @project.permalink
+      project = Factory :project
+      get :index, :q => 'important', :project_id => project.permalink
       response.status.should == (Teambox.config.allow_search ? 403 : 501)
     end
 

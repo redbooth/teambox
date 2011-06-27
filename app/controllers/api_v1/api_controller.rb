@@ -76,7 +76,7 @@ class ApiV1::APIController < ApplicationController
   def belongs_to_project?
     if @current_project
       unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-        api_error(:unauthorized, :type => 'InsufficientPermissions', :message => t('common.not_allowed'))
+        api_error(:forbidden, :type => 'InsufficientPermissions', :message => t('common.not_allowed'))
       end
     end
   end
