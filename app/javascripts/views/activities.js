@@ -45,7 +45,6 @@
    */
   Activities.render = function () {
     this.el.update('');
-    console.log(this.collection);
     this.collection.each(this.appendActivity.bind(this));
 
     return this;
