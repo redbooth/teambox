@@ -28,7 +28,7 @@
     return date && date.strftime("%b %d");
   };
 
-  JADE.time_ago = function (time) {
+  JADE.timeAgo = function (time) {
     return time ? new Date(Date.parse(time)).timeAgo() : '';
   };
 

@@ -12,7 +12,21 @@
     return 'Conversation';
   };
 
-  Conversation.isConversation = function(){return true;}
+  /* TODO: Remove this hack, `isConversation` belongs to a Thread
+   * no one should be talkin to a Conversation if its
+   * expecting a Thread
+   */
+  Conversation.isConversation = function () {
+    return true;
+  }
+
+  /* return the public url
+   *
+   * @return {String}
+   */
+  Conversation.publicUrl = function () {
+    return '/projects/' + this.get('project_id') + '/conversations/' + this.id;
+  };
 
   /* return the `convert_to_task` url
    *

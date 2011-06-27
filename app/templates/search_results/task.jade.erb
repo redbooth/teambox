@@ -1,0 +1,14 @@
+.result.task
+  img(src= '/famfamfam/tick.png', style= 'padding: 4px')
+  .comment_count= self.get('comments_count')
+  a(href= self.publicUrl())= self.get('name') + ' on'
+
+  - if (self.get('task_list') && self.get('project'))
+    - var url = self.task_list_url(self.get('task_list'), self.get('project'))
+    a(href= url)= self.get('name') + ' task list'
+
+  .project= self.get('project').name
+  .task_summary
+    != self.status_transition()
+    = 'Assigned to ' + self.full_name(self.get('user'))
+  time.timeago(data-msec= self.ms(self.get('updated_at')), pubdate= 'true')= self.timeAgo(self.get('updated_at'))

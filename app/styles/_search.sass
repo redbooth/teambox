@@ -1,3 +1,26 @@
+.search_results
+
+  .result
+    +rounded(3px)
+    +gradient-bottom(#eee)
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFF, endColorstr=#EEEEEE, GradientType=0)"
+    padding: 5px
+    border: 1px solid #ddd
+    margin-bottom: 20px
+    max-width: 600px
+
+    img
+      float: left
+
+    .comment_count
+      +rounded(3px)
+      padding: 3px
+      float: right
+      background: #ddd
+      -moz-box-shadow:    1px 1px solid #fff, -1px -1px solid #ccc
+      -webkit-box-shadow: 1px 1px solid #fff, -1px -1px solid #ccc
+      box-shadow:         1px 1px solid #fff, -1px -1px solid #ccc
+
 .search_bar
   float: left
   padding-top: 3px

@@ -13,7 +13,7 @@
    * to the correct model
    *
    * @param {Response} response
-   * @return {Array}
+   * @return {Array} of mixed Models
    */
   SearchResults.parse = function (response) {
     return _.map(_.parseFromAPI(response), function (el) {

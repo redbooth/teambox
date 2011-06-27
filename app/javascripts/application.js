@@ -52,10 +52,12 @@
 //= require <models/base>
 //= require <models/comment>
 //= require <models/conversation>
+//= require <models/note>
 //= require <models/page>
 //= require <models/project>
 //= require <models/person>
 //= require <models/task>
+//= require <models/task_list>
 //= require <models/thread>
 //= require <models/user>
 //= require <collections/base>
@@ -76,6 +78,7 @@
 //= require <views/projects>
 //= require <views/page_teaser>
 //= require <views/search>
+//= require <views/search_results>
 //= require <views/sidebar>
 //= require <views/upload_area>
 

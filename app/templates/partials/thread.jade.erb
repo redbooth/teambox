@@ -3,8 +3,7 @@
     time.timeago(data-msec= self.ms(self.updated_at), pubdate= 'true')= self.updated_at
 
   .info
-    - if (self.is_task)
-      img(src= '/famfamfam/' + (self.is_task ? 'tick' : 'comment') + '.png', style= 'padding: 4px')
+    img(src= '/famfamfam/' + (self.is_task ? 'tick' : 'comment') + '.png', style= 'padding: 4px')
     .comment_count
       span= self.comments_count
 

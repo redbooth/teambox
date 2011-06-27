@@ -28,13 +28,13 @@ _.parseFromAPI = function(json) {
     e.organization = collection.findRef(e.organization_id, 'Organization');
 
     // Only 'new' and 'open' tasks have due dates and assignees
-    if(e.type == "Task" && e.status && e.status !== 0 && e.status !== 1) {
+    if (e.type === "Task" && e.status && e.status !== 0 && e.status !== 1) {
       e.due_on = undefined;
       e.assigned = undefined;
     }
 
     // Give titles to untitled conversations
-    if(e.type == "Conversation" && e.simple) {
+    if (e.type === "Conversation" && e.simple) {
       e.name = "Untitled";
     }
 
@@ -42,6 +42,7 @@ _.parseFromAPI = function(json) {
     if (e.first_comment_id) {
       e.first_comment = collection.findRef(e.first_comment_id, "Comment");
     }
+
     if (e.recent_comment_ids) {
       e.recent_comments = _(e.recent_comment_ids).chain()
         .map(function(id) { 
@@ -58,6 +59,7 @@ _.parseFromAPI = function(json) {
       e.hidden_comments_count = _([e.comments_count - 1 - e.recent_comments.length, 0]).max();
       e.last_comment = _(e.recent_comments).last();
     }
+
     if (e.target_id) {
       e.target = collection.findRef(e.target_id, e.target_type);
       if (e.target) {

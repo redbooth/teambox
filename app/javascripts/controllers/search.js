@@ -11,8 +11,8 @@
     // TODO: add spin
     $('content').update('loading...');
 
-    (new Teambox.Collections.SearchResults({query: query})).fetch({success: function (collection, response) {
-      $('content').update((new Teambox.Views.Activities({collection: collection})).render().el);
+    (new Teambox.Collections.SearchResults([], {query: query})).fetch({success: function (collection, response) {
+      $('content').update((new Teambox.Views.SearchResults({collection: collection})).render().el);
     }});
   };
 

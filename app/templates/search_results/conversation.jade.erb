@@ -1,0 +1,6 @@
+.result.conversation
+  img(src= '/famfamfam/' + (self.is_task ? 'tick' : 'comment') + '.png', style= 'padding: 4px')
+  .comment_count= self.get('comments_count')
+  a.name(href= self.publicUrl())= self.get('name')
+  time.timeago(data-msec= self.ms(self.get('updated_at')), pubdate= 'true')= self.timeAgo(self.get('updated_at'))
+  .project= self.get('project').name

@@ -8,7 +8,7 @@
   .block
     .actions_menu
       .actiondate
-        time.timeago(data-msec= self.ms(self.updated_at), pubdate= 'true')= self.time_ago(self.updated_at)
+        time.timeago(data-msec= self.ms(self.updated_at), pubdate= 'true')= self.timeAgo(self.updated_at)
       img(class= 'triangle', src= '/images/triangle.png?1285939525', alt= 'Triangle')
       .extra
         a.edit(style= 'display:block;') Edit

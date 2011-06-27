@@ -130,7 +130,7 @@
     this.el.update(this.template(this.model.getAttributes()));
 
     // Insert the comment form at bottom of the thread element
-    this.el.insert({ bottom: comment_form.render().el });
+    this.el.insert({bottom: comment_form.render().el});
     if (this.model.isConversation()) {
       this.el.insert({bottom: convert_to_task.render().el});
     }
