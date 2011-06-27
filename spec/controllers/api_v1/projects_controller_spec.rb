@@ -149,7 +149,7 @@ describe ApiV1::ProjectsController do
       login_as @user2
 
       get :show, :id => @project.permalink
-      response.status.should == 401
+      response.status.should == 403
 
       JSON.parse(response.body)['errors']['type'].should == 'InsufficientPermissions'
     end
