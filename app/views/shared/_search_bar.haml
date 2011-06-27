@@ -1,5 +1,5 @@
 - if current_user.can_search?
   .search_bar
-    - form_tag search_path, :method => 'get', :class => 'search', :id => 'search' do
+    = form_tag search_path, :method => 'get', :class => 'search', :id => 'search' do
       = text_field_tag :q, nil, :type => 'search', :id => :searchbox,
                                 :placeholder => t('search.placeholder')
