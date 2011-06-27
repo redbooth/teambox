@@ -426,7 +426,7 @@ describe Task do
       task = Factory(:task, :due_on => Date.today)
       google_event = task.send(:to_google_calendar_event)
       google_event.title.should == task.name
-      google_event.details.should be_nil
+      google_event.details.strip.end_with?("/projects/#{task.project.to_param}/tasks/#{task.to_param}").should be_true
       google_event.start.should == Date.today
       google_event.end.should == Date.today
       
@@ -437,7 +437,8 @@ describe Task do
       task = Factory(:task, :comments => [Factory(:comment, :body => 'Do it by tomorrow')])
       google_event = task.send(:to_google_calendar_event)
       google_event.title.should == task.name
-      google_event.details.should == "Do it by tomorrow"
+      google_event.details.start_with?("Do it by tomorrow").should be_true
+      google_event.details.end_with?("/projects/#{task.project.to_param}/tasks/#{task.to_param}").should be_true
       google_event.start.should == task.due_on
       google_event.end.should == task.due_on
     end
