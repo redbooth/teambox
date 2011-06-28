@@ -1,4 +1,4 @@
-@organizations
+@javascript @organizations
 Feature: Creating an organization
 
   Background: 
@@ -48,8 +48,8 @@ Feature: Creating an organization
     When I fill in "organization_name" with "NASA"
     And I press "Create Organization"
     Then I should see "NASA"
-    And I should see "There are 1 users"
-    And I should see "and 0 projects"
+    And I should see "1 users"
+    And I should see "0 projects"
 
   Scenario: I create two organizations from the organizations page and a project inside each one
     When I go to the organizations page
