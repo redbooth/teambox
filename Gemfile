@@ -51,6 +51,7 @@ group :development do
   gem 'mongrel', '~> 1.1.5', :require => nil
   gem 'jasmine'
   gem 'unicorn', '~> 3.6.1', :require => nil
+  gem 'foreman'
 end
 
 group :test, :development do
