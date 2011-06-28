@@ -27,11 +27,19 @@
         }
 
         var port = function() {
-          return ('https:' === document.location.protocol) ? 443 : 80;
+          if (document.location.hostname === 'localhost') {
+            return 8090;
+          }
+          else {
+            return ('https:' === document.location.protocol) ? 443 : 80;
+          }
         };
 
+        var host = document.location.hostname === 'localhost' ?
+          'localhost' : "push." + document.location.hostname;
+
         var socket = new Juggernaut({
-          host: "push." + document.location.host,
+          host: host,
           port: port(),
           meta: meta,
           secure: ('https:' === document.location.protocol)
