@@ -18,6 +18,7 @@ tmp
 public/avatars
 public/logos
 public/jammit/*
+public/api/*
 public/stylesheets
 public/sprockets.js
 /uploads
