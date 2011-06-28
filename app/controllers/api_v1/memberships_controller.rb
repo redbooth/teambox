@@ -12,12 +12,12 @@ class ApiV1::MembershipsController < ApiV1::APIController
                                              order('memberships.id DESC').
                                              includes([:organization, :user])
     
-    api_respond @memberships, :references => [:organization, :user]
+    api_respond @memberships, :references => true
   end
 
   def show
     authorize! :show, @membership
-    api_respond @membership, :include => [:user]
+    api_respond @membership, :references => true
   end
   
   def update
@@ -33,11 +33,10 @@ class ApiV1::MembershipsController < ApiV1::APIController
   def destroy
     authorize! :admin, @organization
     
-    if @organization.memberships.length > 1
-      @membership.destroy
+    if @membership.destroy
       handle_api_success(@membership)
     else
-      api_error(:unauthorized, :type => 'InsufficientPermissions', :message => t('common.not_allowed'))
+      handle_api_error(@membership)
     end
   end
 

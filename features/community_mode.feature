@@ -22,7 +22,8 @@ Feature: When I use Teambox community version, there is only one organization
       | Password         | dragons                   |
       | Confirm password | dragons                   |
     And I press "Create account"
-    Then I should see "Confirm your email"
+
+    Then I should see "Go to mislav@fuckingawesome.com to confirm your account"
     And "mislav@fuckingawesome.com" should receive an email
     When I open the email
     Then I should see "Hey, Mislav Marohnić!" in the email body
@@ -111,6 +112,8 @@ Feature: When I use Teambox community version, there is only one organization
   Scenario: I can't create a project if I'm not part of the organization
     Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
+    And @pablo exists
+    And "pablo" is an administrator in the organization called "ACME"
     And "mislav" is not a member of the organization called "ACME"
     And I go to the home page
     Then I should not see "+ New Project"

@@ -39,6 +39,8 @@ Teambox::Application.routes.draw do
 
     match '/search' => 'search#index', :as => :search
 
+    match '/guides' => 'guides#index', :as => :guides
+
     match '/text_styles' => 'users#text_styles', :as => :text_styles
     match '/email_posts_path' => 'users#email_posts', :as => :email_posts
     match '/invite_format' => 'invitations#invite_format', :as => :invite_format
@@ -58,11 +60,12 @@ Teambox::Application.routes.draw do
     match '/auth/failure' => 'auth#failure', :as => :auth_failure
     match '/complete_signup' => 'users#complete_signup', :as => :complete_signup
     match '/auth/:provider/unlink' => 'users#unlink_app', :as => :unlink_app
-    match '/auth/google' => 'auth#index', :as => :authorize_google_docs, :defaults => {:provider => 'google'}
 
     resources :google_docs do
       get :search, :on => :collection
     end
+    
+    resources :google_calendars
 
     #RAILS 3 Useless resource?
     resources :reset_passwords
@@ -104,8 +107,13 @@ Teambox::Application.routes.draw do
     post  '/account/stats/:stat/inc' => 'users#increment_stat'
     post  '/account/badge/:badge/grant' => 'users#grant_badge'
     post  '/account/first_steps/hide' => 'users#hide_first_steps'
+    post  '/account/tutorials/hide' => 'users#hide_tutorials'
 
-    resources :teambox_datas, :path => '/datas'
+    resources :teambox_datas, :path => '/datas' do
+      member do
+        get :download
+      end
+    end
 
     resources :users do
       resources :invitations
@@ -396,6 +404,10 @@ Teambox::Application.routes.draw do
     mount Emailer::Preview => 'mail_view'
   end
   
+  if Rails.env.test?
+    match '/oauth/dummy_auth' => 'oauth#dummy_auth', :as => :dummy_auth
+  end
+  
   # Oauth provider
   # Oauth-server
   
@@ -403,7 +415,6 @@ Teambox::Application.routes.draw do
   match '/oauth/authorize',:controller=>'oauth',:action=>'authorize', :as => :authorize
   match '/oauth/revoke',:controller=>'oauth',:action=>'revoke', :as => :revoke
   match '/oauth/token',:controller=>'oauth',:action=>'token', :as => :token
-  match '/oauth/test_request',:controller=>'oauth',:action=>'test_request', :as => :test_request
   
   resources :oauth_clients do
     collection do

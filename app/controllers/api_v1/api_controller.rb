@@ -1,24 +1,45 @@
 class ApiV1::APIController < ApplicationController
   include Oauth::Controllers::ApplicationControllerMethods
   Oauth2Token = ::Oauth2Token
-  
-  skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token, :add_chrome_frame_header
 
-  API_LIMIT = 50
+  skip_before_filter :rss_token, :recent_projects, :touch_user, :verify_authenticity_token, :add_chrome_frame_header
+  before_filter      :api_throttle
+
+  if Rails.env.test?
+    API_LIMIT = 10
+  else
+    API_LIMIT = 20
+  end
+  API_THROTTLE_LIMIT = 200
 
   protected
-  
+
   rescue_from CanCan::AccessDenied do |exception|
     api_error(:unauthorized, :type => 'InsufficientPermissions', :message => 'Insufficient permissions')
   end
-  
+
   def current_user
     @current_user ||= (login_from_session ||
                        login_from_basic_auth ||
                        login_from_cookie ||
                        login_from_oauth) unless @current_user == false
   end
-  
+
+  def api_throttle
+    return unless Rails.env.production?
+    # Limit of API_THROTTLE_LIMIT per hour
+    throttle_key = "#{current_user.id}:#{Time.now.strftime('%Y-%m-%dT%H')}"
+    if val = Rails.cache.read(throttle_key)
+      if val.to_i > API_THROTTLE_LIMIT
+        api_error(:unauthorized, :type => 'AuthorizationFailed', :message => 'Rate Limit Exceeded')
+      else
+        Rails.cache.increment(throttle_key)
+      end
+    else
+      Rails.cache.write(throttle_key, 1, :raw => true) # raw is needed to have 'increment' working
+    end
+  end
+
   def login_from_oauth
     user = Authenticator.new(self,[:token]).allow? ? current_token.user : nil
     user.current_token = current_token if user
@@ -55,7 +76,7 @@ class ApiV1::APIController < ApplicationController
   def belongs_to_project?
     if @current_project
       unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-        api_error(:unauthorized, :type => 'InsufficientPermissions', :message => t('common.not_allowed'))
+        api_error(:forbidden, :type => 'InsufficientPermissions', :message => t('common.not_allowed'))
       end
     end
   end
@@ -103,45 +124,83 @@ class ApiV1::APIController < ApplicationController
   end
   
   def api_wrap(object, options={})
-    objects = if object.respond_to? :each
-      object.map{|o| o.to_api_hash(options.merge(:emit_type => true)) }
+    references = if options[:references] == true
+      objects_references = object.respond_to?(:collect) ? object.collect(&:references) : [object.references]
+      refs = objects_references.inject({}) do |m,e|
+        e.each { |k,v| m[k] = (Array(m[k]) + v).compact.uniq }
+        m
+      end
+      load_references(refs).compact.collect { |o| o.to_api_hash(options.merge(:emit_type => true)) }
+    elsif options[:references] # TODO: kill. only used in search
+      Array(object).map do |obj|
+        options[:references].map{|ref| obj.send(ref) }.flatten.compact
+      end.flatten.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
     else
-      object.to_api_hash(options.merge(:emit_type => true))
+      nil
     end
     
-    if options[:references] || options[:reference_collections]
-      { :type => 'List', :objects => objects }.tap do |wrap|
-        # List of messages to send to the object to get referenced objects
-        if options[:references]
-          wrap[:references] = Array(object).map do |obj|
-            options[:references].map{|ref| obj.send(ref) }.flatten.compact
-          end.flatten.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
-        end
-        
-        # List of messages to send to the object to get referenced objects as [:class, id]
-        if options[:reference_collections]
-          query = {}
-          Array(object).each do |obj|
-            options[:reference_collections].each do |ref|
-              obj_query = obj.send(ref)
-              if obj_query
-                query[obj_query[0]] ||= []
-                query[obj_query[0]] << obj_query[1]
-              end
-            end
-          end
-          
-          wrap[:references] = (wrap[:references]||[]) + (query.map do |query_class, values|
-            objects = Kernel.const_get(query_class).find(:all, :conditions => {:id => values.uniq})
-            objects.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
-          end.flatten)
-        end
+    {}.tap do |api_response|
+      if object.respond_to? :each
+        api_response[:type] = 'List'
+        api_response[:objects] = object.map{|o| o.to_api_hash(options.merge(:emit_type => true)) }
+      else
+        api_response.merge!(object.to_api_hash(options.merge(:emit_type => true)))
       end
-    else
-      objects
+      
+      api_response[:references] = references if references
     end
   end
   
+  def load_reference_hashes(refs, user_ids, people_ids)
+    result = []
+    
+    result += refs.collect do |ref, values|
+      ref_class = ref.to_s.classify
+      case ref_class
+      when 'Person'
+        people_ids += values
+        Person.where(:id => people_ids).all
+      when 'Comment'
+        comments = Comment.where(:id => values).includes(:target).all
+        new_refs = comments.map{|c| load_reference_hashes(c.references, user_ids, people_ids)}.flatten
+        comments + new_refs
+      when 'Upload'
+        Upload.where(:id => values).includes(:page_slot).all
+      when 'Note'
+        Note.where(:id => values).includes(:page_slot).all
+      when 'Conversation'
+        convs = Conversation.where(:id => values).includes(:first_comment).includes(:recent_comments).includes(:watchers).all
+        convs + convs.collect(&:first_comment) + convs.collect(&:recent_comments)
+      when 'Task'
+        tasks = Task.where(:id => values).includes(:first_comment).includes(:recent_comments).includes(:watchers).all
+        tasks + tasks.collect(&:first_comment) + tasks.collect(&:recent_comments)
+      else
+        ref_class.constantize.where(:id => values).all
+      end
+    end
+    
+    result.flatten.uniq
+  end
+
+  # refs is a hash like: table => ids to load, e.g. { :comments => [1,2,3] }
+  def load_references(refs)
+    # Now let's load everything else but the users
+    user_ids = Array(refs.delete(:users))
+    people_ids = Array(refs.delete(:people))
+    
+    elements = load_reference_hashes(refs, user_ids, people_ids)
+
+    # Load all people
+    people = Person.where(:id => people_ids.uniq).all
+    
+    # Finally load the users we referenced before plus the ones associated to elements previously loaded
+    user_ids = user_ids + (people + elements).collect { |e| e.respond_to? :user_id and e.user_id }.compact
+    users = User.where(:id => user_ids.uniq).all
+
+    # elements contains everything but users
+    elements + users + people
+  end
+
   def api_error(status_code, opts={})
     errors = {}
     errors[:type] = opts[:type] if opts[:type]
@@ -186,15 +245,17 @@ class ApiV1::APIController < ApplicationController
   def api_truth(value)
     ['true', '1'].include?(value) ? true : false
   end
-  
-  def api_limit
-    if params[:count]
-      [params[:count].to_i, API_LIMIT].min
+
+  def api_limit(options = {})
+    count = params[:count] && params[:count].to_i
+    return [count && count > 0 ? count : API_LIMIT, API_LIMIT].min if options[:hard]
+    if count
+      count == 0 ? nil : count
     else
       API_LIMIT
     end
   end
-  
+
   def api_range(table_name)
     since_id = params[:since_id]
     max_id = params[:max_id]

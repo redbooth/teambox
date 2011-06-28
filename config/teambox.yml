@@ -13,7 +13,7 @@ defaults: &defaults
   # Hour of the day at which daily reminders will be sent
   daily_task_reminder_email_time: 6
   
-  # Email confirmaiton is require to login
+  # Email confirmation is required (will be asked on top of every inside page)
   email_confirmation_require: true
 
   # Gravatar fallback type in case a user doesn't have an avatar
@@ -62,6 +62,7 @@ defaults: &defaults
     :authentication: :plain
     :user_name:      USER
     :password:       PASSWORD
+    :inbox_task_list: Inbox
 
     # Set to true when using Gmail
     :enable_starttls_auto: false
@@ -134,6 +135,19 @@ defaults: &defaults
   juggernaut:
     port: 8090
   push_new_activities: false
+  trimmer_cache_dir: <%=(Rails.root + "public").to_s %>
+  trimmer_templates_dir: <%= (Rails.root + "app/templates").to_s %>
+  trimmer_allowed_keys: 
+  - "*.date"
+  - "*.datetime"
+  - "*.calendar"
+  - "*.time"
+  - "*.comments"
+  - "*.roles"
+  - "*.common"
+  - "*.tasks"
+  - "*.projects"
+  - "*.conversations"
 
 development:
   <<: *defaults
@@ -150,6 +164,22 @@ staging:
 
 test: &test
   <<: *defaults
+  providers:
+  - :provider: github
+    :key: aaaa
+    :secret: aaaa
+  - :provider: twitter
+    :key: aaaa
+    :secret: aaaa
+  - :provider: facebook
+    :key: aaaa
+    :secret: aaaa
+  - :provider: google
+    :key: teambox.com
+    :secret: aaaa
+  - :provider: linked_in
+    :key: aaaa
+    :secret: aaaa
   app_domain: 127.0.0.1
   allow_outgoing_email: false
   asset_max_file_size: 1

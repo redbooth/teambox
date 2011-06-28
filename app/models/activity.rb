@@ -12,16 +12,19 @@ class Activity < ActiveRecord::Base
 
   scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
 
-  scope :in_projects, lambda { |projects| { :conditions => ["project_id IN (?)", Array(projects).collect(&:id) ] } }
+  scope :in_projects, lambda { |projects| { :conditions => ["activities.project_id IN (?)", Array(projects).collect(&:id) ] } }
   scope :limit_per_page, :limit => Teambox.config.activities_per_page
   scope :by_id, :order => 'id DESC'
   scope :by_updated, :order => 'updated_at desc'
 
-  # COALESCE returns the first non null element and it's standard SQL
-  scope :by_thread, :order => "COALESCE(last_activity_id, id) desc"
+  scope :by_thread, :order => "last_activity_id desc"
+
+  # Before we relied on COALESCE for this, now we materialize it
+  after_create :auto_populate_last_activity_id
+
   scope :threads, :conditions => "target_type != 'Comment'"
-  scope :before, lambda { |previous| { :conditions => ["id < ? AND (last_activity_id IS NULL OR last_activity_id < ?)", previous.last_id, previous.last_id] } }
-  scope :after, lambda { |activity_id| { :conditions => ["id > ?", activity_id ] } }
+  scope :before, lambda { |previous| { :conditions => ["activities.id < ? AND (last_activity_id IS NULL OR last_activity_id < ?)", previous.last_id, previous.last_id] } }
+  scope :after, lambda { |activity_id| { :conditions => ["activities.id > ?", activity_id ] } }
   scope :from_user, lambda { |user| { :conditions => { :user_id => user.id } } }
 
   # We have to update the activity of the thread if such is the case
@@ -31,10 +34,13 @@ class Activity < ActiveRecord::Base
   def self.log(project,target,action,creator_id)
     project_id = project.try(:id)
     return if project.try(:is_importing)
+    
+    is_private = target.respond_to?(:is_private)&&target.is_private
 
     if target.is_a? Comment
       comment_target_type = target.target_type
       comment_target_id = target.target_id
+      is_private = target.respond_to?(:is_private)&&target.is_private
     end
     
     activity = Activity.new(
@@ -43,7 +49,8 @@ class Activity < ActiveRecord::Base
       :action => action,
       :user_id => creator_id,
       :comment_target_type => comment_target_type,
-      :comment_target_id => comment_target_id)
+      :comment_target_id => comment_target_id,
+      :is_private => is_private)
     activity.created_at = target.try(:updated_at) || target.try(:created_at)
     activity.save
     
@@ -53,32 +60,6 @@ class Activity < ActiveRecord::Base
   # Returns the id of the activity itself or the activity's last children's activity if any
   def last_id
     last_activity_id || id
-  end
-
-  def self.remove_log(project,target,action)
-    activity = where(:project_id => project.id, :target_id => target.id, :target_type => target.class.name, :action => action).first
-    activity.destroy if activity
-  end
-
-  def refs_thread_comments
-    if target.respond_to? :first_comment
-      [target.first_comment] + target.recent_comments
-    else
-      []
-    end
-  end
-  
-  def refs_comment_target
-    if comment_target.respond_to? :first_comment
-      [comment_target,
-       comment_target.first_comment,
-       comment_target.user,
-       comment_target.first_comment.try(:user)] + 
-       comment_target.recent_comments + 
-       comment_target.recent_comments.map(&:user)
-    else
-      [comment_target]
-    end
   end
 
   def action_comment_type
@@ -246,6 +227,7 @@ class Activity < ActiveRecord::Base
       :comment_target_id => comment_target_id,
       :comment_target_type => comment_target_type,
       :activity_id => activity_id,
+      :is_private => is_private,
       :changes => action_type == 'create' ? target.attributes : target.previous_changes
     }
     
@@ -272,7 +254,19 @@ class Activity < ActiveRecord::Base
     base
   end
 
+  def references
+    refs = { :users => [user_id], :projects => [project_id] }
+    refs.merge!({ target_type.tableize.to_sym => [target_id] })
+    refs.merge!({ comment_target_type.tableize.to_sym => [comment_target_id] }) if comment_target_id
+    refs
+  end
+
   protected
+
+
+  def auto_populate_last_activity_id
+    update_attribute :last_activity_id, id
+  end
 
   def ping_parent_activity
     if target.is_a? Comment and parent = Activity.last(:conditions => ["target_type = ? AND target_id = ?", comment_target_type, comment_target_id])

@@ -165,7 +165,20 @@ describe Conversation do
       task = conversation.convert_to_task!
 
       task.should_not be_nil
-      task.comments_count.should == task.comments.length
+      task.comments_count.should == 2
+    end
+
+    it "and when converted to a task with due date, it should update the comment counter cache" do
+      conversation = Factory.create(:conversation, :simple => false)
+      conversation.comments_attributes = {"0" => { :body => "Just sayin' hi" }}
+      conversation.updating_user = conversation.user # needed for the due_on change to be saved as a new comment
+      conversation.due_on = 3.days.since
+
+      task = conversation.convert_to_task!
+
+      task.should_not be_nil
+      task.comments(true).to_a.size.should == 3
+      task.comments_count.should == 3 # original conversation + changing date + new comment
     end
 
     it "and when converted to a task, any new comment which fails validation should not be transferred to the task" do
@@ -264,6 +277,122 @@ describe Conversation do
       task = conversation.convert_to_task!
       task.should_not be_nil
       task.record_conversion.should == conversation
+    end
+
+    it "all related comments and activities should be private" do
+      conversation = Factory.create(:conversation, :is_private => true, :simple => false)
+      conversation.comments_attributes = {"0" => { :body => "Just sayin' hi" }}
+      conversation.save!
+      task = conversation.convert_to_task!
+      task.should_not be_nil
+      task.is_private.should == true
+      task.comments(true).any?{|c|c.is_private}.should == true
+      Activity.where(:target_id => task.id, :target_type => 'Task').each{|a| a.is_private.should == true}
+      Activity.where(:comment_target_id => task.id, :comment_target_type => 'Task').each{|a| a.is_private.should == true}
+    end
+  end
+  
+  describe "private conversations" do
+    
+    it "should mark all related activities as private when created as private" do
+      conversation = Factory.create(:conversation, :is_private => true)
+      activities_for_thread(conversation) { |activity| activity.is_private.should == true }
+    end
+    
+    it "should update the private status of related activities and comments each time its updated" do
+      conversation = Factory.create(:conversation, :is_private => true)
+      comment = conversation.comments.create_by_user conversation.user, {:body => 'Test'}
+      upload = comment.uploads.build({:asset => mock_uploader('semicolons.js', 'application/javascript', "alert('what?!')")})
+      comment.uploads << upload
+      comment.save!
+      
+      activities_for_thread(conversation) { |activity| activity.is_private.should == true }
+      conversation.comments.each{|c| c.is_private.should == true; c.uploads.each{|upload| upload.is_private.should == true} }
+      conversation.update_attribute(:is_private, false)
+      activities_for_thread(conversation) { |activity| activity.is_private.should == false }
+      conversation.comments.reload.each{|c| c.is_private.should == false; c.uploads.each{|upload| upload.is_private.should == false} }
+      conversation.update_attribute(:is_private, true)
+      activities_for_thread(conversation) { |activity| activity.is_private.should == true }
+      conversation.comments.reload.each{|c| c.is_private.should == true; c.uploads.each{|upload| upload.is_private.should == true} }
+    end
+    
+    it "should not dispatch notification emails when private" do
+      watcher = Factory.create(:user)
+      Emailer.should_not_receive(:notify_conversation)
+      
+      conversation = Factory.create(:conversation, :is_private => true)
+      conversation.project.add_user(watcher)
+      conversation.add_watcher(watcher)
+      conversation.comments.create_by_user conversation.user, {:body => 'Nononotify'}
+      conversation.save
+      
+      Conversation.find(conversation.id).comments.length.should == 2
+    end
+    
+    it "only comments created by the owner can update is_private" do
+      watcher = Factory.create(:user)
+      conversation = Factory.create(:conversation, :is_private => true)
+      conversation.project.add_user(watcher)
+      conversation.add_watcher(watcher)
+      
+      conversation.comments.create_by_user watcher, {:body => 'shouldnotwork', :is_private => false}
+      conversation.save
+      conversation.reload.is_private.should == true
+      
+      conversation.comments.create_by_user conversation.user, {:body => 'shouldwork', :is_private => false}
+      conversation.save
+      conversation.reload.is_private.should == false
+      
+      conversation.comments.create_by_user watcher, {:body => 'doesntwork', :is_private => true}
+      conversation.save
+      conversation.reload.is_private.should == false
+      
+      conversation.comments.create_by_user conversation.user, {:body => 'reallydoeswork', :is_private => true}
+      conversation.save
+      conversation.reload.is_private.should == true
+    end
+    
+    it "only comments created by the owner can update private_ids" do
+      watcher = Factory.create(:user)
+      conversation = Factory.create(:conversation, :is_private => true)
+      conversation.project.add_user(watcher)
+      conversation.add_watcher(watcher)
+      current_watchers = Conversation.find_by_id(conversation.id).watcher_ids.sort
+      
+      conversation.comments.create_by_user watcher, {:body => 'shouldnotwork', :is_private => true, :private_ids => [conversation.user_id]}
+      conversation.save
+      Conversation.find_by_id(conversation.id).watcher_ids.should == current_watchers.sort
+      
+      conversation.comments.create_by_user conversation.user, {:body => 'shouldwork', :is_private => true, :private_ids => [conversation.user_id]}
+      conversation.save
+      Conversation.find_by_id(conversation.id).watcher_ids.should == [conversation.user_id]
+    end
+    
+    it "private_ids can only be changed when is_private is set" do
+      watcher = Factory.create(:user)
+      project = Factory.create(:project)
+      conversation = Factory.create(:conversation, :is_private => true, :project => project, :user => project.user)
+      conversation = Conversation.find_by_id(conversation.id)
+      conversation.project.add_user(watcher)
+      conversation.add_watcher(watcher)
+      conversation = Conversation.find_by_id(conversation.id)
+      current_watchers = conversation.watcher_ids.sort
+      
+      conversation.comments.create_by_user conversation.user, {:body => 'shouldnotwork', :private_ids => [conversation.user_id]}
+      conversation.save
+      Conversation.find_by_id(conversation.id).watcher_ids.sort.should == current_watchers.sort
+      
+      conversation.comments.create_by_user conversation.user, {:body => 'shouldreallynotwork', :is_private => true, :private_ids => [conversation.user_id]}
+      conversation.save
+      Conversation.find_by_id(conversation.id).watcher_ids.sort.should == [conversation.user_id]
+    end
+    
+    it "is_private cannot be mass assigned" do
+      project = Factory.create(:project)
+      conversation = project.conversations.new_by_user(project.user, :name => 'Test', :is_private => true)
+      conversation.is_private.should == false
+      conversation.update_attributes(:is_private => false)
+      conversation.is_private.should == false
     end
   end
 end

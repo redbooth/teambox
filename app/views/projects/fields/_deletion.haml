@@ -2,5 +2,9 @@
   = archive_project_link(project)
   = t('common.or')
 
-= delete_project_link(project)
+#delete_project_html{:style => 'display: none'}
+  %h2= t('projects.fields.delete_project.title', :project => project.name)
+  %p= t('projects.fields.delete_project.body_html')
+
 = f.hidden_field :archived
+= link_to content_tag(:span,t('projects.fields.forever')), project_path(project), :class => 'button delete_project'

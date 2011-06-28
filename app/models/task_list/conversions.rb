@@ -17,9 +17,6 @@ class TaskList
       if Array(options[:include]).include? :tasks
         tasks.to_xml(options.merge({ :skip_instruct => true }))
       end
-      if Array(options[:include]).include? :comments
-        comments.to_xml(options.merge({ :skip_instruct => true }))
-      end
     end
   end
 
@@ -33,7 +30,6 @@ class TaskList
       :archived => archived,
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
-      :comments_count => comments_count,
     }
     
     base[:type] = self.class.to_s if options[:emit_type]

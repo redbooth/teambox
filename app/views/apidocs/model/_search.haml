@@ -2,7 +2,7 @@
 %p=raw "Current models returned by the search are #{link_to_doc_model(:conversation)}s, #{link_to_doc_model(:task)}s, and #{link_to_doc_model(:page)}s."
 
 - doc_for :index, 
-          :example => example_api_wrap(@comment, :emit_type => true, :references => []),
+          :example => example_api_wrap([@comment], :emit_type => true, :references => []),
           :parameters => {:q => 'ideas'} do
   %p=raw "Returns the first set of objects which match the search query. Either the current project or the current users projects will be used to filter the search, depending on the route used."
   %p=raw "<tt>q</tt> is the actual search term used."

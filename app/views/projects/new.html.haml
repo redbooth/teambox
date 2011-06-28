@@ -1,3 +1,7 @@
+- if @pending_projects.any?
+  .invitations
+    = list_pending_invites(@pending_projects)
+
 %h2=t '.title'
 
 %p=t '.explain1_html'

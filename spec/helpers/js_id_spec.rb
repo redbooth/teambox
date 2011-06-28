@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe ApplicationHelper do
   before do
     @owner = Factory.create(:user)
-    @project = Factory.create(:project, :user_id => @owner.id)
-    @task_list = Factory.create(:task_list, :project_id => @project.id)
+    @project = Factory.create(:project, :user => @owner)
+    @task_list = Factory.create(:task_list, :project => @project)
   end
 
   describe 'js_id' do

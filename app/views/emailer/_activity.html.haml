@@ -1,0 +1,16 @@
+.box{ :style => email_box(activity)+"margin: 80px 0 0 0" }
+  - case activity.target
+  - when Page
+    %p= t("emailer.notify.activity.#{activity.action_type.downcase}.body", :name => activity.user.name, :page => link_to(activity.target.name, project_page_url(@project, activity.target)) ).html_safe
+  - when Note
+    %p= t("emailer.notify.activity.#{activity.action_type.downcase}.body", :name => activity.user.name, :page => link_to(activity.target.page.name, project_page_url(@project, activity.target.page.target)) ).html_safe
+.page{ :style => email_text(:normal) + 'border-bottom: 1px #555 dotted' }
+  .body{ :style => " padding: 5px; font-size: 12px" }
+    - case activity.target
+    - when Page
+      %p= activity.target.description
+    - when Note
+      %p
+        %strong{ :style => 'color: rgb(50,50,50);' }
+          = activity.target.name
+      = activity.target.body_html.html_safe

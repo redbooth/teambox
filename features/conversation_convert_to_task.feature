@@ -86,8 +86,8 @@ Feature: Converting a conversation to a task
     And I select "hold" from "conversation_status"
     And I select "Saimon Moore" from "conversation_assigned_id"
     Then I click on the date selector
-    And I select the month of "December" with the conversation date picker
-    And I select the year "2010" with the conversation date picker
+    And I select the month of "December" with the date picker
+    And I select the year "2010" with the date picker
     And I select the day "29" with the date picker
     When I press "Convert"
     And I wait for 3 seconds

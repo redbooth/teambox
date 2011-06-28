@@ -3,26 +3,28 @@ require 'spec_helper'
 describe Notification do 
   describe 'digest' do
     before do
-      @charles = Factory.create(:user)
-      @pablo = Factory.create(:user)
-      @james = Factory.create(:user)
-      @jordi = Factory.create(:user)
-      @saimon  = Factory.create(:user)
+      @charles = Factory.create(:user, :notify_pages => true)
+      @pablo = Factory.create(:user, :notify_pages => true)
+      @james = Factory.create(:user, :notify_pages => true)
+      @jordi = Factory.create(:user, :notify_pages => true)
+      @saimon  = Factory.create(:user, :notify_pages => true)
 
       @project = Factory.create(:project)
       
       [@charles, @pablo, @james, @jordi, @saimon].each do |user|
-        Factory(:person, :user => user, :project => @project)
+        @project.add_user(user)
       end
 
-      @task = Factory(:task, :user_id => @charles.id, :project_id => @project.id)
-      @conversation = Factory(:conversation, :user_id => @charles.id, :project_id => @project.id)
+      @task = Factory(:task, :user => @charles, :project => @project)
+      @conversation = Factory(:conversation, :user => @charles, :project => @project)
+      @page = Factory(:page, :user => @charles, :project => @project)
 
       @conversation.add_watchers([@charles, @pablo, @james, @saimon])
       @task.add_watchers([@charles, @pablo, @james, @saimon])
+      @page.add_watchers([@charles, @pablo, @james, @saimon])
     end
     
-    context 'Update on conversation or task' do
+    context 'Notify watchers on conversation, task or page' do
       it 'should create notification for conversation watchers, except commenter' do
         @comment = Factory(:comment, :target => @conversation, :user => @charles)
         Notification.where(:comment_id => @comment.id).count.should == 3
@@ -32,9 +34,18 @@ describe Notification do
         @comment = Factory(:comment, :target => @task, :user => @charles)
         Notification.where(:comment_id => @comment.id).count.should == 3
       end
+
+      it 'should create notification for page watchers on update, except commenter' do
+        @note = @page.build_note({:name => 'List'}).tap do |n|
+          n.updated_by = @charles
+          n.save
+        end
+
+        Notification.where(:target_type => 'Activity').count.should == 3
+      end
     end
 
-    context 'should send Digest correct time, and only once' do
+    context 'should send digest at the correct time, and only once' do
       before do
         @midnight = Time.now.utc.at_midnight + 1.week
         @tuesday   = @midnight.monday + 1.day
@@ -61,6 +72,10 @@ describe Notification do
         time_is_now(@midnight) do
           Factory(:comment, :target => @conversation, :user => @pablo)
           Factory(:comment, :target => @task, :user => @jordi)
+          @page.build_note({:name => 'List'}).tap do |n|
+            n.updated_by = @jordi
+            n.save
+          end
 
 
           unread_emails_for(@james.email).size.should == 0
@@ -145,13 +160,63 @@ describe Notification do
         unread_emails_for(@james.email).size.should == 0
         unread_emails_for(@charles.email).size.should == 0
       end
+
+      it 'should skip deleted object' do
+        time_is_now(@tuesday) do
+          @note = @page.build_note({:name => 'List'}).tap do |n|
+            n.updated_by = @charles
+            n.save
+          end
+
+          @deleted_task = Factory(:task, :user_id => @charles.id, :project_id => @project.id)
+          @deleted_conversation = Factory(:conversation, :user_id => @charles.id, :project_id => @project.id)
+
+          @first_conversation_comment = Factory(:comment, :target => @conversation, :user => @charles,
+            :project => @project, :body => "Comment on conversation")
+          @second_task_comment        = Factory(:comment, :target => @task, :user => @charles,
+            :project => @project, :body => "Comment on task")
+
+          @deleted_comment_on_conversation = Factory(:comment, :target => @conversation, :user => @charles,
+            :project => @project, :body => "Deleted comment on conversation")
+          @deleted_comment_on_task         = Factory(:comment, :target => @task, :user => @charles,
+            :project => @project, :body => "Deleted comment on task")
+
+          @comment_on_deleted_conversation = Factory(:comment, :target => @deleted_conversation, :user => @charles,
+            :project => @project, :body => "Comment on deleted conversation")
+          @comment_on_deleted_task         = Factory(:comment, :target => @deleted_task, :user => @charles,
+            :project => @project, :body => "Comment on deleted task")
+        end
+
+        time_is_now(@tuesday + 10.days) do
+          @page.destroy
+          @deleted_comment_on_conversation.destroy
+          @deleted_comment_on_task.destroy
+          @deleted_task.destroy
+          @deleted_conversation.destroy
+
+          Person.send_all_digest
+
+          unread_emails_for(@pablo.email).size.should == 1
+
+          email_body = open_email(@pablo.email).html_part.body
+
+          email_body.should =~ Regexp.new("Comment on conversation")
+          email_body.should =~ Regexp.new("Comment on task")
+
+          email_body.should_not =~ Regexp.new("Deleted comment on conversation")
+          email_body.should_not =~ Regexp.new("Deleted comment on task")
+
+          email_body.should_not =~ Regexp.new("Comment on deleted conversation")
+          email_body.should_not =~ Regexp.new("Comment on deleted task")
+        end
+
+      end
     end
 
     def time_is_now(time)
-      now = Time.now
       Time.stub(:now).and_return(time)
       yield
-      Time.stub(:now).and_return(now)
+      Time.unstub(:now)
     end
 
   end

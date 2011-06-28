@@ -17,6 +17,8 @@ module NavigationHelpers
       account_notifications_path
     when /the login page/
       login_path
+    when /the logout page/
+      logout_path
     when /the forgot password page/
       "/forgot"
     when /the your data page/
@@ -27,6 +29,8 @@ module NavigationHelpers
       developer_oauth_clients_path
     when /the pages of the "([^\"]*)" project/
       project_pages_path(Project.find_by_name($1))
+    when /the pages page/
+      project_pages_path(@current_project)
     when /the new page page/
       new_project_page_path(@current_project)
     when /the page named "([^\"]*)"/
@@ -35,6 +39,8 @@ module NavigationHelpers
       project_path(@current_project)
     when /the public project page/
       public_project_path(@current_project)
+    when /the public project page for the "([^\"]*)" conversation/
+      public_project_conversation_path(@current_project, Conversation.find_by_name($1).id)
     when /the page of the "([^\"]*)" project/
       project_path(Project.find_by_name($1))
     when /the conversations page/

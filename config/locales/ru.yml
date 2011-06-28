@@ -6,7 +6,7 @@ ru:
         city: Город
         country: Страна
         state: Область
-        street: Адрес
+        street: Улица
         zip: "Почтовый индекс"
       card: 
         city: Город
@@ -161,6 +161,7 @@ ru:
       title: "%{person} импортировал проект %{project}"
     create_upload: 
       title: "%{user} загрузил файл %{file}"
+      title_with_page: "%{user} загрузил файл в %{page}:"
     delete_person: 
       by: "от имени"
       delete_person: "покинул проект"
@@ -173,12 +174,15 @@ ru:
       edit_page: "отредактировал страницу"
       title: "%{user} отредактировал страницу %{page}"
     thread: 
+      conversation_with_title_html: "%{conversation} в проекте %{project}"
+      conversation_without_title_html: "<a href='%{conversation_url}'>Обсуждение</a> в проекте %{project}"
       created: 
         conversation: "начал обсуждение"
         task: "создал задачу"
       more_comments: 
         one: "Показать предыдущий комментарий"
         other: "Показать %{count} предыдущих комментариев"
+      task_on_task_list_html: "%{task} в списке задач %{task_list}"
   affiliate: 
     area: "Партнерская программа"
     index: 
@@ -198,6 +202,7 @@ ru:
       option_1: "Вариант 1: Поделитесь этой ссылкой"
       option_2: "Вариант 2: Пригласите ваших знакомых по электронной почте"
       option_3: "Вариант 3: Пригласите ваших знакомых, импортировав их адреса из CSV файла"
+      over_100: "Как только у вас будет более $100,"
       plan_for: "план для"
       premium_plan: "премиум аккаунт"
       refer_info: "Пригласите %{users} пользователей на %{plan} аккаунт, получайте $%{credit} каждый месяц."
@@ -289,6 +294,9 @@ ru:
       hours: "%{hours}ч"
       hours_with_minutes: "%{hours}ч %{minutes}мин"
       loading: Загружается...
+    conversations: 
+      convert_to_task: "Преобразовать в задачу"
+      task_name: "например: Загрузите Предложения по Логотипу"
     convert_form: 
       destination: "Выберите список задач"
       name: "Введите имя задачи"
@@ -317,6 +325,8 @@ ru:
     preview: 
       close: "Закрыть предпросмотр"
       preview: Предпросмотр
+    watchers: 
+      popup_note_html: "Выберите <b>Оповестить участников</b> для отправки уведомлений про это обсуждение."
   common: 
     accept: Принять
     and: и
@@ -330,8 +340,10 @@ ru:
     delete: Удалить
     edit: Изменить
     format_name: "%{first_name} %{last_name}"
+    format_name_short: "%{first_name_first_character}. %{last_name}"
     gantt_chart: "Диаграмма Ганнта"
     in_project: в
+    logged_out: "Вы вышли из системы"
     next: Следующий
     not_allowed: "Вам не разрешено делать это!"
     or: или
@@ -356,16 +368,22 @@ ru:
       subscribe: "Подписаться на новости"
     conversation_with_extract: 
       posted_by: "Написан участником"
+    convert_form: 
+      name: "Название задачи"
+      status: Состояние
+      task_list: "Создать задачу в"
     edit: 
       submit: "Обновить обсуждение"
     fields: 
       body: "Первый комментарий"
       name: Тема
     index: 
+      cant_create: "У вас нет доступа для создания обсуждений в этом проекте"
       new_conversation: "Новое обсуждение"
       rss: 
         description: "Обсуждения проекта %{name}"
         title: "%{name} обсуждение"
+      title: "Обсуждение в %{project}"
       view_single: "Узнать больше"
     link: 
       edit: Редактировать
@@ -838,6 +856,7 @@ ru:
       are_watching: 
         one: " подписан на обсуждение и будет получать уведомления при новых ответах."
         other: " подписаны на обсуждение и будут получать уведомления при новых ответах."
+      assigned_to_html: "Присвоено <b>%{user}</b>"
       comment: "Комментарий в обзоре проекта: "
       comments: "%{number} комментариев"
       conversation: "Обсуждение:"
@@ -847,10 +866,13 @@ ru:
       reply: "Вы можете принять участие в обсуждении, отправив свой ответ на это письмо."
       settings_link: "настройки оповещений"
       status: "Статус: %{status}"
+      stop_watch: "Остановить слежение"
       task: "Задача:"
       task_commands: "Напишите #resolve для решенной задачи, #reject - для отклоненной или #hold  - для отложенной задачи в начале вашего ответа для изменения статуса задачи. Напишите #%{username} чтобы назначить задачу для  @%{username}, и т.д.."
       task_link: "посмотреть эту задачу онлайн"
       task_list: "Список задач:"
+      view_this_conversation_online_html: "Вы можете нажать на %{conversation} для ответа или прикрипления файлов"
+      view_this_task_online_html: "Вы можете %{link} для комментирования или прикрипления файлов"
     project_membership_notification: 
       project_link: "Нажмите на ссылку ниже, чтобы начать совместную работу над проектом %{project} прямо сейчас"
       subject: "%{user} участвуют в [%{project}] с тобой"
@@ -867,6 +889,7 @@ ru:
     teamboxdata: 
       data_export_failed: "Ваши данные не могут быть экспортированы из Teambox. Чтобы попробовать еще раз, пожалуйста, пройдите по следующей ссылке:"
       data_exported: "Ваши данные экспортированы из Teambox и доступны для скачивания по следующей ссылке"
+      data_import_failed: "Вашие данные не могут быть импортированы в TeamBox. Пожалуйста проверьте загруженные вами данные. Для повторения проследуйте по ссылке:"
       data_imported: "Ваши данные успешно импортированы в Teambox. Пройдите по следующей ссылке, чтобы узнать подробности:"
       export_failed: "Ваши данные не могут быть экспортированы."
       exported: "Ваши данные готовы к скачиванию."
@@ -875,8 +898,46 @@ ru:
       imported: "Ваши данные импортированы."
     upload: 
       file: "Файл:"
+  errors: 
+    format: "%{attribute} %{message}"
+    messages: 
+      accepted: "должно быть принято"
+      blank: "не может быть пустым"
+      empty: "не может быть пусто"
+      equal_to: "должно быть равным %{count}"
+      exclusion: зарезервировано
+      greater_than: "должно быть больше чем %{count}"
+      greater_than_or_equal_to: "должно быть больше или равняться %{count}"
+      inclusion: "отсутствует в этом списке"
+      invalid: неверно
+      less_than: "должно быть меньше %{count}"
+      less_than_or_equal_to: "должно быть меньше или равно %{count}"
+      not_a_number: "не номер"
+      not_an_integer: "должно быть числом"
+      odd: "должно быть нечетно"
+      too_long: "слишком длинный (максимум %{count} знаков)"
+      too_short: "слишком короткий (минимум %{count} знаков)"
+      wrong_length: "неверная длина (должно быть %{count} знаков)"
+    template: 
+      body: "Были проблемы с следующими полями:"
   form: 
     cancel: Отменить
+  google_docs: 
+    attach: "Добавить Google Документ"
+    authorization_required: "Для использования Google Документов вы должны авторизировать Teambox для использования вашей учетной записи google."
+    authorize_link: "Авторизируйте Google Документы"
+    create: Создать
+    create_new: "Создать Новый Пустой Документ"
+    creating: Создание
+    new_document_placeholder: "Новое название документа"
+    search_placeholder: "Искать Google документы"
+  helpers: 
+    select: 
+      prompt: "Пожалуйста выбирите"
+    submit: 
+      create: "Создать %{model}"
+      submit: "Сохранить %{model}"
+      update: "Обновить %{model}"
   hours: 
     all_tasks: "Все задачи"
     all_users: "Все пользователи"
@@ -916,6 +977,7 @@ ru:
       title: "Приглашения в очереди"
     invitation: 
       discard: "Отменить приглашение"
+      invited_email_html: "%{inviter} приглашен(а) <b>%{email}</b> присоедениться к проекту."
       invited_user_html: "%{inviter} приглашает <b>%{invitee}</b> участвовать в проекте."
       just_now: "(только сейчас)"
       pending: "Приглашение было послано этому пользователю, но он ещё не подтвердил его."
@@ -928,6 +990,8 @@ ru:
       to_invite: 
         not_example_html: "(NOT <span class=\"mention\">@fred</span> или <span class=\"mention\">@lisa</span>)"
         title: "Для приглашения"
+    new: 
+      also_invite_to_organization: "Пригласить так же к организации '%{organization}'"
     pending: 
       invited_to_join: "%{by} приглашает вас участвовать в проекте %{project}."
       to_access_or: "участвовать в проекте или"
@@ -1042,12 +1106,23 @@ ru:
         format: "%u%n"
         precision: 2
         separator: "."
+        significant: 0
+        strip_insignificant_zeros: 0
         unit: р
     format: 
       delimiter: ","
       precision: 3
       separator: "."
+      significant: 0
+      strip_insignificant_zeros: 0
     human: 
+      decimal_units: 
+        format: "%n %u"
+        units: 
+          billion: Миллиард
+          million: Миллион
+          thousand: Тысяча
+          trillion: Триллион
       format: 
         delimiter: ","
         precision: 1
@@ -1105,10 +1180,12 @@ ru:
       links_colour: "цвет ссылки по умолчанию"
       text_colour: "цвет текста по умолчанию"
     archived_projects: 
+      last_activity: "последняя активность %{date}"
       title: "Архив проектов"
     billing: 
       billing_area_html: "Вы можете получить доступ к счетам, понизить план или изменить параметры оплаты в любое время в<a href='%{link}'>разделе биллинга</a>."
       billing_email_html: "Электронная почта для биллинга <em> Мы вышлем счета по этому адресу</em>"
+      cancel: "Отменить подписку"
       current_plan: "Ваш текущий план"
       downgrade: "Понизить тарифный план"
       plan: План
@@ -1132,6 +1209,7 @@ ru:
       billing: "Планы и биллинг"
       delete: "Удалить данную организацию"
       general_settings: "Основные настройки"
+      invoices: Счета
     delete: 
       clarification: "Если вы удалите эту организацию, вся информация, содержащаяся в ней, будет потеряна навсегда. Пользователи, принадлежащие к этой организации, по-прежнему смогут входит в Teambox и работать с другими организациями."
       confirm: "Я понимаю, что удаление этой организации является необратимым, и все материалы, связанные с этой организацией, будут потеряны."
@@ -1150,6 +1228,7 @@ ru:
       saved: "Изменения сохранены"
       submit: "Сохранить изменения"
       there_are: Существует
+      title: "Настройка для %{organization}"
     external_view: 
       create_your_own_org_html: "Однако, вы сможете <a href='%{link}'>создавать свои собственные организации</a> для ваших проектов."
       request_permission: "Для доступа к этой организации, необходимо запросить разрешение у администраторов:"
@@ -1157,6 +1236,7 @@ ru:
       you_cant_access: "У вас нет прав для доступа или изменения этой организации."
     fields: 
       domain_html: "Домен <em>Опционально. Вы можете использовать свой собственный домен для Вашей организации, посмотрите<a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='Как использовать собственный домен для организации в Teambox'>документацию</a>.</em>"
+      name_html: "Название организации"
       name_placeholder: "Ваша организация"
       permalink_html: "Короткий код организации <em>без пробелов. Будет использоваться для формирования веб-адреса. </em>"
     index: 
@@ -1168,6 +1248,19 @@ ru:
         create: "+ Создать новую организацию"
         explain: "Маркируйте ее своим логотипом и веб-сайтом, и создавайте проекты внутри."
       title: Организации
+    invoices: 
+      address: Адресс
+      amount: Сумма
+      company: Компания
+      company_name: "Название компании"
+      date: Дата
+      invoice: "Счет Teambox"
+      invoices: "Ваши счета"
+      name: Имя
+      no_invoices: "У вас нет счетов"
+      print: Печать
+      update_billing_details: "Обновите ваш биллинг адрес"
+      vat: "VAT код"
     new: 
       created: "Ваша организация была создана!"
       explain: "Формируйте список людей и проекты внутри организации."
@@ -1238,9 +1331,12 @@ ru:
       name: Название
       name_description: "Дайте краткое описательное название"
     index: 
+      cant_create: "У вас нет доступа для создания страниц в этом проекте"
+      new_page: "Новая Страница"
       rss: 
         description: "Страницы проекта %{name}"
         title: "%{name} страницы"
+      title: "Страниц в %{project}"
     new: 
       define1_html: "Здесь вы можете <b>делиться с командой полезной информацией</b>: предстоящими планами, интересными ссылками, инструкциями, шаблонами и так далее..."
       define2_html: "Заполнение страницы — это легко и весело, вы можете перетаскивать элементы страницы и редактировать их."
@@ -1309,16 +1405,27 @@ ru:
     update: 
       success: "Вы обновили роль %{name}"
   plans: 
+    copies: 
+      copy1_html: "Нравиться Teambox? Мы работаем постоянно! <a href='%{link}'>Обновить сейчас</a> для получения поддержки и индивидуальных разработок!"
+      copy2_html: "<a href='%{link}'>Обновить сейчас</a> для увеличения лимитов места и проектов а так же поиска по всем проектам."
+      copy5_html: "<a href='%{link}'>Обновите учетную запись Teambox сейчас</a> профессиональным сотрудничеством!\n"
+      copy6_html: "Поисковая строка по всем проектам сохранит ваше время. <a href='%{link}'>Обновить сейчас</a> чтобы её получить!"
     show: 
+      current_plan_html: "Ваш текущий тариф <strong>%{name}</strong>."
+      max_projects: "Вы можете иметь только %{max} projects."
+      max_storage: "Вы можете хранить до %{max}."
+      plan: "Teambox тарифы"
       title: "Какую организацию вы хотели бы обновить?"
       usage: "Вы можете создать еще <b>%{available_projects} проектов</b> в этой организации"
     thanks: 
       explain: "Приобретая премиум-аккаунт, вы способствуюте развитию Teambox и получаете гораздо больше, чем могли ожидать."
+      reset_your_password: "Пожалуйста введите ваш новый пароль и подтвердите его."
       title: "Спасибо за вашу поддержку!"
       you_can_now_create: "Вы можете создать до %{projects} проектов."
   projects: 
     edit: 
       change_owner: "Сменить владельца"
+      deleted: "Вы удалили проект"
       error: "Не получилось изменить настройки проекта"
       invalid_transferred: "Владение проектом не может быть передано, исправьте ошибки и попробуйте ещё раз."
       submit: "Сохранить изменения"
@@ -1329,11 +1436,13 @@ ru:
       title_settings: "Основные настройки для %{project}"
       transferred: "Владение проектом передано."
     fields: 
+      archived_html: "Архивируйте этот проект <em>Это позволит оставить доступ участников на чтение.</em>"
       archiving: "Архивировать этот проект"
       confirm_delete: "Вы действительно хотите навсегда удалить этот проект? ВОССТАНОВИТЬ ЕГО БУДЕТ НЕЛЬЗЯ. Если вы хотите просто скрыть или отложить его, используйте архивирование."
       extra_options: "Больше опций"
       forever: "Удалить этот проект навсегда"
       name_example: "Имя проекта"
+      name_html: "Название Проекта <em>Выбирайте короткое и информативное имя, например: Таггарт Трансконтинентал.</em>"
       new: 
         choose_organization: 
           choose_org_html: "Организация <em>Какой организации принадлежит этот проект?</em>"
@@ -1365,8 +1474,17 @@ ru:
         description: "Обзор всех ваших проектов"
         title: "Обзор проектов"
       subscribe: "Подписаться на новости"
+    invite_people: 
+      explain_invitations: "Выберите кому предоставить доступ к этому проекту. Вы можете добавить или удалить участников позже."
+      invite_by_email: "Пригласите пользователей введя их email адреса."
+      invite_from_this_organization: "Приглашенные пользователи уже состоят в организации %{organization}"
+      sending: "Рассылка приглашений.."
+      submit: "Послать приглашение и начать совместную работу"
+      title: "Пригласить людей в проект %{project}"
     join: 
       welcome: "Теперь вы участник данного проекта"
+    list: 
+      archived: Архив
     new: 
       active_projects: 
         one: "У вас один активный проект."
@@ -1391,6 +1509,9 @@ ru:
       join: "Присоединиться к проекту"
       not_allowed: "Это частный проект, у вас нет прав доступа к нему."
       title: "Присоединиться к проекту '%{project}'?"
+    pages: 
+      new: "+ Новая страница"
+      title: Страницы
     people_list: 
       invite_people: "Пригласить пользователей..."
       pending_invitations: 
@@ -1464,8 +1585,8 @@ ru:
       username_or_email: "Адрес или логин"
     new: 
       login_failed: "Не получается войти как %{login}"
-      submit: Вход
-      title: Вход
+      submit: Войти
+      title: Войти
       video: "Что такое Teambox?"
   shared: 
     chrome_frame: 
@@ -1495,7 +1616,23 @@ ru:
       subscribe_to_feeds: "Подписаться на ленту новостей..."
     navigation: 
       all_projects: Проекты
+      conversations: Обсуждения
+      files: Файлы
+      my_tasks: "Мои Задачи"
       new_project: "+ Новый проект"
+      open_my_tasks: "Открыть все мои задачи"
+      organizations: Организации
+      pages: Страницы
+      people: "Участники & Права доступа"
+      recent_activity: "Недавняя активность"
+      settings: Настройки
+      show_all_organizations: "Показать организации..."
+      show_all_projects: "Показать все проекты"
+      show_all_tasks: "Показать все задачи в моих проектах"
+      show_less: Меньше
+      show_more: Больше
+      tasks: Задачи
+      time: "Отслеживание времени"
     project_navigation: 
       affiliate_area: "Партнерская программа"
       all_conversations: "Все обсуждения"
@@ -1505,7 +1642,7 @@ ru:
       files: Файлы
       gantt: "Календарь и диаграммы"
       invitations: Приглашения
-      login: Вход
+      login: Войти
       organization: Организация
       organizations: Организации
       overview: Обзор
@@ -1570,7 +1707,7 @@ ru:
       password: Пароль
       username_or_email: "Email или имя пользователя"
     show: 
-      submit: Логин
+      submit: Войти
   support: 
     array: 
       last_word_connector: " и "
@@ -1608,7 +1745,10 @@ ru:
         cant_be_blank: "Название не может быть пустым"
         too_long: "Название должно быть короче 255 символов"
     fields: 
+      finish_on_html: "Заканчивается в... <i>optional</i>"
+      name_html: "Выберите имя для этого списка Задач <i>например: Подготовить Прототип</i>"
       optional: "Если вы укажите начальную и конечную даты, то Список задач будет отображаться на диаграмме Ганнта"
+      start_on_html: "Начинается в... <i>optional</i>"
       task_list: "Списки задач могут служить этапами выполнения проекта. Внутри списка задач вы можете создавать задачи и распределять их между участниками."
       title: "Новый список задач"
     filter: 
@@ -1617,6 +1757,8 @@ ru:
       anybody: Кто-либо
       anytime: "Любое время"
       by_name: "По названию..."
+      filter_tasks: "Фильтр задач"
+      hide: Спрятать
       late_tasks: "Последние задачи"
       month: "В течение 1 месяца"
       my_tasks: "Мои задачи"
@@ -1680,6 +1822,7 @@ ru:
       due_on: до
       today: Сегодня
       tomorrow: Завтра
+      undefined: "Нет даты окончания"
     edit: 
       sending: "Задача обновляется..."
       submit: "Обновить задачу"
@@ -1690,6 +1833,8 @@ ru:
     fields: 
       assigned_to: "Кто ответственный?"
       assigned_to_nobody: Никто
+      due_on_html: "Должно быть выполнено до... <i>optional</i>"
+      name_html: "Введите название Задачи <i>например: Загрузите Предложения по Лого</i>"
       optional: Необязательно
       task: Задача
       title: "Название задачи"
@@ -1712,16 +1857,18 @@ ru:
     show: 
       title: "Задача: %{name}"
     status: 
-      hold: отложена
-      new: новая
-      open: открыт
-      rejected: отклонёна
-      resolved: завершена
+      hold: заморожена
+      new: новый
+      open: открыта
+      rejected: отклонена
+      resolved: решена
     unarchive_box: 
       reopen: "Открыть эту задачу заново"
       task_is_closed: "Задача закрыта и заархивирована"
       unarchive: Разархивировать
   teambox_datas: 
+    column: 
+      description: "Сдесь вы можете перемещать свои данные в и из Teambox."
     data: 
       confirm_delete: "Вы уверены, что хотите удалить эти данные?"
       incomplete: "Требуется больше информации."
@@ -1731,6 +1878,7 @@ ru:
     export_fields: 
       description: "Пожалуйста, выберите проекты, которые вы хотите экспортировать "
     import_fields: 
+      in_organization: "Покласть все проекты в эту организацию"
       select_file: "Пожалуйста, выберите файл, содержащий ваши данные."
       service: "Из какого сервиса вы экспортировали данные?"
       teambox_user: "Пользователь Teambox"
@@ -1738,6 +1886,9 @@ ru:
     index: 
       exports: "Экспортировать ваши проекты"
       imports: "Импортировать данные из файла"
+      imports_explain: "Вы можете импортировать Teambox бекап файлы или Basecamp проекты."
+      no_exports: "Сдесь нет недавних эспортов."
+      no_imports: "Сдесь нет недавних импортов."
       title: "Импортировать или экспортировать ваши данные"
     new_export: 
       submit: "Экспортировать данные"
@@ -1766,6 +1917,7 @@ ru:
     form: 
       description_html: "Название <i>(не обяз.)</i>"
       max_size: "Размер файла не может превышать %{mb}"
+      max_upload_size: "Максимальный размер загрузки %{mb} Mb"
       presence: "Нельзя загружать пустые файлы"
       select_file: "Выбрать файл"
       upload: "Загрузить файл"
@@ -1773,6 +1925,7 @@ ru:
       cant_create: "Вы не можете загружать файлы в этот проект"
       max_upload_size: "Максимальный размер %{mb} МБ"
       new_file: "Загрузить файл"
+      title: "Файлы в %{project}"
     new: 
       select_a_file: "Выбрать файл чтобы загрузить в Teambox"
       uploading: Загрузка...
@@ -1849,6 +2002,7 @@ ru:
       title: "Синхронизация ленты действий"
       your_feeds: "Ваша лента новостей"
     form: 
+      agreement_html: "Регистрируясь вы принимаете наши %{terms} и условия %{privacy} "
       betatester: "Вы можете пользоваться бета-версиями новых функций  еще до официального релизы (они менее стабильны!) ."
       biography: "О себе"
       change_password: "Сменить пароль"

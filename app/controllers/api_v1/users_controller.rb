@@ -10,7 +10,7 @@ class ApiV1::UsersController < ApiV1::APIController
       limit(api_limit).
       order('id DESC')
     
-    api_respond @users, :references => []
+    api_respond @users
   end
 
   def show

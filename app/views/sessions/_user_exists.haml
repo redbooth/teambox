@@ -1,7 +1,0 @@
-- if @conflict[:email]
-  %h2= t('oauth.user_already_exists_by_email', :email => @conflict[:email])
-- elsif @conflict[:login]
-  %h2= t('oauth.user_already_exists_by_login', :login => @conflict[:login])
-%p= t('oauth.user_exists', :provider => provider)
-%p= t('oauth.user_exists_instruction', :provider => provider)
-%p= t('oauth.user_exists_is_not_yours', :account => (@conflict[:email] || @conflict[:login]), :signup_for_a_new_account => link_to( t('oauth.signup_for_a_new_account'), signup_path) )

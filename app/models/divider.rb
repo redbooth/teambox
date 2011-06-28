@@ -23,6 +23,12 @@ class Divider < RoleRecord
     'dividers/divider'
   end
   
+  def references
+    refs = { :projects => [project_id], :pages => [page_id] }
+    refs[:page_slot] = [page_slot.id] if page_slot
+    refs
+  end
+  
   def to_s
     name
   end

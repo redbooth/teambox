@@ -77,11 +77,6 @@ class Conversation < RoleRecord
   def clear_targets
     Activity.destroy_all :target_id => self.id, :target_type => self.class.to_s
   end
-  
-  def refs_comments
-    [first_comment, first_comment.try(:user)] +
-     recent_comments + recent_comments.map(&:user)
-  end
 
   def owner?(u)
     user == u
@@ -95,6 +90,12 @@ class Conversation < RoleRecord
   def body=(value)
     self.comments_attributes = [{ :body => value }] unless value.nil?
   end
+  
+  def references
+    refs = { :users => [user_id], :projects => [project_id] }
+    refs[:comment] = [first_comment.id] + recent_comment_ids
+    refs
+  end
 
   def to_s
     name || ""
@@ -106,12 +107,14 @@ class Conversation < RoleRecord
     indexes name, :sortable => true
 
     indexes comments.body, :as => :body
-    indexes comments.user.first_name, :as => :user_first_name
-    indexes comments.user.last_name, :as => :user_last_name
     indexes comments.uploads(:asset_file_name), :as => :upload_name
     indexes comments.google_docs(:title), :as => :google_doc_name
-    
+
     has project_id, created_at, updated_at
+  end
+
+  def is_visible?(user)
+    !is_private or watchers.include? user
   end
 
   protected
@@ -130,7 +133,7 @@ class Conversation < RoleRecord
   end
   
   def set_comments_target
-    comments.each{|c|c.target = self if c.target.nil?}
+    comments.each{|c| c.target = self if c.target.nil? or c.new_record?}
   end
 
   def update_user_stats

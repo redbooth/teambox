@@ -17,8 +17,8 @@ class Conversation
       t.assigned = assigned_person
       t.created_at = created_at
       t.dont_push = true if Teambox.config.push_new_activities?
+      t.is_private = is_private
     end
-
     task.errors.each {|attr,msg| errors.add(attr, msg)}
 
     if task
@@ -32,8 +32,8 @@ class Conversation
         task.comments << comment
       end
 
-      task.class.update_counters(task.id, :comments_count => comments.size)
-      task.comments_count = comments.size
+      task.class.update_counters(task.id, :comments_count => task.comments.size)
+      task.comments_count = task.comments.size
 
       Activity.for_conversations.in_targets(self).each do |activity|
         activity.target = task if activity.target == self
@@ -50,6 +50,10 @@ class Conversation
 
       task.record_conversion = self
       task.save
+
+      #Ensure correct order when rendering comments
+      task.comments(true)
+
       update_attribute :converted_to, task.id
 
       self.reload.destroy

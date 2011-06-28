@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   belongs_to :invited_by, :class_name => 'User'
 
   has_one :card
-  accepts_nested_attributes_for :people, :update_only => true, :reject_if => proc { |attributes| (attributes.keys - %w(id digest watch_new_conversation watch_new_task)).any? }
+  accepts_nested_attributes_for :people, :update_only => true, :reject_if => proc { |attributes| (attributes.keys - %w(id digest watch_new_conversation watch_new_task watch_new_page)).any? }
   accepts_nested_attributes_for :card
 
   default_scope :order => 'users.updated_at DESC'
@@ -69,13 +69,16 @@ class User < ActiveRecord::Base
                   :card_attributes,
                   :notify_conversations,
                   :notify_tasks,
+                  :notify_pages,
                   :splash_screen,
                   :wants_task_reminder,
                   :keyboard_shortcuts,
                   :digest_delivery_hour,
                   :instant_notification_on_mention,
-                  :default_digest, :default_watch_new_task, :default_watch_new_conversation,
-                  :people_attributes
+                  :default_digest, 
+                  :default_watch_new_task, :default_watch_new_conversation, :default_watch_new_page,
+                  :people_attributes,
+                  :google_calendar_url_token
 
   attr_accessor   :activate, :old_password
 
@@ -230,16 +233,6 @@ class User < ActiveRecord::Base
     update_attribute :email, Regexp.last_match(1).to_s if email =~ DELETED_REGEX
   end
 
-  def link_to_app(provider, uid, credentials)
-    link = AppLink.new
-    link.user              = self
-    link.provider          = provider
-    link.app_user_id       = uid
-    link.access_token      = credentials ? credentials[:token] : nil
-    link.access_secret     = credentials ? credentials[:secret] : nil
-    link.save!
-  end
-
   def self.find_available_login(proposed_login = nil)
     proposed_login ||= "user"
     counter = 0
@@ -289,6 +282,36 @@ class User < ActiveRecord::Base
   def keyboard_shortcuts=(v)
     self.settings = { 'keyboard_shortcuts' => v == "1" }
   end
+  
+  def google_calendar(gcal = nil)
+    gcal = gcal || get_calendar_app
+    return nil if gcal.nil?
+    
+    unless google_calendar_url_token.blank?
+      Rails.logger.debug("Using existing calendar #{google_calendar_url_token}")
+      gcal.find(google_calendar_url_token)
+    else
+      Rails.logger.debug("Creating new Google calendar for user")
+      calendar = gcal.create_calendar(GoogleCalendar::Calendar.new(:title => 'Teambox'))
+      
+      Rails.logger.debug("Setting google_calendar_url_token to #{calendar.url_token}")
+      self.update_attributes!(:google_calendar_url_token => calendar.url_token)
+      calendar
+    end
+  end
+  
+  def get_calendar_app
+    consumer = get_google_calendar_provider
+    return nil if consumer.nil?
+    
+    app_link = self.app_links.find_by_provider('google')
+    if app_link.nil?
+      Rails.logger.debug "The user has not linked their Google account, calendar entry will not be created"
+      return nil
+    end
+
+    GoogleCalendar.new(app_link.credentials['token'], app_link.credentials['secret'], consumer)
+  end
 
   protected
 
@@ -306,6 +329,15 @@ class User < ActiveRecord::Base
     def sanitize_name
       self.first_name = first_name.blank?? nil : first_name.squish
       self.last_name = last_name.blank?? nil : last_name.squish
+    end
+    
+    def get_google_calendar_provider
+      oauth_info = Teambox.config.providers.detect { |p| p.provider == 'google' }
+      if oauth_info.nil?
+        Rails.logger.debug "There is no Google provider, calendar entry will not be created"
+        return nil
+      end
+      OAuth::Consumer.new(oauth_info.key, oauth_info.secret, GoogleCalendar::RESOURCES)
     end
 
 end

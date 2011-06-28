@@ -5,7 +5,7 @@
 
 = form_for @data, :html => {:multipart => true} do |f|
   = hidden_field_tag 'teambox_data[type_name]', 'import'
-  = fields_for_teambox_import(f, @data)
+  = render :partial => 'teambox_datas/import_fields', :locals => {:f => f, :data => @data}
   .submit
     = f.submit t('.submit')
     = t('common.or')

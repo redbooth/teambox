@@ -22,6 +22,8 @@
   .add_watchers_box{ :style => 'display: none' }
     %p= t('comments.watchers.explain') 
 
+  .private_options{ :style => 'display: none', 'object-prefix' => "#{f.object.target_type.downcase}_#{f.object.target_id}", 'object-type' => f.object_name }
+
   .actions
     .attach
       %span= t('.attach') + ": "
@@ -31,6 +33,7 @@
       - if task_form
         = link_to t('comments.hours.tooltip'), '#hours', :class => 'add_hours_icon hoverable', :title => "Log hours"
       = link_to "Watchers", '#watchers', :class => 'add_watchers hoverable', :title => "Notify people"
+      = link_to "Privacy", '#privacy', :class => 'private_switch hoverable', :title => "Control who can see this element"
 
     - if task_form
       .task_actions
@@ -63,7 +66,7 @@
               = conversation_form.select :status, task_statuses_for_select, {}, :disabled => true
               = conversation_form.select :assigned_id, [], {}, :'data-assigned' => conversation_form.object.assigned_id, :disabled => true
             .fields
-              = date_picker(conversation_form, :due_on, false, :disabled => true)
+              = date_picker(conversation_form, :due_on, {}, :disabled => true)
           .submit
             = link_to t('common.cancel'), '#cancel_conversion', :class => 'cancel'
             = f.submit t('comments.convert_form.submit'), :'data-disable-with' => t('comments.new.sending'), :disabled => true

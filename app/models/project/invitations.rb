@@ -1,4 +1,4 @@
-require_dependency 'extract_emails'
+require 'extract_emails'
 
 class Project
 

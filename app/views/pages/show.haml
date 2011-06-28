@@ -1,9 +1,11 @@
 = page_column(@current_project,@pages,@page)
 
 = people_watching(@current_project,current_user,@page)
-.page_header
+.page_header{:class => (@page.is_private ? 'private' : '')}
   = page_action_links(@current_project,@page)
-  %h2=h @page
+  %h2
+    .lock_icon
+    =h @page
   .description=h @page.description
 
 = page_buttons(@current_project,@page)
@@ -25,7 +27,7 @@
       = render 'dividers/new', :project => @current_project, :page => @page, :divider => Divider.new
       = render 'uploads/form', :project => @current_project, :page => @page, :upload => Upload.new(:page_id => @page.id)
   
-  #slots
+  #slots{:class => slots_classes}
     = render :partial => 'slot', :collection => @page.slots.with_widgets, :locals => {:page => @page, :project => @current_project}
   
   .page_slot.pageFooter#page_slot_footer{:slot => -1}

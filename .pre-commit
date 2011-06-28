@@ -1,0 +1,8 @@
+#!/bin/bash
+while read LINE
+do
+  grep -q "$LINE" <(git diff --cached) && echo "Fail words found: '$LINE' 
+Fix your commit damn it..." && exit 1
+done < .git_fail_words
+exit 0
+

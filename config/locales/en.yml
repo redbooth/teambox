@@ -210,6 +210,7 @@ en:
           you will be notified and added as a watcher for that item.
         notify_conversations: Notify me of updates to conversations I'm watching
         notify_tasks: Notify me of updates to tasks I'm watching
+        notify_pages: Notify me of updates to pages I'm watching
         wants_task_reminder: Send me a daily reminder of tasks assigned to me that are due soon
         notify_on_mention: Send email instantly when someone @mentions me on a conversation or task I'm following
         notification_options: Notification options
@@ -322,7 +323,7 @@ en:
       problems_title: Problems?
       resend_html: "Can't find the email? Press <a href='%{link}'>here</a> to re-send the activation email."
       spam: "Make sure the email wasn't classified as spam by your email client."
-      wrong_address_html: "Wrong address? If you mistyped your email address, <a href='%{link}'>cancel the signup process</a> and re-create your account with a valid address."
+      wrong_email_html: "Wrong address? If you mistyped your email address, <a href='%{link}'>you can change it now</a>."
       problems_html: "If you're still having problems, please contact us at %{support}"
     daily_task_reminder_email:
       daily_task_reminder: "Daily task reminder"
@@ -432,7 +433,11 @@ en:
       permalink_html: "Permalink <em>Short identifier for the project</em>"
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
       archived_html: "Archive this Project <em>This will keep it accessible for its members, but not writable anymore.</em>"
-      confirm_delete: "Are you sure you want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you'd rather keep it, use Archive Project instead."
+      delete_this_project: Delete this project
+      delete_project:
+        title: "Are you sure you want to delete %{project}?"
+        body_html: "This will <strong>permanently</strong> delete all data in the project."
+        body_extra_html: "Deleting this project will not cancel your Teambox subscription. To cancel your subscription <a href='%{url}''>click here</a>."
       settings:
         you_cant_unarchive: "You have %{active} active projects, and your current plan only allows %{max} projects"
         upgrade_html: "In order to <b>unarchive this project</b> and be able to edit it, you must <a href='%{link}'>upgrade your account and get more storage and features</a> or archive other projects."
@@ -583,6 +588,7 @@ en:
     appearance_fields:
       logo_html: Logo <em>Ideally should be 134x36 pixels</em>
       description_html: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
+      delete_custom_logo: Delete custom logo (and revert back to the Teambox one)
     index:
       about:
         title: About Organizations
@@ -918,6 +924,7 @@ en:
       name_description: Choose a short and descriptive title
       description: Description
       description_description: "Optional short notes about it. Doesn't allow text styles."
+      is_private: Privacy
     slots:
       insert_here: Insert Here
     column:
@@ -1109,6 +1116,13 @@ en:
       all_users: All users
     uploads:
       button: "Choose File"
+    private:
+      public: This element is visible to everybody in this project
+      private: This element is only visible to people you specify...
+      private_foreveralone: This element is only visible to you
+      private_global: This element is only visible to the following people...
+      readonly_warning: "Only %{user} is able to change privacy settings."
+      all: "All"
   teambox_datas:
     new_import:
       title: "Import data"
@@ -1259,6 +1273,10 @@ en:
   shared:
     loading:
       title: Loading Teambox
+    confirm_email:
+      go_to_your_email_to_confirm: Go to %{email} to confirm your account.
+      resend_email: Resend the instructions
+      change_email: use a different e-mail address
     strip:
       archived_html: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
     collapsed_mode: View threads collapsed
@@ -1280,7 +1298,7 @@ en:
       settings: Settings
       people: "People & Permissions"
       my_tasks: My Tasks
-      today: Today
+      today: Due Today
       open_my_tasks: Open all my tasks
       all_tasks: All Tasks
       organizations: Organizations
@@ -1288,6 +1306,7 @@ en:
       show_all_organizations: "Manage organizations..."
       show_more: Show more
       show_less: Show less
+      gantt_and_calendars: Gantts and calendars
       affiliate: Affiliate area
     project_settings_navigation:
       general: General Settings
@@ -1394,7 +1413,7 @@ en:
       option_1: "Option 1: Share this link"
       option_2: "Option 2: Invite your contacts by entering their email"
       option_3: "Option 3: Invite your contacts by importing contacts from a CSV file"
-      twitter_link: "Try+Teambox+to+collaborate+with+your+team,+sign+up+for+free+at+%{link}"
+      twitter_link: "Try%20Teambox%20to%20collaborate%20with%20your%20team,%20sign%20up%20for%20free%20at%20%{link}"
       referred_users: "Your referred users "
       no_referred_users: "You don't have any referred users yet."
       credits_earned: "Credit you've earned"
@@ -1441,6 +1460,11 @@ en:
       subject: "%{user} shared [%{project}] with you"
       you_have_been_added_to: "You are now a member of the project %{project}"
       project_link: "Click on the link below to start collaborating on %{project} now"
+    accepted_invitation:
+      subject: "%{user} accepted your invitation to [%{project}]"
+      user_has_accepted: "%{user} has accepted your invitation to %{project}"
+      go_to_project: "Go to %{project} now, and collaborate with %{user}"
+      you_can_now_collaborate: "How can you get started? Post conversations or create some tasks on the project!"
     invitation:
       subject: "%{user} shared [%{project}] with you"
       collaborate_with: "%{name} wants to collaborate with you on Teambox:"
@@ -1492,11 +1516,11 @@ en:
       reply: "You can also reply to this email to post a reply in the conversation."
       task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
       are_watching: 
-        one: " is suscribed to this conversation, and will be notified of future replies."
-        other: " are suscribed to this conversation, and will be notified of future replies."
+        one: " is subscribed to this conversation, and will be notified of future replies."
+        other: " are subscribed to this conversation, and will be notified of future replies."
       are_watching_task: 
-        one: " is suscribed to this task, and will be notified of future replies."
-        other: " are suscribed to this task, and will be notified of future replies."
+        one: " is subscribed to this task, and will be notified of future replies."
+        other: " are subscribed to this task, and will be notified of future replies."
       stop_watching_link_html: "%{stop_watch} this thread to stop receiving email notifications."
       stop_watch: Stop watching
       notification_settings_link_html: "You can change your %{settings_link} for further emails."
@@ -1514,6 +1538,20 @@ en:
       reply_by_email: Reply by email
       digest_reply_text: "Go to %{reply_online}."
       digest_title_html: Activity digest for %{project_link}
+      activity:
+        title: Activity on %{project}
+        create_note:
+          subject: "%{name} created a note"
+          body: "%{name} created a note on the page %{page}."
+        create_page:
+          subject: "%{name} created a page"
+          body: "%{name} created the page %{page}."
+        edit_note:
+          subject: "%{name} edited a note"
+          body: "%{name} edited a note on the page %{page}."
+        edit_page:
+          subject: "%{name} edited a page"
+          body: "%{name} edited the page %{page}."
     upload:
       file: "File:"
     bounce:
@@ -1820,6 +1858,8 @@ en:
       default: "%Y-%m-%d"
       short: "%b %d"
       long: "%B %d, %Y"
+      month_and_year: "%B %Y"
+      month_and_day: "%B %d"
     order: [ :day, :month, :year ]
 
     day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
@@ -1856,6 +1896,7 @@ en:
     no_date_assigned: No date assigned
 
   oauth:
+    authentication_failure: Authentication failure, '%{message}'
     this_account_will_be_linked_to: "This account will be linked with %{provider}"
     account_linked: "Your account has been linked."
     app_unlinked: "App unlinked"
@@ -1870,16 +1911,13 @@ en:
     your_account_is_not_linked_html: "Your %{provider} profile is <strong>not linked</strong> to Teambox."
     link_account: Link account.
     unlink_account: Unlink account.
-    user_exists: This %{provider} profile is not linked with any account yet.
-    user_already_exists_by_email: "Link '%{email}' to your Teambox account"
-    user_already_exists_by_login: "The username '%{login}' is already taken"
-    user_exists_instruction: If you already have a Teambox account, log in to link it automatically to your %{provider} profile.
-    user_exists_is_not_yours_html: If you don't own the account '%{account}', %{signup_for_a_new_account}.
+    sign_up_conflict: We already have an account on the system with same username and/or email. If you already have an account you should login to your account instead of creating a new one.
     signup_for_a_new_account: click here to sign up for a new account
     authorize:
       title: "Authorize Application"
-      authorize_access: "Allow this application to access my Teambox account"
-      submit: "Authorize"
+      authorize_access: "Allow this application access?"
+      allow: Allow
+      deny: Deny
       offline_access: Access the account at any time
       offline_access_description: The application will be able to access your account until you revoke access.
       read_projects: Access project data

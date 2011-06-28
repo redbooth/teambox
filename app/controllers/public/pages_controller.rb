@@ -1,7 +1,9 @@
 class Public::PagesController < Public::PublicController
 
   def index
-    @pages = @project.pages
+    @pages = @project.pages.where(['pages.is_private = ? OR (pages.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                            joins("LEFT JOIN watchers ON (pages.id = watchers.watchable_id AND watchers.watchable_type = 'Page') AND watchers.user_id = #{current_user.id}")
+    
   end
 
   def show

@@ -48,7 +48,8 @@ Given /"([^\"]*)" is not a member of the organization called "([^\"]*)"$/ do |us
   user = User.find_by_login(user)
   organization = Organization.find_by_name(name)
   membership = organization.memberships.find_by_user_id(user.id)
-  membership.destroy if membership
+  destroyed = membership.destroy if membership
+  raise "Couldn't destroy the membership" unless destroyed
 end
 
 Given /"([^\"]*)" is a participant in the organization called "([^\"]*)"$/ do |user,name|

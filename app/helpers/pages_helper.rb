@@ -11,6 +11,15 @@ module PagesHelper
       :current_target => current_target
   end
   
+  def visible_pages_list(project)
+    if current_user
+      @pages = project.pages.where(['pages.is_private = ? OR (pages.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                             joins("LEFT JOIN watchers ON (pages.id = watchers.watchable_id AND watchers.watchable_type = 'Page') AND watchers.user_id = #{current_user.id}")
+    else
+      @pages = project.pages.where(['pages.is_private = ?', false])
+    end
+  end
+  
   def new_page_link(project)
     if can? :make_pages, project
       link_to content_tag(:span,t('.new_page')), new_project_page_path(project), :class => 'add_button'
@@ -66,5 +75,11 @@ module PagesHelper
   
   def insert_widget(widget_id, position, location, view_options={})
     page.call "Page.insertWidget", widget_id, position, location, render(view_options)
+  end
+
+  def slots_classes
+    slots_classes = []
+    slots_classes << 'readonly' unless can? :make_pages, @current_project
+    slots_classes.join(" ")
   end
 end

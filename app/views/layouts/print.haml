@@ -5,6 +5,7 @@
     %title
       = @page_title || 'Teambox'
     = include_stylesheets :print, :media => :all
+    = trimmer_include_tag
     = sprockets_include_tag
     = load_javascript_user_data
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}  

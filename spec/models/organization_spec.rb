@@ -97,10 +97,12 @@ describe Organization do
       @organization.is_participant?(project.user).should be_false
     end
     it "should list people in projects and the org as users" do
+      admin = Factory(:user)
+      @organization.add_member(admin, :admin)
       project = Factory(:project, :organization => @organization)
       @organization.add_member(project.user, :participant)
-      @organization.users.should == [project.user]
-      @organization.admins.should == []
+      @organization.users.should == [admin, project.user]
+      @organization.admins.should == [admin]
       @organization.participants.should == [project.user]
       @organization.external_users.should == []
       @organization.users_in_projects.should == [project.user]
@@ -128,6 +130,25 @@ describe Organization do
       @organization.memberships.last.user_id.should == user.id
       @organization.memberships.last.role.should == 30
       @organization.memberships.length.should == 1
+    end
+    it "should not destroy or downgrade the last admin" do
+      user = Factory(:user)
+      @organization.add_member(user, 30).should be_true
+      member = @organization.memberships.last
+      member.role = 20
+      member.save.should be_false
+    end
+    it "should not destroy or downgrade the last admin" do
+      user = Factory(:user)
+      @organization.add_member(user, 30).should be_true
+      member = @organization.memberships.last
+      member.destroy.should be_false
+    end
+    it "should destroy organization even if there is only one admin" do
+      user = Factory(:user)
+      @organization.add_member(user, 30).should be_true
+      @organization.admins.count.should == 1
+      @organization.destroy.should be_true
     end
   end
 

@@ -1,0 +1,215 @@
+--- 
+user_info: 
+  name: Charles
+  uid: charles@teambox.com
+  email: charles@teambox.com
+uid: charles@teambox.com
+credentials: 
+  token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+  secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+extra: 
+  user_hash: 
+    encoding: UTF-8
+    version: "1.0"
+    feed: 
+      xmlns$batch: http://schemas.google.com/gdata/batch
+      category: 
+      - !map:Hashie::Mash 
+        term: http://schemas.google.com/contact/2008#contact
+        scheme: http://schemas.google.com/g/2005#kind
+      author: 
+      - !map:Hashie::Mash 
+        name: !map:Hashie::Mash 
+          $t: Charles
+        email: !map:Hashie::Mash 
+          $t: charles@teambox.com
+      title: 
+        $t: Charles's Contacts
+        type: text
+      xmlns$gContact: http://schemas.google.com/contact/2008
+      openSearch$startIndex: 
+        $t: "1"
+      id: 
+        $t: charles@teambox.com
+      xmlns$gd: http://schemas.google.com/g/2005
+      openSearch$totalResults: 
+        $t: "349"
+      xmlns$openSearch: http://a9.com/-/spec/opensearchrss/1.0/
+      entry: 
+      - !map:Hashie::Mash 
+        category: 
+        - !map:Hashie::Mash 
+          term: http://schemas.google.com/contact/2008#contact
+          scheme: http://schemas.google.com/g/2005#kind
+        gd$extendedProperty: 
+        - !map:Hashie::Mash 
+          name: GCon
+          $t: <cc>0</cc>
+          xmlns: ""
+        title: !map:Hashie::Mash 
+          $t: Ugo Fredette
+          type: text
+        id: !map:Hashie::Mash 
+          $t: http://www.google.com/m8/feeds/contacts/charles%40teambox.com/base/c70fa10ec069c1
+        gd$phoneNumber: 
+        - !map:Hashie::Mash 
+          rel: http://schemas.google.com/g/2005#mobile
+          $t: (514) 246-2922
+        - !map:Hashie::Mash 
+          rel: http://schemas.google.com/g/2005#home
+          $t: (450) 974-2420
+        - !map:Hashie::Mash 
+          rel: http://schemas.google.com/g/2005#mobile
+          $t: (514) 794-3916
+        link: 
+        - !map:Hashie::Mash 
+          href: http://www.google.com/m8/feeds/photos/media/charles%40teambox.com/c70fa1c069c1/A0SZxy1UiLPOf2mVsVc71w
+          rel: http://schemas.google.com/contacts/2008/rel#edit-photo
+          type: image/*
+        - !map:Hashie::Mash 
+          href: http://www.google.com/m8/feeds/photos/media/charles%40teambox.com/c7010ec069c1
+          rel: http://schemas.google.com/contacts/2008/rel#photo
+          type: image/*
+        - !map:Hashie::Mash 
+          href: http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full/c7010ec069c1
+          rel: self
+          type: application/atom+xml
+        - !map:Hashie::Mash 
+          href: http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full/c70faec069c1/12894771246000
+          rel: edit
+          type: application/atom+xml
+        updated: !map:Hashie::Mash 
+          $t: "2010-07-31T16:46:11.246Z"
+      generator: 
+        uri: http://www.google.com/m8/feeds
+        $t: Contacts
+        version: "1.0"
+      link: 
+      - !map:Hashie::Mash 
+        href: http://www.google.com/
+        rel: alternate
+        type: text/html
+      - !map:Hashie::Mash 
+        href: http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full
+        rel: http://schemas.google.com/g/2005#feed
+        type: application/atom+xml
+      - !map:Hashie::Mash 
+        href: http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full
+        rel: http://schemas.google.com/g/2005#post
+        type: application/atom+xml
+      - !map:Hashie::Mash 
+        href: http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full/batch
+        rel: http://schemas.google.com/g/2005#batch
+        type: application/atom+xml
+      - !map:Hashie::Mash 
+        href: http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full?alt=json&max-results=1
+        rel: self
+        type: application/atom+xml
+      - !map:Hashie::Mash 
+        href: http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full?alt=json&start-index=2&max-results=1
+        rel: next
+        type: application/atom+xml
+      updated: 
+        $t: "2011-04-21T20:18:09.129Z"
+      openSearch$itemsPerPage: 
+        $t: "1"
+      xmlns: http://www.w3.org/2005/Atom
+  access_token: !ruby/object:OAuth::AccessToken 
+    consumer: !ruby/object:OAuth::Consumer 
+      http: !ruby/object:Net::HTTP 
+        address: www.google.com
+        close_on_empty_response: false
+        curr_http_version: "1.1"
+        debug_output: 
+        newimpl: true
+        open_timeout: 
+        port: 443
+        read_timeout: 60
+        seems_1_0_server: false
+        socket: 
+        ssl_context: !ruby/object:OpenSSL::SSL::SSLContext 
+          ca_file: 
+          ca_path: 
+          cert: 
+          cert_store: 
+          client_ca: 
+          client_cert_cb: 
+          extra_chain_cert: 
+          key: 
+          options: 
+          session_get_cb: 
+          session_id_context: 
+          session_new_cb: 
+          session_remove_cb: 
+          timeout: 
+          tmp_dh_callback: 
+          verify_callback: 
+          verify_depth: 
+          verify_mode: 0
+        started: false
+        use_ssl: true
+      http_method: :post
+      key: teambox.com
+      options: 
+        :ssl: 
+          :ca_path: /etc/ssl/certs
+        :oauth_version: "1.0"
+        :proxy: 
+        :http_method: :post
+        :request_token_path: /accounts/OAuthGetRequestToken
+        :authorize_path: /accounts/OAuthAuthorizeToken
+        :scheme: :header
+        :signature_method: HMAC-SHA1
+        :site: https://www.google.com
+        :access_token_path: /accounts/OAuthGetAccessToken
+      secret: aaaa
+      uri: !ruby/object:URI::HTTPS 
+        fragment: 
+        host: www.google.com
+        opaque: 
+        password: 
+        path: ""
+        port: 443
+        query: 
+        registry: 
+        scheme: https
+        user: 
+    params: 
+      oauth_token_secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+      :oauth_token_secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+      :oauth_token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+      oauth_token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+    response: !ruby/object:Net::HTTPOK 
+      body: "{\"version\":\"1.0\",\"encoding\":\"UTF-8\",\"feed\":{\"xmlns\":\"http://www.w3.org/2005/Atom\",\"xmlns$openSearch\":\"http://a9.com/-/spec/opensearchrss/1.0/\",\"xmlns$gContact\":\"http://schemas.google.com/contact/2008\",\"xmlns$batch\":\"http://schemas.google.com/gdata/batch\",\"xmlns$gd\":\"http://schemas.google.com/g/2005\",\"id\":{\"$t\":\"charles@teambox.com\"},\"updated\":{\"$t\":\"2011-04-21T20:18:09.129Z\"},\"category\":[{\"scheme\":\"http://schemas.google.com/g/2005#kind\",\"term\":\"http://schemas.google.com/contact/2008#contact\"}],\"title\":{\"type\":\"text\",\"$t\":\"Charles's Contacts\"},\"link\":[{\"rel\":\"alternate\",\"type\":\"text/html\",\"href\":\"http://www.google.com/\"},{\"rel\":\"http://schemas.google.com/g/2005#feed\",\"type\":\"application/atom+xml\",\"href\":\"http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full\"},{\"rel\":\"http://schemas.google.com/g/2005#post\",\"type\":\"application/atom+xml\",\"href\":\"http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full\"},{\"rel\":\"http://schemas.google.com/g/2005#batch\",\"type\":\"application/atom+xml\",\"href\":\"http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full/batch\"},{\"rel\":\"self\",\"type\":\"application/atom+xml\",\"href\":\"http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full?alt\\u003djson\\u0026max-results\\u003d1\"},{\"rel\":\"next\",\"type\":\"application/atom+xml\",\"href\":\"http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full?alt\\u003djson\\u0026start-index\\u003d2\\u0026max-results\\u003d1\"}],\"author\":[{\"name\":{\"$t\":\"Charles\"},\"email\":{\"$t\":\"charles@teambox.com\"}}],\"generator\":{\"version\":\"1.0\",\"uri\":\"http://www.google.com/m8/feeds\",\"$t\":\"Contacts\"},\"openSearch$totalResults\":{\"$t\":\"349\"},\"openSearch$startIndex\":{\"$t\":\"1\"},\"openSearch$itemsPerPage\":{\"$t\":\"1\"},\"entry\":[{\"id\":{\"$t\":\"http://www.google.com/m8/feeds/contacts/charles%40teambox.com/base/c70fa10ec069c1\"},\"updated\":{\"$t\":\"2010-07-31T16:46:11.246Z\"},\"category\":[{\"scheme\":\"http://schemas.google.com/g/2005#kind\",\"term\":\"http://schemas.google.com/contact/2008#contact\"}],\"title\":{\"type\":\"text\",\"$t\":\"Ugo Fredette\"},\"link\":[{\"rel\":\"http://schemas.google.com/contacts/2008/rel#edit-photo\",\"type\":\"image/*\",\"href\":\"http://www.google.com/m8/feeds/photos/media/charles%40teambox.com/c70fa1c069c1/A0SZxy1UiLPOf2mVsVc71w\"},{\"rel\":\"http://schemas.google.com/contacts/2008/rel#photo\",\"type\":\"image/*\",\"href\":\"http://www.google.com/m8/feeds/photos/media/charles%40teambox.com/c7010ec069c1\"},{\"rel\":\"self\",\"type\":\"application/atom+xml\",\"href\":\"http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full/c7010ec069c1\"},{\"rel\":\"edit\",\"type\":\"application/atom+xml\",\"href\":\"http://www.google.com/m8/feeds/contacts/charles%40teambox.com/full/c70faec069c1/12894771246000\"}],\"gd$phoneNumber\":[{\"rel\":\"http://schemas.google.com/g/2005#mobile\",\"$t\":\"(514) 246-2922\"},{\"rel\":\"http://schemas.google.com/g/2005#home\",\"$t\":\"(450) 974-2420\"},{\"rel\":\"http://schemas.google.com/g/2005#mobile\",\"$t\":\"(514) 794-3916\"}],\"gd$extendedProperty\":[{\"xmlns\":\"\",\"name\":\"GCon\",\"$t\":\"\\u003ccc\\u003e0\\u003c/cc\\u003e\"}]}]}}"
+      code: "200"
+      header: 
+        x-content-type-options: 
+        - nosniff
+        x-frame-options: 
+        - SAMEORIGIN
+        expires: 
+        - Thu, 21 Apr 2011 20:18:09 GMT
+        last-modified: 
+        - Thu, 21 Apr 2011 20:18:09 GMT
+        content-type: 
+        - application/json; charset=UTF-8
+        access-control-allow-origin: 
+        - "*"
+        date: 
+        - Thu, 21 Apr 2011 20:18:09 GMT
+        x-xss-protection: 
+        - 1; mode=block
+        server: 
+        - GSE
+        gdata-version: 
+        - "1.0"
+        cache-control: 
+        - private, max-age=0, must-revalidate, no-transform
+        vary: 
+        - Accept, X-GData-Authorization, GData-Version
+      http_version: "1.0"
+      message: OK
+      read: true
+    secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+    token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+provider: google

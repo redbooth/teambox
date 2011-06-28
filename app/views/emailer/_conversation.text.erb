@@ -1,0 +1,2 @@
+<% conversation_title = conversation.name.blank? ? truncate( sanitize( conversation.comments.try(:first).try(:body), :tags => [nil]), :length => 80) : conversation.name -%>
+<%= t('emailer.notify.conversation') %> <%= h(conversation_title) %>

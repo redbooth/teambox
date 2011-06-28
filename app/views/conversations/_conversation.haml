@@ -2,5 +2,6 @@
 - classes += ' active' if defined?(current_target) && current_target == conversation
 .conversation{ :id => "Conversation_#{conversation.id}", :class => classes }
   %span.comments_count= conversation.comments_count
-  = the_conversation_link(conversation)
+  - title = conversation.name.presence || t('activerecord.models.conversation')
+  = link_to title, project_conversation_path(conversation.project,conversation), :class => 'conversation_link'
 .clear

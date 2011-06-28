@@ -1,0 +1,24 @@
+{{#organizations}}
+.el
+  %a.project{ :href => "/organizations/{{permalink}}" } {{name}}
+.contained
+  .el
+    %a.ajax{ :href => "/organizations/{{permalink}}/edit" }= t('organizations.column.general_settings')
+  .el
+    %a.ajax{ :href => "/organizations/{{permalink}}/projects" }= t('organizations.column.admin_projects')
+  .el
+    %a.ajax{ :href => "/organizations/{{permalink}}/task_list_templates" }= t('organizations.column.task_list_templates')
+  {{#can_admin}}
+  .el
+    %a.ajax{ :href => "/organizations/{{permalink}}/memberships" }= t('organizations.column.admin_users')
+  .el
+    %a{ :href => "/organizations/{{permalink}}/appearance" }= t('organizations.column.appearance')
+  .el
+    %a.ajax{ :href => "/organizations/{{permalink}}/delete" }= t('organizations.column.delete')
+  {{/can_admin}}
+{{/organizations}}
+{{#no_community}}
+.el
+  %a.more.ajax{ :href => "/organizations" }= t('shared.navigation.show_all_organizations')
+{{/no_community}}
+

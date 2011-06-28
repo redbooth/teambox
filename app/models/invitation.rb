@@ -38,6 +38,10 @@ class Invitation < RoleRecord
     if target.is_a? Project
       target.organization.add_member(current_user, membership)
       project.add_user(current_user, {:role => role || 3, :source_user => user})
+
+      # Notify the sender that the invitation has been accepted
+      Emailer.send_with_language :accepted_project_invitation, self.user.locale, current_user.id, self.id
+
     elsif target.is_a? Organization
       target.add_member(current_user, membership)
     end
@@ -45,6 +49,11 @@ class Invitation < RoleRecord
   
   def editable?(user)
     project.admin?(user) or self.user_id == user.id or self.invited_user_id == user.id
+  end
+  
+  def references
+    refs = { :users => [user_id, invited_user_id], :projects => [project_id] }
+    refs
   end
 
   def to_api_hash(options = {})

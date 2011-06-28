@@ -1,0 +1,14 @@
+.email{ :style => email_global }
+  - addr = Teambox.config.amazon_s3 ? @data.processed_data.url : "http://#{Teambox.config.app_domain}#{@data.processed_data.url}"
+
+  = dont_answer
+
+  %p= t('emailer.teamboxdata.hey', :user_name => h(@user.name))
+  - if @error
+    %p= t('emailer.teamboxdata.data_export_failed') 
+    %div= link_to teambox_data_url(@data), teambox_data_url(@data)
+  - else
+    %p= t('emailer.teamboxdata.data_exported')
+    %div= link_to addr, addr
+
+  .footer{ :style => email_text(:small) }

@@ -8,22 +8,30 @@
     = t('emailer.common.do_not_answer')
 
   - @targets.each do |target|
-    - if target.is_a? Task
+    - case target
+    - when Task
       = render 'task', :task => target
-    - elsif target.is_a? Conversation
+      = emailer_list_comments(target.comments, @comments)
+    - when Conversation
       = render 'conversation', :conversation => target
-    = emailer_list_comments(target.comments, @comments)
+      = emailer_list_comments(target.comments, @comments)
+    - when Activity
+      = render 'activity', :activity => target
     .actions{ :style => 'color: rgb(100,100,100)' }
       %p
         - case target
         - when Task
           - email = "#{@project.permalink}+task+#{target.id}@#{Rails.configuration[:app_domain]}" 
           - stop_watch = link_to t('emailer.notify.stop_watch'), project_task_url(@project, target)
+          = link_to t('emailer.notify.reply_online'), project_task_url(@project, target), :style => email_button
         - when Conversation
           - email = "#{@project.permalink}+conversation+#{target.id}@#{Rails.configuration[:app_domain]}"
           - stop_watch = link_to t('emailer.notify.stop_watch'), project_conversation_url(@project, target)
-        = link_to t('emailer.notify.reply_online'), project_conversation_url(@project, target), :style => email_button
-        - if Teambox.config.allow_incoming_email
+          = link_to t('emailer.notify.reply_online'), project_conversation_url(@project, target), :style => email_button
+        - when Activity
+          - page = target.target.is_a?(Page) ? target.target : target.target.page
+          - stop_watch = link_to t('emailer.notify.stop_watch'), project_page_url(@project, page)
+        - if email and Teambox.config.allow_incoming_email
           = link_to t('emailer.notify.reply_by_email'), "mailto:#{email}", :style => email_button
         = t('emailer.notify.stop_watching_link_html', :stop_watch => stop_watch )
 

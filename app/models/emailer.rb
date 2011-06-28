@@ -111,6 +111,21 @@ class Emailer < ActionMailer::Base
     )
   end
 
+  # Sent to the person who invited the user when an invitation is accepted
+  def accepted_project_invitation(invited_user_id, invitation_id)
+    @invitation     = Invitation.with_deleted.find(invitation_id)
+    @referral       = @invitation.user
+    @invited_user   = User.find(invited_user_id)
+    @project        = @invitation.project
+    mail(
+      :to         => @referral.email,
+      :from       => self.class.from_user(nil, @referral),
+      :subject    => I18n.t("emailer.accepted_invitation.subject",
+                            :user => @invited_user.name,
+                            :project => @invitation.project.name)
+    )
+  end
+
   def notify_export(data_id)
     @data  = TeamboxData.find(data_id)
     @user  = @data.user
@@ -163,6 +178,18 @@ class Emailer < ActionMailer::Base
     ))
   end
 
+  def notify_activity(user_id, project_id, activity_id)
+    @project      = Project.find(project_id)
+    @activity     = Activity.find(activity_id)
+    @recipient    = User.find(user_id)
+    @organization = @project.organization
+    mail({
+      :to            => @recipient.email,
+      :subject       => "[#{@project.permalink}] " +
+        I18n.t("emailer.notify.activity.#{@activity.action_type.downcase}.subject", :name => @activity.user.name)
+    })
+  end
+
   def project_membership_notification(invitation_id)
     @invitation = Invitation.find_with_deleted(invitation_id)
     @project    = @invitation.project
@@ -187,7 +214,7 @@ class Emailer < ActionMailer::Base
   end
 
   def bounce_message(exception_mail, pretty_exception)
-    info_url = 'http://help.teambox.com/faqs/advanced-features/email'
+    info_url = 'http://help.teambox.com/knowledgebase/articles/10243-using-teambox-via-email'
 
     mail(
       :to         => exception_mail,
@@ -211,13 +238,8 @@ class Emailer < ActionMailer::Base
     @person        = Person.find(person_id)
     @project       = Project.find(project_id)
     @targets = target_types_and_ids.map do |target|
-      case target[:target_type]
-      when 'Conversation'
-        Conversation.find target[:target_id]
-      when 'Task'
-        Task.find target[:target_id]
-      end
-    end
+      target[:target_type].constantize.find_by_id target[:target_id]
+    end.compact.uniq
     @comments      = Comment.where(:id => comment_ids)
 
     mail({
@@ -238,15 +260,32 @@ class Emailer < ActionMailer::Base
       ::Emailer.notify_conversation(conversation.user.id, conversation.project.id, conversation.id)
     end
 
+    def notify_activity_on_page
+      activity = Activity.where(:target_type => 'Page').first
+      ::Emailer.notify_activity(activity.user_id, activity.project_id, activity.id)
+    end
+
+    def notify_activity_on_note
+      activity = Activity.where(:target_type => 'Note').first
+      ::Emailer.notify_activity(activity.user_id, activity.project_id, activity.id)
+    end
+
     def project_digest
-      project_id = Project.first
-      person_id = Project.first.people.first.id
-      user_id = Project.first.users.first.id
+      project_id  = Project.first
+      person_id   = Project.first.people.first.id
+      user        = Project.first.users.first
+      user_id     = user.id
 
-      comments = Project.first.comments
-      comment_ids = comments.map(&:id).shuffle[0 .. (comments.size/3)]
+      target_types_and_ids = []
+      comment_ids = []
 
-      target_types_and_ids = comments.map {|c| {:target_type => c.target_type, :target_id => c.target_id}}.uniq
+      user.notifications.each do |notification|
+        target_types_and_ids << {:target_type => notification.target_type, :target_id => notification.target_id}
+        comment_ids << notification.comment_id unless notification.comment_id.nil?
+      end
+
+      target_types_and_ids.uniq!
+      comment_ids = comment_ids[ (comment_ids.size/3) .. (comment_ids.size)].uniq
 
       ::Emailer.project_digest(user_id, person_id, project_id, target_types_and_ids, comment_ids)
     end
@@ -301,6 +340,18 @@ class Emailer < ActionMailer::Base
       invitation.is_silent = true
       invitation.save!(false)
       ::Emailer.project_invitation(invitation.id)
+    end
+
+    def accepted_project_invitation
+      invitation = Invitation.new do |i|
+        i.token = ActiveSupport::SecureRandom.hex(20)
+        i.user = User.first
+        i.invited_user = User.last
+        i.project = Project.first
+      end
+      invitation.is_silent = true
+      invitation.save!(false)
+      ::Emailer.accepted_project_invitation(invitation.id)
     end
 
     def confirm_email

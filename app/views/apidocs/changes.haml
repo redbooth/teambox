@@ -10,7 +10,12 @@
 
 %p As this version of the API is still in development, important changes are listed below.
 
-%p <strong>2011-03-25</strong>: The API now supports OAuth authentication. See the
+%p <strong>2011-06-14</strong>: External organizations can be listed now (<tt>external=true</tt>). Check the <a href="/api/organization">Organizations API</a> page.
+%p <strong>2011-06-14</strong>: New way of filtering threaded activities (<tt>threads=true</tt>). Check the <a href="/api/activity">Activities API</a> page.
+%p <strong>2011-06-09</strong>: The pagination limits have changed. Check the <a href="/api/concepts">API concepts</a> page.
+%p <strong>2011-05-04</strong>: For simplification, all #show routes now return "references" in the response. Objects are no longer directly included in the object.
+%p
+  <strong>2011-03-25</strong>: The API now supports OAuth authentication. See the
   = link_to 'authentication section', api_auth_path
   for more details.
 %p <strong>2011-03-08</strong>: All API responses now include object types (previously this only happened for references).

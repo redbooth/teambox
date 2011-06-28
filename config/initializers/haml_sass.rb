@@ -1,8 +1,6 @@
 require 'haml/helpers/action_view_mods'
 require 'haml/helpers/action_view_extensions'
 require 'haml/template'
-require 'sass'
-require 'sass/plugin'
 
 Haml::Template::options[:format] = :html5
 

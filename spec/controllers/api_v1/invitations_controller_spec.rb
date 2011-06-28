@@ -29,7 +29,7 @@ describe ApiV1::InvitationsController do
       login_as @project.user
       post :create, :project_id => @project.permalink, :user_or_email => @emails
       response.should be_success
-      
+
       @project.invitations(true).length.should == 3
       @project.invitations.each { |invite| invite.invited_user.should == nil }
     end
@@ -38,7 +38,7 @@ describe ApiV1::InvitationsController do
       login_as @project.user
       post :create, :project_id => @project.permalink, :user_or_email => @users.map(&:login).join(' ')
       response.should be_success
-      
+
       @project.invitations(true).length.should == 5
       @project.invitations.each { |invite| (@users.include?(invite.invited_user)).should == true }
     end
@@ -48,7 +48,7 @@ describe ApiV1::InvitationsController do
       list = @users.map(&:login).join(' ') + ' ' + @emails
       post :create, :project_id => @project.permalink, :user_or_email => list
       response.should be_success
-      
+
       @project.invitations(true).length.should == @users.count + 3
     end
   end

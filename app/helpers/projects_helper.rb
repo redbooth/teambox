@@ -137,27 +137,8 @@ module ProjectsHelper
     projects.reject{|p| p.user_id != user.id}.map {|p| [ p.name, p.id ]}
   end
 
-  # TODO: delete, this is done client side now
-  # FIXME eventually migrate that to just use the plain json from projects_people_data
-  def autocomplete_projects_people_data
-    projects = current_user.projects.reject{ |p| p.new_record? }
-    return nil if projects.empty?
-    
-    format = '@%s <span class="informal">%s</span>'
-    special_all = format % ['all', t('conversations.watcher_fields.people_all')]
-    data_by_permalink = Hash.new { |h, k| h[k] = [special_all] }
-    
-    rows = Person.user_names_from_projects(projects)
-    
-    names = rows.each_with_object(data_by_permalink) do |(project_id, login, first_name, last_name), data|
-      data[project_id] << (format % [login, "#{h first_name} #{h last_name}"])
-    end
-    
-    javascript_tag "_people_autocomplete = #{names.to_json}"
-  end
-
   def projects_people_data
-    projects = @current_project ? [@current_project] : current_user.projects.reject{ |p| p.new_record? }
+    projects = current_user.projects.reject{ |p| p.new_record? }
     return nil if projects.empty?
     data = {}
     rows = Person.user_names_from_projects(projects, current_user)
@@ -167,11 +148,6 @@ module ProjectsHelper
     end
     javascript_tag "_people = #{data.to_json}"
   end
-
-  def commentable_projects
-    @projects.select { |p| p.commentable?(current_user) and not p.archived? }
-  end
-  memoize :commentable_projects
 
   def project_link_with_overlay(project)
     content_tag :div, :class => :project_overlay do

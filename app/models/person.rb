@@ -36,7 +36,7 @@ class Person < ActiveRecord::Base
 
   scope :in_alphabetical_order, :include => :user, :order => 'users.first_name ASC'
 
-  attr_accessible :role, :permissions, :digest, :watch_new_task, :watch_new_conversation
+  attr_accessible :role, :permissions, :digest, :watch_new_task, :watch_new_conversation, :watch_new_page
 
   def owner?
     project.owner?(user)
@@ -85,13 +85,17 @@ class Person < ActiveRecord::Base
       INNER JOIN projects ON projects.id = people.project_id
       INNER JOIN users ON users.id = people.user_id
       WHERE people.project_id IN (#{project_ids.join(',')})
-        AND (people.deleted IS NULL OR people.deleted IS FALSE)
+        AND (people.deleted IS NULL OR people.deleted = #{connection.quoted_false})
       ORDER BY users.id = #{current_user.try(:id).to_i} DESC, users.first_name, users.last_name
     SQL
   end
   
   def user
     @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
+  end
+  
+  def references
+    { :users => [user_id], :projects => [project_id] }
   end
 
   def to_xml(options = {})

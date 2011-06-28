@@ -2,6 +2,7 @@
 .DS_Store
 .idea
 .bundle
+.rvmrc
 *.esproj
 .sass-cache
 /assets
@@ -9,6 +10,7 @@ config/database.yml
 config/teambox.local.yml
 /coverage
 /exports
+/imports
 db/*.sqlite3
 db/sphinx
 config/*.sphinx.conf
@@ -17,11 +19,14 @@ log/*.pid
 tmp
 public/avatars
 public/logos
-public/jammit/*
 public/stylesheets
 public/sprockets.js
+public/trimmer
+public/jammit
 /uploads
 webrat-*
 capybara-*
 rerun.txt
 teambox2
+.pre-commit
+.git_fail_words

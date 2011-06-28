@@ -1,0 +1,43 @@
+--- 
+user_info: 
+  name: Charles Barbier
+  urls: 
+    Facebook: http://www.facebook.com/charles
+    Website: 
+  nickname: charles
+  last_name: Barbier
+  image: http://graph.facebook.com/1111853297/picture?type=square
+  email: charles@teambox.com
+  first_name: Charles
+uid: "1111853297"
+credentials: 
+  token: 66c2d83876c03fb8865da1bd48aecaa5d6f001e8
+extra: 
+  user_hash: 
+    name: Charles Barbier
+    location: 
+      name: Montreal, Quebec
+      id: "10218449823699"
+    username: charles
+    id: "1111853297"
+    gender: male
+    timezone: -7
+    last_name: Barbier
+    languages: 
+    - !map:Hashie::Mash 
+      name: "Fran\xC3\xA7ais"
+      id: "112264595467201"
+    - !map:Hashie::Mash 
+      name: English
+      id: "106059522759137"
+    link: http://www.facebook.com/charles
+    hometown: 
+      name: Montreal, Quebec
+      id: "11260078755651"
+    bio: koukouroukoukwikwi
+    locale: fr_CA
+    verified: true
+    updated_time: 2011-04-15T19:47:09+0000
+    first_name: Charles
+    email: charles@teambox.com
+provider: facebook

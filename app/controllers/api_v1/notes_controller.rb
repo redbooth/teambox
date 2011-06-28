@@ -9,20 +9,22 @@ class ApiV1::NotesController < ApiV1::APIController
       target.notes
     else
       Note.where(:project_id => current_user.project_ids)
-    end
+    end.joins(:page)
     
     @notes = context.except(:order).
+                     where(['pages.is_private = ? OR (pages.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                     joins("LEFT JOIN watchers ON (pages.id = watchers.watchable_id AND watchers.watchable_type = 'Page') AND watchers.user_id = #{current_user.id}").
                      where(api_range('notes')).
                      limit(api_limit).
                      order('notes.id DESC').
                      includes([:project, :page])
     
-    api_respond @notes, :references => [:project, :page]
+    api_respond @notes, :references => true
   end
 
   def show
     authorize! :show, @note
-    api_respond @note, :include => [:page_slot]
+    api_respond @note, :references => true
   end
   
   def create

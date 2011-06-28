@@ -2,10 +2,11 @@
   .section
     = link_to "Overview", public_project_path(@project)
     = link_to "All Conversations", public_project_conversations_path(@project)
-  - if @project.pages.any?
+  - page_list = visible_pages_list(@project)
+  - if page_list.any?
     .section
       %h3 Pages
-      - for page in @project.pages
+      - for page in page_list
         = link_to h(page), public_project_page_path(@project, page)
   - else
     %p No pages on this project

@@ -117,6 +117,7 @@
 //= require <oauth>
 //= require <i18n>
 //= require <datetime>
+//= require <date_picker>
 //= require <expand_comment>
 
 //= require <first_steps>
@@ -135,6 +136,7 @@
 //= require <person>
 //= require <preview>
 //= require <quick_add_pane>
+//= require <private_elements>
 //= require <sessions>
 //= require <splash>
 //= require <task>

@@ -25,13 +25,15 @@ class HoursController < ApplicationController
     end
     
     conditions = if @current_project
-      ['project_id = ? AND created_at >= ? AND created_at < ? AND hours > 0', 
+      ['comments.project_id = ? AND comments.created_at >= ? AND comments.created_at < ? AND comments.hours > 0',
         @current_project.id, @start_date, @end_date]
     else
-      ['project_id IN (?) AND created_at >= ? AND created_at < ? AND hours > 0',
+      ['comments.project_id IN (?) AND comments.created_at >= ? AND comments.created_at < ? AND comments.hours > 0',
         current_user.project_ids, @start_date, @end_date]
     end
-    @comments = Comment.find(:all, :conditions => conditions, :include => [:project, :user, :target])
+    @comments = Comment.where(conditions).includes([:project, :user, :target]).
+                    where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                    joins("LEFT JOIN watchers ON (comments.target_id = watchers.watchable_id AND watchers.watchable_type = comments.target_type) AND watchers.user_id = #{current_user.id}")
     
     respond_to do |format|
       format.html { }
@@ -41,6 +43,7 @@ class HoursController < ApplicationController
   end
   
   def by_period
+    # FIXME This is still being used? We need Garbage Collection :)
     @start_date = hours_time('start')
     @end_date = hours_time('end')
     
@@ -91,14 +94,16 @@ private
   def serialize_comments(comments)
     csv_io = StringIO.new('', 'w')
     CSV::Writer.generate(csv_io) do |csv|
-      csv << ["Time", "Project", "Task", "User", "Person", "Hours", "Description"]
+      csv << ["Time", "Project", "Task", "TaskList", "User", "Person", "Hours", "Minutes", "Description"]
       comments.each do |comment|
         csv << [comment.created_at.to_s(:csv_time),
                comment.project.permalink,
-               comment.target.try(:name)||'',
+               comment.target.is_a?(Task) ? (comment.target.try(:name) || '') : '',
+               comment.target.is_a?(Task) ? (comment.target.task_list.try(:name) || '') : '',
                comment.user.login,
                comment.user.name,
                comment.hours,
+               comment.hours * 60,
                comment.body]
       end
     end
