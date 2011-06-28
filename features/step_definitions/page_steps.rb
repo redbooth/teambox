@@ -7,7 +7,7 @@ Given /^the (p[a-z]+ )?project page "([^\"]*)" exists(?: in "([^\"]*)")?(?: with
   priv_type = (priv_type||'').strip == 'private'
   project = project_name ? Project.find_by_name(project_name) : @current_project
   @page = project.pages.find_by_name(name) || project.new_page(@current_user, {:name => name})
-  @page.is_private = true
+  @page.is_private = true if priv_type
   @page.save!
   note = @page.build_note({:name => 'The first note'}).tap do |n|
     n.updated_by = @page.user
@@ -23,7 +23,7 @@ Given /^(@.+) created the (p[a-z]+ )?project page "([^\"]*)"(?: in "([^\"]*)")?$
   user = User.find_by_login(user_name.gsub('@',''))
   @page = project.pages.find_by_name(name) || project.new_page(user, {:name => name})
   @page.user = user
-  @page.is_private = true
+  @page.is_private = true if priv_type
   @page.save
 end
 
