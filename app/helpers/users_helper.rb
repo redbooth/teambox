@@ -196,7 +196,9 @@ module UsersHelper
     def json_projects
       # FIXME add current_project
       projects = {}
-      current_user.projects.except(:select).select("projects.id, projects.permalink, projects.organization_id, projects.user_id, projects.archived, projects.tracks_time, projects.name, people.role").each do |p|
+      project_ids = current_user.project_ids + [@current_project.try(:id)]
+      my_projects = Project.where(:id => project_ids).joins("LEFT JOIN people ON (people.id = projects.id)").except(:select).select("projects.id, projects.permalink, projects.organization_id, projects.user_id, projects.archived, projects.tracks_time, projects.name, people.role")
+      my_projects.each do |p|
         projects[p.id] = {
           :permalink => p.permalink,
           :role => p.role,
