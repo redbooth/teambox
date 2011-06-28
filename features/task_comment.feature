@@ -20,7 +20,6 @@ Feature: Commenting on a task
     And I select the day "25" with the date picker
     And I press "Save"
     And I wait for 2 second
-    Then show me the page
     Then I should see "JAN 25" within the last comment body
     But I fill in the comment box with "I change my mind, should be done ASAP."
     And I click on the date selector
