@@ -1,4 +1,4 @@
-@organizations
+@organizations @javascript
 Feature: When I use Teambox community version, there is only one organization
 
   Background:
@@ -77,8 +77,7 @@ Feature: When I use Teambox community version, there is only one organization
     When I fill in "login" with "mislav"
     And I fill in "password" with "dragons"
     And I press "Login"
-    Then I should see "All Projects"
-    And I should see "Organization"
+    Then I should see "Organization"
 
   Scenario: I can't create a second organization
     Given @mislav exists and is logged in
@@ -126,7 +125,6 @@ Feature: When I use Teambox community version, there is only one organization
     And I am currently in the project ruby_rockstars
     And "mislav" is an administrator in the organization called "ACME"
     And I go to the home page
-    Then I should see "configure your organization"
     When I follow "Click here"
     Then I should see "Introduce some HTML code for your main site to configure your site"
     And I follow "Appearance"
