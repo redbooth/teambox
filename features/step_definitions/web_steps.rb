@@ -145,8 +145,8 @@ end
 
 Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   if Capybara.current_driver == Capybara.javascript_driver
-    with_css_scope(selector) do |scope|
-      assert scope.has_xpath?("//*[contains(text(), \"#{text}\")]", :visible => true)
+    with_css_scope(selector) do
+      assert page.has_xpath?(XPath::HTML.content(text), :visible => true)
     end
   elsif page.respond_to? :should
     with_scope(selector) do
