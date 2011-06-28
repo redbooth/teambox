@@ -4,17 +4,16 @@
     , SidebarStatic = {};
 
   Sidebar.events = {
-    "click .el" : "clickElement"
+    'click .el' : 'clickElement'
   };
 
   Sidebar.initialize = function (options) {
-    var app_controller = Teambox.controllers.application
-      , current = SidebarStatic.detectSelectedSection(window.location.hash);
+    var current = SidebarStatic.detectSelectedSection(window.location.hash);
 
     _.bindAll(this, 'renderTaskCounter');
 
     // TODO: bind only to change
-    app_controller.my_tasks.bind('all', this.renderTaskCounter);
+    Teambox.collections.tasks.bind('all', this.renderTaskCounter);
 
     // Hide folded navigation bar elements
     $(this.el).select('.contained').invoke('hide');
@@ -29,22 +28,21 @@
   /* renders the counters on the tasks sidebar
    */
   Sidebar.renderTaskCounter = function () {
-    var app_controller = Teambox.controllers.application
-      , mine  = app_controller.my_tasks.mine()
-      , today = app_controller.my_tasks.today()
-      , late  = app_controller.my_tasks.late();
+    var mine  = Teambox.collections.tasks.mine()
+      , today = Teambox.collections.tasks.today()
+      , late  = Teambox.collections.tasks.late();
 
-    $$("#my_tasks_link span, #today_link span").invoke('remove');
+    $$('#my_tasks_link span, #today_link span').invoke('remove');
 
 
-    if (mine && mine.length > 0) {
-      $("my_tasks_link").insert({ bottom: "<span>" + mine.length + "</span>" });
+    if (mine && mine.length) {
+      $("my_tasks_link").insert({bottom: '<span>' + mine.length + '</span>'});
     }
 
-    if (today && today.length > 0) {
-      $("today_link").insert({ bottom: "<span>" + today.length + "</span>" });
+    if (today && today.length) {
+      $('today_link').insert({bottom: '<span>' + today.length + '</span>'});
       if (late.length > 0) {
-        $$("#today_link span")[0].addClassName('red');
+        $$('#today_link span')[0].addClassName('red');
       }
     }
   };
@@ -133,7 +131,7 @@
     return element.hasClassName('selected');
   };
 
-    // Highlight this element, clearing others
+  // Highlight this element, clearing others
   Sidebar.selectElement = function (el) {
     $(this.el).select('.el.selected')
       .invoke('removeClassName', 'selected')

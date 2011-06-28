@@ -112,10 +112,11 @@
     }
 
   , build: function () {
-      // Initialize views
-      views.search_view     = new Teambox.Views.Search();
+      views.search_view = new Teambox.Views.Search();
+      views.sidebar = new Teambox.Views.Sidebar({el: $('column')});
+
       $$('.header h1')[0].insert({after: views.search_view.render().el});
-      views.sidebar     = new Teambox.Views.Sidebar({ el: $('column') });
+      views.sidebar.renderTaskCounter();
     }
   , setPushSessionId: function (push_session_id) {
       this.push_session_id = push_session_id;
