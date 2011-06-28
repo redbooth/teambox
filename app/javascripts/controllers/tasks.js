@@ -50,8 +50,9 @@
 
     Views.Sidebar.highlightSidebar('all_tasks_link');
 
-    $('content').update(view.render().el).insert({top: filters.render().el});
-    $('content').insert({top: filters.render().el});
+    $('content')
+      .update(view.render().el)
+      .insert({top: filters.render().el});
     $('view_title').update(view.title);
   };
 

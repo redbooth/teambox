@@ -3,16 +3,16 @@
   var FilterDueDate = { tagName: 'select'
                       , id: 'filter_due_date'
                         // TODO: generate this with task::status
-                      , options_html: '<option value="">anytime</option>'
-                                    + '<option value="overdue">late tasks</option>'
-                                    + '<option value="unassigned_date">no date assigned</option>'
+                      , options_html: '<option value="">Anytime</option>'
+                                    + '<option value="overdue">Late tasks</option>'
+                                    + '<option value="unassigned_date">No date assigned</option>'
                                     + '<option value="divider" disabled="disabled">------</option>'
-                                    + '<option value="due_today">today</option>'
-                                    + '<option value="due_tomorrow">tomorrow</option>'
-                                    + '<option value="due_week">this week</option>'
-                                    + '<option value="due_2weeks">next 2 weeks</option>'
-                                    + '<option value="due_3weeks">next 3 weeks</option>'
-                                    + '<option value="due_month">within 1 month</option>' };
+                                    + '<option value="due_today">Today</option>'
+                                    + '<option value="due_tomorrow">Tomorrow</option>'
+                                    + '<option value="due_week">This week</option>'
+                                    + '<option value="due_2weeks">Next 2 weeks</option>'
+                                    + '<option value="due_3weeks">Next 3 weeks</option>'
+                                    + '<option value="due_month">Within 1 month</option>' };
 
   FilterDueDate.initialize = function (options) {
     var el = $(this.el);

@@ -2,9 +2,9 @@
 
   var FilterAssigned = { tagName: 'select'
                        , id: 'filter_assigned'
-                       , options_html: '<option value="">anybody</option>'
-                                     + '<option value="mine">my tasks</option>'
-                                     + '<option value="unassigned">unassigned</option>' };
+                       , options_html: '<option value="">Anybody</option>'
+                                     + '<option value="mine">My tasks</option>'
+                                     + '<option value="unassigned">Unassigned</option>' };
 
   FilterAssigned.initialize = function (options) {
     var el = $(this.el);

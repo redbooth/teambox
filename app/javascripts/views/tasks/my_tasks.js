@@ -1,5 +1,5 @@
 (function () {
-  var MyTasks = { title: "Tasks assigned to you"
+  var MyTasks = { title: 'Tasks assigned to you'
                 , template: Teambox.modules.ViewCompiler('tasks.index')
                 , primer_template: Teambox.modules.ViewCompiler('primers.my_tasks')
                 }

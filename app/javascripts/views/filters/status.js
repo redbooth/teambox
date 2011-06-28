@@ -2,12 +2,12 @@
 
   var FilterStatus = { tagName: 'select'
                      , id: 'filter_status'
-                     , options_html: '<option value="">all status</option>'
-                                   + '<option value="status_0">new</option>'
-                                   + '<option value="status_1">open</option>'
-                                   + '<option value="status_2">hold</option>'
-                                   + '<option value="status_3">resolved</option>'
-                                   + '<option value="status_4">rejected</option>' };
+                     , options_html: '<option value="">All status</option>'
+                                   + '<option value="status_0">New</option>'
+                                   + '<option value="status_1">Open</option>'
+                                   + '<option value="status_2">Hold</option>'
+                                   + '<option value="status_3">Resolved</option>'
+                                   + '<option value="status_4">Rejected</option>' };
 
   FilterStatus.initialize = function (options) {
     var el = $(this.el);
