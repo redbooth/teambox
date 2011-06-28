@@ -1,4 +1,4 @@
-@organizations
+@organizations @javascript
 Feature: Managing organizations
 
   Background: 
@@ -18,7 +18,7 @@ Feature: Managing organizations
   Scenario: I view all the projects in my organization
     When I go to the home page
     And I follow "Organizations"
-    When I follow "ACME" within ".organizations"
+    When I follow "ACME" within "#my_organizations_list"
     Then I should see "Ruby Rockstars"
 
   Scenario: I edit an organization
@@ -27,7 +27,7 @@ Feature: Managing organizations
       | organization_permalink  | acmeind        |
     And I press "Save changes"
     And I go to the organizations page
-    Then I should see "War Industries" within ".organizations"
+    Then I should see "War Industries" within "#my_organizations_list"
 
   Scenario: I should see admins, participants and external users from an organization
     When I follow "Manage users"
@@ -35,7 +35,6 @@ Feature: Managing organizations
     And I should see "Pablo" within ".users_participants"
     And I should see "Jordi" within ".users_external"
     And I should not see "Remove admin rights" within ".users_admins"
-    And I should not see "remove from this organization" within ".users_admins"
 
   Scenario: I promote a participant to an admin
     When I follow "Manage users"
@@ -45,6 +44,7 @@ Feature: Managing organizations
   Scenario: I remove a participant from an organization
     When I follow "Manage users"
     And I follow "remove from this organization"
+    And I wait for 1 second
     Then I should see "Pablo" within ".users_external"
 
   Scenario: I promote an external to a participant
@@ -105,7 +105,7 @@ Feature: Managing organizations
   Scenario: I can't access organizations as an external user
     Given I am logged in as @jordi
     And I go to the organizations page
-    Then I should not see "ACME" within ".organizations"
+    Then I should not see "ACME" within "#my_organizations_list"
     When I go to the participant page for the "ACME" organization
     Then I should see "You don't have permission to access or edit this organization."
 
@@ -127,5 +127,5 @@ Feature: Managing organizations
     When the organization called "ACME" has no projects
     Then I follow "ACME"
     And I follow "Delete"
-    And I follow "Delete this organization"
+    And I follow "Delete this organization" confirming with OK
     Then I should see a notice: "You deleted the organization"
