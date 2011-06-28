@@ -96,7 +96,9 @@
 //= require <views/filters/status>
 //
 //= require <views/thread>
-//= require <views/thread_list>
+//= require <views/conversation_new>
+//= require <views/conversation_list>
+//= require <views/conversation_list_item>
 //= require <views/watchers>
 
 //= require <facebox>
