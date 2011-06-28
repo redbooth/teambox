@@ -17,13 +17,27 @@
   };
 
   AppController.index = function () {
-    var threads = Teambox.collections.threads;
+    var threads = Teambox.collections.threads
+      , show_more = '<a href="#" class="button" id="activity_paginate_link"><span>Show more</span></a>';
 
     Views.Sidebar.highlightSidebar('activity_link');
     $('view_title').update('Recent activity');
     $('content').update((new Teambox.Views.Activities({collection: threads})).render().el);
-    $('content').insert({bottom: '<a href="#" class="button" id="activity_paginate_link"><span>Show more</span></a>'});
-    $('activity_paginate_link').observe('click', threads.fetchNextPage.bind(threads));
+    $('content').insert({bottom: show_more});
+
+    // TODO: move this inside the view
+    $('activity_paginate_link').observe('click', function onShowMore(event) {
+      var el = event.element();
+      Element.replace('activity_paginate_link', '<img id="activity_paginate_link" src="/images/loading.gif" alt="loading..." />');
+
+      threads.fetchNextPage(function (collection, response) {
+        Element.replace('activity_paginate_link', show_more);
+        $('activity_paginate_link').observe('click', onShowMore);
+        if (response.objects.length <= 50) {
+          el.hide();
+        }
+      });
+    });
   };
 
   // exports

@@ -65,11 +65,6 @@ describe("views/activities", function () {
     $insert.restore();
   });
 
-  it('`hidePagination` should be triggered when no more elements are added to the collection', function () {
-    Collection.trigger('no_more_pages');
-    expect($('activity_paginate_link')).toBeHidden();
-  });
-
   it('`render` should add all the threads into the activities div and update `content` with it', function () {
     var $appendActivity = sinon.stub(activities, 'appendActivity', function (thread) {
       activities.el.insert({bottom: new Element('div', {'class': thread.get('type')})});

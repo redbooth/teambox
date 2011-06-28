@@ -12,7 +12,7 @@
     return "/api/1/projects/" + this.options.project_id + '/conversations';
   };
 
-  Conversations.fetchNextPage = function () {
+  Conversations.fetchNextPage = function (callback) {
     var models = this.models
       , self = this
       , options = {};
@@ -21,12 +21,7 @@
     // because `data` is a jQuery argument for `$.ajax`
     options.data = 'max_id=' + models[models.length - 1].id;
     options.add = true;
-    options.success = function (collection, response) {
-      // if less than a full page
-      if (response.objects.length <= 50) {
-        self.trigger('no_more_pages');
-      }
-    };
+    options.success = callback;
 
     this.fetch(options);
   };

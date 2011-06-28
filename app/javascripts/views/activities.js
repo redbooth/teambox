@@ -19,7 +19,6 @@
 
     this.collection.unbind('add');
     this.collection.bind('add', Activities.appendActivity.bind(this));
-    this.collection.bind('no_more_pages', Activities.hidePagination.bind(this));
   };
 
   Activities.appendActivity = function appendActivity(thread) {
@@ -33,10 +32,6 @@
         || this.templates.raw_activity;
       this.el.insert({ bottom: template(thread.getAttributes()) });
     }
-  };
-
-  Activities.hidePagination = function hidePagination() {
-    $('activity_paginate_link').hide();
   };
 
   /* Updates the element with each thread
