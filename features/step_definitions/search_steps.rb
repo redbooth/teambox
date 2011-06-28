@@ -10,9 +10,7 @@ end
 
 When /^I submit the search/ do
   if Capybara.current_driver == Capybara.javascript_driver
-    within(:xpath, "//form[@id='search']") do
-      locate(:xpath, "//input[@name='q']").node.send_keys(:return)
-    end
+    page.evaluate_script("document.getElementsByClassName('search')[0].submit()")
   else
     # Not Implemented yet
   end
