@@ -1,32 +1,34 @@
-Teambox.Views.Projects = Backbone.View.extend({
+(function () {
+  var ProjectView = { className: 'projects'
+                    , template: Teambox.modules.ViewCompiler('projects.index')
+                    };
 
-  initialize: function(options) {
-    this.app = options.app;
+  ProjectView.events = {
+    'click a.show_achived': 'showArchived'
+  };
 
+  ProjectView.initialize = function (options) {
+    this.collection = options.collection;
     _.bindAll(this, 'render');
     // TODO: Listen for changes in my projects
-  },
+  };
 
-  template: Handlebars.compile(Templates.projects.index),
 
-  render: function() {
-    $('content').update( this.template({
-      organizations: this.collection.organizations()
-    }));
-  },
+  ProjectView.render = function () {
+    this.el.update(this.template({organizations: this.collection.organizations()}));
 
-  events: {
-    "click a.show_achived": "showArchived"
-  },
+    return this;
+  };
 
   // Reveal archived projects under one organization
-  showArchived: function(evt) {
+  ProjectView.showArchived = function (evt) {
     evt.currentTarget.hide();
     evt.currentTarget.up()
       .next('.archived_projects')
       .appear({duration: 0.2});
     return false;
-  }
+  };
 
-});
-
+  // exports
+  Teambox.Views.Projects = Backbone.View.extend(ProjectView);
+}());

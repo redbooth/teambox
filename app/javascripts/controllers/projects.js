@@ -1,38 +1,36 @@
 (function () {
 
-  var ProjectsController = Teambox.Controllers.BaseController.extend({
+  var ProjectsController = { routes: { '/projects'                     : 'projects_index'
+                                     , '/projects/new'                 : 'projects_new'
+                                     , '/projects/:id'                 : 'projects_show'
+                                     , '/projects/:project/people'     : 'people_index'
+                                     , '/projects/:project/settings'   : 'project_edit'
+                                     , '/projects/:project/task_lists' : 'task_lists'
+                                     }
+                           }
+    , Views = Teambox.Views
+    , collections = Teambox.collections;
 
-    routes: {
-      '/projects'                     : 'projects_index'
-    , '/projects/new'                 : 'projects_new'
-    , '/projects/:id'                 : 'projects_show'
-    , '/projects/:project/people'     : 'people_index'
-    , '/projects/:project/settings'   : 'project_edit'
-    , '/projects/:project/task_lists' : 'task_lists'
-    }
+  ProjectsController.projects_index = function () {
+    Views.Sidebar.highlightSidebar('projects_link');
+    $('content').update((new Views.Projects({collection: collections.projects})).render().el);
+  };
 
-  , projects_index: function () {
-      Teambox.Views.Sidebar.highlightSidebar('projects_link');
-      this.app.projects_view.render();
-    }
+  ProjectsController.projects_new = function () {
+    Teambox.Views.Sidebar.highlightSidebar('new_project_link');
+    $('content').update('new project');
+  };
 
-  , projects_new: function () {
-      Teambox.Views.Sidebar.highlightSidebar('new_project_link');
-      $('content').update('new project');
-    }
+  ProjectsController.projects_show = function () {
+    $('content').update('show project');
+  };
 
-  , projects_show: function () {
-      $('content').update('show project');
-    }
-
-  , task_lists: function (project) {
-      Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_task_lists');
-      this.app.today_view.render();
-    }
-
-  });
+  ProjectsController.task_lists = function (project) {
+    Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_task_lists');
+    this.app.today_view.render();
+  };
 
   // exports
-  Teambox.Controllers.ProjectsController = ProjectsController;
+  Teambox.Controllers.ProjectsController = Teambox.Controllers.BaseController.extend(ProjectsController);
 
 }());

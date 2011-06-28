@@ -113,10 +113,8 @@
 
   , build: function () {
       // Initialize views
-      views.projects_view   = new Teambox.Views.Projects({ app: this, collection: this.my_projects });
       views.search_view     = new Teambox.Views.Search();
       $$('.header h1')[0].insert({after: views.search_view.render().el});
-
       views.sidebar     = new Teambox.Views.Sidebar({ el: $('column') });
     }
   , setPushSessionId: function (push_session_id) {

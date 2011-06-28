@@ -1,0 +1,24 @@
+h2 <%= t('projects.index.projects')%>
+
+.projects_pane
+  - each org in self.organizations
+    h4: a(href= '/organizations/' + org.permalink)= org.name
+
+    .projects
+      - if (org.active_projects.length)
+        - each project in org.active_projects
+          p.project
+            a(href= project.project_url)= project.name
+            span.status
+              = project.my_role
+              - if (project.admin)
+                a(href= '/projects/' + project.permalink + '/settings') (<%= t('organizations.active_projects.settings')%>)
+      - else
+        p.none <%= t('organizations.active_projects.no_active_projects')%>
+
+      - if (org.has_archived_projects.length)
+        - each project in org.active_projects
+          p: a.show_archived(href= '#') Show #{project.count} archived projects
+          .archived_projects(style= 'display: none')
+            - if (project.projects)
+              p.project: a(href= '/projects/' + project.permalink)= project.name
