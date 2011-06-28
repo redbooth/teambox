@@ -1,4 +1,4 @@
-@organizations
+@organizations @javascript
 Feature: Public sites for organizations. Allow to view an entrance page and log in
 
   Background: 
