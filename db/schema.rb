@@ -444,16 +444,16 @@ ActiveRecord::Schema.define(:version => 20110623083525) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "position"
-    t.integer  "comments_count",         :default => 0,     :null => false
+    t.integer  "comments_count",            :default => 0,     :null => false
     t.integer  "last_comment_id"
     t.integer  "assigned_id"
-    t.integer  "status",                 :default => 0
+    t.integer  "status",                    :default => 0
     t.date     "due_on"
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted",                :default => false, :null => false
-    t.boolean  "is_private",             :default => false, :null => false
+    t.boolean  "deleted",                   :default => false, :null => false
+    t.boolean  "is_private",                :default => false, :null => false
     t.string   "google_calendar_url_token"
     t.integer  "record_conversion_id"
     t.string   "record_conversion_type"
