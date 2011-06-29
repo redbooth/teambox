@@ -57,6 +57,64 @@ a.add_button, a.new_task_list_link
       padding: 8px 7px 7px 7px
       background: url(images/button_wrap_bg.jpg) no-repeat right
 
+
+.button_gray
+  font-size: 11px
+  background: url(img_3_2/sprite_btn.png) -126px -112px no-repeat
+  display: block
+  float: left
+  height: 28px
+  padding-left: 3px
+  text-shadow: rgba(255, 255, 255, 1) 0px 1px 1px
+  color: $clr_gray_80
+  span
+    background: transparent url(img_3_2/sprite_btn.png) top right no-repeat
+    background-position-y: -112px
+    display: block
+    float: left
+    height: 21px
+    padding:
+      top: 7px
+      left: 5px
+      right: 7px
+    margin-right: -3px
+  &:hover, &:visited
+    color: $clr_gray_80
+    text-decoration: none
+  &:active
+    background-position-y: -140px
+    span
+      background-position-y: -140px
+
+.button_blue
+  font-size: 11px
+  background: url(img_3_2/sprite_btn.png) -126px -168px no-repeat
+  display: block
+  float: left
+  height: 28px
+  padding-left: 3px
+  text-shadow: rgba(255, 255, 255, 1) 0px 1px 1px
+  color: $clr_gray_80
+  span
+    background: transparent url(img_3_2/sprite_btn.png) top right no-repeat
+    background-position-y: -168px
+    display: block
+    float: left
+    height: 21px
+    padding:
+      top: 7px
+      left: 5px
+      right: 7px
+    margin-right: -3px
+  &:hover, &:visited
+    color: $clr_gray_80
+    text-decoration: none
+  &:active
+    background-position-y: -196px
+    span
+      background-position-y: -196px
+
+
 =button
   display: inline-block
   +rounded(4px)

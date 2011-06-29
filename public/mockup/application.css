@@ -186,6 +186,60 @@ a.button, a.unarchive_task_list_link, a.reorder_task_list_link, a.add_button, a.
     padding: 8px 7px 7px 7px;
     background: url(images/button_wrap_bg.jpg) no-repeat right; }
 
+.button_gray {
+  font-size: 11px;
+  background: url(img_3_2/sprite_btn.png) -126px -112px no-repeat;
+  display: block;
+  float: left;
+  height: 28px;
+  padding-left: 3px;
+  text-shadow: white 0px 1px 1px;
+  color: #535353; }
+  .button_gray span {
+    background: transparent url(img_3_2/sprite_btn.png) top right no-repeat;
+    background-position-y: -112px;
+    display: block;
+    float: left;
+    height: 21px;
+    padding-top: 7px;
+    padding-left: 5px;
+    padding-right: 7px;
+    margin-right: -3px; }
+  .button_gray:hover, .button_gray:visited {
+    color: #535353;
+    text-decoration: none; }
+  .button_gray:active {
+    background-position-y: -140px; }
+    .button_gray:active span {
+      background-position-y: -140px; }
+
+.button_blue {
+  font-size: 11px;
+  background: url(img_3_2/sprite_btn.png) -126px -168px no-repeat;
+  display: block;
+  float: left;
+  height: 28px;
+  padding-left: 3px;
+  text-shadow: white 0px 1px 1px;
+  color: #535353; }
+  .button_blue span {
+    background: transparent url(img_3_2/sprite_btn.png) top right no-repeat;
+    background-position-y: -168px;
+    display: block;
+    float: left;
+    height: 21px;
+    padding-top: 7px;
+    padding-left: 5px;
+    padding-right: 7px;
+    margin-right: -3px; }
+  .button_blue:hover, .button_blue:visited {
+    color: #535353;
+    text-decoration: none; }
+  .button_blue:active {
+    background-position-y: -196px; }
+    .button_blue:active span {
+      background-position-y: -196px; }
+
 img {
   border: none; }
 
@@ -1648,7 +1702,8 @@ img#activity_paginate_loading {
     .thread .comment_header .block {
       float: left;
       display: block;
-      clear: none; }
+      clear: none;
+      width: 550px; }
       .thread .comment_header .block a {
         font-weight: bold;
         text-decoration: none;
@@ -1683,10 +1738,7 @@ img#activity_paginate_loading {
       padding: 10px 10px 10px 44px;
       height: 16px; }
   .thread form.new_comment {
-    border-left: 4px solid #eeeeee;
-    background-color: #fafafa;
-    margin: 0;
-    padding: 2px 0 5px 6px; }
+    margin: 0; }
 
 .expand_comment a {
   position: absolute;
@@ -1822,137 +1874,184 @@ span.comments_count {
   width: 16px;
   text-align: center; }
 
-form.new_comment, form.edit_comment {
+.new_comment, form.edit_comment {
+  margin-top: 10px;
   padding-bottom: 3px;
-  margin-bottom: 30px; }
-  form.new_comment .micro_avatar, form.edit_comment .micro_avatar {
-    border: 1px solid #a0a0a0;
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    position: absolute;
-    top: 1px;
-    left: 0; }
-  form.new_comment .field, form.edit_comment .field {
+  margin-bottom: 10px; }
+  .new_comment .marco_avatar, form.edit_comment .marco_avatar {
+    background: url(img_3_2/sprite_base.png) 0px -36px no-repeat;
+    height: 30px;
+    width: 35px;
+    margin-right: 6px;
+    margin-left: 6px;
+    margin-bottom: 10px;
+    float: left;
+    clear: none; }
+  .new_comment .field, form.edit_comment .field {
     position: relative;
     margin: 3px 0 6px; }
-    form.new_comment .field label, form.edit_comment .field label {
+    .new_comment .field label, form.edit_comment .field label {
       font-weight: normal !important; }
-    form.new_comment .field .textarea, form.edit_comment .field .textarea {
+    .new_comment .field .textarea, form.edit_comment .field .textarea {
       display: block;
-      margin-left: 38px;
-      margin-bottom: 0px; }
-    form.new_comment .field textarea, form.edit_comment .field textarea {
-      width: 95%;
+      float: left;
+      clear: right;
+      width: 555px;
+      margin: 0px; }
+    .new_comment .field textarea, form.edit_comment .field textarea {
+      width: 545px;
       display: block;
       font-size: 13px;
-      height: 1.4em;
+      height: 18px;
+      border: 1px solid #a0a0a0;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
       color: black; }
-      #facebox form.new_comment .field textarea, #facebox form.edit_comment .field textarea {
+      #facebox .new_comment .field textarea, #facebox form.edit_comment .field textarea {
         width: 575px; }
-  form.new_comment .text_field.hours_field, form.edit_comment .text_field.hours_field {
+  .new_comment .text_field.hours_field, form.edit_comment .text_field.hours_field {
     font-size: 12px; }
-    form.new_comment .text_field.hours_field label, form.edit_comment .text_field.hours_field label {
+    .new_comment .text_field.hours_field label, form.edit_comment .text_field.hours_field label {
       display: inline; }
-    form.new_comment .text_field.hours_field input, form.edit_comment .text_field.hours_field input {
+    .new_comment .text_field.hours_field input, form.edit_comment .text_field.hours_field input {
       width: 5em;
       font-size: 14px;
       padding: 2px 4px;
       margin-right: 1em; }
-  form.new_comment .actions, form.edit_comment .actions {
+  .new_comment .new_extra, form.edit_comment .new_extra {
+    display: block;
+    float: left;
+    padding-left: 47px;
+    width: 555px; }
+    .new_comment .new_extra .button_blue, form.edit_comment .new_extra .button_blue {
+      float: right;
+      margin-right: 1px; }
+    .new_comment .new_extra .new_comment_actions, form.edit_comment .new_extra .new_comment_actions {
+      margin: 0;
+        margin-bottom: 0;
+        margin-right: 35px;
+      padding: 0;
+      display: block;
+      float: right;
+      clear: none; }
+      .new_comment .new_extra .new_comment_actions li, form.edit_comment .new_extra .new_comment_actions li {
+        display: block;
+        float: left;
+        clear: none;
+        height: 28px;
+        width: 31px;
+        padding: 0; }
+        .new_comment .new_extra .new_comment_actions li a, form.edit_comment .new_extra .new_comment_actions li a {
+          display: block;
+          float: left;
+          clear: none;
+          height: 28px;
+          min-width: 31px;
+          padding: 0;
+          background: url(img_3_2/sprite_btn.png) no-repeat 0px -56px; }
+        .new_comment .new_extra .new_comment_actions li a:active, form.edit_comment .new_extra .new_comment_actions li a:active {
+          background-position-y: -84px; }
+        .new_comment .new_extra .new_comment_actions li a.btn_doc, form.edit_comment .new_extra .new_comment_actions li a.btn_doc {
+          background-position-x: -31px; }
+        .new_comment .new_extra .new_comment_actions li a.btn_users, form.edit_comment .new_extra .new_comment_actions li a.btn_users {
+          background-position-x: -62px; }
+        .new_comment .new_extra .new_comment_actions li a.btn_lock, form.edit_comment .new_extra .new_comment_actions li a.btn_lock {
+          background-position-x: -93px; }
+  .new_comment .actions, form.edit_comment .actions {
     display: inline-block; }
-    form.new_comment .actions span, form.edit_comment .actions span {
+    .new_comment .actions span, form.edit_comment .actions span {
       font-size: 12px;
       margin-right: 5px; }
-    form.new_comment .actions .add_hours_icon, form.new_comment .actions .attach_icon, form.new_comment .actions .add_watchers, form.edit_comment .actions .add_hours_icon, form.edit_comment .actions .attach_icon, form.edit_comment .actions .add_watchers {
+    .new_comment .actions .add_hours_icon, .new_comment .actions .attach_icon, .new_comment .actions .add_watchers, form.edit_comment .actions .add_hours_icon, form.edit_comment .actions .attach_icon, form.edit_comment .actions .add_watchers {
       text-indent: -9999em;
       margin-right: 5px;
       top: 2px; }
-      *:first-child + html form.new_comment .actions .add_hours_icon, *:first-child + html form.new_comment .actions .attach_icon, *:first-child + html form.new_comment .actions .add_watchers, *:first-child + html form.edit_comment .actions .add_hours_icon, *:first-child + html form.edit_comment .actions .attach_icon, *:first-child + html form.edit_comment .actions .add_watchers {
+      *:first-child + html .new_comment .actions .add_hours_icon, *:first-child + html .new_comment .actions .attach_icon, *:first-child + html .new_comment .actions .add_watchers, *:first-child + html form.edit_comment .actions .add_hours_icon, *:first-child + html form.edit_comment .actions .attach_icon, *:first-child + html form.edit_comment .actions .add_watchers {
         text-indent: 16px;
         overflow: hidden;
         top: -2px; }
-    *:first-child + html form.new_comment .actions .attach_icon, *:first-child + html form.edit_comment .actions .attach_icon {
+    *:first-child + html .new_comment .actions .attach_icon, *:first-child + html form.edit_comment .actions .attach_icon {
       margin-left: -16px; }
-    form.new_comment .actions .task_actions, form.edit_comment .actions .task_actions {
+    .new_comment .actions .task_actions, form.edit_comment .actions .task_actions {
       display: inline; }
-      form.new_comment .actions .task_actions label, form.edit_comment .actions .task_actions label {
+      .new_comment .actions .task_actions label, form.edit_comment .actions .task_actions label {
         display: none; }
-      form.new_comment .actions .task_actions select[name="task[status]"], form.edit_comment .actions .task_actions select[name="task[status]"] {
+      .new_comment .actions .task_actions select[name="task[status]"], form.edit_comment .actions .task_actions select[name="task[status]"] {
         width: 80px; }
-      form.new_comment .actions .task_actions select[name="task[assigned_id]"], form.edit_comment .actions .task_actions select[name="task[assigned_id]"] {
+      .new_comment .actions .task_actions select[name="task[assigned_id]"], form.edit_comment .actions .task_actions select[name="task[assigned_id]"] {
         width: 130px; }
-    form.new_comment .actions div.attach, form.edit_comment .actions div.attach {
+    .new_comment .actions div.attach, form.edit_comment .actions div.attach {
       display: inline-block;
       margin-right: 10px; }
-    form.new_comment .actions div.convert_to_task, form.edit_comment .actions div.convert_to_task {
+    .new_comment .actions div.convert_to_task, form.edit_comment .actions div.convert_to_task {
       top: 8px;
       width: 600px; }
-      form.new_comment .actions div.convert_to_task .fields, form.edit_comment .actions div.convert_to_task .fields {
+      .new_comment .actions div.convert_to_task .fields, form.edit_comment .actions div.convert_to_task .fields {
         display: block;
         margin: 5px 0; }
-      form.new_comment .actions div.convert_to_task label, form.edit_comment .actions div.convert_to_task label {
+      .new_comment .actions div.convert_to_task label, form.edit_comment .actions div.convert_to_task label {
         display: inline-block;
         text-align: right;
         width: 160px;
         margin-right: 10px; }
-      form.new_comment .actions div.convert_to_task input[type=text], form.edit_comment .actions div.convert_to_task input[type=text] {
+      .new_comment .actions div.convert_to_task input[type=text], form.edit_comment .actions div.convert_to_task input[type=text] {
         border: 1px solid #bbbbbb;
         padding: 4px; }
-      form.new_comment .actions div.convert_to_task select, form.edit_comment .actions div.convert_to_task select {
+      .new_comment .actions div.convert_to_task select, form.edit_comment .actions div.convert_to_task select {
         margin: 0 5px 0 0; }
-      form.new_comment .actions div.convert_to_task span.localized_date, form.edit_comment .actions div.convert_to_task span.localized_date {
+      .new_comment .actions div.convert_to_task span.localized_date, form.edit_comment .actions div.convert_to_task span.localized_date {
         margin-left: 180px; }
-    form.new_comment .actions span.convert_to_task a, form.edit_comment .actions span.convert_to_task a {
+    .new_comment .actions span.convert_to_task a, form.edit_comment .actions span.convert_to_task a {
       margin-left: 45px;
       font-size: 12px;
       font-style: normal;
       color: #666666;
       text-decoration: none;
       border-bottom: 1px dashed #cccccc; }
-      form.new_comment .actions span.convert_to_task a:hover, form.edit_comment .actions span.convert_to_task a:hover {
+      .new_comment .actions span.convert_to_task a:hover, form.edit_comment .actions span.convert_to_task a:hover {
         border-bottom: 1px solid #cccccc; }
-    form.new_comment .actions .conversation_actions, form.edit_comment .actions .conversation_actions {
+    .new_comment .actions .conversation_actions, form.edit_comment .actions .conversation_actions {
       display: inline; }
-      form.new_comment .actions .conversation_actions label, form.edit_comment .actions .conversation_actions label {
+      .new_comment .actions .conversation_actions label, form.edit_comment .actions .conversation_actions label {
         font-size: 12px;
         display: none; }
-      form.new_comment .actions .conversation_actions label.display, form.edit_comment .actions .conversation_actions label.display {
+      .new_comment .actions .conversation_actions label.display, form.edit_comment .actions .conversation_actions label.display {
         display: inline; }
-      form.new_comment .actions .conversation_actions select[name="conversation[status]"], form.edit_comment .actions .conversation_actions select[name="conversation[status]"] {
+      .new_comment .actions .conversation_actions select[name="conversation[status]"], form.edit_comment .actions .conversation_actions select[name="conversation[status]"] {
         width: 80px; }
-      form.new_comment .actions .conversation_actions select[name="conversation[assigned_id]"], form.edit_comment .actions .conversation_actions select[name="conversation[assigned_id]"] {
+      .new_comment .actions .conversation_actions select[name="conversation[assigned_id]"], form.edit_comment .actions .conversation_actions select[name="conversation[assigned_id]"] {
         width: 130px; }
-    form.new_comment .actions .date_picker, form.edit_comment .actions .date_picker {
+    .new_comment .actions .date_picker, form.edit_comment .actions .date_picker {
       display: inline-block; }
-      form.new_comment .actions .date_picker img, form.edit_comment .actions .date_picker img {
+      .new_comment .actions .date_picker img, form.edit_comment .actions .date_picker img {
         display: none; }
-      form.new_comment .actions .date_picker span, form.edit_comment .actions .date_picker span {
+      .new_comment .actions .date_picker span, form.edit_comment .actions .date_picker span {
         margin-left: 10px; }
-    form.new_comment .actions span.new, form.edit_comment .actions span.new {
+    .new_comment .actions span.new, form.edit_comment .actions span.new {
       font-size: 10px;
       position: relative;
       top: -2px;
       color: #777777; }
-  form.new_comment .submit, form.edit_comment .submit {
+  .new_comment .submit, form.edit_comment .submit {
     float: right;
     display: inline-block;
     text-align: right;
     width: auto; }
-  form.new_comment .project_select, form.edit_comment .project_select {
+  .new_comment .project_select, form.edit_comment .project_select {
     font-size: 13px; }
-  form.new_comment .extra:after, form.edit_comment .extra:after {
+  .new_comment .extra:after, form.edit_comment .extra:after {
     content: " ";
     visibility: hidden;
     height: 0;
     font-size: 0;
     display: block;
     clear: both; }
-  * html form.new_comment .extra, * html form.edit_comment .extra {
+  * html .new_comment .extra, * html form.edit_comment .extra {
     height: 1px; }
-  *:first-child + html form.new_comment .extra, *:first-child + html form.edit_comment .extra {
+  *:first-child + html .new_comment .extra, *:first-child + html form.edit_comment .extra {
     overflow: hidden; }
-  form.new_comment .error, form.edit_comment .error {
+  .new_comment .error, form.edit_comment .error {
     color: firebrick; }
 
 form .upload_area {
@@ -3201,14 +3300,22 @@ a.thumb_avatar {
 
 a.micro_avatar {
   border: 1px solid #a0a0a0;
-  margin: 5px 10px 8px 8px;
+  margin: 4px 5px 0px 8px;
   padding: 0;
   float: left;
   width: 24px;
   height: 24px;
   border-radius: 2px;
   -moz-border-radius: 2px;
-  -webkit-border-radius: 2px; }
+  -webkit-border-radius: 2px;
+  margin-right: 10px; }
+
+.marco_avatar a.micro_avatar {
+  border: none;
+  margin: 3px;
+  border-radius: 0px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px; }
 
 .card {
   font-size: 12px; }

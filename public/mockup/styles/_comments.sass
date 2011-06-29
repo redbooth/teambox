@@ -13,15 +13,20 @@ span.comments_count
     width: 16px
     text-align: center
 
-form.new_comment, form.edit_comment
+.new_comment, form.edit_comment
+  margin-top: 10px
   padding-bottom: 3px
-  margin-bottom: 30px
-  .micro_avatar
-    border: 1px solid $clr_gray_50
-    +rounded(2px)
-    position: absolute
-    top: 1px
-    left: 0
+  margin-bottom: 10px
+  .marco_avatar
+    background: url(img_3_2/sprite_base.png) 0px -36px no-repeat
+    height: 30px
+    width: 35px
+    margin:
+      right: 6px
+      left: 6px
+      bottom: 10px
+    float: left
+    clear: none
   .field
     position: relative
     margin: 3px 0 6px
@@ -29,13 +34,17 @@ form.new_comment, form.edit_comment
       font-weight: normal !important
     .textarea
       display: block
-      margin-left: 38px
-      margin-bottom: 0px
+      float: left
+      clear: right
+      width: 555px
+      margin: 0px
     textarea
-      width: 95%
+      width: 545px
       display: block
       font-size: 13px
-      height: 1.4em
+      height: 18px
+      border: 1px solid $clr_gray_50
+      +rounded(3px)
       color: black
       #facebox &
         width: 575px
@@ -48,6 +57,46 @@ form.new_comment, form.edit_comment
       font-size: 14px
       padding: 2px 4px
       margin-right: 1em
+  .new_extra
+    display: block
+    float: left
+    padding-left: 47px
+    width: 555px
+    .button_blue
+      float: right
+      margin-right: 1px
+    .new_comment_actions
+      margin: 0
+        bottom: 0
+        right: 35px
+      padding: 0
+      display: block
+      float: right
+      clear: none
+      li
+        display: block
+        float: left
+        clear: none
+        height: 28px
+        width: 31px
+        padding: 0
+        a
+          display: block
+          float: left
+          clear: none
+          height: 28px
+          min-width: 31px
+          padding: 0
+          background: url(img_3_2/sprite_btn.png) no-repeat 0px -56px
+        a:active
+          background-position-y: -84px
+        a.btn_doc
+          background-position-x: -31px
+        a.btn_users
+          background-position-x: -62px
+        a.btn_lock
+          background-position-x: -93px
+
 
   .actions
     display: inline-block
