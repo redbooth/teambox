@@ -46,7 +46,7 @@ class Task < RoleRecord
   before_save :save_changes_to_comment, :if => :track_changes?
   before_save :save_completed_at
   before_validation :remember_comment_created, :on => :update
-  before_save :update_google_calendar_event, :if => lambda {|t| t.assigned.try(:user).try(:admin?) || !t.google_calendar_url_token.blank? }
+  before_save :update_google_calendar_event, :if => lambda {|t| t.assigned.try(:user) || !t.google_calendar_url_token.blank? }
   
   def assigned
     @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
@@ -394,7 +394,7 @@ class Task < RoleRecord
 
   def add_google_calendar_event
     # Perform the main add action if this calendar is suitable
-    if self.assigned && self.assigned.user && !self.due_on.nil? && self.open? && self.assigned.user.try(:admin?)
+    if self.assigned && self.assigned.user && !self.due_on.nil? && self.open?
       gcal = self.assigned.user.get_calendar_app
       return if gcal.nil?
       

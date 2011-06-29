@@ -1,7 +1,7 @@
 class AddTasksToGoogleCalendars < ActiveRecord::Migration
   def self.up
     Task.where(Task.arel_table[:assigned_id].not_eq(nil)).find_each do |task|
-      if task.assigned.try(:user).try(:admin?) || !task.google_calendar_url_token.blank?
+      if task.assigned.try(:user) || !task.google_calendar_url_token.blank?
         begin
           event = task.force_google_calendar_event_creation!
 
