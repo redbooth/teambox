@@ -453,10 +453,10 @@ ActiveRecord::Schema.define(:version => 20110623083525) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",                   :default => false, :null => false
-    t.boolean  "is_private",                :default => false, :null => false
-    t.string   "google_calendar_url_token"
     t.integer  "record_conversion_id"
     t.string   "record_conversion_type"
+    t.boolean  "is_private",                :default => false, :null => false
+    t.string   "google_calendar_url_token"
   end
 
   add_index "tasks", ["assigned_id"], :name => "index_tasks_on_assigned_id"
@@ -555,7 +555,6 @@ ActiveRecord::Schema.define(:version => 20110623083525) do
     t.boolean  "default_watch_new_conversation",                 :default => false
     t.boolean  "default_watch_new_page",                         :default => false
     t.string   "authentication_token"
-    t.boolean  "notify_pages",                                   :default => false
     t.string   "google_calendar_url_token"
   end
 

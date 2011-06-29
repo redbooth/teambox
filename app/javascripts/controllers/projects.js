@@ -26,8 +26,22 @@
   };
 
   ProjectsController.task_lists = function (project) {
+    var tasks = collections.tasks.filteredByProject(project)
+      , collection = new Teambox.Collections.Tasks(tasks)
+      , view = new Views.ProjectTasks({collection: collection})
+      , filters = new Views.Filters({ task_list: view
+                                    , filters: { name: null
+                                               , assigned: null
+                                               , due_date: null
+                                               , status: null }});
+
     Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_task_lists');
-    this.app.today_view.render();
+
+    $('content')
+      .update(view.render().el)
+      .insert({top: filters.render().el});
+
+    $('view_title').update(view.title);
   };
 
   // exports

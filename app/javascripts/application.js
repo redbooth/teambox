@@ -84,6 +84,7 @@
 
 //= require <views/tasks/all_tasks>
 //= require <views/tasks/my_tasks>
+//= require <views/tasks/project_tasks>
 //= require <views/tasks/today_tasks>
 //= require <views/tasks/select_status>
 //= require <views/tasks/select_assigned>
