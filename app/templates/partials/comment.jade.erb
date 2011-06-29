@@ -40,21 +40,21 @@
 
   // TODO: google docs
   div(id= 'email_post_' + self.id, style= 'width: 600px;display: none;')
-    h1 <%= t('.title') %>
-    p <%= t('.send_replies_with_this_email') %>
+    h1 <%= t('users.email_posts.title') %>
+    p <%= t('users.email_posts.send_replies_with_this_email') %>
     p
       a(href: 'mailto:' + reply_email_url)= reply_email_url
-    p <%= t('.teambox_magic_happens') %>
+    p <%= t('users.email_posts.teambox_magic_happens') %>
 
-    p <%= t('.other_shortcuts_available') %>
+    p <%= t('users.email_posts.other_shortcuts_available') %>
 
     table(style= 'width: 580px')
       tr
         td
           a(href: 'mailto:' + conversation_url)= conversation_url
-        td <%= t('.will_create_conversation') %>
+        td <%= t('users.email_posts.will_create_conversation') %>
       tr
         td
           a(href: 'mailto:' + task_url)= task_url
-        td <%= t('.will_create_task') %>
+        td <%= t('users.email_posts.will_create_task') %>
   .clear

@@ -1114,6 +1114,7 @@ en:
       explain: "Click on users to @mention them in your comment. Mentioned users will receive email notifications for your message and others after it."
       popup_note_html: "Select <b>Notify people</b> to send notifications for this conversation."
       all_users: All users
+      label: Watchers
     uploads:
       button: "Choose File"
     private:

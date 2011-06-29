@@ -30,7 +30,7 @@ input(name= 'utf8', type= 'hidden', value= '✓')
       - if (self.is_task)
         a(href= '#hours', class= 'add_hours_icon hoverable', title= '<%= t('comments.hours.tooltip_short') %>') <%= t('comments.hours.tooltip') %>
 
-      a(href= '#', class= 'add_watchers hoverable', title= '<%= t('shared.watchers.notify_people')%>') <%= t('comments.hours.watchers') %>
+      a(href= '#', class= 'add_watchers hoverable', title= '<%= t('shared.watchers.notify_people')%>') <%= t('comments.watchers.label') %>
 
     - if (self.is_task)
       .task_actions
