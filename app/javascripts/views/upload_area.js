@@ -80,7 +80,7 @@
         , response = JSON.parse(iframe_body.firstChild.innerHTML);
 
       if (iframe_body.className !== "error") {
-        self.model.set(response.objects);
+        self.model.set(response.objects ? response.objects : response);
         self.comment_form.addComment(false, response, true);
       } else {
         self.comment_form.handleError(false, response);
