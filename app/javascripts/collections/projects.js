@@ -59,6 +59,17 @@
     return orgs;
   };
 
+  /* Get project by permalink
+   *
+   * @param {String} permalink
+   * @return {Array} filtered models
+   */
+  ProjectsCollection.getByPermalink = function (permalink) {
+    return this.filter(function (el) {
+      return el.get('permalink') === permalink;
+    });
+  };
+
   ProjectsCollection.roles = [
     I18n.translations.roles.observer
   , I18n.translations.roles.commenter

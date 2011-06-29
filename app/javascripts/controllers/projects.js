@@ -25,9 +25,10 @@
     $('content').update('show project');
   };
 
-  ProjectsController.task_lists = function (project) {
-    var tasks = collections.tasks.filteredByProject(project)
-      , collection = new Teambox.Collections.Tasks(tasks)
+  ProjectsController.task_lists = function (permalink) {
+    var tasks = collections.tasks.filteredByProject(permalink)
+      , collection = (new Teambox.Collections.Tasks(tasks))
+      , project = collections.projects.getByPermalink(permalink)
       , view = new Views.ProjectTasks({collection: collection})
       , filters = new Views.Filters({ task_list: view
                                     , filters: { name: null

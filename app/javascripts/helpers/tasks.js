@@ -74,7 +74,6 @@
     var sorted = TasksHelper.sort(options.tasks, options.by)
       , last_status = {order: null};
 
-    console.log(options.tasks);
     _.each(sorted, function (el) {
       var current_status = TasksHelper.getStatus(options.by)(el);
       if (last_status.order !== current_status.order) {

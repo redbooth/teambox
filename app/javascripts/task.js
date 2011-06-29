@@ -26,50 +26,6 @@ document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
 })
 
 Task = {
-  sortableChange: function(draggable) {
-    this.currentDraggable = draggable
-  },
-  
-  sortableUpdate: _.debounce(function() {
-    var taskId = this.currentDraggable.readAttribute('data-task-id'),
-        taskList = this.currentDraggable.up('.task_list')
-        taskListId = taskList.readAttribute('data-task-list-id')
-
-    taskIds = taskList.select('.tasks .task').collect(
-      function(task) {
-          return task.readAttribute('data-task-id')
-      }).join(',')
-
-    new Ajax.Request('/projects/' + current_project + '/tasks/' + taskId + '/reorder', {
-      method: 'put',
-      parameters: { task_list_id: taskListId, task_ids: taskIds }
-    })
-  }, 100),
-
-  makeSortable: function(task_id, all_task_ids) {
-    Sortable.create(task_id, {
-      constraint: 'vertical',
-      containment: all_task_ids,
-      // format: /.*task_(\d+)_task_task/,
-      handle: 'task_drag',
-      dropOnEmpty: true,
-      // that makes the task disappear when it leaves its original task list
-      // only:'task',
-      tag: 'div',
-      onChange: Task.sortableChange.bind(Task),
-      onUpdate: Task.sortableUpdate.bind(Task)
-    })
-  },
-
-  make_all_sortable: function() {
-    var task_div_ids = $$(".tasks.open").map(function(task_div){
-      return task_div.identify();
-    })
-    task_div_ids.each(function(task_div_id){
-      Task.makeSortable(task_div_id, task_div_ids);
-    })
-  },
-
   highlight_my_tasks: function() {
     $$(".task.user_"+my_user.id).invoke('addClassName', 'mine')
   },
@@ -229,10 +185,6 @@ document.on('ajax:success', '.new_task form', function(e){
 // Enable task sort on load and highlight my tasks
 document.observe('dom:loaded', function(e) {
   if(typeof(my_user) == "undefined") return
-
-  if ($$('.tasks').length > 0 && !$('tasks_for_all_projects')) {
-    Task.make_all_sortable()
-  }
   Task.highlight_my_tasks()
   Task.insertAssignableUsers()
 });
