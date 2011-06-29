@@ -13,7 +13,7 @@ class TeamboxData
       @processed_objects[:user] = []
       
       @users = dump['users'].map do |udata|
-        user_name = @imported_users[udata['username']] || udata['username']
+        user_name = (@imported_users[udata['username']] || udata['username']).strip
         user = User.find_by_login(user_name)
         if user.nil? and opts[:create_users]
           user = User.new(udata)
@@ -22,7 +22,7 @@ class TeamboxData
           user.save!
         end
         
-        raise(Exception, "User #{user} could not be resolved") if user.nil?
+        raise(Exception, "User '#{user_name}' could not be resolved") if user.nil?
         
         @imported_users[udata['id']] = user
         @processed_objects[:user] << user.id
@@ -30,7 +30,7 @@ class TeamboxData
       end.compact
       
       @processed_objects[:organization] = []
-      @organizations = dump['organizations'].map do |organization_data|
+      @organizations = (dump['organizations']||[]).map do |organization_data|
         organization_name = @organization_map[organization_data['permalink']] || organization_data['permalink']
         organization = Organization.find_by_permalink(organization_name)
         
@@ -51,13 +51,13 @@ class TeamboxData
         
         Array(organization_data['members']).each do |member_data|
           org_user = resolve_user(member_data['user_id'])
-          organization.add_member(org_user, member_data['role']) unless organization.is_user?(org_user)
+          organization.add_member(org_user, member_data['role']) if org_user && !organization.is_user?(org_user)
         end
       end
       
       @processed_objects[:project] = []
       @imported_people = {}
-      @projects = dump['projects'].map do |project_data|
+      @projects = (dump['projects']||[]).map do |project_data|
         @project = Project.find_by_permalink(project_data['permalink'])
         if @project
           project_data['permalink'] += "-#{rand}"
@@ -112,6 +112,9 @@ class TeamboxData
             
             task.updating_date = task.created_at
             task.updating_user = task.user
+            #In legacy data status can be nil, we transform it to 0
+            task.status = task.status.to_i
+
             task.save!
             
             import_log(task)
@@ -119,7 +122,9 @@ class TeamboxData
             
             task.updating_date = task.created_at
             task.updating_user = task.user
-            unpack_object(task, task_data).save!
+            task = unpack_object(task, task_data)
+            task.status = task.status.to_i
+            task.save!
           end
           
           unpack_object(task_list, task_list_data).save!

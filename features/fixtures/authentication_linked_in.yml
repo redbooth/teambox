@@ -1,0 +1,130 @@
+--- 
+user_info: 
+  name: Charles Barbier
+  location: Montreal, Canada Area
+  urls: 
+    Teambox: http://teambox.com
+    LinkedIn: ""
+  nickname: 
+  last_name: Barbier
+  description: ""
+  image: http://media.linkedin.com/mpr/mprx/0_O-y3pn6YJvCOP537pzX0zBLm1
+  first_name: Charles
+uid: HbQXh0a0
+credentials: 
+  token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+  secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+extra: 
+  access_token: !ruby/object:OAuth::AccessToken 
+    consumer: !ruby/object:OAuth::Consumer 
+      http: !ruby/object:Net::HTTP 
+        address: api.linkedin.com
+        close_on_empty_response: false
+        curr_http_version: "1.1"
+        debug_output: 
+        newimpl: true
+        open_timeout: 30
+        port: 443
+        read_timeout: 30
+        seems_1_0_server: false
+        socket: !ruby/object:FakeWeb::StubSocket {}
+
+        ssl_context: !ruby/object:OpenSSL::SSL::SSLContext 
+          ca_file: 
+          ca_path: 
+          cert: 
+          cert_store: 
+          client_ca: 
+          client_cert_cb: 
+          extra_chain_cert: 
+          key: 
+          options: 
+          session_get_cb: 
+          session_id_context: 
+          session_new_cb: 
+          session_remove_cb: 
+          timeout: 
+          tmp_dh_callback: 
+          verify_callback: 
+          verify_depth: 
+          verify_mode: 0
+        started: false
+        use_ssl: true
+      http_method: :post
+      key: aaaa
+      options: 
+        :ssl: 
+          :ca_path: /etc/ssl/certs
+        :oauth_version: "1.0"
+        :proxy: 
+        :http_method: :post
+        :request_token_path: /uas/oauth/requestToken
+        :authorize_path: /uas/oauth/authenticate
+        :scheme: :header
+        :signature_method: HMAC-SHA1
+        :site: https://api.linkedin.com
+        :access_token_path: /uas/oauth/accessToken
+      secret: aaaa
+      uri: !ruby/object:URI::HTTPS 
+        fragment: 
+        host: api.linkedin.com
+        opaque: 
+        password: 
+        path: ""
+        port: 443
+        query: 
+        registry: 
+        scheme: https
+        user: 
+    params: 
+      oauth_token_secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+      :oauth_token_secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+      :oauth_token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+      oauth_expires_in: "0"
+      :oauth_authorization_expires_in: "0"
+      :oauth_expires_in: "0"
+      oauth_authorization_expires_in: "0"
+      oauth_token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+    response: !ruby/object:Net::HTTPOK 
+      body: |
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <person>
+          <id>HbQXh0a0</id>
+          <first-name>Charles</first-name>
+          <last-name>Barbier</last-name>
+          <headline></headline>
+          <member-url-resources total="1">
+            <member-url>
+              <url>http://teambox.com</url>
+              <name>Teambox</name>
+            </member-url>
+          </member-url-resources>
+          <picture-url>http://media.linkedin.com/mpr/mprx/0_O-y3pn6YJvCOP537pzX0zBLm1</picture-url>
+          <location>
+            <name>Montreal, Canada Area</name>
+            <country>
+              <code>ca</code>
+            </country>
+          </location>
+        </person>
+
+      code: "200"
+      header: 
+        content-type: 
+        - text/xml;charset=UTF-8
+        server: 
+        - Apache-Coyote/1.1
+        date: 
+        - Fri, 15 Apr 2011 19:44:54 GMT
+        x-li-format: 
+        - xml
+        vary: 
+        - x-li-format,Accept-Encoding
+        transfer-encoding: 
+        - chunked
+      http_version: "1.0"
+      message: OK
+      read: true
+    secret: 159eab88a9b9f03c68c59cd7e3e6e16c83340bb1
+    token: 50877a6a410156d8c8afa8168d8be8025aba6bd2
+provider: linked_in

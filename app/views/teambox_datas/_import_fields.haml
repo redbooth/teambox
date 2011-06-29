@@ -8,8 +8,8 @@
     = f.label :service_basecamp, 'Basecamp'
   
   .many_fields
-    = f.label :asset, t('.select_file')
-    = f.file_field :import_data, :size => 20
+    = f.label :processed_data, t('.select_file')
+    = f.file_field :processed_data, :size => 20
     .clear
 - elsif @data.status_name == :mapping
   %p= t('.please_supply_user_map')
@@ -20,6 +20,6 @@
       %th
     = map_table_for_data(@data)
   .target_project.many_fields
-    %label{:for => 'teambox_data_target_organization'}= t('.in_organization')
-    = select_tag "teambox_data[target_organization]", options_for_select(options_for_target_organization, @data.target_organization)
-    = errors_for @data, "target_organization"
+    %label{:for => 'teambox_data_organization_id'}= t('.in_organization')
+    = select_tag "teambox_data[organization_id]", options_for_select(options_for_organization, @data.organization_id)
+    = errors_for @data, "organization_id"

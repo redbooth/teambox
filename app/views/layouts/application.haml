@@ -29,6 +29,7 @@
         This is a beta preview of the next Teambox release, which could have bugs.
         %a{ :href => "http://teambox.com" }
           Go back to normal Teambox.
+    = render 'shared/confirm_email'
     #header_wrap
       = header
     = configure_this_organization
@@ -39,21 +40,17 @@
         - show_flash
         .column_wrap
           .column#column
+            - if @current_user.settings['show_tutorials']
+              .video_tutorials_box
+                = link_to "Watch the tutorial videos", guides_path, :class => 'view_videos'
+                if it's your first time here.
+                = link_to "(Hide this)", "#", :class => 'hide'
+                .close_me{ :style => 'display: none' }
+                  %p This will hide this box. You can access the tutorials and help with the link on top at any time.
+                  = link_to "Hide this box", "#"
             = render 'shared/navigation'
-        .content_wrap
-          .separator
-            %span.left.unfold_sidebar= link_to "&rarr;".html_safe, "#"
-            %span#view_title
-              All Projects
-            %span.unfold_aux= link_to "&larr;".html_safe, "#"
-          .content#content
-        .aux_wrap
-          .separator
-            Contextual
-            %span.fold_aux= link_to "&rarr;".html_safe, "#"
-          .view_sidebar
-            = yield :column
-      =# footer
-    = autocomplete_projects_people_data
+            .view_sidebar
+              = yield :column
+      = footer
     = projects_people_data
     = hide_google_docs_if_not_configured

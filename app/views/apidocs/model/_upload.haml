@@ -2,11 +2,11 @@
 %p=raw "In the case of a page, uploads belong in slots which can be reordered using page#reorder."
 
 - doc_for :index,
-          :example => example_api_wrap(@upload, :references => [:page, :user]) do
+          :example => example_api_wrap([@upload], :references => true) do
   %p=raw "Returns the most recent dividers on a page."
 
 - doc_for :show,
-          :example => @upload.to_api_hash do
+          :example => example_api_wrap([@upload], :references => true)  do
   %p=raw "Returns the data for a divider."
   
 - doc_for :create,

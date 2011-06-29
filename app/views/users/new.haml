@@ -3,6 +3,9 @@
 - if @provider
   %p= t(:'oauth.this_account_will_be_linked_to', :provider => @provider)
 
+- if @conflict
+  %p= t('oauth.sign_up_conflict')
+
 - if !@invitation and @user.email and User.find_by_email(@user.email)
   %p{ :style => 'margin: 80px 10px; padding: 10px; border: 1px rgb(220,220,150) solid; background-color: rgb(255,255,200)' }
     = t('.you_already_have_an_account_html', :email => @user.email, :login_link => login_path, :reset_password_link => forgot_password_path)

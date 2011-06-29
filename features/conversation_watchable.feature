@@ -1,8 +1,13 @@
 @javascript
 Feature: Watchers for conversations
 
-  Background: 
-    Given a project with users @mislav, @balint, @pablo and @james
+  Background:
+    Given the following confirmed users exist
+      | login  | email                    | first_name | last_name |
+      | pablo  | pablo@teambox.com        | Pablo      | Villalba  |
+      | enric  | enric@teambox.com        | Enric      | Lluelles  |
+      | james  | james@teambox.com        | James      | Urquhart  |
+    Given a project with users @mislav, @enric, @pablo and @james
     And I am logged in as @mislav
     And no emails have been sent
 
@@ -16,18 +21,21 @@ Feature: Watchers for conversations
     When I follow "All users"
     And I press "Save"
     And I wait for 2 second
-    Then @balint, @pablo and @james should receive 1 emails
+    Then @enric, @pablo and @james should receive 1 emails
 
   Scenario: New conversation watchers
     When I go to the new conversation page
     And I fill in "Title" with "Talk!"
     And I fill in the comment box with "We need to discuss!"
+    And I uncheck "James Urquhart"
     And I press "Create"
-    Then @balint, @pablo and @james should be watching the conversation "Talk!"
+    Then @enric and @pablo should be watching the conversation "Talk!"
+    And @james should not be watching the conversation "Talk!"
     When I fill in the comment box with "Rockets!"
     And I press "Save"
     And I wait for 1 second
-    Then @balint, @pablo and @james should receive 2 emails
+    Then @enric and @pablo should receive 2 emails
+    And @james should receive 0 emails
 
   Scenario: Existing conversation with watchers
     Given I started a conversation named "Politics"
@@ -40,12 +48,12 @@ Feature: Watchers for conversations
     And I fill in the comment box with "Rockets!"
     And I press "Save"
     And I wait for 1 second
-    Then @balint should receive no emails
+    Then @enric should receive no emails
     And @pablo and @james should receive 2 emails
 
   Scenario: User leaves project
     Given I started a conversation named "Politics"
-    And the conversation "Politics" is watched by @balint, @pablo and @james
+    And the conversation "Politics" is watched by @enric, @pablo and @james
     And @pablo left the project
     When I go to the conversations page
     And I follow "Politics"
@@ -56,4 +64,4 @@ Feature: Watchers for conversations
     And I press "Save"
     And I wait for 1 second
     Then @pablo should receive no emails
-    And @balint and @james should receive 2 emails
+    And @enric and @james should receive 2 emails

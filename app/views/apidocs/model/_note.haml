@@ -2,11 +2,11 @@
 %p=raw "Note belong in slots, which can be reordered using page#reorder."
 
 - doc_for :index,
-          :example => example_api_wrap(@note, :references => [:page]) do
+          :example => example_api_wrap([@note], :references => true) do
   %p=raw "Returns the most recent notes on a page."
 
 - doc_for :show,
-          :example => @note.to_api_hash(:include => [:page_slot]) do
+          :example => example_api_wrap(@note, :references => true) do
   %p=raw "Returns the data for a note."
   
 - doc_for :create,

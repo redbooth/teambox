@@ -1,11 +1,13 @@
 %p=raw "Organizations group together #{link_to_doc_model(:project)}s and users (via #{link_to_doc_model(:membership)})."
 
 - doc_for :index,
-          :example => example_api_wrap(@organization, :references => []) do
+          :example => example_api_wrap([@organization], :references => true) do
   %p=raw "Returns the most recent organizations you own or belong to."
+  %p=raw "By default external organizations* aren't included. They can be included by adding <tt>external=true</tt> as a <tt>GET</tt> parameter"
+  %p=raw "*<em>External organization</em>: An organization that owns a project the user is in, but he's not on the organization."
 
 - doc_for :show, 
-          :example => @organization.to_api_hash,
+          :example => example_api_wrap(@organization, :references => true),
           :includes => [:projects, :members] do
   %p=raw "Returns the data for a given organization"
   

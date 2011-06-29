@@ -1,5 +1,7 @@
-.page
-  %h3= link_to page, project_page_path(@current_project, page)
+.page{:class => (page.is_private ? 'private' : '')}
+  %h3
+    .lock_icon
+    = link_to page, project_page_path(@current_project, page)
   %p= page.description
   - if page.slots.any?
     - groups = page.divided_slots
@@ -8,5 +10,5 @@
         %h4= h(group[0].rel_object.name)
       %ul
         - group[1].each do |item|
-          - if item.rel_object.class == Note
+          - if item.rel_object.class == Note && item.rel_object.name.present?
             %li= h(item.rel_object.name)

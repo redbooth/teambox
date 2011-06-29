@@ -1,6 +1,6 @@
 %h2= t('.title')
 
-= form_for [@current_project,@page] do |f|
+= form_for [@current_project,@page], :html => {'data-creator-user-id' => @page.user_id, 'data-project-id' => @page.project_id, 'data-project-id' => @page.project_id} do |f|
   = page_fields(f)
 
   .submit

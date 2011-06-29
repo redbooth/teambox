@@ -36,7 +36,7 @@ describe Emailer do
 
       it "should render valid task notification for #{locale}" do
         @task = Factory(:task)
-        Factory(:comment, :target => @task)
+        Factory(:comment, :target => @task, :project => @task.project, :user => @task.user)
 
         with_locale(locale) do
           lambda { Emailer.notify_task(@user.id, @task.project.id, @task.id) }.should_not raise_error
@@ -45,7 +45,7 @@ describe Emailer do
 
       it "should render valid conversation notification for #{locale}" do
         @conversation = Factory(:conversation)
-        Factory(:comment, :target => @conversation)
+        Factory(:comment, :target => @conversation, :project => @conversation.project, :user => @conversation.user)
 
         with_locale(locale) do
           lambda { Emailer.notify_conversation(@user.id, @conversation.project.id, @conversation.id) }.should_not raise_error
@@ -57,7 +57,7 @@ describe Emailer do
         @task.assign_to(@user)
         @task.save
 
-        Factory(:comment, :target => @task, :due_on => Time.now + 1.day)
+        Factory(:comment, :target => @task, :due_on => Time.now + 1.day, :project => @task.project, :user => @task.user)
 
         with_locale(locale) do
           lambda { Emailer.daily_task_reminder(@user.id) }.should_not raise_error

@@ -291,35 +291,9 @@ BLOCK
     @current_project.organization.is_admin?(current_user)
   end
 
-  def include_push_server(project_ids=[])
-    return "" unless Teambox.config.push_new_activities
-    javascript_tag(<<-JS) 
-      window.WEB_SOCKET_SWF_LOCATION = "http://#{request.host}/WebSocketMain.swf"
-      if ( typeof( window['Teambox'] ) == "undefined" ) {
-        window.Teambox = {};
-      }
-
-      var sessionId = Cookie.read('_teambox-2_session');
-      var meta = {
-        teambox_session_id: sessionId,
-      };
-      if (my_user && my_user.authentication_token) {
-        meta['auth_token'] = my_user.authentication_token;
-      }
-      if (my_user && my_user.username) {
-        meta['login'] = my_user.username;
-      }
-      Teambox.pushServer = new Juggernaut({
-        port: #{Teambox.config.juggernaut.port},
-        meta: meta,
-        secure: ('https:' == document.location.protocol)
-      });
-    JS
-  end
-
   def session_meta_tag
     key = Rails.application.config.session_options[:key]
     %(<meta name="session-key" content="#{Rack::Utils.escape_html(key)}"/>\n<meta name="session-id" content="#{Rack::Utils.escape_html(cookies[key])}"/>).html_safe
   end
-
 end
+

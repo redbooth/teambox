@@ -28,8 +28,10 @@ class UsersController < ApplicationController
       return redirect_to projects_path
     else
       # Create an account from OAuth
-      if session[:profile] and session[:app_link]
-        signup_from_oauth(session[:profile], session[:app_link])
+      if session[:app_link_id] and app_link = AppLink.find_by_id(session[:app_link_id])
+        signup_from_oauth(app_link)
+        @conflict = true if app_link.sign_up_conflict?
+        @provider = app_link.provider.humanize
       # Regular invitation
       else
         @user = User.new
@@ -46,7 +48,9 @@ class UsersController < ApplicationController
     @card = @user.card
     @projects_shared = @user.projects_shared_with(@current_user)
     @shares_invited_projects = @projects_shared.empty? && @user.shares_invited_projects_with?(@current_user)
-    @activities = Activity.for_projects(@user.projects_shared_with(@current_user)).from_user(@user)
+    @activities = Activity.for_projects(@user.projects_shared_with(@current_user)).from_user(@user).
+      where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+      joins("LEFT JOIN watchers ON ((activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.target_id = watchers.watchable_id AND watchers.watchable_type = activities.target_type)) AND watchers.user_id = #{current_user.id}")
     @threads = @activities.threads
     @last_activity = @activities.all.last
 
@@ -65,17 +69,24 @@ class UsersController < ApplicationController
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
+    if session[:app_link_id] and app_link = AppLink.find_by_id(session[:app_link_id])
+      app_link_email = app_link.detect_custom_attribute { |k,v| k == 'email' }
+    end
 
-    @user.confirmed_user = ((@invitation && @invitation.email == @user.email) or 
-                            (session[:profile] && session[:profile][:email] == @user.email) or
-                            Rails.env.development? or !Teambox.config.email_confirmation_require)
+    @user.confirmed_user = (
+      (@invitation && @invitation.email == @user.email) or
+      (app_link_email && app_link_email == @user.email) or
+      !Teambox.config.email_confirmation_require)
 
     if @user && @user.save
       self.current_user = @user
 
-      if applink = AppLink.find_by_id(session[:applink])
-        applink.user = @user
-        applink.save
+      # Enable the tutorials box link
+      @user.write_setting 'show_tutorials', true
+
+      if app_link
+        app_link.user = @user
+        app_link.save
       end
 
       if @invitation
@@ -132,7 +143,6 @@ class UsersController < ApplicationController
     end
 
     @email = current_user.email
-    render :layout => 'sessions'
   end
 
   def confirm_email
@@ -159,7 +169,7 @@ class UsersController < ApplicationController
   def text_styles
     render :layout => false
   end
-  
+
   def email_posts
     @project_permalink = params[:project_permalink]||''
     @target_type = params[:target_type]||''
@@ -168,6 +178,21 @@ class UsersController < ApplicationController
   end
 
   def calendars
+    oauth_info = Teambox.config.providers.detect { |p| p.provider == 'google' }
+    if oauth_info.nil?
+      Rails.logger.debug "There is no Google provider cannot list calendars"
+      return true
+    end
+    consumer = OAuth::Consumer.new(oauth_info.key, oauth_info.secret, GoogleCalendar::RESOURCES)
+    
+    app_link = current_user.app_links.find_by_provider('google')
+    if app_link.nil?
+      Rails.logger.debug "The user has not linked their Google account, cannot link calendars"
+      return true
+    end
+    
+    gcal = GoogleCalendar.new(app_link.credentials['token'], app_link.credentials['secret'], consumer)
+    @google_calendars = gcal.list_own
   end
 
   def feeds
@@ -224,6 +249,11 @@ class UsersController < ApplicationController
     head :ok
   end
 
+  def hide_tutorials
+    @current_user.write_setting 'show_tutorials', false
+    head :ok
+  end
+
   private
     def find_user
       unless @user = ( User.find_by_login(params[:id]) || User.find_by_id(params[:id]) )
@@ -239,17 +269,28 @@ class UsersController < ApplicationController
       end
     end
 
-    def signup_from_oauth(profile, app_link)
+    def signup_from_oauth(app_link)
+      app_link = AppLink.find_by_id session[:app_link_id]
       @user ||= User.new
-      @user.first_name    = @user.first_name.presence || profile[:first_name]
-      @user.last_name     = @user.last_name.presence  || profile[:last_name]
-      if profile[:login]
-        @user.login     ||= User.find_available_login(profile[:login])
+
+      @user.first_name    ||= app_link.detect_custom_attribute {|k,v| k == 'first_name' }
+      @user.last_name     ||= app_link.detect_custom_attribute {|k,v| k == 'last_name' }
+
+      if @user.first_name.blank? and @user.last_name.blank? and name = app_link.detect_custom_attribute {|k,v| k == 'name' and v.split(' ').size > 1 }
+        name = name.split(' ')
+        @user.first_name = name.first
+        @user.last_name = name.last
+      end
+      if login = app_link.detect_custom_attribute {|k,v| /(login|username|nickname)/.match(k) }
+        @user.login     ||= User.find_available_login(login)
+      end
+      if locale = app_link.detect_custom_attribute {|k,v| ['locale','lang','language'].include? k }
+        @user.locale = locale
       end
 
-      @user.email       ||= profile[:email] unless User.find_by_email(profile[:email])
-
-      @provider = profile[:provider]
+      if email = app_link.detect_custom_attribute {|k,v| k == 'email' }
+        @user.email     ||= email unless User.find_by_email(email)
+      end
     end
 
     def can_users_signup?

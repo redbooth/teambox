@@ -12,7 +12,6 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale,
                 :rss_token,
                 :set_client,
-                :confirmed_user?,
                 :load_project, 
                 :load_organizations,
                 :login_required, 
@@ -53,17 +52,11 @@ class ApplicationController < ActionController::Base
         redirect_to root_url
       end
     end
-    
+
     def handle_no_permissions
       render :text => "You don't have permission to edit/update/delete within \"#{@current_project.name}\" project", :status => :forbidden
     end
-    
-    def confirmed_user?
-      if current_user and not current_user.is_active?
-        redirect_to unconfirmed_email_user_path(current_user)
-      end
-    end
-    
+
     def rss_token
       unless params[:rss_token].nil? or !%w(rss ics).include?(params[:format])
         user = User.find_by_rss_token(params[:rss_token])
@@ -126,13 +119,19 @@ class ApplicationController < ActionController::Base
       I18n.locale = (locale.present? && I18n.available_locales.include?(locale.to_sym)) ? locale : I18n.default_locale
     end
 
-    LOCALES_REGEX = /\b(#{ I18n.available_locales.join('|') })\b/
-
     def user_agent_locale
       unless (Rails.env.test? || Rails.env.cucumber?)
-        request.headers['HTTP_ACCEPT_LANGUAGE'].to_s =~ LOCALES_REGEX && $&
+        user_agent_locales.first
       else
         :en
+      end
+    end
+
+    LOCALES_REGEX = /\b(#{ I18n.available_locales.join('|') })\b/
+
+    def user_agent_locales
+      request.headers['HTTP_ACCEPT_LANGUAGE'].to_s.split(",").map do |s|
+        s =~ LOCALES_REGEX && $&
       end
     end
     

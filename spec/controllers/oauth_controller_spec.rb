@@ -26,7 +26,14 @@ describe OauthController do
     describe "authorize invalid client" do
       it "should render a failure page if an invalid client is used" do
         get :authorize, :response_type=>"code",:client_id=>'000', :redirect_uri=>"http://application/callback"
-        response.should render_template("authorize_failure")
+        response.body.should == 'Invalid Application Key'
+      end
+    end
+    
+    describe "authorize invalid response type" do
+      it "should render a failure page if an invalid response type is used" do
+        get :authorize, :response_type=>"fudge",:client_id=>current_client_application.key, :redirect_uri=>"http://application/callback"
+        response.body.should == 'Invalid Request'
       end
     end
 
@@ -212,6 +219,10 @@ describe OauthController do
         query['error'].should == 'redirect_uri_mismatch'
       end
       
+      it "should not allow http://other-application/callback on GET" do
+        get :authorize, :response_type=>"code", :client_id=>current_client_application.key, :redirect_uri => 'http://other-application/callback'
+        response.body.should == 'Invalid Redirect URI'
+      end
     end
     
     describe "deny" do

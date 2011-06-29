@@ -10,6 +10,14 @@ class TasksController < ApplicationController
   end
 
   def show
+    authorize! :show, @task
+    respond_to do |f|
+      f.any(:html, :m)
+      f.js {
+        @show_part = params[:part]
+        render :template => 'tasks/reload'
+      }
+    end
   end
 
   def new
@@ -23,7 +31,9 @@ class TasksController < ApplicationController
 
   def create
     authorize! :make_tasks, @current_project
-    @task = @task_list.tasks.create_by_user(current_user, params[:task])
+    @task = @task_list.tasks.build_by_user(current_user, params[:task])
+    @task.is_private = (params[:task][:is_private]||false) if params[:task]
+    @task.save
     
     respond_to do |f|
       f.any(:html, :m) {
@@ -59,7 +69,6 @@ class TasksController < ApplicationController
 
   def update
     if can? :update, @task
-      can? :update, @task
       @task.updating_user = current_user
       success = @task.update_attributes params[:task]
     elsif can? :comment, @task
@@ -72,7 +81,7 @@ class TasksController < ApplicationController
     respond_to do |f|
       f.any(:html, :m) {
         if request.xhr? or iframe?
-          if @task.comment_created?
+          if success and @task.comment_created?
             comment = @task.comments(true).first
             response.headers['X-JSON'] = @task.to_json(:include => :assigned)
 
@@ -121,8 +130,7 @@ class TasksController < ApplicationController
     task_ids = params[:task_ids].split(',').collect {|t| t.to_i}
     target_task_list.tasks.each do |t|
       next unless task_ids.include?(t.id)
-      t.position = task_ids.index(t.id)
-      t.save
+      Task.thin_model.find(t.id).update_attribute :position, task_ids.index(t.id)
     end
 
     head :ok

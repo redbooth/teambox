@@ -6,10 +6,10 @@ describe Emailer do
       @owner = Factory.create(:user)
       @fred = Factory.create(:user)
       @janet = Factory.create(:user)
-      @project = Factory.create(:project, :user_id => @owner.id)
+      @project = Factory.create(:project, :user => @owner)
       @project.add_user(@fred)
-      @task = Factory(:task, :user_id => @owner.id, :project_id => @project.id)
-      @conversation = Factory(:conversation, :user_id => @owner.id, :project_id => @project.id)
+      @task = Factory(:task, :user => @owner, :project => @project)
+      @conversation = Factory(:conversation, :user => @owner, :project => @project)
       
       @email_template = Mail.new
       @email_template.from = @owner.email
@@ -121,15 +121,17 @@ describe Emailer do
       end
     
       it "should create the Inbox list if it does not exist" do
-        lambda do
+        inbox_task_list_name_is "Uncategorized" do
           lambda do
-            Emailer.receive(@email_template.to_s)
-          end.should change(Task, :count).by(1)
-        end.should change(TaskList, :count).by(1)
-        
-        task_list = TaskList.find_by_name('Inbox')
-        task = Task.first(:order => 'tasks.id DESC')
-        task.task_list.should == task_list
+            lambda do
+              Emailer.receive(@email_template.to_s)
+            end.should change(Task, :count).by(1)
+          end.should change(TaskList, :count).by(1)
+
+          task_list = TaskList.find_by_name('Uncategorized')
+          task = Task.first(:order => 'tasks.id DESC')
+          task.task_list.should == task_list
+        end
       end
       
       it "should assign the task to fred with #fred" do |variable|
@@ -352,6 +354,13 @@ describe Emailer do
         end.should raise_error Emailer::Incoming::TargetNotFoundError
       end
       
+    end
+
+    def inbox_task_list_name_is(name, &block)
+      name_was = Teambox.config.incoming_email_settings[:inbox_task_list]
+      Teambox.config.incoming_email_settings[:inbox_task_list] = name
+      yield
+      Teambox.config.incoming_email_settings[:inbox_task_list] = name_was
     end
   end
 end

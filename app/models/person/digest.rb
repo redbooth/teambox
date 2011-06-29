@@ -34,18 +34,18 @@ class Person
   def send_digest
     # Todo, once we have a UI for notificaitons, make sure we only send notification for unread notifications
     target_types_and_ids = notifications.where(:sent => false).map  do |notification|
-      if notification.target.present? and notification.comment.present?
-        {:target_type => notification.target_type, :target_id => notification.target_id}
-      end
+      next if (target = notification.target_type.constantize.find_by_id notification.target_id).nil?
+      next if target.respond_to? :comments and notification.comment.nil?
+      next if target.is_a? Activity and (target.target.deleted? or target.target.nil?)
+      {:target_type => notification.target_type, :target_id => notification.target_id}
     end.compact.uniq
     if target_types_and_ids.any?
       comment_ids = notifications.where(:sent => false).map do |notification|
-        notification.comment_id if notification.comment.present?
+        notification.comment_id if notification.comment
       end.compact
       notifications.update_all(['sent = ?', true])
-      Emailer.send_with_language(:project_digest, self.user.locale.to_sym, user_id, self[:id], project_id, target_types_and_ids, comment_ids)
+      Emailer.send_with_language(:project_digest, self.user.locale.to_sym, self.user.id, self[:id], project_id, target_types_and_ids, comment_ids)
     end
-
     touch :last_digest_delivery
   end
 

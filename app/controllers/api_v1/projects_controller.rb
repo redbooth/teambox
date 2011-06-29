@@ -7,15 +7,14 @@ class ApiV1::ProjectsController < ApiV1::APIController
     @projects = current_user.projects.except(:order).
                              where(api_range('projects')).
                              limit(api_limit).
-                             order('projects.id DESC').
-                             includes([:organization, :user])
+                             order('projects.id DESC')
     
-    api_respond @projects, :references => [:organization, :user]
+    api_respond @projects, :references => true
   end
 
   def show
     authorize! :show, @current_project
-    api_respond @current_project, :include => api_include
+    api_respond @current_project, :references => true, :include => api_include
   end
   
   def create
@@ -74,7 +73,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
   end
   
   def api_include
-    [:organization, :people, :user] & (params[:include]||{}).map(&:to_sym)
+    [:people] & (params[:include]||{}).map(&:to_sym)
   end
   
 end

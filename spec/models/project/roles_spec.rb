@@ -4,7 +4,7 @@ describe Project do
   describe 'roles' do 
     before do
       @owner = Factory.create(:user)
-      @project = Factory.create(:project, :user_id => @owner.id)
+      @project = Factory.create(:project, :user => @owner)
     end
 
     it "should allow owner to edit this project" do
@@ -13,25 +13,25 @@ describe Project do
 
     it "should not allow observer to edit this project" do
       user = Factory.create(:user)
-      commentor = Factory.create(:person, :user_id => user.id, :project_id => @project.id, :role => Person::ROLES[:observer])
+      @project.add_user(user, :role => Person::ROLES[:observer])
       @project.editable?(user).should == false
     end
 
     it "should not allow commenter to edit this project" do
       user = Factory.create(:user)
-      commentor = Factory.create(:person, :user_id => user.id, :project_id => @project.id, :role => Person::ROLES[:commenter])
+      @project.add_user(user, :role => Person::ROLES[:commenter])
       @project.editable?(user).should == false
     end
 
     it "should allow participant to edit this project" do
       user = Factory.create(:user)
-      participant = Factory.create(:person, :user_id => user.id, :project_id => @project.id, :role => Person::ROLES[:participant])
+      @project.add_user(user, :role => Person::ROLES[:participant])
       @project.editable?(user).should == true
     end
 
     it "should allow admin to edit this project" do
       user = Factory.create(:user)
-      participant = Factory.create(:person, :user_id => user.id, :project_id => @project.id, :role => Person::ROLES[:admin])
+      @project.add_user(user, :role => Person::ROLES[:admin])
       @project.editable?(user).should == true
     end
   end

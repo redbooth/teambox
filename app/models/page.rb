@@ -10,16 +10,30 @@ class Page < RoleRecord
   
   has_permalink :name, :scope => :project_id
   
-  attr_accessible :name, :description, :note_attributes
+  attr_accessible :name, :description, :note_attributes, :is_private, :private_ids
   attr_accessor :suppress_activity
+  attr_accessor :updating_user
+  attr_accessor :private_ids
   
   validates_presence_of :user
   validates_length_of :name, :minimum => 1
+  validate :check_updating_user, :on => :update
   
   default_scope :order => 'position ASC, created_at DESC, id DESC'
   
-  after_create :log_create, :update_user_stats
-  after_update :log_update
+  after_create :log_create, :update_user_stats, :set_private_ids
+  after_update :log_update, :set_private_ids
+  
+  def check_updating_user
+    return if @updating_user.nil?
+    @errors.add :is_private, 'cannot be set' if @is_private_set && (@updating_user != user)
+    @errors.add :private_ids, 'cannot be updated' if is_private && (@updating_user != user)
+  end
+  
+  def is_private=(value)
+    self[:is_private] = value
+    @is_private_set = true
+  end
   
   def build_note(note = {})
     self.notes.build(note) do |note|
@@ -111,6 +125,20 @@ class Page < RoleRecord
     project.log_activity(self, 'edit') unless @suppress_activity
   end
   
+  def set_private_ids
+    if is_private && @private_ids && @is_private_set
+      set_private_watchers(@private_ids)
+    end
+  end
+
+  def references
+    refs = { :users => [user_id], :projects => [project_id] }
+    refs[:note] = note_ids
+    refs[:divider] = divider_ids
+    refs[:upload] = upload_ids
+    refs
+  end
+  
   def to_s
     name
   end
@@ -121,10 +149,6 @@ class Page < RoleRecord
   
   def user
     @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
-  end
-  
-  def refs_objects
-    notes+dividers+uploads
   end
   
   def to_xml(options = {})
@@ -161,7 +185,9 @@ class Page < RoleRecord
       :name => name,
       :description => description,
       :created_at => created_at.to_s(:api_time),
-      :updated_at => updated_at.to_s(:api_time)
+      :updated_at => updated_at.to_s(:api_time),
+      :watchers => Array.wrap(watcher_ids),
+      :is_private => is_private
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
@@ -192,6 +218,7 @@ class Page < RoleRecord
   end
 
   define_index do
+    set_property :group_concat_max_len => 1024 * 10
     where Page.undeleted_clause_sql
 
     indexes name, :sortable => true

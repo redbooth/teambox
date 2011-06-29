@@ -56,7 +56,7 @@
    * @return {Array}
    */
   Thread.parseComments = function (response) {
-    var thread_attributes = response.objects
+    var thread_attributes = ( response.objects || response )
       , comment_attributes = _.detect(response.references, function (ref) {
           return thread_attributes.recent_comment_ids[0] === ref.id;
         })
@@ -86,7 +86,7 @@
     if (response.objects) {
       return _.parseFromAPI(response.objects);
     } else {
-      return _.parseFromAPI(response)[0];
+      return _.parseFromAPI(response);
     }
   };
 

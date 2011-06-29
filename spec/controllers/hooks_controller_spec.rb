@@ -205,7 +205,7 @@ describe HooksController do
     
     describe "Pivotal Tracker" do
       before do
-        @payload = {"activity"=>
+        @payload_v2 = {"activity"=>
           {"author"=>"James Kirk",
             "project_id"=>26,
             "occurred_at"=>Time.parse("Mon Dec 14 22:12:09 UTC 2009"),
@@ -220,30 +220,130 @@ describe HooksController do
                 "accepted_at"=>Time.parse("Mon Dec 14 22:12:09 UTC 2009"),
                 "url"=>"https:///projects/26/stories/109",
                 "id"=>109}}}}
-      end
-      
-      def post
-        super :create, @payload.merge(:hook_name => 'pivotal', :project_id => @project.id)
-      end
-      
-      it "creates a new task list" do
-        post
-        response.should be_success
         
-        task_list = @project.task_lists.first
-        task_list.name.should == "Pivotal Tracker"
-        
-        task = task_list.tasks.first
-        task.name.should == "More power to shields [PT109]"
-        task.status_name.should == :resolved
-        task.comments.first.body.should == "James Kirk marked the task as accepted on #PT"
+        @payload_v3 = {"activity"=>
+          {"author"=>"James Kirk",
+            "project_id"=>26,
+            "occurred_at"=>Time.parse("Mon Dec 14 22:12:09 UTC 2009"),
+            "id"=>1031,
+            "version"=>175,
+            "description"=>'James Kirk accepted "More power to shields"',
+            "event_type"=>"story_update",
+            "stories"=> [
+              {
+                "current_state"=>"delivered",
+                "url"=>"https:///projects/26/stories/109",
+                "id"=>109
+              }
+            ]
+          }}
+          
+          @payload_v3_new = {"activity"=>
+            {"author"=>"James Kirk",
+              "project_id"=>26,
+              "occurred_at"=>Time.parse("Mon Dec 14 22:12:09 UTC 2009"),
+              "id"=>1031,
+              "version"=>175,
+              "description"=>'James Kirk created "More power to shields"',
+              "event_type"=>"story_update",
+              "stories"=> [
+                {
+                  "name" => "More power to shields",
+                  "current_state"=>"unscheduled",
+                  "url"=>"https:///projects/26/stories/109",
+                  "id"=>109
+                }
+              ]
+            }}
       end
       
-      it "ignores unknown task status" do
-        @payload['activity']['stories']['story']['current_state'] = "smokin'!"
-        post
-        task = Task.first
-        task.status_name.should == :new
+      def post(payload = @payload_v2, hook = 'pivotal')
+        super :create, payload.merge(:hook_name => hook, :project_id => @project.id)
+      end
+      
+      describe "V2" do
+        it "should create a new task list" do
+          post
+          response.should be_success
+        
+          task_list = @project.task_lists.first
+          task_list.name.should == "Pivotal Tracker"
+        
+          task = task_list.tasks.first
+          task.name.should == "More power to shields [PT109]"
+          task.status_name.should == :resolved
+          task.comments.first.body.should == "James Kirk marked the task as accepted on #PT"
+        end
+      
+        it "should ignore unknown task statuses" do
+          @payload_v2['activity']['stories']['story']['current_state'] = "smokin'!"
+          post
+          task = Task.first
+          task.status_name.should == :new
+        end
+      end
+    
+      describe "V3" do
+        it "should raise an error when sending to V3 in this format" do
+          post(@payload_v2, 'pivotal_v3')
+          response.status.should == 400
+          response.body.should == "Tracker appears to be in old format"
+        end
+      
+        it "should create a new task list" do
+          post(@payload_v3_new, 'pivotal_v3')
+          response.should be_success, response.body
+        
+          task_list = @project.task_lists.first
+          task_list.name.should == "Pivotal Tracker"
+        
+          task = task_list.tasks.first
+          task.name.should == "More power to shields [PT109]"
+          task.status_name.should == :new
+        end
+        
+        it "should update a task if it exists" do
+          post(@payload_v3_new, 'pivotal_v3')
+          response.should be_success, response.body
+          
+          task_list = @project.task_lists.first
+          task_list.name.should == "Pivotal Tracker"
+          task = task_list.tasks.first
+          task.name.should == "More power to shields [PT109]"
+          
+          sleep(2)
+          
+          lambda do
+            post(@payload_v3, 'pivotal_v3')
+            response.should be_success, response.inspect
+        
+            task_list = @project.task_lists.first.reload
+            task_list.name.should == "Pivotal Tracker"
+        
+            task = task_list.tasks.first.reload
+            task.name.should == "More power to shields [PT109]"
+            task.status_name.should == :hold
+          end.should change(Task, :count).by(0)
+        end
+        
+        it "should create a task on an update if it does not exist" do
+          post(@payload_v3, 'pivotal_v3')
+          response.should be_success, response.body
+        
+          task_list = @project.task_lists.first
+          task_list.name.should == "Pivotal Tracker"
+        
+          task = task_list.tasks.first
+          task.name.should == "James Kirk accepted \"More power to shields\" [PT109]"
+          task.status_name.should == :hold
+        end
+      
+        it "should ignore unknown task statuses" do
+          @payload_v3['activity']['stories'].first['current_state'] = "smokin'!"
+          post(@payload_v3, 'pivotal_v3')
+          task = Task.first
+          task.status_name.should == :new
+        end
       end
     end
     

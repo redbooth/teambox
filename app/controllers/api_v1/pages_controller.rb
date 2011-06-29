@@ -11,12 +11,14 @@ class ApiV1::PagesController < ApiV1::APIController
     end
     
     @pages = context.except(:order).
+                     where(['pages.is_private = ? OR (pages.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                     joins("LEFT JOIN watchers ON (pages.id = watchers.watchable_id AND watchers.watchable_type = 'Page') AND watchers.user_id = #{current_user.id}").
                      where(api_range('pages')).
                      limit(api_limit).
                      order('pages.id DESC').
                      includes([:project, :user])
     
-    api_respond @pages, :include => :slots, :references => [:project, :user]
+    api_respond @pages, :include => :slots, :references => true
   end
   
   def create
@@ -31,11 +33,12 @@ class ApiV1::PagesController < ApiV1::APIController
     
   def show
     authorize! :show, @page
-    api_respond @page, :include => [:slots, :objects]
+    api_respond @page, :references => true, :include => :slots
   end
   
   def update
     authorize! :update, @page
+    @page.updating_user = current_user
     if @page.update_attributes(params)
       handle_api_success(@page)
     else
@@ -83,6 +86,17 @@ class ApiV1::PagesController < ApiV1::APIController
     authorize! :destroy, @page
     @page.destroy
 
+    handle_api_success(@page)
+  end
+
+  def watch
+    authorize! :watch, @page
+    @page.add_watcher(current_user)
+    handle_api_success(@page)
+  end
+
+  def unwatch
+    @page.remove_watcher(current_user)
     handle_api_success(@page)
   end
 

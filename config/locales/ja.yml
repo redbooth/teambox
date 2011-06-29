@@ -161,6 +161,7 @@ ja:
       title: "%{person} が %{project} をインポートしました。"
     create_upload: 
       title: "%{user} ファイルのアップロード %{file} "
+      title_with_page: "%{user} さんはファイルを%{page}へアップロードしました。"
     delete_person: 
       by: by
       delete_person: はプロジェクトを離れました
@@ -291,6 +292,8 @@ ja:
       hours: "%{hours}時"
       hours_with_minutes: "%{hours}時 %{minutes}分"
       loading: 読み込み中
+    conversations: 
+      convert_to_task: タスクに変換
     convert_form: 
       destination: タスクリストの設置場所を選ぶ
       name: タスク名入力
@@ -358,6 +361,9 @@ ja:
       subscribe: ニュースフィードを受け取る
     conversation_with_extract: 
       posted_by: "投稿 by"
+    convert_form: 
+      name: タスク名をつける
+      status: 状態
     edit: 
       submit: 会話の更新
     fields: 
@@ -1745,7 +1751,6 @@ ja:
   uploads: 
     comment_upload_link: 添付
     errors: 
-      exceeded_storage_plan_limit: "%{organization_name} の許容量を超えています。<a href='%{url}'>アップグレード</a>をして許容量を増やしましょう。"
       general: ファイルのアップロードにエラーがありました。
     form: 
       description_html: "タイトル <i>(任意)</i>"

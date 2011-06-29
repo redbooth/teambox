@@ -1,0 +1,12 @@
+.email{ :style => email_global }
+  = dont_answer
+
+  %p= t('emailer.teamboxdata.hey', :user_name => h(@user.name))
+  - if @error
+    %p= t('emailer.teamboxdata.data_import_failed') 
+    %div= link_to teambox_data_url(@data), teambox_data_url(@data)
+  - else
+    %p= t('emailer.teamboxdata.data_imported')
+    %div= link_to teambox_data_url(@data), teambox_data_url(@data)
+
+  .footer{ :style => email_text(:small) }

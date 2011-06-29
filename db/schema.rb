@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110404233401) do
+ActiveRecord::Schema.define(:version => 20110623083525) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -24,12 +24,14 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.integer  "comment_target_id"
     t.boolean  "deleted",             :default => false, :null => false
     t.integer  "last_activity_id"
+    t.boolean  "is_private",          :default => false, :null => false
   end
 
   add_index "activities", ["comment_target_id"], :name => "index_activities_on_comment_target_id"
   add_index "activities", ["comment_target_type"], :name => "index_activities_on_comment_target_type"
   add_index "activities", ["created_at"], :name => "index_activities_on_created_at"
   add_index "activities", ["deleted"], :name => "index_activities_on_deleted"
+  add_index "activities", ["is_private"], :name => "index_activities_on_is_private"
   add_index "activities", ["last_activity_id"], :name => "index_activities_on_last_activity_id"
   add_index "activities", ["project_id"], :name => "index_activities_on_project_id"
   add_index "activities", ["target_id"], :name => "index_activities_on_target_id"
@@ -57,10 +59,10 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.text     "custom_attributes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "access_token"
-    t.string   "access_secret"
+    t.text     "credentials"
   end
 
+  add_index "app_links", ["provider", "app_user_id"], :name => "index_app_links_on_provider_and_app_user_id"
   add_index "app_links", ["user_id"], :name => "index_app_links_on_user_id"
 
   create_table "cards", :force => true do |t|
@@ -101,11 +103,13 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.date     "previous_due_on"
     t.integer  "uploads_count",        :default => 0
     t.boolean  "deleted",              :default => false, :null => false
+    t.boolean  "is_private",           :default => false, :null => false
   end
 
   add_index "comments", ["created_at"], :name => "index_comments_on_created_at"
   add_index "comments", ["deleted"], :name => "index_comments_on_deleted"
   add_index "comments", ["hours"], :name => "index_comments_on_hours"
+  add_index "comments", ["is_private"], :name => "index_comments_on_is_private"
   add_index "comments", ["project_id"], :name => "index_comments_on_project_id"
   add_index "comments", ["target_type", "target_id", "user_id"], :name => "index_comments_on_target_type_and_target_id_and_user_id"
 
@@ -129,9 +133,11 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.boolean  "simple",          :default => false
     t.boolean  "deleted",         :default => false, :null => false
     t.integer  "converted_to"
+    t.boolean  "is_private",      :default => false, :null => false
   end
 
   add_index "conversations", ["deleted"], :name => "index_conversations_on_deleted"
+  add_index "conversations", ["is_private"], :name => "index_conversations_on_is_private"
   add_index "conversations", ["project_id"], :name => "index_conversations_on_project_id"
 
   create_table "dividers", :force => true do |t|
@@ -239,6 +245,7 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
 
   add_index "notes", ["deleted"], :name => "index_notes_on_deleted"
   add_index "notes", ["page_id"], :name => "index_notes_on_page_id"
+  add_index "notes", ["project_id"], :name => "index_notes_on_project_id"
 
   create_table "notifications", :force => true do |t|
     t.integer  "person_id"
@@ -252,6 +259,7 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.datetime "updated_at"
   end
 
+  add_index "notifications", ["comment_id"], :name => "index_notifications_on_comment_id"
   add_index "notifications", ["person_id", "sent"], :name => "index_notifications_on_person_id_and_sent"
   add_index "notifications", ["user_id", "read"], :name => "index_notifications_on_user_id_and_read"
 
@@ -320,9 +328,11 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.integer  "position"
     t.string   "permalink"
     t.boolean  "deleted",         :default => false, :null => false
+    t.boolean  "is_private",      :default => false, :null => false
   end
 
   add_index "pages", ["deleted"], :name => "index_pages_on_deleted"
+  add_index "pages", ["is_private"], :name => "index_pages_on_is_private"
   add_index "pages", ["project_id"], :name => "index_pages_on_project_id"
 
   create_table "people", :force => true do |t|
@@ -434,21 +444,24 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "position"
-    t.integer  "comments_count",         :default => 0,     :null => false
+    t.integer  "comments_count",            :default => 0,     :null => false
     t.integer  "last_comment_id"
     t.integer  "assigned_id"
-    t.integer  "status",                 :default => 0
+    t.integer  "status",                    :default => 0
     t.date     "due_on"
     t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted",                :default => false, :null => false
+    t.boolean  "deleted",                   :default => false, :null => false
+    t.boolean  "is_private",                :default => false, :null => false
+    t.string   "google_calendar_url_token"
     t.integer  "record_conversion_id"
     t.string   "record_conversion_type"
   end
 
   add_index "tasks", ["assigned_id"], :name => "index_tasks_on_assigned_id"
   add_index "tasks", ["deleted"], :name => "index_tasks_on_deleted"
+  add_index "tasks", ["is_private"], :name => "index_tasks_on_is_private"
   add_index "tasks", ["project_id"], :name => "index_tasks_on_project_id"
   add_index "tasks", ["task_list_id"], :name => "index_tasks_on_task_list_id"
 
@@ -456,7 +469,6 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.integer  "user_id"
     t.integer  "type_id"
     t.text     "project_ids"
-    t.text     "map_data"
     t.string   "processed_data_file_name"
     t.string   "processed_data_content_type"
     t.integer  "processed_data_file_size"
@@ -467,6 +479,8 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.string   "service"
     t.integer  "status",                      :default => 0
     t.boolean  "deleted",                     :default => false, :null => false
+    t.integer  "organization_id"
+    t.text     "user_map"
   end
 
   add_index "teambox_datas", ["deleted"], :name => "index_teambox_datas_on_deleted"
@@ -483,11 +497,13 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",            :default => false, :null => false
+    t.boolean  "is_private",         :default => false, :null => false
   end
 
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
   add_index "uploads", ["deleted"], :name => "index_uploads_on_deleted"
-  add_index "uploads", ["page_id"], :name => "index_uploads_on_page_id"
+  add_index "uploads", ["is_private"], :name => "index_uploads_on_is_private"
+  add_index "uploads", ["page_id", "asset_file_name"], :name => "index_uploads_on_page_id_and_asset_file_name"
   add_index "uploads", ["project_id", "deleted", "updated_at"], :name => "index_uploads_on_project_id_and_deleted_and_updated_at"
 
   create_table "users", :force => true do |t|
@@ -539,10 +555,13 @@ ActiveRecord::Schema.define(:version => 20110404233401) do
     t.boolean  "default_watch_new_conversation",                 :default => false
     t.boolean  "default_watch_new_page",                         :default => false
     t.string   "authentication_token"
+    t.boolean  "notify_pages",                                   :default => false
+    t.string   "google_calendar_url_token"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_auth_token", :unique => true
   add_index "users", ["deleted"], :name => "index_users_on_deleted"
+  add_index "users", ["email", "deleted", "updated_at"], :name => "index_users_on_email_and_deleted_and_updated_at"
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 
   create_table "versions", :force => true do |t|

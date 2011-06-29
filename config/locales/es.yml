@@ -218,7 +218,7 @@ es:
       tracking5: "Tu página especial para inscripción es"
       tracking6: "Publica este enlace en Facebook, Twitter, en tu propio sitio, o envialo por correo electrónico a un amigo. Después de registrarte recibirás un email de confirmación."
       twitter: Twitter
-      twitter_link: "Prueba+Teambox+para+colaborar+con+tu+equipo,+date+de+alta+gratis+en+%{link}"
+      twitter_link: "Prueba%20Teambox%20para%20colaborar%20con%20tu%20equipo,%20date%20de%20alta%20gratis%20en%20%{link}"
       use_money: "Puedes utilizar este dinero para obtener un "
       use_money_cash: "o para pagar dinero real"
       use_tracking_code: "Debes utilizar un código de seguimiento para que podamos saber qué usuarios están viniendo de ti."
@@ -325,6 +325,9 @@ es:
     preview: 
       close: Cerrar
       preview: Previsualizar
+    watchers: 
+      explain: "Haz clic en los usuarios para mencionarlos @mencion en tu comentario. Los usuarios que menciones recibirán notificaciones por email de tu mensaje y los demás después de ello."
+      popup_note_html: "Selecciona <b>Notificar personas</b> para enviar notificaciones para esta conversación."
   common: 
     accept: Aceptar
     and: "y"
@@ -350,6 +353,8 @@ es:
     rename: Renombrar
     save: Guardar
     show_more: "Ver más"
+    loading: Cargando...
+    download_as_csv: Descargar como CSV
     signup: Identificarse
   confirm: 
     delete_group: "¿Estás seguro de que quieres borrar este grupo?"
@@ -376,6 +381,7 @@ es:
       body: "Primer mensaje"
       name: Título
     index: 
+      cant_create: "No tienes permiso para crear Conversaciones en este proyecto"
       new_conversation: "Nueva Conversación"
       rss: 
         description: "Conversaciones en el proyecto %{name}"
@@ -852,19 +858,18 @@ es:
       reply: "También puedes contestar a este email para publicar una respuesta en la conversación."
       settings_link: "configuración de las notificaciones"
       status: "Estado: %{status}"
-      stop_watch: "Dejar de ver"
+      stop_watch: "Dejar de seguir"
       stop_watching_link_html: "%{stop_watch} este hilo para dejar de recibir notificaciones por email."
       task: "Tarea:"
       task_commands: "Escribe #resolve, #reject o #hold al principio de tu respuesta para cambiar el estado de la tarea. Escribe #%{username} para asignarla a @%{username}, etc."
       task_link: "ver esta tarea online"
       task_list: "Lista de tareas:"
-      view_conversation_online: "ver esta conversación online"
-      view_this_conversation_online_html: "Puedes %{conversation} para contestar y añadir archivos"
+      view_this_conversation_online_html: "Haz click en %{conversation} para contestar y añadir archivos"
       view_this_task_online_html: "Puedes %{link} para comentar y adjuntar archivos."
     project_membership_notification: 
       project_link: "Haz click en el siguiente para empezar a colaborar en %{project} ahora"
       subject: "%{user} comparte [%{project}] contigo"
-      you_have_been_added_to: "Tu eres ahora un miembro del proyecto %{project}"
+      you_have_been_added_to: "Ahora eres un miembro del proyecto %{project}"
     reset_password: 
       follow_this_link: "con el fin de %{new_password} para Teambox, es necesario que inicies sesión en el siguiente link:"
       hey: "¡Hola, %{user_name}!"
@@ -1064,7 +1069,7 @@ es:
       in_projects_but_not_in_the_organization: 
         explain: "Sólo pueden acceder a los proyectos a los que están invitados. No se puede crear proyectos dentro de la organización."
         title: "Personas externas"
-      make_admin: "Obtener permisos de administrados"
+      make_admin: "Obtener permisos de administrador"
       no_users: "No hay usuarios aqui"
       remove: "eliminar de esta organización"
       remove_admin: "Eliminar los derechos de administrador"
@@ -1505,7 +1510,7 @@ es:
         other: "Tienes %{count} proyectos activos."
         zero: "No tienes proyectos activos."
       explain1_html: "Un proyecto es un grupo compartido con tus colaboradores. Utilízalo para compartir Conversaciones, Tareas y Archivos"
-      explain2_html: "Puedes crear un proyecto para cada área: Desarrolo, Ventar, proyectos de tus clientes, etc."
+      explain2_html: "Puedes crear un proyecto para cada área: Desarrollo, Ventas, proyectos de tus clientes, etc."
       invalid_project: "Proyecto no válido, corrige los errores e inténtalo de nuevo."
       new_project: "Nuevo proyecto..."
       not_allowed: "No puedes crear proyectos con tu tipo de cuenta."
@@ -1598,6 +1603,7 @@ es:
     close_search: Cerrar búsqueda
     results_for: Resultados para %{search_terms}
     found_results: Hemos encontrado %{length} resultados
+    placeholder_in_project: "Búsqueda en un proyecto"
     submit: Buscar
   sessions: 
     fields: 
@@ -1613,6 +1619,8 @@ es:
   shared: 
     chrome_frame: 
       enhance_html: "Mejora tu experiencia con Teambox utilizando Google Chrome Frame. Cliquea <a href=\"%{link}\" target=\\\"_blank\\\">aquí</a> para configurarlo."
+    collapsed_mode: "Ver los hilos minimizados"
+    expanded_mode: "Ver los hilos expandidos"
     footer: 
       feedback: Feedback
       help: Ayuda
@@ -2122,20 +2130,23 @@ es:
             2. ¡deja líneas en blanco!
         smaller_header: "Cabecera pequeña ---------"
         title: "Escribe esto"
-        unordered_list: "* lista no numerada\n\
-            * deja una línea antes y después\n"
+        unordered_list: |
+            * lista no numerada
+            * deja una línea antes y después
       to_see_this: 
         bold_text_html: "texto <strong style=\"font-weight: bold\">negrita</strong>"
         header_html: "<h3 style=\"font-size:18px\">Cabecera</h3>"
         image_html: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
         italic_text_html: "texto en <i>cursiva</i>"
         link_html: "<a href=\"http://www.teambox.com\">Enlaza algo</a>"
-        ordered_list_html: "<li>lista ordenada</li>\n\
-            <li>¡deja líneas en blanco!</li>\n"
+        ordered_list_html: |
+            <li>lista ordenada</li>
+            <li>¡deja líneas en blanco!</li>
         smaller_header_html: "<h4 style=\"font-size:14px\">Cabecera pequeña</h4>"
         title_html: "Para ver esto"
-        unordered_list_html: "<li>lista ordenada</li>\n\
-            <li>deja una línea antes y después</li>\n"
+        unordered_list_html: |
+            <li>lista ordenada</li>
+            <li>deja una línea antes y después</li>
     unconfirmed_email: 
       follow_the_link_html: "Por favor, <b>abre este email y sigue el enlace que hay en él</b> para activar tu cuenta."
       invitation_sent_to_html: "Hemos enviado una invitación a <i>%{email}</i>, para verificar tu dirección de email."

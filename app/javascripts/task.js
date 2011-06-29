@@ -26,7 +26,6 @@ document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
 })
 
 Task = {
-  
   sortableChange: function(draggable) {
     this.currentDraggable = draggable
   },
@@ -144,6 +143,8 @@ Task = {
       classes.push((task.assigned_id != 0) ? 'assigned' : 'unassigned')
     if (task.assigned)
       classes.push('user_' + task.assigned.user_id)
+    if (task.is_private)
+      classes.push('private')
     return classes.join(' ')
   },
 
@@ -254,6 +255,8 @@ document.on('task:updated', function(e, doc){
     due_on.update(Task.dateForDueOn(task_data))
     assigned_user.update(Task.linkToNameForAssigned(task_data))
     task.writeAttribute('class', 'task expanded ' + task_classes)
+    task.writeAttribute('data-user-id', task_data.user_id)
+    task.writeAttribute('data-watcher-ids', (task_data.watchers||[]).join(','))
   }
 
   // task in thread
@@ -266,6 +269,9 @@ document.on('task:updated', function(e, doc){
     summary.down('.assigned_date').update(Task.dateForDueOn(task_data))
     summary.down('.assigned_to').update(task_data.assigned ? I18n.t(I18n.translations.tasks.assigned.assigned_to, {user: Task.fullNameForAssigned(task_data)}) : '')
     
+    // sync attributes
+    task.writeAttribute('data-user-id', task_data.user_id)
+    task.writeAttribute('data-watcher-ids', (task_data.watchers||[]).join(','))
     var counter = task.down('.comment_header').down('.comment_count').down()
     if (counter) counter.update(parseInt(counter.innerHTML) + 1)
   }

@@ -1,3 +1,4 @@
+@javascript
 Feature: Update Project
 
   Background: 
@@ -10,4 +11,5 @@ Feature: Update Project
     And I should see "General Settings" in the title
     When I check "project_archived"
     And I press "Save Changes"
-    Then I should see "This project is archived. To edit or comment on this project you must unarchive it on the Project Settings page"
+    And I wait for 1 second
+    Then I should see "This project is archived"

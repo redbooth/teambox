@@ -1,13 +1,17 @@
 ;(function(){
   var element, imageMaxWidth = 700, imageMaxHeight = 300, screenMinWidth = 75
   
-  var Facebox = {
+  Facebox = {
     open: function(html, classname, extra) {
       classname || (classname = 'html')
       // element.down('.facebox-wrapper').setStyle({ 'margin-top': window.scrollY + 100 + 'px' })
       element.down('.facebox-wrapper').setStyle({ width: '' }).className = 'facebox-wrapper ' + classname
       var content = element.down('.facebox-content').update(html)
-      element.down('.facebox-extra .description').update(extra)
+      var default_close = [{className: 'close', href:'#close', description: 'Close'}]
+      if (extra)
+        setExtras(extra.buttons || default_close, extra.description)
+      else
+        setExtras(default_close, '')
       element.setStyle({ display: 'block' })
       if (classname == 'loading') content.fire('facebox:loading')
       else content.fire('facebox:opened', { type: classname })
@@ -49,11 +53,21 @@
       <div class='facebox-wrapper html'>\
         <div class='facebox-container'>\
           <div class='facebox-content'></div>\
-          <div class='facebox-extra'><p class='description'></p><a class='close' href='#close'>close</a></div>\
+          <div class='facebox-extra'></div>\
         </div></div></div>"
       })
     element = $('facebox')
     if (element && fn) fn(element)
+  }
+
+  var setExtras = function(buttons, description) {
+    var items = ["<p class='description'>" + (description ? description : '') + "</p>", "<div class=\'buttons'>"]
+    buttons.each(function(button){
+      items.push("<a class='facebutton " + button.className + "' href='" + button.href + "' " + 
+                 (button.extra||'') + ">" + button.description + "</a>")
+    })
+    items.push('</div>')
+    element.down('.facebox-extra').update(items.join(''))
   }
 
   document.on('dom:loaded', function() {
@@ -78,7 +92,7 @@
         
         if (/^#(.+)/.test(href)) {
           var source = $(RegExp.$1)
-          if (source) Facebox.open(source.innerHTML, 'html', extra)
+          if (source) Facebox.open(source.innerHTML, 'html', {description: extra})
         }
         else if (/\.(png|gif|jpe?g|bmp|tif?f)(\?|$)/i.test(href)) {
           Facebox.openImage(href, extra)

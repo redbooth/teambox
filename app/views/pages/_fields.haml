@@ -9,3 +9,8 @@
     = f.label :description, t('.description')
     .description= t('.description_description')
   = f.text_field :description
+
+.option_fields
+  .label
+    %label= t('.is_private')
+.private_options{ 'object-prefix' => 'page_form', 'object-type' => 'page' }

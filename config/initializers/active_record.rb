@@ -44,3 +44,13 @@ class ActiveRecord::Base
     respond_to?(:to_api_hash) ? to_api_hash(options).to_json : super(options)
   end
 end
+
+class ActiveRecord::Base
+  def self.thin_model
+    table = table_name
+    @@thin_model ||= Class.new(superclass).tap do |anon|
+      anon.class_eval { set_table_name table }
+     end
+  end
+end
+

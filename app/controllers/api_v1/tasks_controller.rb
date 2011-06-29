@@ -13,22 +13,24 @@ class ApiV1::TasksController < ApiV1::APIController
     
     @tasks = context.except(:order).
                      where(api_range('tasks')).
+                     where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                     joins("LEFT JOIN watchers ON (tasks.id = watchers.watchable_id AND watchers.watchable_type = 'Task') AND watchers.user_id = #{current_user.id}").
                      limit(api_limit).
-                     order('tasks.id DESC').
-                     includes([:task_list, :project, :user, :assigned,
-                              {:first_comment => :user}, {:recent_comments => :user}])
+                     order('tasks.id DESC')
     
-    api_respond @tasks, :references => [:task_list, :project, :user, :assigned, :refs_comments]
+    api_respond @tasks, :references => true
   end
 
   def show
     authorize! :show, @task
-    api_respond @task, :include => api_include
+    api_respond @task, :include => api_include, :references => true
   end
   
   def create
     authorize! :make_tasks, @current_project
-    @task = @task_list.tasks.create_by_user(current_user, params)
+    @task = @task_list.tasks.build_by_user(current_user, params)
+    @task.is_private = (params[:task][:is_private]||false) if params[:task]
+    @task.save
     
     if @task.new_record?
       handle_api_error(@task)
@@ -43,7 +45,7 @@ class ApiV1::TasksController < ApiV1::APIController
     @task.updating_user = current_user
 
     if @task.update_attributes(params)
-      handle_api_success(@task, :wrap_objects => true, :references => [:project, :user, :comments, :assigned], :include => [:user])
+      handle_api_success(@task, :wrap_objects => true, :references => true, :include => [:user, :uploads])
     else
       handle_api_error(@task)
     end
@@ -110,6 +112,6 @@ class ApiV1::TasksController < ApiV1::APIController
   end
     
   def api_include
-    [:comments, :user, :assigned] & (params[:include]||{}).map(&:to_sym)
+    [:comments, :user, :assigned, :uploads] & (params[:include]||{}).map(&:to_sym)
   end
 end

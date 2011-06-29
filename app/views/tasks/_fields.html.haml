@@ -20,11 +20,13 @@
         - comment_fields.object.uploads.build unless comment_fields.object.uploads.any?
         = comment_fields.fields_for :uploads do |uploads|
           = uploads.file_field :asset, :id => 'upload_file'
+      .private_options{ :style => 'display: none', 'object-prefix' => "task_new", 'object-type' => 'task[comments_attributes][0]' }
       .actions
         .attach
           %span= t('comments.fields.attach') + ": "
           = link_to t('uploads.comment_upload_link'), '#uploads', :class => 'attach_icon hoverable', :title => "Attach a file"
           = render 'google_docs/form', :f => comment_fields
+          = link_to "Privacy", '#privacy', :class => 'private_switch hoverable', :title => "Control who can see this element"
 
   .assigned_to.text_field
     = f.label :assigned_id, t('comments.new.assigned_to')

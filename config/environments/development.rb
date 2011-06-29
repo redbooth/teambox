@@ -45,4 +45,3 @@ Teambox::Application.configure do
   config.cache_store = UselessStore.new
 
 end
-

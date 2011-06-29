@@ -94,7 +94,6 @@ module Teambox
       else
         unless Rails.env.test? || Rails.env.cucumber?
           action_mailer.delivery_method = :test
-          self.email_confirmation_require = false
         end
       end
 

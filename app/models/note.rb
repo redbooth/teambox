@@ -29,6 +29,12 @@ class Note < RoleRecord
     'notes/note'
   end
   
+  def references
+    refs = { :projects => [project_id], :pages => [page_id] }
+    refs[:page_slot] = [page_slot.id] if page_slot
+    refs
+  end
+  
   def to_s
     name
   end

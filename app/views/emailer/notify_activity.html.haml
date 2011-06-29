@@ -1,0 +1,19 @@
+.email{ :style =>  "#{email_global}" }
+  %h1= link_to logo_image, projects_url(@project)
+  %h2{ :style => email_text(:normal) }
+    - project =  link_to(@project.name, project_url(@project))
+    = t('emailer.notify.activity.title', :project => project).html_safe
+
+  %p{ :style => email_text(:small) }
+    = t('emailer.common.do_not_answer')
+
+  = render 'activity', :activity => @activity
+
+  - link = case @activity 
+  - when Page then project_page_url(@project, @target)
+  - when Note then project_page_url(@project, @target.page)
+
+  .footer{ :style => email_text(:small)+"; margin: 40px 0" }
+    %p
+      = t('emailer.notify.stop_watching_link_html', :stop_watch => link )
+      = t('emailer.notify.notification_settings_link_html', :settings_link => link_to(t('emailer.notify.settings_link'), account_notifications_url) )

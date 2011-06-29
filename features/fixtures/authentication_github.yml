@@ -1,0 +1,39 @@
+--- 
+user_info: 
+  name: Charles Barbier
+  urls: 
+    Blog: ""
+    GitHub: http://github.com/charles
+  nickname: charles
+  email: charles@teambox.com
+uid: 78458
+credentials: 
+  token: 66c2d83876c03fb8865da1bd48aecaa5d6f001e8
+extra: 
+  user_hash: 
+    name: Charles Barbier
+    company: Teambox
+    gravatar_id: 23e6178f295b9cb7473d44d9e501a2b3
+    plan: 
+      name: free
+      collaborators: 0
+      space: 307200
+      private_repos: 0
+    location: Montreal
+    created_at: 2009/04/27 12:17:00 -0700
+    blog: ""
+    public_gist_count: 8
+    public_repo_count: 14
+    collaborators: 0
+    disk_usage: 4152
+    following_count: 9
+    id: 78458
+    permission: 
+    type: User
+    private_gist_count: 13
+    owned_private_repo_count: 0
+    followers_count: 15
+    total_private_repo_count: 0
+    login: charles
+    email: charles@teambox.com
+provider: github

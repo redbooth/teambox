@@ -291,5 +291,156 @@ describe Task do
       Task.due_today.should_not include(@for_tomorrow)
     end
   end
+  
+  describe "private tasks" do
+    
+    it "should mark all related activities as private when created as private" do
+      task = Factory.create(:task, :is_private => true)
+      activities_for_thread(task) { |activity| activity.is_private.should == true }
+    end
+  
+    it "should update the private status of related activities and comments each time its updated" do
+      task = Factory.create(:task, :is_private => true)
+      comment = task.comments.create_by_user task.user, {:body => 'Test'}
+      upload = comment.uploads.build({:asset => mock_uploader('semicolons.js', 'application/javascript', "alert('what?!')")})
+      comment.uploads << upload
+      task.save!
+      
+      activities_for_thread(task) { |activity| activity.is_private.should == true }
+      task.comments.reload.each{|c| c.is_private.should == true; c.uploads.each{|upload| upload.is_private.should == true} }
+      task.update_attribute(:is_private, false)
+      activities_for_thread(task) { |activity| activity.is_private.should == false }
+      task.comments.reload.each{|c| c.is_private.should == false; c.uploads.each{|upload| upload.is_private.should == false} }
+      task.update_attribute(:is_private, true)
+      activities_for_thread(task) { |activity| activity.is_private.should == true }
+      task.comments.reload.each{|c| c.is_private.should == true; c.uploads.each{|upload| upload.is_private.should == true} }
+    end
+    
+    it "should not dispatch notification emails when private" do
+      watcher = Factory.create(:user)
+      Emailer.should_not_receive(:notify_task)
+      
+      task = Factory.create(:task, :is_private => true)
+      task.project.add_user(watcher)
+      task.add_watcher(watcher)
+      task.comments.create_by_user task.user, {:body => 'Nononotify'}
+      task.save
+      
+      Task.find(task.id).comments.length.should == 1
+    end
+    
+    it "only comments created by the owner can update is_private" do
+      watcher = Factory.create(:user)
+      task = Factory.create(:task, :is_private => true)
+      task.project.add_user(watcher)
+      task.add_watcher(watcher)
+      
+      task.comments.create_by_user watcher, {:body => 'shouldnotwork', :is_private => false}
+      task.save
+      task.reload.is_private.should == true
+      
+      task.comments.create_by_user task.user, {:body => 'shouldwork', :is_private => false}
+      task.save
+      task.reload.is_private.should == false
+      
+      task.comments.create_by_user watcher, {:body => 'doesntwork', :is_private => true}
+      task.save
+      task.reload.is_private.should == false
+      
+      task.comments.create_by_user task.user, {:body => 'reallydoeswork', :is_private => true}
+      task.save
+      task.reload.is_private.should == true
+    end
+    
+    it "only comments created by the owner can update private_ids" do
+      watcher = Factory.create(:user)
+      task = Factory.create(:task, :is_private => true)
+      task.project.add_user(watcher)
+      task.add_watcher(watcher)
+      current_watchers = Task.find_by_id(task.id).watcher_ids.sort
+      
+      task.comments.create_by_user watcher, {:body => 'shouldnotwork', :is_private => true, :private_ids => [task.user_id]}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.should == current_watchers.sort
+      
+      task.comments.create_by_user task.user, {:body => 'shouldwork', :is_private => true, :private_ids => [task.user_id]}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.should == [task.user_id]
+    end
+    
+    it "private_ids can only be changed when is_private is set" do
+      watcher = Factory.create(:user)
+      project = Factory.create(:project)
+      task = Factory.create(:task, :is_private => true, :project => project, :user => project.user)
+      task = Task.find_by_id(task.id)
+      task.project.add_user(watcher)
+      task.add_watcher(watcher)
+      task = Task.find_by_id(task.id)
+      current_watchers = task.watcher_ids.sort
+      
+      task.comments.create_by_user task.user, {:body => 'shouldnotwork', :private_ids => [task.user_id]}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.sort.should == current_watchers.sort
+      
+      task.comments.create_by_user task.user, {:body => 'shouldreallynotwork', :is_private => true, :private_ids => [task.user_id]}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.sort.should == [task.user_id]
+    end
+    
+    it "setting is_private only works on creation" do
+      task_list = Factory.create(:task_list)
+      task = task_list.project.create_task(task_list.user, task_list, :name => 'Test', :is_private => true)
+      task.is_private.should == false
+      task.update_attributes(:is_private => false)
+      task.is_private.should == false
+    end
+    
+    it "should not remove the creator or assigned user from the watchers list" do
+      user = Factory.create(:user)
+      project = Factory.create(:project)
+      project.add_user(user)
+      
+      task = Factory.create(:task, :is_private => true, :project => project, :user => project.user, :assigned => project.people.last)
+      
+      current_watchers = task.watcher_ids.sort
+      current_watchers.sort.should == [project.user_id, user.id].sort
+      
+      # assigned cannot be cleared
+      task.comments.create_by_user task.user, {:is_private => true, :body => 'shouldclear', :private_ids => []}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.sort.should == [project.user_id, user.id].sort
+      
+      Task.find_by_id(task.id).update_attributes(:assigned_id => nil)
+      task = Task.find_by_id(task.id)
+      task.assigned.should == nil
+      
+      # unassigned user can now be cleared
+      task.comments.create_by_user task.user, {:is_private => true, :body => 'shouldclear', :private_ids => []}
+      task.save
+      Task.find_by_id(task.id).watcher_ids.should == [project.user_id]
+    end
+  end
 
+  describe "google calendar system" do
+    it "should create a correctly formatted GoogleCalendar::Event when sent #to_google_calendar_event" do
+      task = Factory(:task, :due_on => Date.today)
+      google_event = task.send(:to_google_calendar_event)
+      google_event.title.should == task.name
+      google_event.details.strip.end_with?("/projects/#{task.project.to_param}/tasks/#{task.to_param}").should be_true
+      google_event.start.should == Date.today
+      google_event.end.should == Date.today
+      
+      task.due_on.should be_instance_of(Date)
+    end
+    
+    it "should create a correctly formatted GoogleCalendar::Event when sent #to_google_calendar_event with a body" do
+      task = Factory(:task, :comments => [Factory(:comment, :body => 'Do it by tomorrow')])
+      google_event = task.send(:to_google_calendar_event)
+      google_event.title.should == task.name
+      google_event.details.start_with?("Do it by tomorrow").should be_true
+      google_event.details.end_with?("/projects/#{task.project.to_param}/tasks/#{task.to_param}").should be_true
+      google_event.start.should == task.due_on
+      google_event.end.should == task.due_on
+    end
+  end
 end

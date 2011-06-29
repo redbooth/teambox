@@ -1,5 +1,6 @@
 class Upload < RoleRecord
   include Immortal
+  include PrivateElementMethods
 
   ICONS = %w(aac ai aiff avi bmp c cpp css dat dmg doc dotx dwg dxf eps exe flv gif h hpp html ics iso java jpg key mid mp3 mp4 mpg odf ods odt otp ots ott pdf php png ppt psd py qt rar rb rtf sql tga tgz tiff txt wav xls xlsx xml yml zip)
     
@@ -99,7 +100,8 @@ class Upload < RoleRecord
   end
 
   def downloadable?(user)
-    project.user_ids.include?(user.id)
+    project.user_ids.include?(user.id) &&
+    user_can_access_private_target?(user)
   end
 
   def file_type
@@ -110,6 +112,16 @@ class Upload < RoleRecord
   
   def user
     @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
+  end
+  
+  def references
+    refs = { :users => [user_id], :projects => [project_id] }
+    refs[:comment] = [comment_id] if comment_id
+    if page_id
+      refs[:page] = [page_id]
+      refs[:page_slot] = [page_slot.id] if page_slot
+    end
+    refs
   end
 
   def to_xml(options = {})
@@ -143,7 +155,8 @@ class Upload < RoleRecord
       :created_at => created_at.to_s(:api_time),
       :updated_at => updated_at.to_s(:api_time),
       :user_id => user_id,
-      :comment_id => comment_id
+      :comment_id => comment_id,
+      :is_private => is_private
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
@@ -156,12 +169,15 @@ class Upload < RoleRecord
     if comment_id
       self.user_id = comment.user_id
       self.project_id = comment.project_id
+      self.is_private = comment.is_private
     end
+    true
   end
   
   def update_comment_to_show_delete
     if self.comment && self.comment.body.blank? && self.comment.uploads.count == 1
       self.comment.update_attributes(:body => "File deleted")
     end
+    true
   end
 end

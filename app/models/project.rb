@@ -102,6 +102,10 @@ class Project < ActiveRecord::Base
                            :order => 'id DESC',
                            :limit => limit)
   end
+  
+  def references
+    { :users => [user_id], :organizations => [organization_id] }
+  end
 
   def to_s
     name
@@ -111,25 +115,30 @@ class Project < ActiveRecord::Base
     permalink
   end
 
-  def to_ical(filter_user = nil)
-    Project.calendar_for_tasks(tasks, self, filter_user)
+  def to_ical(current_user, filter_user = nil)
+    Project.to_ical([self], current_user, filter_user)
   end
 
-  def self.to_ical(projects, filter_user = nil, host = nil, port = 80)
-    tasks = projects.collect{ |p| p.tasks }.flatten
-    self.calendar_for_tasks(tasks, projects, filter_user, host, port)
+  def self.to_ical(projects, for_user, filter_user = nil, host = nil, port = 80)
+    self.calendar_for_tasks(for_user, Task.where(:project_id => projects.map(&:id)), projects, filter_user, host, port)
   end
   
   protected
 
-    def self.calendar_for_tasks(tasks, projects, filter_user, host = nil, port = 80)
+    def self.calendar_for_tasks(current_user, query_tasks, projects, filter_user, host = nil, port = 80)
       calendar_name = case projects
       when Project then projects.name
       else "Teambox - All Projects"
       end
 
+      # privacy filter
+      tasks = query_tasks.includes(:project).
+                          where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+                          joins("LEFT JOIN watchers ON (tasks.id = watchers.watchable_id AND watchers.watchable_type = 'Task') AND watchers.user_id = #{current_user.id}")
+
       if filter_user
-        tasks = tasks.select { |task| task.assigned.try(:user_id) == filter_user.id }
+        people = Person.where(:user_id => filter_user.id)
+        tasks = tasks.where(:assigned_id => people.map(&:id))
       end
 
       ical = Icalendar::Calendar.new

@@ -2,5 +2,5 @@
   %p.month_value#month_value{ :style => 'clear: both', :value => "#{[year,month].join('_')}"}
     =link_to_last_month(project,year,month)
     %span
-      =Time.mktime(year,month).to_s(:month_and_year)
+      =I18n.l(Time.mktime(year,month).to_date, :format => :month_and_year)
     =link_to_next_month(project,year,month)

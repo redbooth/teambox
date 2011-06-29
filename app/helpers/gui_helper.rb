@@ -1,7 +1,7 @@
 module GuiHelper
 
   def progress_bar(now, max, classes='green', width=200)
-    ratio = 1.0*now/max
+    ratio = [1.0*now/max, 1.0].min
     "<div class='progressbar #{classes}' style='width: #{width}px'>
       <div class='bar1' style='width:#{width*ratio}px'></div>
       <div class='bar2' style='width:#{width*ratio}px'></div>
@@ -10,7 +10,7 @@ module GuiHelper
   end
 
   def warning_progress_bar(now, max, width=200)
-    ratio = 1.0*now/max
+    ratio = [1.0*now/max, 1.0].min
     classes = case ratio
     when 0..0.6 then :green
     when 0.6..0.8 then :yellow

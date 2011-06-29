@@ -1,11 +1,11 @@
 %p=raw "Projects contain most of the objects present in Teambox."
 
 - doc_for :index,
-          :example => example_api_wrap(@project, :references => [:organization, :user]) do
+          :example => example_api_wrap([@project], :references => true) do
   %p=raw "Returns the most recent projects you own or belong to. You can also filter by organization by passing in <tt>organization_id</tt>."
 
 - doc_for :show,
-          :example => @project.to_api_hash,
+          :example => example_api_wrap(@project, :references => true),
           :includes => [:organization, :people, :user] do
   %p=raw "Returns the data for a given project"
   

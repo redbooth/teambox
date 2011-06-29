@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   before_filter :load_projects, :only => [:index]
   before_filter :set_page_title
   before_filter :disallow_for_community, :only => [:new, :create]
-  before_filter :load_pending_projects, :only => [:index, :show]
+  before_filter :load_pending_projects, :only => [:index, :show, :new, :create]
   
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
@@ -14,30 +14,43 @@ class ProjectsController < ApplicationController
   
   def index
     @new_conversation = Conversation.new(:simple => true)
-    @activities = Activity.for_projects(@projects)
+    @activities = Activity.for_projects(@projects).
+      where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+      joins("LEFT JOIN watchers ON ((activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.target_id = watchers.watchable_id AND watchers.watchable_type = activities.target_type)) AND watchers.user_id = #{current_user.id}")
+    
     @threads = @activities.threads.all(:include => [:project, :target])
     @last_activity = @threads.last
 
     respond_to do |f|
-      f.html
+      f.html do
+        # If I can create a project and I don't have any, show me the create a project screen
+        if can?(:create_project, @current_user) and !current_user.projects.any?
+          @project = Project.new
+          @project.build_organization
+          render 'projects/new'
+        end
+      end
       f.m     { redirect_to activities_path if request.path == '/' }
       f.rss   { render :layout  => false }
-      f.ics   { render :text    => Project.to_ical(@projects, params[:filter] == 'mine' ? current_user : nil, request.host, request.port) }
+      f.ics   { render :text    => Project.to_ical(@projects, current_user, params[:filter] == 'mine' ? current_user : nil, request.host, request.port) }
       f.print { render :layout  => 'print' }
     end
   end
 
   def show
-    @activities = Activity.for_projects(@current_project)
+    @activities = Activity.for_projects(@current_project).
+      where(['activities.is_private = ? OR (activities.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+      joins("LEFT JOIN watchers ON  ((activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.target_id = watchers.watchable_id AND watchers.watchable_type = activities.target_type)) AND watchers.user_id = #{current_user.id}")
+    
     @threads = @activities.threads.all(:include => [:project, :target])
     @last_activity = @threads.last
-    @recent_conversations = @current_project.conversations.not_simple.recent(4)
+    @recent_conversations = @current_project.conversations.not_simple.recent(4).reject { |c| !c.is_visible?(current_user) }
     @new_conversation = @current_project.conversations.new(:simple => true)
 
     respond_to do |f|
       f.any(:html, :m)
       f.rss   { render :layout  => false }
-      f.ics   { render :text    => @current_project.to_ical(params[:filter] == 'mine' ? current_user : nil) }
+      f.ics   { render :text    => @current_project.to_ical(current_user, params[:filter] == 'mine' ? current_user : nil) }
       f.print { render :layout  => 'print' }
     end
   end

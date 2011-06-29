@@ -11,13 +11,13 @@ class ApiV1::InvitationsController < ApiV1::APIController
                                        limit(api_limit).
                                        order('invitations.id DESC')
     
-    api_respond @invitations, :include => [:project, :user], :references => [:project, :user]
+    api_respond @invitations, :references => true
   end
 
   def show
     authorize! :show, @invitation
     authorize! :admin, @target
-    api_respond @invitation, :include => [:project, :user]
+    api_respond @invitation, :references => true
   end
   
   def create

@@ -121,7 +121,11 @@ def make_the_teambox_dump
   @project = Factory(:project)
   @task_list = Factory(:task_list, :project => @project)
   @conversation = Factory(:conversation, :project => @project)
-  @task = Factory(:task, :task_list_id => @task_list.id, :project => @project)
+  @task = Factory(:task, :task_list => @task_list, :project => @project)
+  
+  @project.add_user(@task_list.user)
+  @project.add_user(@conversation.user)
+  @project.add_user(@task.user)
 end
 
 def make_and_dump_the_teambox_dump
@@ -140,7 +144,15 @@ def decode_test_csv(body)
 end
 
 def dump_test_data
-  ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(TeamboxData.new.serialize(Organization.all, Project.all, User.all)))
+  ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(TeamboxData.new.serialize(Organization.all, Project.all)))
+end
+
+def activities_for_thread(target, &block)
+  Activity.all.each do |activity|
+    if activity.comment_target == target or activity.target == target or (activity.target_type == 'Upload' && activity.comment.target == target)
+      yield activity
+    end
+  end
 end
 
 # Backwards compatibility fix: this way we can use it in subject blocks
@@ -151,5 +163,15 @@ end
 # RAILS3 document this for rack-test
 def app
   Rails.application
+end
+
+RSpec.configure do |config|
+  if ENV['PROFILE']
+    config.around(:each) do |example|
+      start = Time.now.to_f
+      example.run
+      puts "\n#{example.metadata[:full_description]}: #{(Time.now.to_f - start)} s"
+    end
+  end
 end
 

@@ -15,20 +15,8 @@ module ApidocsHelper
   end
   
   def example_api_wrap(object, options={})
-    objects = if object.is_a? Enumerable
-      object.map{|o| o.to_api_hash(options) }
-    else
-      object.to_api_hash(options)
-    end
-    
-    if options[:references]
-      { :references => Array(object).map{ |obj|  
-          options[:references].map{|ref| obj.send(ref)}
-        }.flatten.compact.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))},
-        :objects => objects }
-    else
-      objects
-    end
+    api_controller = ApiV1::APIController.new
+    api_controller.send 'api_wrap', object, options
   end
   
   def routes_for_model(modelname)

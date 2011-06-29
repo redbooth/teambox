@@ -18,6 +18,7 @@ class ConversationsController < ApplicationController
   def create
     authorize! :converse, @current_project
     @conversation = @current_project.conversations.new_by_user(current_user, params[:conversation])
+    @conversation.is_private = (params[:conversation][:is_private]||false) if params[:conversation]
 
     if @conversation.save
       respond_to do |f|
@@ -45,7 +46,9 @@ class ConversationsController < ApplicationController
   end
 
   def index
-    @conversations = @current_project.conversations.not_simple
+    @conversations = @current_project.conversations.
+      where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+      joins("LEFT JOIN watchers ON (conversations.id = watchers.watchable_id AND watchers.watchable_type = 'Conversation') AND watchers.user_id = #{current_user.id}")
 
     respond_to do |f|
       f.any(:html, :m)
@@ -54,7 +57,11 @@ class ConversationsController < ApplicationController
   end
 
   def show
-    @conversations = @current_project.conversations.not_simple
+    authorize! :show, @conversation
+    @conversations = @current_project.conversations.not_simple.
+      where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+      joins("LEFT JOIN watchers ON (conversations.id = watchers.watchable_id AND watchers.watchable_type = 'Conversation') AND watchers.user_id = #{current_user.id}")
+                             
 
     respond_to do |f|
       f.any(:html, :m)

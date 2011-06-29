@@ -22,10 +22,22 @@
       text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px
       font-family: Helvetica, Arial, sans-serif
       font-size: 11px
-      +rounded(10px)
+      +rounded(3px)
       +box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.5))
       &.red
         background-color: #b00
+      &.clickable
+        padding: 0
+        margin: 0
+        &:hover
+          background-color: #333
+          a
+            color: white
+        a
+          padding: 2px 4px
+    &.late_tasks span
+      font-weight: bold
+      color: red
     &.selected, &.children-selected, &.selected:hover, &.children-selected:hover
       background: lighten($navbar, 20)
       +gradient(#a0b0d0, #6f83ab)
@@ -71,6 +83,8 @@
       background-image: url(/famfamfam/newspaper.png)
     &.conversations
       background-image: url(/famfamfam/comment.png)
+    &.today
+      background-image: url(/famfamfam/weather_sun.png)
     &.tasks
       background-image: url(/famfamfam/tick.png)
     &.today

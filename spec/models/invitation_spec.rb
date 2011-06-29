@@ -63,7 +63,7 @@ describe Invitation do
       user = Factory.create(:user)
       @project.organization.add_member(user, :participant)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_receive(:send_with_language).once
+      Emailer.should_receive(:send_with_language).twice #once for the membership notification and another one for the "user accepted invitation" notification
       invitation.save
       user.invitations.length.should == 0
     end
@@ -106,7 +106,7 @@ describe Invitation do
       user = Factory.create(:user)
       @project.organization.add_member(user, :participant)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_receive(:send_with_language).once
+      Emailer.should_receive(:send_with_language).twice #once for the membership notification and another one for the "user accepted invitation" notification
       invitation.save
       user.invitations.length.should == 0
       invitation.should be_frozen

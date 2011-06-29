@@ -248,7 +248,7 @@ var InsertHereFunc = function(evt){
 
 document.on('dom:loaded', function() {
   if ($$('body.show_pages').first()) {
-    Page.init(false, window.location.pathname);
+    Page.init($('slots').hasClassName('readonly'), window.location.pathname);
     Page.makeSortable();
   }
 })
@@ -267,8 +267,9 @@ document.on('click', 'a.note_button, a.divider_button, a.upload_button', functio
   
   var form = $('new_' + type);
   InsertionBar.setWidgetFormLoading(form, false);
+  Form.reset(form);
   InsertionBar.setWidgetForm(form);
-  Form.reset(form).focusFirstElement();
+  form.focusFirstElement();
 });
 
 document.on('click', 'a.cancelPageWidget', function(e) {

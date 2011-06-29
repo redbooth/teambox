@@ -141,8 +141,9 @@ def seed_data
                         :password_confirmation => "papapa",
                         :first_name => a, :last_name => b,
                         :betatester => true,
-                        :notify_conversations => false,
-                        :notify_tasks => false,
+                        :notify_conversations => true,
+                        :notify_tasks => true,
+                        :notify_pages => true,
                         :email => "example_#{a}@teambox.com")
     user.activate!
     user

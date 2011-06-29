@@ -43,8 +43,8 @@ module UsersHelper
     javascript_tag %(
      window.my_user = #{json_user};
      window.my_projects = #{json_projects};
+     window.my_external_organizations = #{json_external_organizations};
      window.my_organizations = #{json_organizations};
-     window.my_tasks = #{json_tasks};
      window.current_project = #{@current_project ? @current_project.id : 'null'};
 
      (function(){
@@ -197,6 +197,7 @@ module UsersHelper
         :collapse_activities => !!current_user.settings["collapse_activities"],
         :keyboard_shortcuts => !!current_user.settings["keyboard_shortcuts"],
         :first_day_of_week => current_user.first_day_of_week,
+        :recent_projects => current_user.recent_projects_ids,
         :stats => {
           :projects => current_user.get_stat('projects'),
           :conversations => current_user.get_stat('conversations'),
@@ -207,29 +208,39 @@ module UsersHelper
         :first_steps => current_user.show_first_steps,
         :badges => current_user.badges,
         :show_badges => current_user.show_badges,
+        :can_create_project => (!Teambox.config.community || (@community_organization && @community_role)),
+        :community => Teambox.config.community,
         :authentication_token => current_user.authentication_token
       }.to_json
     end
 
     def json_projects
+      # FIXME add current_project
       projects = {}
-      current_user.people.all(:include => :project).each do |p|
-        projects[p.project.id] = {
-          :permalink => p.project.permalink,
+      current_user.projects.except(:select).select("projects.id, projects.permalink, projects.organization_id, projects.user_id, projects.archived, projects.tracks_time, projects.name, people.role").each do |p|
+        projects[p.id] = {
+          :permalink => p.permalink,
           :role => p.role,
-          :organization_id => p.project.organization_id,
-          :archived => p.project.archived,
-          :name => h(p.project.name) }
+          :organization_id => p.organization_id,
+          :owner => p.user_id,
+          :archived => p.archived,
+          :time_tracking => p.tracks_time,
+          :name => h(p.name) }
       end
       projects.to_json
     end
 
-    def json_organizations
-      Organization.find(current_user.projects.collect(&:organization_id).compact).collect do |org| {
-        :id => org.id,
-        :name => org.name,
-        :permalink => org.permalink }
-      end.to_json
+    # FIXME refactor the next two methods in one
+    def json_external_organizations
+      current_user.projects.joins(:organization).
+        except(:select).except(:order).
+        select('distinct(organizations.id), organizations.name, organizations.permalink').
+        collect(&:attributes).to_json
     end
 
+    def json_organizations
+      current_user.memberships.joins(:organization).
+        select("organizations.id, organizations.name, organizations.permalink, memberships.role").
+        collect(&:attributes).to_json
+    end
 end

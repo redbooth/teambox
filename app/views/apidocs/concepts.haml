@@ -91,7 +91,11 @@
 
 %p For a collection of objects, the actual objects will be returned in the "objects" list, while any object referenced by the collection will be returned in the "references" list. This reduces the amount of redundant data in a request.
 
-%p The maximum number of returned objects is defined by the API_LIMIT, which is currently set at 50 items per request. To get more items, you will need to use the following parameters:
+%h3 Pagination
+
+%p The number of returned objects is by default limited to 20. This limit can be changed by providing a <tt>count</tt> parameter. If the value of <tt>count</tt> is <tt>0</tt> there won't be any limit, so all the objects will be returned.
+%p There is one exception to this rule, which is the activities index action (<tt>/api/1/activites</tt> or <tt>/api/1/projects/:project_id/activites</tt>), where the limit cannot be changed to more than 20.
+%p To paginate through the entire collection, you will need to use the following parameters:
 
 %ul
   %li <tt>since_id</tt> to get items created <strong>AFTER</strong> the specified id.

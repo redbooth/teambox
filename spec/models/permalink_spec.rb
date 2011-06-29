@@ -21,6 +21,11 @@ describe "permalink" do
       duplicate.permalink.should_not == first_obj.permalink
     end
 
+    it "should replace non-ascii chars with their ascii counterparts" do
+      obj = Factory.create(model, :permalink => "òéàüñ ìí")
+      obj.permalink.should == "oeaun-ii"
+    end
+
     it "should generate a unique permalink to #{model} if none is given" do
       first_obj = Factory.create(model, :name => 'Teambox')
       first_obj.permalink.should_not be_nil

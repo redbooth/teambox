@@ -38,10 +38,10 @@ describe TeamboxData do
       organization.add_member(user, Membership::ROLES[:admin])
       project = Factory(:project, :organization => organization, :user => user)
       
-      user_map = user_list.inject({}){|a,key| a[key] = user.login; a}
+      user_map = user_list.inject({}){|a,key| a[key] = "  #{user.login}   "; a}
       org_map = org_list.inject({}){|a,key| a[key] = organization.permalink; a}
       
-      TeamboxData.new.tap{|d| d.data = data; d.user = user }.unserialize(
+      TeamboxData.new.tap{|d| d.type_name = 'import'; d.data = data; d.user = user }.unserialize(
         {'User' => user_map, 'Organization' => org_map}, {})
       
       Organization.count.should == 1
@@ -68,6 +68,28 @@ describe TeamboxData do
       Organization.count.should == 0
       
       TeamboxData.new.tap{|d| d.data = data }.unserialize({}, {:create_users => true, :create_organizations => true})
+      
+      User.count.should == old_user_count
+      Project.count.should == old_project_count
+    end
+    
+    it "should not dump users associated with the organization when no organizations are dumped" do
+      make_the_teambox_dump
+      old_user_count = User.count
+      old_project_count = Project.count
+      extra_user = Factory(:user)
+      Organization.first.add_member(extra_user, Membership::ROLES[:admin])
+      
+      data = ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(TeamboxData.new.serialize(nil, Project.all)))
+      
+      User.destroy_all
+      Project.destroy_all
+      
+      User.count.should == 0
+      Project.count.should == 0
+      
+      org_map = { Organization.first.id => Organization.first }
+      TeamboxData.new.tap{|d| d.data = data }.unserialize({'Organization' => org_map}, {:create_users => true})
       
       User.count.should == old_user_count
       Project.count.should == old_project_count
@@ -164,7 +186,7 @@ describe TeamboxData do
   describe "serialize" do
     it "should serialize data" do
       make_the_teambox_dump
-      encoded_data = ActiveSupport::JSON.encode TeamboxData.new.serialize(Organization.all, Project.all, User.all)
+      encoded_data = ActiveSupport::JSON.encode TeamboxData.new.serialize(Organization.all, Project.all)
       account_dump = ActiveSupport::JSON.decode(encoded_data)['account']
       account_dump['projects'].length.should == 1
       project_dump = account_dump['projects'][0]
@@ -206,7 +228,7 @@ describe TeamboxData do
       organization.add_member(user, Membership::ROLES[:admin])
       dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user; d.save}
       dump.data = @teambox_dump
-      dump.target_organization = organization.permalink
+      dump.organization = organization
       dump.user_map = user_map
       dump.status_name = :mapping
       
@@ -225,17 +247,16 @@ describe TeamboxData do
       user_map = @user_list.inject({}){|a,key| a[key] = user.login; a}
       
       organization.add_member(user, Membership::ROLES[:admin])
-      dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user; d.save}
-      dump.import_data = mock_uploader('dump.js', 'text/json', ActiveSupport::JSON.encode(@teambox_dump))
+      dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user}
+      dump.processed_data = mock_uploader('dump.js', 'text/json', ActiveSupport::JSON.encode(@teambox_dump))
       dump.save
-      dump.target_organization = organization.permalink
+      dump.organization = organization
       dump.user_map = user_map
       dump.status_name = :pre_processing
       
       dump.save.should == true
       dump = TeamboxData.find_by_id(dump.id)
       
-      dump.map_data.should_not == nil
       dump.error?.should_not == true
       dump.status_name.should == :pre_processing
       dump.data.should_not == nil
@@ -256,7 +277,7 @@ describe TeamboxData do
       organization.add_member(user, Membership::ROLES[:admin])
       dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user;d.save}
       dump.data = @teambox_dump
-      dump.target_organization = organization.permalink
+      dump.organization = organization
       dump.user_map = user_map
       dump.status_name = :mapping
       
@@ -277,7 +298,7 @@ describe TeamboxData do
       organization.add_member(user, Membership::ROLES[:admin])
       dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user; d.save}
       dump.data = @teambox_dump
-      dump.target_organization = organization.permalink
+      dump.organization = organization
       dump.user_map = user_map
       dump.status_name = :mapping
       
@@ -309,7 +330,7 @@ describe TeamboxData do
       
       dump = TeamboxData.new.tap{|d|d.type_name='import';d.service='teambox';d.user=user}
       dump.data = @teambox_dump
-      dump.target_organization = organization.permalink
+      dump.organization = organization
       dump.user_map = user_map
       dump.status_name = :mapping
       
@@ -334,7 +355,7 @@ describe TeamboxData do
   describe "export_to_file" do
     it "should export data to a file" do
       make_the_teambox_dump
-      TeamboxData.export_to_file(Project.all, User.all, Organization.all, "#{Rails.root}/tmp/test-export.json")
+      TeamboxData.export_to_file(Project.all, Organization.all, "#{Rails.root}/tmp/test-export.json")
     end
   end
   
@@ -348,6 +369,30 @@ describe TeamboxData do
       dump.save
       
       dump.to_api_hash.should_not == nil
+    end
+  end
+  
+  describe "organizations_to_export" do
+    before do
+      @organization = Factory.create(:organization)
+      @other_organization = Factory.create(:organization)
+      
+      @project = Factory.create(:project, :organization => @organization)
+      @other_project = Factory.create(:project, :organization => @other_organization)
+      
+      @organization.add_member(@project.user, Membership::ROLES[:admin])
+    end
+    
+    it "should include organizations belonging to the projects if no user is specified" do
+      dump = TeamboxData.new.tap{|d|d.type_name='export'}
+      dump.project_ids = Project.all.map(&:id)
+      dump.organizations_to_export.map(&:id).sort.should == [@organization.id, @other_organization.id].sort
+    end
+    
+    it "should include organizations belonging to the projects which the user is an admin of if a user is specified" do
+      dump = TeamboxData.new.tap{|d|d.type_name='export';d.user=@project.user}
+      dump.project_ids = Project.all.map(&:id)
+      dump.organizations_to_export.map(&:id).should == [@organization.id]
     end
   end
 end

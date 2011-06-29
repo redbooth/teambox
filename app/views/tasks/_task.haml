@@ -2,7 +2,7 @@
 - project ||= task.project
 - task_list ||= task.task_list
 
-%div[task]{ :class => task_classes(task), :'data-task-id' => task.id }
+%div[task]{ :class => task_classes(task), :'data-task-id' => task.id, :'data-creator-user-id' => task.try(:user_id), :'data-watcher-ids' => (task.try(:watcher_ids)||[]).join(','), 'data-assigned-id' => task.try(:assigned_id) }
   .taskStatus
     = image_tag('drag.png', :class => 'task_drag') if editable and !task.archived?
     = task_status(task, :content)
@@ -10,7 +10,8 @@
     .expanded_actions{ :style => 'display: none' }
       %a.full{ :href => project_task_path(project, task) }= t('.full_view')
       %a.hide{ :href => '#' }= t('.hide_comments')
-    = link_to task, [project, task], :class => :name
+    .lock_icon
+    = link_to h(task), [project, task], :class => :name
     %span.assigned_date= task.due_on ? due_on(task) : ''
     %span.assigned_user= task.assigned ? link_to(task.assigned.short_name, user_path(task.assigned.user)) : ''
     - unless @current_project
