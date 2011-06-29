@@ -208,12 +208,9 @@ module UsersHelper
         :first_steps => current_user.show_first_steps,
         :badges => current_user.badges,
         :show_badges => current_user.show_badges,
-<<<<<<< HEAD
-        :authentication_token => current_user.authentication_token
-=======
         :can_create_project => (!Teambox.config.community || (@community_organization && @community_role)),
-        :community => Teambox.config.community
->>>>>>> dev
+        :community => Teambox.config.community,
+        :authentication_token => current_user.authentication_token
       }.to_json
     end
 
