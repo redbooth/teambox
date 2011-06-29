@@ -13,7 +13,16 @@
       this.el.update(options.template());
 
       options.tasks.each(function (task) {
-        self.el.select('.tasks')[0].insert({bottom: (new Teambox.Views.Task({model: task})).render().el});
+        var el = (new Teambox.Views.Task({model: task})).render().el;
+
+        // add the dragndrop
+        if (options.dragndrop && !task.is_archived()) {
+          el.down('.taskStatus').insert({
+            top: new Element('img', {alt: 'Drag', 'class': 'task_drag', src: '/images/drag.png'})
+          });
+        }
+
+        self.el.select('.tasks')[0].insert({bottom: el});
       });
     } else {
       this.el.update(options.primer_template());
@@ -65,6 +74,7 @@
     var sorted = TasksHelper.sort(options.tasks, options.by)
       , last_status = {order: null};
 
+    console.log(options.tasks);
     _.each(sorted, function (el) {
       var current_status = TasksHelper.getStatus(options.by)(el);
       if (last_status.order !== current_status.order) {

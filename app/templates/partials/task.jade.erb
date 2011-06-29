@@ -1,13 +1,16 @@
 // CLEANME: taskStatus is deprecated and hidden
 - var task = new Teambox.Models.Task(self);
+
 .taskStatus
-  // <img src='drag.png' class='task_drag'/> if editable and !task.archived?
   span.task_status.task_counter(data-task-id= self.id)= self.comments_count
+
 .status= self.status_text()
+
 .taskName
   a.name(href= '/#!' + task.publicUrl())= self.name
   form.edit_title(style= 'display:none;')
     input(data-disable-with= '<%= t('common.saving')%>…', value= self.name)
+
   .expanded_actions(style= 'display:none;')
     a.full(href= '#!' + task.publicUrl()) <%= t('tasks.task.full_view')%>
     a.edit(href= "#") <%= t('tasks.task.edit')%>
@@ -26,7 +29,9 @@
       &rarr;
     span.task_list
       a(href= self.task_list_url)= self.task_list.name
+
 .clear
+
 .thread(style= 'display:none;')
   .comments
     - if (self.first_comment)
@@ -41,5 +46,4 @@
 
   // TODO: I'm adding this form.new_comment so the styles are right, feel free to change
   // so the style is more similar to the comment form on the thread view
-  form.new_comment
-    != self.partial('partials.comment_form', self)
+  form.new_comment!= self.partial('partials.comment_form', self)

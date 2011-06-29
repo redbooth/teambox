@@ -316,10 +316,10 @@ document.on('ajax:success', 'form.edit_task', function(e, form) {
 
 document.on('ajax:failure', 'form.new_task.app_form', function(e, form) {
   var message = $H(e.memo.responseJSON)
-	message.keys().each( function(k) {
-		field = form.down('#task_'+k)
-		if (field) field.parentNode.insertOrUpdate('span.error', message.get(k))
-	})
+  message.keys().each( function(k) {
+    field = form.down('#task_'+k)
+    if (field) field.parentNode.insertOrUpdate('span.error', message.get(k))
+  })
 })
 
 document.on('ajax:before', 'form.new_task.app_form', function(e, form) {

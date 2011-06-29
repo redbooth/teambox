@@ -12,6 +12,13 @@
     return 'Task';
   };
 
+  /* get the overdue if a due date is provided
+   *
+   * @return {Boolean}
+   */
+  Task.is_archived = function () {
+    return ['rejected', 'resolved'].indexOf(this.get('status_name')) !== -1;
+  };
 
   /* get the overdue if a due date is provided
    *

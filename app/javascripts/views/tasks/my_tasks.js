@@ -25,8 +25,8 @@
                                   , template: this.template
                                   , primer_template: this.primer_template });
 
-    TasksHelper.group({ tasks: $$('#content .task')
-                      , where: $$('#content .tasks')[0]
+    TasksHelper.group({ tasks: this.el.select('.task')
+                      , where: this.el.select('.tasks')[0]
                       , by: 'due_date' });
 
     return this;

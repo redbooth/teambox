@@ -20,14 +20,16 @@
    * @return self
    */
   ProjectTasks.render = function () {
+    console.log(this.collection.models);
     TasksHelper.render.call(this, { tasks: this.collection.models
                                   , title: this.title
                                   , template: this.template
+                                  , dragndrop: true
                                   , primer_template: this.primer_template });
 
-    TasksHelper.group({ tasks: $$('#content .task')
-                      , where: $$('#content .tasks')[0]
-                      , by: 'due_date' });
+    TasksHelper.group({ tasks: this.el.select('.task')
+                      , where: this.el.down('.tasks')
+                      , by: 'task_list' });
 
     return this;
   };
