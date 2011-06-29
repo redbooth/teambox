@@ -1,7 +1,7 @@
 class Comment
     
   def previously_closed?
-    [:rejected, :resolved].include? previous_status_name
+    [:rejected, :resolved, :merged].include? previous_status_name
   end
   
   def transition?

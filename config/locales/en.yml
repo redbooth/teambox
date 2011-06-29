@@ -855,6 +855,7 @@ en:
       hold: hold
       resolved: resolved
       rejected: rejected
+      merged: merged
     my_tasks:
       my_tasks: My tasks for all projects
     overview_box:

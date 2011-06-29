@@ -32,7 +32,7 @@ describe Task do
   end
   
   it "should allow creation with given statuses" do
-    Task::STATUS_NAMES.each do |status_name|
+    (Task::STATUS_NAMES - [:merged]).each do |status_name|
       task = Factory(:task, :status => Task::STATUSES[status_name])
       task.valid?.should == true
     end
@@ -418,6 +418,36 @@ describe Task do
       task.comments.create_by_user task.user, {:is_private => true, :body => 'shouldclear', :private_ids => []}
       task.save
       Task.find_by_id(task.id).watcher_ids.should == [project.user_id]
+    end
+  end
+  
+  describe "merging tasks" do
+    before do
+      @project = Factory(:project)
+      @user = Factory(:user)
+      @project.add_user(@user)
+      @task = Factory(:task, :project => @project, :user => @user)
+    end
+    
+    it "should link with the other task" do
+      @other_task = Factory(:task, :project => @project, :user => @project.user)
+      @task.update_attributes!(:comments_attributes => [{:body => "Merging with task"}],
+                              :merged_task_id => @other_task.id,
+                              :status => Task::STATUSES[:merged]).should == true
+      comment = @other_task.reload.comments.last
+      comment.body.should == "Merging with task"
+      comment.merged_with_task.should == @task
+      @task.reload.archived?.should == true
+      @task.merged_task.should == @other_task
+    end
+    
+    it "should not link with the other task in another project" do
+      @other_task = Factory(:task, :user => @project.user)
+      @task.update_attributes(:comments_attributes => [{:body => "Merging with task"}],
+                              :merged_task_id => @other_task.id,
+                              :status => Task::STATUSES[:merged]).should == false
+      @task.reload.archived?.should == false
+      @other_task.reload.comments.last.should == nil
     end
   end
 

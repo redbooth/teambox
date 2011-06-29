@@ -10,6 +10,7 @@ class Comment < ActiveRecord::Base
   belongs_to :target, :polymorphic => true, :counter_cache => true
   belongs_to :assigned, :class_name => 'Person'
   belongs_to :previous_assigned, :class_name => 'Person'
+  belongs_to :merged_with_task, :class_name => 'Task'
 
   has_many :notifications, :dependent => :destroy
 

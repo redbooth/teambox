@@ -3,7 +3,7 @@ class Task < RoleRecord
   
   include Watchable
 
-  STATUS_NAMES = [:new, :open, :hold, :resolved, :rejected]
+  STATUS_NAMES = [:new, :open, :hold, :resolved, :rejected, :merged]
 
   # values equal or bigger than :resolved will be considered as archived tasks
   STATUSES = STATUS_NAMES.each_with_index.each_with_object({}) {|(name, code), all| all[name] = code }
@@ -17,6 +17,7 @@ class Task < RoleRecord
 
   belongs_to :task_list, :counter_cache => true
   belongs_to :page
+  belongs_to :merged_task, :class_name => 'Task'
 
   belongs_to :assigned, :class_name => 'Person'
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
@@ -24,7 +25,7 @@ class Task < RoleRecord
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| %w[is_private body hours human_hours uploads_attributes google_docs_attributes].all? { |k| comment[k].blank? } }
 
-  attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes, :user
+  attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes, :user, :merged_task_id
 
   validates_presence_of :user
   validates_presence_of :name, :message => I18n.t('tasks.errors.name.cant_be_blank')
@@ -42,11 +43,13 @@ class Task < RoleRecord
   before_validation :set_comments_target
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_validation :set_comments_author, :if => :updating_user
+  before_validation :check_merged_tasks
   before_save :transition_from_new_to_open, :if => :assigned_id?
   before_save :save_changes_to_comment, :if => :track_changes?
   before_save :save_completed_at
   before_validation :remember_comment_created, :on => :update
   before_save :update_google_calendar_event, :if => lambda {|t| t.assigned.try(:user) || !t.google_calendar_url_token.blank? }
+  before_save :handle_merged_tasks
   
   def assigned
     @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
@@ -58,7 +61,7 @@ class Task < RoleRecord
   end
 
   def archived?
-    [:rejected, :resolved].include? status_name
+    [:rejected, :resolved, :merged].include? status_name
   end
   alias :closed? :archived?
 
@@ -450,6 +453,24 @@ class Task < RoleRecord
       event = gcal.find_event(calendar.url_token, self.google_calendar_url_token)
       gcal.delete_event(event)
       self.google_calendar_url_token = nil
+    end
+  end
+  
+  def check_merged_tasks
+    if status_name == :merged
+      if merged_task.nil? or merged_task.archived? or merged_task.project_id != self.project_id or merged_task.is_private
+        errors.add :merged_task_id, :invalid
+      end
+    end
+  end
+  
+  def handle_merged_tasks
+    if status_name == :merged
+      merged_task.updating_user = updating_user
+      merged_task.updating_date = updating_date
+      comment = merged_task.comments.build({:body => comments.last.body})
+      comment.merged_with_task = self
+      merged_task.save!
     end
   end
 end
