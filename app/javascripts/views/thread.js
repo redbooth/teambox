@@ -94,9 +94,11 @@
       .highlight({duration: 1});
 
     // update excerpt
-    this.el.down('.comment_header .excerpt')
-           .update('<strong>' + comment.user.first_name + ' ' + comment.user.last_name
-                 + '</strong> ' + comment.body);
+    var excerpt = this.el.down('.comment_header .excerpt');
+    if (excerpt) {
+      excerpt.update('<strong>' + comment.user.first_name + ' ' + comment.user.last_name
+                   + '</strong> ' + comment.body);
+    }
 
     // TODO: backbonize this [leftovers from comment.js]
     //Task.insertAssignableUsers();
