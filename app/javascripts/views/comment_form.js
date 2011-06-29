@@ -76,6 +76,10 @@
   CommentForm.reset = function () {
     // clear comment and reset textarea height
     this.el.down('textarea').update('').setStyle({height: ''}).value = '';
+    var preview = this.el.down('.preview');
+    if (preview) {
+      preview.remove();
+    }
 
     if (this.model.className() === 'Task') {
       this.el.down('.human_hours').value = '';
