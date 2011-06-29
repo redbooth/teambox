@@ -44,7 +44,7 @@ class ApiV1::TasksController < ApiV1::APIController
     @task.updating_user = current_user
 
     if @task.update_attributes(params)
-      handle_api_success(@task, :wrap_objects => true, :references => [:comments], :include => [:uploads])
+      handle_api_success(@task, :wrap_objects => true, :references => true, :include => [:user, :uploads])
     else
       handle_api_error(@task)
     end
