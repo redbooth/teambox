@@ -11,29 +11,27 @@
       , _body = $$('body')[0]
       , _loading_bar = $$('.loading .bar .fill')[0];
 
-    // init()
+    callback = callback || function () {}; // noop
     _body.addClassName('loading');
-    _loading_bar.setStyle({width: "10px"});
+    _loading_bar.setStyle({width: '0px'});
 
-    /* Get a callback to handle parallel requests and updates a loading_bar
+    /* Curries a callback to handle parallel requests and update a loading_bar
      *
-     * @param {String} req
+     * @param {Function} cb
      * @return {Function}
      */
-    LOADER.load = function (req) {
+    LOADER.load = function (cb) {
 
-      LOADER.total += 1;
+      LOADER.total++;
+      cb = cb || function () {}; // noop
 
       return function () {
-        LOADER.loaded += 1;
-
-        if (LOADER.loaded === LOADER.total) {
+        cb.apply(cb, arguments);
+        if (++LOADER.loaded === LOADER.total) {
           _body.toggleClassName('loading');
-          if (callback) {
-            return callback();
-          }
+          return callback();
         } else {
-          var width = 130 * LOADER.loaded / (LOADER.total - 1);
+          var width = 130 * LOADER.loaded / LOADER.total;
           _loading_bar.setStyle({width: width + "px"});
         }
       };

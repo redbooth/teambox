@@ -33,82 +33,42 @@
 
       // Fetch all data we're going to need
       // Uses the Loader class, which updates the progress bar
-      models.user.fetch({success: _loader.load('user')});
-      collections.tasks.fetch({success: _loader.load('tasks')});
-      collections.threads.fetch({success: _loader.load('activities')});
-      collections.pages.fetch({success: _loader.load('pages')});
-
-      _loader.total += 2; // this is hackish, but the loader is a little bit too dumb
-      collections.projects.fetch({success: function (projects) {
-        var task_list_done = 0, people_done = 0, conversation_done = 0;
+      models.user.fetch({success: _loader.load()});
+      collections.tasks.fetch({success: _loader.load()});
+      collections.threads.fetch({success: _loader.load()});
+      collections.pages.fetch({success: _loader.load()});
+      collections.projects.fetch({success: _loader.load(function (projects) {
         _.each(projects.models, function (project, i) {
           var collection;
-          _loader.total += 2;
 
           // preload task_lists
-          collection = new Teambox.Collections.TaskLists([], {project_id: project.id})
-          projects.models[i].set({task_lists:collection});
-          collection.fetch({
-            success: function (task_lists) {
-              _loader.loaded++;
-
-              try {
-                collections.tasks_lists.add(task_lists.models, {silent: true});
-              } catch (e) {
-                // may try to add same task_list twice
-              }
-
-              task_list_done += 1;
-              if (task_list_done === projects.length) {
-                _loader.loaded++;
-                _loader.load('projects')();
-              }
-            }
-          });
+          collection = new Teambox.Collections.TaskLists([], {project_id: project.id});
+          projects.models[i].set({task_lists: collection});
+          collection.fetch({success: _loader.load(function (task_lists) {
+            try {
+              collections.tasks_lists.add(task_lists.models, {silent: true});
+            } catch (e) {} // may try to add same task_list twice
+          })});
 
           // preload conversations
           collection = new Teambox.Collections.Conversations([], {project_id: project.id});
-          projects.models[i].set({conversations:collection});
-          collection.fetch({
-            success: function (conversations) {
-              _loader.loaded++;
-
-              try {
-                collections.conversations.add(conversations.models, {silent: true});
-              } catch (e) {
-                // may try to add same task_list twice
-              }
-
-              conversation_done += 1;
-              if (conversation_done === projects.length) {
-                _loader.loaded++;
-                _loader.load('projects')();
-              }
-            }
-          });
+          projects.models[i].set({conversations: collection});
+          collection.fetch({success: _loader.load(function (conversations) {
+            try {
+              collections.conversations.add(conversations.models, {silent: true});
+            } catch (e) {} // may try to add same task_list twice
+          })});
 
           // preload people
           collection = new Teambox.Collections.People([], {project_id: project.id});
-          projects.models[i].set({people:collection});
-          collection.fetch({
-            success: function (people) {
-              _loader.loaded++;
-
-              try {
-                collections.people.add(people.models, {silent: true});
-              } catch (e) {
-                // may try to add same people twice
-              }
-
-              people_done += 1;
-              if (people_done === projects.length) {
-                _loader.loaded++;
-                _loader.load('projects')();
-              }
-            }
-          });
+          projects.models[i].set({people: collection});
+          collection.fetch({success: _loader.load(function (people) {
+            try {
+              collections.people.add(people.models, {silent: true});
+            } catch (e) {} // may try to add same task_list twice
+          })});
         });
-      }});
+      })});
     }
 
   , build: function () {
