@@ -16,7 +16,7 @@
         var el = (new Teambox.Views.Task({model: task})).render().el;
 
         // add the dragndrop
-        if (options.dragndrop && !task.is_archived()) {
+        if (options.dragndrop && !task.isArchived()) {
           el.down('.taskStatus').insert({
             top: new Element('img', {alt: 'Drag', 'class': 'task_drag', src: '/images/drag.png'})
           });

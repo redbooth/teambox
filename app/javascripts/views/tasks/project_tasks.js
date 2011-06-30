@@ -1,6 +1,6 @@
 (function () {
   var ProjectTasks = { title: 'Tasks'
-                     , template: Teambox.modules.ViewCompiler('tasks.index')
+                     , id: 'task_lists'
                      , primer_template: Teambox.modules.ViewCompiler('primers.my_tasks')
                      }
     , TasksHelper = Teambox.helpers.tasks;
@@ -66,7 +66,7 @@
                                   , primer_template: this.primer_template });
 
     TasksHelper.group({ tasks: this.el.select('.task')
-                      , where: this.el.down('.tasks')
+                      , where: this.el
                       , by: 'task_list' });
 
     this.makeAllSortable();

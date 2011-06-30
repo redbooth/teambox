@@ -2,7 +2,8 @@
 
   var _one_day = 1000 * 60 * 60 * 24
     , Task = {}
-    , TaskStatic = {};
+    , TaskStatic = {}
+    , _status_names = ['new', 'open', 'hold', 'resolved', 'rejected'];
 
   /* Returns the class name
    *
@@ -12,12 +13,28 @@
     return 'Task';
   };
 
-  /* get the overdue if a due date is provided
+  /* gets the status_name
+   *
+   * @return {String}
+   */
+  Task.statusName = function () {
+    return _status_names[this.get('status')] || 'new';
+  };
+
+  /* is the task archived?
    *
    * @return {Boolean}
    */
-  Task.is_archived = function () {
-    return ['rejected', 'resolved'].indexOf(this.get('status_name')) !== -1;
+  Task.isArchived = function () {
+    return ['rejected', 'resolved'].indexOf(this.statusName()) !== -1;
+  };
+
+  /* is the task open?
+   *
+   * @return {Boolean}
+   */
+  Task.isOpen = function () {
+    return this.statusName() === 'open';
   };
 
   /* get the overdue if a due date is provided
