@@ -28,7 +28,7 @@
       - if (self.assigned)
         p.assigned_transition
           | Assigned to
-          = self.full_name(self.assigned)
+          = self.full_name(self.assigned.user)
 
       != self.body_html
     - if (self.uploads && self.uploads.length)
