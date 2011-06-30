@@ -14,11 +14,6 @@ child(:comment_target => :comment_target) {
   attributes :id
 }
 
-child(:user) do
-  attributes :id, :first_name, :last_name, :avatar_url
-  attributes :login => :username
-end
-child(:project) do
-  attributes :id, :permalink, :name
-end
+child(:user) { extends 'api_v2/users/base' }
+child(:project) { extends 'api_v2/projects/base' }
 
