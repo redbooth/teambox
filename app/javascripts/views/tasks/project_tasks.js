@@ -1,6 +1,7 @@
 (function () {
   var ProjectTasks = { title: 'Tasks'
                      , id: 'task_lists'
+                     , template: Teambox.modules.ViewCompiler('task_lists.index')
                      , primer_template: Teambox.modules.ViewCompiler('primers.my_tasks')
                      }
     , TasksHelper = Teambox.helpers.tasks;
@@ -59,17 +60,29 @@
    * @return self
    */
   ProjectTasks.render = function () {
-    TasksHelper.render.call(this, { tasks: this.collection.models
-                                  , title: this.title
-                                  , template: this.template
-                                  , dragndrop: true
-                                  , primer_template: this.primer_template });
+    var self = this
+      , tasks = this.collection.sortBy(function (el) {
+          return el.get('task_list_id');
+        });
 
-    TasksHelper.group({ tasks: this.el.select('.task')
-                      , where: this.el
-                      , by: 'task_list' });
+    if (tasks.length > 0) {
+      this.el.update(this.template({tasks: tasks}));
 
-    this.makeAllSortable();
+      //tasks.each(function (task) {
+      //  var el = (new Teambox.Views.Task({model: task})).render().el;
+
+      //  // add the dragndrop
+      //  if (options.dragndrop && !task.isArchived()) {
+      //    el.down('.taskStatus').insert({
+      //      top: new Element('img', {alt: 'Drag', 'class': 'task_drag', src: '/images/drag.png'})
+      //    });
+      //  }
+
+      //  self.el.select('.tasks')[0].insert({bottom: el});
+      //});
+    } else {
+      this.el.update(this.primer_template());
+    }
 
     return this;
   };

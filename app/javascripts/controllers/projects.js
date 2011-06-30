@@ -42,6 +42,8 @@
       .update(view.render().el)
       .insert({top: filters.render().el});
 
+    view.makeAllSortable();
+
     $('view_title').update(view.title);
   };
 

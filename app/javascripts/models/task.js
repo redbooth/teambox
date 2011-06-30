@@ -29,6 +29,39 @@
     return ['rejected', 'resolved'].indexOf(this.statusName()) !== -1;
   };
 
+  /* get the classes according to the model's status
+   *
+   * @return {String} classes
+   */
+  Task.getClasses = function () {
+    var one_week = 1000 * 60 * 60 * 24 * 7
+      , classes = [];
+
+    function add(klass, stat) {
+      if (stat && klass) {
+        classes.push(klass);
+      }
+      return add;
+    }
+
+    add('due_today', this.is_due_today())
+       ('due_tomorrow', this.is_due_tomorrow())
+       ('due_week', this.is_due_in(one_week))
+       ('due_2weeks', this.is_due_in(one_week * 2))
+       ('due_3weeks', this.is_due_in(one_week * 3))
+       ('due_month', this.is_due_in(one_week * 4))
+       ('overdue', this.is_overdue())
+       ('unassigned_date', !this.get('due_on'))
+       ('status_' + this.get('status'), true)
+       ('status_notopen', !this.isOpen())
+       ('due_on', this.get('due_on') || this.isArchived())
+       (this.get('this') ? 'task_list_' + this.get('task_list_id') : '', this.get('task_list_id'))
+       (this.get('assigned') ? 'assigned' : 'unassigned', !this.isArchived())
+       (this.get('assigned') ? 'user_' + this.get('assigned').user_id : null, true);
+
+    return classes.join(' ');
+  };
+
   /* is the task open?
    *
    * @return {Boolean}

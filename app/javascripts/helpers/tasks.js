@@ -15,13 +15,6 @@
       options.tasks.each(function (task) {
         var el = (new Teambox.Views.Task({model: task})).render().el;
 
-        // add the dragndrop
-        if (options.dragndrop && !task.isArchived()) {
-          el.down('.taskStatus').insert({
-            top: new Element('img', {alt: 'Drag', 'class': 'task_drag', src: '/images/drag.png'})
-          });
-        }
-
         self.el.select('.tasks')[0].insert({bottom: el});
       });
     } else {
@@ -133,7 +126,8 @@
    */
   TasksHelper.foldEmptyTaskLists = function () {
     $$("div.task_list").each(function (e) {
-      var container = e.up('.task_list_container'), visible_tasks;
+      var container = e.up('.task_list_container')
+        , visible_tasks;
 
       if (!container) {
         return;

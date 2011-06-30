@@ -15,6 +15,8 @@
   Task.initialize = function (options) {
     // bindings
     _.bindAll(this, 'render');
+
+    this.dragndrop = options.dragndrop;
     this.model.bind('change', this.render);
   };
 
@@ -26,7 +28,14 @@
     this.el.update(this.template(this.model.getAttributes()));
     this.el.writeAttribute('id', 'task_' + this.model.id);
     this.el.writeAttribute('data-task-id', this.model.id);
-    this.el.addClassName(this.getClasses());
+
+    if (this.dragndrop && !this.model.isArchived()) {
+      this.el.down('.taskStatus').insert({
+        top: new Element('img', {alt: 'Drag', 'class': 'task_drag', src: '/images/drag.png'})
+      });
+    }
+
+    this.el.addClassName(this.model.getClasses());
 
     return this;
   };
@@ -53,40 +62,6 @@
     }
 
     this.el.toggleClassName('expanded');
-  };
-
-  /* get the classes according to the model's status
-   *
-   * @return {String} classes
-   */
-  Task.getClasses = function () {
-    var task = this.model
-      , one_week = 1000 * 60 * 60 * 24 * 7
-      , classes = [];
-
-    function add(klass, stat) {
-      if (stat && klass) {
-        classes.push(klass);
-      }
-      return add;
-    }
-
-    add('due_today', task.is_due_today())
-       ('due_tomorrow', task.is_due_tomorrow())
-       ('due_week', task.is_due_in(one_week))
-       ('due_2weeks', task.is_due_in(one_week * 2))
-       ('due_3weeks', task.is_due_in(one_week * 3))
-       ('due_month', task.is_due_in(one_week * 4))
-       ('overdue', task.is_overdue())
-       ('unassigned_date', !task.get('due_on'))
-       ('status_' + task.get('status'), true)
-       ('status_notopen', !task.isOpen())
-       ('due_on', task.get('due_on') || task.isArchived())
-       (task.get('task_list_id') ? 'task_list_' + task.get('task_list_id') : '', task.get('task_list_id'))
-       (task.get('assigned') ? 'assigned' : 'unassigned', !task.isArchived())
-       (task.get('assigned') ? 'user_' + task.get('assigned').user_id : null, true);
-
-    return classes.join(' ');
   };
 
   // Edit task's title inline
