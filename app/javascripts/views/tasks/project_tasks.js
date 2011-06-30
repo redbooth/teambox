@@ -6,6 +6,21 @@
                      }
     , TasksHelper = Teambox.helpers.tasks;
 
+  ProjectTasks.events = {
+    'click .task .name': 'showComments'
+  };
+
+  /* insert the comments below the task clicked
+   *
+   * @param {Event} evt
+   */
+  ProjectTasks.showComments = function (evt) {
+    evt.stop();
+
+    var element = evt.element();
+    element.up('.task').down('.thread').toggle();
+  };
+
   ProjectTasks.makeSortable = function (task_id, all_task_ids) {
     var self = this;
 
