@@ -68,7 +68,7 @@
         });
 
     if (assigned_user) {
-      comment_attributes.assigned = assigned_user.user;
+      comment_attributes.assigned = assigned_user;
     }
 
     if (project) {
