@@ -57,7 +57,11 @@ class Comment
     if Array(options[:include]).include?(:uploads) && uploads.any?
       base[:uploads] = uploads.map {|u| u.to_api_hash(options)}
     end
-    
+
+    if Array(options[:include]).include?(:assigned)
+      base[:assigned] = assigned
+    end
+
     if Array(options[:include]).include? :user
       base[:user] = {
         :username => user.login,
