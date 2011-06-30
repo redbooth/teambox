@@ -47,9 +47,6 @@ _.parseFromAPI = function(json) {
       e.recent_comments = _(e.recent_comment_ids).chain()
         .map(function(id) { 
           var comment = collection.findRef(id, "Comment");
-          if (comment.assigned && comment.assigned.user) {
-            comment.assigned = comment.assigned.user;
-          }
           return comment;
         })
         .compact() // In case there are no recent comments in references
