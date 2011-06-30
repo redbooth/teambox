@@ -1,16 +1,29 @@
 .thread
   max-width: 620px
   margin: 0 0 15px 11px
-  background: url(img_3_2/sprite_v.png) 0px -110px repeat-x #eee
   border: 1px solid $clr_gray_50
+  background: #eee
   +rounded(5px)
   .thread_title
+    background: url(img_3_2/sprite_v.png) 0px -110px repeat-x #eee
     margin: 4px 0 2px
     font-size: 12px
+    a
+      display: block
+      float: left
+      clear: none
+      margin-right: 4px
   .task_summary
     font-size: 11px
     color: #333
-    display: inline-block
+    display: block
+    float: left
+    clear: left
+    margin:
+      top: 5px
+      bottom: 7px
+    .task_status
+      margin-right: 5px
     span.assigned_date, span.assigned_to
       display: none
     &.due_on
@@ -40,8 +53,9 @@
       display: block
       clear: none
       width: 32px
-      height: 32px
-      padding:
+      height: 30px
+      margin: 0
+      padding: 0
         top: 3px
         left: 7px
       //border: 1px solid red
@@ -86,18 +100,28 @@
   .more_comments
     display: block
     font-size: 12px
-    background-color: #ffe
-    +gradient(#ffe, #ffd)
+    background: url(img_3_2/sprite_v.png) 0 -183px $clr_gray_15
+    height: 36px
+    border-bottom: 1px solid $white
+    &:hover
+      background-color: $clr_gray_20 
+    //+gradient(#ffe, #ffd)
     a
       color: #333
       display: block
       padding: 10px 10px 10px 44px
       height: 16px
+      &:hover
+        text-decoration: none
   form.new_comment
     //border-left: 4px solid #eee
     //background-color: $comments_bkg
     margin: 0
     //padding: 2px 0 5px 6px
+
+.thread_conversation
+  .thread_title
+    margin-top: 7px
 
 .expand_comment
   a

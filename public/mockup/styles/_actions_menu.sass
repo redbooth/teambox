@@ -19,26 +19,39 @@
     .actiondate
       color: $clr_gray_50
   .extra
+    background: #eee
+    +rounded(3px)
+    +gradient(#f9f9f9,#eeeeee)
     display: none
     position: absolute
     z-index: 1000
     top: 17px
     right: 0
     margin: 0
-    padding: 3px 0
+      right: -5px
+    padding: 0
     white-space: nowrap
-    background: white
-    border: 1px solid #ccc
-    //+box-shadow(#EEE 3px 3px 3px)
+    border: 1px solid $clr_gray_40
+    +box-shadow($clr_gray_30 0px 0px 6px)
     a, span
+      color: $clr_gray_60
       display: block
-      padding: 3px 5px
+      padding: 5px
       font-weight: normal
+      border-bottom: 1px solid #e9e9e9
+      border-top: 1px solid $white
+      border-left: 1px solid $white
+    .edit
+      +rounded-top(3px)
+    .delete
+      +rounded-bottom(3px)
     a:hover
-      background: $navbar
+      background: $clr_gray_20
       text-decoration: none
+      color: $clr_gray_90
     span
-      color: #aaa
+      color: $clr_gray_60
+      text-shadow: rgba(255, 255, 255, 1) 0px 1px 1px
     a.edit, a.delete
       display: none
 .actiondate

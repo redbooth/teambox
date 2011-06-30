@@ -65,6 +65,10 @@ textarea.placeholder, input.placeholder {
   font-size: 12px;
   color: #010101;
   overflow-y: hidden; }
+  .textilized .before span {
+    margin-right: 3px; }
+  .textilized .before .task_status {
+    margin-top: 5px; }
   .textilized h1, .textilized h2 {
     font-size: 16px;
     border-bottom: 0; }
@@ -78,7 +82,7 @@ textarea.placeholder, input.placeholder {
       font-size: 12px; }
   .textilized p {
     line-height: 18px;
-    margin: 2px 0 8px; }
+    margin: 3px 0 8px; }
   .textilized a {
     text-decoration: underline; }
   .textilized blockquote {
@@ -1649,18 +1653,30 @@ img#activity_paginate_loading {
 .thread {
   max-width: 620px;
   margin: 0 0 15px 11px;
-  background: url(img_3_2/sprite_v.png) 0px -110px repeat-x #eeeeee;
   border: 1px solid #a0a0a0;
+  background: #eeeeee;
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px; }
   .thread .thread_title {
+    background: url(img_3_2/sprite_v.png) 0px -110px repeat-x #eeeeee;
     margin: 4px 0 2px;
     font-size: 12px; }
+    .thread .thread_title a {
+      display: block;
+      float: left;
+      clear: none;
+      margin-right: 4px; }
   .thread .task_summary {
     font-size: 11px;
     color: #333333;
-    display: inline-block; }
+    display: block;
+    float: left;
+    clear: left;
+    margin-top: 5px;
+    margin-bottom: 7px; }
+    .thread .task_summary .task_status {
+      margin-right: 5px; }
     .thread .task_summary span.assigned_date, .thread .task_summary span.assigned_to {
       display: none; }
     .thread .task_summary.due_on span.assigned_date {
@@ -1683,9 +1699,11 @@ img#activity_paginate_loading {
       display: block;
       clear: none;
       width: 32px;
-      height: 32px;
-      padding-top: 3px;
-      padding-left: 7px; }
+      height: 30px;
+      margin: 0;
+      padding: 0;
+        padding-top: 3px;
+        padding-left: 7px; }
       .thread .comment_header .info .comment_count {
         display: none;
         text-align: center; }
@@ -1729,16 +1747,23 @@ img#activity_paginate_loading {
   .thread .more_comments {
     display: block;
     font-size: 12px;
-    background-color: #ffffee;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffee), to(#ffffdd));
-    background-image: -moz-linear-gradient(#ffffee, #ffffdd); }
+    background: url(img_3_2/sprite_v.png) 0 -183px #e5e5e5;
+    height: 36px;
+    border-bottom: 1px solid white; }
+    .thread .more_comments:hover {
+      background-color: #dcdcdc; }
     .thread .more_comments a {
       color: #333333;
       display: block;
       padding: 10px 10px 10px 44px;
       height: 16px; }
+      .thread .more_comments a:hover {
+        text-decoration: none; }
   .thread form.new_comment {
     margin: 0; }
+
+.thread_conversation .thread_title {
+  margin-top: 7px; }
 
 .expand_comment a {
   position: absolute;
@@ -1841,8 +1866,7 @@ img#activity_paginate_loading {
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
-    margin: 7px;
-      margin-left: 7px; }
+    margin: 7px; }
   .activity a {
     font-weight: bold; }
   .activity img {
@@ -1857,6 +1881,9 @@ img#activity_paginate_loading {
 .activity.collapsed {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#fafafa));
   background-image: -moz-linear-gradient(#f2f2f2, #fafafa); }
+
+#activity_paginate_link {
+  margin-left: 11px; }
 
 span.comments_count {
   padding: 1px 5px;
@@ -2501,8 +2528,9 @@ span.task_status, span.current_task_status {
   padding: 0 3px;
   text-transform: uppercase;
   font-size: 11px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
   display: inline-block;
   line-height: 14px; }
 
@@ -3300,7 +3328,7 @@ a.thumb_avatar {
 
 a.micro_avatar {
   border: 1px solid #a0a0a0;
-  margin: 4px 5px 0px 8px;
+  margin: 4px 5px 6px 8px;
   padding: 0;
   float: left;
   width: 24px;
@@ -3959,25 +3987,52 @@ div.weektable {
     .actions_menu:hover .actiondate {
       color: #a0a0a0; }
   .actions_menu .extra {
+    background: #eeeeee;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#eeeeee));
+    background-image: -moz-linear-gradient(#f9f9f9, #eeeeee);
     display: none;
     position: absolute;
     z-index: 1000;
     top: 17px;
     right: 0;
     margin: 0;
-    padding: 3px 0;
+      margin-right: -5px;
+    padding: 0;
     white-space: nowrap;
-    background: white;
-    border: 1px solid #cccccc; }
+    border: 1px solid #b5b5b5;
+    box-shadow: #c9c9c9 0px 0px 6px;
+    -webkit-box-shadow: #c9c9c9 0px 0px 6px;
+    -moz-box-shadow: #c9c9c9 0px 0px 6px; }
     .actions_menu .extra a, .actions_menu .extra span {
+      color: #898989;
       display: block;
-      padding: 3px 5px;
-      font-weight: normal; }
+      padding: 5px;
+      font-weight: normal;
+      border-bottom: 1px solid #e9e9e9;
+      border-top: 1px solid white;
+      border-left: 1px solid white; }
+    .actions_menu .extra .edit {
+      border-radius: 3px 3px 0 0;
+      -moz-border-radius-topleft: 3px;
+      -moz-border-radius-topright: 3px;
+      -webkit-border-top-left-radius: 3px;
+      -webkit-border-top-right-radius: 3px; }
+    .actions_menu .extra .delete {
+      border-radius: 0 0 3px 3px;
+      -moz-border-radius-bottomleft: 3px;
+      -moz-border-radius-bottomright: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+      -webkit-border-bottom-right-radius: 3px; }
     .actions_menu .extra a:hover {
-      background: #78acd7;
-      text-decoration: none; }
+      background: #dcdcdc;
+      text-decoration: none;
+      color: #313131; }
     .actions_menu .extra span {
-      color: #aaaaaa; }
+      color: #898989;
+      text-shadow: white 0px 1px 1px; }
     .actions_menu .extra a.edit, .actions_menu .extra a.delete {
       display: none; }
 
@@ -4264,7 +4319,9 @@ ul.google_docs_list, .google_docs_attachment ul.file_list {
   display: inline-block;
   position: relative;
   font-size: 12px;
-  margin-bottom: 5px; }
+  margin-right: 4px; }
+  .project_overlay a {
+    font-weight: normal !important; }
   .project_overlay .overlay {
     position: absolute;
     top: -11px;
@@ -5029,7 +5086,6 @@ form.new_conversation div.preview {
 
 .activity .upload_list .upload_file span {
   display: inline-block;
-  height: 16px;
   max-width: 400px;
   overflow: hidden;
   text-overflow: ellipsis;
