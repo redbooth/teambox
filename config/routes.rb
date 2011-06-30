@@ -242,6 +242,10 @@ Teambox::Application.routes.draw do
       end
     end
 
+    namespace :api_v2, :path => 'api/2' do
+      resources :activities, :only => [:index, :show]
+    end
+
     namespace :api_v1, :path => 'api/1' do
       resources :app_links, :except => [ :edit, :update ]
       resources :projects, :except => [:new, :edit] do
