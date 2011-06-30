@@ -67,6 +67,10 @@ class Comment
         :micro_avatar_url => user.avatar_or_gravatar_url(:micro)
       }
     end
+
+    if Array(options[:include]).include? :project
+      base[:project] = {:name => project.name, :permalink => project.permalink}
+    end
     
     base
   end

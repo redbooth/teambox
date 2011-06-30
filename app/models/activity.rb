@@ -180,6 +180,9 @@ class Activity < ActiveRecord::Base
       target_includes << :task_list
     when 'Comment'
       target_includes << :target
+      target_includes << :project
+      target_includes << :user
+      target_includes << :uploads
     when 'Conversation'
       target_includes << :comments
     when 'Page'
