@@ -11,14 +11,12 @@ code :type do |c|
   c.class.to_s
 end
 
-if @activity.target.target_type == 'Task'
-  attributes :assigned_id,
-             :previous_assigned_id,
-             :previous_status,
-             :status,
-             :due_on,
-             :previous_due_on
-end
+attributes :assigned_id,
+           :previous_assigned_id,
+           :previous_status,
+           :status,
+           :due_on,
+           :previous_due_on
 
 child :uploads, :if => lambda {|c| c.uploads.any?} do
   attributes :id,
