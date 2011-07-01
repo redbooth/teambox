@@ -138,6 +138,11 @@ GEM
     gherkin (2.4.0)
       json (>= 1.4.6)
     haml (3.1.2)
+    haml-rails (0.3.4)
+      actionpack (~> 3.0)
+      activesupport (~> 3.0)
+      haml (~> 3.0)
+      railties (~> 3.0)
     hashie (1.0.0)
     hpricot (0.8.4)
     i18n (0.5.0)
@@ -293,6 +298,7 @@ DEPENDENCIES
   faker
   fuubar
   haml (~> 3.1.2)
+  haml-rails
   hashie
   hpricot (~> 0.8.2)
   i18n (>= 0.1.3)
