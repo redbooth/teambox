@@ -137,22 +137,22 @@
 
         switch(activity.action) {
           case 'create':
-            this.app['my_' + activity.target_type.toLowerCase() + 's'].add(activity.target);
-            this.app.my_threads.add(activity.target);
+            Teambox.collections[activity.target_type.toLowerCase() + 's'].add(activity.target);
+            Teambox.collections.threads.add(activity.target);
             break;
           case 'update':
-            thread = this.app['my_' + activity.target_type.toLowerCase() + 's'].get(activity.target_id);
+            thread = Teambox.collections[activity.target_type.toLowerCase() + 's'].get(activity.target_id);
             if (thread) {
               thread.set(activity.changes);
             }
             break;
           case 'delete':
-            target = this.app['my_' + activity.target_type.toLowerCase() + 's'].get(activity.target_id);
+            target = Teambox.collections[activity.target_type.toLowerCase() + 's'].get(activity.target_id);
             if (target) {
-              this.app['my_' + activity.target_type.toLowerCase() + 's'].remove(target);
+              Teambox.collections[activity.target_type.toLowerCase() + 's'].remove(target);
             }
             if (thread) {
-              this.app.my_threads.remove(thread);
+              Teambox.collections.threads.remove(thread);
             }
             break;
 
@@ -167,12 +167,12 @@
 
         switch(activity.action) {
           case 'create':
-            thread = this.app.my_threads.getByIdAndClass(id, type);
+            thread = Teambox.collections.threads.getByIdAndClass(id, type);
             if (thread) thread.trigger('comment:added', activity.target);
 
             break;
           case 'update':
-            thread = this.app.my_threads.getByIdAndClass(id, type);
+            thread = Teambox.collections.threads.getByIdAndClass(id, type);
             if (thread) {
               //TODO: Update comment in thread's comments collection and trigger thread change event
               comment = thread.recent_comments.get(activity.target_id);
@@ -183,7 +183,7 @@
             }
             break;
           case 'delete':
-            thread = this.app.my_threads.getByIdAndClass(id, type);
+            thread = Teambox.collections.threads.getByIdAndClass(id, type);
             if (thread) {
               //TODO: Update comment in thread's comments collection and trigger thread change event
               comment = thread.recent_comments.get(activity.target_id);
@@ -203,17 +203,17 @@
 
         switch(activity.action) {
           case 'create':
-            this.app.my_threads.add(activity);
-            this.app.my_projects.add(activity);
+            Teambox.collections.threads.add(activity);
+            Teambox.collections.projects.add(activity);
             break;
           case 'delete':
-            project = this.app.my_projects.get(activity.target_id);
-            thread  = this.app.my_threads.get(activity.target_id); 
+            project = Teambox.collections.projects.get(activity.target_id);
+            thread  = Teambox.collections.threads.get(activity.target_id); 
             if (project) {
-              this.app.my_projects.remove(project);
+              Teambox.collections.projects.remove(project);
             }
             if (thread) {
-              this.app.my_threads.remove(thread);
+              Teambox.collections.threads.remove(thread);
             }
             break;
 
@@ -225,12 +225,12 @@
         var thread;
         switch(activity.action) {
           case 'create':
-            this.app.my_threads.add(activity);
+            Teambox.collections.threads.add(activity);
             break;
           case 'delete':
-            thread  = this.app.my_threads.get(activity.target_id); 
+            thread  = Teambox.collections.threads.get(activity.target_id); 
             if (thread) {
-              this.app.my_threads.remove(thread);
+              Teambox.collections.threads.remove(thread);
             }
 
             break;
