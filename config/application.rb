@@ -96,6 +96,11 @@ module Teambox
     end
     config.from_file 'teambox.yml'
 
+    config.generators do |g|
+      g.template_engine :haml
+      g.test_framework :rspec, :fixture => false, :views => false
+    end
+
     # Redirect http to https if secure_logins is true
     # https://github.com/tobmatth/rack-ssl-enforcer
     config.middleware.use Rack::SslEnforcer if Teambox.config.secure_logins
