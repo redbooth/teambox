@@ -97,7 +97,7 @@
 
           console.log("Received activity: ", activity);
 
-          if (activity.push_session_id.toString() === self.app.push_session_id) {
+          if (!activity.push_session_id || (activity.push_session_id.toString() === self.app.push_session_id)) {
             return;
           }
 
