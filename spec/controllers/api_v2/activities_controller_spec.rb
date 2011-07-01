@@ -19,7 +19,7 @@ describe ApiV2::ActivitiesController do
     end
 
     it "shows activities with a JSONP callback" do
-      pending "TBD"
+      pending "implement callback"
       login_as @user
 
       get :index, :callback => 'lolCat', :format => 'js'
@@ -61,7 +61,6 @@ describe ApiV2::ActivitiesController do
       get :index, :project_id => @project.permalink, :count => 1
       response.should be_success
 
-      pending "implement limits"
       JSON.parse(response.body).length.should == 1
     end
 
@@ -73,7 +72,6 @@ describe ApiV2::ActivitiesController do
       get :index, :project_id => @project.permalink, :count => 0
       response.should be_success
 
-      pending "implement limits"
       JSON.parse(response.body).length.should == 10
     end
 
@@ -83,7 +81,6 @@ describe ApiV2::ActivitiesController do
       get :index, :project_id => @project.permalink, :since_id => @project.activity_ids[1], :count => 1
       response.should be_success
 
-      pending "implement limits"
       JSON.parse(response.body).map{|a| a['id'].to_i}.should == [@project.activity_ids[0]]
     end
 
@@ -94,11 +91,11 @@ describe ApiV2::ActivitiesController do
       response.should be_success
 
       data = JSON.parse(response.body)
+      pending "Also check the values of the objects"
 
       data.select { |a| a['target']['type'] == 'Project' && a['target']['id'] == @project.id }.should_not be_empty
       data.select { |a| a['target']['type'] == 'Person' && a['target']['id'] == @project.people.last.id }.should_not be_empty
 
-      pending "Also check the values of the objects"
     end
 
     it "returns comment for conversation and task objects" do
@@ -148,14 +145,12 @@ describe ApiV2::ActivitiesController do
     it "should not allow oauth users without :read_projects to view activities" do
       login_as_with_oauth_scope @project.user, []
       get :index, :access_token => @project.user.current_token.token
-      pending "implement oauth"
       response.status.should == 401
     end
 
     it "should allow oauth users with :read_projects to view activities" do
       login_as_with_oauth_scope @project.user, [:read_projects]
       get :index, :access_token => @project.user.current_token.token
-      pending "implement oauth"
       response.should be_success
     end
 
@@ -213,7 +208,6 @@ describe ApiV2::ActivitiesController do
 
       get :index, :threads => true
       response.should be_success
-      pending "implement threads"
       objects = JSON.parse(response.body)
       objects.select{ |a| a['target_type'] == 'Conversation' }.should_not be_empty
       objects.select{ |a| a['target_type'] == 'Comment' }.should be_empty
