@@ -24,7 +24,7 @@ class NotificationsObserver < ActiveRecord::Observer
 
       #TODO: Also send none project-related activities
       if activity.project && !activity.is_first_comment? && activity.push?
-        activity_hash = activity.to_push_data(:push_session_id => User.current.push_session_id)
+        activity_data = activity.to_push_data(:rabl_assigns => {:push_session_id => User.current.push_session_id})
 
         users = User.select_auth_tokens activity.project.users
 
@@ -40,7 +40,7 @@ class NotificationsObserver < ActiveRecord::Observer
         end
 
         users.uniq.each do |user|
-          Juggernaut.publish("/users/#{user[0]}", activity_hash.to_json)
+          Juggernaut.publish("/users/#{user[0]}", activity_data)
         end
       end
     end

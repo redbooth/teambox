@@ -24,13 +24,13 @@
   Activities.appendActivity = function appendActivity(thread) {
     var template;
     if (thread.get('type') === "Conversation" || thread.get('type') === "Task") {
-      this.el.insert({bottom: (new Teambox.Views.Thread({controller: this.controller, model: thread})).render().el});
+      this.el.insert({top: (new Teambox.Views.Thread({controller: this.controller, model: thread})).render().el});
     } else if (thread.get('type') === 'Page') {
-      this.el.insert({bottom: (new Teambox.Views.PageTeaser({model: thread})).render().el});
+      this.el.insert({top: (new Teambox.Views.PageTeaser({model: thread})).render().el});
     } else {
       template = (this.templates[thread.get('target_type').toLowerCase()] || {})[thread.get('action')]
         || this.templates.raw_activity;
-      this.el.insert({ bottom: template(thread.getAttributes()) });
+      this.el.insert({ top: template(thread.getAttributes()) });
     }
   };
 
