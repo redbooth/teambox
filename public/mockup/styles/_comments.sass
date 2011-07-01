@@ -97,6 +97,40 @@ span.comments_count
         a.btn_lock
           background-position-x: -93px
 
+.info_new_conversation
+  .new_comment_actions
+    margin: 0
+      bottom: 0
+      right: 35px
+    padding: 0
+    display: block
+    float: right
+    clear: none
+    li
+      display: block
+      float: left
+      clear: none
+      height: 28px
+      width: 31px
+      padding: 0
+      a
+        display: block
+        float: left
+        clear: none
+        height: 28px
+        min-width: 31px
+        padding: 0
+        background: url(img_3_2/sprite_btn.png) no-repeat 0px -56px
+      a:active
+        background-position-y: -84px
+      a.btn_doc
+        background-position-x: -31px
+      a.btn_users
+        background-position-x: -62px
+      a.btn_lock
+        background-position-x: -93px
+
+
 
   .actions
     display: inline-block
@@ -281,3 +315,126 @@ form .upload_area
 .comment-image
   max-height: 480px
   max-width: 385px
+
+#new_conversation_form
+  display: block
+  float: left
+  clear: both
+  width: 620px
+  margin:
+    top: 10px
+    left: 10px
+    bottom: 25px
+  .big_avatar
+    display: block
+    float: left
+    clear: none
+    width: 62px
+    height: 55px
+    background: url(img_3_2/sprite_base.png) 0 -66px
+    span
+      width: 49px
+      height: 49px
+      display: block
+      float: left
+      position: relative
+      top: 3px
+      left: 3px
+      background: $clr_gray_20
+  .button_blue
+    float: right
+    margin-top: 26px
+  .textarea_big 
+    width: 553px
+    height: 55px
+    display: block
+    float: left
+    clear: right
+    margin-left: 5px
+    textarea
+      color: $clr_gray_80
+      border: 1px solid $clr_gray_50
+      width: 543px
+      height: 43px
+      padding: 5px
+      +rounded(3px)
+  .info_new_conversation
+    display: block
+    float: left
+    clear: none
+    margin-left: 68px
+    width: 552px
+  .info_label
+    display: block
+    float: left
+    clear: both
+    font-size: 10px
+    color: $clr_gray_80
+    margin:
+      top: 9px
+      bottom: 5px
+  .dropdown_autocomplete
+    display: none
+    width: 278px
+    list-style-type: none
+    position: absolute
+    top: 40px
+    //margin-left: -40px
+    float: left
+    clear: both
+    z-index: 500
+    +rounded-bottom(3px)
+    background: $white
+    border: 1px solid $clr_gray_50
+      top: none
+    padding: 3px 0 0 0
+    li
+      //border-top: 1px solid $clr_gray_50
+      background: $clr_gray_05
+      padding: 5px
+      width: 268px
+      margin-left: 0px
+      +rounded-bottom(3px)
+      &:hover
+        background-color: $clr_gray_10
+  .dropdown_projects
+    color: $clr_gray_80
+    display: block
+    float: left
+    clear: none
+    position: relative
+    .dropdown_arrow
+      display: block
+      float: left
+      clear: none
+      margin-left: -2px
+      height: 28px
+      width: 31px
+      background: url(img_3_2/sprite_btn.png) no-repeat -62px 0px
+      z-index: 9998
+      position: relative
+    &:hover
+      .dropdown_autocomplete
+        display: block
+      .dropdown_arrow
+        background-position: -93px 0px
+
+  .new_comment_actions_div
+    display: block
+    float: right
+    clear: none
+    ol
+      clear: both
+  input[type=text]
+    +rounded(3px)
+    border: $brd_gray
+    padding: 4px 4px 4px 5px
+    width: 240px
+    font-size: 12px
+    display: block
+    float: left
+    clear: left
+    height: 18px
+    position: relative
+    z-index: 9997
+  

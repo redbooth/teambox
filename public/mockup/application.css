@@ -197,7 +197,7 @@ a.button, a.unarchive_task_list_link, a.reorder_task_list_link, a.add_button, a.
   float: left;
   height: 28px;
   padding-left: 3px;
-  text-shadow: white 0px 1px 1px;
+  text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0px;
   color: #535353; }
   .button_gray span {
     background: transparent url(img_3_2/sprite_btn.png) top right no-repeat;
@@ -224,7 +224,7 @@ a.button, a.unarchive_task_list_link, a.reorder_task_list_link, a.add_button, a.
   float: left;
   height: 28px;
   padding-left: 3px;
-  text-shadow: white 0px 1px 1px;
+  text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0px;
   color: #535353; }
   .button_blue span {
     background: transparent url(img_3_2/sprite_btn.png) top right no-repeat;
@@ -410,10 +410,10 @@ div.header {
     z-index: 9999;
     display: block;
     height: 28px;
-    top: 13px;
+    top: 14px;
     right: 20px;
     float: right;
-    text-shadow: white 0px 1px 1px; }
+    text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0px; }
     div.header #user_utilities h2 {
       background: url(img_3_2/sprite_btn.png) -126px 0 no-repeat;
       display: block;
@@ -1081,10 +1081,10 @@ body.loading {
       clear: none;
       margin-left: -2px;
       height: 28px;
-      width: 32px;
+      width: 31px;
       background: url(img_3_2/sprite_btn.png) no-repeat; }
       .search_bar form.search a:active {
-        background-position: -32px 0px; }
+        background-position: -31px 0px; }
       .search_bar form.search a span {
         display: none; }
   .no-inputsearch .search_bar .ignore input[type=search] {
@@ -1985,101 +1985,133 @@ span.comments_count {
           background-position-x: -62px; }
         .new_comment .new_extra .new_comment_actions li a.btn_lock, form.edit_comment .new_extra .new_comment_actions li a.btn_lock {
           background-position-x: -93px; }
-  .new_comment .actions, form.edit_comment .actions {
-    display: inline-block; }
-    .new_comment .actions span, form.edit_comment .actions span {
-      font-size: 12px;
-      margin-right: 5px; }
-    .new_comment .actions .add_hours_icon, .new_comment .actions .attach_icon, .new_comment .actions .add_watchers, form.edit_comment .actions .add_hours_icon, form.edit_comment .actions .attach_icon, form.edit_comment .actions .add_watchers {
-      text-indent: -9999em;
-      margin-right: 5px;
-      top: 2px; }
-      *:first-child + html .new_comment .actions .add_hours_icon, *:first-child + html .new_comment .actions .attach_icon, *:first-child + html .new_comment .actions .add_watchers, *:first-child + html form.edit_comment .actions .add_hours_icon, *:first-child + html form.edit_comment .actions .attach_icon, *:first-child + html form.edit_comment .actions .add_watchers {
-        text-indent: 16px;
-        overflow: hidden;
-        top: -2px; }
-    *:first-child + html .new_comment .actions .attach_icon, *:first-child + html form.edit_comment .actions .attach_icon {
-      margin-left: -16px; }
-    .new_comment .actions .task_actions, form.edit_comment .actions .task_actions {
-      display: inline; }
-      .new_comment .actions .task_actions label, form.edit_comment .actions .task_actions label {
-        display: none; }
-      .new_comment .actions .task_actions select[name="task[status]"], form.edit_comment .actions .task_actions select[name="task[status]"] {
-        width: 80px; }
-      .new_comment .actions .task_actions select[name="task[assigned_id]"], form.edit_comment .actions .task_actions select[name="task[assigned_id]"] {
-        width: 130px; }
-    .new_comment .actions div.attach, form.edit_comment .actions div.attach {
-      display: inline-block;
-      margin-right: 10px; }
-    .new_comment .actions div.convert_to_task, form.edit_comment .actions div.convert_to_task {
-      top: 8px;
-      width: 600px; }
-      .new_comment .actions div.convert_to_task .fields, form.edit_comment .actions div.convert_to_task .fields {
-        display: block;
-        margin: 5px 0; }
-      .new_comment .actions div.convert_to_task label, form.edit_comment .actions div.convert_to_task label {
-        display: inline-block;
-        text-align: right;
-        width: 160px;
-        margin-right: 10px; }
-      .new_comment .actions div.convert_to_task input[type=text], form.edit_comment .actions div.convert_to_task input[type=text] {
-        border: 1px solid #bbbbbb;
-        padding: 4px; }
-      .new_comment .actions div.convert_to_task select, form.edit_comment .actions div.convert_to_task select {
-        margin: 0 5px 0 0; }
-      .new_comment .actions div.convert_to_task span.localized_date, form.edit_comment .actions div.convert_to_task span.localized_date {
-        margin-left: 180px; }
-    .new_comment .actions span.convert_to_task a, form.edit_comment .actions span.convert_to_task a {
-      margin-left: 45px;
-      font-size: 12px;
-      font-style: normal;
-      color: #666666;
-      text-decoration: none;
-      border-bottom: 1px dashed #cccccc; }
-      .new_comment .actions span.convert_to_task a:hover, form.edit_comment .actions span.convert_to_task a:hover {
-        border-bottom: 1px solid #cccccc; }
-    .new_comment .actions .conversation_actions, form.edit_comment .actions .conversation_actions {
-      display: inline; }
-      .new_comment .actions .conversation_actions label, form.edit_comment .actions .conversation_actions label {
-        font-size: 12px;
-        display: none; }
-      .new_comment .actions .conversation_actions label.display, form.edit_comment .actions .conversation_actions label.display {
-        display: inline; }
-      .new_comment .actions .conversation_actions select[name="conversation[status]"], form.edit_comment .actions .conversation_actions select[name="conversation[status]"] {
-        width: 80px; }
-      .new_comment .actions .conversation_actions select[name="conversation[assigned_id]"], form.edit_comment .actions .conversation_actions select[name="conversation[assigned_id]"] {
-        width: 130px; }
-    .new_comment .actions .date_picker, form.edit_comment .actions .date_picker {
-      display: inline-block; }
-      .new_comment .actions .date_picker img, form.edit_comment .actions .date_picker img {
-        display: none; }
-      .new_comment .actions .date_picker span, form.edit_comment .actions .date_picker span {
-        margin-left: 10px; }
-    .new_comment .actions span.new, form.edit_comment .actions span.new {
-      font-size: 10px;
-      position: relative;
-      top: -2px;
-      color: #777777; }
-  .new_comment .submit, form.edit_comment .submit {
-    float: right;
-    display: inline-block;
-    text-align: right;
-    width: auto; }
-  .new_comment .project_select, form.edit_comment .project_select {
-    font-size: 13px; }
-  .new_comment .extra:after, form.edit_comment .extra:after {
-    content: " ";
-    visibility: hidden;
-    height: 0;
-    font-size: 0;
+
+.info_new_conversation .new_comment_actions {
+  margin: 0;
+    margin-bottom: 0;
+    margin-right: 35px;
+  padding: 0;
+  display: block;
+  float: right;
+  clear: none; }
+  .info_new_conversation .new_comment_actions li {
     display: block;
-    clear: both; }
-  * html .new_comment .extra, * html form.edit_comment .extra {
-    height: 1px; }
-  *:first-child + html .new_comment .extra, *:first-child + html form.edit_comment .extra {
-    overflow: hidden; }
-  .new_comment .error, form.edit_comment .error {
-    color: firebrick; }
+    float: left;
+    clear: none;
+    height: 28px;
+    width: 31px;
+    padding: 0; }
+    .info_new_conversation .new_comment_actions li a {
+      display: block;
+      float: left;
+      clear: none;
+      height: 28px;
+      min-width: 31px;
+      padding: 0;
+      background: url(img_3_2/sprite_btn.png) no-repeat 0px -56px; }
+    .info_new_conversation .new_comment_actions li a:active {
+      background-position-y: -84px; }
+    .info_new_conversation .new_comment_actions li a.btn_doc {
+      background-position-x: -31px; }
+    .info_new_conversation .new_comment_actions li a.btn_users {
+      background-position-x: -62px; }
+    .info_new_conversation .new_comment_actions li a.btn_lock {
+      background-position-x: -93px; }
+.info_new_conversation .actions {
+  display: inline-block; }
+  .info_new_conversation .actions span {
+    font-size: 12px;
+    margin-right: 5px; }
+  .info_new_conversation .actions .add_hours_icon, .info_new_conversation .actions .attach_icon, .info_new_conversation .actions .add_watchers {
+    text-indent: -9999em;
+    margin-right: 5px;
+    top: 2px; }
+    *:first-child + html .info_new_conversation .actions .add_hours_icon, *:first-child + html .info_new_conversation .actions .attach_icon, *:first-child + html .info_new_conversation .actions .add_watchers {
+      text-indent: 16px;
+      overflow: hidden;
+      top: -2px; }
+  *:first-child + html .info_new_conversation .actions .attach_icon {
+    margin-left: -16px; }
+  .info_new_conversation .actions .task_actions {
+    display: inline; }
+    .info_new_conversation .actions .task_actions label {
+      display: none; }
+    .info_new_conversation .actions .task_actions select[name="task[status]"] {
+      width: 80px; }
+    .info_new_conversation .actions .task_actions select[name="task[assigned_id]"] {
+      width: 130px; }
+  .info_new_conversation .actions div.attach {
+    display: inline-block;
+    margin-right: 10px; }
+  .info_new_conversation .actions div.convert_to_task {
+    top: 8px;
+    width: 600px; }
+    .info_new_conversation .actions div.convert_to_task .fields {
+      display: block;
+      margin: 5px 0; }
+    .info_new_conversation .actions div.convert_to_task label {
+      display: inline-block;
+      text-align: right;
+      width: 160px;
+      margin-right: 10px; }
+    .info_new_conversation .actions div.convert_to_task input[type=text] {
+      border: 1px solid #bbbbbb;
+      padding: 4px; }
+    .info_new_conversation .actions div.convert_to_task select {
+      margin: 0 5px 0 0; }
+    .info_new_conversation .actions div.convert_to_task span.localized_date {
+      margin-left: 180px; }
+  .info_new_conversation .actions span.convert_to_task a {
+    margin-left: 45px;
+    font-size: 12px;
+    font-style: normal;
+    color: #666666;
+    text-decoration: none;
+    border-bottom: 1px dashed #cccccc; }
+    .info_new_conversation .actions span.convert_to_task a:hover {
+      border-bottom: 1px solid #cccccc; }
+  .info_new_conversation .actions .conversation_actions {
+    display: inline; }
+    .info_new_conversation .actions .conversation_actions label {
+      font-size: 12px;
+      display: none; }
+    .info_new_conversation .actions .conversation_actions label.display {
+      display: inline; }
+    .info_new_conversation .actions .conversation_actions select[name="conversation[status]"] {
+      width: 80px; }
+    .info_new_conversation .actions .conversation_actions select[name="conversation[assigned_id]"] {
+      width: 130px; }
+  .info_new_conversation .actions .date_picker {
+    display: inline-block; }
+    .info_new_conversation .actions .date_picker img {
+      display: none; }
+    .info_new_conversation .actions .date_picker span {
+      margin-left: 10px; }
+  .info_new_conversation .actions span.new {
+    font-size: 10px;
+    position: relative;
+    top: -2px;
+    color: #777777; }
+.info_new_conversation .submit {
+  float: right;
+  display: inline-block;
+  text-align: right;
+  width: auto; }
+.info_new_conversation .project_select {
+  font-size: 13px; }
+.info_new_conversation .extra:after {
+  content: " ";
+  visibility: hidden;
+  height: 0;
+  font-size: 0;
+  display: block;
+  clear: both; }
+* html .info_new_conversation .extra {
+  height: 1px; }
+*:first-child + html .info_new_conversation .extra {
+  overflow: hidden; }
+.info_new_conversation .error {
+  color: firebrick; }
 
 form .upload_area {
   padding: 0.3em 0; }
@@ -2107,6 +2139,134 @@ form .upload_area {
 .comment-image {
   max-height: 480px;
   max-width: 385px; }
+
+#new_conversation_form {
+  display: block;
+  float: left;
+  clear: both;
+  width: 620px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 25px; }
+  #new_conversation_form .big_avatar {
+    display: block;
+    float: left;
+    clear: none;
+    width: 62px;
+    height: 55px;
+    background: url(img_3_2/sprite_base.png) 0 -66px; }
+    #new_conversation_form .big_avatar span {
+      width: 49px;
+      height: 49px;
+      display: block;
+      float: left;
+      position: relative;
+      top: 3px;
+      left: 3px;
+      background: #dcdcdc; }
+  #new_conversation_form .button_blue {
+    float: right;
+    margin-top: 26px; }
+  #new_conversation_form .textarea_big {
+    width: 553px;
+    height: 55px;
+    display: block;
+    float: left;
+    clear: right;
+    margin-left: 5px; }
+    #new_conversation_form .textarea_big textarea {
+      color: #535353;
+      border: 1px solid #a0a0a0;
+      width: 543px;
+      height: 43px;
+      padding: 5px;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px; }
+  #new_conversation_form .info_new_conversation {
+    display: block;
+    float: left;
+    clear: none;
+    margin-left: 68px;
+    width: 552px; }
+  #new_conversation_form .info_label {
+    display: block;
+    float: left;
+    clear: both;
+    font-size: 10px;
+    color: #535353;
+    margin-top: 9px;
+    margin-bottom: 5px; }
+  #new_conversation_form .dropdown_autocomplete {
+    display: none;
+    width: 278px;
+    list-style-type: none;
+    position: absolute;
+    top: 40px;
+    float: left;
+    clear: both;
+    z-index: 500;
+    border-radius: 0 0 3px 3px;
+    -moz-border-radius-bottomleft: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    background: white;
+    border: 1px solid #a0a0a0;
+      border-top: none;
+    padding: 3px 0 0 0; }
+    #new_conversation_form .dropdown_autocomplete li {
+      background: #f5f5f5;
+      padding: 5px;
+      width: 268px;
+      margin-left: 0px;
+      border-radius: 0 0 3px 3px;
+      -moz-border-radius-bottomleft: 3px;
+      -moz-border-radius-bottomright: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+      -webkit-border-bottom-right-radius: 3px; }
+      #new_conversation_form .dropdown_autocomplete li:hover {
+        background-color: #eeeeee; }
+  #new_conversation_form .dropdown_projects {
+    color: #535353;
+    display: block;
+    float: left;
+    clear: none;
+    position: relative; }
+    #new_conversation_form .dropdown_projects .dropdown_arrow {
+      display: block;
+      float: left;
+      clear: none;
+      margin-left: -2px;
+      height: 28px;
+      width: 31px;
+      background: url(img_3_2/sprite_btn.png) no-repeat -62px 0px;
+      z-index: 9998;
+      position: relative; }
+    #new_conversation_form .dropdown_projects:hover .dropdown_autocomplete {
+      display: block; }
+    #new_conversation_form .dropdown_projects:hover .dropdown_arrow {
+      background-position: -93px 0px; }
+  #new_conversation_form .new_comment_actions_div {
+    display: block;
+    float: right;
+    clear: none; }
+    #new_conversation_form .new_comment_actions_div ol {
+      clear: both; }
+  #new_conversation_form input[type=text] {
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border: 1px solid #a0a0a0;
+    padding: 4px 4px 4px 5px;
+    width: 240px;
+    font-size: 12px;
+    display: block;
+    float: left;
+    clear: left;
+    height: 18px;
+    position: relative;
+    z-index: 9997; }
 
 #column .conversations {
   clear: both;
@@ -4005,7 +4165,8 @@ div.weektable {
     border: 1px solid #b5b5b5;
     box-shadow: #c9c9c9 0px 0px 6px;
     -webkit-box-shadow: #c9c9c9 0px 0px 6px;
-    -moz-box-shadow: #c9c9c9 0px 0px 6px; }
+    -moz-box-shadow: #c9c9c9 0px 0px 6px;
+    text-shadow: white 1px 1px 0px; }
     .actions_menu .extra a, .actions_menu .extra span {
       color: #898989;
       display: block;
@@ -4238,7 +4399,7 @@ ul.google_docs_list, .google_docs_attachment ul.file_list {
       padding-left: 40px;
       background: url(img_3_2/sprite_btn.png) -126px -56px no-repeat;
       margin-left: -3px;
-      text-shadow: white 0px 1px 1px; }
+      text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0px; }
     .nav_links .btn_new_project:active, .more_links .btn_new_project:active {
       background-position: right -84px; }
       .nav_links .btn_new_project:active a, .more_links .btn_new_project:active a {
