@@ -768,6 +768,7 @@ en:
     short_conversation:
       comment: comment
       comments: comments
+    untitled: Untitled conversation
   hours:
     download: Download
     comments: Time Entries
