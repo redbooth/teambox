@@ -163,8 +163,12 @@ class Activity < ActiveRecord::Base
       end if target
     end
   end
-  
+
   def to_push_data(options={})
+    ActivityRenderer.render_activity(self, options)
+  end
+
+  def to_push_data_old(options={})
     target_includes = [:project, :user]
     includes = [:target, :project, :user]
     case self.target_type
