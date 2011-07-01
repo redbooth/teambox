@@ -20,7 +20,6 @@ gem 'icalendar', '~> 1.1.3'
 gem 'libxml-ruby', '1.1.3', :require => 'libxml'
 gem 'rdiscount', '~> 1.6.3'
 gem 'haml', '~> 3.1.2'
-gem 'haml-rails'
 gem 'sass', '~> 3.1.2'
 # gem 'mysql2'
 gem 'mysql', '~> 2.8.1', :require => nil, :group => 'mysql'
@@ -57,6 +56,7 @@ group :development do
   gem 'jasmine'
   gem 'unicorn', '~> 3.6.1', :require => nil
   gem 'foreman'
+  gem 'haml-rails'
 end
 
 group :test, :development do
