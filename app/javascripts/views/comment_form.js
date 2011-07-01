@@ -164,16 +164,16 @@
 
   /* inits the uploader
    */
-  CommentForm.initUploader = function() {
+  CommentForm.initUploader = function () {
     if (!this.uploader) {
       this.uploader = new Teambox.modules.Uploader(this, {
-          onFilesAdded: this.upload_area.onFilesAdded.bind(this.upload_area)
-        , onFilesRemoved: this.upload_area.onFilesRemoved.bind(this.upload_area)
-        , onFileUploaded: this.upload_area.onFileUploaded.bind(this.upload_area)
-        , onUploadProgress: this.upload_area.onUploadProgress.bind(this.upload_area)
-        , onUploadComplete: this.upload_area.onUploadComplete.bind(this.upload_area)
-        , onUploadFile: this.upload_area.onUploadFile.bind(this.upload_area)
-        , onInit: this.upload_area.onUploaderInit.bind(this.upload_area)
+        onFilesAdded: this.upload_area.onFilesAdded.bind(this.upload_area)
+      , onFilesRemoved: this.upload_area.onFilesRemoved.bind(this.upload_area)
+      , onFileUploaded: this.upload_area.onFileUploaded.bind(this.upload_area)
+      , onUploadProgress: this.upload_area.onUploadProgress.bind(this.upload_area)
+      , onUploadComplete: this.upload_area.onUploadComplete.bind(this.upload_area)
+      , onUploadFile: this.upload_area.onUploadFile.bind(this.upload_area)
+      , onInit: this.upload_area.onUploaderInit.bind(this.upload_area)
       });
     }
 

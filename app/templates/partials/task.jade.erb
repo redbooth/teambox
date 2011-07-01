@@ -43,7 +43,3 @@
 
     - each recent_comment in self.recent_comments
       != self.partial('partials.comment', recent_comment)
-
-  // TODO: I'm adding this form.new_comment so the styles are right, feel free to change
-  // so the style is more similar to the comment form on the thread view
-  form.new_comment!= self.partial('partials.comment_form', self)
