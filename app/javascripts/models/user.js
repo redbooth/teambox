@@ -31,5 +31,12 @@ Teambox.Models.User = Teambox.Models.Base.extend({
       return "/api/1/account";
     }
 
+  /* Get the public url
+   *
+   * @return {String}
+   */
+  , publicUrl: function () {
+      return '/users/' + this.get('login');
+    }
 });
 
