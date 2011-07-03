@@ -82,9 +82,10 @@
       , threads = Teambox.collections.threads
       , pages = Teambox.collections.pages
       , projects = Teambox.collections.projects
+      , people = Teambox.collections.people
       , regex = RegExp(search_term, 'i')
-      , found = threads.models.concat(pages.models).concat(projects.models).select(function (el) {
-          return el.get('name') && regex.test(el.get('name'));
+      , found = threads.models.concat(pages.models).concat(projects.models).concat(people.models).select(function (el) {
+          return el.get('name') && regex.test(el.get('name')) || (el.get('type') === 'Person' && el.get('user').username && regex.test(el.get('user').username));
         }).sortBy(function (el) {
           return el.get('updated_at');
         }).sortBy(function (el) {
