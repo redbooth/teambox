@@ -65,7 +65,7 @@
    * @return {Array} filtered models
    */
   ProjectsCollection.getByPermalink = function (permalink) {
-    return this.filter(function (el) {
+    return this.detect(function (el) {
       return el.get('permalink') === permalink;
     });
   };

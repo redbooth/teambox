@@ -37,6 +37,7 @@
 //= require <helpers/jade>
 
 //= require <helpers/tasks>
+//= require <helpers/projects>
 //= require <helpers/deparam>
 //= require <helpers/forms>
 

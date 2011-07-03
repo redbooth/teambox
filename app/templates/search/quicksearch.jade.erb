@@ -2,6 +2,9 @@ ul#quicksearch_results
   li.selected
     a.submit_search(href= '#!/search/' + self.query) <%=t('search.quicksearch.search_all')%>
   - each result in self.results
-    -var thread = new Teambox.Models.Thread(result)
+    - if (_.any(['Task','Conversation'], function (type) { return result.type === type;}))
+      - var model = new Teambox.Models.Thread(result)
+    - else
+      - var model = new Teambox.Models[result.type](result)
     li
-      a.result(href= '/#!' + thread.publicUrl())= thread.get('type') + ': ' + thread.get('name')
+      a.result(href= '/#!' + model.publicUrl())= model.get('type') + ': ' + model.get('name')

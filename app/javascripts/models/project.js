@@ -9,6 +9,15 @@
     return 'Project';
   };
 
+  /* Get the public url
+   *
+   * @return {String}
+   */
+  Project.publicUrl = function () {
+    return '/projects/' + this.get('permalink');
+  };
+
+
   /* returns user names in a `autocompleter` format
    *
    * @return {String}
