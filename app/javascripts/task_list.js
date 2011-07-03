@@ -1,38 +1,4 @@
 var TaskList = {
-  in_sort: false,
-  
-  sortableChange: function(draggable) {
-    this.currentDraggable = draggable
-  },
-  
-  sortableUpdate: _.debounce(function() {
-    task_list_ids = this.currentDraggable.up().select('.task_list').collect(
-    function(task_list) {
-        return task_list.readAttribute('data-task-list-id')
-    }).join(',')
-
-    new Ajax.Request('/projects/' + current_project + '/task_lists/reorder', {
-      method: 'put',
-      parameters: { task_list_ids: task_list_ids }
-    })
-  }, 100),
-
-  makeSortable: function() {
-    TaskList.in_sort = true;
-    Sortable.create('task_lists', {
-      constraint:'vertical',
-      handle:'img.drag',
-      tag:'div',
-      only:'task_list_container',
-      onChange: TaskList.sortableChange.bind(TaskList),
-      onUpdate: TaskList.sortableUpdate.bind(TaskList)
-    });
-  },
-  destroySortable: function() {
-    TaskList.in_sort = false;
-    Sortable.destroy('task_lists');
-  },
-
   // Inserts new list
   insertList: function(id, content, archived) {
     if (archived)
@@ -119,10 +85,10 @@ var TaskList = {
         Actions.setActions(element, false);
         Actions.setLoading(element, false);
       },
-      onFailure: function(response){	
+      onFailure: function(response){  
         Actions.setLoading(element, false);
       }
-    });	
+    }); 
   },
 
   resolveAndArchive: function(element, url) {
@@ -273,11 +239,6 @@ document.on('click', '#template_task_list_form a.create_traditional', function(e
   e.stop()
 })
 
-document.on('click', '#reorder_task_lists_link', function(e, element){
-  e.stop()
-  TaskList.setReorder(true);
-});
-
 document.on('click', '#done_reordering_task_lists_link', function(e, element){
   e.stop()
   TaskList.setReorder(false);
@@ -287,7 +248,7 @@ document.observe('toggleform:loaded:edit_task_list', function(evt) {
   // Reload sort
   if (TaskList.in_sort) {
     setTimeout(function(){
-      TaskList.setReorder(false);	
+      TaskList.setReorder(false); 
       TaskList.setReorder(true);
     }, 0);
   }
@@ -298,8 +259,8 @@ document.observe('toggleform:loaded:edit_task_list', function(evt) {
 document.observe('toggleform:loaded:new_task_list', function(evt) {
   // Reload sort
   if (TaskList.in_sort) {
-	setTimeout(function(){
-      TaskList.setReorder(false);	
+  setTimeout(function(){
+      TaskList.setReorder(false); 
       TaskList.setReorder(true);
     }, 0);
   }

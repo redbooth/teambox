@@ -29,18 +29,12 @@
     var tasks = collections.tasks.filteredByProject(permalink)
       , collection = (new Teambox.Collections.Tasks(tasks))
       , project = collections.projects.getByPermalink(permalink)
-      , view = new Views.ProjectTasks({collection: collection})
-      , filters = new Views.Filters({ task_list: view
-                                    , filters: { name: null
-                                               , assigned: null
-                                               , due_date: null
-                                               , status: null }});
+      , view = new Views.TaskLists({collection: collection, project: project});
 
     Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_task_lists');
 
     $('content')
-      .update(view.render().el)
-      .insert({top: filters.render().el});
+      .update(view.render().el);
 
     view.makeAllSortable();
 

@@ -1,0 +1,51 @@
+form(style='overflow: visible;', method='POST', action='/projects/test_project-20/task_lists', accept-charset='UTF-8')
+  input(type='hidden', value='✓', name='utf8')
+  input(type='hidden', value='VSy6WrSsPymWfiKex6WRq9xq1LlfEnBLVf0xAGt95Kk=', name='authenticity_token')
+  h3 New Task List
+  p A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
+
+  #traditional_task_list_form
+    .name.text_field
+      label(for='task_list_name')
+        | Choose a name for this Task List
+        i eg. Prepare a Prototype
+      input(type='text', size='30', name='task_list[name]', id='task_list_name', autofocus='autofocus')
+      a.template_link.create_from_template(href='#') or create a Task List from a template
+
+    p.optional If you set starting and ending dates, this task will be displayed in the Gantt chart
+    .pick_date
+      label(for='task_list_start_on')
+        | Starts on...
+        i optional
+      div#task_list__start_on.date_picker
+        img.calendar_date_select_popup_icon(src='/images/calendar_date_select/calendar.gif?1285939525', alt='Calendar')
+        span.localized_date No date assigned
+        input#task_list_start_on.datepicker(type='hidden', name='task_list[start_on]')
+    .pick_date
+      label(for='task_list_finish_on')
+        | End on...
+        i optional
+      div#task_list__finish_on.date_picker
+        img.calendar_date_select_popup_icon(src='/images/calendar_date_select/calendar.gif?1285939525', alt='Calendar')
+        span.localized_date No date assigned
+        input#task_list_finish_on.datepicker(type='hidden', name='task_list[finish_on]')
+
+  // TODO: This is harcode!
+  #template_task_list_form(style='display: none;')
+    .template.text_field
+      label(for='task_list_template') Create a task list from a template
+      select#task_list_template(name= 'task_list[template]')
+        option(value='')
+        option(value='38') Case Study Questions
+        option(value='36') Joint Webinar Planning
+        option(value='29') Trial Plan
+        option(value='3') Teambox Training
+        option(value='27') Uncover Evaluation Needs
+        option(value='1') Version release
+      a.template_link.create_traditional(href='#') or create a Task List from scratch
+
+  img.loading(style='display: none', src='/images/loading.gif?1285939525', id='project_60006_task_list_new_loading', alt='Loading')
+  div.submit(id='project_60006_task_list_new_submit', class='submit')
+    input.inline_form_create(type='submit', value='Add Task List', name='commit')
+    | or
+    a#task_lists_form_cancel(href='#') Cancel
