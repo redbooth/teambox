@@ -275,6 +275,9 @@ Teambox::Application.routes.draw do
             put :archive
             put :unarchive
           end
+          collection do
+            put :reorder
+          end
 
           resources :tasks, :except => [:new, :edit]
         end

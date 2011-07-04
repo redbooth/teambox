@@ -231,6 +231,23 @@ describe ApiV1::TaskListsController do
     end
   end
 
+  describe "#reorder" do
+
+    it "should allow a user to reorder task lists" do
+      login_as @user
+      tl1 = Factory :task_list, :project => @project
+      tl2 = Factory :task_list, :project => @project
+      tl3 = Factory :task_list, :project => @project
+
+      put :reorder, :project_id => @project.permalink, :task_list_ids => [tl2.id, tl3.id, tl1.id].join(',')
+      response.should be_success
+
+      tl2.reload.position.should == 0
+      tl3.reload.position.should == 1
+      tl1.reload.position.should == 2
+    end
+  end
+
   describe "#destroy" do
     it "should allow the creator to destroy a task list" do
       login_as @task_list.user
