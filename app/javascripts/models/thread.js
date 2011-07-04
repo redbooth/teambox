@@ -26,7 +26,8 @@
     return this.get('type') === 'Conversation';
   };
 
-  /* Get the public url
+  /**
+   * Get the public url
    *
    * @return {String}
    */
@@ -34,7 +35,8 @@
     return '/projects/' + this.get('project_id') + '/' + this.get('type').toLowerCase() + 's/' + this.id;
   };
 
-  /* Get the API url
+  /**
+   * Get the API url
    *
    * @return {String}
    */

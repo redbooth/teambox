@@ -107,7 +107,8 @@
     });
   };
 
-  /* Syncs the new comment and triggers `comment:added`
+  /**
+   * Syncs the new comment and triggers `comment:added`
    *
    * @param {Event} evt
    * @returns false;

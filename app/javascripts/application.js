@@ -122,8 +122,10 @@
 //= require <oauth>
 //= require <i18n>
 //= require <datetime>
-//= require <date_picker>
 //= require <expand_comment>
+
+//TODO: delete
+//= require <date_picker>
 
 //= require <first_steps>
 //= require <forms>

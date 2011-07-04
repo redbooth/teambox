@@ -59,10 +59,11 @@
     return orgs;
   };
 
-  /* Get project by permalink
+  /**
+   * Get project by permalink
    *
    * @param {String} permalink
-   * @return {Array} filtered models
+   * @return {Object}
    */
   ProjectsCollection.getByPermalink = function (permalink) {
     return this.detect(function (el) {

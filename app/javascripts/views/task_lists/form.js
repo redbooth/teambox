@@ -6,6 +6,7 @@
 
   TaskListsForm.events = {
     'click #task_lists_form_cancel': 'toggle'
+  , 'submit form'                  : 'postTaskList'
   };
 
   TaskListsForm.initialize = function (options) {
@@ -13,7 +14,8 @@
     this.project = options.project;
   };
 
-  /* toggles the new task list form
+  /**
+   * Toggles the new task list form
    *
    * @param {Event} evt
    */
@@ -22,7 +24,24 @@
     this.el.toggle();
   };
 
-  /* updates the element
+  /**
+   * Syncs the new task_list and triggers `task_list:added`
+   *
+   * @param {Event} evt
+   */
+  TaskListsForm.postTaskList = function (evt) {
+    if (evt) evt.stop();
+
+    var data = _.deparam(this.el.down('form').serialize(), true);
+
+    (new Teambox.Models.TaskList()).save(data.task_list, {
+      success: function (model, response) {
+      }
+    });
+  };
+
+  /**
+   * Updates the element
    *
    * @return self
    */

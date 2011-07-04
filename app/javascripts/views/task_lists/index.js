@@ -11,9 +11,11 @@
   , 'click #toggle_new_task_list': 'toggleNewTaskListForm'
   , 'click #reorder_task_lists': 'toggleReorder'
   , 'click #done_reordering_task_lists': 'toggleReorder'
+  , 'click .date_picker' : 'showCalendar'
   };
 
-  /* Initializes the view
+  /**
+   * Initializes the view
    *
    * @param {Object} options
    */
@@ -29,7 +31,24 @@
                                                              , status: null }});
   };
 
-  /* insert the comments below the task clicked
+  /**
+   * Displays the calendar
+   *
+   * @param {Event} evt
+   */
+  TaskLists.showCalendar = function (evt, element) {
+    evt.stop();
+
+    new Teambox.modules.CalendarDateSelect(element.down('input'), element.down('span'), {
+      buttons: true
+    , popup: 'force'
+    , time: false
+    , year_range: [2008, 2020]
+    });
+  };
+
+  /**
+   * Insert the comments below the task clicked
    *
    * @param {Event} evt
    */
@@ -53,7 +72,8 @@
     }
   };
 
-  /* insert the comments below the task clicked
+  /**
+   * Insert the comments below the task clicked
    *
    * @param {Event} evt
    */
@@ -62,7 +82,8 @@
     evt.element().up('.task').down('.thread').toggle();
   };
 
-  /* toggles the new task list form
+  /**
+   * Toggles the new task list form
    *
    * @param {Event} evt
    */
@@ -99,10 +120,16 @@
     });
   };
 
+  /**
+   * Destroy all sortable
+   */
   TaskLists.destroySortable = function () {
     Sortable.destroy('task_lists');
   };
 
+  /**
+   * Make all task lists sortable
+   */
   TaskLists.makeAllSortable = function () {
     var task_div_ids = this.el.select('.tasks.open').map(function (task_div) {
           return task_div.identify();
@@ -113,7 +140,8 @@
     });
   };
 
-  /* updates the element
+  /**
+   * Updates the element
    *
    * @return self
    */

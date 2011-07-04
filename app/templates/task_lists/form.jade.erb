@@ -1,6 +1,7 @@
-form(style='overflow: visible;', method='POST', action='/projects/test_project-20/task_lists', accept-charset='UTF-8')
-  input(type='hidden', value='✓', name='utf8')
-  input(type='hidden', value='VSy6WrSsPymWfiKex6WRq9xq1LlfEnBLVf0xAGt95Kk=', name='authenticity_token')
+form(method='POST', action= '#', accept-charset='UTF-8')
+  input(name= 'utf8', type= 'hidden', value= '✓')
+  input(name= 'task_list[project_id]', type= 'hidden', value= self.project.id)
+
   h3 New Task List
   p A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
 
