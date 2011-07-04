@@ -324,7 +324,6 @@ Teambox::Application.routes.draw do
         member do
           put :watch
           put :unwatch
-          put :reorder
         end
       end
 

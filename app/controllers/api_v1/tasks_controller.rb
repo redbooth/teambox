@@ -75,7 +75,7 @@ class ApiV1::TasksController < ApiV1::APIController
         @task.save
       end
 
-      task_ids = params[:task_ids].split(',').collect {|t| t.to_i}
+      task_ids = params[:task_ids].split(',').collect(&:to_i)
       @task_list.tasks.each do |t|
         next unless task_ids.include?(t.id)
         Task.thin_model.find(t.id).update_attribute :position, task_ids.index(t.id)

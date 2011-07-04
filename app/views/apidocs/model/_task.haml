@@ -28,9 +28,9 @@
 
 - doc_for :reorder,
           :status => :updated,
-          :parameters => { :tasks => [1,2,3] },
+          :parameters => { :task_ids => "1,2,3", :task_list_id => 8 },
           :role => :participant do
-  %p=raw "Reorders the tasks in a task list according to the order each task id is presented in <tt>tasks</tt>."
+  %p=raw "Moves the task <tt>id</tt> to the task list identified by <tt>task_list_id</tt> and reorders its tasks according to the order each task id is presented in <tt>task_ids</tt>."
 
 - doc_for :watch,
           :status => :updated,
