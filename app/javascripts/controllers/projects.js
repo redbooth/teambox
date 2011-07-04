@@ -32,14 +32,13 @@
 
   ProjectsController.task_lists = function (permalink) {
     var tasks = collections.tasks.filteredByProject(permalink)
-      , collection = (new Teambox.Collections.Tasks(tasks))
       , project = collections.projects.getByPermalink(permalink)
-      , view = new Views.TaskLists({collection: collection, project: project});
+      , task_lists = project.get('task_lists').setTasks(tasks)
+      , view = new Views.TaskLists({collection: task_lists, project: project});
 
     Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_task_lists');
 
-    $('content')
-      .update(view.render().el);
+    $('content').update(view.render().el);
 
     view.makeAllSortable();
 

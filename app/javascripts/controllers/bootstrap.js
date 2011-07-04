@@ -41,25 +41,21 @@
         _.each(projects.models, function (project, i) {
           var collection;
 
-          // preload task_lists
+          // preload project >> task_lists
           collection = new Teambox.Collections.TaskLists([], {project_id: project.id});
           projects.models[i].set({task_lists: collection});
           collection.fetch({success: _loader.load(function (task_lists) {
-            try {
-              collections.tasks_lists.add(task_lists.models, {silent: true});
-            } catch (e) {} // may try to add same task_list twice
+            collections.tasks_lists.add(task_lists.models, {silent: true});
           })});
 
-          // preload conversations
+          // preload project >> conversations
           collection = new Teambox.Collections.Conversations([], {project_id: project.id});
           projects.models[i].set({conversations: collection});
           collection.fetch({success: _loader.load(function (conversations) {
-            try {
-              collections.conversations.add(conversations.models, {silent: true});
-            } catch (e) {} // may try to add same task_list twice
+            collections.conversations.add(conversations.models, {silent: true});
           })});
 
-          // preload people
+          // preload project >> people
           collection = new Teambox.Collections.People([], {project_id: project.id});
           projects.models[i].set({people: collection});
           collection.fetch({success: _loader.load(function (people) {

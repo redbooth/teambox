@@ -146,12 +146,8 @@
    * @return self
    */
   TaskLists.render = function () {
-    var tasks = this.collection.sortBy(function (el) {
-          return el.get('task_list_id');
-        });
-
-    if (tasks.length > 0) {
-      this.el.update(this.template({tasks: tasks, project: this.project}));
+    if (this.collection.length > 0) {
+      this.el.update(this.template({task_lists: this.collection, project: this.project}));
     } else {
       this.el.update(this.primer_template());
     }

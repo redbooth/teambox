@@ -4,26 +4,13 @@ a#toggle_new_task_list(href= '#') New Task List
 
 .task_list_container
 
-  - for (var i = 0, len = self.tasks.length; i < len; i++)
-    - var last_status = self.tasks[i].get('task_list_id');
-    - var task = self.tasks[i]
-
+  - each task_list in self.task_lists.models
     .task_list
-      .head= task.get('task_list').name
+      .head= task_list.get('name')
       .tasks.open
-        div(data-task-id= task.id, class= 'task ' + task.getClasses(), id= 'task_' + task.id)
-          != (new Teambox.Views.Task({model: task, dragndrop: true})).render().el.innerHTML
-
-        - i++;
-        - for (;i < len;i++)
-          - var current_status = self.tasks[i].get('task_list_id');
-          - var task = self.tasks[i]
-
-          - if (last_status === current_status)
-            div(data-task-id= task.id, class= 'task ' + task.getClasses(), id= 'task_' + task.id)
-              != (new Teambox.Views.Task({model: task, dragndrop: true})).render().el.innerHTML
-          - else
-            - break;
+        - each task in task_list.get('tasks')
+          div(data-task-id= task.id, class= 'task ' + task.getClasses(), id= 'task_' + task.id)
+            != (new Teambox.Views.Task({model: task, dragndrop: true})).render().el.innerHTML
 
         .new_task
           //TODO
