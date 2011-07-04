@@ -47,14 +47,16 @@ class ApiV1::TaskListsController < ApiV1::APIController
 
   def reorder
     authorize! :reorder_objects, @current_project
-    params[:task_lists].each_with_index do |task_list_id,idx|
-      @task_list = @current_project.task_lists.find(task_list_id)
-      @task_list.update_attribute(:position,idx.to_i)
+    task_list_ids = params[:task_list_ids].to_s.split(',').collect(&:to_i)
+
+    @current_project.task_lists.each do |t|
+      next unless task_list_ids.include?(t.id)
+      t.update_attribute :position, task_list_ids.index(t.id)
     end
-    
+
     handle_api_success(@task_list)
   end
-  
+
   def archive
     authorize! :update, @task_list
     unless @task_list.archived
