@@ -286,6 +286,7 @@ Teambox::Application.routes.draw do
           member do
             put :watch
             put :unwatch
+            put :reorder
           end
 
           resources :comments, :except => [:new, :edit]
@@ -326,6 +327,7 @@ Teambox::Application.routes.draw do
         member do
           put :watch
           put :unwatch
+          put :reorder
         end
       end
 

@@ -68,7 +68,7 @@ class ApiV1::TasksController < ApiV1::APIController
     @task.remove_watcher(current_user)
     handle_api_success(@task)
   end
-  
+
   def reorder
     authorize! :reorder_objects, @current_project
     begin
@@ -86,11 +86,13 @@ class ApiV1::TasksController < ApiV1::APIController
     rescue ActiveRecord::RecordNotFound
       return api_error :not_found, :type => 'ObjectNotFound', :message => 'Task not found' unless @task
     end
-    new_task_ids_for_task_list.each_with_index do |task_id,idx|
-      task = @task_list.tasks.find(task_id)
-      task.update_attribute(:position,idx.to_i)
+
+    task_ids = params[:task_ids].split(',').collect {|t| t.to_i}
+    @task_list.tasks.each do |t|
+      next unless task_ids.include?(t.id)
+      Task.thin_model.find(t.id).update_attribute :position, task_ids.index(t.id)
     end
-    
+
     api_status(:ok)
   end
 
