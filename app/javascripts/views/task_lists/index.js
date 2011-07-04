@@ -8,6 +8,7 @@
 
   TaskLists.events = {
     'click .task .name': 'showComments'
+  , 'click .new_task a.toggle': 'toggleNewTask'
   , 'click #toggle_new_task_list': 'toggleNewTaskListForm'
   , 'click #reorder_task_lists': 'toggleReorder'
   , 'click #done_reordering_task_lists': 'toggleReorder'
@@ -80,6 +81,18 @@
   TaskLists.showComments = function (evt) {
     evt.stop();
     evt.element().up('.task').down('.thread').toggle();
+  };
+
+  /**
+   * Toggles the new task form
+   *
+   * @param {Event} evt
+   */
+  TaskLists.toggleNewTask = function (evt) {
+    var element = evt.element();
+
+    evt.stop();
+    element.next().toggle(evt);
   };
 
   /**

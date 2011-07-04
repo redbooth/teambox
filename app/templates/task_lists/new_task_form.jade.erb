@@ -1,0 +1,59 @@
+form#new_task.app_form.new_task(method='POST', enctype='multipart/form-data', accept-charset='UTF-8', style='display:none;')
+  input(type='hidden', value='✓', name='utf8')
+
+  h3 New Task
+  p Choose an actionable task. The more specific, the better.
+
+  .name.text_field
+    label(for='task_name')
+      | Enter a Task title
+      i eg. Upload Logo Proposal
+    input#task_name(type='text', size='30', name='task[name]')
+
+  p.optional You can provide better instructions for this Task below.
+
+  .body.text_field
+    label(for='task_comments_attributes_0_body')
+      | What needs to be done?
+      i optional
+    textarea#task_comments_attributes_0_body(rows='3', name='task[comments_attributes][0][body]', cols='40')
+
+  .extra
+    .upload_area
+      p Select a file to upload to Teambox
+      input#upload_file(type='file', name='task[comments_attributes][0][uploads_attributes][0][asset]')
+
+    .private_options(style='display: none')
+
+    .actions
+      .attach
+        span Attach:
+        a.attach_icon.hoverable(title='Attach a file', href='#uploads') Attachment
+        .google_docs_attachment
+          a(rel='facebox', href='/google_docs')
+            img.google_docs_logo(src='/images/google_docs/icon_6_document.gif?1291811897', alt='Icon_6_document')
+          .google_docs_attachment_form_area
+            .fields
+            ul.file_list
+
+          a.private_switch.hoverable(title='Control who can see this element', href='#privacy') Privacy
+
+  .assigned_to.text_field
+    label(for='task_assigned_id') Assigned to:
+    select#task_assigned_id(name='task[assigned_id]')
+      option Unassigned
+      option(value='140708') Pau Ramon Revilla
+
+  .pick_date
+    label(for='task_due_on')
+      | Needs to be done before...
+      i optional
+
+    #task__due_on.date_picker
+      img.calendar_date_select_popup_icon(src='/images/calendar_date_select/calendar.gif?1285939525', alt='Calendar')
+      span.localized_date No date assigned
+      input#task_due_on.datepicker(type='hidden', name='task[due_on]')
+
+  .submit
+    a.cancel(href='#cancel') Cancel
+    input#task_submit(type='submit', value='Add Task', name='commit')

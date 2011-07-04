@@ -13,5 +13,5 @@ a#toggle_new_task_list(href= '#') New Task List
             != (new Teambox.Views.Task({model: task, dragndrop: true})).render().el.innerHTML
 
         .new_task
-          //TODO
-          a(href= '') new task
+          a.toggle(href= '#') new task
+          != (new Teambox.Views.TaskListsTaskForm({})).render().el.innerHTML
