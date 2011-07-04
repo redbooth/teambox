@@ -9,7 +9,7 @@
    * @return {Array} tasks matched
    */
     ProjectsHelper.filterActivitiesByProject = function (id, collection) {
-      return new Teambox.Collections.Projects(collection.select(function (a) {
+      return new Teambox.Collections.Threads(collection.select(function (a) {
         return a.get('project_id') === id;
       }));
     };
