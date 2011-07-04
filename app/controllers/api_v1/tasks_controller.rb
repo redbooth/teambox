@@ -68,16 +68,20 @@ class ApiV1::TasksController < ApiV1::APIController
 
   def reorder
     authorize! :reorder_objects, @current_project
-    @task = @current_project.tasks.find(params[:id])
-    if @task.task_list != @task_list
-      @task.task_list = @task_list
-      @task.save
-    end
+    begin
+      @task = @current_project.tasks.find(params[:id])
+      if @task.task_list != @task_list
+        @task.task_list = @task_list
+        @task.save
+      end
 
-    task_ids = params[:task_ids].split(',').collect {|t| t.to_i}
-    @task_list.tasks.each do |t|
-      next unless task_ids.include?(t.id)
-      Task.thin_model.find(t.id).update_attribute :position, task_ids.index(t.id)
+      task_ids = params[:task_ids].split(',').collect {|t| t.to_i}
+      @task_list.tasks.each do |t|
+        next unless task_ids.include?(t.id)
+        Task.thin_model.find(t.id).update_attribute :position, task_ids.index(t.id)
+      end
+    rescue ActiveRecord::RecordNotFound
+      return api_error :not_found, :type => 'ObjectNotFound', :message => 'Task not found' unless @task
     end
 
     api_status(:ok)
