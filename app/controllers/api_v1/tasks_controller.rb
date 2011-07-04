@@ -65,19 +65,21 @@ class ApiV1::TasksController < ApiV1::APIController
     @task.remove_watcher(current_user)
     handle_api_success(@task)
   end
-  
+
   def reorder
     authorize! :reorder_objects, @current_project
-    new_task_ids_for_task_list = (params[:tasks] || []).reject { |task_id| task_id.blank? }.map(&:to_i)
-    moved_task_ids = new_task_ids_for_task_list.to_set - @task_list.task_ids.to_set
-    moved_task_ids.each do |moved_task_id|
-      Task.find(moved_task_id).update_attribute(:task_list, @task_list)
+    @task = @current_project.tasks.find(params[:id])
+    if @task.task_list != @task_list
+      @task.task_list = @task_list
+      @task.save
     end
-    new_task_ids_for_task_list.each_with_index do |task_id,idx|
-      task = @task_list.tasks.find(task_id)
-      task.update_attribute(:position,idx.to_i)
+
+    task_ids = params[:task_ids].split(',').collect {|t| t.to_i}
+    @task_list.tasks.each do |t|
+      next unless task_ids.include?(t.id)
+      Task.thin_model.find(t.id).update_attribute :position, task_ids.index(t.id)
     end
-    
+
     api_status(:ok)
   end
 

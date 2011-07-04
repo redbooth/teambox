@@ -362,4 +362,24 @@ describe ApiV1::TasksController do
       response.status.should == 401
     end
   end
+
+  describe "#reorder" do
+    it "should allow a user to reorder tasks" do
+      login_as @user
+      tl = Factory(:task_list, :project => @project)
+      task1 = Factory(:task, :task_list => tl, :project => @project)
+      task2 = Factory(:task, :task_list => tl, :project => @project)
+      task3 = Factory(:task, :task_list => tl, :project => @project)
+      task1.position.should == 0
+      task2.position.should == 1
+      task3.position.should == 2
+
+      put :reorder, :project_id => @project.permalink, :id => task1.id, :task_list_id => tl.id, :task_ids => [task2.id, task1.id, task3.id].join(',')
+      response.should be_success
+
+      task2.reload.position.should == 0
+      task1.reload.position.should == 1
+      task3.reload.position.should == 2
+    end
+  end
 end
