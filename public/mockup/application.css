@@ -767,6 +767,147 @@ form.app_form {
   padding: 20px;
   margin-bottom: 15px; }
 
+/* DROPDOWNS FILTERS */
+.dropdown_filter {
+  width: 140px;
+  position: relative;
+  z-index: 9000;
+  display: block;
+  height: 28px;
+  float: left;
+  clear: none;
+  margin-left: 10px;
+  text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0px; }
+  .dropdown_filter .selected_item {
+    z-index: 9500;
+    background: url(img_3_2/sprite_btn.png) -126px 0 no-repeat;
+    display: block;
+    float: left;
+    clear: none;
+    width: 98px;
+    height: 22px;
+    color: #535353;
+    font-size: 11px;
+    margin: 0;
+    padding-left: 10px;
+    padding-top: 6px;
+    padding-bottom: 0; }
+    .dropdown_filter .selected_item:hover, .dropdown_filter .selected_item:visited {
+      color: #535353;
+      text-decoration: none; }
+  .dropdown_filter .dropdown_arrow {
+    margin: 0;
+    display: block;
+    float: right;
+    clear: none;
+    width: 32px;
+    height: 28px;
+    background: url(img_3_2/sprite_btn.png) -474px 0 no-repeat;
+    margin: 0; }
+  .dropdown_filter ol {
+    font-size: 11px;
+    position: absolute;
+    display: none;
+    top: 28px;
+    width: 138px;
+    left: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    z-index: 500;
+    border-right: 1px solid #a0a0a0;
+    border-left: 1px solid #a0a0a0;
+    border-radius: 0 0 3px 3px;
+    -moz-border-radius-bottomleft: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px; }
+    .dropdown_filter ol .last_item {
+      border-radius: 0 0 3px 3px;
+      -moz-border-radius-bottomleft: 3px;
+      -moz-border-radius-bottomright: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+      -webkit-border-bottom-right-radius: 3px; }
+      .dropdown_filter ol .last_item a {
+        border-radius: 0 0 3px 3px;
+        -moz-border-radius-bottomleft: 3px;
+        -moz-border-radius-bottomright: 3px;
+        -webkit-border-bottom-left-radius: 3px;
+        -webkit-border-bottom-right-radius: 3px; }
+    .dropdown_filter ol li {
+      width: 138px;
+      border-top: 1px solid #f5f5f5;
+      border-bottom: 1px solid #a0a0a0;
+      z-index: 501; }
+      .dropdown_filter ol li:hover {
+        border-top-color: white; }
+      .dropdown_filter ol li a {
+        position: relative;
+        display: block;
+        padding: 5px 0 0 10px;
+        background: #e5e5e5;
+        color: #535353;
+        height: 21px;
+        border-left: 1px solid #f5f5f5; }
+        .dropdown_filter ol li a:hover {
+          background: #eeeeee;
+          color: #535353;
+          text-decoration: none;
+          border-left-color: white; }
+    .dropdown_filter ol .separator {
+      border: none;
+      height: 4px;
+      background: #c9c9c9;
+      background-image: none;
+      max-width: 120px; }
+    .dropdown_filter ol .selected {
+      border-top-color: white; }
+      .dropdown_filter ol .selected a {
+        color: #313131;
+        border-left-color: white;
+        background-color: #eeeeee; }
+  .dropdown_filter:hover .selected_item {
+    background: url(img_3_2/sprite_btn.png) -126px -28px no-repeat; }
+  .dropdown_filter:hover .dropdown_arrow {
+    background: url(img_3_2/sprite_btn.png) -474px -28px no-repeat; }
+  .dropdown_filter:hover ol {
+    display: block; }
+
+#dropwdown_status {
+  width: 115px; }
+  #dropwdown_status .selected_item {
+    width: 73px; }
+  #dropwdown_status ol {
+    width: 113px; }
+    #dropwdown_status ol li {
+      width: 113px; }
+    #dropwdown_status ol .separator {
+      width: 95px; }
+
+.filters strong {
+  display: block;
+  top: 24px;
+  left: 27px;
+  color: #535353;
+  float: left;
+  clear: none;
+  position: absolute;
+  margin: 0; }
+
+#filter_tasks_by_name {
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 1px solid #a0a0a0;
+  padding: 4px 4px 4px 43px;
+  width: 144px;
+  font-size: 12px;
+  display: block;
+  float: left;
+  clear: none;
+  height: 18px;
+  margin: 0; }
+
 div.loading {
   display: none; }
 
@@ -2753,11 +2894,12 @@ p.view_for_all {
 
 .filters {
   display: block;
-  background-color: #f9f9f9;
-  border: 1px solid #dddddd;
+  float: left;
+  clear: both;
+  width: 100%;
   font-size: 12px;
-  margin: 25px 0;
-  padding: 5px 10px; }
+  margin: 8px 0 20px 10px;
+  padding: 0; }
   .filters input {
     width: 120px;
     margin: 0 5px; }
