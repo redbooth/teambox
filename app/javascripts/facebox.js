@@ -45,9 +45,19 @@
       if (element.getStyle('display') == 'block') {
         element.hide().fire('facebox:closed')
       }
+    },
+    setElement: function(el) {
+      element = $(el);
+
+      element.on('click', function(e) {
+        if (e.findElement('.facebox-extra .close') || !e.findElement('.facebox-wrapper')) {
+          e.preventDefault();
+          Facebox.close();
+        }
+      });
     }
   }
-  
+
   var setElement = function(fn) {
     $(document.body).insert({ bottom: "<div id='facebox' style='display: none'>\
       <div class='facebox-wrapper html'>\

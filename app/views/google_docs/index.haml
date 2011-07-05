@@ -1,6 +1,6 @@
-#google_docs
+.google_docs
   %h2= t('google_docs.attach')
-  #search_form
+  .search_form
     - form_tag search_google_docs_path, :method => 'get', :'data-remote' => true do
       = text_field_tag :q, @search_terms, :size => 30, :placeholder => t('google_docs.search_placeholder')
       = submit_tag 'Search Documents'

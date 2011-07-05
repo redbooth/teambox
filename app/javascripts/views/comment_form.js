@@ -13,6 +13,7 @@
   , 'submit .new_comment'          : 'postComment'
   , 'click span.convert_to_task a' : 'toggleConvertToTask'
   , 'click .date_picker'           : 'showCalendar'
+  , 'click a.google_doc_icon'      : 'showGoogleDocs'
   };
 
   CommentForm.initialize = function (options) {
@@ -20,6 +21,7 @@
 
     this.convert_to_task = options.convert_to_task;
     this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
+    this.google_docs = new Teambox.Views.GoogleDocs({comment_form: this});
     this.watchers = new Teambox.Views.Watchers({model: this.model});
   };
 
@@ -62,6 +64,8 @@
     this.el.down('.actions')
       // upload area
       .insert({before: this.upload_area.render().el})
+      // google docs
+      .insert({before: this.google_docs.render().el})
       // watchers box
       .insert({before: this.watchers.render().el});
 
@@ -243,6 +247,10 @@
       textarea.insert({after: container});
       this.autocompleter = new Autocompleter.Local(textarea, container, people, {tokens: [' ']});
     }
+  };
+
+  CommentForm.showGoogleDocs = function(event) {
+    this.google_docs.openGoogleDocsList(event);
   };
 
   // exports

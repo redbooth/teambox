@@ -72,8 +72,4 @@ function addGoogleDocToForm(getFormValue){
   // Prototype.Facebox.close()
 }
 
-// Find the last number in a string - adapted from increment last number as we have many fields
-String.prototype.findLastNumber = function(){
-  var matches = this.match(/\d+/g)
-  return parseInt(matches.last())
-}
+

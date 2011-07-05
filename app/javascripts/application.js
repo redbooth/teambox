@@ -82,6 +82,7 @@
 //= require <views/search_results>
 //= require <views/sidebar>
 //= require <views/upload_area>
+//= require <views/google_docs>
 
 //= require <views/task_lists/index>
 //= require <views/task_lists/form>
@@ -132,7 +133,6 @@
 
 //= require <first_steps>
 //= require <forms>
-//= require <google_docs>
 //= require <hotkeys>
 //= require <hours>
 //= require <hoverable>
