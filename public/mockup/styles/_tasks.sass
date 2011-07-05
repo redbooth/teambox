@@ -1,3 +1,5 @@
+.tasks
+  width: 750px
 form.new_task, form.edit_task, .task_list_form
   margin-bottom: 10px
   label
@@ -102,7 +104,13 @@ form.new_task, form.edit_task, .task_list_form
       display: none
 
 .task_list, .task_list_closed
-  width: 100%
+  width: 620px
+  margin-left: 10px
+  .group
+    display: block
+    float: left
+    clear: both
+    margin: 15px 0 5px 0
   a
     color: rgb(50,50,50)
   img.drag
@@ -125,18 +133,18 @@ form.new_task, form.edit_task, .task_list_form
   .archive
     display: none
   .task
+    width: 619px
+    display: block
+    float: left
+    clear: left
     position: relative
-    +gradient(#fcfcfc, #eee)
-    border: 1px solid #DDD
+    background: $clr_gray_10
+    //+gradient(#fcfcfc, #eee)
+    border: 1px solid $clr_gray_50
     border-radius: 5px
-    box-shadow: #EEE 1px 1px 1px
-    margin: 1px 0
-    padding:
-      top: 4px
-      bottom: 2px
-      left: 10px
-      right: 10px
-
+    //box-shadow: #EEE 1px 1px 1px
+    margin: 0 0 3px 0
+    padding: 0
     .expanded_actions
       display: inline
       float: right
@@ -148,40 +156,84 @@ form.new_task, form.edit_task, .task_list_form
     .task_drag
       display: none
       cursor: move
-    .taskStatus
-      text-align: right
+    .task_counter
+      color: $clr_gray_80
+      width: 25px
+      height: 20px
+      padding: 0
+        top: 2px
+      margin: 10px 14px 0 10px
+      display: block
       float: left
-      width: 23px
-      padding-left: 22px
-      padding-right: 5px
-      line-height: 16px
-      display: none
+      clear: both
+      text-align: center
+      background: url(img_3_2/sprite_base.png) -37px -36px no-repeat
+    .taskStatus
+      //text-align: right
+      float: left
+      //width: 23px
+      //padding-left: 22px
+      //padding-right: 5px
+      //line-height: 16px
+      //display: none
       span
         display: inline-block
         vertical-align: top
-        width: 23px
-        padding: 0
+        //width: 23px
+        //padding: 0
         text-align: center
     .status
-      position: absolute
-      left: 20px
-      top: 5px
-      width: 60px
+      background: #fce69c
+      color: white
+      padding: 0 3px
+      text-transform: uppercase
       font-size: 11px
+      +rounded(2px)
+      border: 1px solid #b0a16d
+      display: inline-block
+      line-height: 14px
+      float: right
+      clear: none
       overflow: hidden
-      text-align: right
-      font-weight: bold
-      color: #333
-
+      text-align: center
+      color: $clr_gray_80
+      margin: 11px 10px 0 0
+      min-width: 53px
+    &.status_0
+      .status
+        border-color: #8397a1
+        background-color: #bbd8e6
+    &.status_1
+      .status
+        //background: $clr_gray_30
+        //border-color: $clr_gray_60
+    // HOLD
+    &.status_2
+      .status
+        background: $clr_gray_30
+        border-color: $clr_gray_60
+    &.status_3
+      .status
+        text-transform: none
+        background: none
+        border: none
+    &.assigned
+      .status
+        min-width: 15px
+        text-align: right
+        text-transform: none
     &:hover .taskStatus
-      width: 45px
+      //width: 45px
       padding-left: 0
       .task_drag
         display: inline-block
     .taskName
+      +rounded(4px)
+      border-top: 1px solid $white
       min-height: 18px
       font-size: 12px
-      padding-left: 90px
+      padding-top: 4px
+      //padding-left: 90px
       span.assigned_date, span.assigned_user
         display: none
         color: rgb(100,100,100)
@@ -207,7 +259,7 @@ form.new_task, form.edit_task, .task_list_form
     &.assigned
       .taskName
         span.assigned_user
-          display: inline-block
+          display: none
     &.overdue
       .taskName
         a.name
@@ -252,7 +304,7 @@ form.new_task, form.edit_task, .task_list_form
         display: inline
       .extended
         display: block
-        margin: 3px 0 5px
+        margin: 0 0 5px
         font-size: 11px
         color: #555
         a
@@ -341,7 +393,7 @@ p.assigned_transition
   background: #ffc947
   +gradient(#ffc947+#333,#ffc947)
   color: #333
-.task.status_hold .taskStatus span.task_status, .task_status_hold
+.task.status_hold .taskStatus span.task_status, .task_status_hold, .status_notopen
   background: #be3cff
   +gradient(#be3cff+#333,#be3cff)
   color: white
@@ -360,16 +412,21 @@ p.assigned_transition
     color: #999
 
 .assigned_date
-  color: rgb(100,100,100)
-  padding: 0px 5px
-  margin-right: 5px
-  font-size: 11px
-  -moz-border-radius: 4px
-  -webkit-border-radius: 4px
-  background: rgb(245,245,245)
-  border: solid 1px rgb(225,225,225)
   text-transform: uppercase
-  display: inline-block
+  display: block
+  float: left
+  clear: right
+  background: $clr_gray_20
+  color: white
+  padding: 0 3px
+  font-size: 11px
+  +rounded(2px)
+  border: 1px solid $clr_gray_40
+  line-height: 14px
+  overflow: hidden
+  text-align: right
+  color: $clr_gray_60
+  margin: 12px 0 0 7px
 
 p.view_for_all
   font-size: 12px
@@ -381,7 +438,7 @@ p.view_for_all
   clear: both
   width: 100%
   font-size: 12px
-  margin: 8px 0 20px 10px
+  margin: 8px 0 5px 10px
   padding: 0
   input
     width: 120px
@@ -413,6 +470,7 @@ p.view_for_all
       margin: 0
 
 .group
+  text-transform: uppercase
   font-size: 13px
   font-weight: bold
   margin: 20px 0 6px
