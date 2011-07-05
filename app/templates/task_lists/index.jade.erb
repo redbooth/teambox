@@ -3,15 +3,3 @@ a#done_reordering_task_lists(style='display:none', href="#") Done reorder
 a#toggle_new_task_list(href= '#') New Task List
 
 .task_list_container
-
-  - each task_list in self.task_lists.models
-    .task_list
-      .head= task_list.get('name')
-      .tasks.open
-        - each task in task_list.get('tasks')
-          div(data-task-id= task.id, class= 'task ' + task.getClasses(), id= 'task_' + task.id)
-            != (new Teambox.Views.Task({model: task, dragndrop: true})).render().el.innerHTML
-
-        .new_task
-          a.toggle(href= '#') new task
-          != (new Teambox.Views.TaskListsTaskForm({})).render().el.innerHTML

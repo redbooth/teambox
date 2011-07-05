@@ -86,7 +86,8 @@
 //= require <views/task_lists/index>
 //= require <views/task_lists/form>
 //= require <views/task_lists/new_task_form>
-//
+//= require <views/task_lists/task_list>
+
 //= require <views/tasks/all_tasks>
 //= require <views/tasks/my_tasks>
 //= require <views/tasks/today_tasks>

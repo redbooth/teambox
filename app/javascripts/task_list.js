@@ -1,21 +1,21 @@
 var TaskList = {
   // Inserts new list
-  insertList: function(id, content, archived) {
-    if (archived)
-      $('task_lists').insert({bottom: content});
-    else
-      $('task_lists').insert({top: content});
-    new Effect.Highlight(id, {duration:3});
-  },
+  //insertList: function(id, content, archived) {
+  //  if (archived)
+  //    $('task_lists').insert({bottom: content});
+  //  else
+  //    $('task_lists').insert({top: content});
+  //  new Effect.Highlight(id, {duration:3});
+  //},
 
   // Replaces new list (or inserts if applicable)
-  replaceList: function(id, content, archived) {
-    var existing = $(id);
-    if (!id)
-      TaskList.insertList(id,content,archived);
-    else
-      existing.replace(content);
-  },
+  //replaceList: function(id, content, archived) {
+  //  var existing = $(id);
+  //  if (!id)
+  //    TaskList.insertList(id,content,archived);
+  //  else
+  //    existing.replace(content);
+  //},
 
   // Removes an existing list
   removeList: function(id) {

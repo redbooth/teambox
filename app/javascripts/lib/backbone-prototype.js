@@ -581,7 +581,9 @@
       if (!model.collection) {
         model.collection = this;
       }
-      var index = this.comparator ? this.sortedIndex(model, this.comparator) : this.length;
+      var index = options.at != null ? options.at :
+                  this.comparator ? this.sortedIndex(model, this.comparator) :
+                  this.length;
       this.models.splice(index, 0, model);
       model.bind('all', this._onModelEvent);
       this.length++;

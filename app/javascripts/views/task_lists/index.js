@@ -7,12 +7,9 @@
     , TasksHelper = Teambox.helpers.tasks;
 
   TaskLists.events = {
-    'click .task .name': 'showComments'
-  , 'click .new_task a.toggle': 'toggleNewTask'
-  , 'click #toggle_new_task_list': 'toggleNewTaskListForm'
+    'click #toggle_new_task_list': 'toggleNewTaskListForm'
   , 'click #reorder_task_lists': 'toggleReorder'
   , 'click #done_reordering_task_lists': 'toggleReorder'
-  , 'click .date_picker' : 'showCalendar'
   };
 
   /**
@@ -30,22 +27,6 @@
                                                              , assigned: null
                                                              , due_date: null
                                                              , status: null }});
-  };
-
-  /**
-   * Displays the calendar
-   *
-   * @param {Event} evt
-   */
-  TaskLists.showCalendar = function (evt, element) {
-    evt.stop();
-
-    new Teambox.modules.CalendarDateSelect(element.down('input'), element.down('span'), {
-      buttons: true
-    , popup: 'force'
-    , time: false
-    , year_range: [2008, 2020]
-    });
   };
 
   /**
@@ -74,25 +55,19 @@
   };
 
   /**
-   * Insert the comments below the task clicked
+   * inserts a task list
    *
-   * @param {Event} evt
+   * @param {Object} model
    */
-  TaskLists.showComments = function (evt) {
-    evt.stop();
-    evt.element().up('.task').down('.thread').toggle();
-  };
+  TaskLists.insertTaskList = function (model) {
+    var el = (new Teambox.Views.TaskList({model: model})).render().el;
 
-  /**
-   * Toggles the new task form
-   *
-   * @param {Event} evt
-   */
-  TaskLists.toggleNewTask = function (evt) {
-    var element = evt.element();
+    this.el
+      .down('.task_list_container')
+      .insert(model.get('archived') ? {bottom: el}
+                                    : {top: el});
 
-    evt.stop();
-    element.next().toggle(evt);
+    new Effect.Highlight(el, {duration:3});
   };
 
   /**
@@ -159,8 +134,14 @@
    * @return self
    */
   TaskLists.render = function () {
+    var self = this;
+
     if (this.collection.length > 0) {
-      this.el.update(this.template({task_lists: this.collection, project: this.project}));
+      this.el.update(this.template({project: this.project}));
+      this.collection.each(function (el) {
+        self.el.down('.task_list_container')
+          .insert({bottom: (new Teambox.Views.TaskList({model: el})).render().el});
+      });
     } else {
       this.el.update(this.primer_template());
     }
