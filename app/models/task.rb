@@ -165,7 +165,7 @@ class Task < RoleRecord
 
     comment = case activity[:event_type]
     when 'story_create'
-      "#{story[:description]}\n\n<a href=http://www.pivotaltracker.com/story/show/#{story[:id]}>View on #PT</a>"
+      "#{story[:description]}\n\nView on PT: http://www.pivotaltracker.com/story/show/#{story[:id]}"
     when 'story_update'
       if story[:current_state]
         # TODO: setting assigned person all the time might not be what we want
