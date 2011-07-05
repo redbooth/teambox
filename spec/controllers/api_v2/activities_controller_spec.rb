@@ -30,6 +30,7 @@ describe ApiV2::ActivitiesController do
 
     it "shows activities in a project" do
       login_as @user
+      Factory :project, :user => @user
 
       get :index, :project_id => @project.permalink
       response.should be_success
