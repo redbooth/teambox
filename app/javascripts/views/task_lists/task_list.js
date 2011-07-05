@@ -15,6 +15,8 @@
    */
   TaskList.initialize = function (options) {
     _.bindAll(this, 'render');
+
+    this.project = options.project;
   };
 
   /**
@@ -45,7 +47,20 @@
    * @return self
    */
   TaskList.render = function () {
+    var self = this;
+
     this.el.update(this.template({task_list: this.model}));
+    _.each(this.model.get('tasks'), function (el) {
+      self.el.down('.tasks').insert({top: (new Teambox.Views.Task({model: el})).render().el});
+    });
+
+    // select assigned
+    (new Teambox.Views.SelectAssigned({
+      el: this.el.down('#task_assigned_id')
+    , selected: null
+    , project: this.project
+    })).render();
+
     return this;
   };
 

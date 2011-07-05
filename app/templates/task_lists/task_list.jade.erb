@@ -1,10 +1,5 @@
 .head= self.task_list.get('name')
 .tasks.open
-  - if (self.task_list.get('tasks'))
-    - each task in self.task_list.get('tasks')
-      div(data-task-id= task.id, class= 'task ' + task.getClasses(), id= 'task_' + task.id)
-        != (new Teambox.Views.Task({model: task, dragndrop: true})).render().el.innerHTML
-
   .new_task
     a.toggle(href= '#') new task
     != (new Teambox.Views.TaskListsTaskForm({})).render().el.innerHTML

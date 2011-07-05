@@ -60,7 +60,7 @@
    * @param {Object} model
    */
   TaskLists.insertTaskList = function (model) {
-    var el = (new Teambox.Views.TaskList({model: model})).render().el;
+    var el = (new Teambox.Views.TaskList({model: model, project: this.project})).render().el;
 
     this.el
       .down('.task_list_container')
@@ -140,7 +140,7 @@
       this.el.update(this.template({project: this.project}));
       this.collection.each(function (el) {
         self.el.down('.task_list_container')
-          .insert({bottom: (new Teambox.Views.TaskList({model: el})).render().el});
+          .insert({bottom: (new Teambox.Views.TaskList({model: el, project: self.project})).render().el});
       });
     } else {
       this.el.update(this.primer_template());

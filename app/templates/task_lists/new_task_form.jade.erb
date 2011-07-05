@@ -28,7 +28,7 @@ form#new_task.app_form.new_task(method='POST', enctype='multipart/form-data', ac
     .actions
       .attach
         span Attach:
-        a.attach_icon.hoverable(title='Attach a file', href='#uploads') Attachment
+        a.attach_icon.hoverable(title='Attach a file', href='#') Attachment
         .google_docs_attachment
           a(rel='facebox', href='/google_docs')
             img.google_docs_logo(src='/images/google_docs/icon_6_document.gif?1291811897', alt='Icon_6_document')
@@ -36,13 +36,11 @@ form#new_task.app_form.new_task(method='POST', enctype='multipart/form-data', ac
             .fields
             ul.file_list
 
-          a.private_switch.hoverable(title='Control who can see this element', href='#privacy') Privacy
+          a.private_switch.hoverable(title='Control who can see this element', href='#') Privacy
 
   .assigned_to.text_field
     label(for='task_assigned_id') Assigned to:
     select#task_assigned_id(name='task[assigned_id]')
-      option Unassigned
-      option(value='140708') Pau Ramon Revilla
 
   .pick_date
     label(for='task_due_on')
