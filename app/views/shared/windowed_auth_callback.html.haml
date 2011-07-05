@@ -1,0 +1,10 @@
+!!! Strict
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang'=>"en", :lang=>"en" }
+  %head
+    %meta{ 'http-equiv' => "content-type", :content => "text/html;charset=utf-8" }
+    %title="Teambox - #{t('oauth.account_linked')}"
+
+  %body
+    = loading_image('windowed_auth_callback')
+    = javascript_tag "document.getElementById('windowed_auth_callback').style.display='block';window.opener.Teambox.controllers.application.triggerGoogleAuthCallback('#{auth_window_id}');"
+

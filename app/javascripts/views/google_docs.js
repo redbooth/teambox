@@ -21,8 +21,10 @@
   /*
   * TODO: Maintain checkbox states
   * TODO: Once google docs is API'd change google doc search/create forms to backbone
+  */
   GoogleDocs.events = {
-    'change .google_docs input[type="checkbox"]': 'addOrRemoveGoogleDoc'
+      'change .google_docs input[type="checkbox"]': 'addOrRemoveGoogleDoc'
+    , 'click  .google_docs_authorization_required a': 'authorize'
   };
 
   GoogleDocs.initialize = function (options) {
@@ -38,6 +40,40 @@
     this.el.update(this.template());
 
     return this;
+  };
+
+  /*
+  * Open a window to allow user to give their consent to google docs 
+  * - Additionally store the window id in the app controller so that
+  *   on returning to teambox, the callback is called to close the window.
+  */
+  GoogleDocs.authorize = function(event) {
+
+    var self    = this
+    , app       = Teambox.controllers.application
+    , window_id = 'google_docs_auth_window' + Date.now()
+    , window_dimensions  = {height: 500, width: 500}
+    , browser_dimensions = document.body.getDimensions()
+    , y = (browser_dimensions.height - window_dimensions.height) / 2
+    , x = (browser_dimensions.width - window_dimensions.width) / 2
+    , h = window_dimensions.height
+    , w = window_dimensions.width
+    , window_features = 'scrollbars=yes,resizable=yes,height=' + h + ',width=' + w +',left=' + x + ',top=' + y
+    , _window   = window.open('/auth/google?origin=' + window_id, window_id, window_features);
+
+    event.preventDefault();
+
+    var callback = function () {
+      _window.close();
+      Facebox.setElement(self.el.down('.facebox'));
+      Facebox.openUrl('/google_docs', 'Google Docs');
+    };
+
+    app.windowed_auth_requests = app.windowed_auth_requests || {};
+    app.windowed_auth_requests[window_id] = callback;
+
+    Facebox.close();
+    return false;
   };
 
   /* Show list of docs in facebox div

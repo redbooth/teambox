@@ -5,7 +5,7 @@
 
   Teambox.Controllers.Bootstrap = Backbone.Controller.extend({
     config: {}
-
+  , windowed_auth_requests: {}
   , initialize: function (options) {
       var self = this,
           _loader = Teambox.modules.Loader(function () {
@@ -76,6 +76,12 @@
     }
   , setPushSessionId: function (push_session_id) {
       this.push_session_id = push_session_id;
+    }
+  , triggerGoogleAuthCallback: function(window_id) {
+      var callback = this.windowed_auth_requests[window_id];
+      if (callback) {
+        callback();
+      }
     }
   });
 
