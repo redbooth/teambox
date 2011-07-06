@@ -23,6 +23,18 @@ describe Watcher do
       conversation.watchers.should include(@user1)
     end
 
+    it "should not add watcher if its private and user has set watch_new_conversation" do
+      @person1.update_attribute(:watch_new_conversation, true)
+      @person1.watch_new_conversation.should be_true
+      conversation = true
+
+      lambda {
+        conversation = Factory.create(:conversation, :project => @project, :user => @project.user, :is_private => true)
+      }.should change(Watcher, :count).by(1)
+
+      conversation.watchers.should_not include(@user1)
+    end
+
     it "should add conversation's user as a watcher" do
       conversation = true
 
@@ -151,6 +163,18 @@ describe Watcher do
       }.should change(Watcher, :count).by(2)
 
       task.watchers.should include(@user1)
+    end
+
+    it "should not add watcher if its private and user has set watch_new_task" do
+      @person1.update_attribute(:watch_new_task, true)
+      @person1.watch_new_task.should be_true
+      task = true
+
+      lambda {
+        task = Factory.create(:task, :project => @project, :user => @project.user, :is_private => true)
+      }.should change(Watcher, :count).by(1)
+
+      task.watchers.should_not include(@user1)
     end
 
     it "should add task's user as a watcher" do
