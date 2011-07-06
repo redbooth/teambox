@@ -2665,7 +2665,7 @@ form.new_task, form.edit_task, .task_list_form {
     float: left;
     clear: left;
     position: relative;
-    background: #eeeeee;
+    background: #e5e5e5;
     border: 1px solid #a0a0a0;
     border-radius: 5px;
     margin: 0 0 3px 0;
@@ -2687,7 +2687,7 @@ form.new_task, form.edit_task, .task_list_form {
       height: 20px;
       padding: 0;
         padding-top: 2px;
-      margin: 10px 14px 0 10px;
+      margin: 9px 14px 0 10px;
       display: block;
       float: left;
       clear: both;
@@ -2702,7 +2702,7 @@ form.new_task, form.edit_task, .task_list_form {
     .task_list .task .status, .task_list_closed .task .status {
       background: #fce69c;
       color: white;
-      padding: 0 3px;
+      padding: 1px 3px;
       text-transform: uppercase;
       font-size: 11px;
       border-radius: 2px;
@@ -2716,18 +2716,82 @@ form.new_task, form.edit_task, .task_list_form {
       overflow: hidden;
       text-align: center;
       color: #535353;
-      margin: 11px 10px 0 0;
+      margin: 10px 10px 0 0;
       min-width: 53px; }
-    .task_list .task.status_0 .status, .task_list_closed .task.status_0 .status {
-      border-color: #8397a1;
-      background-color: #bbd8e6; }
-    .task_list .task.status_2 .status, .task_list_closed .task.status_2 .status {
-      background: #c9c9c9;
-      border-color: #898989; }
-    .task_list .task.status_3 .status, .task_list_closed .task.status_3 .status {
-      text-transform: none;
-      background: none;
-      border: none; }
+    .task_list .task.status_0, .task_list_closed .task.status_0 {
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#e5e5e5));
+      background-image: -moz-linear-gradient(#f5f5f5, #e5e5e5); }
+      .task_list .task.status_0 .status, .task_list_closed .task.status_0 .status {
+        border-color: #8397a1;
+        background-color: #bbd8e6; }
+      .task_list .task.status_0 .taskName, .task_list_closed .task.status_0 .taskName {
+        font-weight: bold; }
+        .task_list .task.status_0 .taskName a, .task_list_closed .task.status_0 .taskName a {
+          color: #313131; }
+        .task_list .task.status_0 .taskName .extended, .task_list_closed .task.status_0 .taskName .extended {
+          font-weight: normal; }
+    .task_list .task.status_1, .task_list_closed .task.status_1 {
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#e5e5e5));
+      background-image: -moz-linear-gradient(#f5f5f5, #e5e5e5); }
+      .task_list .task.status_1 .status, .task_list_closed .task.status_1 .status {
+        color: #857952; }
+    .task_list .task.status_2, .task_list_closed .task.status_2 {
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#e5e5e5));
+      background-image: -moz-linear-gradient(#f5f5f5, #e5e5e5); }
+      .task_list .task.status_2 .status, .task_list_closed .task.status_2 .status {
+        background: #c9c9c9;
+        border-color: #898989; }
+    .task_list .task.status_3, .task_list_closed .task.status_3 {
+      background-color: #dcdcdc; }
+      .task_list .task.status_3 .taskName, .task_list_closed .task.status_3 .taskName {
+        border-top-color: #eeeeee; }
+        .task_list .task.status_3 .taskName a, .task_list .task.status_3 .taskName .extended span a, .task_list_closed .task.status_3 .taskName a, .task_list_closed .task.status_3 .taskName .extended span a {
+          color: #898989; }
+      .task_list .task.status_3 .status, .task_list_closed .task.status_3 .status {
+        padding-right: 0;
+        text-transform: none;
+        background: none;
+        border: none;
+        color: #a0a0a0;
+        text-align: right; }
+      .task_list .task.status_3 .taskStatus, .task_list_closed .task.status_3 .taskStatus {
+        display: block;
+        float: left;
+        clear: none;
+        height: 25px;
+        width: 26px;
+        margin: 5px 14px 0 8px;
+        background: url(img_3_2/ico/tick-gray.png) no-repeat 7px 6px; }
+        .task_list .task.status_3 .taskStatus .task_counter, .task_list_closed .task.status_3 .taskStatus .task_counter {
+          display: none; }
+    .task_list .task.status_4, .task_list_closed .task.status_4 {
+      background-color: #c9c9c9; }
+      .task_list .task.status_4 .taskName, .task_list_closed .task.status_4 .taskName {
+        border-top-color: #dcdcdc; }
+        .task_list .task.status_4 .taskName a, .task_list_closed .task.status_4 .taskName a {
+          text-decoration: line-through;
+          color: #898989; }
+        .task_list .task.status_4 .taskName .extended span a, .task_list_closed .task.status_4 .taskName .extended span a {
+          color: #a0a0a0;
+          text-decoration: none; }
+      .task_list .task.status_4 .status, .task_list_closed .task.status_4 .status {
+        padding-right: 0;
+        text-transform: none;
+        background: none;
+        border: none;
+        color: #a0a0a0;
+        text-align: right; }
+      .task_list .task.status_4 .taskStatus, .task_list_closed .task.status_4 .taskStatus {
+        text-decoration: line-through;
+        display: block;
+        float: left;
+        clear: none;
+        height: 25px;
+        width: 26px;
+        margin: 5px 14px 0 8px;
+        background: url(img_3_2/ico/slash-gray.png) no-repeat 7px 6px; }
+        .task_list .task.status_4 .taskStatus .task_counter, .task_list_closed .task.status_4 .taskStatus .task_counter {
+          display: none; }
     .task_list .task.assigned .status, .task_list_closed .task.assigned .status {
       min-width: 15px;
       text-align: right;
@@ -2737,6 +2801,7 @@ form.new_task, form.edit_task, .task_list_form {
       .task_list .task:hover .taskStatus .task_drag, .task_list_closed .task:hover .taskStatus .task_drag {
         display: inline-block; }
     .task_list .task .taskName, .task_list_closed .task .taskName {
+      color: #a0a0a0;
       border-radius: 4px;
       -moz-border-radius: 4px;
       -webkit-border-radius: 4px;
@@ -2744,6 +2809,8 @@ form.new_task, form.edit_task, .task_list_form {
       min-height: 18px;
       font-size: 12px;
       padding-top: 4px; }
+      .task_list .task .taskName a, .task_list_closed .task .taskName a {
+        color: #535353; }
       .task_list .task .taskName span.assigned_date, .task_list .task .taskName span.assigned_user, .task_list_closed .task .taskName span.assigned_date, .task_list_closed .task .taskName span.assigned_user {
         display: none;
         color: #646464;
@@ -2756,7 +2823,7 @@ form.new_task, form.edit_task, .task_list_form {
         border: solid 1px #e1e1e1;
         text-transform: uppercase; }
         .task_list .task .taskName span.assigned_date a, .task_list .task .taskName span.assigned_user a, .task_list_closed .task .taskName span.assigned_date a, .task_list_closed .task .taskName span.assigned_user a {
-          color: #646464; }
+          color: #a0a0a0; }
         .task_list .task .taskName span.assigned_date a:hover, .task_list .task .taskName span.assigned_user a:hover, .task_list_closed .task .taskName span.assigned_date a:hover, .task_list_closed .task .taskName span.assigned_user a:hover {
           text-decoration: none;
           color: black; }
@@ -2803,9 +2870,12 @@ form.new_task, form.edit_task, .task_list_form {
   display: block;
   margin: 0 0 5px;
   font-size: 11px;
-  color: #555555; }
+  color: #a0a0a0; }
+  #tasks_for_all_projects .task_list .task .extended .task_list {
+    margin-left: 3px; }
   #tasks_for_all_projects .task_list .task .extended a {
-    color: #555555; }
+    color: #a0a0a0;
+    margin-right: 3px; }
 #tasks_for_all_projects .task_list .task .taskName a.loading {
   background-image: url(images/loading.gif); }
 
@@ -2923,7 +2993,7 @@ p.assigned_transition {
   clear: right;
   background: #dcdcdc;
   color: white;
-  padding: 0 3px;
+  padding: 1px 3px;
   font-size: 11px;
   border-radius: 2px;
   -moz-border-radius: 2px;
@@ -2932,8 +3002,13 @@ p.assigned_transition {
   line-height: 14px;
   overflow: hidden;
   text-align: right;
-  color: #898989;
-  margin: 12px 0 0 7px; }
+  color: #535353;
+  margin: 11px 0 0 7px; }
+
+.late_date {
+  color: white;
+  border: 1px solid #c63d43;
+  background-color: #f14a52; }
 
 p.view_for_all {
   font-size: 12px;
