@@ -20,7 +20,8 @@
     this.model.bind('change', this.render);
   };
 
-  /* updates the element using the template
+  /**
+   * Updates the element using the template
    *
    * @return self
    */
@@ -45,7 +46,8 @@
     return this;
   };
 
-  /* Expand/collapse task comment threads inline
+  /**
+   * Expand/collapse task comment threads inline
    *
    * @param {Event} evt
    */

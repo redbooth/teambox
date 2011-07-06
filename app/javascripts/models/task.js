@@ -5,7 +5,8 @@
     , TaskStatic = {}
     , _status_names = ['new', 'open', 'hold', 'resolved', 'rejected'];
 
-  /* Returns the class name
+  /**
+   * Returns the class name
    *
    * @return {String}
    */
@@ -13,7 +14,8 @@
     return 'Task';
   };
 
-  /* gets the status_name
+  /**
+   * Gets the status_name
    *
    * @return {String}
    */
@@ -21,7 +23,8 @@
     return _status_names[this.get('status')] || 'new';
   };
 
-  /* is the task archived?
+  /**
+   * Is the task archived?
    *
    * @return {Boolean}
    */
@@ -29,7 +32,8 @@
     return ['rejected', 'resolved'].indexOf(this.statusName()) !== -1;
   };
 
-  /* get the classes according to the model's status
+  /**
+   * Get the classes according to the model's status
    *
    * @return {String} classes
    */
@@ -62,7 +66,8 @@
     return classes.join(' ');
   };
 
-  /* is the task open?
+  /**
+   * Is the task open?
    *
    * @return {Boolean}
    */
@@ -70,7 +75,8 @@
     return this.statusName() === 'open';
   };
 
-  /* get the overdue if a due date is provided
+  /**
+   * Get the overdue if a due date is provided
    *
    * @param {Integer} offset
    * @return {String} overdue
@@ -84,44 +90,70 @@
     }
   };
 
-    /* is the task overdue?
-     *
-     * @return {Boolean} overdue?
-     */
+  /**
+   * Is the task overdue?
+   *
+   * @return {Boolean} overdue?
+   */
   Task.is_overdue = function () {
     return !this.get('archived?') && this.overdue() > 0;
   };
 
-    /* is the task due for today?
-     *
-     * @return {Boolean} overdue today?
-     */
+  /**
+   * Is the task due for today?
+   *
+   * @return {Boolean} overdue today?
+   */
   Task.is_due_today = function () {
     return this.overdue() === 0;
   };
 
-    /* is the task due for tomorrow?
-     *
-     * @return {Boolean} overdue tomorrow?
-     */
+  /**
+   * Is the task due for tomorrow?
+   *
+   * @return {Boolean} overdue tomorrow?
+   */
   Task.is_due_tomorrow = function () {
     return this.overdue() === -1;
   };
 
-    /* is the task due in xxx?
-     *
-     * @return {Boolean} overdue in?
-     */
+  /**
+   * Is the task due in xxx?
+   *
+   * @return {Boolean} overdue in?
+   */
   Task.is_due_in = function (time_end) {
     return this.get('due_on') && !this.is_overdue() && this.overdue(time_end) <= 0;
   };
 
+  /**
+   * Public url
+   *
+   * @return {String}
+   */
   Task.publicUrl = function () {
     return '/projects/' + this.get('project_id') + '/tasks/' + this.get('id');
   };
 
+  /**
+   * API url
+   *
+   * @return {String}
+   */
   Task.url = function () {
-    return "/api/1/tasks/" + this.get('id');
+    var url = '/api/1';
+
+    console.log(this);
+
+    if (this.get('project_id')) {
+      url += '/projects/' + this.get('project_id');
+    }
+
+    if (this.get('task_list_id')) {
+      url += '/task_lists/' + this.get('task_list_id');
+    }
+
+    return url + '/tasks/';
   };
 
   // static
@@ -145,7 +177,7 @@
               , resolved:          {order: 3, value: 3, label: 'resolved'}
               , rejected:          {order: 4, value: 4, label: 'rejected'}
               }
-  }
+  };
 
   // exports
   Teambox.Models.Task = Teambox.Models.Base.extend(Task, TaskStatic);

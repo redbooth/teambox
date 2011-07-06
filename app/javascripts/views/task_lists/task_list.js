@@ -5,7 +5,6 @@
 
   TaskList.events = {
     'click .task .name': 'showComments'
-  , 'click .new_task a.toggle': 'toggleNewTask'
   };
 
   /**
@@ -30,18 +29,6 @@
   };
 
   /**
-   * Toggles the new task form
-   *
-   * @param {Event} evt
-   */
-  TaskList.toggleNewTask = function (evt) {
-    var element = evt.element();
-
-    evt.stop();
-    element.next().toggle(evt);
-  };
-
-  /**
    * Updates the element
    *
    * @return self
@@ -54,12 +41,11 @@
       self.el.down('.tasks').insert({top: (new Teambox.Views.Task({model: el})).render().el});
     });
 
-    // select assigned
-    (new Teambox.Views.SelectAssigned({
-      el: this.el.down('#task_assigned_id')
-    , selected: null
-    , project: this.project
-    })).render();
+    this.el.down('.tasks').insert({bottom: (new Teambox.Views.TaskListsTaskForm({
+      project: this.project
+    , parent_view: this
+    , task_list: this.model
+    })).render().el});
 
     return this;
   };

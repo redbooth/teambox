@@ -1,5 +1,10 @@
+a.toggle(href= '#') new task
+
 form#new_task.app_form.new_task(method='POST', enctype='multipart/form-data', accept-charset='UTF-8', style='display:none;')
   input(type='hidden', value='✓', name='utf8')
+
+  input(type= 'hidden', value= self.project.id, name= 'task[project_id]')
+  input(type= 'hidden', value= self.task_list.id, name= 'task[task_list_id]')
 
   h3 New Task
   p Choose an actionable task. The more specific, the better.
@@ -13,15 +18,15 @@ form#new_task.app_form.new_task(method='POST', enctype='multipart/form-data', ac
   p.optional You can provide better instructions for this Task below.
 
   .body.text_field
-    label(for='task_comments_attributes_0_body')
+    label(for='comments_body')
       | What needs to be done?
       i optional
-    textarea#task_comments_attributes_0_body(rows='3', name='task[comments_attributes][0][body]', cols='40')
+    textarea#task_comments_attributes_0_body(rows='3', name='comment[body]', cols='40')
 
   .extra
     .upload_area
       p Select a file to upload to Teambox
-      input#upload_file(type='file', name='task[comments_attributes][0][uploads_attributes][0][asset]')
+      input#upload_file(type='file', name='comment[uploads_attributes][0][asset]')
 
     .private_options(style='display: none')
 

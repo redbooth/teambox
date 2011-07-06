@@ -1,5 +1,2 @@
 .head= self.task_list.get('name')
 .tasks.open
-  .new_task
-    a.toggle(href= '#') new task
-    != (new Teambox.Views.TaskListsTaskForm({})).render().el.innerHTML
