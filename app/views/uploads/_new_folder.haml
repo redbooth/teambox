@@ -1,10 +1,10 @@
-%form.new_folder#new_folder_form{ :style => 'display: none' }
+= form_for [@current_project,Folder.new], :html => {:style => 'display: none', :id => 'new_folder_form'} do |f|
   -# TODO: Add an attribute to add the folder in the right @parent_folder
   .header
     .icon
       = image_tag '/famfamfam/folder.png'
     .full_row
-      = text_field_tag :name, t('.default_text'), :id => 'new_folder_name'
+      = f.text_field :name, :value => t('.default_text'), :id => 'new_folder_name'
       .actions
         = link_to t('common.cancel'), '#', :class => 'close'
-        = submit_tag t('.submit'), :class => 'button'
+        = f.submit t('.submit'), :class => 'button'

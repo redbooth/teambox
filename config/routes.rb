@@ -166,6 +166,7 @@ Teambox::Application.routes.draw do
       match 'uploads(/:parent_folder)' => 'uploads#index', :as => :uploads
       resources :uploads
       match 'uploads(/:parent_folder)' => 'uploads#index', :as => :uploads, :method => :get
+      resources :folders, :as => :folders, :except => [:new, :index]
       match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
 
       match 'invite_people' => 'projects#invite_people', :as => :invite_people, :via => :get
