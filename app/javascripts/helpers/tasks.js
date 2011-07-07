@@ -2,7 +2,8 @@
 (function () {
   var TasksHelper = {};
 
-  /* updated the element
+  /**
+   * Updated the element
    *
    * @return self
    */
@@ -22,7 +23,9 @@
     }
   };
 
-  /* shows all task_list containers
+  /**
+   * Shows all task_list containers
+   *
    * @return self
    */
   TasksHelper.showAllTaskLists = function () {
@@ -30,7 +33,9 @@
     return TasksHelper;
   };
 
-  /* changes visibility of all tasks
+  /**
+   * Changes visibility of all tasks
+   *
    * @param {Boolean} show
    * @return self
    */
@@ -41,7 +46,8 @@
     return TasksHelper;
   };
 
-  /* Delete all the groups
+  /**
+   * Delete all the groups
    *
    * @param {Array} tasks
    * @param {Object} options
@@ -54,7 +60,8 @@
     return TasksHelper;
   };
 
-  /* Group tasks by...
+  /**
+   * Group tasks by...
    *
    * @param {Object} options
    *
@@ -79,7 +86,8 @@
     return TasksHelper;
   };
 
-  /* Sort tasks by...
+  /**
+   * Sort tasks by...
    *
    * @param {Array} tasks
    * @param {String} by
@@ -90,7 +98,8 @@
     return _.sortBy(tasks, TasksHelper.getStatus(by, 'order'));
   };
 
-  /* Get task status by
+  /**
+   * Get task status by
    *
    * @param {String} by
    * @param {String} optional attr
@@ -121,8 +130,10 @@
     }
   };
 
-  /* Hides task lists if they don't have any visible tasks
-   * @retun self
+  /**
+   * Hides task lists if they don't have any visible tasks
+   *
+   * @return self
    */
   TasksHelper.foldEmptyTaskLists = function () {
     $$("div.task_list").each(function (e) {
@@ -150,7 +161,8 @@
     return TasksHelper;
   };
 
-  /* select tasks matching a name
+  /**
+   * Select tasks matching a name
    *
    * @param {String} name
    * @return {Array} tasks matched
@@ -162,7 +174,8 @@
     });
   };
 
-  /* select tasks matching assigned/due_date
+  /**
+   * Select tasks matching assigned/due_date
    *
    * @param {String} name
    * @param {String} klass

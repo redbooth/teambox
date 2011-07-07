@@ -6,6 +6,16 @@
     , _status_names = ['new', 'open', 'hold', 'resolved', 'rejected'];
 
   /**
+   * Parses response and builds the thread model
+   *
+   * @param {Response} response
+   * @return {Array}
+   */
+  Task.parse = function (response) {
+    return _.parseFromAPI(response);
+  };
+
+  /**
    * Returns the class name
    *
    * @return {String}
@@ -60,7 +70,7 @@
        ('status_notopen', !this.isOpen())
        ('due_on', this.get('due_on') || this.isArchived())
        (this.get('this') ? 'task_list_' + this.get('task_list_id') : '', this.get('task_list_id'))
-       (this.get('assigned') ? 'assigned' : 'unassigned', !this.isArchived())
+       (this.get('assigned') ? 'assigned' : 'unassigned', true)
        (this.get('assigned') ? 'user_' + this.get('assigned').user_id : null, true);
 
     return classes.join(' ');
@@ -183,4 +193,3 @@
   Teambox.Models.Task = Teambox.Models.Base.extend(Task, TaskStatic);
 
 }());
-

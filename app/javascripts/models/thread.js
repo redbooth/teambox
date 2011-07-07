@@ -2,7 +2,8 @@
 
   var Thread = {};
 
- /* Returns the class name
+ /**
+  * Returns the class name
   *
   * @return {String}
   */
@@ -10,7 +11,8 @@
     return this.get('type');
   };
 
-  /* Checks if the thread is a Task
+  /**
+   * Checks if the thread is a Task
    *
    * @return {Boolean}
    */
@@ -18,7 +20,8 @@
     return this.get('type') === 'Task';
   };
 
-  /* Checks if the thread is a Conversation
+  /**
+   * Checks if the thread is a Conversation
    *
    * @return {Boolean}
    */
@@ -44,7 +47,8 @@
     return '/api/1' + this.publicUrl();
   };
 
-  /* Get the comments url
+  /**
+   * Get the comments url
    *
    * @return {String}
    */
@@ -52,13 +56,14 @@
     return this.url() + '/comments';
   };
 
-  /* Parses response and builds an array of comments attached to the thread
+  /**
+   * Parses response and builds an array of comments attached to the thread
    *
    * @param {Response} response
    * @return {Array}
    */
   Thread.parseComments = function (response) {
-    var thread_attributes = ( response.objects || response )
+    var thread_attributes = response.objects || response
       , comment_attributes = _.detect(response.references, function (ref) {
           return thread_attributes.recent_comment_ids[0] === ref.id;
         })
@@ -84,6 +89,12 @@
     return comment_attributes;
   };
 
+  /**
+   * Parses response and builds the thread model
+   *
+   * @param {Response} response
+   * @return {Array}
+   */
   Thread.parse = function (response) {
     if (response.objects) {
       return _.parseFromAPI(response.objects);

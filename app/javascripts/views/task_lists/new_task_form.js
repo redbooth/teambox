@@ -5,7 +5,7 @@
     , TasksHelper = Teambox.helpers.tasks;
 
   TaskListsTaskForm.events = {
-    'click .date_picker'       : 'showCalendar' // TODO: Y U NO WORK?
+    'click .date_picker'       : 'showCalendar'
   , 'click a.cancel'           : 'toggleNewTask'
   , 'click .new_task a.toggle' : 'toggleNewTask'
   , 'submit form'              : 'postTask'
@@ -62,20 +62,10 @@
 
     (new Teambox.Models.Task()).save(data.task, {
       success: function (model, response) {
-        self.parent_view.down('.tasks').insert({top: (new Teambox.Views.Task({model: model})).render().el});
-        // TODO: Add the comment too
-        // TODO: Show the recently added task
-        // TODO: Add the task to the collection
+        self.parent_view.el.down('.tasks').insert({top: (new Teambox.Views.Task({model: model})).render().el});
+        Teambox.collections.tasks.add(model, {at: 0});
+        self.task_list.get('tasks').push(model);
         self.toggle();
-
-        // add comment
-        //var comment = data.comment;
-        //comment.task_id = model.id;
-        //(new Teambox.Models.Comment()).save(comment, {
-        //  success: function (model, response) {
-        //    console.log(model);
-        //  }
-        //});
       }
     });
   };

@@ -21,12 +21,12 @@ form#new_task.app_form.new_task(method='POST', enctype='multipart/form-data', ac
     label(for='comments_body')
       | What needs to be done?
       i optional
-    textarea#task_comments_attributes_0_body(rows='3', name='comment[body]', cols='40')
+    textarea#comments_body(rows='3', name='task[comments_attributes][0][body]', cols='40')
 
   .extra
     .upload_area
       p Select a file to upload to Teambox
-      input#upload_file(type='file', name='comment[uploads_attributes][0][asset]')
+      input#upload_file(type='file', name='task[comments_attributes][0][uploads_attributes][0][asset]')
 
     .private_options(style='display: none')
 
@@ -36,12 +36,11 @@ form#new_task.app_form.new_task(method='POST', enctype='multipart/form-data', ac
         a.attach_icon.hoverable(title='Attach a file', href='#') Attachment
         .google_docs_attachment
           a(rel='facebox', href='/google_docs')
-            img.google_docs_logo(src='/images/google_docs/icon_6_document.gif?1291811897', alt='Icon_6_document')
+            img.google_docs_logo(src='/images/google_docs/icon_6_document.gif', alt='Icon_6_document')
           .google_docs_attachment_form_area
             .fields
             ul.file_list
-
-          a.private_switch.hoverable(title='Control who can see this element', href='#') Privacy
+        a.private_switch.hoverable(title='Control who can see this element', href='#') Privacy
 
   .assigned_to.text_field
     label(for='task_assigned_id') Assigned to:
