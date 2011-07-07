@@ -126,6 +126,10 @@
     return '#!/projects/' + project.permalink + '/tasks/' + task.id;
   };
 
+  JADE.google_docs_url = function (google_doc, project) {
+    return '#!/projects/' + project.permalink + '/google_docs/' + google_doc.id;
+  };
+
   JADE.task_list_url = function (task_list, project) {
     return '#!/projects/' + project.permalink + '/task_lists/' + task_list.id;
   };

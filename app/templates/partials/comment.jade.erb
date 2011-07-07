@@ -38,7 +38,15 @@
             a(href= self.downloadUrl(upload.id, upload.filename, "original"), class="link_to_upload", rel="facebox")
               img(alt="#{upload.description}", src=self.downloadUrl(upload.id, upload.filename, "thumb"))
 
-  // TODO: google docs
+    - if (self.google_docs && self.google_docs.length)
+      ul.google_docs_list
+        - each google_doc in self.google_docs
+          li.upload
+            span.file_icon.google_icon
+              img(src="/images/google_docs/icon_6_#{google_doc.document_type}.gif",alt=google_doc.document_type)
+            span.filename
+              a(href=self.google_docs_url(google_doc, self.project), target='blank')= google_doc.title
+
   div(id= 'email_post_' + self.id, style= 'width: 600px;display: none;')
     h1 <%= t('users.email_posts.title') %>
     p <%= t('users.email_posts.send_replies_with_this_email') %>

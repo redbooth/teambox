@@ -1,17 +1,4 @@
 (function () {
-  // As search results come back when filtering results add them in place of the current list
-  document.on('ajax:success', '.google_docs .search_form form', function(e, form) {
-    form.up('.google_docs').down('.google_docs_list').replace(e.memo.responseText);
-  });
-
-  // Once the call to make a new document has been made we must add it to the list of documents
-  document.on('ajax:success', '.google_docs .create_google_document_form form', function(e, form){
-    var doc = e.memo.responseText.evalJSON(true);
-    addGoogleDocToForm(function(field_name){
-      return doc[field_name];
-    });
-    form.down('#google_doc_title').clear();
-  });
 
   var GoogleDocs = { 
       className: 'google_docs_attachment'
@@ -37,6 +24,27 @@
   /* Render google docs area
    */
   GoogleDocs.render = function () {
+    var self = this;
+
+
+    // As search results come back when filtering results add them in place of the current list
+    if (!this.searchFormHandler) {
+      this.searchFormHandler = document.on('ajax:success', '.google_docs .search_form form', function(e, form) {
+        form.up('.google_docs').down('.google_docs_list').replace(e.memo.responseText);
+      });
+    };
+
+    // Once the call to make a new document has been made we must add it to the list of documents
+    if (!this.createFormHandler) {
+      this.createFormHandler = document.on('ajax:success', '.google_docs .create_google_document_form form', function(e, form){
+        var doc = e.memo.responseText.evalJSON(true);
+        self.addGoogleDocToForm(function(field_name){
+          return doc[field_name];
+        });
+        form.down('#google_doc_title').clear();
+      });
+    };
+
     this.el.update(this.template());
 
     return this;
@@ -108,7 +116,7 @@
    */
   GoogleDocs.removeGoogleDocFromForm = function (data_id){
     var selector = '[data-gform="' + data_id + '"]';
-    this.el.select(selector).each(function(element){
+    this.comment_form.el.select(selector).each(function(element){
       element.remove()
     })
   };
@@ -117,7 +125,7 @@
    */
   GoogleDocs.addGoogleDocToForm = function (fn) {
     // Find the various elements we are going to interact with
-    var form_area = this.el.down('.google_docs_attachment_form_area')
+    var form_area = this.comment_form.el.down('.google_docs_attachment_form_area')
     , getFormValue = fn
     , prefix = form_area.readAttribute('data-object-name')
     , previous_field = form_area.select('input').last();

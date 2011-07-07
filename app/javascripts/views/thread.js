@@ -11,6 +11,7 @@
     'mouseover .textilized a': 'setTargetBlank'
   , 'click .thread .comments .more_comments a': 'reloadComments'
   , 'click a.delete': 'deleteComment'
+  , 'click a.google_doc_icon'      : 'showGoogleDocs'
   };
 
   Thread.initialize = function (options) {
@@ -18,6 +19,26 @@
 
     this.model.attributes.is_task = this.model.get('type') === 'Task';
     this.model.bind('comment:added', Thread.addComment.bind(this));
+
+    var Views = Teambox.Views;
+    this.convert_to_task = new Views.ConvertToTask({model: new Teambox.Models.Conversation(this.model.attributes)});
+    this.comment_form = new Views.CommentForm({
+          model: this.model
+        , convert_to_task: this.convert_to_task
+        , controller: this.controller
+        , thread: this
+    });
+    this.google_docs = new Teambox.Views.GoogleDocs({comment_form: this.comment_form});
+  };
+
+  /* Cleans the thread
+   *
+   * @param {Event} evt
+   * @returns false;
+   */
+  Thread.reset = function () {
+    this.el.select('.google_docs_attachment_form_area .fields input').invoke('remove');
+    this.el.select('.google_docs_attachment_form_area .file_list li').invoke('remove');
   };
 
   /* sets the target attribute to '_blank'
@@ -111,15 +132,7 @@
    * @return {Object} self
    */
   Thread.render = function () {
-    var Views = Teambox.Views
-      , convert_to_task = new Views.ConvertToTask({model: new Teambox.Models.Conversation(this.model.attributes)})
-      , comment_form = new Views.CommentForm({
-          model: this.model
-        , convert_to_task: convert_to_task
-        , controller: this.controller
-      });
-
-    convert_to_task.comment_form = comment_form;
+    this.convert_to_task.comment_form = this.comment_form;
 
     // Add data attributes to the DOM.
     this.el.writeAttribute({
@@ -132,12 +145,20 @@
     this.el.update(this.template(this.model.getAttributes()));
 
     // Insert the comment form at bottom of the thread element
-    this.el.insert({bottom: comment_form.render().el});
+    this.el.insert({bottom: this.comment_form.render().el});
     if (this.model.isConversation()) {
-      this.el.insert({bottom: convert_to_task.render().el});
+      this.el.insert({bottom: this.convert_to_task.render().el});
     }
+    // google docs
+    // Because comment_form view's el is the actual form tag, 
+    // the google docs view needs to be inserted at the thread level
+    this.el.insert({bottom: this.google_docs.render().el});
 
     return this;
+  };
+
+  Thread.showGoogleDocs = function(event) {
+    this.google_docs.openGoogleDocsList(event);
   };
 
   // exports

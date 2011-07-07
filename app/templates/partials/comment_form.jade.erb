@@ -16,6 +16,10 @@ input(name= 'utf8', type= 'hidden', value= '✓')
         input(class= 'human_hours', name= 'comments_attributes[0][human_hours]', size= '30', type= 'text')
       a(href= 'http://help.teambox.com/faqs/advanced-features/time-tracking', target= '_blank') <%= t('projects.fields.new.time_tracking_docs')%>.
 
+  .google_docs_attachment_form_area(data-object-name= 'comments_attributes[0]')
+    .fields
+    ul.file_list
+
   .actions
     .attach
       span <%= t('comments.fields.attach')%>
