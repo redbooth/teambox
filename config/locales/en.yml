@@ -1315,7 +1315,8 @@ en:
       title: Upload a file
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed %{mb} MB"
-      description_html: Description and tags <i>(optional)</i>
+      select_file: Select file
+      description_html: Title <i>(optional)</i>
       upload: Upload file
       max_upload_size: "Max upload size is %{mb} Mb"
     primer:
@@ -2062,7 +2063,11 @@ en:
     pending_invitation:
       teambox: "was invited to join Teambox %{on} through %{provider}"
       project: "was invited to join the project '%{project}' through %{provider}"
+<<<<<<< HEAD
       delivery_fail: "we tried to deliver the invitation through %{provider} but an error occurred. You can manually invite this person by sending the sign up link:"
+=======
+      delivery_fail: "we try to deliver the invitation through %{provider} but an error occure. You can manually invite this person by sending the sign up link:"
+>>>>>>> bump english file
     project:
       title: "Invite contacts to the '%{project}' project."
     filter:
