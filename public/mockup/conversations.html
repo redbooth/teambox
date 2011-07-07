@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" class=" js canvas canvastext geolocation crosswindowmessaging websqldatabase no-indexeddb hashchange historymanagement draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions  video audio localstorage sessionstorage webworkers applicationcache svg smil svgclippaths  inputsearch  fontface"><head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta name="csrf-param" content="authenticity_token">
+    <meta name="csrf-token" content="t0WdMY+4uCeLGYU/WsPGcsqXQdRIuEWNNg8hT9DkwcE=">
+    <link href="/favicon.ico" rel="shortcut icon">
+    <title>Teambox</title>
+    <link href="application.css" media="screen" rel="stylesheet" type="text/css">
+  </head>
+  <body class="folded_aux en development">
+    <style type="text/css">
+            a.micro_avatar.my_avatar { background: url(http://www.gravatar.com/avatar/85ebbad6d49ffba12ada85b98baca888?size=24&default=identicon) no-repeat }
+          </style>
+    <div id="keyboard_shortcuts" style="display:none;">
+      <div class="title">
+        Keyboard navigation:
+      </div>
+      <div class="key">
+        <span>j</span>
+        next thread
+        ↓
+      </div>
+      <div class="key">
+        <span>k</span>
+        previous thread
+        ↑
+      </div>
+      <div class="key">
+        <span>enter</span>
+        open / close thread
+      </div>
+      <div class="key">
+        <span>s</span>
+        search
+      </div>
+    </div>
+    <div id="header_wrap">
+      <div class="header">
+        <h1><a href="#!/"><img alt="Teambox" src="img_3_2/logo_teambox_3_2.png"></a></h1><div class="search_bar"><form id="search" accept-charset="UTF-8" action="/search" method="get" class="search"><input id="searchbox" name="q" placeholder="Search all projects" type="text" autocomplete="off"><a class="ender_btn search_btn" href="#"></a></form></div>
+        <div id="quick_add_buttons">
+              <a class="quick_add_btn conv" href="#!/conversations/new"><span>New conversation</span></a>
+              <a class="quick_add_btn task" href="#!/tasks/new"><span>New task</span></a>
+              <div class="pane" style="display: none">
+                <form accept-charset="UTF-8" action="/projects/earthworks/task_lists/3/tasks.js" class="app_form new_task" data-mine="false" data-project-id="1" data-remote="true" enctype="multipart/form-data" id="new_task" method="post" style="display:none"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="t0WdMY+4uCeLGYU/WsPGcsqXQdRIuEWNNg8hT9DkwcE="></div>
+                  <h3>New Task</h3>
+                  <p>Choose an actionable task. The more specific, the better.</p>
+                  <div class="name text_field">
+                    <label for="task_name">Enter a Task title <i>eg. Upload Logo Proposal</i></label>
+                    <input id="task_name" name="task[name]" size="30" type="text">
+                  </div>
+                  <p class="optional">You can provide better instructions for this Task below.</p>
+                  <div class="body text_field">
+                    <label for="task_comments_attributes_0_body">What needs to be done? <i>optional</i></label>
+                    <textarea cols="40" id="task_comments_attributes_0_body" name="task[comments_attributes][0][body]" rows="3"></textarea>
+                  </div>
+                  <div class="extra">
+                    <div class="upload_area">
+                      <p>Select a file to upload to Teambox</p>
+                      <input id="upload_file" name="task[comments_attributes][0][uploads_attributes][0][asset]" type="file">
+                    </div>
+                    <div class="actions">
+                      <div class="attach">
+                        <span>Attach:</span>
+                        <a href="#uploads" class="attach_icon hoverable" title="Attach a file">Attachment</a>
+                        <div class="google_docs_attachment">
+                          <a href="/google_docs" class="google_docs_icon hoverable" rel="facebox" title="Attach Google Docs"></a>
+                          <div class="google_docs_attachment_form_area" data-object-name="task[comments_attributes][0]">
+                            <div class="fields">
+                            
+                            </div>
+                            <ul class="file_list"></ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="assigned_to text_field">
+                    <label for="task_assigned_id">Assigned to:</label>
+                    <select id="task_assigned_id" name="task[assigned_id]"><option>Unassigned</option><option value="1">Frank Kramer</option><option value="2">Corrina Kottke</option><option value="5">Marco Fizzulo</option><option value="4">Maya Bhaskaran</option><option value="3">Tomas Santiago</option></select>
+                  </div>
+                  <div class="pick_date">
+                    <label for="task_due_on">Needs to be done before... <i>optional</i></label>
+                    <div class="date_picker "><img alt="Calendar" class="calendar_date_select_popup_icon" src="images/calendar_date_select/calendar.gif?1306709053"><input id="task_due_on" name="task[due_on]" type="hidden"><span class="localized_date"><i>No date assigned</i></span></div>
+                  </div>
+                  <div class="submit">
+                    <a href="#cancel">Cancel</a>
+                  
+                    <input data-disable-with="Creating the task…" id="task_submit" name="commit" type="submit" value="Add Task">
+                  </div>
+                </form>
+              </div>
+          </div>
+          <div class="dropdown_navigation" id="user_utilities">
+            <h2><a href="#">Settings</a></h2><a class="dropdown_arrow" href="#"></a>
+            <ol class="global_navigation">
+            <li id="username"><a href="/users/corrina">My profile</a></li>
+            <li><a href="/account/settings">Settings</a></li>
+            <li><a href="http://guide.teambox.com#interface" target="_blank">Help</a></li>
+            <li class="last_item"><a href="/logout">Logout</a></li>
+          </ol>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="container" id="container">
+      <div class="wrapper">
+        <div class="column_wrap">
+          <div class="column" id="column">
+            <div class="separator first">
+              Overview
+            </div>
+            <div class="nav_links">
+              <div class="el" id="activity_link"><a href="#!/" class="recent_activity backboned">Recent activity</a></div>
+              <div class="el" id="today_link"><a href="#!/today" class="today backboned">Today</a></div>
+              <div class="el" id="my_tasks_link"><a href="#!/my_tasks" class="tasks backboned">My Tasks</a></div>
+              <div class="el selected" id="all_tasks_link"><a href="#!/all_tasks" class="all_tasks backboned">All Tasks</a></div>
+              <div class="el last"><a href="/calendars" class="calendar ajax">Calendar</a></div>
+              <div class="separator with_margin">Projects</div>
+              <div class="el"><a href="/projects/earthworks" class="project">Earthworks Yoga</a></div>
+              <div class="contained" style="display: none; ">
+                <div class="el"><a href="/projects/earthworks" class="recent_activity ajax">Recent activity</a></div>
+                <div class="el" id="project_earthworks_conversations"><a href="/projects/earthworks/conversations" class="conversations ajax">Conversations</a></div>
+                <div class="el" id="project_earthworks_task_lists">
+                  <a href="#!/projects/earthworks/task_lists" class="tasks backboned">Tasks</a>
+                </div>
+                <div class="el"><a href="/projects/earthworks/pages" class="pages ajax">Pages</a></div>
+                <div class="el"><a href="/projects/earthworks/uploads" class="files ajax">Files</a></div>
+                <div class="el"><a href="/projects/earthworks/settings" class="settings">Settings</a></div>
+                <div class="contained" style="display: none; ">
+                  <div class="el"><a href="/projects/earthworks/settings" class="general_settings ajax">General Settings</a></div>
+                  <div class="el"><a href="/projects/earthworks/deletion" class="deletion ajax">Project Archiving/Deletion</a></div>
+                  <div class="el"><a href="/projects/earthworks/ownership" class="ownership ajax">Ownership</a></div>
+                </div>
+                <div class="el"><a href="/projects/earthworks/people" class="people ajax">People &amp; Permissions</a></div>
+              </div>
+              <div class="el" id="projects_link"><a href="#!/projects" class="more">Show all projects...</a></div>
+              <div class="btn_new_project" id="new_project_link"><a href="/projects/new" class="more ajax">New Project</a></div>
+              <div class="separator with_margin">More...</div>
+              <div class="el" id="my_organizations"><a href="/organizations" class="organizations">Organizations</a></div>
+              <div class="contained" style="display: none; ">
+                <div class="el"><a href="/organizations/design-projects">Design projects</a></div>
+                <div class="contained" style="display: none; ">
+                  <div class="el"><a href="/organizations/design-projects/edit" class="ajax">General settings</a></div>
+                  <div class="el"><a href="/organizations/design-projects/projects" class="ajax">Manage projects</a></div>
+                  <div class="el"><a href="/organizations/design-projects/task_list_templates" class="ajax">Task List Templates</a></div>
+                  <div class="el"><a href="/organizations/design-projects/memberships" class="ajax">Manage users</a></div>
+                  <div class="el"><a href="/organizations/design-projects/appearance" class="">Appearance</a></div>
+                  <div class="el"><a href="/organizations/design-projects/delete" class="ajax">Delete this organization...</a></div>
+                </div>
+              </div>
+              <div class="el"><a href="/time" class="ajax time">Time tracking</a></div>
+              <div class="el last"><a href="/chat" class="chat">Chat</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="content_wrap">
+          <div class="separator">
+            <span id="view_title">Conversations on Earthworks Yoga</span>
+          </div>
+          <div class="content conversation_content" id="content">
+            <div class="conversation_list">
+              <div class="conversation">
+                <div class="new_conversation">
+                  <span class="selected_arrow"></span>
+                  <a class="button_create_conv" href="#">Create a new conversation</a>
+                </div>
+              </div>
+              <div class="conversation selected">
+                <div class="conversation_tag">
+                  <span class="selected_arrow"></span>
+                  <span class="star"></span>
+                  <span class="answer"></span>
+                  <span class="title">Lorem ipsum dolor sit amet</span>
+                  <span class="excerpt">Duis blandit imperdiet diam, condimen…</span>
+                  <span class="people">marcosmedina, pepe, kepler (+1 more)</span>
+                  <span class="time">15:45h</span>
+                </div>
+                
+              </div>
+              <div class="conversation starred">
+                <div class="conversation_tag">
+                  <span class="star"></span>
+                  <span class="answer"></span>
+                  <span class="title">Lorem ipsum dolor sit amet</span>
+                  <span class="people">marcosmedina, pepe, kepler (+11 more)</span>
+                  <span class="time">15:45h</span>
+                </div>
+              </div>
+              <div class="conversation answered">
+                <div class="conversation_tag">
+                  <span class="star"></span>
+                  <span class="answer"></span>
+                  <span class="title">Lorem ipsum dolor sit amet</span>
+                  <span class="excerpt">Duis blandit imperdiet diam, condimen…</span>
+                  <span class="people">marcosmedina, pepe, kepler</span>
+                  <span class="time">Yesterday</span>
+                </div>
+              </div>
+              <div class="conversation">
+                <div class="conversation_tag">
+                  <span class="star"></span>
+                  <span class="answer"></span>
+                  <span class="title">Lorem ipsum dolor sit amet</span>
+                  <span class="excerpt">Duis blandit imperdiet diam, condimen…</span>
+                  <span class="people">marty, emmet_brown, lorraine (+3 more)</span>
+                  <span class="time">11th November 1985</span>
+                </div>
+              </div>
+              <div class="conversation answered starred">
+                <div class="conversation_tag">
+                  <span class="star"></span>
+                  <span class="answer"></span>
+                  <span class="title">Lorem ipsum dolor sit amet</span>
+                  <span class="excerpt">Duis blandit imperdiet diam, condimen…</span>
+                  <span class="people">marty, emmet_brown, tannent (+3 more)</span>
+                  <span class="time">12th November 1955</span>
+                </div>
+              </div>
+              
+            </div>
+            
+            <div class="conversation_view">
+            
+            </div>
+          
+          
+          </div>
+
+
+        </div>
+        <div class="aux_wrap">
+          <div class="separator">
+            Contextual
+            <span class="fold_aux"><a href="#">→</a></span>
+          </div>
+          <div class="view_sidebar">
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <style type="text/css">
+            form .google_docs_attachment { display: none }
+          </style>
+  
+
+<div id="facebox" style="display: none">      <div class="facebox-wrapper html">        <div class="facebox-container">          <div class="facebox-content"></div>          <div class="facebox-extra"><p class="description"></p><a class="close" href="#close">close</a></div>        </div></div></div><div style="display: none; " id="hiddenlpsubmitdiv"></div></body></html>
+
