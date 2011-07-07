@@ -1,4 +1,4 @@
-;(function(){
+(function(){
   var element, imageMaxWidth = 700, imageMaxHeight = 300, screenMinWidth = 75
   
   Facebox = {
