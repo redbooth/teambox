@@ -41,7 +41,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     authorize! :update, @conversation
 
     if @conversation.update_attributes params
-      handle_api_success(@conversation, :wrap_objects => true, :references => true, :include => [:user, :uploads])
+      handle_api_success(@conversation, :wrap_objects => true, :references => true, :include => [:user, :uploads, :google_docs])
     else
       handle_api_error(@conversation)
     end
