@@ -63,6 +63,29 @@ _.parseFromAPI = function(json) {
         e.target.target = collection.findRef(e.target.target_id, e.target.target_type);
       }
     }
+
+    if (e.type === "Comment") {
+      if (e.upload_ids && e.upload_ids.length) {
+        e.uploads = _(e.upload_ids).chain()
+        .map(function(id) {
+          return collection.findRef(id, 'Upload');
+        })
+        .compact()
+        .sortBy(function(c) {return c.id;})
+        .value()
+      }
+
+      if (e.google_doc_ids && e.google_doc_ids.length) {
+        e.google_docs = _(e.google_doc_ids).chain()
+        .map(function(id) {
+          return collection.findRef(id, 'GoogleDoc');
+        })
+        .compact()
+        .sortBy(function(c) {return c.id;})
+        .value()
+      }
+
+    }
     return e;
   };
 
