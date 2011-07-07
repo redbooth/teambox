@@ -1933,6 +1933,7 @@ en:
     create_new: Create a New Blank Document
     create: Create
     creating: Creating...
+    searching: Searching...
     attach: Attach a Google Document
     search_placeholder: Search Google documents
     new_document_placeholder: New document title

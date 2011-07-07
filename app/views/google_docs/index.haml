@@ -3,7 +3,7 @@
   .search_form
     - form_tag search_google_docs_path, :method => 'get', :'data-remote' => true do
       = text_field_tag :q, @search_terms, :size => 30, :placeholder => t('google_docs.search_placeholder')
-      = submit_tag 'Search Documents'
+      = submit_tag 'Search Documents', :'data-disable-with' => t('google_docs.searching')
     
   = render :partial => 'list'
   
