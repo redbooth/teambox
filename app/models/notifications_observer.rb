@@ -57,7 +57,7 @@ class NotificationsObserver < ActiveRecord::Observer
         if user.send("notify_#{target.class.to_s.downcase.pluralize}".to_sym)
           notification = person.notifications.new(:comment => comment, :target => target, :user => user)
 
-          if !target.is_private and (person.digest_type == :instant or (comment.mentioned.to_a.include? user and user.instant_notification_on_mention?))
+          if person.digest_type == :instant or (comment.mentioned.to_a.include? user and user.instant_notification_on_mention?)
             instant_delivery(target, comment, user)
             notification.sent = true
           elsif person.digest_type != :none

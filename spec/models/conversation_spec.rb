@@ -307,9 +307,9 @@ describe Conversation do
       conversation.comments.reload.each{|c| c.is_private.should == true; c.uploads.each{|upload| upload.is_private.should == true} }
     end
     
-    it "should not dispatch notification emails when private" do
+    it "should still dispatch notification emails when private" do
       watcher = Factory.create(:user)
-      Emailer.should_not_receive(:notify_conversation)
+      Emailer.should_receive(:send_with_language)
       
       conversation = Factory.create(:conversation, :is_private => true)
       conversation.project.add_user(watcher)
