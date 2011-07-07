@@ -59,8 +59,10 @@ class Comment < ActiveRecord::Base
   before_save   :copy_ownership_from_target, :if => lambda { |c| c.new_record? and c.target_id? }
   before_validation   :copy_ownership_from_target, :on => :create, :if => lambda { |c| c.target }
   before_validation   :add_private_statechange, :on => :create
+  
+  before_destroy :check_task
   after_create  :trigger_target_callbacks
-  after_destroy :cleanup_activities, :cleanup_conversation
+  after_destroy :cleanup_activities, :cleanup_conversation, :cleanup_task
 
   # must happen after copy_ownership_from_target
   formats_attributes :body
@@ -227,5 +229,25 @@ class Comment < ActiveRecord::Base
       @conversation = self.target
       @conversation.destroy if @conversation.simple and @conversation.comments.count == 0
     end
+  end
+  
+  def check_task
+    @last_comment_in_task = if target_type == 'Task' && target 
+      list = target.comments.order('id DESC').limit(2)
+      list.first.try(:id) == id && list.length > 1
+    else
+      false
+    end
+    true
+  end
+  
+  def cleanup_task
+    if @last_comment_in_task
+      self.target.assigned_id = previous_assigned_id
+      self.target.due_on = previous_due_on
+      self.target.status = previous_status || Task::STATUSES[:open]
+      self.target.save!
+    end
+    true
   end
 end

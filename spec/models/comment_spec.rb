@@ -228,6 +228,55 @@ describe Comment do
     end
   end
   
+  describe "destruction" do
+    before do
+      @task = Factory(:task)
+      @old_time = (Time.now + 2.days).to_date
+      @new_time = @old_time - 1
+      @new_assigned_id = @task.project.person_ids.first
+      @new_status = Task::STATUSES[:hold]
+      
+      @task.updating_user = @task.user
+      @task.update_attributes :comments_attributes => [{:body => 'Lets think about this...'}]
+      @task.save
+      
+      @task = Task.find_by_id(@task.id)
+      @task.assigned_id = 0
+      @task.due_on = @old_time
+      @task.updating_user = @task.user
+      @task.update_attributes :comments_attributes => [{:body => 'Do it in 2 days'}]
+      @task.save!
+      
+      @task = Task.find_by_id(@task.id)
+      @old_status = @task.status
+      @old_assigned_id = @task.assigned_id
+      @task.assigned_id = @new_assigned_id
+      @task.due_on = @new_time
+      @task.status = @new_status
+      @task.updating_user = @task.user
+      @task.update_attributes :comments_attributes => [{:body => 'Bring it forward'}]
+      @task.save!
+    end
+    
+    it "reverts the status back to the previous status when destroyed as the last comment" do
+      @task.comments.last.destroy
+      
+      @task = Task.find_by_id(@task.id)
+      @task.due_on.should == @old_time
+      @task.assigned_id.should == @old_assigned_id
+      @task.status.should == @old_status
+    end
+    
+    it "maintains the status if any other comments are destroyed" do
+      @task.comments[1].destroy
+      
+      @task = Task.find_by_id(@task.id)
+      @task.due_on.should == @new_time
+      @task.status.should == @new_status
+      @task.assigned_id.should == @new_assigned_id
+    end
+  end
+  
   describe "permissions" do
     before do
       @project = Factory(:project)
