@@ -2,6 +2,7 @@ class UploadsController < ApplicationController
   before_filter :find_upload, :only => [:destroy,:update,:thumbnail,:show]
   skip_before_filter :load_project, :only => [:download]
   before_filter :set_page_title
+  before_filter :load_folder, :only => :index
   
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
@@ -41,18 +42,17 @@ class UploadsController < ApplicationController
   end
 
   def index
-    parent_folder_id = params[:parent_folder]
-    @parent_folder = parent_folder_id ? Folder.find(parent_folder_id) : nil
+
     # TODO: Ensure you are able to view this folder
     @uploads = @current_project.uploads.
                        where(['uploads.is_private = ? OR (uploads.is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
-                       where(:parent_folder_id => parent_folder_id).
+                       where(:parent_folder_id => @current_folder).
                        joins("LEFT JOIN comments ON comments.id = uploads.comment_id").
                        joins("LEFT JOIN watchers ON (comments.target_id = watchers.watchable_id AND watchers.watchable_type = comments.target_type) AND watchers.user_id = #{current_user.id}").
                        includes(:user).
                        order('updated_at DESC')
     @folders = @current_project.folders.
-                       where(:parent_folder_id => parent_folder_id).
+                       where(:parent_folder_id => @current_folder).
                        order('name DESC')
     @upload ||= @current_project.uploads.new
   end
@@ -85,7 +85,7 @@ class UploadsController < ApplicationController
             redirect_to [@current_project, @upload.page]
           end
         else
-          redirect_to [@current_project, :uploads]
+          redirect_to(@upload.parent_folder_id ? project_folder_path(@current_project, @upload.parent_folder_id) : [@current_project, :uploads])
         end
       }
     end
@@ -122,6 +122,16 @@ class UploadsController < ApplicationController
         @upload = @current_project.uploads.find(params[:id])
       else
         @upload = @current_project.uploads.find_by_asset_file_name(params[:id])
+      end
+    end
+
+    def load_folder
+      if folder_id = params[:folder_id] || params[:id]
+        unless @current_folder = Folder.find_by_id(folder_id)
+          flash[:error] = t('not_found.folder', :id => folder_id)
+          redirect_to project_uploads_path(@current_project)
+        end
+        @parent_folder = @current_folder.parent_folder
       end
     end
 

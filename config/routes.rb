@@ -163,10 +163,13 @@ Teambox::Application.routes.draw do
 
       match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
       match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
-      match 'uploads(/:parent_folder)' => 'uploads#index', :as => :uploads
-      resources :uploads
-      match 'uploads(/:parent_folder)' => 'uploads#index', :as => :uploads, :method => :get
-      resources :folders, :as => :folders, :except => [:new, :index]
+      resources :uploads do
+        collection do
+          resources :folders, :except => [:show, :index, :new]
+        end
+      end
+      match 'uploads/folders/:id' => 'uploads#index', :via => :get
+
       match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
 
       match 'invite_people' => 'projects#invite_people', :as => :invite_people, :via => :get

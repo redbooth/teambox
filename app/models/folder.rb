@@ -4,6 +4,7 @@ class Folder < RoleRecord
   belongs_to :user
   belongs_to :project
   belongs_to :parent_folder, :class_name => 'Folder'
+  has_many :folders, :foreign_key => :parent_folder_id, :dependent => :destroy
 
   # TODO: Validate it has a name, a project and a user
 
@@ -21,6 +22,15 @@ class Folder < RoleRecord
 
   def to_s
     name
+  end
+
+  # TODO: Can also create folders_count column to cache number of child folders for each folder
+  def has_children?
+    !folders.empty?
+  end
+
+  def has_parent?
+    !parent_folder.nil?
   end
 
   protected

@@ -1,6 +1,7 @@
 - is_valid = upload.asset.errors.empty? && upload.errors.empty?
 
 = form_for [project, upload], upload_form_html_options(page,upload) do |f|
+  = f.hidden_field :parent_folder_id, :value => @current_folder.id if @current_folder
   %h2= t('.title')
   .file
     %p= t('.max_upload_size', :mb => Teambox.config.asset_max_file_size)

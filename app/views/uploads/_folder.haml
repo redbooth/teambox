@@ -3,11 +3,11 @@
     .icon
       = image_tag '/famfamfam/folder.png'
     .file
-      = link_to folder.name, project_uploads_path(:parent_folder => folder)
+      = link_to folder.name, project_folder_path(@current_project, folder)
     .size
       =# number_to_human_size upload.size
     .author
-      =# upload.user
+      = folder.user
     .more
       [+]
 

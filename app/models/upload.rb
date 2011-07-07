@@ -20,7 +20,8 @@ class Upload < RoleRecord
 
   attr_accessible :asset,
                   :page_id,
-                  :description
+                  :description,
+                  :parent_folder_id
   
   include PageWidget
 
