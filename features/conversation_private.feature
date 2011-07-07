@@ -28,9 +28,7 @@ Feature: Creating a private conversation
     When I choose "This element is only visible to people you specify..."
     And I check "Jordi Romero"
     And I uncheck "Pablo Villalba"
-    Then show me the page
     And I press "Create"
-    Then show me the page
     Then I should see "Top Secret" in the title
     Then @pablo should not be watching the conversation "Top Secret"
     Then @jordi should be watching the conversation "Top Secret"
