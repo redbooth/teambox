@@ -40,7 +40,9 @@ class Comment
       :project_id => project_id,
       :target_id => target_id,
       :target_type => target_type,
-      :hours => hours
+      :hours => hours,
+      :upload_ids => upload_ids,
+      :google_doc_ids => google_doc_ids
     }
     
     base[:type] = self.class.to_s if options[:emit_type]
@@ -57,7 +59,15 @@ class Comment
     if Array(options[:include]).include?(:uploads) && uploads.any?
       base[:uploads] = uploads.map {|u| u.to_api_hash(options)}
     end
-    
+
+    if Array(options[:include]).include?(:google_docs) && google_docs.any?
+      base[:google_docs] = google_docs.map {|u| u.to_api_hash(options)}
+    end
+
+    if Array(options[:include]).include?(:assigned)
+      base[:assigned] = assigned
+    end
+
     if Array(options[:include]).include? :user
       base[:user] = {
         :username => user.login,

@@ -118,7 +118,7 @@ class Comment < ActiveRecord::Base
   end
   
   def references
-    refs = { :users => [user_id], :projects => [project_id], :uploads => upload_ids }
+    refs = { :users => [user_id], :projects => [project_id], :uploads => upload_ids, :google_docs => google_doc_ids }
     refs.merge!({ target_type.tableize.to_sym => [target_id] })
     refs[:people] = []
     refs[:people] << assigned_id if assigned_id

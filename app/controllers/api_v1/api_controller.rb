@@ -166,6 +166,8 @@ class ApiV1::APIController < ApplicationController
         comments + new_refs
       when 'Upload'
         Upload.where(:id => values).includes(:page_slot).all
+      when 'GoogleDoc'
+        GoogleDoc.where(:id => values).all
       when 'Note'
         Note.where(:id => values).includes(:page_slot).all
       when 'Conversation'
