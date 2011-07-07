@@ -18,7 +18,7 @@
       else content.fire('facebox:opened', { type: classname })
     },
     openImage: function(src, alt) {
-      this.open('Loading image ...', 'loading')
+      this.openLoading()
       var image = new Image()
       image.onload = function() {
         this.open('<a href="' + src + '"><img src="' + src + '"></a>', 'image', alt)
@@ -31,7 +31,7 @@
       image.src = src
     },
     openUrl: function(url, extra) {
-      this.open('Loading ...', 'loading')
+      this.openLoading()
       new Ajax.Request(url, {
         method: 'get',
         onSuccess: function(response) {
@@ -41,6 +41,10 @@
           this.open('<br/><p>There has been an error.</p>', 'error')
         }.bind(this)
       })
+    },
+    openLoading: function() {
+      var loading_img = '<img src="/images/loading.gif" class = "loading" style="inline-block"/>'
+      this.open(loading_img + ' Loading ...', 'loading')
     },
     close: function() {
       if (element.getStyle('display') == 'block') {
