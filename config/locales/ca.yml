@@ -242,13 +242,13 @@ ca:
       save: "Guardar els canvis"
   calendar: 
     abbr_weekdays: 
+      - Dg
       - Dl
       - Dm
       - Dx
       - Dj
       - Dv
-      - Dx
-      - Dg
+      - Ds
     clear: Netejar
     now: Ara
     ok: OK
