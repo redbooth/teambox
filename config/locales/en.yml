@@ -1,6 +1,47 @@
 # Original translation
 # Mark missing translations by adding ##### at the end of the line
 en:
+  marketing:
+    home: Home
+    home_title: Home | Teambox
+    pricing: Pricing
+    pricing_title: Plans & Pricing
+    what_is_teambox: What is Teambox?
+    what_is_teambox_title: Features & Information
+    about_teambox: About Teambox
+    about_teambox_title: About Teambox
+    tour: Tour
+    tour_title: Project collaboration for agile teams
+    case_studies: Case studies
+    case_studies_title: Companies using Teambox and their testimonials
+    newsletters: Past newsletters
+    newsletters_title: Corporate communications
+    webinars: Previous and upcoming webinars
+    webinars_title: Online training sesssions for task management
+    history: The Teambox Story
+    history_title: Origins and milestone for Teambox
+    press: Press room
+    press_title: Teambox logo, PR notes and press releases
+    tour_projects: Projects
+    tour_projects_title: Project Management tools
+    tour_conversations: Conversations
+    tour_conversations_title: Status messaging
+    tour_tasklists: Task lists
+    tour_tasklists_title: Getting Things Done and Task management
+    tour_pages: Pages
+    tour_pages_title: Wiki Software with Pages
+    tour_files: Files
+    tour_files_title: File sharing and Dropbox alternative
+    tour_time: Time tracking
+    tour_time_title: Time tracking software
+    tour_social: Social tools
+    tour_social_title: Social productivity software
+    tour_video: Watch video
+    tour_video_title: Tutorial video for Teambox
+    change_locale:
+      another_language_available: "This page is also avaliable in %{language}"
+      accept: "View in %{language}"
+      cancel: "Hide this"
   # if latest_announcement is less than 5 characters, it will not be displayed
   latest_announcement_html: "<strong>New</strong>: Earn money by referring new users into Teambox. Log in and go into your affiliate area to make up a 15% of the income you generate!<br/><br/>Read <a href='http://blog.teambox.com'>our blog</a> for more news about Teambox."
   common:
@@ -171,6 +212,22 @@ en:
     watcher:
       remove: remove
   users:
+    help_box:
+      videos:
+        link: Watch the tutorial videos
+        text: "if it's your first time here"
+      guide:
+        link: "Read the User Guide"
+        text: to get started
+      tips:
+        link: "Learn our staff's tips"
+        text: to master your Teambox
+      support:
+        link: "Contact support"
+        text: if you need help
+      feedback:
+        link: "Send us your feedback and ideas"
+        text: to help us improve
     form:
       login: Username
       first_name: First name
@@ -226,11 +283,22 @@ en:
         digest_option_weekly: Weekly digest
         digest_option_instant: Instant
         digest_option_none: No email
+        digest_option_instant: Instant notification
+      linked_accounts:
+        find_more_contacts: Find more contacts by linking your accounts
+        link_your_accounts: Link your social network profiles to find your friends!
+        teambox_integrates_services: We integrate with services you already use. Get the most out of Teambox by connecting your accounts.
+        no_spam_html: We hate spam! Teambox will <b>not</b> send unsolicited messages to your contacts.
       invalid_login: "use only letters, numbers and underscores"
       delete:
-        steps_before_1: "To delete your Teambox account, you first need to leave or delete all your current projects."
-        steps_before_2: "This will ensure that no other users will lose data on their projects when you delete your account."
-        steps_before_3: "Leave or delete your current projects and then come back to this page to delete your account."
+        project:
+          steps_before_1: "To delete your Teambox account, you first need to leave or delete all your current projects."
+          steps_before_2: "This will ensure that no other users will lose data on their projects when you delete your account."
+          steps_before_3: "Leave or delete your current projects and then come back to this page to delete your account."
+        organization:
+          steps_before_1: "You can't delete your Teambox account if you are the last administrator of a paid organization."
+          steps_before_2: "In order to delete your account you need to give administrator privilege to at least one other member of the organization, or downgrade this organization to a free plan."
+          steps_before_3: "Give administrator to another user or downgrade your organizations and come back to this page to delete your account."
         what_will_happen: "After deleting your account, your Teambox profile will not be accessible anymore."
         delete_my_account: "Delete my account now"
         account_deleted: "Your account has been deleted. We will miss you!"
@@ -277,6 +345,31 @@ en:
       activated: "Your account has been activated! Welcome to Teambox :)"
       invalid_html: "<p>Invalid or expired access link. Login with your email and password.</p><p>If you don't remember your login data, follow the Forgot your Password link.</p>"
       invalid_user: Invalid user
+    link_profiles:
+      twitter:
+        title: Twitter
+        connect: Connect your account to...
+        reason1: Connect to your contacts
+        reason2: Log in with one click
+        reason3: Future integrations
+        connect: Connect Twitter
+      google:
+        title: Google Account
+        connect: Connect to integrate with...
+        reason1: Google Docs
+        reason2: Google Contacts
+        reason3: Future integrations
+        connect: Connect Google
+      facebook:
+        title: Facebook
+        connect: Connect your account to...
+        reason1: Find your friends
+        reason2: Import your Address Book
+        reason3: Log in with one click
+        connect: Connect Facebook
+      connected: Connected!
+      expired: Expired!
+      renew: Renew now
     show:
       profile: Profile
       projects: Projects
@@ -580,7 +673,7 @@ en:
         get_storage_html: "Up to <b>%{number}</b>"
       yearly_plans:
         save_with_yearly_plans_html: <b>Save 20%</b>. You can also sign up for any plan yearly and <b>get two months free</b>.
-        signup_links_html: "Sign up yearly for <a href='%{corporate}'>Corporate ($2990)</a>, <a href='%{pro}'>Pro ($990)</a>, <a href='%{basic}'>Basic ($290)</a> or <a href='%{personal}'>Personal ($120)</a>."
+        signup_links_html: "Sign up yearly for <a href='%{pro}'>Pro ($990)</a>, <a href='%{basic}'>Basic ($290)</a> or <a href='%{personal}'>Personal ($120)</a>."
     fields:
       name_html: "Organization name"
       name_placeholder: Your organization
@@ -638,7 +731,7 @@ en:
       not_with_projects: You can't destroy this organization because it still has projects
       go_delete_some_projects_html: "You can't delete an organization while it still has projects inside. Please <a href='%{link}'>delete or transfer</a> all the projects from this organization before deleting it."
       not_paid_plan: You can't delete an organization with a paid plan.
-      go_downgrade_to_free_plan: "You need to <a href='%{link}'>unsubscribe</a> from the paid plan before deleting the organization. You can downgrade your account to the free plan from the <a href='%{link}'>billing</a> section."
+      go_downgrade_to_free_plan_html: "You need to <a href='%{link}'>unsubscribe</a> from the paid plan before deleting the organization. You can downgrade your account to the free plan from the <a href='%{link}'>billing</a> section."
       delete: Delete this organization
       clarification: "If you delete this organization, all the information that's attached to it organization will be lost forever. The users that belong to this organization will still be able to login to Teambox and work with their other organizations."
       confirm: I understand that deleting this organization is irreversible and all the content related to this organization will be lost.
@@ -1197,8 +1290,8 @@ en:
       new_file: Upload a File
       cant_create: "You don't have permission to upload files to this project"
       max_upload_size: "Max upload size is %{mb} Mb"
-      current_storage_size: "You can upload %{bytes} more in the organization %{organization_name}.<br/><br/><a href='%{url}'>Upgrade</a> your plan to store more documents."
-      no_storage_left: "You have reached the storage limit for your organization.<br/><br/><a href='%{url}'>Upgrade</a> your plan now."
+      current_storage_size_html: "You can upload %{bytes} more in the organization %{organization_name}.<br/><br/><a href='%{url}'>Upgrade</a> your plan to store more documents."
+      no_storage_left_html: "You have reached the storage limit for your organization.<br/><br/><a href='%{url}'>Upgrade</a> your plan now."
     form:
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed %{mb} MB"
@@ -1220,7 +1313,7 @@ en:
       remove: Delete
       on_: "on"
     errors:
-      exceeded_storage_plan_limit: "You have exceeded your storage quota for %{organization_name}. To increase your storage limits, <a href='%{url}'>upgrade your plan now</a>."
+      exceeded_storage_plan_limit_html: "You have exceeded your storage quota for %{organization_name}. To increase your storage limits, <a href='%{url}'>upgrade your plan now</a>."
       general:  "There was an error uploading the file"
   sessions:
     fields:
@@ -1229,13 +1322,13 @@ en:
       forgot: Forgot your password?
       signup: Sign up for an account
     new:
-      title: Login
+      title: Log in
       video: What's Teambox about?
-      submit: Login
+      submit: Log in
       login_failed: "Couldn't log you in as %{login}. Try inserting your email and password, or use Forgot your Password to set a new one."
   sites:
     show:
-      submit: Login
+      submit: Log in
     fields:
       password: Password
       username_or_email: Email or Username
@@ -1256,12 +1349,12 @@ en:
         configure_html: "Your plan supports custom branding and domain names. <a href='%{link}'>Configure your branding here</a>."
         not_available_html: "Your plan doesn't support <strong>custom branding</strong>. Upgrade to a higher account to get it."
     copies:
-      copy1_html: "Liking Teambox? We're full-time workers! <a href='%{link}'>Upgrade now</a> to support our development!"
+      copy1_html: "Like Teambox? Get more projects! <a href='%{link}'>Upgrade now</a> to support our development!"
       copy2_html: "<a href='%{link}'>Upgrade now</a> to get more projects, storage and search across all projects."
-      copy3_html: "<a href='%{link}'>Get more done</a> with a premium account! Extra storage, up to 2000 projects."
-      copy4_html: "<a href='%{link}'>Work better</a> with a premium account: Search bar across all projects."
+      copy3_html: "<a href='%{link}'>Get more done</a> with a premium account! Extra storage, more projects."
+      copy4_html: "<a href='%{link}'>Make work better</a> with a premium account: Search bar across all projects."
       copy5_html: "<a href='%{link}'>Upgrade your Teambox account now</a> and enjoy professional collaboration!"
-      copy6_html: "Search bar across all projects could save you hours. <a href='%{link}'>Upgrade now</a> to have it!"
+      copy6_html: "A search bar across all projects will save you hours. <a href='%{link}'>Upgrade now</a> to get it!"
       copy7_html: "Your business matters! <a href='%{link}'>Get the best support</a> for Teambox with our premium plans."
 
   shared:
@@ -1269,6 +1362,11 @@ en:
       go_to_your_email_to_confirm: Go to %{email} to confirm your account.
       resend_email: Resend the instructions
       change_email: use a different e-mail address
+    invite_contacts:
+      title: Invite your friends to Teambox
+      find_more_contacts: Find more contacts
+      note1: Your contacts will not be invited to your projects.
+      note2: They will be able to create their own accounts.
     strip:
       archived_html: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
     collapsed_mode: View threads collapsed
@@ -1294,6 +1392,7 @@ en:
       open_my_tasks: Open all my tasks
       show_all_tasks: View all tasks in my projects...
       organizations: Organizations
+      dropbox: Dropbox folders
       show_all_organizations: "Manage organizations..."
       gantt_and_calendars: Gantts and calendars
       affiliate: Affiliate area
@@ -1314,7 +1413,7 @@ en:
       people: People
       pages: Pages
       time_tracking: Time Tracking
-      login: Login
+      login: Log in
       signup: Signup
       files: Files
       invitations: Invitations
@@ -1325,10 +1424,10 @@ en:
       project_invitations: Project Invitations
       home: Home
       logout: Logout
-      login: Login
+      login: Log in
       project_invitations: "Invitations (%{count})"
       settings: Settings
-      help: Help
+      help: "Help & Feedback"
     public_navigation:
       home: Teambox
       tour: Tour
@@ -1837,6 +1936,7 @@ en:
     en: English
     pl: Polish
     tr: Turkish
+    es: Spanish
 
   date:
     yesterday: Yesterday
@@ -1933,4 +2033,33 @@ en:
       new: New Task List Template
     form:
       name_html: Template name <i>eg. Design process</i>
+
+  friends:
+    index:
+      pending_invitation: Invitations pending...
+      find_more_contacts: Find more contacts on Teambox
+    pending_invitation:
+      teambox: "was invited to join Teambox %{on} through %{provider}"
+      project: "was invited to join the project '%{project}' through %{provider}"
+      delivery_fail: "we try to deliver the invitation through %{provider} but an error occure. You can manually invite this person by sending the sign up link:"
+    project:
+      title: "Invite contacts to the '%{project}' project."
+    filter:
+      title: Filter friends
+      provider: Filter by provider...
+      name: Filter by name...
+    friend:
+      inviting: Inviting...
+      invite: Invite
+      reinvite: Resend invitation
+      sent: Sent!
+      profile_page: profile page
+      loading: Loading your friends...
+    invitations:
+      twitter:
+        signup: "Join my Teambox so we can share projects: %{link}"
+        project: "Join my '%{project}' project so we can share tasks: %{link}"
+      facebook:
+        signup: "Join my Teambox so we can share projects and tasks online. Follow the link below this post on Facebook."
+        project: "Join my '%{project}' project on Teambox so we can share tasks online. Follow the link below this post on Facebook"
 
