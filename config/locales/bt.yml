@@ -1208,7 +1208,7 @@ bt:
       title: "%{name}"
       you_cant_access: "Ти нямаш разрешение за достъп или за редактиране на тази организация."
     fields: 
-      domain_html: "Домейн em>Ти можеш да изполваш твоя собствен домейн за твоята организация, виж <a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title ='How to use your own domain for your organization in Teambox'>документацията</a>.</em>"
+      domain_html: "Домейн em>Ти можеш да изполваш твоя собствен домейн за твоята организация, виж <a href='http://help.teambox.com/knowledgebase/articles/10247-custom-domain' title ='How to use your own domain for your organization in Teambox'>документацията</a>.</em>"
       name_html: "Име на организацията"
       name_placeholder: "Твоята организация"
       permalink_html: "Кратък организационен код<em>Не са позволени разстояния. Ще бъде използван за уеб адреса.</em>"

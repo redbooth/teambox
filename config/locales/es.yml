@@ -1243,7 +1243,7 @@ es:
       title: "%{name}"
       you_cant_access: "Usted no tiene permiso de acceso o editar esta organización."
     fields: 
-      domain_html: "Dominio <em>Puedes utilizar tu propio dominio para tu organización, compruébalo en la <a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='Cómo utilizar tu propio dominio para tu organización en Teambox'>documentación</a>.</em>"
+      domain_html: "Dominio <em>Puedes utilizar tu propio dominio para tu organización, compruébalo en la <a href='http://help.teambox.com/knowledgebase/articles/10247-custom-domain' title='Cómo utilizar tu propio dominio para tu organización en Teambox'>documentación</a>.</em>"
       name_html: "Nombre de la organización"
       name_placeholder: "Tu organización"
       permalink_html: "Código de la organización corto <em>No se permiten espacios. Será utilizado para la dirección web.</em>"
