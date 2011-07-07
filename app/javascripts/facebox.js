@@ -13,6 +13,7 @@
       else
         setExtras(default_close, '')
       element.setStyle({ display: 'block' })
+      element.select('.loading').invoke('setStyle', {display: 'block'})
       if (classname == 'loading') content.fire('facebox:loading')
       else content.fire('facebox:opened', { type: classname })
     },
