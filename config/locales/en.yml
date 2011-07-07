@@ -2041,7 +2041,7 @@ en:
     pending_invitation:
       teambox: "was invited to join Teambox %{on} through %{provider}"
       project: "was invited to join the project '%{project}' through %{provider}"
-      delivery_fail: "we try to deliver the invitation through %{provider} but an error occure. You can manually invite this person by sending the sign up link:"
+      delivery_fail: "we tried to deliver the invitation through %{provider} but an error occurred. You can manually invite this person by sending the sign up link:"
     project:
       title: "Invite contacts to the '%{project}' project."
     filter:
