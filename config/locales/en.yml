@@ -1317,6 +1317,7 @@ en:
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed %{mb} MB"
       select_file: Select file
+      description_html: Title <i>(optional)</i>
       upload: Upload file
       max_upload_size: "Max upload size is %{mb} Mb"
     primer:
