@@ -1231,7 +1231,7 @@ de:
       title: "%{name}"
       you_cant_access: "Du haste keine Berechtigung dieser Organisation beizutreten oder sie zu bearbeiten."
     fields: 
-      domain_html: "Domain <em>Du kannst deine eigene Domain für deine Teambox Organisation verwenden. Bitte siehe dir die <a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='Wie man seine eigene Domain für die Organisation verwendet'>Dokumentation</a> an.</em>"
+      domain_html: "Domain <em>Du kannst deine eigene Domain für deine Teambox Organisation verwenden. Bitte siehe dir die <a href='http://help.teambox.com/knowledgebase/articles/10247-custom-domain' title='Wie man seine eigene Domain für die Organisation verwendet'>Dokumentation</a> an.</em>"
       name_html: "Name der Organisation"
       name_placeholder: "Deine Organisation"
       permalink_html: "Kurzer Organisations-Name <em>Keine Leerzeichen erlaubt. Wird in der URL genutzt.</em>"
