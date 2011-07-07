@@ -1241,7 +1241,7 @@ ca:
       title: "%{name} "
       you_cant_access: "Vostè no té permís d'accés ni d'edició aquesta organització."
     fields: 
-      domain_html: "Domini &lt;em&gt;Podeu utilitzar el vostre propi domini per a la vostra organització; comproveu &lt;a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='Com utilitzar el vostre propi domini per a la vostra organització a Teambox'&gt;documentació&lt;/a&gt;.&lt;/em&gt; "
+      domain_html: "Domini &lt;em&gt;Podeu utilitzar el vostre propi domini per a la vostra organització; comproveu &lt;a href='http://help.teambox.com/knowledgebase/articles/10247-custom-domain' title='Com utilitzar el vostre propi domini per a la vostra organització a Teambox'&gt;documentació&lt;/a&gt;.&lt;/em&gt; "
       name_html: "Nom de l'organització"
       name_placeholder: "La vostra organització"
       permalink_html: "Codi curt de l'organització &lt;em&gt;Sense espais. S'utilitzarà per l'adreça web.&lt;/em&gt; "
