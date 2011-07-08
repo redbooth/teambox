@@ -261,7 +261,7 @@ describe ApiV1::ConversationsController do
       response.should be_success
 
       data = JSON.parse(response.body)
-      objects = data['objects']
+      objects = data
       objects.should_not be_empty
       last_comment_id = @conversation.recent_comments(true).detect {|c| c.body.include?('modified')}.id
       objects['recent_comment_ids'].should include(last_comment_id)
