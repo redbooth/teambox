@@ -29,6 +29,7 @@
 //= require <modules/params>
 //= require <modules/view_compiler>
 //= require <modules/uploader>
+//= require <modules/clock>
 
 // TODO: move it to modules
 //= require <lib/teambox_api>
