@@ -1,21 +1,22 @@
 (function  () {
 
-  var ViewCompiler = function (path) {
-    var template = Templates;
+  var ViewCompiler = function (path, content) {
+    var template = content
+    , jade_opts = { cache: true, self: true};
 
-    _.each(path.split('.'), function (el) {
-      template = template[el];
-    });
+    if (path) {
+      template = Templates;
+      _.each(path.split('.'), function (el) {
+        template = template[el];
+      });
+
+      jade_opts.filename = path;
+    }
 
     // <3 curry
     return function (locals) {
-
       _.defaults(locals || {}, Teambox.helpers.jade);
-
-      return require('jade').compile(
-        template
-      , {filename: path, cache: true, self: true}
-      )(locals);
+      return require('jade').compile(template, jade_opts)(locals);
     };
   };
 

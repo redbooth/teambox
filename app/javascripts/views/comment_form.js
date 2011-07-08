@@ -13,6 +13,7 @@
   , 'submit .new_comment'          : 'postComment'
   , 'click span.convert_to_task a' : 'toggleConvertToTask'
   , 'click .date_picker'           : 'showCalendar'
+  , 'click  a.private_switch'      : 'togglePrivateElements'
   };
 
   CommentForm.initialize = function (options) {
@@ -21,6 +22,7 @@
     this.convert_to_task = options.convert_to_task;
     this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
     this.watchers = new Teambox.Views.Watchers({model: this.model});
+    this.private_elements = new Teambox.Views.PrivateElements({comment_form: this, model: this.model});
     this.thread = options.thread;
   };
 
@@ -63,7 +65,11 @@
       // upload area
       .insert({before: this.upload_area.render().el})
       // watchers box
-      .insert({before: this.watchers.render().el});
+      .insert({before: this.watchers.render().el})
+      // private elements box
+      .insert({before: this.private_elements.render().el});
+
+
 
     return this;
   };
@@ -86,6 +92,8 @@
       this.el.select('.hours_field').invoke('hide');
     }
 
+    this.private_elements.reset();
+
     this.el.select('.error').invoke('remove');
     this.el.select('.x-pushsession-id').invoke('remove');
 
@@ -95,10 +103,13 @@
 
   CommentForm.addComment = function (m, resp, upload) {
     var comment_attributes = this.model.parseComments(resp);
+    this.model.set(this.model.parseModelData(resp), {is_silent: true});
 
     this.reset();
     this.model.attributes.last_comment = comment_attributes;
     this.model.attributes.recent_comments.push(comment_attributes);
+
+
     this.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user));
   };
 
@@ -244,6 +255,10 @@
       textarea.insert({after: container});
       this.autocompleter = new Autocompleter.Local(textarea, container, people, {tokens: [' ']});
     }
+  };
+
+  CommentForm.togglePrivateElements = function(event) {
+    this.private_elements.toggle(event);
   };
 
   // exports

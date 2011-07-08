@@ -1,0 +1,7 @@
+.private_users
+  - each person in self.people
+    - var is_checked = (self.watcher_ids == null || self.watcher_ids.indexOf(person.get('user_id')) >= 0);
+    - if (is_checked)
+      .private_user
+        label= self.full_name(person.get('user'))
+

@@ -18,6 +18,25 @@
     return this.get('type') === 'Task';
   };
 
+  /* Returns the prefixed model id
+   *
+   * @return {String}
+   */
+  Thread.prefix = function () {
+    return this.get('type').toLowerCase() + '_' + this.id;
+  };
+
+  /* Returns the downcased classname
+   *
+   * @return {String}
+   */
+  Thread.type = function () {
+    return this.get('type').toLowerCase();
+  };
+
+
+
+
   /* Checks if the thread is a Conversation
    *
    * @return {Boolean}
@@ -52,6 +71,19 @@
     return this.url() + '/comments';
   };
 
+  Thread.parseModelData = function(response) {
+    var thread_attributes = ( response.objects || response )
+
+    return _.reduce(thread_attributes, function(attrs, v, k) {
+      var checkType = function(type) {
+        return (_.any(['_method','utf8','commit'], function(a) {return k === a;})) ? false : typeof v != type;
+      };
+
+     if (_.all(['object', 'function'], checkType)) { attrs[k]= v; }
+     return attrs;
+    }, {});
+  };
+
   /* Parses response and builds an array of comments attached to the thread
    *
    * @param {Response} response
@@ -78,7 +110,8 @@
     }
 
     if (typeof comment_attributes.body_html === 'string') {
-      comment_attributes.body_html = comment_attributes.body_html.unescapeHTML();
+      comment_attributes.body = _.unescapeHTML(comment_attributes.body);
+      comment_attributes.body_html = _.unescapeHTML(comment_attributes.body_html);
     }
 
     return comment_attributes;

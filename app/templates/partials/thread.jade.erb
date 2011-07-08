@@ -9,6 +9,7 @@
 
   .block
     .thread_title
+      .lock_icon
       - if (self.is_task)
         a(href= self.task_url(self, self.project))= self.name + ' on'
 

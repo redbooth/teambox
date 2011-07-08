@@ -83,6 +83,7 @@
 //= require <views/sidebar>
 //= require <views/upload_area>
 //= require <views/google_docs>
+//= require <views/private_elements>
 
 //= require <views/task_lists/index>
 //= require <views/task_lists/form>
@@ -146,7 +147,6 @@
 //= require <person>
 //= require <preview>
 //= require <quick_add_pane>
-//= require <private_elements>
 //= require <sessions>
 //= require <splash>
 //= require <task>
