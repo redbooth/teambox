@@ -78,11 +78,13 @@
 
         socket.on('connect', function() {
           self.app.setPushSessionId(socket.sessionID);
+          self.app.synchroniseClock();
           console.log("connected: ", socket.sessionID);
         });
 
         socket.on('disconnect', function() {
           self.app.setPushSessionId(false);
+          self.app.dontSynchroniseClock();
           console.log("disconnected: ");
         });
 

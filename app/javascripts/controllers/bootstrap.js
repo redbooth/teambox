@@ -14,10 +14,12 @@
               window.location.hash = '#!/';
             }
 
+            self.clock = Teambox.modules.Clock;
+            self.clock.init(self.clockTick.bind(self));
             self.notificationsController = new Teambox.Controllers.Notifications(self);
             self.build();
             Backbone.history.start();
-          });
+          }, true);
 
       Backbone.Controller.prototype.initialize.call(this, options);
 
@@ -40,8 +42,55 @@
       });
     }
 
-  , projectsLoaderCallback: function(_loader) {
+    //Fetch data from server on each clock tick
+    //"unless" we're synchronizing (.e.g push is active)
+    //"or" we're currently inside a clock tick (fetch)
+  , clockTick: function(clock) {
+      console.log('tick - ' + new Date() + ' - fetching data from server...');
+
+      //Every 4 seconds, interval is doubled unless clock.reset(x) is called.
+      //We call fetch on each poll unless we have a valid push connection.
+      //Push connect event, disables polling.
+      //Push disconnect event, enables polling.
+      //Call clock.activity() to reset the timer (so the interval is reset to it's original value)
+      //Call clock.synchronise() to disable polling.
+      //Call clock.synchronised() to enable polling.
+      //You can call clock.tick() whenever you want while not synchronizing
+
+      var self = this
+      , _loader = Teambox.modules.Loader(function () {
+        console.log('fetchData done! Synchronizing clock!');
+        //renable polling after last fetch
+        clock.synchronised();
+      })
+
+      , log = function(model_class) { return function() {console.log('Done fetching ' + model_class + '!'); }}
+      , load_projects = function(loader, logger) {
+          return self.projectsLoaderCallback(loader, logger);
+      };
+
+      this.fetchData({
+          user: _loader.load(log('user'))
+        , tasks: _loader.load(log('tasks'))
+        , threads: _loader.load(log('threads'))
+        , pages: _loader.load(log('pages'))
+        , projects: _loader.load(load_projects(_loader, log))
+      });
+    }
+
+  , synchroniseClock: function() {
+      console.log('Push connection! Synchronizing clock!');
+      this.clock.synchronise();
+    }
+
+  , dontSynchroniseClock: function() {
+      console.log('No push connection! Clock synchronized!');
+      this.clock.synchronised();
+    }
+
+  , projectsLoaderCallback: function(_loader, log) {
       return function (projects) {
+        if (log) { log('projects')(); }
         _.each(projects.models, function (project, i) {
           var collection;
 
@@ -50,6 +99,7 @@
           projects.models[i].set({task_lists: collection});
           collection.fetch({success: _loader.load(function (task_lists) {
             collections.tasks_lists.add(task_lists.models, {silent: true});
+            if (log) { log('task_lists')(); }
           })});
 
           // preload project >> conversations
@@ -57,6 +107,7 @@
           projects.models[i].set({conversations: collection});
           collection.fetch({success: _loader.load(function (conversations) {
             collections.conversations.add(conversations.models, {silent: true});
+            if (log) { log('conversations')(); }
           })});
 
           // preload project >> people
@@ -65,6 +116,7 @@
           collection.fetch({success: _loader.load(function (people) {
             try {
               collections.people.add(people.models, {silent: true});
+              if (log) { log('people')(); }
             } catch (e) {} // may try to add same task_list twice
           })});
         });

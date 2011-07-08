@@ -6,14 +6,17 @@
 
 (function () {
 
-  Teambox.modules.Loader = function (callback) {
+  Teambox.modules.Loader = function (callback, ui) {
     var LOADER = {loaded: 0, total: 0}
       , _body = $$('body')[0]
       , _loading_bar = $$('.loading .bar .fill')[0];
 
     callback = callback || function () {}; // noop
-    _body.addClassName('loading');
-    _loading_bar.setStyle({width: '0px'});
+
+    if (ui) {
+      _body.addClassName('loading');
+      _loading_bar.setStyle({width: '0px'});
+    }
 
     /* Curries a callback to handle parallel requests and update a loading_bar
      *
@@ -28,11 +31,15 @@
       return function () {
         cb.apply(cb, arguments);
         if (++LOADER.loaded === LOADER.total) {
-          _body.toggleClassName('loading');
+          if (ui) {
+            _body.toggleClassName('loading');
+          }
           return callback();
         } else {
-          var width = 130 * LOADER.loaded / LOADER.total;
-          _loading_bar.setStyle({width: width + "px"});
+          if (ui) {
+            var width = 130 * LOADER.loaded / LOADER.total;
+            _loading_bar.setStyle({width: width + "px"});
+          }
         }
       };
     };
