@@ -17,8 +17,10 @@
   Thread.initialize = function (options) {
     _.bindAll(this, "render");
 
+
     this.model.attributes.is_task = this.model.get('type') === 'Task';
     this.model.bind('comment:added', Thread.addComment.bind(this));
+    this.model.bind('comment:added', Thread.updateThreadAttributes.bind(this));
 
     var Views = Teambox.Views;
     this.convert_to_task = new Views.ConvertToTask({model: new Teambox.Models.Conversation(this.model.attributes)});
@@ -127,19 +129,28 @@
     //document.fire("stats:update");
   };
 
+  /* updates thread tag attributes
+   *
+   * @return {Object} self
+   */
+  Thread.updateThreadAttributes = function() {
+    // Add data attributes to the DOM.
+    this.el.writeAttribute({
+      'className': this.model.get('is_private') ? 'thread private' : 'thread'
+    , 'data-class': this.model.get('type').toLowerCase()
+    , 'data-id': this.model.get('id')
+    , 'data-project-id': this.model.get('project_id')
+    });
+  };
+
+
   /* updates thread el using a template
    *
    * @return {Object} self
    */
   Thread.render = function () {
+    this.updateThreadAttributes();
     this.convert_to_task.comment_form = this.comment_form;
-
-    // Add data attributes to the DOM.
-    this.el.writeAttribute({
-      'data-class': this.model.get('type').toLowerCase()
-    , 'data-id': this.model.get('id')
-    , 'data-project-id': this.model.get('project_id')
-    });
 
     // Prepare the thread DOM element
     this.el.update(this.template(this.model.getAttributes()));

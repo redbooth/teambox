@@ -1,0 +1,15 @@
+.private_users
+  .private_all
+    input(id="#{self.model.prefix()}_private_all", name="comments_attributes[0][all_private]", type="checkbox", value="true")
+    label(for="#{self.model.prefix()}_private_all")
+      = I18n.translations.comments['private']['all']
+  - each person in self.people
+    - if (person.get('user_id') === Teambox.models.user.id || person.id === self.assigned_id) 
+      input(type="hidden", name="comments_attributes[0][private_ids][]", value="#{person.get('user_id')}")
+    - else
+      - var ident = self.model.prefix() +'_private_'+ person.get('user_id');
+      - var is_checked = (self.watcher_ids === null || self.watcher_ids.indexOf(person.get('user_id')) >= 0) ? 'checked' : '';
+      .private_user
+        input(checked="#{is_checked}", name="comments_attributes[0][private_ids][]", type="checkbox", value="#{person.get('user_id')}", id="#{ident}")
+        label(for="#{ident}")= self.full_name(person.get('user'))
+

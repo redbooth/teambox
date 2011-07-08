@@ -31,6 +31,7 @@ input(name= 'utf8', type= 'hidden', value= '✓')
         a(href= '#hours', class= 'add_hours_icon hoverable', title= '<%= t('comments.hours.tooltip_short') %>') <%= t('comments.hours.tooltip') %>
 
       a(href= '#', class= 'add_watchers hoverable', title= '<%= t('shared.watchers.notify_people')%>') <%= t('comments.watchers.label') %>
+      a(href='#privacy', class='private_switch hoverable', title='<%=t("comments.private.control")%>') <%=t("comments.private.privacy")%>
 
     - if (self.is_task)
       .task_actions

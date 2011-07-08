@@ -15,8 +15,12 @@ Teambox.Models.User = Teambox.Models.Base.extend({
     }
 
 
-  , username_template: Handlebars.compile(
-      "<a href='/users/{{username}}'>{{username}}</a>"
+  , username_template: Teambox.modules.ViewCompiler(false,
+      "a(href='/users/#{self.username}')= self.username"
+    )
+
+  , full_name_template: Teambox.modules.ViewCompiler(false, 
+      "a(href='/users/#{self.username}')= self.full_name(self)"
     )
 
     // Updates the username link on the header
