@@ -231,7 +231,7 @@ class ApiV1::APIController < ApplicationController
     is_new = options.delete(:is_new)
     status = options.delete(:status) || is_new ? :created : :ok
     respond_to do |f|
-      if is_new || options.delete(:wrap_objects) || false
+      if is_new || options.delete(:wrap_objects)
         content = {:json => api_wrap(object, options).to_json, :status => status}
         content[:callback] = params[:callback] if request.format.js?
 
