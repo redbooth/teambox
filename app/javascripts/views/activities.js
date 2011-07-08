@@ -61,7 +61,7 @@
    */
   Activities.render = function () {
     this.el.update('');
-    this.collection.each(this.appendActivity.bind(this));
+    this.collection.models.reverse().each(this.appendActivity.bind(this));
     this.el.insert({bottom: this.templates.show_more()});
 
     return this;

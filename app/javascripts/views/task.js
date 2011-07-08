@@ -30,7 +30,6 @@
     this.el.writeAttribute('id', 'task_' + this.model.id);
     this.el.writeAttribute('data-task-id', this.model.id);
 
-
     if (this.dragndrop && !this.model.isArchived()) {
       this.el.down('.taskStatus').insert({
         top: new Element('img', {alt: 'Drag', 'class': 'task_drag', src: '/images/drag.png'})

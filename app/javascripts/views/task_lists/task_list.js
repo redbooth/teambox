@@ -38,7 +38,7 @@
 
     this.el.update(this.template({task_list: this.model}));
     _.each(this.model.get('tasks'), function (el) {
-      self.el.down('.tasks').insert({top: (new Teambox.Views.Task({model: el})).render().el});
+      self.el.down('.tasks').insert({top: (new Teambox.Views.Task({model: el, dragndrop: true})).render().el});
     });
 
     this.el.down('.tasks').insert({bottom: (new Teambox.Views.TaskListsTaskForm({

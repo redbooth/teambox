@@ -64,8 +64,9 @@
       success: function (model, response) {
         self.parent_view.el.down('.tasks').insert({top: (new Teambox.Views.Task({model: model})).render().el});
         Teambox.collections.tasks.add(model, {at: 0});
+        Teambox.collections.threads.add((new Teambox.Models.Thread(response)), {at: 0});
         self.task_list.get('tasks').push(model);
-        self.toggle();
+        self.el.toggle();
       }
     });
   };
