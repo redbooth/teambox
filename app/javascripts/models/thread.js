@@ -20,10 +20,6 @@
     return this.get('type') === 'Task';
   };
 
-<<<<<<< HEAD
-  /**
-   * Checks if the thread is a Conversation
-=======
   /* Returns the prefixed model id
    *
    * @return {String}
@@ -41,10 +37,8 @@
   };
 
 
-
-
-  /* Checks if the thread is a Conversation
->>>>>>> priv_elements_3.2
+  /**
+   * Checks if the thread is a Conversation
    *
    * @return {Boolean}
    */
