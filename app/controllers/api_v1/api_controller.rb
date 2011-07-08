@@ -221,7 +221,7 @@ class ApiV1::APIController < ApplicationController
     is_new = options.delete(:is_new)
     status = options.delete(:status) || is_new ? :created : :ok
     respond_to do |f|
-      if is_new || options.delete(:wrap_objects) || false
+      if is_new || options.delete(:wrap_objects)
         f.json { render :json => api_wrap(object, options).to_json, :status => status }
         f.js   { render :json => api_wrap(object, options).to_json, :status => status, :callback => params[:callback] }
       else
