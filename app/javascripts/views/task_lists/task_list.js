@@ -1,5 +1,5 @@
 (function () {
-  var TaskList = { className: 'task_list'
+  var TaskList = { className: 'task_list_container'
                   , template: Teambox.modules.ViewCompiler('task_lists.task_list')
                   };
 
@@ -35,6 +35,8 @@
    */
   TaskList.render = function () {
     var self = this;
+
+    this.el.id = 'task_list_' + this.model.id;
 
     this.el.update(this.template({task_list: this.model}));
     _.each(this.model.get('tasks'), function (el) {

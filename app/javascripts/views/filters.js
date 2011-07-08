@@ -70,7 +70,6 @@
 
     TasksHelper.showAllTaskLists().displayAllTasks(false);
     tasks.invoke('show');
-    TasksHelper.foldEmptyTaskLists();
   };
 
   // expose

@@ -44,8 +44,8 @@
     }, []);
   };
 
-  /* updates tasks according to the filters
-   *
+  /**
+   * updates tasks according to the filters
    */
   Filter.updateTasks = function () {
 
