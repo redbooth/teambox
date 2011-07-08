@@ -1331,6 +1331,11 @@ en:
     errors:
       exceeded_storage_plan_limit_html: "You have exceeded your storage quota for %{organization_name}. To increase your storage limits, <a href='%{url}'>upgrade your plan now</a>."
       general:  "There was an error uploading the file"
+  folders:
+    form:
+      default_text: Enter a folder name
+    new:
+      submit: Create folder
   sessions:
     fields:
       username_or_email: Email or Username

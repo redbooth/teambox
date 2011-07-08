@@ -4,7 +4,7 @@
     .icon
       = image_tag '/famfamfam/folder.png'
     .full_row
-      = f.text_field :name, :value => t('.default_text'), :id => 'new_folder_name'
+      = f.text_field :name, :value => t('folders.form.default_text'), :id => 'new_folder_name'
       .actions
         = link_to t('common.cancel'), '#', :class => 'close'
-        = f.submit t('.submit'), :class => 'button'
+        = f.submit t('folders.new.submit'), :class => 'button'
