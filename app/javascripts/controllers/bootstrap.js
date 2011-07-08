@@ -31,13 +31,17 @@
       collections.threads  = this.my_threads  = new Teambox.Collections.Threads();
       collections.projects = this.my_projects = new Teambox.Collections.Projects();
 
-      // Fetch all data we're going to need
-      // Uses the Loader class, which updates the progress bar
-      models.user.fetch({success: _loader.load()});
-      collections.tasks.fetch({success: _loader.load()});
-      collections.threads.fetch({success: _loader.load()});
-      collections.pages.fetch({success: _loader.load()});
-      collections.projects.fetch({success: _loader.load(function (projects) {
+      this.fetchData({
+          user: _loader.load()
+        , tasks: _loader.load()
+        , threads: _loader.load()
+        , pages: _loader.load()
+        , projects: _loader.load(this.projectsLoaderCallback(_loader))
+      });
+    }
+
+  , projectsLoaderCallback: function(_loader) {
+      return function (projects) {
         _.each(projects.models, function (project, i) {
           var collection;
 
@@ -64,7 +68,20 @@
             } catch (e) {} // may try to add same task_list twice
           })});
         });
-      })});
+      }
+    }
+
+    /*
+    * Fetch all data we're going to need
+    * Uses the Loader class, which updates the progress bar
+    *
+    */
+  , fetchData: function(callbacks) {
+      models.user.fetch({success: callbacks.user});
+      collections.tasks.fetch({success: callbacks.tasks});
+      collections.threads.fetch({success: callbacks.threads});
+      collections.pages.fetch({success: callbacks.pages});
+      collections.projects.fetch({success: callbacks.projects});
     }
 
   , build: function () {
