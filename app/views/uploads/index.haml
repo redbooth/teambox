@@ -12,12 +12,12 @@
 - else
   %p= t('.cant_create')
 
-- if @parent_folder
+- if @current_folder
   .breadcrumbs
     = folder_breadcrumbs
   
 .uploads
-  - if @parent_folder
+  - if @current_folder
     = render 'uploads/parent_folder', :folder => @parent_folder
   = render 'uploads/new_folder'
   = render :collection => @folders, :partial => 'uploads/folder'
