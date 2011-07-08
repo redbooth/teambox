@@ -1301,7 +1301,6 @@ en:
     index:
       title: Files in %{project}
       new_file: Upload a File
-      new_folder: New Folder
       cant_create: "You don't have permission to upload files to this project"
       max_upload_size: "Max upload size is %{mb} Mb"
       current_storage_size_html: "You can upload %{bytes} more in the organization %{organization_name}.<br/><br/><a href='%{url}'>Upgrade</a> your plan to store more documents."
@@ -1310,10 +1309,10 @@ en:
       default_text: New folder name
       submit: Create folder
     form:
-      title: Upload a file
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed %{mb} MB"
-      description_html: Description and tags <i>(optional)</i>
+      select_file: Select file
+      description_html: Title <i>(optional)</i>
       upload: Upload file
       max_upload_size: "Max upload size is %{mb} Mb"
     primer:
@@ -1329,8 +1328,6 @@ en:
       uploaded_by: Uploaded by
       remove: Delete
       on_: "on"
-    parent_folder:
-      parent_folder: Parent folder...
     errors:
       exceeded_storage_plan_limit_html: "You have exceeded your storage quota for %{organization_name}. To increase your storage limits, <a href='%{url}'>upgrade your plan now</a>."
       general:  "There was an error uploading the file"

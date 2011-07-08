@@ -5,9 +5,12 @@
     .file
       = link_to folder.name, project_folder_path(@current_project, folder)
     .size
-      =# number_to_human_size upload.size
-    .author
-      = folder.user
+      -# TODO: Check if defined plural rules for folder and file words in other languages
+      = pluralize folder.folders_count, 'folder'
+      %br
+      = pluralize folder.uploads_count, 'file'
+    -#.author
+      =# folder.user
     .more
       [+]
 

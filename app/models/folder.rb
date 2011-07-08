@@ -4,7 +4,8 @@ class Folder < RoleRecord
   belongs_to :user
   belongs_to :project
   belongs_to :parent_folder, :class_name => 'Folder'
-  has_many :folders, :foreign_key => :parent_folder_id, :dependent => :destroy
+  has_many :folders, :foreign_key => :parent_folder_id, :conditions => {:deleted => false}
+  has_many :uploads, :foreign_key => :parent_folder_id, :conditions => {:deleted => false}
 
   # TODO: Validate it has a name, a project and a user
 
@@ -27,6 +28,15 @@ class Folder < RoleRecord
   # TODO: Can also create folders_count column to cache number of child folders for each folder
   def has_children?
     !folders.empty?
+  end
+
+  # TODO: Both methods below may be replaced by counter cache columns for better performance
+  def folders_count
+    folders.count
+  end
+
+  def uploads_count
+    uploads.count
   end
 
   def has_parent?

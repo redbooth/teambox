@@ -1,16 +1,14 @@
 $upload_icon_width: 16px
 
 .uploads
-  .upload, form.new_folder
-    position: relative
+  .upload
     font-size: 12px
     padding: 0 0 6px 5px
     border: 1px solid transparent
     &.alternate
       background: lighten($navbar, 30)
-    &.selected
+    &:hover
       background-color: #ffe
-    &:hover, &.selected
       border-color: #aaa
     .header
       display: block
@@ -18,7 +16,7 @@ $upload_icon_width: 16px
       padding: 0
       height: auto
       cursor: pointer
-    .icon, .file, .size, .author, .more, .full_row
+    .icon, .file, .size, .author, .more
       display: inline-block
       overflow: hidden
       white-space: nowrap
@@ -31,17 +29,6 @@ $upload_icon_width: 16px
       width: 400px
       a
         color: black
-    .full_row
-      width: 600px
-      input#new_folder_name
-        font-size: 12px
-        border: 1px solid #999
-        padding: 4px
-        margin: 5px 0 2px 2px
-        width: 200px
-      .actions
-        float: right
-        padding-top: 6px
     .size, .author
       width: 75px
       font-size: 10px
@@ -54,22 +41,11 @@ $upload_icon_width: 16px
     &:hover .more
       display: inline-block
     .reference
-      display: inline-block
-      position: absolute
-      border: 1px solid #aaa
-      border-top: 0
-      top: 25px
-      right: -1px
-      background-color: #ffe
+      display: block
+      padding: 7px 0px 2px 20px
       a
-        display: block
-        padding: 5px 15px
-        color: black
-        &:hover
-          background-color: $navbar
-          color: black
-          text-decoration: none
-          cursor: pointer
+        display: inline-block
+        margin-right: 10px
       a[data-method="delete"]
         color: red
 
@@ -129,8 +105,6 @@ $upload_icon_width: 16px
       width: 200px
     p.error
       margin: 0px
-  .description
-    margin: 30px 0
   .submit
     margin-top: 10px
 
@@ -140,10 +114,3 @@ $upload_icon_width: 16px
   padding: 1px
   &:hover
     border: 1px solid rgb(160, 160, 160)
-
-.breadcrumbs
-  margin: 25px 0
-  font-size: 12px
-  font-weight: bold
-  a
-
