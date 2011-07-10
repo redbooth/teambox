@@ -1301,6 +1301,7 @@ en:
     index:
       title: Files in %{project}
       new_file: Upload a File
+      new_folder: New Folder
       cant_create: "You don't have permission to upload files to this project"
       max_upload_size: "Max upload size is %{mb} Mb"
       current_storage_size_html: "You can upload %{bytes} more in the organization %{organization_name}.<br/><br/><a href='%{url}'>Upgrade</a> your plan to store more documents."
