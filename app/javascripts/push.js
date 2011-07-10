@@ -38,6 +38,8 @@
         var host = document.location.hostname === 'localhost' ?
           'localhost' : "push." + document.location.hostname;
 
+        //TODO: Catch any exceptions and desync clock
+        //TODO: Add clock.activity calls where appropriate
         var socket = new Juggernaut({
           host: host,
           port: port(),
