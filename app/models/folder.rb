@@ -7,6 +7,8 @@ class Folder < RoleRecord
   has_many :folders, :foreign_key => :parent_folder_id, :conditions => {:deleted => false}
   has_many :uploads, :foreign_key => :parent_folder_id, :conditions => {:deleted => false}
 
+  NAME_LENGTH = 3..40
+  
   # TODO: Validate it has a name, a project and a user
 
   #after_create  :log_create
@@ -30,6 +32,10 @@ class Folder < RoleRecord
     !folders.empty?
   end
 
+  def has_parent?
+    !parent_folder.nil?
+  end
+
   # TODO: Both methods below may be replaced by counter cache columns for better performance
   def folders_count
     folders.count
@@ -37,10 +43,6 @@ class Folder < RoleRecord
 
   def uploads_count
     uploads.count
-  end
-
-  def has_parent?
-    !parent_folder.nil?
   end
 
   protected

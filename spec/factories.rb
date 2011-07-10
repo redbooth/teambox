@@ -165,6 +165,12 @@ Factory.define :upload do |upload|
   upload.association(:user)
 end
 
+Factory.define :folder do |folder|
+  folder.name 'The X-Files'
+  folder.association(:project)
+  folder.association(:user)
+end
+
 Factory.define :page do |page|
   page.association(:user)
   page.association(:project)
