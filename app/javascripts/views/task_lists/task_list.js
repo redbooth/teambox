@@ -5,6 +5,9 @@
 
   TaskList.events = {
     'click .task .name': 'showComments'
+  , 'click .task_list_rename': 'showRename'
+  , 'click .task_list_set_dates': 'showSetDates'
+  , 'click a.inline_form_update_cancel': 'hideTaskListForm'
   };
 
   /**
@@ -26,6 +29,53 @@
   TaskList.showComments = function (evt) {
     evt.stop();
     evt.element().up('.task').down('.thread').toggle();
+  };
+
+  /**
+   * Toggles the rename form
+   *
+   * @param {Event} evt
+   */
+  TaskList.showRename = function (evt) {
+    evt.stop();
+    var head = evt.element().up('.head');
+
+    head.down('.actions_menu').hide();
+    head.down('span.task_list_name').hide();
+    head.down('.task_list_form').show().down('.name.text_field').show();
+  };
+
+  /**
+   * Toggles the set dates form
+   *
+   * @param {Event} evt
+   */
+  TaskList.showSetDates = function (evt) {
+    evt.stop();
+
+    var head = evt.element().up('.head');
+
+    head.down('.actions_menu').hide();
+    head.down('.task_list_form').show().down('.date_fields').show();
+  };
+
+  /**
+   * Hides task_list form
+   *
+   * @param {Event} evt
+   */
+  TaskList.hideTaskListForm = function (evt) {
+    evt.stop();
+
+    var head = evt.element().up('.head')
+      , task_list_form = head.down('.task_list_form');
+
+    head.down('.actions_menu').show();
+    head.down('span.task_list_name').show();
+
+    task_list_form.hide();
+    task_list_form.down('.date_fields').hide();
+    task_list_form.down('.name.text_field').hide();
   };
 
   /**
