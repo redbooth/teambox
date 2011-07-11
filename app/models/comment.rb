@@ -12,6 +12,7 @@ class Comment < ActiveRecord::Base
   belongs_to :previous_assigned, :class_name => 'Person'
 
   has_many :notifications, :dependent => :destroy
+  attr_accessor :do_rollback
 
   def task_comment?
     self.target_type == "Task"
@@ -232,7 +233,7 @@ class Comment < ActiveRecord::Base
   end
   
   def check_task
-    @last_comment_in_task = if target_type == 'Task' && target 
+    @last_comment_in_task = if @do_rollback && target_type == 'Task' && target
       list = target.comments.order('id DESC').limit(2)
       list.first.try(:id) == id && list.length > 1
     else

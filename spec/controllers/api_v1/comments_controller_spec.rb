@@ -380,4 +380,30 @@ describe ApiV1::CommentsController do
       @project.comments(true).length.should == 1
     end
   end
+  
+  describe "#destroy rollback" do
+    before do
+      task_comment_rollback_example(@project)
+    end
+    
+    it "reverts the status back to the previous status when destroyed as the last comment with do_rollback" do
+      login_as @project.user
+      put :destroy, :project_id => @project.permalink, :id => @task.comments.last.id
+      
+      @task = Task.find_by_id(@task.id)
+      @task.due_on.should == @old_time
+      @task.assigned_id.should == @old_assigned_id
+      @task.status.should == @old_status
+    end
+    
+    it "maintains the status if any other comments are destroyed" do
+      login_as @project.user
+      put :destroy, :project_id => @project.permalink, :id => @task.comments[1].id
+      
+      @task = Task.find_by_id(@task.id)
+      @task.due_on.should == @new_time
+      @task.status.should == @new_status
+      @task.assigned_id.should == @new_assigned_id
+    end
+  end
 end

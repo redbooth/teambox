@@ -54,6 +54,7 @@ class CommentsController < ApplicationController
   
   def destroy
     authorize! :destroy, @comment
+    @comment.do_rollback = true
     @comment.destroy
     
     if request.xhr?

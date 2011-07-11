@@ -139,6 +139,35 @@ def make_and_dump_the_teambox_dump
   Project.destroy_all
 end
 
+def task_comment_rollback_example(project)
+  @task = Factory(:task, :project => project)
+  @old_time = (Time.now + 2.days).to_date
+  @new_time = @old_time - 1
+  @new_assigned_id = @task.project.person_ids.first
+  @new_status = Task::STATUSES[:hold]
+
+  @task.updating_user = @task.user
+  @task.update_attributes :comments_attributes => [{:body => 'Lets think about this...'}]
+  @task.save
+
+  @task = Task.find_by_id(@task.id)
+  @task.assigned_id = 0
+  @task.due_on = @old_time
+  @task.updating_user = @task.user
+  @task.update_attributes :comments_attributes => [{:body => 'Do it in 2 days'}]
+  @task.save!
+
+  @task = Task.find_by_id(@task.id)
+  @old_status = @task.status
+  @old_assigned_id = @task.assigned_id
+  @task.assigned_id = @new_assigned_id
+  @task.due_on = @new_time
+  @task.status = @new_status
+  @task.updating_user = @task.user
+  @task.update_attributes :comments_attributes => [{:body => 'Bring it forward'}]
+  @task.save!
+end
+
 def decode_test_csv(body)
   CSV.parse(body)
 end

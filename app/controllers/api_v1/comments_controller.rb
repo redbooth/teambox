@@ -49,6 +49,7 @@ class ApiV1::CommentsController < ApiV1::APIController
   
   def destroy
     authorize! :destroy, @comment
+    @comment.do_rollback = true
     @comment.destroy
     
     handle_api_success(@comment)
