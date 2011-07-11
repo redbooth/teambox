@@ -1,4 +1,3 @@
-@javascript
 Feature: Folders
 
   Background:
@@ -15,4 +14,26 @@ Feature: Folders
     Then I should be on the page of the "Rails 6.0 features" folder
     And I should see "Rails 6.0 features" within ".breadcrumbs"
 
-
+  Scenario: Mislav browses a tree and uploads a file
+    Given a current project has nested folders
+    | name         |
+    | Director     |
+    | Tarantino    |
+    | Pulp Fiction |
+    | Mia Wallace  |
+    When I go to the uploads page of the "Ruby Rockstars" project
+    And I enter "Director" folder
+    Then I should be on the page of the "Director" folder
+    And I enter "Tarantino" folder
+    Then I should be on the page of the "Tarantino" folder
+    And I enter "Pulp Fiction" folder
+    Then I should be on the page of the "Pulp Fiction" folder
+    And I follow "Parent Folder"
+    Then I should be on the page of the "Tarantino" folder
+    And I follow "Director" within ".breadcrumbs"
+    Then I should be on the page of the "Director" folder
+    When I follow "Upload a File"
+    And I attach the file "features/support/sample_files/dragon.jpg" to "upload_asset"
+    And I press "Upload file"
+    And show me the page
+    Then I should see "dragon.jpg" within ".file_upload"

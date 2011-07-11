@@ -1,4 +1,4 @@
-%div[upload]{ :class => cycle('alternate', '') }
+%div[upload]{ :class => ['file_upload', cycle('alternate', '')] }
   .header
     .icon
       - icon_name = Upload::ICONS.include?(upload.file_type) ? upload.file_type : '_blank'
