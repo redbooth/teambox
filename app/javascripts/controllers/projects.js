@@ -41,6 +41,13 @@
     // render
     view.render();
 
+    // Hackish fix for scrollable drag'n'drops bug:
+    // https://prototype.lighthouseapp.com/projects/8887/tickets/59-drag-drop-problem-in-scroll-div
+    // http://www.ruby-forum.com/topic/188760
+    // https://prototype.lighthouseapp.com/projects/8887/tickets/122-scrollbar-causes-drag-drop-to-fail
+    Position.includeScrollOffsets = true;
+    view.makeAllTasksSortable();
+
     $('view_title').update(view.title);
   };
 

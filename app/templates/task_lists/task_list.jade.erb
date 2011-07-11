@@ -2,4 +2,4 @@
   .head
     img.task_drag(alt= 'Drag', src= '/images/drag.png')
     = self.task_list.get('name')
-  .tasks.open
+  .tasks.open(id= 'project_' + self.task_list.get('project_id') + '_task_list_' + self.task_list.id + '_the_main_tasks')

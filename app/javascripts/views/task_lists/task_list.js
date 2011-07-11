@@ -43,7 +43,7 @@
       self.el.down('.tasks').insert({top: (new Teambox.Views.Task({model: el, dragndrop: true})).render().el});
     });
 
-    this.el.down('.tasks').insert({bottom: (new Teambox.Views.TaskListsTaskForm({
+    this.el.down('.tasks').insert({after: (new Teambox.Views.TaskListsTaskForm({
       project: this.project
     , parent_view: this
     , task_list: this.model
