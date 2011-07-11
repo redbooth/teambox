@@ -87,14 +87,15 @@ describe ApiV2::ActivitiesController do
     it "includes nested objects" do
       login_as @user
 
-      get :index, :project_id => @project.permalink, :since_id => @project.activity_ids[1], :count => 1
+      get :index, :project_id => @project.permalink
       response.should be_success
 
       data = JSON.parse(response.body)
-      pending "Also check the values of the objects"
 
-      data.select { |a| a['target']['type'] == 'Project' && a['target']['id'] == @project.id }.should_not be_empty
-      data.select { |a| a['target']['type'] == 'Person' && a['target']['id'] == @project.people.last.id }.should_not be_empty
+      project = data.find { |a| a['target']['type'] == 'Project' && a['target']['id'] == @project.id }
+      project.should_not be_nil
+      person = data.find { |a| a['target']['type'] == 'Person' && a['target']['id'] == @project.people.last.id }
+      person.should_not be_nil
 
     end
 
@@ -123,13 +124,17 @@ describe ApiV2::ActivitiesController do
       task_activity['user']['username'].should == task.user.login
       task_activity['target']['name'].should == task.name
 
-      pending "Implement more nested stuff"
-      references.include?("#{conversation.first_comment.id}_Comment").should == true
-      references.include?("#{conversation.first_comment.user.id}_User").should == true
-      references.include?("#{task.first_comment.id}_Comment").should == true
-      references.include?("#{task.first_comment.user.id}_User").should == true
-      references.include?("#{upload.id}_Upload").should == true
-      references.include?("#{assigned_person.id}_Person").should == true
+      conversation_response = data.find { |a| a['target_type'] == 'Conversation' && a['target_id'] == conversation.id }['target']
+      conversation_response['first_comment']['id'].should == conversation.first_comment.id
+      conversation_response['first_comment']['user']['id'].should == conversation.first_comment.user.id
+
+      task_response = data.find { |a| a['target_type'] == 'Task' && a['target_id'] == task.id }['target']
+
+      task_response['first_comment']['id'].should == task.first_comment.id
+      task_response['first_comment']['user']['id'].should == task.first_comment.user.id
+      task_response['assigned_id'].should == assigned_person.id
+
+      data.find { |a| a['target_type'] == 'Upload' && a['target_id'] == upload.id }.should_not be_nil
 
       data.each do |obj|
         if obj['type'] == 'Conversation'

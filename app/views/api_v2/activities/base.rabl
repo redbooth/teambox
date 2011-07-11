@@ -3,16 +3,13 @@ attributes :id, :last_activity_id, :action, :user_id, :project_id, :target_id, :
 code(:created_at) { |a| a.created_at.to_s(:api_time) }
 code(:updated_at) { |a| a.updated_at.to_s(:api_time) }
 
-child(:target => :target) {
-  code(:type) { |t| t.class.to_s }
-  attributes :id
-  code(:name) { |t| t.name if t.respond_to?(:name) }
-}
+code(:target, :if => lambda { |a| a.target_type}) do |a|
+  partial("api_v2/#{a.target_type.pluralize.underscore}/activity", :object => a.target)
+end
 
-child(:comment_target => :comment_target) {
-  code(:type) { |ct| ct.class.to_s }
-  attributes :id
-}
+code(:comment_target, :if => lambda { |a| a.comment_target_type}) do |a|
+  partial("api_v2/#{a.comment_target_type.pluralize.underscore}/activity", :object => a.comment_target)
+end
 
 child(:user) { extends 'api_v2/users/base' }
 child(:project) { extends 'api_v2/projects/base' }
