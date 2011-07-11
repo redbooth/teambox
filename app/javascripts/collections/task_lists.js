@@ -41,6 +41,16 @@
     return this;
   };
 
+  /**
+   * Comparator function
+   *
+   * @param {Object} task_list
+   * @return {Integer}
+   */
+  TaskLists.comparator = function (task_list) {
+    return task_list.get('position');
+  };
+
   // exports
   Teambox.Collections.TaskLists = Teambox.Collections.Base.extend(TaskLists);
 

@@ -1,20 +1,20 @@
 class ApiV1::TaskListsController < ApiV1::APIController
   before_filter :load_task_list, :only => [:update,:show,:destroy,:archive,:unarchive]
-  
+
   def index
     authorize! :show, @current_project||current_user
-    
+
     context = if @current_project
       @current_project.task_lists.where(api_scope)
     else
       TaskList.where(:project_id => current_user.project_ids).where(api_scope)
     end
-    
+
     @task_lists = context.except(:order).
                           where(api_range('task_lists')).
                           limit(api_limit).
                           order('task_lists.id DESC')
-    
+
     api_respond @task_lists, :references => true
   end
 
