@@ -39,9 +39,38 @@
         .content_wrap
           .separator
             %span#view_title
-              All Projects
-            %span.unfold_aux= link_to "&larr;".html_safe, "#"
+              = t("navigation.recent_activity")
           .content#content
+            -# TODO: [MARKUP] Convert to simple conversation backbone view
+            %form#new_conversation_form
+              .big_avatar
+                %span
+              .textarea_big
+                %textarea{:cols => "40", :placeholder => "Write here"}
+              .info_new_conversation
+                .dropdown_projects
+                  %label.info_label{:for => "field_projects"} Comment on
+                  %div
+                    %input#field_projects{:autocomplete => "on", :placeholder => "Select a project", :type => "text"}/
+                    %a.dropdown_arrow{:href => "#"}
+                    %ol.dropdown_autocomplete
+                      %li Development
+                      %li Yoga projects
+                      %li Teambox
+                %a.button_blue{:href => "#"}
+                  %span Save
+                .new_comment_actions_div
+                  %span.info_label More actions
+                  %ol.new_comment_actions
+                    %li
+                      %a.btn_attach{:href => "#"}
+                    %li
+                      %a.btn_doc{:href => "#"}
+                    %li
+                      %a.btn_users{:href => "#"}
+                    %li
+                      %a.btn_lock{:href => "#"}
+
         .aux_wrap
           .separator
             Contextual
