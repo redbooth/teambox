@@ -42,6 +42,10 @@
       - if doc[:parameters]
         %h4= "Parameters you should pass"
         %pre= "\n" + JSON.pretty_generate(doc[:parameters])
+      - if doc[:optional_parameters]
+        %h4= "Parameters you can pass"
+        %pre= "\n" + JSON.pretty_generate(doc[:optional_parameters])
+
       - if doc[:example]
         %h4= "Example response"
         %pre= "\n" + JSON.pretty_generate(doc[:example])

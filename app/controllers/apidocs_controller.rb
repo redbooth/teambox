@@ -69,7 +69,26 @@ class ApidocsController < ApplicationController
     end
     
     def example_task(task_list, name)
-      @project.new_task(@apiman, task_list, {:name => name}).tap do |task|
+      @project.new_task(@apiman, task_list, {
+        :name => name, :comments_attributes => { 0 => { :body => 'modified....',
+                                 :uploads_attributes => {
+                                   0 => {
+                                     :asset => mock_upload("templates.txt", 'text/plain', "my data")
+                                   }
+                                 },
+                                 :google_docs_attributes => {
+                                   0 => {
+                                     :title => 'Some google doc',
+                                     :document_id => 'x123456789',
+                                     :document_type => 'document',
+                                     :url => 'http://google.com/docs/x1234567',
+                                     :edit_url => 'http://google.com/docs/x1234567/edit',
+                                     :acl_url => 'http://google.com/docs/x1234567/acl'
+                                   }
+                                 }
+                               }
+                         }
+      }).tap do |task|
         task.created_at = autogen_created_at
         task.save!
       end
@@ -159,7 +178,7 @@ class ApidocsController < ApplicationController
         example_comment(@project, @task, "Testing the API!")
         
         example_task_list("Things to do with the API")
-        example_task(@project.task_lists.first, "Mobile App")
+        task = example_task(@project.task_lists.first, "Mobile App")
         example_comment(@project, @task, "Working on it")
         
         example_conversation("What to do with the API", "Anyone have any ideas?")

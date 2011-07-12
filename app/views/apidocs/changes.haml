@@ -10,7 +10,13 @@
 
 %p As this version of the API is still in development, important changes are listed below.
 
-%p <strong>2011-07-11</strong>: AppLink's now exposed. See the <a href="/api/app_link">AppLinks API</a> page.
+%p <strong>2011-07-11</strong>: The following changes have been introduced:
+%ul
+  %li A user's application links are now an exposed resource in the API. See the <a href="/api/app_link">AppLinks API</a> page.
+  %li Tasks and Conversations will now return their data in response to PUT (#update) requests. Check the <a href="/api/task">Tasks API</a> or the <a href="/api/conversation">Conversations API</a> for details.
+  %li The API now additionally supports the 'text/plain' mime-type which you can request using either the <code>.text</code> extension or the <code>format=text</code> parameter.
+  %li Any Google Docs attached to a comment are now exposed. See the <a href="/api/task">Tasks API</a> or the <a href="/api/conversation">Conversations API</a> for an example.
+
 %p <strong>2011-06-14</strong>: External organizations can be listed now (<tt>external=true</tt>). Check the <a href="/api/organization">Organizations API</a> page.
 %p <strong>2011-06-14</strong>: New way of filtering threaded activities (<tt>threads=true</tt>). Check the <a href="/api/activity">Activities API</a> page.
 %p <strong>2011-06-09</strong>: The pagination limits have changed. Check the <a href="/api/concepts">API concepts</a> page.
