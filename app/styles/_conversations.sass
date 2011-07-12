@@ -135,12 +135,21 @@ body.new_conversations, body.create_conversations
   .conversation
     overflow: hidden
     cursor: pointer
-    height: 90px
+    height: 65px
     border-bottom: 1px solid #A0A0A0
     background-color: #fafafa
     padding: 0px 4px
     &.active
       background-color: #cccccc
+    .thread_title
+      font-size: 14px
+      margin: 5px
+    .thread_body
+      font-size: 11px
+      margin: 5px
+      color: #777
+      max-height: 28px
+      overflow: hidden
 
 .conversation_view
   float: left
