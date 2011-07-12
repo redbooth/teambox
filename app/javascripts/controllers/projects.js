@@ -36,7 +36,7 @@
       , task_lists = project.get('task_lists').setTasks(tasks)
       , view = new Views.TaskLists({collection: task_lists, project: project, el: $('content')});
 
-    Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_task_lists');
+    Teambox.Views.Sidebar.highlightSidebar('project_' + permalink + '_task_lists');
 
     // render
     view.render();

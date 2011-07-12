@@ -2,10 +2,6 @@
 
 Documentation draft about `css` and `js`:
 
-  * Coding standards
-  * Tests
-  * Building process
-
 ## JS
 
 ### File organization
@@ -58,7 +54,7 @@ Recommended options.
       /*jshint prototypejs: true, browser: true, devel: true, node: true, jquery: true, debug: true,
       forin: true, undef: true, eqeqeq: true, bitwise: true, immed: true, laxbreak: true, noarg: true,
       noempty: true, nonew: true, indent: 2, maxlen: 120, onevar: true */
-      /*global Teambox, _, Backbone, Templates, Handlebars */
+      /*global Teambox, _, Backbone, Templates, Handlebars, Position, Sortable */
 
 ### Coding standard
 
