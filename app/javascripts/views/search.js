@@ -17,6 +17,7 @@
   , 'focus input#searchbox':        'focus'            // Y U NO WORK?
   , 'click #quicksearch_results a': 'reset'            // Y U NO WORK?
   , 'focusout input#searchbox':     'hideQuickResults'
+  , 'click a.search_btn':           'submitSearch'
   }
 
   /* Updates current el
