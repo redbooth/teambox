@@ -4,11 +4,11 @@ code(:created_at) { |a| a.created_at.to_s(:api_time) }
 code(:updated_at) { |a| a.updated_at.to_s(:api_time) }
 
 code(:target, :if => lambda { |a| a.target_type}) do |a|
-  partial("api_v2/#{a.target_type.pluralize.underscore}/activity", :object => a.target)
+  partial("api_v2/#{a.target_type.pluralize.underscore}/base", :object => a.target)
 end
 
 code(:comment_target, :if => lambda { |a| a.comment_target_type}) do |a|
-  partial("api_v2/#{a.comment_target_type.pluralize.underscore}/activity", :object => a.comment_target)
+  partial("api_v2/#{a.comment_target_type.pluralize.underscore}/base", :object => a.comment_target)
 end
 
 child(:user) { extends 'api_v2/users/base' }
