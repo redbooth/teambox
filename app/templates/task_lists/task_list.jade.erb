@@ -13,24 +13,22 @@
         a.task_list_resolve(href= '#', aconfirm='Are you sure you want to resolve and archive this task list?', action_url='/projects/test_project-20/task_lists/93220/archive?on_index=1') Resolve all tasks and archive
         a.task_list_delete(href= '#', aconfirm='Are you sure you want to delete this task list?', action_url='/projects/test_project-20/task_lists/93220?on_index=1') Delete
 
-    // TODO: This is harcode!
     form.task_list_form(accept-charset='UTF-8', style= 'display: none;overflow-x: visible;overflow-y: visible;')
-      input(name='utf8', type='hidden', value='✓')
-      input(name='_method', type='hidden', value='put')
-      input(id='on_index', name='on_index', type='hidden', value='1')
+      input(name= 'task_list[id]', type= 'hidden', value= self.task_list.id)
 
       .name.text_field(style= 'display:none;')
         label(for='task_list_name')
           | Choose a name for this Task List 
           i eg. Prepare a Prototype
-        input#task_list_name(autofocus='autofocus', name='task_list[name]', size='30', type='text', value='')
+        input#task_list_name(autofocus='autofocus', name='task_list[name]', size='30', type='text', value= self.task_list.get('name'))
+
 
       .date_fields(style= 'display:none;')
         .pick_date
           label(for= 'task_list_start_on')
             | Starts on... 
             i optional
-          .date_picker(id='task_list_103073_start_on')
+          .date_picker(id= 'task_list_' + self.task_list.id + '_start_on')
             img.calendar_date_select_popup_icon(alt='Calendar', src='/images/calendar_date_select/calendar.gif')
             span.localized_date No date assigned
             input.datepicker#task_list_start_on(name='task_list[start_on]', type='hidden')
@@ -38,7 +36,7 @@
           label(for= 'task_list_finish_on')
             | End on... 
             i optional
-          .date_picker(id='task_list_103073_finish_on')
+          .date_picker(id='task_list_' + self.task_list.id + '_finish_on')
             img.calendar_date_select_popup_icon(alt= 'Calendar', src='/images/calendar_date_select/calendar.gif')
             span.localized_date No date assigned
             input.datepicker#task_list_finish_on(name='task_list[finish_on]', type='hidden')

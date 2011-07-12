@@ -23,7 +23,13 @@
       base_url += '/projects/' + this.get('project_id');
     }
 
-    return base_url + '/task_lists';
+    base_url += '/task_lists';
+
+    if (this.isNew()) {
+      return base_url;
+    } else {
+      return base_url + '/' + encodeURIComponent(this.id);
+    }
   };
 
   // exports

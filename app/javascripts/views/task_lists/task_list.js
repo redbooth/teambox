@@ -8,6 +8,7 @@
   , 'click .task_list_rename': 'showRename'
   , 'click .task_list_set_dates': 'showSetDates'
   , 'click a.inline_form_update_cancel': 'hideTaskListForm'
+  , 'submit form.task_list_form': 'updateTaskList'
   };
 
   /**
@@ -19,6 +20,23 @@
     _.bindAll(this, 'render');
 
     this.project = options.project;
+  };
+
+  /**
+   * Updates a task list
+   *
+   * @param {Event} evt
+   */
+  TaskList.updateTaskList = function (evt) {
+    evt.stop();
+    var data = _.deparam(evt.element().serialize(), true)
+      , self = this
+      , task_list = Teambox.collections.tasks_lists.get(data.task_list.id)
+      , attr;
+
+    delete data.task_list.id;
+
+    task_list.save(data.task_list, {success: self.render});
   };
 
   /**

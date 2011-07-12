@@ -17,7 +17,10 @@
     _.bindAll(this, 'render');
 
     this.dragndrop = options.dragndrop;
+    this.model.set({task_list: Teambox.collections.tasks_lists.get(this.model.get('task_list_id'))}, {silent: true});
+
     this.model.bind('change', this.render);
+    this.model.get('task_list').bind('change', this.render);
   };
 
   /**

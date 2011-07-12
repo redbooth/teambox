@@ -14,7 +14,8 @@
     }.bind(this));
   };
 
-  /* updates the element
+  /**
+   * Updates the element
    *
    * @return this
    */
