@@ -243,6 +243,7 @@ Teambox::Application.routes.draw do
     end
 
     namespace :api_v1, :path => 'api/1' do
+      resources :app_links, :except => [ :edit, :update ]
       resources :projects, :except => [:new, :edit] do
         member do
           put :transfer

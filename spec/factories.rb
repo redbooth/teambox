@@ -219,3 +219,12 @@ Factory.define :cucumber_ly, :parent => :client_application do |f|
   f.updated_at Time.parse("2007-11-17 16:56:51")
 end
 
+Factory.define :app_link do |d|
+  d.provider "google"
+  d.app_user_id { Factory.next(:login) }
+  d.credentials({'token' => 'xxx', 'secret' => 'blabla'})
+  d.custom_attributes({'custom' => 1})
+
+  d.association :user
+end
+

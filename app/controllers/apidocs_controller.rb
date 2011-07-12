@@ -8,7 +8,7 @@ class ApidocsController < ApplicationController
   before_filter :load_example_data
   before_filter :load_api_routes, :only => [:routes,:model]
   
-  DOCUMENTED_MODELS = %w{activity comment conversation divider invitation membership note organization search page person project task_list task upload user}
+  DOCUMENTED_MODELS = %w{activity app_link comment conversation divider invitation membership note organization search page person project task_list task upload user}
 
   def index
   end
@@ -38,6 +38,20 @@ class ApidocsController < ApplicationController
     def autogen_created_at
       @autogen_created_at ||= 2.days.ago
       @autogen_created_at += 25.minutes
+    end
+
+    def example_app_link(provider)
+      @app_link ||= AppLink.find_by_provider_and_user_id(provider, @apiman.id)
+      unless @app_link
+        @app_link = @apiman.app_links.create! do |app_link|
+          app_link.provider = provider || 'google'
+          app_link.app_user_id = @apiman.login
+          app_link.credentials = {'token' => '123456789', 'secret' => 'bla'}
+          app_link.custom_attributes = {'custom' => 1}
+          app_link.created_at = autogen_created_at
+        end
+      end
+      @app_link
     end
     
     def example_comment(target, user, body)
@@ -123,6 +137,7 @@ class ApidocsController < ApplicationController
       @apiman = find_or_create_example_user('API Man', 'example_api_user')
       @project = @apiman.projects.first
       @organization = @apiman.organizations.first
+
       if @project.nil?
         if @organization.nil?
           if Organization.count == 0
@@ -174,6 +189,7 @@ class ApidocsController < ApplicationController
       @task = @task_list.tasks.first
       @comment = @project.comments.first
       @converted_comment = @project.tasks.first
+      @app_link = example_app_link('twitter')
     end
 
     def load_api_routes

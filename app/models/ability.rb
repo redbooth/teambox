@@ -13,6 +13,10 @@ class Ability
     (object && object.is_private) ? object.watcher_ids.include?(user.id) : true
   end
 
+  def owner?(user, object)
+    object.user == user
+  end
+
   def initialize(user)
     
     # Comment & commentable permissions
@@ -70,7 +74,11 @@ class Ability
     can :destroy, [TaskList, Page] do |object|
       api_write?(user) && (object.owner?(user) or object.project.admin?(user))
     end
-    
+
+    can :destroy, AppLink do |object|
+      api_write?(user) && owner?(user, object)
+    end
+
     # Person permissions
     
     can :update, Person do |person|
@@ -187,7 +195,11 @@ class Ability
         true
       end
     end
-    
+
+    can :show, AppLink do |object|
+      api_read?(user) && owner?(user, object)
+    end
+
     can :update_privacy, [Conversation, Task] do |object|
       object.user_id == user.id
     end
