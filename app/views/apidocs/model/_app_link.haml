@@ -1,0 +1,21 @@
+%p=raw "An AppLink holds the required authentication information when you connect Teambox to different oauth providers"
+
+- doc_for :index,
+          :example => example_api_wrap([@app_link], :references => true) do
+  %p=raw "Returns your most recent app_links."
+
+- doc_for :show,
+          :example => example_api_wrap(@app_link, :references => true),
+          :includes => [:user] do
+  %p=raw "Returns the data for a given app_link."
+  
+- doc_for :create,
+  :parameters => {:app_user_id => "example_api_user", :provider => 'facebook', :credentials => {'token' => '123', :secret => 'bla'}, :custom_attributes => {'custom' => 1 } },
+          :example => @app_link.to_api_hash,
+          :status => :created do
+  %p=raw "Creates a new app_link."
+
+- doc_for :destroy,
+          :status => :deleted,
+          :role => [:owner] do
+  %p=raw "Destroys an app_link. You must be the owner in order to perform this action."

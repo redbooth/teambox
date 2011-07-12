@@ -7,6 +7,10 @@ class AppLink < ActiveRecord::Base
   serialize :custom_attributes
   serialize :credentials
 
+  attr_accessible :provider, :app_user_id, :custom_attributes, :credentials, :user_id
+
+  concerned_with :conversions
+
   def self.find_or_create_or_update_from_authentification(provider, auth_hash, current_user=nil)
     # Scope provider
     app_link = self.where(:provider => provider)
@@ -56,6 +60,10 @@ class AppLink < ActiveRecord::Base
 
   def detect_custom_attribute(&block)
     resursive_detect custom_attributes, &block
+  end
+
+  def references
+    { :users => [user_id] }
   end
 
   protected
