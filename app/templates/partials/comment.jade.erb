@@ -7,10 +7,8 @@
     a.micro_avatar(href= self.user_url(self.user), style= 'background: url(' + self.user.micro_avatar_url + ') no-repeat')
   .block
     .actions_menu
-      %img(src="/img_3_2/ico/arrow-dropdown.png", alt="Triangle",class="triangle")
-      .actiondate
-        time.timeago(data-msec= self.ms(self.updated_at), pubdate= 'true')= self.timeAgo(self.updated_at)
-      img(class= 'triangle', src= '/images/triangle.png?1285939525', alt= 'Triangle')
+      img(src="/img_3_2/ico/arrow-dropdown.png", alt="Triangle",class="triangle")
+      - #TODO: [MARKUP] removed actiondate from here. Need to put it back somewhere
       .extra
         a.edit(style= 'display:block;') Edit
         a.reply_email(rel= 'facebox', href= '#email_post_' + self.id) Reply via email
