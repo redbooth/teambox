@@ -390,7 +390,6 @@ describe ApiV1::CommentsController do
       @project.comments(true).length.should == 1
     end
   end
-<<<<<<< HEAD
   
   describe "#destroy rollback" do
     before do
@@ -417,6 +416,4 @@ describe ApiV1::CommentsController do
       @task.assigned_id.should == @new_assigned_id
     end
   end
-=======
->>>>>>> b2edd1b... Allow use of the 'text' format in the api.
 end
