@@ -2,6 +2,9 @@
   display: inline-block
   position: relative
   font-size: 12px
+  margin-right: 4px
+  a
+    font-weight: normal !important
   .overlay
     position: absolute
     top: -11px
@@ -10,7 +13,7 @@
     background-color: rgb(230,230,230)
     background-color: rgba(255,255,255,0.95)
     padding: 10px
-    z-index: 20000
+    z-index: 10000
     +box-shadow(#777 1px 2px 10px)
     +rounded(5px)
     border: 1px solid #999
@@ -31,16 +34,16 @@
             text-decoration: none
             color: $link_hover
           &.recent_activity
-            background-image: url(/famfamfam/newspaper.png)
+            background-image: url(famfamfam/newspaper.png)
           &.conversations
-            background-image: url(/famfamfam/comment.png)
+            background-image: url(famfamfam/comment.png)
           &.tasks
-            background-image: url(/famfamfam/tick.png)
+            background-image: url(famfamfam/tick.png)
           &.time
-            background-image: url(/famfamfam/time.png)
+            background-image: url(famfamfam/time.png)
           &.pages
-            background-image: url(/famfamfam/layout_content.png)
+            background-image: url(famfamfam/layout_content.png)
           &.files
-            background-image: url(/famfamfam/folder.png)
+            background-image: url(famfamfam/folder.png)
           &.people
-            background-image: url(/famfamfam/group.png)
+            background-image: url(famfamfam/group.png)

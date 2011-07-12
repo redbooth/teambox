@@ -12,6 +12,7 @@
 @import activities
 @import comments
 @import conversations
+@import new_conversations
 @import tasks
 @import task_list_templates
 @import pages
@@ -31,7 +32,8 @@
 @import calendar_date_select
 @import autocomplete
 @import facebox
-@import progress_bars
+//Commented because it gives error in the mockup (on local)
+//@import progress_bars
 @import tooltips
 @import preview
 @import hoverable
@@ -40,7 +42,6 @@
 @import first_steps
 @import badges
 @import oauth
-@import videos
 
 .navigation
   display: none
@@ -51,18 +52,20 @@
 
 .activity .upload_list .upload_file span
   display: inline-block
-  height: 16px
   max-width: 400px
   overflow: hidden
   text-overflow: ellipsis
   white-space: nowrap
+
+.activity
+  width: 620px
 
 .header
   .upgrade
     font-size: 12px
     background-position: 3px 5px
     background-repeat: no-repeat
-    background-image: url(/famfamfam/star.png)
+    background-image: url(famfamfam/star.png)
     height: 20px
     display: inline-block
     margin:
@@ -75,6 +78,9 @@
 
 .activity_block a, .starter a, .thread_title a, .before a
   color: #333
+.activity_block
+  border-top: 1px solid $clr_gray_05
+  +rounded(3px)
 
 .text_actions
   float: right
@@ -85,12 +91,3 @@
     text-decoration: none
   a
     text-decoration: underline
-
-.top_notice
-  font-size: 12px 
-  padding: 2px
-  background: #ffd
-  border-bottom: #dd5 1px solid
-  text-align: center
-  a.button
-    margin: 10px

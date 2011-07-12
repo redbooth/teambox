@@ -1,0 +1,113 @@
+.conversation_list
+  width: 271px
+  height: 100%
+  margin: 0
+  padding: 0
+  background: url(img_3_2/sprite_h.png) -1280px 0 repeat-y
+  .conversation, 
+    padding-bottom: 3px
+    background: url(img_3_2/sprite_h.png) -1551px bottom no-repeat
+  .conversation_tag, .new_conversation
+    position: relative
+    width: 236px
+    padding: 8px 3px 8px 26px
+    margin: 2px
+    span
+      width: 245px
+      display: block
+      margin-bottom: 4px
+      width: 100%
+    .title
+      margin-bottom: 5px
+    .excerpt, .people, .time
+      font-size: 11px
+    .excerpt
+      color: $clr_gray_70
+    .people
+      color: $clr_gray_50
+    .time
+      color: $clr_gray_30
+    .star
+      display: inline
+      float: left
+      clear: both
+      position: relative
+      top: 0
+      left: 0
+      margin:
+        left: -22px
+        top: -2px
+      width: 18px
+      height: 18px
+      background: url(img_3_2/ico/star-hidden.png) no-repeat
+      &:hover
+        background-image: url(img_3_2/ico/star.png)
+    .answer
+      display: none
+    .selected_arrow
+      display: none
+      height: 13px
+      width: 11px
+      float: right
+      clear: none
+      position: absolute
+      top: 50%
+      left: 264px
+      margin-top: -10px
+      background: url(img_3_2/sprite_base.png) -65px -36px no-repeat
+    &:hover
+      background-color: $clr_gray_10
+  .new_conversation
+    width: 268px
+    background-color: $clr_gray_10
+    //height: 38px
+    padding: 0
+    border-top: 1px solid $white
+    font-weight: bold
+    color: $clr_gray_80
+    margin: 0
+    .selected_arrow
+      display: none
+      margin-top: -8px
+      left: 268px
+      width: 9px
+      background-position-x: -80px
+    a, a:hover, a:visited
+      display: block
+      padding: 18px 2px 18px 28px
+      width: 100%
+      height: 100%
+      color: $clr_gray_80
+      text-decoration: none
+
+    a:hover
+      color: $clr_gray_90
+    &:hover
+      background-color: $clr_gray_20
+  .starred
+    .star
+      background-image: url(img_3_2/ico/star.png)
+    .title
+      font-weight: bold
+  .selected
+    .selected_arrow
+      display: block
+    .conversation_tag
+      background-color: $white
+  .answered
+    .answer
+      display: inline
+      float: left
+      clear: both
+      position: relative
+      top: 0
+      left: 0
+      margin:
+        left: -21px
+        top: 2px
+      width: 18px
+      height: 18px
+      background: url(img_3_2/ico/reply-gray.png) no-repeat
+
+.conversation_content
+  background-image: none !important

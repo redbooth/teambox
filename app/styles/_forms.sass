@@ -89,3 +89,140 @@ form.app_form
   border: 1px solid rgb(200,200,120)
   padding: 20px
   margin-bottom: 15px
+
+/* DROPDOWNS FILTERS */
+$dropdown_width: 140px
+.dropdown_filter
+  width: $dropdown_width
+  position: relative
+  z-index: 9000
+  display: block
+  height: 28px
+  float: left
+  clear: none
+  margin-left: 10px
+  text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0px
+  
+  .selected_item
+    z-index: 9500
+    background: url(img_3_2/sprite_btn.png) -126px 0 no-repeat
+    display: block
+    float: left
+    clear: none
+    width: $dropdown_width - 42px
+    height: 22px
+    color: $clr_gray_80
+    font-size: 11px
+    margin: 0
+    padding:
+      left: 10px
+      top: 6px
+      bottom: 0
+    &:hover, &:visited
+      color: $clr_gray_80
+      text-decoration: none
+  .dropdown_arrow
+    margin: 0
+    display: block
+    float: right
+    clear: none
+    width: 32px
+    height: 28px
+    background: url(img_3_2/sprite_btn.png) -474px 0 no-repeat
+    margin: 0
+  
+  ol
+    font-size: 11px
+    position: absolute
+    display: none
+    top: 28px
+    width: $dropdown_width - 2px
+    left: 0
+    list-style-type: none
+    margin: 0
+    padding: 0
+    z-index: 500
+    border:
+      right: 1px solid $clr_gray_50
+      left: 1px solid $clr_gray_50
+    +rounded-bottom(3px)
+    .last_item
+      +rounded-bottom(3px)
+      a
+        +rounded-bottom(3px)
+    li
+      width: $dropdown_width - 2px
+      border:
+        top: 1px solid $clr_gray_05
+        bottom: 1px solid $clr_gray_50
+      z-index: 501
+      &:hover
+        border-top-color: $white
+      a
+        position: relative
+        display: block
+        padding: 5px 0 0 8px
+        background: $clr_gray_15
+        color: $clr_gray_80
+        height: 21px
+        border:
+          left: 1px solid $clr_gray_05
+        &:hover
+          background: $clr_gray_10
+          color: $clr_gray_80
+          text-decoration: none
+          border-left-color: $white
+    .separator
+      border: none
+      line-height: 0
+      height: 0
+      background: $clr_gray_30
+      background-image: none
+      max-width: $dropdown_width - 20px
+    .selected
+      border-top-color: $white 
+      a
+        color: $clr_gray_90
+        border-left-color: $white
+        background-color: $clr_gray_10
+  &:hover
+    .selected_item 
+      background: url(img_3_2/sprite_btn.png) -126px -28px no-repeat
+    .dropdown_arrow
+      background: url(img_3_2/sprite_btn.png) -474px -28px no-repeat
+    ol
+      display: block
+      
+$dropdown_width_short: 115px
+#dropwdown_status
+  width: $dropdown_width_short
+  
+  .selected_item
+    width: $dropdown_width_short - 42px
+  ol
+    width: $dropdown_width_short - 2px
+    li
+      width: $dropdown_width_short - 2px
+    .separator
+      width: $dropdown_width_short - 20px
+.filters
+  strong
+    display: block
+    top: 24px
+    left: 27px
+    color: $clr_gray_80
+    float: left
+    clear: none
+    position: absolute
+    margin: 0
+#filter_tasks_by_name
+  +rounded(3px)
+  border: $brd_gray
+  padding: 4px 4px 4px 43px
+  width: 147px
+  font-size: 12px
+  display: block
+  float: left
+  clear: none
+  height: 18px
+  margin: 0

@@ -1,13 +1,30 @@
 .thread
-  max-width: 800px
-  margin: 20px 0 35px
+  max-width: 620px
+  margin: 0 0 15px 11px
+  border: 1px solid $clr_gray_50
+  background: #eee
+  +rounded(5px)
   .thread_title
-    margin: 4px 0 8px
+    background: url(img_3_2/sprite_v.png) 0px -110px repeat-x #eee
+    margin: 4px 0 2px
     font-size: 12px
+    a
+      display: block
+      float: left
+      clear: none
+      margin-right: 4px
   .task_summary
     font-size: 11px
     color: #333
-    display: inline-block
+    display: block
+    float: left
+    clear: left
+    margin:
+      top: 5px
+      bottom: 7px
+    .task_status
+      display: inline-block
+      margin-right: 5px
     span.assigned_date, span.assigned_to
       display: none
     &.due_on
@@ -23,14 +40,26 @@
       span.assigned_date
         color: red
   .comments
-    border-left: 4px solid $comments_left_border
-    background-color: $comments_bkg
+    //border-left: 4px solid $comments_left_border
+    //background-color: $comments_bkg
   .comment_header
-    border-left: 4px solid $comments_left_border
-    background-color: $comments_left_border
-    +gradient($comments_left_border, $comments_bkg)
+    +rounded-top(5px)
+    border-top: 1px solid $white
+    //border-left: 4px solid $comments_left_border
+    //background-color: $comments_left_border
+    //+gradient($comments_left_border, $comments_bkg)
     .info
-      position: absolute
+      //position: absolute
+      float: left
+      display: block
+      clear: none
+      width: 32px
+      height: 30px
+      margin: 0
+      padding: 0
+        top: 3px
+        left: 7px
+      //border: 1px solid red
       .comment_count
         display: none
         text-align: center
@@ -43,6 +72,10 @@
           font-weight: bold
           +rounded(5px)
     .block
+      float: left
+      display: block
+      clear: none
+      width: 550px
       a
         font-weight: bold
         text-decoration: none
@@ -58,11 +91,6 @@
           height: 14px
           font-size: 11px
           margin-top: 8px
-      .lock_icon
-        position: relative
-        top: 2px
-        display: none
-        margin-right: 10px
   span.time
     position: relative
     float: right
@@ -73,24 +101,28 @@
   .more_comments
     display: block
     font-size: 12px
-    background-color: #ffe
-    +gradient(#ffe, #ffd)
+    background: url(img_3_2/sprite_v.png) 0 -183px $clr_gray_15
+    height: 36px
+    border-bottom: 1px solid $white
+    &:hover
+      background-color: $clr_gray_20 
+    //+gradient(#ffe, #ffd)
     a
       color: #333
       display: block
       padding: 10px 10px 10px 44px
       height: 16px
+      &:hover
+        text-decoration: none
   form.new_comment
-    border-left: 4px solid #eee
-    background-color: $comments_bkg
+    //border-left: 4px solid #eee
+    //background-color: $comments_bkg
     margin: 0
-    padding: 2px 0 5px 6px
+    //padding: 2px 0 5px 6px
 
-.thread.private
-  .comment_header
-    .block
-      .lock_icon
-        display: inline-block
+.thread_conversation
+  .thread_title
+    margin-top: 7px
 
 .expand_comment
   a
@@ -126,16 +158,17 @@
     display: block !important
 
 #activities
+  margin-left: 10px
   .thread.selected
     .comment_header
-      border-left-color: $navbar
-      +gradient($comments_left_border - #111, $comments_bkg - #111)
+      //border-left-color: $navbar
+      //+gradient($comments_left_border - #111, $comments_bkg - #111)
 
   .comment_header
     cursor: pointer
     &:hover
-      border-left-color: $navbar
-      +gradient($comments_left_border - #111, $comments_bkg - #111)
+      //border-left-color: $navbar
+      //+gradient($comments_left_border - #111, $comments_bkg - #111)
 
 #activities.collapsed
   .thread
@@ -143,47 +176,11 @@
   .thread.collapsed
     margin: 0
 
-.add_watchers_box, .private_options
+.add_watchers_box
   margin-left: 45px
   padding: 5px 0 20px
   max-height: 200px
   overflow-y: auto
-
-.private_options
-  max-height: 300px
-  .option
-    label
-      display: inline-block
-      font-weight: normal
-  .private_users
-    display: block
-    margin: 10px 0
-    padding-left: 22px
-    .private_user
-      display: inline-block
-      label
-        width: 170px
-        white-space: nowrap
-        overflow-x: hidden
-        display: inline-block
-        text-overflow: ellipsis
-        font-weight: normal
-      input
-        margin-right: 10px
-    .private_all
-      label
-        width: 170px
-        white-space: nowrap
-        overflow-x: hidden
-        display: inline-block
-        text-overflow: ellipsis
-        font-weight: bold
-      input
-        margin-right: 10px
-   
-   
-
-.add_watchers_box
   p
     font-size: 11px
     font-weight: bold

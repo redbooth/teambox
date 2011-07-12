@@ -1,18 +1,29 @@
 .activity
-  margin: 20px 10px
+  border: 1px solid $clr_gray_60
+  +rounded(3px)
+  background: $clr_gray_20
+  margin: -5px 0 15px 11px
   font-size: 12px
   +clearing
   p
     margin: 0
+      top: 10px
   .date
-    float: right
-    margin-top: 2px
     font-size: 10px
-    color: #9DA3A7
-    padding-left: 4px
+    padding: 1px
+    color: $clr_gray_50
+    display: block
+    float: left
+    clear: none
+    position: relative
+    top: 11px
+    left: 593px
+    margin-right: -120px
+    cursor: default
   .micro_avatar
+    border: 1px solid $clr_gray_50
     +rounded(3px)
-    margin-right: 16px
+    margin: 7px
   a
     font-weight: bold
   img
@@ -26,8 +37,13 @@
     padding-left: 35px
 
 .activity.collapsed
-  margin: 2px 0
-  padding: 8px 5px
-  border-left: 4px solid white
-  background-color: $comments_bkg
+  //margin: 2px 0
+  //padding: 8px 5px
+  //border-left: 4px solid white
+  //background-color: $comments_bkg
   +gradient($comments_left_border, $comments_bkg)
+
+#activity_paginate_link
+  margin:
+    bottom: 20px
+    left: 21px

@@ -96,11 +96,6 @@
         margin: 5px 0px
         font-size: 12px
         color: rgb(100, 100, 100)
-    .lock_icon
-      display: none
-    &.private
-      .lock_icon
-        display: none
 
 .show_pages
   .page_header
@@ -116,11 +111,6 @@
     .description
       font-size: 12px
       color: rgb(180, 180, 180)
-    .lock_icon
-      display: none
-    &.private
-      .lock_icon
-        display: inline-block
   h3
     font-size: 18px
     font-weight: normal
@@ -213,18 +203,18 @@
     a
       opacity: 1
     &.handle
-      display: inline
+      display: block
   .slotActions
     display: none
   &:hover .slotActions
     display: block
 
 .page_slot.InsertBefore
-  background-image: url(/images/pins.gif)
+  background-image: url(images/pins.gif)
   background-repeat: repeat-x
 
 .divider
-  background: url(/images/divider.jpg) repeat-x center
+  background: url(images/divider.jpg) repeat-x center
   padding-left: 10px
   h3
     padding-top: 3px
@@ -243,7 +233,7 @@ form.new_divider, form.edit_divider
   margin-top: 5px
   padding: 10px
     right: 0px
-  background: url(../images/divider.jpg) repeat-x center
+  background: url(images/divider.jpg) repeat-x center
   .area
     border: solid 1px rgb(230, 230, 230)
     background: rgb(245, 245, 245)

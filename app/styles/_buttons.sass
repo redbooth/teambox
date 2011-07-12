@@ -1,5 +1,5 @@
 a.loading_button
-  background: url(/images/loading_button_bg.gif) no-repeat left
+  background: url(images/loading_button_bg.gif) no-repeat left
   font-size: 12px
   padding: 5px
     left: 20px
@@ -8,7 +8,7 @@ a.loading_button
     padding: 5px
       right: 10px
     font-weight: bold
-    background: url(/images/loading_button_wrap_bg.jpg) no-repeat right
+    background: url(images/loading_button_wrap_bg.jpg) no-repeat right
 
 a.button, a.unarchive_task_list_link, a.reorder_task_list_link, a.add_button, a.new_task_list_link, a.new_task_list_template
   display: inline-block
@@ -36,12 +36,12 @@ a.button, a.unarchive_task_list_link, a.reorder_task_list_link, a.add_button, a.
   .cssgradients &
     border: 1px solid silver
   .no-cssgradients &
-    background: url(/images/button_bg.jpg) no-repeat left
+    background: url(images/button_bg.jpg) no-repeat left
     padding: 5px 0 5px 5px
     span
       padding: 6px 10px 5px 5px
       font-weight: bold
-      background: url(/images/button_wrap_bg.jpg) no-repeat right
+      background: url(images/button_wrap_bg.jpg) no-repeat right
 
 a.add_button, a.new_task_list_link
   .cssgradients &
@@ -51,17 +51,69 @@ a.add_button, a.new_task_list_link
       color: #555555
       margin-right: 0.3em
   .no-cssgradients &
-    background-image: url(/images/add_button_bg.jpg)
+    background-image: url(images/add_button_bg.jpg)
     padding-left: 20px
     span
       padding: 8px 7px 7px 7px
-      background: url(/images/button_wrap_bg.jpg) no-repeat right
+      background: url(images/button_wrap_bg.jpg) no-repeat right
 
-a.button.allow
-  .cssgradients &
-    +gradient-bottom(rgb(0,180,20))
-  .no-cssgradients &
-    background: rgb(0,140,40)
+
+.button_gray
+  font-size: 11px
+  background: url(img_3_2/sprite_btn.png) -126px -112px no-repeat
+  display: block
+  float: left
+  height: 28px
+  padding-left: 3px
+  text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0px
+  color: $clr_gray_80
+  span
+    background: transparent url(img_3_2/sprite_btn.png) top right no-repeat
+    background-position-y: -112px
+    display: block
+    float: left
+    height: 21px
+    padding:
+      top: 7px
+      left: 5px
+      right: 7px
+    margin-right: -3px
+  &:hover, &:visited
+    color: $clr_gray_80
+    text-decoration: none
+  &:active
+    background-position-y: -140px
+    span
+      background-position-y: -140px
+
+.button_blue
+  font-size: 11px
+  background: url(img_3_2/sprite_btn.png) -126px -168px no-repeat
+  display: block
+  float: left
+  height: 28px
+  padding-left: 3px
+  text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0px
+  color: $clr_gray_80
+  span
+    background: transparent url(img_3_2/sprite_btn.png) top right no-repeat
+    background-position-y: -168px
+    display: block
+    float: left
+    height: 21px
+    padding:
+      top: 7px
+      left: 5px
+      right: 7px
+    margin-right: -3px
+  &:hover, &:visited
+    color: $clr_gray_80
+    text-decoration: none
+  &:active
+    background-position-y: -196px
+    span
+      background-position-y: -196px
+
 
 =button
   display: inline-block

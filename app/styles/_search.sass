@@ -1,31 +1,9 @@
-.search_results
-
-  .result
-    +rounded(3px)
-    +gradient-bottom(#eee)
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFF, endColorstr=#EEEEEE, GradientType=0)"
-    padding: 5px
-    border: 1px solid #ddd
-    margin-bottom: 20px
-    max-width: 600px
-
-    img
-      float: left
-
-    .comment_count
-      +rounded(3px)
-      padding: 3px
-      float: right
-      background: #ddd
-      -moz-box-shadow:    1px 1px solid #fff, -1px -1px solid #ccc
-      -webkit-box-shadow: 1px 1px solid #fff, -1px -1px solid #ccc
-      box-shadow:         1px 1px solid #fff, -1px -1px solid #ccc
-
 .search_bar
   float: left
-  padding-top: 3px
+  padding-top: 0
   margin:
-    right: 1.5em
+    right: 34px
+    top: 13px
   form.search
     position: relative
     margin:
@@ -39,7 +17,7 @@
       +rounded(3px)
       border: $brd_gray
       padding: 4px 4px 4px 5px
-      width: 250px
+      width: 284px
       font-size: 12px
       display: block
       float: left
@@ -55,10 +33,10 @@
       clear: none
       margin-left: -2px
       height: 28px
-      width: 32px
-      background: url(/img_3_2/sprite_btn.png) no-repeat
+      width: 31px
+      background: url(img_3_2/sprite_btn.png) no-repeat
       &:active
-        background-position: -32px 0px
+        background-position: -31px 0px
       
       span
         display: none

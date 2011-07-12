@@ -1,44 +1,145 @@
 #header_wrap
   +clearing
-  +gradient-bottom(#eee)
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFF, endColorstr=#EEEEEE, GradientType=0)"
+  +gradient(#e4e4e4, #dcdcdc)
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#E4E4E4, endColorstr=#DCDCDC, GradientType=0)"
+  height: $header_height
+  border:
+    top: 1px solid $clr_gray_05
+    bottom: 1px solid $clr_gray_60
   padding:
-    left: 15px
+    left: 19px
     right: 15px
-    bottom: 5px
     
 
 div.header
   width: 100%
   margin: 0 auto
-  padding-top: 5px
+  padding-top: 0
   h1
     margin: 0
-    border-right: 1px solid #ddd
     width: $column_width - 35px
-    height: 36px
-    padding-right: 20px
+    height: $header_height - 11px
+    padding:
+      right: 18px
+      top: 11px
     float: left
+    background: url(img_3_2/sprite_v.png) top right no-repeat
     a
       display: block
       width: 134px
       height: 36px
 
   #user_utilities
+    width: 160px
+    position: absolute
+    z-index: 9999
+    display: block
+    height: 28px
+    top: 14px
+    right: 20px
     float: right
-    margin-top: 2px
-    padding: 0
-    text-align: right
-    .global_navigation
-      padding: 0
-      margin:
-        right: 10px
-        top: 10px
-      text-align: right
+    text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 0px
+    
+    h2
+      background: url(img_3_2/sprite_btn.png) -126px 0 no-repeat
+      display: block
+      float: left
+      clear: none
+      width: 108px
+      height: 22px
+      color: $clr_gray_80
+      font-size: 12px
+      margin: 0
+      padding:
+        left: 10px
+        top: 6px
+        bottom: 0
+      a, a:hover, a:visited
+        color: $clr_gray_80
+        text-decoration: none
+    .dropdown_arrow
+      margin: 0
+      display: block
+      float: left
+      clear: none
+      width: 32px
+      height: 28px
+      background: url(img_3_2/sprite_btn.png) -474px 0 no-repeat
+      margin: 0
+    
+    ol
+      position: absolute
+      display: none
+      top: 28px
+      width: 148px
+      left: 0
       list-style-type: none
-      font-size: 11px
-      li
-        display: inline-block
+      margin: 0
+      padding: 0
+      z-index: 500
+      border:
+        right: 1px solid $clr_gray_50
+        left: 1px solid $clr_gray_50
+      +rounded-bottom(3px)
+      .last_item
+        +rounded-bottom(3px)
         a
-          color: #333
-          padding: 5px
+          +rounded-bottom(3px)
+      li
+        width: 148px
+        border:
+          top: 1px solid $clr_gray_05
+          bottom: 1px solid $clr_gray_50
+        z-index: 501
+        a
+          position: relative
+          display: block
+          padding: 5px 0 0 8px
+          background: $clr_gray_15
+          color: $clr_gray_80
+          height: 21px
+          border:
+            left: 1px solid $clr_gray_05
+          &:hover, &:visited
+            background: $clr_gray_10
+            color: $clr_gray_80
+            text-decoration: none
+    &:hover
+      h2 
+        background: url(img_3_2/sprite_btn.png) -126px -28px no-repeat
+      .dropdown_arrow
+        background: url(img_3_2/sprite_btn.png) -474px -28px no-repeat
+      ol
+        display: block
+
+  #quick_add_buttons
+    float: left
+    clear: none
+    padding: 0
+    margin:
+      top: 13px
+      right: 0px
+    text-align: right
+    list-style-type: none
+    font-size: 11px
+    a
+      color: #333
+      padding: 0
+      &.quick_add_btn
+        display: block
+        float: left
+        clear: none
+        height: 28px
+        width: 32px
+        padding: 0
+        background: url(img_3_2/sprite_btn.png) no-repeat 0px -28px
+        &:active
+          background-position: -63px -28px
+        span
+          display: none
+      &.task
+        width: 31px
+        background-position: -32px -28px
+        &:active
+          background-position: -95px -28px
+

@@ -11,7 +11,7 @@ body
 
 div.content_wrap, div.column_wrap, div.aux_wrap
   position: absolute
-  top: 46px
+  top: $header_height + 2px
   bottom: 0
   overflow: hidden
 // Beta notice on the top of the page
@@ -34,7 +34,8 @@ div.column_wrap
   font-size: 12px
   left: 0
   width: $column_width
-  background: $sidebar_bkg
+  background: $clr_gray_10
+  border-right: 1px solid $white
   overflow: hidden
   div.column
     select
@@ -42,17 +43,18 @@ div.column_wrap
     .view_sidebar
       margin-left: 15px
 div.content_wrap
-  left: $column_width
+  left: $column_width +1px
   right: $aux_width
-  border-left: 1px solid #B7B7B7
+  border-left: 1px solid $clr_gray_60
   .content
     position: absolute
-    top: 23px
+    top: 26px
     bottom: 0
     left: 0
     right: 0
     overflow-y: auto
-    padding: 10px
+    //padding: 10px
+    background: url(img_3_2/bg_activity.gif) repeat
 div.aux_wrap
   width: $aux_width
   right: 0
@@ -122,19 +124,20 @@ p.flash-notice
   background-color: white
 
 .separator
-  height: 20px
+  height: 24px
   margin: 0
   padding: 0
-    left: 10px
+    left: 18px
+    top: 4px
   line-height: 19px
-  background: #E7E7E7
+  background: $clr_gray_20
   background-image: -moz-linear-gradient(top,#F3F3F3,#D7D7D7)
   background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#F3F3F3),color-stop(1,#D7D7D7))
-  border:
-    bottom: 1px solid #B7B7B7
-    top: 1px solid #DDD
+  //border:
+    //bottom: 1px solid #B7B7B7
+    //top: 1px solid #DDD
   &.with_margin
-    margin-top: 20px
+    margin-top: 10px
   span
     position: absolute
     right: 0
@@ -144,7 +147,8 @@ p.flash-notice
     display: inline-block
     &#view_title
       right: none
-      left: 25px
+      left: 20px
+      top: 3px
       border: none
     a
       display: inline-block
@@ -154,19 +158,23 @@ p.flash-notice
       left: -11px
       border-right: 1px solid #DDD
   .column_wrap &
-    +gradient(#D8DEE5, #C6D1DD)
-    border-top: 1px solid #A4ACB3
-    span
-      border-left: 1px solid #a4acb3
+    background: url(img_3_2/sprite_v.png) repeat-x 0px -55px
+    text-transform: uppercase
+  .content_wrap &
+    height: 24px
+    background: url(img_3_2/sprite_v.png) repeat-x 0px -83px
+  &.first
+    background-position: 0px -56px
+    height: 23px
   a:hover
     color: black
     text-decoration: none
 .separator, .separator a
-  color: #777
+  color: $clr_gray_80
   text-shadow: white 0 1px 0
-  text-transform: uppercase
+  //text-transform: uppercase
   text-align: left
-  font-size: 11px
+  font-size: 12px
   font-weight: bold
   -webkit-user-select: none
   -khtml-user-select: none
