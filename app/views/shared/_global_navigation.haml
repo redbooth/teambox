@@ -5,15 +5,12 @@
     %span New task
   =#TODO: [MARKUP] - Add backbone views
 
-#user_utilities
+#user_utilities.dropdown_navigation
+  %h2
+    = link_to t('.settings'), account_settings_path
+  %a{:class=>"dropdown_arrow", :href=>"#"}
   %ol.global_navigation
-    /= micro_avatar(current_user)
-    %li.quick_add
-      = link_to "New conversation", "#!/conversations/new" #, :class => 'quick_add_link'
-      = link_to "New task", "#!/tasks/new" #, :class => 'quick_add_link'
-      .pane{ :style => 'display: none' }
-        = render 'tasks/form', :project => Project.first, :task_list => TaskList.first, :task => TaskList.first.tasks.build
-    %li#username
+    %li#username= link_to t('.my_profile'), user_path(current_user)
     %li= link_to t('.settings'), account_settings_path
     - if current_user.invitations.pending_projects.count > 0
       %li= link_to_unless_current t('.project_invitations', :count => current_user.invitations.count),
