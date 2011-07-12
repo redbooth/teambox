@@ -1,0 +1,8 @@
+-var id = self.model_name + '_' + self.attribute
+-var name = self.model_name + '[' + self.attribute + ']'
+
+label(for= id)!= self.label
+.date_picker
+  img.calendar_date_select_popup_icon(alt='Calendar', src='/images/calendar_date_select/calendar.gif')
+  span.localized_date= self.current_date ? self.date(self.current_date) : 'No date assigned'
+  input.datepicker(id= id, name= name, type='hidden')

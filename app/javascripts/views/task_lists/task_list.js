@@ -111,6 +111,24 @@
       self.el.down('.tasks').insert({top: (new Teambox.Views.Task({model: el, dragndrop: true})).render().el});
     });
 
+    this.el.down('.date_fields')
+      .insert({
+        bottom: (new Teambox.Views.DatePicker({
+          model_name: 'task_list'
+        , attribute: 'start_on'
+        , label: 'Starts on <i>optional</i>'
+        , current_date: this.model.get('start_on')
+        }).render().el)
+      })
+      .insert({
+        bottom: (new Teambox.Views.DatePicker({
+          model_name: 'task_list'
+        , attribute: 'finish_on'
+        , label: 'End on <i>optional</i>'
+        , current_date: this.model.get('finish_on')
+        }).render().el)
+      });
+
     this.el.down('.tasks').insert({after: (new Teambox.Views.TaskListsTaskForm({
       project: this.project
     , parent_view: this

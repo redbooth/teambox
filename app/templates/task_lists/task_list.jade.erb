@@ -4,8 +4,15 @@
     span.task_list_name= self.task_list.get('name')
 
     .actions_menu
-      span.actiondate No dates assigned
-      span.loading(style= 'display: none;') Loading...
+      -if (self.task_list.get('start_on') && self.task_list.get('finish_on'))
+        span.actiondate #{self.date(self.task_list.get('start_on'))} - #{self.date(self.task_list.get('finish_on'))}
+      -else if(self.task_list.get('start_on'))
+        span.actiondate Starts on #{self.date(self.task_list.get('start_on'))}
+      -else if(self.task_list.get('finish_on'))
+        span.actiondate Ends on #{self.date(self.task_list.get('finish_on'))}
+      -else
+        span.actiondate No dates assigned
+
       img.triangle(alt= 'Triangle', src='/images/triangle.png?1285939525')
       .extra
         a.task_list_rename(href= '#') Rename task list
@@ -24,22 +31,6 @@
 
 
       .date_fields(style= 'display:none;')
-        .pick_date
-          label(for= 'task_list_start_on')
-            | Starts on... 
-            i optional
-          .date_picker(id= 'task_list_' + self.task_list.id + '_start_on')
-            img.calendar_date_select_popup_icon(alt='Calendar', src='/images/calendar_date_select/calendar.gif')
-            span.localized_date No date assigned
-            input.datepicker#task_list_start_on(name='task_list[start_on]', type='hidden')
-        .pick_date
-          label(for= 'task_list_finish_on')
-            | End on... 
-            i optional
-          .date_picker(id='task_list_' + self.task_list.id + '_finish_on')
-            img.calendar_date_select_popup_icon(alt= 'Calendar', src='/images/calendar_date_select/calendar.gif')
-            span.localized_date No date assigned
-            input.datepicker#task_list_finish_on(name='task_list[finish_on]', type='hidden')
 
       img.loading(alt= 'Loading', src= '/images/loading.gif', style= 'display: none')
       div.submit

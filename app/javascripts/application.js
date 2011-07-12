@@ -77,6 +77,7 @@
 //= require <views/comment_form>
 //= require <views/conversation>
 //= require <views/convert_to_task>
+//= require <views/date_picker>
 //= require <views/projects>
 //= require <views/page_teaser>
 //= require <views/search>

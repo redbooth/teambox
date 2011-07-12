@@ -4,7 +4,7 @@
                       };
 
   SearchResults.events = {
-  }
+  };
 
   SearchResults.initialize = function (options) {
     this.model = options.collection;
