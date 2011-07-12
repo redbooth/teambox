@@ -6,7 +6,7 @@ module ApplicationHelper
   end
   
   def logo_image
-    logo = @organization ? @organization.logo(:top) : "header_logo_black.png"
+    logo = @organization ? @organization.logo(:top) : "img_3_2/logo_teambox_3_2.png"
     image_tag(logo, :alt => "Teambox")
   end
 
