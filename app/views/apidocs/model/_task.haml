@@ -21,7 +21,10 @@
   %p=raw "Creates a new task."
 
 - doc_for :update,
+          :example => example_api_wrap(@task, :references => true, :include => [:user, :uploads, :google_docs]),
+          :includes => [:comments, :user, :assigned],
           :parameters => {:name => @task.name, :due_on => "2010-01-02", :assigned_id => "<person id>", :status => "0...4|[0,1,2,3,4]" },
+          :optional_parameters => {:comments_attributes => { 0 => { :body => 'modified....', :uploads_attributes => { 0 => { :asset => "Your binary data goes here" } }, :google_docs_attributes => { 0 => { :title => 'Some google doc', :document_id => 'x123456789', :document_type => 'document', :url => 'http://google.com/docs/x1234567', :edit_url => 'http://google.com/docs/x1234567/edit', :acl_url => 'http://google.com/docs/x1234567/acl' } } } } },
           :status => :updated,
           :role => :participant do
   %p=raw "Updates the name, due date, assigned #{link_to_doc_model(:person)}, and status of a task."
