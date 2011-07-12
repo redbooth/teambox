@@ -9,6 +9,8 @@
     %title= "Teambox"
     = include_stylesheets :application, :media => :screen
     = include_stylesheets :print, :media => :print
+    /[if IE 7]
+      = include_stylesheets :ie7, :media => :screen
     = yield :stylesheet_includes
     = stylesheet_link_tag 'cucumber', :media => :screen if Rails.env.cucumber?
     = trimmer_include_tag

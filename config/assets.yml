@@ -18,3 +18,5 @@ stylesheets:
     - public/stylesheets/sessions.css
     - public/stylesheets/public.css
     - public/stylesheets/sites.css
+  ie7:
+    - public/stylesheets/app_ie7_fix.css
