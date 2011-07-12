@@ -109,8 +109,8 @@ describe ApiV2::ActivitiesController do
       # This ensures the first activities will not be on the first page
       conversation = Factory.create(:conversation, :project => @project, :user => task.user)
       upload = Factory.build(:upload, :asset => mock_uploader('semicolons.js', 'application/javascript', "alert('what?!')"), :user => task.user)
-      Factory.create(:comment, :target => conversation, :project => @project, :uploads => [upload], :user => task.user)
-      Factory :comment, :target => task, :project => @project, :assigned_id => assigned_person.id, :user => task.user
+      Factory :comment, :target => conversation, :project => @project, :uploads => [upload], :user => task.user
+      task.assign_to(assigned_person.user)
 
       get :index, :project_id => @project.permalink
       response.should be_success
@@ -120,22 +120,17 @@ describe ApiV2::ActivitiesController do
       conversation_activity = data.find { |a| a['target_type'] == 'Conversation' && a['target_id'] == conversation.id }
       conversation_activity['user']['username'].should == conversation.user.login
       conversation_activity['target']['name'].should == conversation.name
+      conversation_activity['target']['first_comment']['id'].should == conversation.first_comment.id
+      conversation_activity['target']['first_comment']['user']['id'].should == conversation.first_comment.user.id
+      conversation_activity['target']['recent_comments'].collect { |c| c['uploads'] }.compact.flatten.collect { |u| u['id'] }.should include(upload.id)
 
       task_activity = data.find { |a| a['target_type'] == 'Task' && a['target_id'] == task.id }
       task_activity['user']['username'].should == task.user.login
       task_activity['target']['name'].should == task.name
+      task_activity['target']['first_comment']['id'].should == task.first_comment.id
+      task_activity['target']['first_comment']['user']['id'].should == task.first_comment.user.id
+      task_activity['target']['assigned_id'].should == assigned_person.id
 
-      conversation_response = data.find { |a| a['target_type'] == 'Conversation' && a['target_id'] == conversation.id }['target']
-      conversation_response['first_comment']['id'].should == conversation.first_comment.id
-      conversation_response['first_comment']['user']['id'].should == conversation.first_comment.user.id
-
-      task_response = data.find { |a| a['target_type'] == 'Task' && a['target_id'] == task.id }['target']
-
-      task_response['first_comment']['id'].should == task.first_comment.id
-      task_response['first_comment']['user']['id'].should == task.first_comment.user.id
-      task_response['assigned_id'].should == assigned_person.id
-
-      data.find { |a| a['target_type'] == 'Upload' && a['target_id'] == upload.id }.should_not be_nil
 
       data.each do |obj|
         if obj['type'] == 'Conversation'
