@@ -131,9 +131,6 @@
 //= require <datetime>
 //= require <expand_comment>
 
-//TODO: delete
-//= require <date_picker>
-
 //= require <first_steps>
 //= require <forms>
 //= require <hotkeys>
@@ -151,9 +148,6 @@
 //= require <quick_add_pane>
 //= require <sessions>
 //= require <splash>
-//= require <task>
-//= require <task_list>
 //= require <task_list_templates>
 //= require <threads>
-//= require <watchers>
 //= require <push>
