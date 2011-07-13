@@ -11,7 +11,7 @@
   , 'click a.add_watchers'         : 'toggleWatchers'
   , 'focusin textarea'             : 'focusTextarea'
   , 'submit .new_comment'          : 'postComment'
-  , 'click span.convert_to_task a' : 'toggleConvertToTask'
+  , 'click a.convert_to_task'      : 'toggleConvertToTask'
   , 'click .date_picker'           : 'showCalendar'
   , 'click  a.private_switch'      : 'togglePrivateElements'
   };

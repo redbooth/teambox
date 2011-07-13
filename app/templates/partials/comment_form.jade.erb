@@ -8,7 +8,7 @@ input(name= 'utf8', type= 'hidden', value= '✓')
     textarea(cols= '40', name='comments_attributes[0][body]', placeholder= '<%= t('comments.new.task') %>', rows= '20', autocomplete= 'off')
     .autocomplete(style= 'display: none')
 
-.extra(style= 'display: none')
+.new_extra(style= 'display: none')
   - if (self.is_task)
     .field.text_field.hours_field(style= 'display: none')
       label
@@ -48,8 +48,8 @@ input(name= 'utf8', type= 'hidden', value= '✓')
           span(class= 'localized_date')
             i <%= t('date_picker.no_date_assigned') %>
     - else
-      span.convert_to_task
-        a(href= '#convert_to_task') <%= t('comments.conversations.convert_to_task') %>
+      %a.button_gray.convert_to_task{:href => "#convert_to_task"}
+        %span <%= t('comments.conversations.convert_to_task') %>
 
     span.new(style= 'display: none') ← &nbsp;&nbsp; <%= t('comments.watchers.popup_note_html') %>
 
