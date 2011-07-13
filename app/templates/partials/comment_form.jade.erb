@@ -24,35 +24,35 @@ input(name= 'utf8', type= 'hidden', value= '✓')
     .fields
     ul.file_list
 
-  .actions
-    .attach
-      span <%= t('comments.fields.attach')%>
-      a(href= '#uploads', class= 'attach_icon hoverable', title= '<%= t('uploads.tooltip')%>') Attachment
-      a(href= '/google_docs', class='google_doc_icon')
-        img(alt= 'Icon_6_document', class= 'google_docs_logo', src= '/images/google_docs/icon_6_document.gif')
-
-      - if (self.is_task)
-        a(href= '#hours', class= 'add_hours_icon hoverable', title= '<%= t('comments.hours.tooltip_short') %>') <%= t('comments.hours.tooltip') %>
-
-      a(href= '#', class= 'add_watchers hoverable', title= '<%= t('shared.watchers.notify_people')%>') <%= t('comments.watchers.label') %>
-      a(href='#privacy', class='private_switch hoverable', title='<%=t("comments.private.control")%>') <%=t("comments.private.privacy")%>
-
+  ol.new_comment_actions
+    li
+      a.btn_attach(href= '#uploads', class= 'attach_icon hoverable', title= '<%= t('uploads.tooltip')%>')
+    li
+      a.btn_doc(href= '/google_docs', class='google_doc_icon hoverable', title='<%= t('google_docs.attach')%>')
     - if (self.is_task)
-      .task_actions
-        label(for= 'task_status') <%= t('activerecord.attributes.task.status') %>
-        select#task_status(name= 'status')
+      li
+        a.btn_hours(href= '#hours', class= 'add_hours_icon hoverable', title= '<%= t('comments.hours.tooltip_short') %>')
+    li
+      a.btn_users(href= '#', class= 'add_watchers hoverable', title= '<%= t('shared.watchers.notify_people')%>')
+    li
+      a.btn_lock(href='#privacy', class='private_switch hoverable', title='<%=t("comments.private.control")%>')
 
-        label(for= 'task_assigned_id') <%= t('comments.new.assigned_to') %>
-        select#task_assigned_id(name= 'assigned_id')
+  - if (self.is_task)
+    .task_actions
+      label(for= 'task_status') <%= t('activerecord.attributes.task.status') %>
+      select#task_status(name= 'status')
 
-        label(for= 'task_due_on') <%= t('activerecord.attributes.task.due_on') %>
-        .date_picker
-          img(alt= 'Calendar', class= 'calendar_date_select_popup_icon', src= '/images/calendar_date_select/calendar.gif')
-          input(id= 'task_due_on', name= 'due_on', type= 'hidden')
-          span(class= 'localized_date')
-            i <%= t('date_picker.no_date_assigned') %>
-    - else
-      a.button_gray.convert_to_task(href="#convert_to_task")
-        span <%= t('comments.conversations.convert_to_task') %>
+      label(for= 'task_assigned_id') <%= t('comments.new.assigned_to') %>
+      select#task_assigned_id(name= 'assigned_id')
+
+      label(for= 'task_due_on') <%= t('activerecord.attributes.task.due_on') %>
+      .date_picker
+        img(alt= 'Calendar', class= 'calendar_date_select_popup_icon', src= '/images/calendar_date_select/calendar.gif')
+        input(id= 'task_due_on', name= 'due_on', type= 'hidden')
+        span(class= 'localized_date')
+          i <%= t('date_picker.no_date_assigned') %>
+  - else
+    a.button_gray.convert_to_task(href="#convert_to_task")
+      span <%= t('comments.conversations.convert_to_task') %>
 
     span.new(style= 'display: none') ← &nbsp;&nbsp; <%= t('comments.watchers.popup_note_html') %>
