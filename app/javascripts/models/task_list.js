@@ -32,6 +32,45 @@
     }
   };
 
+  /**
+   * Get the `archive` API url
+   *
+   * @return {String}
+   */
+  TaskList.archiveUrl = function () {
+    return this.url() + '/archive';
+  };
+
+  /**
+   * Calls to the archive API
+   *
+   * @param {Function} callback
+   */
+  TaskList.archive = function (callback) {
+    var self = this
+      , url = this.archiveUrl();
+
+    function onSuccess(transport) {
+      self.set({archived: true});
+      _.each(self.get('tasks'), function (task) {
+        task.set({assigned: null, status: 3});
+      });
+
+      // new activities will be fetched
+      Teambox.collections.threads.fetch({success: function () {
+        callback(null);
+      }});
+    }
+
+    new Ajax.Request(url, { method: 'PUT'
+                          , requestHeaders: {Accept: 'application/json'}
+                          , onSuccess: onSuccess
+                          , onFailure: function (transport) {
+                              callback(Error(transport.status + ': ' + transport.responseText));
+                            }
+                          });
+  };
+
   // exports
   Teambox.Models.TaskList = Teambox.Models.Base.extend(TaskList);
 }());

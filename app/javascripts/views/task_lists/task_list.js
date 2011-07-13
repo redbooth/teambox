@@ -8,6 +8,7 @@
   , 'click .task_list_rename': 'showRename'
   , 'click .task_list_set_dates': 'showSetDates'
   , 'click a.inline_form_update_cancel': 'hideTaskListForm'
+  , 'click .task_list_resolve': 'resolveTaskList'
   , 'submit form.task_list_form': 'updateTaskList'
   };
 
@@ -20,6 +21,26 @@
     _.bindAll(this, 'render');
 
     this.project = options.project;
+    this.model.bind('change', this.render);
+  };
+
+  /**
+   * resolveTaskList
+   *
+   * @param {Event} evt
+   */
+  TaskList.resolveTaskList = function (evt) {
+    evt.stop();
+    if (confirm('Are you sure you want to resolve and archive this task list?')) {
+      var self = this
+        , task_list_id = evt.element().ancestors()[3].readAttribute('data-task-list-id')
+        , task_list = Teambox.collections.tasks_lists.get(task_list_id);
+
+      task_list.archive(function (error, result) {
+        if (error) return console.log(error);
+        self.el.highlight();
+      });
+    }
   };
 
   /**
@@ -129,11 +150,15 @@
         }).render().el)
       });
 
-    this.el.down('.tasks').insert({after: (new Teambox.Views.TaskListsTaskForm({
-      project: this.project
-    , parent_view: this
-    , task_list: this.model
-    })).render().el});
+    if (!this.model.get('archived')) {
+      this.el.down('.tasks').insert({after: (new Teambox.Views.TaskListsTaskForm({
+        project: this.project
+      , parent_view: this
+      , task_list: this.model
+      })).render().el});
+    } else {
+      this.el.addClassName('archived');
+    }
 
     return this;
   };
