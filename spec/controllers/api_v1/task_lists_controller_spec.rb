@@ -5,7 +5,10 @@ describe ApiV1::TaskListsController do
     make_a_typical_project
 
     @task_list = @project.create_task_list(@owner, {:name => 'A TODO list'})
-    @task_list.save!
+    @task_list.tasks << Task.new()
+
+    @task = @project.create_task(@owner, @task_list, {:name => 'Something TODO'})
+    @task.save!
 
     @other_task_list = @project.create_task_list(@owner, {:name => 'Another TODO list'})
     @other_task_list.archived = true
@@ -205,6 +208,14 @@ describe ApiV1::TaskListsController do
       response.status.should == 422
 
       @task_list.reload.archived.should == true
+    end
+
+    it "should unassign and set resolved status to the associated tasks" do
+      login_as @user
+
+      put :archive, :project_id => @project.permalink, :id => @task_list.id
+      @task_list.tasks[0].assigned.should == nil
+      @task_list.tasks[0].status.should == 3
     end
   end
 

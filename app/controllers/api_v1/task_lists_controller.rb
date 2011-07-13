@@ -64,29 +64,27 @@ class ApiV1::TaskListsController < ApiV1::APIController
       comment_attrs = {:comment_body => params[:message]}
       comment_attrs[:body] ||= "Archived task list"
       comment_attrs[:status] = params[:status] || 3
-      
+
       # Resolve all unresolved tasks
       @task_list.tasks.each do |task|
-        if !task.archived?
-          task.previous_status = task.status
-          task.previous_assigned_id = task.assigned_id
+        unless task.archived?
+          task.assigned = nil
           task.status = comment_attrs[:status]
-          task.assigned_id = nil
           comment = @current_project.new_comment(current_user,task,comment_attrs)
           comment.save!
         end
       end
-      
+
       @task_list.reload
       @task_list.archived = true
       @task_list.save!
-      
+
       handle_api_success(@task_list)
     else
       handle_api_error(@task_list)
     end
   end
-  
+
   def unarchive
     authorize! :update, @task_list
     if @task_list.archived
