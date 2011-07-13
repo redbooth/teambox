@@ -8,7 +8,7 @@ input(name= 'utf8', type= 'hidden', value= '✓')
   .textarea
     textarea(cols= '40', name='comments_attributes[0][body]', placeholder= '<%= t('comments.new.task') %>', rows= '20', autocomplete= 'off')
     .autocomplete(style= 'display: none')
-
+.clear
 .new_extra(style= 'display: none')
   - if (self.is_task)
     .field.text_field.hours_field(style= 'display: none')
