@@ -15,7 +15,7 @@
    * @return {String} url
    */
   TaskCollection.url = function () {
-    return '/api/1/tasks';
+    return '/api/1/tasks.json';
   };
 
   /* Active tasks assigned to me

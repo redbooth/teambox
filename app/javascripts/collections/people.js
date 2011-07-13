@@ -14,7 +14,7 @@
   };
 
   People.url = function () {
-    return '/api/1/projects/' + this.project_id + '/people';
+    return '/api/1/projects/' + this.project_id + '/people.json';
   };
 
   // exports

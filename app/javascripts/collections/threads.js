@@ -17,7 +17,7 @@
   };
 
   Threads.url = function () {
-    return "/api/1/activities";
+    return "/api/1/activities.json";
   };
 
   Threads.fetchNextPage = function (callback) {

@@ -28,7 +28,7 @@
       url += '/' + this.project_id;
     }
 
-    return url + '/search?q=' + this.query;
+    return url + '/search.json?q=' + this.query;
   };
 
   // exports

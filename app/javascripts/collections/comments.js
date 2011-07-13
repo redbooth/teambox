@@ -27,7 +27,7 @@
       url += '/conversations/' + this.conversation_id;
     }
 
-    url += '/comments';
+    url += '/comments.json';
 
     return url;
   };

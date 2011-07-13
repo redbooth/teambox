@@ -9,7 +9,7 @@
   };
 
   Conversations.url = function () {
-    return "/api/1/projects/" + this.options.project_id + '/conversations';
+    return "/api/1/projects/" + this.options.project_id + '/conversations.json';
   };
 
   Conversations.fetchNextPage = function (callback) {

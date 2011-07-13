@@ -9,7 +9,7 @@
   };
 
   Pages.url = function () {
-    return "/api/1/pages";
+    return "/api/1/pages.json";
   };
 
   // exports

@@ -6,7 +6,7 @@
   };
 
   ProjectsCollection.url = function () {
-    return '/api/1/projects';
+    return '/api/1/projects.json';
   };
 
   // Returns organizations, adding the following arrays:

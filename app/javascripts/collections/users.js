@@ -12,7 +12,7 @@
   };
 
   Users.url = function () {
-    return '/api/1/users';
+    return '/api/1/users.json';
   };
 
   // exports

@@ -17,7 +17,7 @@
       base_url += '/projects/' + this.options.project_id;
     }
 
-    return base_url + '/task_lists';
+    return base_url + '/task_lists.json';
   };
 
   /**
