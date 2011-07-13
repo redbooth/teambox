@@ -246,7 +246,7 @@
       , people = Teambox.collections.projects.get(this.model.get('project_id')).getAutocompleterUserNames()
       , container;
 
-    this.el.down('.extra').show();
+    this.el.down('.new_extra').show();
 
     if (this.autocompleter) {
       this.autocompleter.options.array = people;
