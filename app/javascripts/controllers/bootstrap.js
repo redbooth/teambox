@@ -34,63 +34,68 @@
       collections.projects = this.my_projects = new Teambox.Collections.Projects();
 
       this.fetchData({
-          user: _loader.load()
-        , tasks: _loader.load()
-        , threads: _loader.load()
-        , pages: _loader.load()
-        , projects: _loader.load(this.projectsLoaderCallback(_loader))
+        user: _loader.load()
+      , tasks: _loader.load()
+      , threads: _loader.load()
+      , pages: _loader.load()
+      , projects: _loader.load(this.projectsLoaderCallback(_loader))
       });
     }
 
-    //Fetch data from server on each clock tick
-    //"unless" we're synchronizing (.e.g push is active)
-    //"or" we're currently inside a clock tick (fetch)
-  , clockTick: function(clock) {
+    /**
+     * Fetch data from server on each clock tick
+     * "unless" we're synchronizing (.e.g push is active)
+     * "or" we're currently inside a clock tick (fetch)
+     *
+     * @param {Object} clock
+     */
+  , clockTick: function (clock) {
       console.log('tick - ' + new Date() + ' - fetching data from server...');
 
-      //Every 4 seconds, interval is doubled unless clock.reset(x) is called.
-      //We call fetch on each poll unless we have a valid push connection.
-      //Push connect event, disables polling.
-      //Push disconnect event, enables polling.
-      //Call clock.activity() to reset the timer (so the interval is reset to it's original value)
-      //Call clock.synchronise() to disable polling.
-      //Call clock.synchronised() to enable polling.
-      //You can call clock.tick() whenever you want while not synchronizing
+      // Every 4 seconds, interval is doubled unless clock.reset(x) is called.
+      // We call fetch on each poll unless we have a valid push connection.
+      // Push connect event, disables polling.
+      // Push disconnect event, enables polling.
+      // Call clock.activity() to reset the timer (so the interval is reset to it's original value)
+      // Call clock.synchronise() to disable polling.
+      // Call clock.synchronised() to enable polling.
+      // You can call clock.tick() whenever you want while not synchronizing
 
       var self = this
-      , _loader = Teambox.modules.Loader(function () {
-        console.log('fetchData done! Synchronizing clock!');
-        //renable polling after last fetch
-        clock.synchronised();
-      })
+        , _loader = Teambox.modules.Loader(function () {
+            console.log('fetchData done! Synchronizing clock!');
+            //renable polling after last fetch
+            clock.synchronised();
+          });
 
-      , log = function(model_class) { return function() {console.log('Done fetching ' + model_class + '!'); }}
-      , load_projects = function(loader, logger) {
-          return self.projectsLoaderCallback(loader, logger);
-      };
+      function log(model_class) {
+        return function () {
+          console.log('Done fetching ' + model_class + '!');
+        };
+      }
 
       this.fetchData({
-          user: _loader.load(log('user'))
-        , tasks: _loader.load(log('tasks'))
-        , threads: _loader.load(log('threads'))
-        , pages: _loader.load(log('pages'))
-        , projects: _loader.load(load_projects(_loader, log))
+        user: _loader.load(log('user'))
+      , tasks: _loader.load(log('tasks'))
+      , threads: _loader.load(log('threads'))
+      , pages: _loader.load(log('pages'))
+      , projects: _loader.load(self.projectsLoaderCallback(_loader, log))
       });
     }
 
-  , synchroniseClock: function() {
+  , synchroniseClock: function () {
       console.log('Push connection! Synchronizing clock!');
       this.clock.synchronise();
     }
 
-  , dontSynchroniseClock: function() {
+  , dontSynchroniseClock: function () {
       console.log('No push connection! Clock synchronized!');
       this.clock.synchronised();
     }
 
-  , projectsLoaderCallback: function(_loader, log) {
+  , projectsLoaderCallback: function (_loader, log) {
       return function (projects) {
-        if (log) { log('projects')(); }
+        if (log) log('projects')();
         _.each(projects.models, function (project, i) {
           var collection;
 
@@ -99,7 +104,7 @@
           projects.models[i].set({task_lists: collection});
           collection.fetch({success: _loader.load(function (task_lists) {
             collections.tasks_lists.add(task_lists.models, {silent: true});
-            if (log) { log('task_lists')(); }
+            if (log) log('task_lists')();
           })});
 
           // preload project >> conversations
@@ -120,15 +125,16 @@
             } catch (e) {} // may try to add same task_list twice
           })});
         });
-      }
+      };
     }
 
-    /*
-    * Fetch all data we're going to need
-    * Uses the Loader class, which updates the progress bar
-    *
-    */
-  , fetchData: function(callbacks) {
+    /**
+     * Fetch all data we're going to need
+     * Uses the Loader class, which updates the progress bar
+     *
+     * @param {Object} callbacks
+     */
+  , fetchData: function (callbacks) {
       models.user.fetch({success: callbacks.user});
       collections.tasks.fetch({success: callbacks.tasks});
       collections.threads.fetch({success: callbacks.threads});
@@ -146,7 +152,8 @@
   , setPushSessionId: function (push_session_id) {
       this.push_session_id = push_session_id;
     }
-  , triggerGoogleAuthCallback: function(window_id) {
+
+  , triggerGoogleAuthCallback: function (window_id) {
       var callback = this.windowed_auth_requests[window_id];
       if (callback) {
         callback();

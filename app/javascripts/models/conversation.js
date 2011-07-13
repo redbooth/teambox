@@ -4,7 +4,8 @@
   Conversation.initialize = function (options) {
   };
 
- /* Returns the class name
+ /**
+  * Returns the class name
   *
   * @return {String}
   */
@@ -12,15 +13,17 @@
     return 'Conversation';
   };
 
-  /* TODO: Remove this hack, `isConversation` belongs to a Thread
+  /**
+   * TODO: Remove this hack, `isConversation` belongs to a Thread
    * no one should be talkin to a Conversation if its
    * expecting a Thread
    */
   Conversation.isConversation = function () {
     return true;
-  }
+  };
 
-  /* return the public url
+  /**
+   * Return the public url
    *
    * @return {String}
    */
@@ -28,7 +31,8 @@
     return '/projects/' + this.get('project_id') + '/conversations/' + this.id;
   };
 
-  /* return the `convert_to_task` url
+  /**
+   * Return the `convert_to_task` url
    *
    * @return {String}
    */
@@ -36,7 +40,8 @@
     return '/api/1/projects/' + this.get('project_id') + '/conversations/' + this.id + '/convert_to_task';
   };
 
-  /* return the `comments` url
+  /**
+   * Return the `comments` url
    *
    * @return {String}
    */
@@ -44,7 +49,8 @@
     return '/api/1/projects/' + this.get('project_id') + '/conversations/' + this.id + '/comments';
   };
 
-  /* return the resource url
+  /**
+   * Return the resource url
    *
    * @return {String}
    */
@@ -52,7 +58,8 @@
     return "/api/1/conversations/" + this.id;
   };
 
-  /* parses the incoming data from the API
+  /**
+   * Parses the incoming data from the API
    *
    * @return {Object}
    */
@@ -60,7 +67,8 @@
     return _.parseFromAPI(response)[0];
   };
 
-  /* Check if the model has been loaded fully
+  /**
+   * Check if the model has been loaded fully
    *
    * @return {Boolean}
    */
@@ -69,7 +77,8 @@
     return !!this.getAttributes().project_id;
   };
 
-  /* Calls to the convert_to_task API
+  /**
+   * Calls to the convert_to_task API
    *
    * @param {Object} parameters
    * @param {Function} onSuccess
