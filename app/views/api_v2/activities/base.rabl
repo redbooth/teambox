@@ -1,4 +1,5 @@
 attributes :id, :last_activity_id, :action, :user_id, :project_id, :target_id, :target_type, :comment_target_id, :comment_target_type, :is_private
+extends 'api_v2/shared/type'
 
 code(:created_at) { |a| a.created_at.to_s(:api_time) }
 code(:updated_at) { |a| a.updated_at.to_s(:api_time) }
