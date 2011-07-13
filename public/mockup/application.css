@@ -339,19 +339,6 @@ div.column_wrap {
   div.column_wrap div.column .view_sidebar {
     margin-left: 15px; }
 
-div.content_wrap {
-  left: 191px;
-  right: 200px;
-  border-left: 1px solid #898989; }
-  div.content_wrap .content {
-    position: absolute;
-    top: 26px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow-y: auto;
-    background: url(img_3_2/bg_activity.gif) repeat; }
-
 div.aux_wrap {
   width: 200px;
   right: 0;
@@ -362,6 +349,28 @@ div.aux_wrap {
     color: black; }
   div.aux_wrap .view_sidebar {
     padding: 5px; }
+
+div.content_scroll {
+  overflow-y: auto;
+  position: absolute;
+  background: url(img_3_2/bg_activity.gif) repeat;
+  top: 26px;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+
+div.content_wrap {
+  left: 191px;
+  right: 200px;
+  border-left: 1px solid #898989; }
+  div.content_wrap .content {
+    position: relative;
+    float: left;
+    clear: both;
+    top: 10px;
+    bottom: 0;
+    left: 0;
+    right: 0; }
 
 div.clear {
   clear: both; }
@@ -2534,6 +2543,9 @@ body.new_conversations form.new_conversation, body.create_conversations form.new
 .conversation_list {
   width: 271px;
   height: 100%;
+  display: block;
+  float: left;
+  clear: none;
   margin: 0;
   padding: 0;
   background: url(img_3_2/sprite_h.png) -1280px 0 repeat-y; }
@@ -2550,6 +2562,9 @@ body.new_conversations form.new_conversation, body.create_conversations form.new
       display: block;
       margin-bottom: 4px;
       width: 100%; }
+    .conversation_list .conversation_tag .actions_menu, .conversation_list .new_conversation .actions_menu {
+      margin-top: -4px;
+      margin-right: -3px; }
     .conversation_list .conversation_tag .title, .conversation_list .new_conversation .title {
       margin-bottom: 5px; }
     .conversation_list .conversation_tag .excerpt, .conversation_list .conversation_tag .people, .conversation_list .conversation_tag .time, .conversation_list .new_conversation .excerpt, .conversation_list .new_conversation .people, .conversation_list .new_conversation .time {
@@ -2568,7 +2583,7 @@ body.new_conversations form.new_conversation, body.create_conversations form.new
       top: 0;
       left: 0;
       margin-left: -22px;
-      margin-top: -2px;
+      margin-top: -17px;
       width: 18px;
       height: 18px;
       background: url(img_3_2/ico/star-hidden.png) no-repeat; }

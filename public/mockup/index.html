@@ -162,7 +162,8 @@
           <div class="separator">
             <span id="view_title">Recent activity</span>
           </div>
-          <div class="content" id="content">
+          <div class="content_scroll">
+          <div class="content_header">
           <form id="new_conversation_form">
             <div class="big_avatar"><span></span></div>
             <div class="textarea_big"><textarea cols="40" placeholder="Write here"></textarea></div>
@@ -189,6 +190,8 @@
             </div>
           </form>
           <div class="clear"></div>
+          </div>
+          <div class="content" id="content">
           <div id="activities"><div class="thread" data-class="task" data-id="7" data-project-id="1"><div class="comment comment_header"><span class="time"><time data-msec="1307547790000" pubdate="true" class="timeago">2011-06-08 15:43:10 +0000</time></span><div class="info"><img src="img_3_2/ico/tick-button-24.png"><div class="comment_count"><span>13</span></div></div><div class="block"><div class="thread_title"><a href="function (task, project) {
     return '#!/projects/' + project.permalink + '/tasks/' + task.id;
   }">Project Welcome on</a><a href="#!/projects/earthworks/task_lists/3">Project Welcome task list</a></div><div class="project_overlay"><a data-project-id="1">Earthworks Yoga</a></div><div class="task_summary"><span class="task_status task_status_open">open</span>Assigned to Corrina Kottke</div><p class="excerpt"><strong>Corrina Kottke</strong>ewrwerewr</p></div><div class="clear"></div></div><div class="comments"><div data-editable-before="1306926599000" id="comment_35" data-project="1" data-id="35" data-user="2" class="comment"><div class="info"><a style="background: url(http://www.gravatar.com/avatar/49958537f28bbde1a14027f1a5cd06d8?size=24&amp;default=identicon) no-repeat" class="micro_avatar"></a></div><div class="block"><div class="actions_menu"><img src="img_3_2/ico/arrow-dropdown.png" alt="Triangle" class="triangle"><div class="extra"><a style="display:block;" class="edit">Edit</a><a rel="facebox" href="#email_post_35" class="reply_email">Reply via email</a><a style="display:block;" href="#" class="delete">Delete</a></div></div><div class="actiondate"><time data-msec="1306926599000" pubdate="true" class="timeago">Jun 1</time></div><div class="body textilized"><div class="before"><a class="user"></a></div><p>I found a yoga website that I really love. It’s a dumb name for a studio, but the website design is flawless: Let’s Get Bent: <a href="http://bit.ly/8p0gmf">http://bit.ly/8p0gmf</a></p>
@@ -680,7 +683,7 @@ I highly recommend. Please let me know what you think.</p>
           </div>
         </div>
       </div>
-      
+    </div>
     </div>
     <style type="text/css">
             form .google_docs_attachment { display: none }
