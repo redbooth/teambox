@@ -156,14 +156,14 @@
     this.el.update(this.template(this.model.getAttributes()));
 
     // Insert the comment form at bottom of the thread element
-    this.el.insert({bottom: this.comment_form.render().el});
+    this.el.down('div.new_comment_wrap').insert({bottom: this.comment_form.render().el});
     if (this.model.isConversation()) {
-      this.el.insert({bottom: this.convert_to_task.render().el});
+      this.el.down('div.new_comment_wrap').insert({bottom: this.convert_to_task.render().el});
     }
     // google docs
     // Because comment_form view's el is the actual form tag, 
     // the google docs view needs to be inserted at the thread level
-    this.el.insert({bottom: this.google_docs.render().el});
+    this.el.down('div.new_comment_wrap').insert({bottom: this.google_docs.render().el});
 
     return this;
   };
