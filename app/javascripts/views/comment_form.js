@@ -61,7 +61,7 @@
       this.el.insert({top: new Element('input', {type: 'hidden', name: '_method', value: 'put'})});
     }
 
-    this.el.down('.actions')
+    this.el.down('.new_comment_actions')
       // upload area
       .insert({before: this.upload_area.render().el})
       // watchers box
