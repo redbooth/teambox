@@ -8,8 +8,11 @@ input(name= 'utf8', type= 'hidden', value= '✓')
   .textarea
     textarea(cols= '40', name='comments_attributes[0][body]', placeholder= '<%= t('comments.new.task') %>', rows= '20', autocomplete= 'off')
     .autocomplete(style= 'display: none')
+  span.help
+    a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= '<%= t('projects.show.text_styling')%>')
 .clear
 .new_extra(style= 'display: none')
+  input.button_blue.submit(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
   - if (self.is_task)
     .field.text_field.hours_field(style= 'display: none')
       label
@@ -53,8 +56,3 @@ input(name= 'utf8', type= 'hidden', value= '✓')
         span <%= t('comments.conversations.convert_to_task') %>
 
     span.new(style= 'display: none') ← &nbsp;&nbsp; <%= t('comments.watchers.popup_note_html') %>
-
-  .submit
-    span.help
-      a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= '<%= t('projects.show.text_styling')%>')
-      input(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
