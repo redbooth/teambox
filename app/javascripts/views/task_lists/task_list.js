@@ -8,7 +8,8 @@
   , 'click .task_list_rename': 'showRename'
   , 'click .task_list_set_dates': 'showSetDates'
   , 'click a.inline_form_update_cancel': 'hideTaskListForm'
-  , 'click .task_list_resolve': 'resolveTaskList'
+  , 'click a.task_list_resolve': 'resolveTaskList'
+  , 'click a.task_list_delete': 'deleteTaskList'
   , 'submit form.task_list_form': 'updateTaskList'
   };
 
@@ -18,10 +19,38 @@
    * @param {Object} options
    */
   TaskList.initialize = function (options) {
-    _.bindAll(this, 'render');
+    _.bindAll(this, 'render', 'onDestroy');
 
     this.project = options.project;
     this.model.bind('change', this.render);
+    this.model.bind('destroy', this.onDestroy);
+  };
+
+  /**
+   * Callback triggered when the task_list is being destroyed
+   */
+  TaskList.onDestroy = function () {
+    this.el.remove();
+
+    _.each(this.model.get('tasks'), function (task) {
+      task.trigger('destroy');
+    });
+  };
+
+  /**
+   * deleteTaskList
+   *
+   * @param {Event} evt
+   */
+  TaskList.deleteTaskList = function (evt) {
+    evt.stop();
+    if (confirm('Are you sure you want to delete this task list?')) {
+      var self = this
+        , task_list_id = evt.element().ancestors()[3].readAttribute('data-task-list-id')
+        , task_list = Teambox.collections.tasks_lists.get(task_list_id);
+
+      task_list.destroy();
+    }
   };
 
   /**

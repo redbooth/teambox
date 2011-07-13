@@ -13,6 +13,8 @@
   };
 
   Task.initialize = function (options) {
+    var self = this;
+
     // bindings
     _.bindAll(this, 'render');
 
@@ -21,6 +23,9 @@
 
     this.model.bind('change', this.render);
     this.model.get('task_list').bind('change', this.render);
+    this.model.bind('destroy', function () {
+      self.el.remove();
+    });
   };
 
   /**
