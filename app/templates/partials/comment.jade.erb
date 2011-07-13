@@ -8,11 +8,12 @@
   .block
     .actions_menu
       img(src="/img_3_2/ico/arrow-dropdown.png", alt="Triangle",class="triangle")
-      - #TODO: [MARKUP] removed actiondate from here. Need to put it back somewhere
       .extra
         a.edit(style= 'display:block;') Edit
         a.reply_email(rel= 'facebox', href= '#email_post_' + self.id) Reply via email
         a.delete(style= 'display:block;', href= "#") Delete
+    .actiondate
+      time.timeago(data-msec= self.ms(self.updated_at), pubdate= 'true')= self.timeAgo(self.updated_at)
     .body.textilized
       .before
         a.user(href= self.user_url(self.user))= self.full_name(self.user)
