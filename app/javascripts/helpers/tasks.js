@@ -76,11 +76,14 @@
 
     _.each(sorted, function (el) {
       var current_status = TasksHelper.getStatus(options.by)(el);
-      if (last_status.order !== current_status.order) {
-        options.where.insert('<div class="group">' + current_status.label + '</div>');
+      //TODO: Quick fix for exception. Revisit!
+      if (current_status) {
+        if (last_status.order !== current_status.order) {
+          options.where.insert('<div class="group">' + current_status.label + '</div>');
+        }
+        options.where.insert({bottom: el});
+        last_status = current_status;
       }
-      options.where.insert({bottom: el});
-      last_status = current_status;
     });
 
     return TasksHelper;
