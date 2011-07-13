@@ -87,7 +87,7 @@
   /* Show list of docs in facebox div
    */
   GoogleDocs.openGoogleDocsList = function (event) {
-    var link = $(event.target).up('a');
+    var link = $(event.target);
 
     event.preventDefault();
 
