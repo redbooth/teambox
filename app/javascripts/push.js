@@ -1,4 +1,4 @@
-(function() {
+;(function() {
 
   window.WEB_SOCKET_SWF_LOCATION = window.location.protocol + "//" + window.location.host  + "/WebSocketMain.swf";
 
