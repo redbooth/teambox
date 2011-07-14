@@ -32,6 +32,7 @@ gem 'hashie'
 gem 'tilt', '~> 1.2.2'
 gem 'choices', :git => "git://github.com/teambox/choices.git"
 gem 'rack-staticifier', :git => "https://github.com/remi/rack-staticifier.git"
+gem 'rack-contrib', :require => 'rack/contrib'
 gem 'trimmer', :git => "https://github.com/teambox/trimmer.git"
 gem 'rabl'
 

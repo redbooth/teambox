@@ -212,6 +212,8 @@ GEM
     polyglot (0.3.1)
     rabl (0.2.8)
     rack (1.2.3)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-ssl-enforcer (0.2.2)
@@ -344,6 +346,7 @@ DEPENDENCIES
   pg (~> 0.9.0)
   pickle (~> 0.4.4)
   rabl
+  rack-contrib
   rack-ssl-enforcer
   rack-staticifier!
   rails (~> 3.0.9)

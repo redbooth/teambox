@@ -19,7 +19,6 @@ describe ApiV2::ActivitiesController do
     end
 
     it "shows activities with a JSONP callback" do
-      pending "implement callback"
       login_as @user
 
       get :index, :callback => 'lolCat', :format => 'js'
