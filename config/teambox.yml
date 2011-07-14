@@ -155,6 +155,12 @@ development:
   asset_max_file_size: 1
   allow_outgoing_email: false
 
+js_development:
+  <<: *defaults
+  app_domain: teambox.smackaho.st
+  asset_max_file_size: 1
+  allow_outgoing_email: false
+
 production:
   <<: *defaults
 

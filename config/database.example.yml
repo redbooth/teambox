@@ -1,4 +1,4 @@
-development:
+development: &development
   adapter: mysql
   host: localhost
   username: root 
@@ -21,3 +21,6 @@ production:
 
 cucumber:
   <<: *TEST
+
+js_development:
+  <<: *development
