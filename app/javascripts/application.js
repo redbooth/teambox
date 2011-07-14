@@ -80,6 +80,7 @@
 //= require <views/conversation>
 //= require <views/convert_to_task>
 //= require <views/date_picker>
+//= require <views/drop_down>
 //= require <views/projects>
 //= require <views/page_teaser>
 //= require <views/search>
@@ -117,7 +118,6 @@
 //= require <views/conversation_list>
 //= require <views/conversation_list_item>
 //= require <views/watchers>
-//= require <views/simple_conversation/select_project>
 //= require <views/simple_conversation_form>
 
 //= require <facebox>
