@@ -10,6 +10,8 @@ class ApiV2::ActivitiesController < ApiV2::APIController
     @activities = @activities.threads if params[:threads]
     @activities = @activities.limit(api_limit(:hard => true))
     @activities = @activities.where(api_range(:activities))
+    @activities = @activities.where(['is_private = ? OR (is_private = ? AND watchers.user_id = ?)', false, true, current_user.id]).
+      joins("LEFT JOIN watchers ON ((activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type) OR (activities.comment_target_id = watchers.watchable_id AND watchers.watchable_type = activities.comment_target_type)) AND watchers.user_id = #{current_user.id}")
     @activities = @activities.order('activities.id DESC')
   end
 

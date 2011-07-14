@@ -189,8 +189,6 @@ describe ApiV2::ActivitiesController do
       get :index
       response.should be_success
 
-      pending "implement privacy"
-
       list = {}
       JSON.parse(response.body).each do |object|
         list["#{object['comment_target_type']}#{object['comment_target_id']}"] = object if object['comment_target_type']
@@ -240,7 +238,6 @@ describe ApiV2::ActivitiesController do
 
       get :show, :project_id => @project.permalink, :id => activity.id
 
-      pending "implement privacy"
       response.status.should == 401
     end
   end
