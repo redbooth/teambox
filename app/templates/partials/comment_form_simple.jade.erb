@@ -1,0 +1,35 @@
+input(name= 'utf8', type= 'hidden', value= '✓')
+.big_avatar
+  span
+.textarea_big
+  textarea(cols= '40', name='comments_attributes[0][body]', placeholder= '<%= t('comments.new.task') %>', rows= '20', autocomplete= 'off')
+  span.help
+    a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= '<%= t('projects.show.text_styling')%>')
+.info_new_conversation
+  .dropdown_projects
+    label.info_label(for="field_projects") Comment on
+    div
+      input.project_id(type="hidden", name='project_id')
+      input#field_projects(autocomplete="on", :placeholder="Select a project",type="text" )
+      a.dropdown_arrow(href="#")
+      ol.select_project.dropdown_autocomplete
+  input.button_blue.submit(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
+  .google_docs_attachment_form_area(data-object-name= 'comments_attributes[0]')
+    .fields
+    ul.file_list
+  .new_comment_actions_div
+    span.info_label More actions
+    ol.new_comment_actions
+      li
+        a.btn_attach(href= '#uploads', class= 'attach_icon hoverable', title= '<%= t('uploads.tooltip')%>')
+      li
+        a.btn_doc(href= '/google_docs', class='google_doc_icon hoverable', title='<%= t('google_docs.attach')%>')
+      - if (self.is_task)
+        li
+          a.btn_hours(href= '#hours', class= 'add_hours_icon hoverable', title= '<%= t('comments.hours.tooltip_short') %>')
+      li
+        a.btn_users(href= '#', class= 'add_watchers hoverable', title= '<%= t('shared.watchers.notify_people')%>')
+      li
+        a.btn_lock(href='#privacy', class='private_switch hoverable', title='<%=t("comments.private.control")%>')
+
+  span.new(style= 'display: none') ← &nbsp;&nbsp; <%= t('comments.watchers.popup_note_html') %>

@@ -3,6 +3,7 @@
   var CommentForm = { tagName: 'form'
                     , className: 'new_comment'
                     , template: Teambox.modules.ViewCompiler('partials.comment_form')
+                    , simple_template: Teambox.modules.ViewCompiler('partials.comment_form_simple')
                     };
 
   CommentForm.events = {
@@ -24,6 +25,7 @@
     this.watchers = new Teambox.Views.Watchers({model: this.model});
     this.private_elements = new Teambox.Views.PrivateElements({comment_form: this, model: this.model});
     this.thread = options.thread;
+    this.simple = options.simple;
   };
 
   /* Updates the comment_form el
@@ -38,38 +40,43 @@
     , 'data-project-id': this.model.get('project_id')
     , 'enctype': 'multipart/form-data'
     , 'method': 'POST'
+    , 'id': this.simple ? 'new_conversation_form' : ''
     });
 
     this.el.addClassName("edit_" + this.model.get('type').toLowerCase());
 
-    this.el.update(this.template(this.model.getAttributes()));
+    var template = this.simple ? this.simple_template : this.template;
+    this.el.update(template(_.extend({view: this}, this.model.getAttributes())));
 
-    // select status
-    (new Teambox.Views.SelectStatus({
-      el: this.el.select('#task_status')[0]
-    , selected: this.model.get('status')
-    })).render();
+    if (this.model.get('type') === 'Task') {
+      // select status
+      (new Teambox.Views.SelectStatus({
+        el: this.el.select('#task_status')[0]
+      , selected: this.model.get('status')
+      })).render();
 
-    // select assigned
-    (new Teambox.Views.SelectAssigned({
-      el: this.el.select('#task_assigned_id')[0]
-    , selected: this.model.get('assigned_id')
-    , project: Teambox.collections.projects.get(this.model.get('project_id'))
-    })).render();
+      // select assigned
+      (new Teambox.Views.SelectAssigned({
+        el: this.el.select('#task_assigned_id')[0]
+      , selected: this.model.get('assigned_id')
+      , project: Teambox.collections.projects.get(this.model.get('project_id'))
+      })).render();
+    }
 
     if (/\d+$/.test(this.model.url())) {
       this.el.insert({top: new Element('input', {type: 'hidden', name: '_method', value: 'put'})});
     }
 
-    this.el.down('.new_comment_actions')
-      // upload area
-      .insert({before: this.upload_area.render().el})
-      // watchers box
-      .insert({before: this.watchers.render().el})
-      // private elements box
-      .insert({before: this.private_elements.render().el});
+    var actions = this.el.down('.new_comment_actions');
+    // upload area
+    actions.insert({before: this.upload_area.render().el})
 
+    // watchers box
+    // TODO: Watchers need to update dynamically according to selected project
+    // actions.insert({before: this.watchers.render().el})
 
+    // private elements box
+    actions.insert({before: this.private_elements.render().el});
 
     return this;
   };

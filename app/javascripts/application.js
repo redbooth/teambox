@@ -117,6 +117,8 @@
 //= require <views/conversation_list>
 //= require <views/conversation_list_item>
 //= require <views/watchers>
+//= require <views/simple_conversation/select_project>
+//= require <views/simple_conversation_form>
 
 //= require <facebox>
 //= require <showdown>

@@ -394,7 +394,7 @@ form .upload_area
       width: 268px
       margin-left: 0px
       +rounded-bottom(3px)
-      &:hover
+      &.selected
         background-color: $clr_gray_10
   .dropdown_projects
     color: $clr_gray_80
@@ -412,11 +412,11 @@ form .upload_area
       background: url(/img_3_2/sprite_btn.png) no-repeat -62px 0px
       z-index: 9998
       position: relative
-    &:hover
-      .dropdown_autocomplete
-        display: block
-      .dropdown_arrow
-        background-position: -93px 0px
+    // &:hover
+    //   .dropdown_autocomplete
+    //     display: block
+    //   .dropdown_arrow
+    //     background-position: -93px 0px
 
   .new_comment_actions_div
     display: block
