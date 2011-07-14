@@ -23,12 +23,15 @@
   };
 
   SimpleConversationForm.render = function () {
+    var projects = Teambox.collections.projects.map(function(p) { return {id: p.get('permalink'), value: p.get('name')};});
     this.el.update('');
     this.el.insert({bottom: this.comment_form.render().el});
     this.el.insert({bottom: this.google_docs.render().el});
 
-    (new Teambox.Views.SelectProject({
+    (new Teambox.Views.DropDown({
         el: this.el.down('.dropdown_projects')
+      , collection: projects
+      , className: 'dropdown_projects'
      })).render();
 
 
