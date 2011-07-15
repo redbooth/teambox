@@ -1643,6 +1643,7 @@ ca:
       files: Fitxers
       gantt_and_calendars: "Gantts i calendaris"
       my_tasks: "Les meves tasques"
+      today: "Tasques per avui"
       new_project: "+ Nou Projecte"
       open_my_tasks: "Obrir totes les meves tasques"
       organizations: Organitzacions
