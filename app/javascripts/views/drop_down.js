@@ -120,6 +120,7 @@
   DropDown.selectOption = function(entry) {
     this.el.down('input[type=hidden]').value = entry.id;
     this.el.down('input[type=text]').value = entry.value;
+    this.trigger('change:selection', entry.id);
   };
 
   /* Handles selecting an entry either via click or return key
