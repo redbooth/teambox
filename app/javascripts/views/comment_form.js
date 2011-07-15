@@ -10,7 +10,6 @@
     'click a.attach_icon'          : 'toggleAttach'
   , 'click a.add_hours_icon'       : 'toggleHours'
   , 'click a.add_watchers'         : 'toggleWatchers'
-  , 'focusin textarea'             : 'focusTextarea'
   , 'submit .new_comment'          : 'postComment'
   , 'click a.convert_to_task'      : 'toggleConvertToTask'
   , 'click .date_picker'           : 'showCalendar'
@@ -21,11 +20,16 @@
     _.bindAll(this, "render");
 
     this.convert_to_task = options.convert_to_task;
+    this.thread = options.thread;
+    this.simple = options.simple;
+
+    if (!this.simple) {
+      this.events['focusin textarea'] = 'focusTextarea';
+    }
+
     this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
     this.watchers = new Teambox.Views.Watchers({model: this.model});
     this.private_elements = new Teambox.Views.PrivateElements({comment_form: this, model: this.model});
-    this.thread = options.thread;
-    this.simple = options.simple;
   };
 
   /* Updates the comment_form el

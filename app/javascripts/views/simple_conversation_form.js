@@ -23,17 +23,31 @@
   };
 
   SimpleConversationForm.render = function () {
-    var projects = Teambox.collections.projects.map(function(p) { return {id: p.id, value: p.get('name')};});
+    var projects = Teambox.collections.projects.map(function(p) { return {id: p.id, value: p.get('name')};})
+      , model = this.model
+      , watchers_update = this.comment_form.watchers.update;
+
     this.el.update('');
     this.el.insert({bottom: this.comment_form.render().el});
     this.el.insert({bottom: this.google_docs.render().el});
 
-    this.projects_dropdown = new Teambox.Views.DropDown({
+    var dropdown = new Teambox.Views.DropDown({
         el: this.el.down('.dropdown_projects')
       , collection: projects
       , className: 'dropdown_projects'
-     }).bind('change:selection', this.comment_form.watchers.update);
-     this.projects_dropdown.render();
+     });
+
+    function updateProjectInModel(project_id) { 
+      model.set({'project_id': project_id}); 
+    };
+
+    var dropdown_callbacks = [watchers_update, updateProjectInModel];
+
+    _.each(dropdown_callbacks, function(callback) {
+      dropdown.bind('change:selection', callback);
+    });
+
+    dropdown.render();
 
     return this;
   };
