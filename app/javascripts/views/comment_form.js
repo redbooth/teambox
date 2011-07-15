@@ -72,8 +72,7 @@
     actions.insert({before: this.upload_area.render().el})
 
     // watchers box
-    // TODO: Watchers need to update dynamically according to selected project
-    // actions.insert({before: this.watchers.render().el})
+    actions.insert({before: this.watchers.render().el})
 
     // private elements box
     actions.insert({before: this.private_elements.render().el});

@@ -9,9 +9,20 @@
   };
 
   Watchers.initialize = function (options) {
-    _.bindAll(this, "render");
+    _.bindAll(this, "render", "update");
 
-    this.project = Teambox.collections.projects.get(this.model.get('project_id'));
+    var project_id = this.model.get('project_id');
+    if (project_id) {
+      this.setProject(project_id);
+    }
+  };
+
+  /* Draw the Add Watchers box and populate it with watchers
+   *
+   * @return self
+   */
+  Watchers.setProject = function (project_id) {
+    this.project = Teambox.collections.projects.get(project_id);
   };
 
   /* Draw the Add Watchers box and populate it with watchers
@@ -19,13 +30,27 @@
    * @return self
    */
   Watchers.render = function () {
-    var users = _.map(this.project.get('people').models, function (person) {
-          return person.get('user');
-        });
-
-    this.el.update(this.template({users: users})).hide();
-
+    this.update();
+    this.el.hide();
     return this;
+  };
+
+  /* Rerender watchers list
+   *
+   * @param {Event} evt
+   * @return false
+   */
+  Watchers.update = function (project_id) {
+    if (project_id) {
+      this.setProject(project_id);
+    }
+
+    if (this.project) {
+      var users = _.map(this.project.get('people').models, function (person) {
+            return person.get('user');
+          });
+      this.el.update(this.template({users: users}));
+    }
   };
 
   /* Add @username to the textarea when clicking on a user
