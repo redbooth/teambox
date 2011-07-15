@@ -29,6 +29,7 @@
       'keydown input[type=text]': 'navigateSelect'
     , 'keyup input[type=text]':   'filterOptions'
     , 'click li': 'selectEvent'
+    , 'click .dropdown_arrow': 'showDropDown'
     , 'mouseover li': 'selectElement'
   };
 
