@@ -1,6 +1,23 @@
 (function () {
   var DropDown = {};
 
+  /* Initialise a new DropDown view
+   *
+   * Allows you to selection from a list of options
+   * Using either keyboard or mouse
+   * and filters list as you type.
+   *
+   * @param {Object} options
+   * @required options.collection
+   * @optional options.tagName
+   * @optional options.className
+   *
+   * Expects the following markup:
+   *   input(type="hidden")
+   *   input(type="text")
+   *   a.dropdown_arrow
+   *   ol.dropdown_autocomplete
+   */
   DropDown.initialize = function (options) {
     _.bindAll(this, 'render');
     this.collection = options.collection;
@@ -46,6 +63,11 @@
     }
   };
 
+  /* Show/hide dropdown on focus/blur
+   * On blue event, hide is triggered in a timeout
+   * so as not to conflict with click event.
+   * Will also call selectFirstEntry on blur event
+   */
   DropDown.setupBlurFocusHandlers = function() {
     this.el.down('input[type=text]').on('focus', this.showDropDown.bind(this));
     this.el.down('input[type=text]').on('blur', function(event) {
@@ -54,6 +76,10 @@
     }.bind(this));
   };
 
+  /* Show dropdown
+   *
+   * @param {Object} event
+   */
   DropDown.showDropDown = function(event) {
     var dropDown = this.el.down('.dropdown_autocomplete');
     if (dropDown.getStyle('display') === 'none') {
@@ -62,6 +88,10 @@
     }
   };
 
+  /* Hide dropdown
+   *
+   * @param {Object} event
+   */
   DropDown.hideDropDown = function(event) {
     var dropDown = this.el.down('.dropdown_autocomplete');
     if (dropDown.getStyle('display') === 'block') {
@@ -70,6 +100,10 @@
     }
   };
 
+  /* Render dropdown options from supplied collection.
+   *
+   * @param {Array} collection
+   */
   DropDown.updateOptions = function(collection) {
     this.el.down('.dropdown_autocomplete').update(collection.reduce(function (memo, entry) {
       memo += '<li data-entry-id="'  + entry.id + '"><span class="entry">';
@@ -78,11 +112,20 @@
     }, ''));
   };
 
+  /* Write selected option to form fields
+   *
+   * @param {Object} entry
+   */
   DropDown.selectOption = function(entry) {
     this.el.down('input[type=hidden]').value = entry.id;
     this.el.down('input[type=text]').value = entry.value;
   };
 
+  /* Handles selecting an entry either via click or return key
+   *
+   * @param {Object} event
+   * @param {Object} li
+   */
   DropDown.selectEvent = function(event, li) {
     event.stop();
     li = li || event.target;
@@ -95,16 +138,30 @@
     }
   };
 
+  /* Highlight selected li element.
+   *
+   * @param {Object} event
+   * @param {Object} li
+   */
   DropDown.selectElement = function(event, li) {
     li = event.target || li;
     this.el.select('li').each(function(el) {el.removeClassName('selected');});
     li.addClassName('selected');
   };
 
+  /* Rerender list with full collection
+   */
   DropDown.reset = function() {
     this.updateOptions(this.collection);
   };
 
+  /* Filter list on key up according to wether
+   * value of text input begins with an entry or not
+   *
+   * Handle return key and selection target option
+   *
+   * @param {Object} event
+   */
   DropDown.filterOptions = function(event) {
     if (event.keyCode === Event.KEY_DOWN) {
       event.stop();
@@ -139,6 +196,10 @@
     }
   };
 
+  /* Enable moving up and down the list with the arrow keys
+   *
+   * @param {Object} event
+   */
   DropDown.navigateSelect = function(event) {
     this.showDropDown();
 
