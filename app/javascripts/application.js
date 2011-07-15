@@ -54,6 +54,7 @@
 //= require <models/base>
 //= require <models/comment>
 //= require <models/conversation>
+//= require <models/divider>
 //= require <models/note>
 //= require <models/page>
 //= require <models/project>
@@ -62,6 +63,7 @@
 //= require <models/task_list>
 //= require <models/thread>
 //= require <models/user>
+//= require <models/upload>
 //= require <collections/base>
 //= require <collections/comments>
 //= require <collections/conversations>
@@ -86,6 +88,11 @@
 //= require <views/upload_area>
 //= require <views/google_docs>
 //= require <views/private_elements>
+
+//= require <views/pages/page_list>
+//= require <views/pages/page_list_item>
+//= require <views/pages/page_slot>
+//= require <views/page>
 
 //= require <views/task_lists/index>
 //= require <views/task_lists/form>
@@ -142,7 +149,6 @@
 //= require <toggleform>
 //= require <navigation_ajax>
 //= require <overlays>
-//= require <pages>
 //= require <person>
 //= require <preview>
 //= require <quick_add_pane>

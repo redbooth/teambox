@@ -1,8 +1,8 @@
 (function () {
 
-  var Note = {};
+  var Divider = {};
 
-  Note.parse = function (response) {
+  Divider.parse = function (response) {
     // Link slot objects from references
     return _.parseFromAPI(response);
   };
@@ -12,12 +12,12 @@
    *
    * @return {Boolean}
    */
-  Note.isLoaded = function () {
+  Divider.isLoaded = function () {
     // If it doesn't have a project_id, for example, it's not loaded
     return !!this.getAttributes().project_id;
   };
 
 
   // exports
-  Teambox.Models.Note = Teambox.Models.Base.extend(Note);
+  Teambox.Models.Divider = Teambox.Models.Base.extend(Divider);
 }());

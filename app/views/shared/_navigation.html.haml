@@ -28,7 +28,7 @@
         = link_to t('.tasks'), "#!#{project_task_lists_path(project)}", :class => 'tasks backboned'
       - if time_tracking_enabled? and project.tracks_time
         .el= link_to t('.time'), project_time_path(project), :class => 'time ajax'
-      .el= link_to t('.pages'), project_pages_path(project), :class => 'pages ajax'
+      .el= link_to t('.pages'), "#!#{project_pages_path(project)}", :class => 'pages backbone'
       .el= link_to t('.files'), project_uploads_path(project), :class => 'files ajax'
       - if can?(:update, project)
         .el= link_to t('.settings'), project_settings_path(project), :class => 'settings'

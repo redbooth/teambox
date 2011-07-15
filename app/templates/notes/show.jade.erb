@@ -1,0 +1,3 @@
+.note(id="note_" + self.model.id)
+  h3= self.model.get('name')
+  .textilized!= self.model.get('body_html')

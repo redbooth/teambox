@@ -1,0 +1,25 @@
+.upload( id='upload_' + self.model.id, class=self.model.isImage() ? 'image' : '' )
+  - if (self.model.isImage())
+    .thumb
+      a{href=upload.publicUrl()}
+        img{src=upload.publicUrl()}
+  - else
+    .info
+      - var icon_path = 'file_icons/48px/_blank.png'
+      a(href=icon_path)
+        img(src=icon_path)
+  .block
+    .filename.show_details
+    .body
+      .file
+        a(href=self.model.publicUrl())= self.model.get('file_name')
+        = self.model.get('size')
+      - if (self.model.get('description').length > 0)
+        .description
+          = self.model.get('description')
+      .reference
+        = 'Uploaded by'
+        a(href='/users/'+self.model.get('user').id)= self.model.get('user').first_name + ' ' + self.model.get('user').last_name
+        .date
+          = self.model.get('created_at')
+  .clear

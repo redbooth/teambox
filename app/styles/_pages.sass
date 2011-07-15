@@ -37,13 +37,6 @@
       float: left
       cursor: move
 
-#pages
-  div.page
-    font-size: 12px
-    ul
-      margin: 5px 0
-      padding-left: 20px
-
 .new_pages, .create_pages, .edit_pages
   .content
     h2, form
@@ -332,3 +325,32 @@ form.new_note, form.edit_note
   h4
     :margin-top 2px
     :margin-bottom 2px
+
+
+#content
+  .page_list
+    float: left
+    width: 300px
+    border-right: 1px solid #ccc
+    .header
+      background-color: #eeeeee
+      padding: 4px
+      width: 292px
+    .page
+      overflow: hidden
+      cursor: pointer
+      height: 65px
+      border-bottom: 1px solid #A0A0A0
+      background-color: #fafafa
+      padding: 0px 4px
+      &.active
+        background-color: #cccccc
+      h3
+        font-size: 14px
+        margin: 5px
+
+  .page_view
+    float: left
+
+  .pages
+    margin: -10px

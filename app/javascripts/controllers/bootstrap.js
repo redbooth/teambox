@@ -37,7 +37,6 @@
         user: _loader.load()
       , tasks: _loader.load()
       , threads: _loader.load()
-      , pages: _loader.load()
       , projects: _loader.load(this.projectsLoaderCallback(_loader))
       });
     }
@@ -78,7 +77,6 @@
         user: _loader.load(log('user'))
       , tasks: _loader.load(log('tasks'))
       , threads: _loader.load(log('threads'))
-      , pages: _loader.load(log('pages'))
       , projects: _loader.load(self.projectsLoaderCallback(_loader, log))
       });
     }
@@ -105,6 +103,14 @@
           collection.fetch({success: _loader.load(function (task_lists) {
             collections.tasks_lists.add(task_lists.models, {silent: true});
             if (log) log('task_lists')();
+          })});
+
+          // preload project >> pages
+          collection = new Teambox.Collections.Pages([], {project_id: project.id});
+          projects.models[i].set({pages: collection});
+          collection.fetch({success: _loader.load(function (pages) {
+            collections.pages.add(pages.models, {silent: true});
+            if (log) { log('pages')(); }
           })});
 
           // preload project >> conversations
@@ -138,7 +144,6 @@
       models.user.fetch({success: callbacks.user});
       collections.tasks.fetch({success: callbacks.tasks});
       collections.threads.fetch({success: callbacks.threads});
-      collections.pages.fetch({success: callbacks.pages});
       collections.projects.fetch({success: callbacks.projects});
     }
 
