@@ -52,6 +52,13 @@
     return this;
   };
 
+  /* Cleans the form
+   */
+  SimpleConversationForm.reset = function () {
+    this.el.select('.google_docs_attachment_form_area .fields input').invoke('remove');
+    this.el.select('.google_docs_attachment_form_area .file_list li').invoke('remove');
+  };
+
   // exports
   Teambox.Views.SimpleConversationForm = Backbone.View.extend(SimpleConversationForm);
 }());
