@@ -1,10 +1,8 @@
-# Assets [DRAFT]
+# Javascript
 
-Documentation draft about `css` and `js`:
+Documentation draft about `js`:
 
-## JS
-
-### File organization
+## File organization
 
 All javascripts live under `/app/javascripts`
 [TODO: some are still on `vendor/sprockets`]
@@ -24,7 +22,7 @@ All javascripts live under `/app/javascripts`
     |---libs.js             # [Sprocket/Jammit] Contains frameworks and third party modules.
                             # They don't change oftern so they can be cached a lot.
 
-### Namespace
+## Namespace
 
 In order to avoid lots of global variables, we namespace our `js` modules under the `Teambox` namespace
 
@@ -42,7 +40,7 @@ In order to avoid lots of global variables, we namespace our `js` modules under 
     |-modules      # our modules
     |-cache        # client side cache
 
-### JSHint
+## JSHint
 
 Some options just define a coding standard, but others will help to prevent bugs / memory leaks.
 If you use vim, I highly recommend using [jshint.vim](https://github.com/wookiehangover/jshint.vim)
@@ -56,7 +54,7 @@ Recommended options.
       noempty: true, nonew: true, indent: 2, maxlen: 120, onevar: true */
       /*global Teambox, _, Backbone, Templates, Handlebars, Position, Sortable */
 
-### Coding standard
+## Coding standard
 
   * We will try to stick to JSHint as much as possible, but without being stupid zealots.
   * Comma-first helps to detect missing commas.
@@ -99,19 +97,7 @@ var FooPrinter = Teambox.modules.FooPrinter
     .printFoo(); // => foo
 ```
 
-### Testing
-
-We use Jasmine for testing.
-Include your specs under `spec/javascripts/specs`. Try to keep the original file hierachy.
-Test only one file for each spec.
-Stub any AJAX call, or DOM.
-[sinon](http://sinonjs.org/), [jasmine-sinon](https://github.com/froots/jasmine-sinon) and [jasmine-prototype](https://github.com/masylum/jasmine-prototype) are included.
-
-Any new file you need to test must be added to `spec/javascripts/support/jasmine.yml`
-
-To run the tests: `rake jasmine` and then open your browser to `0.0.0.0:8888`
-
-### Templating
+## Templating
 
 The templates are generated server side using trimmer + erb.
 We compile them client-side using [jade](https://github.com/visionmedia/jade)
@@ -139,6 +125,15 @@ found at `app/javascripts/helpers/jade.js`.
 
 You can overwrite any _helper_ by passing a local with the same name.
 
-## CSS
+## Testing
 
-...
+We use [jasmine](pivotal.github.com/jasmine/) + [phantomjs](code.google.com/p/phantomjs/) for testing.
+Include your specs under `spec/javascripts/specs` and then add them manually at `spec/javascripts/SpecRunner.html`.
+Try to keep the original file hierachy.
+Test only one file for each spec.
+Stub any AJAX call, or DOM.
+
+[sinon](http://sinonjs.org/), [jasmine-sinon](https://github.com/froots/jasmine-sinon) and [jasmine-prototype](https://github.com/masylum/jasmine-prototype) are included.
+
+To run the tests you must have the app http server running
+Use `make test` or open `spec/javascripts/SpecRunner.html` on your browser.
