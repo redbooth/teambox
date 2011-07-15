@@ -355,7 +355,7 @@ class Task < RoleRecord
   
   def options_for_google_calendar_event
     {
-      :title => self.name,
+      :title => "#{self.name} (#{self.project.name} - #{self.task_list.name})",
       :details => "#{self.comments.first.try(:body)}\r\n\r\n#{"https://#{Teambox.config.app_domain}/projects/#{self.project.permalink}/tasks/#{self.id}"}",
       :start => self.due_on,
       :end => self.due_on
