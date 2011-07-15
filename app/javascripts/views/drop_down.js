@@ -132,7 +132,7 @@
     event.stop();
     li = li || event.target;
 
-    var entry = _.detect(this.collection, function(e) { return e.id === li.getAttribute('data-entry-id');});
+    var entry = _.detect(this.collection, function(e) { return e.id.toString() === li.getAttribute('data-entry-id');});
     this.selectElement(false, li);
     this.selectOption(entry);
     if (event.type === 'click') {
