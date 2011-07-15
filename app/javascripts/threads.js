@@ -41,5 +41,4 @@ document.on('dom:loaded', function() {
   Hotkeys.key('j', function() { Threads.selectNext() })
   Hotkeys.key('k', function() { Threads.selectPrevious() })
   Hotkeys.key('enter', function() { Threads.toggleSelected() })
-})
-
+});
