@@ -137,3 +137,13 @@ Stub any AJAX call, or DOM.
 
 To run the tests you must have the app http server running
 Use `make test` or open `spec/javascripts/SpecRunner.html` on your browser.
+
+## Integration tests
+
+Integration tests can be achived easily with phantomjs.
+The runner (`spec/javascripts/integration.js`) fetches
+the app at http://localhost:3000.
+Once the page is loaded it includes an assert library at `spec/javascripts/integration/include.js`
+and execute the tests at `spec/javascripts/integration/tests.js`.
+
+Use `make integration` to run the tests.
