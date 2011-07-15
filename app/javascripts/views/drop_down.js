@@ -11,20 +11,47 @@
   DropDown.events = {
       'keydown input[type=text]': 'navigateSelect'
     , 'keyup input[type=text]':   'filterOptions'
-    , 'click li':                 'selectEvent'
+    , 'click li': 'selectEvent'
+    , 'mouseover li': 'selectElement'
   };
 
+  /* Updates current el
+   *
+   * @return self
+   */
   DropDown.render = function () {
     var self = this;
 
     this.reset();
     this.setupBlurFocusHandlers();
-    this.selectOption(this.collection.first());
+    this.selectFirstEntry();
+    return this;
+  };
+
+  /* Select the first entry in the collection
+   * if the text input is empty or
+   * if there's no value in the text input that corresponds
+   * an entry in the collection.
+   */
+  DropDown.selectFirstEntry = function() {
+    var value = this.el.down('input[type=text]').value;
+
+    if (!value || !value.length) {
+      this.selectOption(this.collection.first());
+    }
+    else if(!this.collection.any(function(entry){
+      return entry.value.toLowerCase().startsWith(value.toLowerCase());
+    })){
+      this.selectOption(this.collection.first());
+    }
   };
 
   DropDown.setupBlurFocusHandlers = function() {
     this.el.down('input[type=text]').on('focus', this.showDropDown.bind(this));
-    this.el.down('input[type=text]').on('blur', this.hideDropDown.bind(this));
+    this.el.down('input[type=text]').on('blur', function(event) {
+      setTimeout(this.hideDropDown.bind(this), 1000)
+      this.selectFirstEntry();
+    }.bind(this));
   };
 
   DropDown.showDropDown = function(event) {
@@ -45,8 +72,8 @@
 
   DropDown.updateOptions = function(collection) {
     this.el.down('.dropdown_autocomplete').update(collection.reduce(function (memo, entry) {
-      memo += '<li data-entry-id="'  + entry.id + '">';
-      memo += entry.value + '</li>';
+      memo += '<li data-entry-id="'  + entry.id + '"><span class="entry">';
+      memo += entry.value + '</span></li>';
       return memo;
     }, ''));
   };
@@ -61,11 +88,16 @@
     li = li || event.target;
 
     var entry = _.detect(this.collection, function(e) { return e.id === li.getAttribute('data-entry-id');});
-    this.selectElement(li);
+    this.selectElement(false, li);
     this.selectOption(entry);
+    if (event.type === 'click') {
+      this.hideDropDown();
+    }
   };
 
-  DropDown.selectElement = function(li) {
+  DropDown.selectElement = function(event, li) {
+    li = event.target || li;
+    this.el.select('li').each(function(el) {el.removeClassName('selected');});
     li.addClassName('selected');
   };
 
