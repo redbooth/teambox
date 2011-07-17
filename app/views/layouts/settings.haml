@@ -1,0 +1,27 @@
+!!! Strict
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang'=>"en", :lang=>"en" }
+  %head
+    %meta{ :charset => "UTF-8" }
+    %meta{ :'http-equiv' => "X-UA-Compatible", :content => "IE=edge" }
+    = csrf_meta_tag
+    %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
+    %title= "Teambox settings"
+    = include_stylesheets :application, :media => :screen
+    = yield :stylesheet_includes
+    = sprockets_include_tag
+    = javascript_include_tag 'development' if Rails.env.development?
+    = yield :js_includes
+    = javascript_tag do
+      = yield :js_templates
+  %body{ :class => "folded_aux #{location_name} #{I18n.locale} #{Rails.env} controller_#{controller.controller_name}", :reload_url => reload_url}
+    #header_wrap
+      = header
+    #container.container
+      .wrapper
+        .content_wrap
+          .content#content
+            - show_flash
+            = yield
+        .column_wrap
+          .column#column
+            = render 'shared/user_navigation'

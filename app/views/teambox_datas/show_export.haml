@@ -1,8 +1,4 @@
-- content_for :column do
-  = render 'shared/user_navigation'
-
-%h2
-  = t('.title')
+%h2= t('.title')
 
 .teambox_data
   - if @data.processing?

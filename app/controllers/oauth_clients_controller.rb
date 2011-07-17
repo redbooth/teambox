@@ -2,6 +2,8 @@ class OauthClientsController < ApplicationController
   before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
   skip_before_filter :load_project
 
+  layout 'settings'
+
   def index
     @tokens = current_user.tokens.find :all, :conditions => 'oauth_tokens.invalidated_at is null and oauth_tokens.authorized_at is not null'
   end

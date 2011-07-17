@@ -2,11 +2,13 @@ class TeamboxDatasController < ApplicationController
   skip_before_filter :load_project
   before_filter :find_data, :except => [:index, :new, :create]
   
+  layout 'settings'
+
   def index
     # show current imports/exports
     @data_imports = current_user.teambox_datas.find_all_by_type_id(0)
     @data_exports = current_user.teambox_datas.find_all_by_type_id(1)
-    
+
     respond_to do |f|
       f.html
     end
@@ -54,15 +56,15 @@ class TeamboxDatasController < ApplicationController
     end
     render view_for_data(:show)
   end
-  
+
   def destroy
     @data.destroy
-    
+
     respond_to do |f|
       f.html { redirect_to teambox_datas_path }
     end
   end
-  
+
   def download
     head(:forbidden) and return unless @data.downloadable?(current_user)
     
