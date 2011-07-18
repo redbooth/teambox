@@ -555,6 +555,7 @@ ActiveRecord::Schema.define(:version => 20110623083525) do
     t.boolean  "default_watch_new_conversation",                 :default => false
     t.boolean  "default_watch_new_page",                         :default => false
     t.string   "authentication_token"
+    t.boolean  "notify_pages",                                   :default => false
     t.string   "google_calendar_url_token"
   end
 
