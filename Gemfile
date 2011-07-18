@@ -50,6 +50,8 @@ group :development do
   gem 'ruby-debug', '~> 0.10.3', :require => nil
   gem 'mongrel', '~> 1.1.5', :require => nil
   gem 'haml-rails'
+  gem 'unicorn'
+  gem 'foreman'
 end
 
 group :test, :development do

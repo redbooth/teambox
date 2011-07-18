@@ -142,6 +142,11 @@ class ApiV1::APIController < ApplicationController
     {}.tap do |api_response|
       if object.respond_to? :each
         api_response[:type] = 'List'
+        api_response[:offset] = object.offset if object.respond_to?(:offset)
+        api_response[:total_pages] = object.total_pages if object.respond_to?(:total_pages)
+        api_response[:total_entries] = object.total_entries if object.respond_to?(:total_entries)
+        api_response[:per_page] = object.per_page if object.respond_to?(:per_page)
+        api_response[:current_page] = object.current_page if object.respond_to?(:current_page)
         api_response[:objects] = object.map{|o| o.to_api_hash(options.merge(:emit_type => true)) }
       else
         api_response.merge!(object.to_api_hash(options.merge(:emit_type => true)))

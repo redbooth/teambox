@@ -73,6 +73,7 @@ en:
     logged_out: You were logged out
     loading: Loading...
     download_as_csv: Download as CSV
+    pagination: "Showing results from: "
   confirm:
     delete_task_list: Are you sure you want to delete this task list?
     delete_task: Are you sure you want to delete this task?
