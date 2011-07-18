@@ -52,7 +52,11 @@
    * @return {String}
    */
   Thread.publicUrl = function () {
-    return '/projects/' + this.get('project_id') + '/' + this.get('type').toLowerCase() + 's/' + this.id;
+    var url = '/projects/' + this.get('project_id') + '/' + this.get('type').toLowerCase() + 's';
+    if (this.id) {
+      url += '/' + this.id;
+    }
+    return url;
   };
 
   /**
