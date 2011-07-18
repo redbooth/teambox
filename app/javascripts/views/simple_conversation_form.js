@@ -11,7 +11,7 @@
   SimpleConversationForm.initialize = function (options) {
     _.bindAll(this, "render", "updateFormAttributes");
 
-    this.model = new Teambox.Models.Thread({type: 'Conversation', simple: true, title: 'Untitled'});
+    this.model = new Teambox.Models.Thread({type: 'Conversation', simple: true, title: 'Untitled', recent_comments: []});
     this.comment_form = new Teambox.Views.CommentForm({
         model: this.model
       , thread: this
