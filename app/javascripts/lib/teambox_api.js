@@ -50,6 +50,8 @@
       e.organization = findRef(e.organization_id, 'Organization');
 
       // Only 'new' and 'open' tasks have due dates and assignees
+      // FIXME this is not true, we keep the assigned and date for tasks
+      // on hold but we just don't show it in the pending task lists
       if (e.type === 'Task' && e.status && e.status !== 0 && e.status !== 1) {
         e.due_on = undefined;
         e.assigned = undefined;
