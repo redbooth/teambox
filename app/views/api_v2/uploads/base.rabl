@@ -1,4 +1,4 @@
-attributes :id, :description, :user_id, :page_id
+attributes :id, :description, :user_id, :page_id, :project_id
 attributes :url => :download
 extends 'api_v2/shared/type'
 code(:slot_id) { |n| n.page_slot.try :id }

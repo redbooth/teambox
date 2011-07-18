@@ -8,7 +8,12 @@ code(:updated_at) { |a| a.updated_at.to_s(:api_time) }
 # FIXME missing target
 
 child(:user) { extends 'api_v2/users/base' }
+child(:project) { extends 'api_v2/projects/base' }
 child(:uploads) { extends 'api_v2/uploads/base' }
 child(:google_docs) { extends 'api_v2/google_docs/base' } # FIXME implement view
 child(:assigned => :assigned) { extends 'api_v2/people/base' }
+
+child(:target => :target) do
+  child(:project) { extends 'api_v2/projects/base' }
+end
 
