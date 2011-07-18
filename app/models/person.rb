@@ -14,6 +14,7 @@ class Person < ActiveRecord::Base
   
   after_create :log_create
   after_destroy :log_delete, :cleanup_after
+  before_destroy :set_deleted_date
   
 #  validates_uniqueness_of :user, :scope => :project
   validates_presence_of :user, :project   # Make sure they both exist and are set
@@ -37,6 +38,7 @@ class Person < ActiveRecord::Base
   scope :in_alphabetical_order, :include => :user, :order => 'users.first_name ASC'
 
   attr_accessible :role, :permissions, :digest, :watch_new_task, :watch_new_conversation, :watch_new_page
+  attr_reader :deleted_at
 
   def owner?
     project.owner?(user)
@@ -134,6 +136,10 @@ class Person < ActiveRecord::Base
   end
   
   protected
+  
+  def set_deleted_date
+    @deleted_at = Time.now
+  end
   
   def log_delete
     project.log_activity(self, 'delete')

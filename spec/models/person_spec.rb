@@ -27,6 +27,24 @@ describe Person do
     project.add_user(user)
     project.reload.people.map(&:id).include?(person_id).should == true
   end
+  
+  it "should generate a delete activity with the correct date when destroyed" do
+    project = Factory :project
+    user = Factory :user
+    
+    now = Time.now
+    Time.stub!(:now).and_return(now - 10.seconds)
+    project.add_user(user)
+    Time.stub!(:now).and_return(now + 10.seconds)
+    
+    person = project.people.find_by_user_id(user)
+    person.destroy
+    
+    activity = project.activities.first
+    activity.action.should == 'delete'
+    activity.target.should == person
+    activity.created_at.to_i.should == Time.now.to_i
+  end
 
   it "should be created" do
     @user = Factory(:user)

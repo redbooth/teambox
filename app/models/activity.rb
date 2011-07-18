@@ -51,7 +51,14 @@ class Activity < ActiveRecord::Base
       :comment_target_type => comment_target_type,
       :comment_target_id => comment_target_id,
       :is_private => is_private)
-    activity.created_at = target.try(:updated_at) || target.try(:created_at)
+    activity.created_at = case action
+      when 'create'
+        target.try(:created_at)
+      when 'edit'
+        target.try(:updated_at)
+      when 'delete'
+        target.try(:deleted_at) || target.try(:updated_at)
+      end || target.try(:created_at) || Time.now
     activity.save
     
     activity
