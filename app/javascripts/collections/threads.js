@@ -5,7 +5,7 @@
   };
 
   Threads.parse = function (response) {
-    return _.parseFromAPI(response).collect(function (o) {
+    return response.collect(function (o) {
       if (o.target.type === "Comment") {
         return o.target.target;
       } else if (o.target.type === "Task" || o.target.type === "Conversation") {
@@ -17,7 +17,7 @@
   };
 
   Threads.url = function () {
-    return "/api/1/activities.json";
+    return "/api/2/threads.json";
   };
 
   Threads.fetchNextPage = function (callback) {
