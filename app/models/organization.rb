@@ -27,7 +27,7 @@ class Organization < ActiveRecord::Base
   before_destroy :prevent_if_projects
   
   attr_accessor :is_example, :delete_logo
-  attr_accessible :name, :permalink, :description, :logo, :settings, :delete_logo
+  attr_accessible :name, :permalink, :description, :logo, :settings, :delete_logo, :omit_email_processing
 
   LogoSizes = {
     :square   => [96, 96],
@@ -130,6 +130,14 @@ class Organization < ActiveRecord::Base
     end
     
     base
+  end
+
+  def omit_email_processing?
+    !!settings['omit_email_processing']
+  end
+
+  def omit_email_processing=(v)
+    self.settings = { 'omit_email_processing' => v == "1" }
   end
 
   protected

@@ -680,6 +680,7 @@ en:
       name_placeholder: Your organization
       permalink_html: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
       domain_html: "Domain <em>You can use your own domain for your organization, check the <a href='http://help.teambox.com/knowledgebase/articles/10247-custom-domain' title='How to use your own domain for your organization in Teambox'>documentation</a>.</em>"
+      omit_email_processing_html: Do not process incoming emails
     appearance_fields:
       logo_html: Logo <em>Ideally should be 134x36 pixels</em>
       description_html: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>

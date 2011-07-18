@@ -77,31 +77,36 @@ module Emailer::Incoming
   # Receives a parsed and decoded TMail::Mail object.
   def receive(email)
     email = ParamsMail.new(email) if Hash === email
-    
+
     # TODO: ease a bit on the ivars pls
     process_incoming email
-    get_target email
-    
-    case @type
-    when :project
-      create_conversation
-    when :conversation
-      if @target then post_to(@target)
-      else create_conversation
-      end
-    when :task
-      unless @target
-        @target = create_task
+
+    unless @project.organization.omit_email_processing?
+
+      get_target email
+
+      case @type
+      when :project
+        create_conversation
+      when :conversation
+        if @target then post_to(@target)
+        else create_conversation
+        end
+      when :task
+        unless @target
+          @target = create_task
+        end
+
+        get_action
+        @body = extract_action
+        post_to(@target)
       end
       
-      get_action
-      @body = extract_action
-      post_to(@target)
     end
   end
 
   private
-  
+
   # Sendgrid params to act as TMail::Mail
   class ParamsMail
     def initialize(params)
@@ -201,6 +206,9 @@ module Emailer::Incoming
     @user = User.find_by_email from
     raise UserNotFoundError.new(email, "Invalid user '#{email.from.first}'") unless @user
     raise NotProjectMemberError.new(email, "User does not belong to project") unless @user.projects.include? @project
+
+    # Check if organization wants to receive emails
+    
 
     # Get the body in multipart emails as well
     if email.respond_to? :parts

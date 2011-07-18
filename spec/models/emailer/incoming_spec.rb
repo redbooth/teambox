@@ -36,7 +36,7 @@ describe Emailer do
         comment.assigned_id.should be_nil
         comment.status_name.should == :new
       end
-      
+
       it "should not create a new task if the subject is blank and the body is blank" do
         @email_template.subject = ""
         @email_template.body = ""
@@ -46,6 +46,19 @@ describe Emailer do
             Emailer.receive(@email_template.to_s)
           end.should raise_error
         end.should change(Task, :count).by(0)
+      end
+
+      it "should not create a task if organization doesn't process incoming emails" do
+
+        @organization = Factory.create(:organization, :omit_email_processing => "1")
+        @organization.add_member(@owner, :admin)
+        @organization.add_member(@fred, :participant)
+        @project.organization = @organization
+        @project.save
+
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should_not change(Task, :count)
       end
 
      it "should set the truncated body as the task name if there is no subject" do
@@ -159,6 +172,7 @@ describe Emailer do
         comment.previous_assigned_id.should == nil
         comment.previous_status.should == Task::STATUSES[:new]
       end
+
     end
 
     it "should not assign or change the status of the task with no action" do
