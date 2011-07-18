@@ -9,7 +9,7 @@
    * @return {Object} self
    */
   SimpleConversationForm.initialize = function (options) {
-    _.bindAll(this, "render");
+    _.bindAll(this, "render", "updateFormAttributes");
 
     this.model = new Teambox.Models.Thread({type: 'Conversation', simple: true, title: 'Untitled'});
     this.comment_form = new Teambox.Views.CommentForm({
@@ -41,7 +41,7 @@
       model.set({'project_id': project_id}); 
     };
 
-    var dropdown_callbacks = [watchers_update, updateProjectInModel];
+    var dropdown_callbacks = [watchers_update, updateProjectInModel, this.updateFormAttributes];
 
     _.each(dropdown_callbacks, function(callback) {
       dropdown.bind('change:selection', callback);
@@ -50,6 +50,10 @@
     dropdown.render();
 
     return this;
+  };
+
+  SimpleConversationForm.updateFormAttributes = function(project_id) {
+    this.comment_form.updateFormAttributes(project_id);
   };
 
   /* Cleans the form

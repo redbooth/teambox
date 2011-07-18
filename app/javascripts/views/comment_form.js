@@ -37,15 +37,7 @@
    * @returns self;
    */
   CommentForm.render = function () {
-
-    this.el.writeAttribute({
-      'accept-charset': 'UTF-8'
-    , 'action': this.model.url()
-    , 'data-project-id': this.model.get('project_id')
-    , 'enctype': 'multipart/form-data'
-    , 'method': 'POST'
-    , 'id': this.simple ? 'new_conversation_form' : ''
-    });
+    this.updateFormAttributes(this.model.get('project_id'));
 
     this.el.addClassName("edit_" + this.model.get('type').toLowerCase());
 
@@ -84,6 +76,21 @@
     return this;
   };
 
+  CommentForm.updateFormAttributes = function(project_id) {
+   this.el.writeAttribute({
+      'accept-charset': 'UTF-8'
+    , 'action': this.model.url()
+    , 'data-project-id': project_id
+    , 'enctype': 'multipart/form-data'
+    , 'method': 'POST'
+    , 'id': this.simple ? 'new_conversation_form' : ''
+    });
+
+
+  };
+
+ 
+
   /* Cleans the form
    *
    * @param {Event} evt
@@ -119,8 +126,12 @@
     this.model.attributes.last_comment = comment_attributes;
     this.model.attributes.recent_comments.push(comment_attributes);
 
+    this.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user), this.simple);
 
-    this.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user));
+    if (this.simple) {
+      Teambox.collections.threads.add(this.model);
+      Teambox.collections.conversations.add(resp);
+    }
   };
 
   CommentForm.handleError = function (m, resp) {

@@ -103,7 +103,9 @@
    * @param {Object} response
    * @param {Object} user
    */
-  Thread.addComment = function (comment, user) {
+  Thread.addComment = function (comment, user, simple) {
+    if (simple) { return; }
+
     if (user) {
       comment.user = user.attributes;
     }
@@ -133,7 +135,8 @@
    *
    * @return {Object} self
    */
-  Thread.updateThreadAttributes = function() {
+  Thread.updateThreadAttributes = function(comment, user, simple) {
+    if (simple) { return; }
     // Add data attributes to the DOM.
     this.el.writeAttribute({
       'className': this.model.get('is_private') ? 'thread private' : 'thread'
