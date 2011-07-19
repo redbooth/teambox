@@ -133,7 +133,7 @@ class ApiV1::APIController < ApplicationController
       load_references(refs).compact.collect { |o| o.to_api_hash(options.merge(:emit_type => true)) }
     elsif options[:references] # TODO: kill. only used in search
       Array(object).map do |obj|
-        options[:references].map{|ref| obj.send(ref) }.flatten.compact
+        options[:references].map{|ref| obj.respond_to?(ref) ? obj.send(ref) : nil }.flatten.compact
       end.flatten.uniq.map{|o| o.to_api_hash(options.merge(:emit_type => true))}
     else
       nil
