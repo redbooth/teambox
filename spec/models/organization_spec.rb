@@ -101,7 +101,7 @@ describe Organization do
       @organization.add_member(admin, :admin)
       project = Factory(:project, :organization => @organization)
       @organization.add_member(project.user, :participant)
-      @organization.users.should == [admin, project.user]
+      @organization.user_ids.sort.should == [admin.id, project.user_id].sort
       @organization.admins.should == [admin]
       @organization.participants.should == [project.user]
       @organization.external_users.should == []
