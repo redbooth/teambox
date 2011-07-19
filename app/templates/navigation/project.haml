@@ -28,9 +28,9 @@
     .el
       %a.ownership.ajax{ :href => "/projects/{{permalink}}/ownership" }= t('shared.project_settings_navigation.ownership')
     {{/owner}}
+  {{/can_admin}}
   .el
     %a.people.ajax{ :href => "/projects/{{permalink}}/people" }= t('shared.navigation.people')
-  {{/can_admin}}
 {{/projects}}
 {{#show_more}}
 .el#show_all_projects
