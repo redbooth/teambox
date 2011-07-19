@@ -425,7 +425,7 @@ describe Task do
     it "should create a correctly formatted GoogleCalendar::Event when sent #to_google_calendar_event" do
       task = Factory(:task, :due_on => Date.today)
       google_event = task.send(:to_google_calendar_event)
-      google_event.title.should == task.name
+      google_event.title.should == "#{task.name} (#{task.project.name} - #{task.task_list.name})"
       google_event.details.strip.end_with?("/projects/#{task.project.to_param}/tasks/#{task.to_param}").should be_true
       google_event.start.should == Date.today
       google_event.end.should == Date.today
@@ -436,7 +436,7 @@ describe Task do
     it "should create a correctly formatted GoogleCalendar::Event when sent #to_google_calendar_event with a body" do
       task = Factory(:task, :comments => [Factory(:comment, :body => 'Do it by tomorrow')])
       google_event = task.send(:to_google_calendar_event)
-      google_event.title.should == task.name
+      google_event.title.should == "#{task.name} (#{task.project.name} - #{task.task_list.name})"
       google_event.details.start_with?("Do it by tomorrow").should be_true
       google_event.details.end_with?("/projects/#{task.project.to_param}/tasks/#{task.to_param}").should be_true
       google_event.start.should == task.due_on
