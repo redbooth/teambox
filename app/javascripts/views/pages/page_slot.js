@@ -1,6 +1,6 @@
 (function () {
   var PageSlot = { 	tagName: 'div'
-                     , className: 'slot'
+                     , className: 'page_slot'
                      , Note_template: Teambox.modules.ViewCompiler('notes.show')
                      , Divider_template: Teambox.modules.ViewCompiler('dividers.show')
                      , Upload_template: Teambox.modules.ViewCompiler('uploads.show_page')
