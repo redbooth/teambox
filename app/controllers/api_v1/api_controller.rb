@@ -142,7 +142,7 @@ class ApiV1::APIController < ApplicationController
     {}.tap do |api_response|
       if object.respond_to? :each
         api_response[:type] = 'List'
-        api_response[:offset] = object.offset if object.respond_to?(:offset)
+        api_response[:offset] = object.offset if object.respond_to?(:offset) && object.respond_to?(:total_pages)
         api_response[:total_pages] = object.total_pages if object.respond_to?(:total_pages)
         api_response[:total_entries] = object.total_entries if object.respond_to?(:total_entries)
         api_response[:per_page] = object.per_page if object.respond_to?(:per_page)
