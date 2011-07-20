@@ -119,14 +119,11 @@
   };
 
   CommentForm.addComment = function (m, resp, upload) {
-    var comment_attributes = this.model.parseComments(resp);
-    this.model.set(this.model.parseModelData(resp), {is_silent: true});
-
     this.reset();
-    this.model.attributes.last_comment = comment_attributes;
-    this.model.attributes.recent_comments.push(comment_attributes);
 
-    this.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user), this.simple);
+    var comment_attributes = this.model.parseComments(resp);
+    //TODO: To be made redundant with APIv2
+    this.model.attributes = _.parseFromAPI(resp);
 
     if (this.simple) {
       Teambox.collections.threads.add(this.model);
