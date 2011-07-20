@@ -26,6 +26,9 @@
     if (!this.simple) {
       this.events['focusin textarea'] = 'focusTextarea';
     }
+    else {
+      this.model.validate = this.validateSimpleForm;
+    }
 
     this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
     this.watchers = new Teambox.Views.Watchers({model: this.model});
@@ -123,7 +126,7 @@
 
     var comment_attributes = this.model.parseComments(resp);
     //TODO: To be made redundant with APIv2
-    this.model.attributes = _.parseFromAPI(resp);
+    this.model.set(_.parseFromAPI(resp), {silent: true});
 
     if (this.simple) {
       Teambox.collections.threads.add(this.model);
@@ -136,9 +139,17 @@
   };
 
   CommentForm.handleError = function (m, resp) {
-    resp.errors.each(function (error) {
-      self.el.down('div.text_area').insertOrUpdate('p.error', error.value);
-    });
+    if (typeof resp === 'string') {
+      var error = resp;
+      this.el.down('textarea').up('div').insertOrUpdate('p.error', error);
+    }
+    else if (resp.errors && resp.errors.length) {
+      resp.errors.each(function (error) {
+        this.el.down('textarea').up('div').insertOrUpdate('p.error', error.value);
+      });
+    }
+
+    Teambox.helpers.forms.restoreDisabledInputs(this.el);
   };
 
   /**
@@ -168,7 +179,7 @@
 
     this.model.save(data, {
       success: this.addComment.bind(this)
-    , failure: this.handleError.bind(this)
+    , error: this.handleError.bind(this)
     });
 
     return false;
@@ -281,6 +292,19 @@
 
   CommentForm.togglePrivateElements = function(event) {
     this.private_elements.toggle(event);
+  };
+
+  /*
+  * Form validations for simple case
+  * TODO: i18n error message.
+  */
+  CommentForm.validateSimpleForm = function(attrs) {
+    if (attrs.comments_attributes 
+        && attrs.comments_attributes['0'] 
+        && (!attrs.comments_attributes['0'].body
+            || !attrs.comments_attributes['0'].body.length)) {
+      return I18n.translations.activerecord.errors.models.conversation.attributes.comments.must_have_one;
+    }
   };
 
   // exports
