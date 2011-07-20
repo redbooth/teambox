@@ -127,7 +127,11 @@
 
     if (this.simple) {
       Teambox.collections.threads.add(this.model);
-      Teambox.collections.conversations.add(resp);
+      // TODO: Investigate what we need to do here...
+      // Teambox.collections.conversations.add(resp);
+    }
+    else {
+      this.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user), this.simple);
     }
   };
 
