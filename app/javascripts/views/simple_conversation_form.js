@@ -2,6 +2,7 @@
 
   var SimpleConversationForm = { tagName: 'div'
                     , className: 'simple_conversation'
+                    , default_attributes: {type: 'Conversation', simple: true, title: 'Untitled', recent_comments: []}
                     };
 
   /* updates thread el using a template
@@ -9,17 +10,39 @@
    * @return {Object} self
    */
   SimpleConversationForm.initialize = function (options) {
-    _.bindAll(this, "render", "updateFormAttributes");
+    _.bindAll(this, "setup", "resetModel", "render", "updateFormAttributes");
 
-    this.model = new Teambox.Models.Thread({type: 'Conversation', simple: true, title: 'Untitled', recent_comments: []});
+    this.setup();
+    return this;
+  };
+
+  SimpleConversationForm.setup = function() {
+    this.model = new Teambox.Models.Thread(this.default_attributes);
     this.comment_form = new Teambox.Views.CommentForm({
         model: this.model
       , thread: this
       , simple: true
     });
     this.google_docs = new Teambox.Views.GoogleDocs({comment_form: this.comment_form});
+  };
 
-    return this;
+  SimpleConversationForm.resetModel = function() {
+    this.model.id = null;
+    this.model.cid = _.uniqueId('c');
+    var project_id = this.model.get('project_id');
+    var project = this.model.get('project');
+    this.model.clear({silent: true});
+    this.model.set(_.extend(_.clone(this.default_attributes), {recent_comments: [], project_id: project_id, project: project}), {silent: true});
+
+    /*
+    * collection.add() calls _add which binds 'all' event to the model
+    * and calls _onModelEvent() which is, in reality, 
+    * what calls collection.trigger('add') (each time it's called).
+    * 
+    * Since, we're readding the same model each time to the collection, we need to unbind the 'all' events
+    * otherwise they accumulate with foreseeable consequences.
+    */
+    this.model.unbind('all');
   };
 
   SimpleConversationForm.render = function () {
@@ -59,6 +82,7 @@
   /* Cleans the form
    */
   SimpleConversationForm.reset = function () {
+    this.resetModel();
     this.el.select('.google_docs_attachment_form_area .fields input').invoke('remove');
     this.el.select('.google_docs_attachment_form_area .file_list li').invoke('remove');
   };
