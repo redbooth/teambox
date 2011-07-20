@@ -1,0 +1,67 @@
+/*
+Syntax error: Invalid CSS after "...s_hue, $lighten": expected ")", was "=0%)"
+        on line 1 of styles/_progress_bars.sass
+        from line 34 of styles/application.sass
+
+1: =progress_bar_colors($abs_hue, $lighten=0%)
+2:   $hue: $abs_hue - 85deg
+3:   border: 1px solid adjust-hue(#5D8D24, $hue)
+4:   border-top: 1px solid adjust-hue(#3F670E, $hue)
+5:   border-bottom: 1px solid adjust-hue(#5D8E25, $hue)
+6:   div
+
+Backtrace:
+styles/_progress_bars.sass:1
+styles/application.sass:34
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/scss/parser.rb:898:in `expected'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/script/lexer.rb:193:in `expected!'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/script/parser.rb:448:in `assert_tok'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/script/parser.rb:328:in `defn_arglist!'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/script/parser.rb:102:in `parse_mixin_definition_arglist'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/engine.rb:776:in `parse_mixin_definition'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/engine.rb:546:in `parse_line'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/engine.rb:447:in `build_tree'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/engine.rb:466:in `append_children'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/engine.rb:465:in `each'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/engine.rb:465:in `append_children'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/engine.rb:322:in `_to_tree'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/engine.rb:250:in `to_tree'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/perform.rb:144:in `visit_import'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `send'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `visit'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/perform.rb:18:in `visit'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/base.rb:53:in `visit_children'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/base.rb:53:in `map'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/base.rb:53:in `visit_children'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/perform.rb:27:in `visit_children'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/perform.rb:39:in `with_environment'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/perform.rb:26:in `visit_children'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `visit'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/perform.rb:47:in `visit_root'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `send'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `visit'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/perform.rb:18:in `visit'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/perform.rb:7:in `send'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/visitors/perform.rb:7:in `visit'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/tree/root_node.rb:20:in `render'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/engine.rb:291:in `_render'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/engine.rb:238:in `render'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/plugin/compiler.rb:319:in `update_stylesheet'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/plugin/compiler.rb:169:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/plugin/compiler.rb:167:in `each'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/plugin/compiler.rb:167:in `update_stylesheets'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/plugin/compiler.rb:214:in `watch'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/plugin.rb:111:in `send'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/plugin.rb:111:in `method_missing'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/exec.rb:408:in `watch_or_update'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/exec.rb:294:in `process_result'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/exec.rb:41:in `parse'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/../lib/sass/../sass/exec.rb:21:in `parse!'
+/Library/Ruby/Gems/1.8/gems/sass-3.1.1/bin/sass:8
+/usr/bin/sass:19:in `load'
+/usr/bin/sass:19
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: Invalid CSS after \"...s_hue, $lighten\": expected \")\", was \"=0%)\"\A         on line 1 of styles/_progress_bars.sass\A         from line 34 of styles/application.sass\A \A 1: =progress_bar_colors($abs_hue, $lighten=0%)\A 2:   $hue: $abs_hue - 85deg\A 3:   border: 1px solid adjust-hue(#5D8D24, $hue)\A 4:   border-top: 1px solid adjust-hue(#3F670E, $hue)\A 5:   border-bottom: 1px solid adjust-hue(#5D8E25, $hue)\A 6:   div"; }
