@@ -1,4 +1,4 @@
-attributes :id, :name, :task_list_id, :comments_count, :assigned_id, :status, :is_private, :project_id
+attributes :id, :name, :task_list_id, :comments_count, :assigned_id, :status, :is_private, :project_id, :hidden_comments_count
 code(:due_on, :if => lambda { |t| t.due_on }) { |k| k.due_on.to_s(:db) }
 extends 'api_v2/shared/type'
 extends 'api_v2/shared/dates'

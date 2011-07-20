@@ -1,4 +1,4 @@
-attributes :id, :name, :project_id, :user_id, :simple, :comments_count, :is_private
+attributes :id, :name, :project_id, :user_id, :simple, :comments_count, :is_private, :hidden_comments_count
 extends 'api_v2/shared/type'
 extends 'api_v2/shared/dates'
 

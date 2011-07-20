@@ -266,6 +266,10 @@ class Task < RoleRecord
     end
   end
 
+  def hidden_comments_count
+    recent_comment_ids ? [0, (comments_count - recent_comments.size)].max() : false
+  end
+
   protected
 
   #don't store 0 when assigned_id was set by a string

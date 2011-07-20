@@ -117,6 +117,10 @@ class Conversation < RoleRecord
     !is_private or watchers.include? user
   end
 
+  def hidden_comments_count
+    recent_comment_ids ? [0, (comments_count - recent_comments.size)].max() : false
+  end
+
   protected
   
   def check_comments_presence
