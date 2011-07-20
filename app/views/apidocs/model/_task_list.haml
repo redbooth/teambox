@@ -11,11 +11,11 @@
   %p=raw "Returns the data for a task list."
   
 - doc_for :create,
-          :parameters => {:name => 'Task list', :start_on => '2010-01-01', :finish_on => '2010-02-01', :project_id => 123},
+          :parameters => {:name => 'Task list', :start_on => '2010-01-01', :finish_on => '2010-02-01', :project_id => 123, :template_id => 11},
           :example => @task_list.to_api_hash,
           :status => :created,
           :role => :participant do
-  %p=raw "Creates a new task list."
+  %p=raw "Creates a new task list.<br /><strong>You should provide name OR template_id, never both.</strong>"
 
 - doc_for :update,
           :parameters => {:name => @task_list.name, :start_on => @task_list.start_on, :finish_on => @task_list.finish_on },
