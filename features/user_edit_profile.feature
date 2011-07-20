@@ -2,7 +2,7 @@ Feature: Update a profile
 
   Background: 
     Given a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić"
-    And I am logged in as mislav
+    And I am logged in as @mislav
     When I go to the account settings page
 
   Scenario: Mislav updates his profile

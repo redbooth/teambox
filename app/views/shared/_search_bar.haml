@@ -1,12 +1,9 @@
-- if controller_name != 'search' and (current_user.can_search? or (@current_project && @current_project.user.can_search?))
+- if current_user.can_search? or (@current_project && @current_project.user.can_search?)
   .search_bar
     - per_project = !current_user.can_search?
     - search_destination = per_project ? project_search_path(@current_project) : search_path
-    - form_tag search_destination, :method => 'get', :class => 'search' do
+    - form_tag search_destination, :method => 'get', :class => 'search', :id => 'search' do
       = text_field_tag :q, nil, :type => 'search', :id => nil,
         :placeholder => per_project ? t('search.placeholder_in_project') : t('search.placeholder')
-        
       - if per_project
         = hidden_field_tag :project_id, @current_project
-        
-      = submit_tag t('search.submit'), :name => nil

@@ -1,7 +1,0 @@
-%p{ :style => email_text(:small) }
-  - if APP_CONFIG['allow_incoming_email']
-    %span{ :style => 'color: white' }= email_answer_line
-    %br
-    = t('emailer.common.answer_above_this_line')
-  - else
-    = t('emailer.common.do_not_answer')

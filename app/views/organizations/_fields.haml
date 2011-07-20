@@ -1,9 +1,9 @@
 .text_field
-  %label= t('.name')
+  %label= t('.name_html')
   = errors_for @organization, :name
   = f.text_field :name
 .text_field
-  %label= t('.permalink')
+  %label= t('.permalink_html')
   = errors_for @organization, :permalink
   = f.text_field :permalink
 -#.text_field
@@ -12,17 +12,6 @@
 -#.text_field
 -#  %label Default timezone <em>for new users</em>
 -#  = select_tag :timezone, "<option>GMT+1 Madrid</option>"
-.option_fields
-  %label= t('.logo')
-  .option
-    = f.file_field :logo
-  %img.logo_square{ :src => @organization.logo.url(:square) }
-  %img.logo_top{ :src => @organization.logo.url(:top) }
-.text_area
-  %label= t('.description')
-  = errors_for @organization, :description
-  = f.text_area :description
-
 -#.text_field
 -#  %label Hosted only: Configure domain name to accept from
 -#  = text_field_tag 'asd', '', :placeholder => 'teambox.com'

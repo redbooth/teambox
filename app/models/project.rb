@@ -2,7 +2,7 @@
 # A Person model describes the relationship of a User that follows a Project.
 
 class Project < ActiveRecord::Base
-  acts_as_paranoid
+  include Immortal
 
   concerned_with :validation,
                  :initializers,
@@ -11,13 +11,18 @@ class Project < ActiveRecord::Base
                  :callbacks,
                  :archival,
                  :permalink,
-                 :invitations
+                 :invitations,
+                 :conversions
 
   attr_accessible :name, :permalink, :archived, :tracks_time, :public, :organization_attributes, :organization_id
-
+  has_many :google_docs
+  
+  attr_accessor :is_importing
+  attr_accessor :import_activities
+  
   def self.find_by_id_or_permalink(param)
-    if param =~ /^\d+$/
-      find(param)
+    if param.to_s =~ /^\d+$/
+      find_by_id(param)
     else
       find_by_permalink(param)
     end
@@ -25,24 +30,41 @@ class Project < ActiveRecord::Base
 
   def log_activity(target, action, creator_id=nil)
     creator_id ||= target.user_id
+    return log_later(target, action, creator_id) if self.is_importing
     Activity.log(self, target, action, creator_id)
   end
-
+  
+  def log_later(target, action, creator_id)
+    @import_activities ||= []
+    base = {:date => target.try(:created_at) || nil,
+            :project => self,
+            :action => action,
+            :creator_id => creator_id,
+            :target_id => target.id,
+            :target_class => target.class}
+    if target.is_a? Comment
+      base[:comment_target_type] = target.target_type
+      base[:comment_target_id] = target.target_id
+    end
+    @import_activities << base
+  end
+  
   def add_user(user, params={})
-    unless Person.exists? :user_id => user.id, :project_id => id
-      people.build.tap do |person|
-        person.user_id = user.id
-        person.role = params[:role] if params[:role]
-        person.source_user_id = params[:source_user].try(:id)
-        person.save
-      end
+    unless has_member?(user)
+      person = Person.with_deleted.where(:project_id => self.id, :user_id => user.id).first
+      person ||= people.build
+      
+      person.user = user
+      person.role = params[:role] if params[:role]
+      person.source_user_id = params[:source_user].try(:id)
+      person.deleted = false
+      person.save
+      person
     end
   end
 
   def remove_user(user)
-    if person = Person.find_by_user_id_and_project_id(user.id, id)
-      person.destroy
-    end
+    people.find_by_user_id(user.id).try(:destroy)
   end
 
   def transfer_to(person)
@@ -53,7 +75,7 @@ class Project < ActiveRecord::Base
   end
 
   def has_member?(user)
-    Person.exists?(:project_id => self.id, :user_id => user.id)
+    people.exists?(:user_id => user.id)
   end
 
   def task_lists_assigned_to(user)
@@ -62,29 +84,6 @@ class Project < ActiveRecord::Base
       t << task_list if task_list.tasks.count(:conditions => {:assigned_id => person.id, :status => Task::STATUSES[:open]}) > 0
       t
     end
-  end
-
-  # Optimized way of getting activities for one or more project.
-  # Can limit the number of records and page.
-  def self.get_activities_for(projects, *args)
-    options = args.extract_options!
-
-    if options[:before]
-      conditions = ["project_id IN (?) AND id < ?", Array(projects).collect{ |p| p.id }, options[:before] ]
-    elsif options[:after]
-      conditions = ["project_id IN (?) AND id > ?", Array(projects).collect{ |p| p.id }, options[:after] ]
-    else
-      conditions = ["project_id IN (?)", Array(projects).collect{ |p| p.id } ]
-    end
-    
-    if options[:user_id]
-      conditions[0] += ' AND user_id = ?'
-      conditions << options[:user_id]
-    end
-    
-    Activity.find(:all, :conditions => conditions,
-                        :order => 'id DESC',
-                        :limit => options[:limit] || APP_CONFIG['activities_per_page'])
   end
 
   def get_recent(model_class, limit = 5)
@@ -99,67 +98,6 @@ class Project < ActiveRecord::Base
 
   def to_param
     permalink
-  end
-
-  def to_xml(options = {})
-    options[:indent] ||= 2
-    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
-    xml.instruct! unless options[:skip_instruct]
-    xml.project :id => id do
-      xml.tag! 'name', name
-      xml.tag! 'permalink', permalink
-      xml.tag! 'created-at', created_at.to_s(:db)
-      xml.tag! 'updated-at', updated_at.to_s(:db)
-      xml.tag! 'archived', archived
-      xml.tag! 'owner-user-id', user_id
-      xml.people :count => people.size do
-        for person in people
-          person.to_xml(options.merge({ :skip_instruct => true, :root => :person }))
-        end
-      end
-    end
-  end
-  
-  def to_api_hash(options = {})
-    base = {
-      :id => id,
-      :organization_id => organization_id,
-      :name => name,
-      :permalink => permalink,
-      :archived => archived,
-      :created_at => created_at.to_s(:api_time),
-      :updated_at => updated_at.to_s(:api_time),
-      :archived => archived,
-      :owner_user_id => user_id
-    }
-    
-    base[:type] = self.class.to_s if options[:emit_type]
-    
-    if Array(options[:include]).include? :people
-      base[:people] = people.map {|p| p.to_api_hash(options)}
-    end
-    
-    if Array(options[:include]).include? :task_lists
-      base[:task_lists] = task_lists.map {|p| p.to_api_hash(options)}
-    end
-    
-    if Array(options[:include]).include? :invitations
-      base[:invitations] = invitations.map {|p| p.to_api_hash(options)}
-    end
-    
-    if Array(options[:include]).include? :pages
-      base[:pages] = pages.map {|p| p.to_api_hash(options)}
-    end
-    
-    if Array(options[:include]).include? :uploads
-      base[:uploads] = uploads.map {|p| p.to_api_hash(options)}
-    end
-    
-    if Array(options[:include]).include? :conversations
-      base[:conversations] = conversations.map {|p| p.to_api_hash(options)}
-    end
-    
-    base
   end
 
   def to_ical(filter_user = nil)
@@ -202,10 +140,16 @@ class Project < ActiveRecord::Base
             summary task.name
           end
           if host
-            port_in_url = (port == 80) ? '' : ":#{port}"
-            url         "http://#{host}#{port_in_url}/projects/#{task.project.permalink}/task_lists/#{task.task_list.id}/tasks/#{task.id}"
+            base_url = if port == 80
+              "http://#{host}"
+            elsif port == 443
+              "https://#{host}"
+            else
+              "http://#{host}:#{port}"
+            end
+            url         "#{base_url}/#{task.project.permalink}/tasks/#{task.id}"
           end
-          klass         task.project.name
+          klass         "PRIVATE"
           dtstamp       DateTime.civil(created_date.year,created_date.month,created_date.day,created_date.hour,created_date.min,created_date.sec,created_date.offset)
           uid           "tb-#{task.project.id}-#{task.id}"
         end

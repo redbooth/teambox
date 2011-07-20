@@ -1,9 +1,11 @@
 $highlight: #fff9da
 $navbar: #78acd7
-$text: #333
-$typeface: "Lucida Grande", Helvetica, "Helvetica Neue", Arial, Verdana, sans-serif
+$text: #010101
+$typeface: "Lucida Grande", Tahoma, Verdana, Helvetical, sans-serif
 $link: #259bad
 $link_hover: #df5249
+$comments_left_border: #f2f2f2
+$comments_bkg: #fafafa
 
 // fix for IE7, http://flipc.blogspot.com/2009/02/damn-ie7-and-inline-block.html
 =inline-block($height)
@@ -83,7 +85,6 @@ $link_hover: #df5249
 =light-box
   border: 1px rgb(220, 220, 220) solid
   background-color: rgb(240, 240, 240)
-  +rounded(5px)
 
 .inline
   display: inline
@@ -93,26 +94,9 @@ $link_hover: #df5249
   color: #500
   font-weight: bold
 
-.fyi
-  position: absolute
-  background: white
-  border: solid 4px #ddd
-  font-size: 12px
-  margin: 0
-  padding: 5px
-  +rounded(4px)
-  width: 300px
+label.error
+  margin-bottom: 3px
 
-.weakling
-  font-size: 11px
-  font-weight: bold
-  .default
-    color: rgb(160, 160, 160)
-  .error
-    color: rgb(200, 0, 0)
-  .weak
-    color: rgb(100, 100, 0)
-  .average
-    color: rgb(200, 0, 200)
-  .strong
-    color: rgb(0, 200, 0)
+span.error
+  color: red
+  font-variant: italic

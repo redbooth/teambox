@@ -1,27 +1,33 @@
-%p= "An Invitation invites a #{link_to_doc_model(:user)} to a #{link_to_doc_model(:project)}, via email."
+%p=raw "An Invitation invites a #{link_to_doc_model(:user)} to a #{link_to_doc_model(:project)}, via email."
 
-- doc_for :index, :example => example_api_wrap(@invitation, :references => [:project, :user]) do
-  %p= "Returns the 25 most recent invitations which belong to you, or in the case of a project, the project."
+- doc_for :index,
+          :example => example_api_wrap(@invitation, :references => [:project, :user]) do
+  %p=raw "Returns the 25 most recent invitations which belong to you, or in the case of a project, the project."
 
-- doc_for :show,  :example => @invitation.to_api_hash(:include => [:project, :user]) do
-  %p= "Returns the data for a given invitation."
+- doc_for :show,
+          :example => @invitation.to_api_hash(:include => [:project, :user]) do
+  %p=raw "Returns the data for a given invitation."
   
-- doc_for :create, :parameters => {:user_or_email => 'billg@microsoft.com' },
-                   :example => @invitation.to_api_hash(:include => [:project, :user]),
-                   :status => :created,
-                   :role => :admin do
-  %p= "Creates one or more new invitations, based on the email addresses specified in <tt>user_or_email</tt>."
+- doc_for :create,
+          :parameters => {:user_or_email => 'billg@microsoft.com' },
+          :example => @invitation.to_api_hash(:include => [:project, :user]),
+          :status => :created,
+          :role => :admin do
+  %p=raw "Creates one or more new invitations, based on the email addresses specified in <tt>user_or_email</tt>."
 
 - ignore_doc_for :update
 
-- doc_for :resend, :status => :updated,
-                   :role => :admin do
-  %p= "Resends an invitation."
+- doc_for :resend,
+          :status => :updated,
+          :role => :admin do
+  %p=raw "Resends an invitation."
   
-- doc_for :accept, :status => :updated,
-                   :role => :owner do
-  %p= "Accepts an invitation. The current user will be added to the project associated with the invitation."
+- doc_for :accept,
+          :status => :updated,
+          :role => :owner do
+  %p=raw "Accepts an invitation. The current user will be added to the project associated with the invitation."
 
-- doc_for :destroy, :status => :deleted,
-                    :role => [:admin, :owner] do
-  %p= "Destroys an invitation. You need to be either the target user of the invitation, or an administrator of the target project for this to work."
+- doc_for :destroy,
+          :status => :deleted,
+          :role => [:admin, :owner] do
+  %p=raw "Destroys an invitation. You need to be either the target user of the invitation, or an administrator of the target project for this to work."

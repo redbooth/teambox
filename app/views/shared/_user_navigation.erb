@@ -18,7 +18,7 @@ render_tabnav :user do
       t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'picture'
     end
 
-    if Teambox.config.providers and !Teambox.config.providers.empty?
+    if Teambox.config.providers? and !Teambox.config.providers.empty?
       add_tab do |t|
         t.named t('.linked_accounts')
         t.links_to account_linked_accounts_path
@@ -30,6 +30,12 @@ render_tabnav :user do
       t.named t('.notifications')
       t.links_to account_notifications_path
       t.highlights_on :controller => 'users', :action => 'edit', :sub_action => 'notifications'
+    end
+
+    add_tab do |t|
+      t.named t('.your_data')
+      t.links_to teambox_datas_path
+      t.highlights_on :controller => 'teambox_datas'
     end
 
     add_tab do |t|

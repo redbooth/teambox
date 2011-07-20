@@ -13,7 +13,7 @@
   %h2=h conversation.name
 
 - if can? :update, conversation
-  - form_for [project, conversation], :html => { :'data-remote' => true, :style => 'display: none', :class => 'edit_conversation app_form' } do |f|
+  = form_for [project, conversation], :html => { :'data-remote' => true, :style => 'display: none', :class => 'edit_conversation app_form' } do |f|
     = render 'fields', :f => f, :project => @current_project
     .submit
       = f.submit t('conversations.edit.submit')

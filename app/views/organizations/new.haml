@@ -2,9 +2,7 @@
 
 %p= t('.explain')
 
-- form_for @organization, :html => { :multipart => true } do |f|
+= form_for @organization, :html => { :multipart => true } do |f|
   = render 'organizations/fields', :f => f
   .submit
     = f.submit t('.submit')
-
-= render 'organizations/column'

@@ -8,22 +8,6 @@ module CalendarsHelper
     render 'hours/report_list'
   end
   
-  def observe_hour_filter
-  end
-
-  def observe_hour_reports
-    update_page_tag do |page|
-      page['report_list'].observe('change') { |page| page.apply_report_list }
-    end
-  end
-
-  def apply_report_list
-    page << "Hours.currentReport = this.getValue(); Hours.update();"
-  end
-
-  def apply_user_filter
-  end
-
   def day_hours(comments)
     @users_displayed ||= comments.map(&:user)
     comments.group_by { |c| c.created_at.mday }
@@ -34,9 +18,6 @@ module CalendarsHelper
     @class_names ||= {}
     @class_names[user.to_s] ||= (@current_class_name += 1)
     "#{text}_#{@class_names[user.to_s]} hour_#{user} hour"
-  end
-
-  def week_hours
   end
 
   def build_small_calendar(comments,year,month)
@@ -97,6 +78,7 @@ module CalendarsHelper
       end
     end
     cal << print_next_month_days(first_weekday,last_weekday,week_tally,week_count,last,total_tally,total_sum)
+    cal.html_safe
   end
 
   def build_weektable(year, month)
@@ -122,6 +104,7 @@ module CalendarsHelper
 
     wk << '</td></tr><tr>'
     wk << '</tr></table>' 
+    wk.html_safe
   end
 
   private
@@ -132,7 +115,7 @@ module CalendarsHelper
     if cur.wday == last_weekday
       cal << "</tr><tr>"
     end
-    cal
+    cal.html_safe
   end
 
   def day_names(first_weekday)
@@ -170,7 +153,7 @@ module CalendarsHelper
       cal << " weekendDay" if weekend?(d)
       cal << %("><div class=\"cd\">#{d.day}</div></td>)
     end unless first.wday == first_weekday
-    cal
+    cal.html_safe
   end
 
   def print_next_month_days(first_weekday,last_weekday,week_tally,week_count,last,total_tally,total_sum)
@@ -182,6 +165,7 @@ module CalendarsHelper
     end unless last.wday == last_weekday
     cal << "</tr>"
     cal << "</table>"
+    cal.html_safe
   end
 
   def first_day_of_week(day)
@@ -226,7 +210,7 @@ module CalendarsHelper
       month -= 1
     end
     url = project ? project_hours_by_month_url(project,year,month) : hours_by_month_url(year,month)
-    link_to "&larr; #{I18n.t('common.prev')}", url
+    link_to "&larr; #{I18n.t('common.prev')}".html_safe, url
   end
 
   def link_to_next_month(project,year,month)
@@ -237,7 +221,7 @@ module CalendarsHelper
       month += 1
     end
     url = project ? project_hours_by_month_url(project,year,month) : hours_by_month_url(year,month)
-    link_to "#{I18n.t('common.next')} &rarr;", url
+    link_to "#{I18n.t('common.next')} &rarr;".html_safe, url
   end
 
   def hours_js(year, month, comments)
@@ -272,17 +256,17 @@ module CalendarsHelper
  
     start_date = start_of_calendar(year, month)
     start = "new Date(#{start_date.year}, #{start_date.month-1}, #{start_date.day})"
+    
     javascript_tag <<-EOS
-    document.observe('dom:loaded', function(e){
-      Hours.init(#{start});
-     Hours.addHours([#{args.join(',')}]);
-     Hours.userMap = #{usermap.to_json};
-     Hours.userNameMap = #{usernamemap.to_json};
-     Hours.taskMap = #{taskmap.to_json};
-     Hours.projectMap = #{projectmap.to_json};
-     Hours.organizationMap = #{organizationmap.to_json};
-     Hours.update();
-    });
+      HOURS_DATA = {
+        start: #{start},
+        hours: [#{args.join(',')}],
+        userMap: #{usermap.to_json},
+        userNameMap: #{usernamemap.to_json},
+        taskMap: #{taskmap.to_json},
+        projectMap: #{projectmap.to_json},
+        organizationMap: #{organizationmap.to_json}
+      }
     EOS
   end
 

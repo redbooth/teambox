@@ -1,14 +1,14 @@
 class Project
-
-  def after_destroy
-    remove_from_recent_projects
-  end
   
-  def after_save
+  after_create :log_create
+  after_destroy :remove_from_recent_projects
+  after_save :remove_recent_unless_archived
+  
+  def remove_recent_unless_archived
     remove_from_recent_projects if archived?
   end
   
-  def after_create
+  def log_create
     add_user(user)
     log_activity(self, 'create', user_id)
 

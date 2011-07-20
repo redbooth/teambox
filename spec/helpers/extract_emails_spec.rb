@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe String, '#extract_emails' do
+describe 'String#extract_emails' do
 
   context "valid" do
     it "extracts single email from: pablo@teambox.com" do
@@ -93,8 +93,7 @@ describe String, '#extract_emails' do
   protected
   
   def subject
-    desc = [description].concat(description_args).join(' ')
-    data = desc.match(/from: (.+)$/m)[1]
+    data = description.match(/from: (.+)$/m)[1]
     data.extract_emails
   end
   

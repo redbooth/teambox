@@ -1,5 +1,7 @@
 class Organization < ActiveRecord::Base
-  acts_as_paranoid
+  include Immortal
+  include Metadata
+  extend Metadata::Defaults
 
   has_permalink :name
   has_many :projects #, :dependent => :destroy
@@ -12,10 +14,10 @@ class Organization < ActiveRecord::Base
   validates_length_of     :name, :minimum => 4
 
   validates_presence_of   :permalink
-  validates_uniqueness_of :permalink, :case_sensitive => false
+  validates_uniqueness_of :permalink, :case_sensitive => false, :scope => :deleted
   validates_uniqueness_of :domain, :case_sensitive => false, :allow_nil => true, :allow_blank => true
   validates_length_of     :permalink, :minimum => 4
-  validates_exclusion_of  :permalink, :in => %w(www help support mail pop smtp ftp)
+  validates_exclusion_of  :permalink, :in => %w(www help support mail pop smtp ftp guide)
   validates_format_of     :permalink, :with => /^[\w\_\-]+$/
 
   validate :ensure_unicity_for_community_version, :on => :create, :unless => :is_example
@@ -23,7 +25,7 @@ class Organization < ActiveRecord::Base
   before_destroy :prevent_if_projects
   
   attr_accessor :is_example
-  attr_accessible :name, :permalink, :description, :logo
+  attr_accessible :name, :permalink, :description, :logo, :settings
 
   LogoSizes = {
     :square   => [96, 96],
@@ -33,6 +35,7 @@ class Organization < ActiveRecord::Base
   has_attached_file :logo, 
     :url  => "/logos/:id/:style.png",
     :path => (Teambox.config.amazon_s3 ? "logos/:id/:style.png" : ":rails_root/public/logos/:id/:style.png"),
+    :s3_protocol => (Teambox.config.secure_logins ? 'https' : 'http'),
     :styles => LogoSizes.each_with_object({}) { |(name, size), all|
         all[name] = ["%dx%d>" % [size[0], size[1]], :png]
       }
@@ -62,6 +65,14 @@ class Organization < ActiveRecord::Base
   def to_param
     permalink
   end
+  
+  def self.find_by_id_or_permalink(param)
+    if param.to_s =~ /^\d+$/
+      find_by_id(param)
+    else
+      find_by_permalink(param)
+    end
+  end
 
   def users_in_projects
     User.find(:all, :joins => :people, :conditions => {:people => {:project_id => project_ids}}).uniq
@@ -69,7 +80,7 @@ class Organization < ActiveRecord::Base
 
   # External users are simply involved in some project of the organization
   def external_users
-    users_in_projects - users
+    (users_in_projects - users).sort_by {|u| u.first_name}
   end
 
   def is_admin?(user)
@@ -119,7 +130,7 @@ class Organization < ActiveRecord::Base
 
     def ensure_unicity_for_community_version
       if Teambox.config.community && new_record?
-        errors.add_to_base("Can't have more than one organization") if Organization.count > 0
+        errors.add(:base, "Can't have more than one organization") if Organization.count > 0
       end
     end
 
@@ -128,3 +139,14 @@ class Organization < ActiveRecord::Base
     end
 
 end
+
+Organization.default_settings = {
+    'colours' => {
+      'header_bar' => '78ACD7',
+      'links' => '259BAD',
+      'highlight' => 'fff9da',
+      'text' => '333',
+      'link_hover' => 'df5249'
+    }
+  }
+

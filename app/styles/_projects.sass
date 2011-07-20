@@ -54,22 +54,14 @@
             color: #fff
           span.login
             float: none
-      
-  .project_list
-    margin-top: 15px
-    font-size: 12px
-    .project_link
-      margin: 1px 0 2px 0
-    .new_project_link
-      a
-        color: rgb(150, 150, 150)
-  .archived_project_list
-    .project_link
-      margin: 10px 5px
 
-  .recent_conversations
+  .recent_conversations, .project_pages
     a.conversation
       background: url(/images/comment.gif) no-repeat left
+      margin-left: 10px
+      padding-left: 25px
+    a.page
+      background: url(/images/page.png) no-repeat left
       margin-left: 10px
       padding-left: 25px
     a
@@ -93,7 +85,7 @@
     margin: 15px 0
     display: block
 
-  a.gantt_link, a.calendars_link, a.print_link, a.email_link, a.subscribe, a.public_link, a.leave_link
+  a.gantt_link, a.calendars_link, a.print_link, a.email_link, a.subscribe, a.public_link, a.leave_link, a.csv_link
     display: block
     margin-top: 5px
     font-size: 13px
@@ -103,6 +95,8 @@
     +gantt_icon
   a.calendars_link
     +calendar_icon
+  a.csv_link
+    +csv_icon
   a.print_link
     +print_icon
   a.email_link
@@ -193,16 +187,6 @@
         display: none
 
 .edit_projects, .update_projects
-  .content_wrap
-    float: right
-    padding: 10px
-      left: 0px
-  .column_wrap
-    float: left
-    .submit
-      text-align: right
-  .column
-    +rounded(5px)
   .owner
     label
       font-size: 12px
@@ -217,31 +201,20 @@ form#new_project
   .errors_for
     font-size: 12px
   .text_field
-    margin-bottom: 20px
+    margin-bottom: 30px
   .check_box
     padding-left: 10px
-  .invite_contacts
-    margin-top: 30px
-    font-size: 12px
-    h3
-      font-size: 14px
-      margin:
-        top: 7px
-        bottom: 10px
-    .users
-      margin-left: 10px
-      .user
-        float: left
-        width: 190px
-    p
-      margin: 15px 0 5px
-    textarea
-      width: 550px
-      height: 40px
-      font-size: 12px
-      margin: 0
   .submit
     margin-top: 20px
+  em
+    font-style: normal
+    font-size: 10px
+    color: #777
+  label
+    a
+      font-size: 10px
+  label, h3
+    font-weight: normal
 
 form#new_project, form.edit_project
   padding:
@@ -278,7 +251,7 @@ form#new_project, form.edit_project
   p.invite_by_email
     padding-left: 10px
 
-.new_projects,.create_projects
+.new_projects, .create_projects
   #project_organization_id
     max-width: 200px
   .preview
@@ -298,11 +271,34 @@ form#new_project, form.edit_project
       li
         margin-bottom: 3px
 
-.show_projects
-  h2
-    border: none
-    margin: 0
-      bottom: 5px
+form#invite_contacts
+  margin-top: 30px
+  font-size: 12px
+  h3
+    font-size: 14px
+    margin:
+      top: 20px
+      bottom: 10px
+    font-weight: normal
+  .users
+    margin-left: 10px
+    .user
+      float: left
+      width: 190px
+  p
+    margin: 15px 0 5px
+  textarea
+    width: 550px
+    height: 40px
+    font-size: 12px
+    margin: 0 0 0 10px
+  .previewBox
+    display: none
+  .submit
+    margin-top: 20px
+
+.show_projects span.in_project
+  display: none
 
 .show_projects, .index_task_lists
   h2
@@ -332,7 +328,32 @@ form#new_project, form.edit_project
 
 #show_more_button
   margin-top: 40px
+  width: 620px
+  text-align: center
   .activity_paginate_link
-    width: 100%
     text-align: center
- 
+
+img#activity_paginate_loading
+  margin-left: 300px
+
+body.list_projects
+  h4
+    font-size: 12px
+    margin: 30px 0 10px
+  p
+    font-size: 13px
+    margin: 6px 0 6px 10px
+    &.none
+      color: #999
+    a
+      color: #333
+      &.show_archived
+        color: #999
+        text-decoration: underline
+    span.status
+      color: #777
+      font-size: 12px
+      float: right
+      a
+        color: #777
+        text-decoration: underline

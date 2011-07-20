@@ -13,11 +13,13 @@
   //   getPixelValue("11px");
   // Or like this:
   //   getPixelValue(someElement, 'paddingTop');  
-  function getPixelValue(value, property) {
+  function getPixelValue(value, property, context) {
+    var element = null;
     if (Object.isElement(value)) {
       element = value;
       value = element.getStyle(property);
     }
+
     if (value === null) {
       return null;
     }
@@ -29,32 +31,54 @@
       return window.parseFloat(value);
     }
     
+    var isPercentage = value.include('%'), isViewport = (context === document.viewport);    
+    
     // When IE gives us something other than a pixel value, this technique
     // (invented by Dean Edwards) will convert it to pixels.
-    if (/\d/.test(value) && element.runtimeStyle) {
+    //
+    // (This doesn't work for percentage values on elements with `position: fixed`
+    // because those percentages are relative to the viewport.)
+    if (/\d/.test(value) && element && element.runtimeStyle && !(isPercentage && isViewport)) {
       var style = element.style.left, rStyle = element.runtimeStyle.left; 
       element.runtimeStyle.left = element.currentStyle.left;
       element.style.left = value || 0;  
       value = element.style.pixelLeft;
       element.style.left = style;
       element.runtimeStyle.left = rStyle;
-
+      
       return value;
     }
     
     // For other browsers, we have to do a bit of work.
-    if (value.include('%')) {
+    // (At this point, only percentages should be left; all other CSS units
+    // are converted to pixels by getComputedStyle.)
+    if (element && isPercentage) {
+      context = context || element.parentNode;
       var decimal = toDecimal(value);
-      var whole;
-      if (property.include('left') || property.include('right') ||
-       property.include('width')) {
-        whole = $(element.parentNode).measure('width');
-      } else if (property.include('top') || property.include('bottom') ||
-       property.include('height')) {
-        whole = $(element.parentNode).measure('height');
+      var whole = null;
+      var position = element.getStyle('position');
+      
+      var isHorizontal = property.include('left') || property.include('right') ||
+       property.include('width');
+       
+      var isVertical =  property.include('top') || property.include('bottom') ||
+        property.include('height');
+        
+      if (context === document.viewport) {
+        if (isHorizontal) {
+          whole = document.viewport.getWidth();
+        } else if (isVertical) {
+          whole = document.viewport.getHeight();
+        }
+      } else {
+        if (isHorizontal) {
+          whole = $(context).measure('width');
+        } else if (isVertical) {
+          whole = $(context).measure('height');
+        }
       }
       
-      return whole * decimal;
+      return (whole === null) ? 0 : whole * decimal;
     }
     
     // If we get this far, we should probably give up.
@@ -213,7 +237,7 @@
      *  measurements, it's probably not worth it.
     **/
     initialize: function($super, element, preCompute) {
-      $super();      
+      $super();
       this.element = $(element);
       
       // nullify all properties keys
@@ -282,6 +306,10 @@
       
       var position = element.getStyle('position'),
        width = element.getStyle('width');
+      
+      // Preserve the context in case we get a percentage value.  
+      var context = (position === 'fixed') ? document.viewport :
+       element.parentNode;
        
       element.setStyle({
         position:   'absolute',
@@ -299,12 +327,14 @@
         //  (b) it has an explicitly-set width, instead of width: auto.
         // Either way, it means the element is the width it needs to be
         // in order to report an accurate height.
-        newWidth = getPixelValue(width);
-      } else if (width && (position === 'absolute' || position === 'fixed')) {
-        newWidth = getPixelValue(width);
+        newWidth = getPixelValue(element, 'width', context);
+      } else if (position === 'absolute' || position === 'fixed') {
+        // Absolute- and fixed-position elements' dimensions don't depend
+        // upon those of their parents.
+        newWidth = getPixelValue(element, 'width', context);
       } else {
-        // If not, that means the element's width depends upon the width of
-        // its parent.
+        // Otherwise, the element's width depends upon the width of its
+        // parent.
         var parent = element.parentNode, pLayout = $(parent).getLayout();
 
         newWidth = pLayout.get('width') -
@@ -335,6 +365,7 @@
       if (!(property in COMPUTATIONS)) {
         throw "Property not found.";
       }
+      
       return this._set(property, COMPUTATIONS[property].call(this, this.element));
     },
     
@@ -439,8 +470,11 @@
       'height': function(element) {
         if (!this._preComputing) this._begin();
         
-        var bHeight = this.get('border-box-height');        
-        if (bHeight <= 0) return 0;
+        var bHeight = this.get('border-box-height');
+        if (bHeight <= 0) {
+          if (!this._preComputing) this._end();
+          return 0;
+        }
         
         var bTop = this.get('border-top'),
          bBottom = this.get('border-bottom');
@@ -457,7 +491,10 @@
         if (!this._preComputing) this._begin();
         
         var bWidth = this.get('border-box-width');
-        if (bWidth <= 0) return 0;
+        if (bWidth <= 0) {
+          if (!this._preComputing) this._end();
+          return 0;
+        }
 
         var bLeft = this.get('border-left'),
          bRight = this.get('border-right');
@@ -487,11 +524,17 @@
       },
       
       'border-box-height': function(element) {
-        return element.offsetHeight;
+        if (!this._preComputing) this._begin();
+        var height = element.offsetHeight;
+        if (!this._preComputing) this._end();
+        return height;
       },
             
       'border-box-width': function(element) {
-        return element.offsetWidth;
+        if (!this._preComputing) this._begin();
+        var width = element.offsetWidth;
+        if (!this._preComputing) this._end();
+        return width;
       },
       
       'margin-box-height': function(element) {
@@ -565,23 +608,19 @@
       },
       
       'border-top': function(element) {
-        return Object.isNumber(element.clientTop) ? element.clientTop : 
-         getPixelValue(element, 'borderTopWidth');
+        return getPixelValue(element, 'borderTopWidth');
       },
       
       'border-bottom': function(element) {
-        return Object.isNumber(element.clientBottom) ? element.clientBottom : 
-         getPixelValue(element, 'borderBottomWidth');
+        return getPixelValue(element, 'borderBottomWidth');
       },
       
       'border-left': function(element) {
-        return Object.isNumber(element.clientLeft) ? element.clientLeft : 
-         getPixelValue(element, 'borderLeftWidth');
+        return getPixelValue(element, 'borderLeftWidth');
       },
       
       'border-right': function(element) {
-        return Object.isNumber(element.clientRight) ? element.clientRight : 
-         getPixelValue(element, 'borderRightWidth');
+        return getPixelValue(element, 'borderRightWidth');
       },
       
       'margin-top': function(element) {
@@ -723,16 +762,31 @@
    *  Finds the computed width and height of `element` and returns them as
    *  key/value pairs of an object.
    *  
-   *  This method returns correct values on elements whose display is set to
-   *  `none` either in an inline style rule or in an CSS stylesheet.
-   *  
-   *  In order to avoid calling the method twice, you should consider caching
-   *  the values returned in a variable as shown below. If you only need
-   *  `element`'s width or height, consider using [[Element.getWidth]] or
-   *  [[Element.getHeight]] instead.
+   *  For backwards-compatibility, these dimensions represent the dimensions
+   *  of the element's "border box" (including CSS padding and border). This
+   *  is equivalent to the built-in `offsetWidth` and `offsetHeight`
+   *  browser properties.
    *  
    *  Note that all values are returned as _numbers only_ although they are
    *  _expressed in pixels_.
+   * 
+   *  ##### Caveats
+   *  
+   *  * If the element is hidden via `display: none` in CSS, this method will
+   *    attempt to measure the element by temporarily removing that CSS and
+   *    applying `visibility: hidden` and `position: absolute`. This gives
+   *    the element dimensions without making it visible or affecting the
+   *    positioning of surrounding elements &mdash; but may not give accurate
+   *    results in some cases. [[Element.measure]] is designed to give more
+   *    accurate results.
+   *  
+   *  * In order to avoid calling the method twice, you should consider
+   *    caching the returned values in a variable, as shown in the example
+   *    below.
+   *  
+   *  * For more complex use cases, use [[Element.measure]], which is able
+   *    to measure many different aspects of an element's dimensions and
+   *    offsets.
    *  
    *  ##### Examples
    *  
@@ -751,11 +805,41 @@
    *      // -> 100
   **/
   function getDimensions(element) {
-    var layout = $(element).getLayout();
-    return {
-      width:  layout.get('width'),
-      height: layout.get('height')
-    };    
+    element = $(element);
+    var display = Element.getStyle(element, 'display');
+    
+    if (display && display !== 'none') {
+      return { width: element.offsetWidth, height: element.offsetHeight };
+    }
+    
+    // All *Width and *Height properties give 0 on elements with
+    // `display: none`, so show the element temporarily.
+    var style = element.style;
+    var originalStyles = {
+      visibility: style.visibility,
+      position:   style.position,
+      display:    style.display
+    };
+    
+    var newStyles = {
+      visibility: 'hidden',
+      display:    'block'
+    };
+
+    // Switching `fixed` to `absolute` causes issues in Safari.
+    if (originalStyles.position !== 'fixed')
+      newStyles.position = 'absolute';
+    
+    Element.setStyle(element, newStyles);
+    
+    var dimensions = {
+      width:  element.offsetWidth,
+      height: element.offsetHeight
+    };
+    
+    Element.setStyle(element, originalStyles);
+
+    return dimensions;
   }
   
   /**
@@ -765,16 +849,20 @@
    *  `body` element is returned.
   **/
   function getOffsetParent(element) {
-    if (isDetached(element)) return $(document.body);
+    element = $(element);
+    
+    // For unusual cases like these, we standardize on returning the BODY
+    // element as the offset parent.
+    if (isDocument(element) || isDetached(element) || isBody(element) || isHtml(element))
+      return $(document.body);
 
     // IE reports offset parent incorrectly for inline elements.
     var isInline = (Element.getStyle(element, 'display') === 'inline');
     if (!isInline && element.offsetParent) return $(element.offsetParent);
-    if (element === document.body) return $(element);
     
     while ((element = element.parentNode) && element !== document.body) {
       if (Element.getStyle(element, 'position') !== 'static') {
-        return (element.nodeName === 'HTML') ? $(document.body) : $(element);
+        return isHtml(element) ? $(document.body) : $(element);
       }
     }
     
@@ -789,12 +877,15 @@
    *  document.
   **/
   function cumulativeOffset(element) {
+    element = $(element);
     var valueT = 0, valueL = 0;
-    do {
-      valueT += element.offsetTop  || 0;
-      valueL += element.offsetLeft || 0;
-      element = element.offsetParent;
-    } while (element);
+    if (element.parentNode) {
+      do {
+        valueT += element.offsetTop  || 0;
+        valueL += element.offsetLeft || 0;
+        element = element.offsetParent;
+      } while (element);
+    }
     return new Element.Offset(valueL, valueT);
   }
   
@@ -804,10 +895,12 @@
    *  Returns `element`'s offset relative to its closest positioned ancestor
    *  (the element that would be returned by [[Element.getOffsetParent]]).
   **/  
-  function positionedOffset(element) {
+  function positionedOffset(element) {    
+    element = $(element);
+
     // Account for the margin of the element.
     var layout = element.getLayout();
-
+    
     var valueT = 0, valueL = 0;
     do {
       valueT += element.offsetTop  || 0;
@@ -821,7 +914,7 @@
     } while (element);
     
     valueL -= layout.get('margin-top');
-    valueT -= layout.get('margin-left');    
+    valueT -= layout.get('margin-left');
     
     return new Element.Offset(valueL, valueT);
   }
@@ -843,11 +936,12 @@
   }
 
   /**
-   *  Element.viewportOffset(@element) -> Array
+   *  Element.viewportOffset(@element) -> Element.Offset
    *
    *  Returns the X/Y coordinates of element relative to the viewport.
   **/
   function viewportOffset(forElement) {
+    element = $(element);
     var valueT = 0, valueL = 0, docBody = document.body;
 
     var element = forElement;
@@ -931,6 +1025,66 @@
     if (originalStyles) element.setStyle(originalStyles);
     return element;
   }
+    
+  if (Prototype.Browser.IE) {
+    // IE doesn't report offsets correctly for static elements, so we change them
+    // to "relative" to get the values, then change them back.
+    getOffsetParent = getOffsetParent.wrap(
+      function(proceed, element) {
+        element = $(element);
+        
+        // For unusual cases like these, we standardize on returning the BODY
+        // element as the offset parent.
+        if (isDocument(element) || isDetached(element) || isBody(element) || isHtml(element))
+          return $(document.body);
+
+        var position = element.getStyle('position');
+        if (position !== 'static') return proceed(element);
+
+        element.setStyle({ position: 'relative' });
+        var value = proceed(element);
+        element.setStyle({ position: position });
+        return value;
+      }
+    );
+    
+    positionedOffset = positionedOffset.wrap(function(proceed, element) {
+      element = $(element);
+      if (!element.parentNode) return new Element.Offset(0, 0);
+      var position = element.getStyle('position');
+      if (position !== 'static') return proceed(element);
+
+      // Trigger hasLayout on the offset parent so that IE6 reports
+      // accurate offsetTop and offsetLeft values for position: fixed.
+      var offsetParent = element.getOffsetParent();
+      if (offsetParent && offsetParent.getStyle('position') === 'fixed')
+        hasLayout(offsetParent);
+
+      element.setStyle({ position: 'relative' });
+      var value = proceed(element);
+      element.setStyle({ position: position });
+      return value;
+    });
+  } else if (Prototype.Browser.Webkit) {    
+    // Safari returns margins on body which is incorrect if the child is absolutely
+    // positioned.  For performance reasons, redefine Element#cumulativeOffset for
+    // KHTML/WebKit only.
+    cumulativeOffset = function(element) {
+      element = $(element);
+      var valueT = 0, valueL = 0;
+      do {
+        valueT += element.offsetTop  || 0;
+        valueL += element.offsetLeft || 0;
+        if (element.offsetParent == document.body)
+          if (Element.getStyle(element, 'position') == 'absolute') break;
+
+        element = element.offsetParent;
+      } while (element);
+
+      return new Element.Offset(valueL, valueT);
+    };
+  }
+  
   
   Element.addMethods({
     getLayout:              getLayout,
@@ -949,6 +1103,14 @@
     return element.nodeName.toUpperCase() === 'BODY';
   }
   
+  function isHtml(element) {
+    return element.nodeName.toUpperCase() === 'HTML';
+  }
+  
+  function isDocument(element) {
+    return element.nodeType === Node.DOCUMENT_NODE;
+  }
+  
   function isDetached(element) {
     return element !== document.body &&
      !Element.descendantOf(element, document.body);
@@ -963,49 +1125,14 @@
         element = $(element);        
         if (isDetached(element)) return new Element.Offset(0, 0);
 
-        var rect  = element.getBoundingClientRect(),
+        var rect = element.getBoundingClientRect(),
          docEl = document.documentElement;
         // The HTML element on IE < 8 has a 2px border by default, giving
         // an incorrect offset. We correct this by subtracting clientTop
         // and clientLeft.
         return new Element.Offset(rect.left - docEl.clientLeft,
          rect.top - docEl.clientTop);
-      },
-      
-      cumulativeOffset: function(element) {
-        element = $(element);
-        if (isDetached(element)) return new Element.Offset(0, 0);
-
-        var docOffset = $(document.body).viewportOffset(),
-          elementOffset = element.viewportOffset();
-        return elementOffset.relativeTo(docOffset);
-      },
-            
-      positionedOffset: function(element) {
-        element = $(element);
-        var parent = element.getOffsetParent();        
-        if (isDetached(element)) return new Element.Offset(0, 0);
-        
-        // When the BODY is the offsetParent, IE6 mistakenly reports the
-        // parent as HTML. Use that as the litmus test to fix another
-        // annoying IE6 quirk.
-        if (element.offsetParent &&
-         element.offsetParent.nodeName.toUpperCase() === 'HTML') {
-          return positionedOffset(element);
-        }
-        
-        var eOffset = element.viewportOffset(),
-         pOffset = isBody(parent) ? viewportOffset(parent) : 
-          parent.viewportOffset();
-        var retOffset = eOffset.relativeTo(pOffset);
-        
-        // Account for the margin of the element.
-        var layout = element.getLayout();
-        var top  = retOffset.top  - layout.get('margin-top');
-        var left = retOffset.left - layout.get('margin-left');
-        
-        return new Element.Offset(left, top);
       }
     });    
-  }  
+  }
 })();

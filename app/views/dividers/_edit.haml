@@ -1,4 +1,4 @@
-- form_for [divider.project,divider.page,divider], :html => { :'data-remote' => 'true' } do |f|
+= form_for [divider.project,divider.page,divider], :html => { :'data-remote' => 'true' } do |f|
   .area
     = divider_fields(f)
     .submit{ :id => "divider_submit_#{divider.id}" }

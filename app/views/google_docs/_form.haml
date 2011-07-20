@@ -1,0 +1,15 @@
+.google_docs_attachment
+  = link_to google_docs_path, :rel => 'facebox', :class => 'hoverable', :title => "Attach Google Docs" do
+    = image_tag 'google_docs/icon_6_document.gif', :class => 'google_docs_logo'
+
+  .google_docs_attachment_form_area{:'data-object-name' => f.object_name}
+    .fields
+      -# f.object.google_docs.build
+      = f.fields_for :google_docs do |fields|
+        = fields.hidden_field :title
+        = fields.hidden_field :document_type
+        = fields.hidden_field :url
+        = fields.hidden_field :edit_url
+        = fields.hidden_field :acl_url
+    
+    %ul.file_list

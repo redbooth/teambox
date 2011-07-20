@@ -1,23 +1,36 @@
 %h2= t('.title')
 
-- if @app_link
-  %p= t(:'oauth.this_account_will_be_linked_to', :provider => @app_link.provider)
+- if @provider
+  %p= t(:'oauth.this_account_will_be_linked_to', :provider => @provider)
 
 - if !@invitation and @user.email and User.find_by_email(@user.email)
   %p{ :style => 'margin: 80px 10px; padding: 10px; border: 1px rgb(220,220,150) solid; background-color: rgb(255,255,200)' }
-    = t('.you_already_have_an_account', :email => @user.email, :login_link => login_path, :reset_password_link => forgot_password_path)
+    = t('.you_already_have_an_account_html', :email => @user.email, :login_link => login_path, :reset_password_link => forgot_password_path)
 
 - else
   - if !Teambox.config.community or @invitation
-    %p= t('.existing_user', :login_url => login_path, :forgot_url => forgot_password_path)
+    %p= t('.existing_user_html', :login_url => login_path, :forgot_url => forgot_password_path)
 
   - secure_url = Teambox.config.secure_logins ? users_url(:protocol => 'https') : nil
-
-  - form_for @user, :url => secure_url do |f|
+  = form_for @user, :url => secure_url do |f|
     = render 'users/form/new', :f => f, :user => f.object
-    - if Rails.env.development? and Teambox.config.email_confirmation_require
-      %p You are running in development mode. No email confirmation will be required.
-      %p When running Teambox in production mode, signup will require an email confirmation.
-    %br
     .submit
-      = submit_tag t('.submit'), :tabindex => 300
+      .submit_button
+        = submit_tag t('.submit'), :tabindex => 300, :id => 'submit', :class => :button
+
+- if Rails.env.development? and Teambox.config.email_confirmation_require
+  %p
+    You are running in development mode. No email confirmation will be required.
+    %br
+    When running Teambox in production mode, signup will require an email confirmation.
+
+= js_for_signup_form_validations
+
+:javascript
+  // Autodetect browser's timezone
+  var offset = -new Date().getTimezoneOffset() / 60 - 1
+  var local_tz = (offset < 0 ? "-" : "+") + offset.abs().toPaddedString(2)
+  var select = $('user_time_zone')
+  $A(select.options).find(function(option) {
+    return option.text.match(/[+-]\d+/) == local_tz
+  }).selected = true

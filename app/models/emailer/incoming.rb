@@ -1,23 +1,31 @@
 require 'net/pop'
 require 'net/imap'
 require 'net/http'
+require 'action_view/helpers/text_helper'
 
-# Receives an email and performs the adequate action
+# Receives email
 #
-# Emails can be sent to project@app.server.com or project+model+id@app.server.com
-# Cases:
+# proj-permalink@app.server.com
+#   → new conversation with Subject as a title and Body as a comment
 #
-# keiretsu@app.server.com                  Will find or start a conversation with Subject as a title and Body as a comment
-# keiretsu+conversation@app.server.com     Will find or start a conversation with Subject as a title and Body as a comment
-# keiretsu+task@app.server.com             Will start a conversation with Subject (or the Body if not present) as title
-# keiretsu+conversation+5@app.server.com   Will post a new comment in the conversation whose id is 5
-# keiretsu+task+12@app.server.com          Will post a new comment in the task whose id is 12
+# proj-permalink+conversation@app.server.com
+#   → find or create conversation with Subject as a title and Body as a comment
 #
-# Invalid or malformed emails will be ignored
+# proj-permalink+task@app.server.com
+#   → new task with Subject (or the Body if not present) as title
 #
+# proj-permalink+conversation+5@app.server.com
+#   → new comment for the conversation #5
+#
+# proj-permalink+task+12@app.server.com
+#   → new comment for the task #12
+#
+# Invalid or malformed emails will be ignored and sometimes bounced to the receiver.
 
 module Emailer::Incoming
-  
+  include ActionView::Helpers::TextHelper
+  ACTION_MATCH = /^\s*#(\w+)/
+
   def self.fetch(settings)
     type = settings[:type].to_s.downcase
     send("fetch_#{type}", settings)
@@ -70,19 +78,25 @@ module Emailer::Incoming
   def receive(email)
     email = ParamsMail.new(email) if Hash === email
     
-    process email
+    # TODO: ease a bit on the ivars pls
+    process_incoming email
     get_target email
-    get_action if @target.is_a?(Task)
+    
     case @type
-    when :project then create_conversation
-    when :conversation then @target ? post_to(@target) : create_conversation
+    when :project
+      create_conversation
+    when :conversation
+      if @target then post_to(@target)
+      else create_conversation
+      end
     when :task
       unless @target
         @target = create_task
-        get_action
       end
+      
+      get_action
+      @body = extract_action
       post_to(@target)
-    else raise "Invalid target type"
     end
   end
 
@@ -94,6 +108,7 @@ module Emailer::Incoming
       @params = params
       @from = @to = @cc = nil
       @attachments = nil
+      @charsets = JSON.parse(@params[:charsets] || '{}')
     end
     
     %w[from to cc].each do |field|
@@ -105,7 +120,7 @@ module Emailer::Incoming
     end
     
     def body
-      @params[:text]
+      @body ||= field_to_utf8(:text)
     end
     
     def subject
@@ -127,8 +142,24 @@ module Emailer::Incoming
     def field_to_addr(field)
       value = @params[field.to_sym]
       return if value.blank?
-      header = TMail::AddressHeader.new(field.to_s, value)
-      header.addrs.map &:spec
+      # RAILS3 report bug, this doesn't parse with a newline char at the end
+      header = Mail::Field.new(field.to_s, value.strip)
+      header.addrs.map &:address
+    end
+    
+    def field_to_utf8(field)
+      value = @params[field.to_sym]
+      return value if value.blank?
+      
+      charset = @charsets[field.to_s]
+      if charset and charset.downcase != 'utf-8'
+        begin
+          value = Iconv.iconv('utf-8', charset, value).first
+        rescue Iconv::IllegalSequence, Iconv::InvalidEncoding, Errno::EINVAL
+          # do nothing
+        end
+      end
+      return value
     end
   end
   
@@ -137,13 +168,12 @@ module Emailer::Incoming
     attr_accessor :mail
     
     def initialize(mail, message)
-      raise "mail must be passed to error" if mail.nil?
       super(message)
       @mail = mail
     end
     
-    def from
-      @mail.from.kind_of?(Array) ? @mail.from.first : @mail.from
+    def sender?
+      mail.from.present?
     end
   end
   
@@ -153,7 +183,7 @@ module Emailer::Incoming
   class TargetNotFoundError < Error; end
 
   # accepts params in Sendgrid's format: http://wiki.sendgrid.com/doku.php?id=parse_api
-  def process(email)
+  def process_incoming(email)
     raise MissingInfo, "Invalid mail body" if email.body.blank?
     
     from = Array(email.from).first
@@ -171,17 +201,30 @@ module Emailer::Incoming
     @user = User.find_by_email from
     raise UserNotFoundError.new(email, "Invalid user '#{email.from.first}'") unless @user
     raise NotProjectMemberError.new(email, "User does not belong to project") unless @user.projects.include? @project
-    
-    @body    = strip_responses(email.body)
-    @subject = email.subject.gsub(REPLY_REGEX, "").strip
+
+    # Get the body in multipart emails as well
+    if email.respond_to? :parts
+      parts = email.parts.select{|p| p.content_type.include?('text/')}
+      @body = parts.any? ? parts.collect(&:decoded).join("\n") : email.body
+    else
+      @body = email.body
+    end
+    #strip any remaining html tags (after strip_responses) from the body
+    @body    = strip_responses(@body).strip_tags.to_s.strip
+    @subject = email.subject.to_s.gsub(REPLY_REGEX, "").strip
     @files   = email.attachments || []
     
     Rails.logger.info "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
   end
   
+  # Removes 'On ... bla bla wrote line'
+  # Splits emails on answer line and takes top half
+  # Gmail adds <div class='email' to indicate where real message begins
+  # so we split on that too and again take top half
+  # finally strip any whitespace
   def strip_responses(body)
     # For GMail. Matches "On 19 August 2010 13:48, User <proj+conversation+22245@app.teambox.com<proj%2Bconversation%2B22245@app.teambox.com>> wrote:"
-    body.strip.
+    body.to_s.strip.
       gsub(/\n[^\r\n]*\d{2,4}.*\+.*\d@app.teambox.com.*:.*\z/m, '').
       split(Emailer::ANSWER_LINE).first.
       split("<div class='email'").first.
@@ -191,47 +234,35 @@ module Emailer::Incoming
   # Decides which kind of object we'll be posting to (Conversation, Task, Task List..)
   # and finds it if appliable.
   def get_target(email)
-    extra_params = @to.split('+')
+    # projectname+targetclass+id@mailserver.com
+    permalink, klass, object_id = @to.split('+')
+    
+    begin
+      @type = klass ? klass.singularize.to_sym : :project
 
-    case extra_params.size
-      when 1 # projectname@mailserver.com
-        @type = :project
-        @target = @project
-      when 2 # projectname+targetclass@mailserver.com
-        case extra_params.second
-        when 'conversation', 'conversations'
-          @type = :conversation
-          @target = Conversation.find_by_name_and_project_id(@subject, @project.id)
-        when 'task', 'tasks'
-          @type = :task
-          @target = nil
+      if object_id
+        @target = @project.send(@type.to_s.pluralize).find(object_id)
+      elsif klass
+        case @type
+        when :conversation
+          @target = @project.conversations.find_by_name(@subject)
+        when :task then # do nothing
         else
-          raise "Invalid target class"
+          raise ArgumentError, "unknown type: #{@type}"
         end
-      when 3 # projectname+targetclass+id@mailserver.com
-        case extra_params.second
-        when 'conversation'
-          @type = :conversation
-          @target = Conversation.find_by_id_and_project_id(extra_params.third, @project.id)
-        when 'task_list'
-          @type = :task_list
-          @target = TaskList.find_by_id_and_project_id(extra_params.third, @project.id)
-        when 'task'
-          @type = :task
-          @target = Task.find_by_id_and_project_id(extra_params.third, @project.id)          
-        else
-          raise "Invalid target class"
-        end
-        raise TargetNotFoundError.new(email, "#{extra_params.second} #{extra_params.third} not found for #{@project.name}") if @target.nil?
       else
-        raise "Invalid recipient: '#{@to}'"
+        @target = @project
+      end
+    rescue ArgumentError, NoMethodError, ActiveRecord::RecordNotFound => ex
+      Rails.logger.debug "[Incoming email] captured #{ex.class}: #{ex.message}"
+      raise TargetNotFoundError.new(email, "couldn't process target #{@to}")
     end
   end
   
   # Determines the #action
   # The commands are #resolve / #resolved, #username, #reject / #rejected and #hold.
   def get_action
-    if @body =~ /^\s*#(\w+)/
+    if @body =~ ACTION_MATCH
       tag = $1.downcase
       
       @target_action = case tag
@@ -246,6 +277,11 @@ module Emailer::Incoming
         end
       end
     end
+  end
+  
+  def extract_action
+    get_action
+    @body.sub(ACTION_MATCH, '').strip
   end
   
   def post_to(target)
@@ -298,7 +334,7 @@ module Emailer::Incoming
     end
     
     task = task_list.tasks.create! do |task|
-      task.name = @subject.blank? ? @body : @subject
+      task.name = @subject.blank? ? truncate(@body, :length => 255) : @subject
       task.project = @project
       task.user = @user
     end

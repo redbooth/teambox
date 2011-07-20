@@ -4,14 +4,16 @@ require 'digest/sha1'
 # A Person model describes the relationship of a User that follows a Project.
 
 class User < ActiveRecord::Base
+  include Immortal
+  include Metadata
+  extend Metadata::Defaults
 
-  include ActionController::UrlWriter
+  include Rails.application.routes.url_helpers
 
-  acts_as_paranoid
   concerned_with  :activation,
                   :avatar,
                   :authentication,
-                  :example_project,
+                  :conversions,
                   :recent_projects,
                   :roles,
                   :rss,
@@ -19,16 +21,17 @@ class User < ActiveRecord::Base
                   :validation,
                   :task_reminders
 
-  LOCALE_CODES = I18n.available_locales.map(&:to_s)
-
   has_many :projects_owned, :class_name => 'Project', :foreign_key => 'user_id'
   has_many :comments
+  has_many :conversations
+  has_many :task_lists
+  has_many :pages
   has_many :people
   has_many :projects, :through => :people, :order => 'name ASC'
   has_many :invitations, :foreign_key => 'invited_user_id'
   has_many :activities
   has_many :uploads
-  has_many :app_links
+  has_many :app_links, :dependent => :destroy
   has_many :memberships
   has_many :teambox_datas
 
@@ -39,6 +42,8 @@ class User < ActiveRecord::Base
 
   has_one :card
   accepts_nested_attributes_for :card
+  default_scope :order => 'users.updated_at DESC'
+  scope :in_alphabetical_order, :order => 'users.first_name ASC'
 
   attr_accessible :login,
                   :email,
@@ -47,6 +52,7 @@ class User < ActiveRecord::Base
                   :biography,
                   :password,
                   :password_confirmation,
+                  :old_password,
                   :time_zone,
                   :locale,
                   :first_day_of_week,
@@ -54,27 +60,34 @@ class User < ActiveRecord::Base
                   :card_attributes,
                   :notify_conversations,
                   :notify_tasks,
+                  :splash_screen,
                   :wants_task_reminder
 
-  attr_accessor   :activate
+  attr_accessor   :activate, :old_password
 
   before_validation :sanitize_name
   before_destroy :rename_as_deleted
+  
+  before_create :init_user
+  after_create :clear_invites
+  before_save :update_token
 
-  def before_save
+  def update_token
     self.recent_projects_ids ||= []
     self.rss_token ||= generate_rss_token
     self.visited_at ||= Time.now
   end
 
-  def before_create
+  def init_user
     if invitation = Invitation.find_by_email(email)
       self.invited_by = invitation.user
       invitation.user.update_attribute :invited_count, (invitation.user.invited_count + 1)
     end
+    self.card ||= build_card
+    self.splash_screen = true
   end
 
-  def after_create
+  def clear_invites
     send_activation_email unless self.confirmed_user
 
     if invitations = Invitation.find_all_by_email(email)
@@ -107,7 +120,7 @@ class User < ActiveRecord::Base
   end
   
   def locale
-    if LOCALE_CODES.include? self[:locale]
+    if I18n.available_locales.map(&:to_s).include? self[:locale]
       self[:locale]
     else
       I18n.default_locale.to_s
@@ -159,80 +172,8 @@ class User < ActiveRecord::Base
     object.has_watcher? self
   end
 
-  def contacts_not_in_project(project)
-    conditions = ["project_id IN (?)", Array(self.projects).collect{ |p| p.id } ]
-
-    people = Person.find(:all,
-      :select => 'user_id',
-      :conditions => conditions,
-      :limit => 300)
-
-    user_ids_in_project = project.users.collect { |u| u.id }
-
-    user_ids = people.reject! do |p|
-      user_ids_in_project.include?(p.user_id)
-    end.collect { |p| p.user_id }.uniq
-
-    conditions = ["id IN (?) AND deleted_at IS NULL", user_ids]
-
-    User.find(:all,
-      :conditions => conditions,
-      :order => 'updated_at DESC',
-      :limit => 10)
-  end
-
-  def to_xml(options = {})
-    options[:indent] ||= 2
-    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
-    xml.instruct! unless options[:skip_instruct]
-    xml.user :id => id do
-      xml.tag! 'first-name', first_name
-      xml.tag! 'last-name', last_name
-      # xml.tag! 'email', email
-      xml.tag! 'locale', locale
-      xml.tag! 'username', login
-      xml.tag! 'time_zone', time_zone
-      xml.tag! 'biography', biography
-      xml.tag! 'created-at', created_at.to_s(:db)
-      xml.tag! 'updated-at', updated_at.to_s(:db)
-      xml.tag! 'avatar-url', avatar_or_gravatar_url(:thumb)
-    end
-  end
-
   def utc_offset
-    @utc_offset ||= ActiveSupport::TimeZone[time_zone].utc_offset
-  end
-
-  def to_api_hash(options = {})
-    base = {
-      :id => id,
-      :first_name => first_name,
-      :last_name => last_name,
-      :locale => locale,
-      :username => login,
-      :time_zone => time_zone,
-      :utc_offset => utc_offset,
-      :biography => biography,
-      :created_at => created_at.to_s(:api_time),
-      :updated_at => updated_at.to_s(:api_time),
-      :avatar_url => avatar_or_gravatar_url(:thumb)
-    }
-    
-    base[:type] = self.class.to_s if options[:emit_type]
-    
-    if Array(options[:include]).include? :email
-      base[:email] = email
-    end
-    
-    if Array(options[:include]).include? :projects
-      base[:projects] = projects.map{|p| p.to_api_hash }
-    end
-    
-    if Array(options[:include]).include? :organizations
-      base[:organizations] = organizations.map{|o| o.to_api_hash }
-    end
-    
-    base
+    @utc_offset ||= ActiveSupport::TimeZone[time_zone].try(:utc_offset) || 0
   end
   
   def in_project(project)
@@ -245,7 +186,7 @@ class User < ActiveRecord::Base
       :select => 'user_id',
       :conditions => conditions,
       :limit => 300).collect { |p| p.user_id }.uniq
-    conditions = ["id IN (?) AND deleted_at IS NULL AND id != (?)", user_ids, self.id]
+    conditions = ["id IN (?) AND deleted = ? AND id != (?)", user_ids, false, self.id]
     User.find(:all,
       :conditions => conditions,
       :order => 'updated_at DESC',
@@ -275,11 +216,13 @@ class User < ActiveRecord::Base
     update_attribute :email, Regexp.last_match(1).to_s if email =~ DELETED_REGEX
   end
 
-  def link_to_app(provider, uid)
+  def link_to_app(provider, uid, credentials)
     link = AppLink.new
     link.user              = self
     link.provider          = provider
     link.app_user_id       = uid
+    link.access_token      = credentials ? credentials[:token] : nil
+    link.access_secret     = credentials ? credentials[:secret] : nil
     link.save!
   end
 
@@ -293,19 +236,32 @@ class User < ActiveRecord::Base
     login
   end
 
-  def pending_tasks
-    if people.any?
-      active_project_ids = projects.unarchived.collect(&:id)
-      people_ids = people.select do |person|
-        active_project_ids.include?(person.project_id)
-      end.collect(&:id)
+  def active_project_ids
+    @active_project_ids ||= Person.where(:user_id => id).joins(:project).where(:projects => { :archived => false }).collect(&:id)
+  end
 
-      Task.all(:conditions => { :assigned_id => people_ids,
-                                :status => Task::ACTIVE_STATUS_CODES}, :order => 'ID desc').
-           sort { |a,b| (a.due_on || 1.week.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
-    else
-      []
+  def pending_tasks
+    Rails.cache.fetch("pending_tasks.#{id}") do
+      active_project_ids.empty? ? [] :
+        Task.where(:status => Task::ACTIVE_STATUS_CODES).where(:assigned_id => active_project_ids).order('ID desc').includes(:project).
+             sort { |a,b| (a.due_on || 1.week.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
     end
+  end
+
+  def clear_pending_tasks!
+    Rails.cache.delete("pending_tasks.#{id}")
+  end
+
+  def tasks_counts_update
+    assigned_tasks = Task.assigned_to(self)
+    # we do t.statys && t.status < 3 because some tasks might be 
+    self.assigned_tasks_count  = assigned_tasks.select { |t| t.status == 1 }.length
+    self.completed_tasks_count = assigned_tasks.select { |t| t.status == 3 }.length
+    self.save
+  end
+
+  def users_for_user_map
+    @users_for_user_map ||= self.organizations.map{|o| o.users + o.users_in_projects }.flatten.uniq
   end
 
   protected

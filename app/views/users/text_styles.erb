@@ -8,53 +8,53 @@
   #facebox ol { padding-left: 0px; }
 </style>
 
-<table class="textile_doc" style="width: 550px"> 
-  <tr> 
-    <th><%= t('.enter_this.title') %></th>
-    <th><%= t('.to_see_this.title') %></th>
-  </tr> 
-  <tr> 
-    <td><pre><%= t('.enter_this.bold_text') %></pre></td>
-    <td><%= t('.to_see_this.bold_text') %></td> 
-  </tr> 
-  <tr> 
-    <td><pre><%= t('.enter_this.italic_text') %></pre></td>
-    <td><%= t('.to_see_this.italic_text') %></td> 
-  </tr> 
-  <tr> 
-    <td><pre><%= t('.enter_this.header') %></pre></td>
-    <td> 
-      <%= t('.to_see_this.header') %>
-    </td> 
-  </tr> 
-  <tr> 
-    <td><pre><%= t('.enter_this.smaller_header') %></pre></td>
-    <td><%= t('.to_see_this.smaller_header') %></td> 
-  </tr> 
-  <tr> 
-    <td><pre><%= t('.enter_this.link') %></pre></td>
-    <td><%= t('.to_see_this.link') %></td> 
-  </tr> 
-  <tr> 
-    <td><pre><%= t('.enter_this.image') %></pre></td>
-    <td><%= t('.to_see_this.image') %></td> 
-  </tr> 
-  <tr> 
-    <td><pre><%= t('.enter_this.unordered_list') %></pre></td>
-    <td> 
+<table class="textile_doc" style="width: 550px">
+  <tr>
+    <th><%=raw t('.enter_this.title') %></th>
+    <th><%=raw t('.to_see_this.title_html') %></th>
+  </tr>
+  <tr>
+    <td><pre><%=raw t('.enter_this.bold_text') %></pre></td>
+    <td><%=raw t('.to_see_this.bold_text_html') %></td>
+  </tr>
+  <tr>
+    <td><pre><%=raw t('.enter_this.italic_text') %></pre></td>
+    <td><%=raw t('.to_see_this.italic_text_html') %></td>
+  </tr>
+  <tr>
+    <td><pre><%=raw t('.enter_this.header') %></pre></td>
+    <td>
+      <%=raw t('.to_see_this.header_html') %>
+    </td>
+  </tr>
+  <tr>
+    <td><pre><%=raw t('.enter_this.smaller_header') %></pre></td>
+    <td><%=raw t('.to_see_this.smaller_header_html') %></td>
+  </tr>
+  <tr>
+    <td><pre><%=raw t('.enter_this.link') %></pre></td>
+    <td><%=raw t('.to_see_this.link_html') %></td>
+  </tr>
+  <tr>
+    <td><pre><%=raw t('.enter_this.image') %></pre></td>
+    <td><%=raw t('.to_see_this.image_html') %></td>
+  </tr>
+  <tr>
+    <td><pre><%=raw t('.enter_this.unordered_list') %></pre></td>
+    <td>
       <ul style="padding-left:10px">
-        <%= t('.to_see_this.unordered_list') %>
-      </ul> 
-    </td> 
-  </tr> 
-  <tr> 
-    <td><pre><%= t('.enter_this.ordered_list') %></pre></td>
-    <td> 
+        <%=raw t('.to_see_this.unordered_list_html') %>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td><pre><%=raw t('.enter_this.ordered_list') %></pre></td>
+    <td>
       <ol style="padding-left:20px">
-        <%= t('.to_see_this.ordered_list') %>
-      </ol> 
-    </td> 
-  </tr> 
+        <%=raw t('.to_see_this.ordered_list_html') %>
+      </ol>
+    </td>
+  </tr>
 </table>
 
-<p><%= t('.block_of_code') %></p>
+<p><%=raw t('.block_of_code') %></p>

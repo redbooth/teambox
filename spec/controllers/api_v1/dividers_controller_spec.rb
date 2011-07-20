@@ -23,6 +23,15 @@ describe ApiV1::DividersController do
       JSON.parse(response.body)['objects'].length.should == 1
     end
     
+    it "shows all dividers without a page or project" do
+      login_as @user
+      
+      get :index
+      response.should be_success
+      
+      JSON.parse(response.body)['objects'].length.should == 1
+    end
+    
     it "returns references for linked objects" do
       login_as @user
       
@@ -42,6 +51,15 @@ describe ApiV1::DividersController do
       login_as @user
       
       get :show, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id
+      response.should be_success
+      
+      JSON.parse(response.body)['id'].to_i.should == @divider.id
+    end
+    
+    it "shows a divider without a page or project id" do
+      login_as @user
+      
+      get :show, :id => @divider.id
       response.should be_success
       
       JSON.parse(response.body)['id'].to_i.should == @divider.id
@@ -115,7 +133,7 @@ describe ApiV1::DividersController do
       login_as @observer
       
       post :create, :project_id => @project.permalink, :page_id => @page.id, :name => 'Divisions'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @page.dividers(true).length.should == 1
     end
@@ -135,7 +153,7 @@ describe ApiV1::DividersController do
       login_as @observer
       
       put :update, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id, :name => 'Modified'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @divider.reload.name.should_not == 'Modified'
     end
@@ -155,7 +173,7 @@ describe ApiV1::DividersController do
       login_as @observer
       
       put :destroy, :project_id => @project.permalink, :page_id => @page.id, :id => @divider.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @page.dividers(true).length.should == 1
     end

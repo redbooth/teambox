@@ -1,7 +1,10 @@
-= render 'header', :project => @current_project, :task_list => @task_list, :task => @task
+- if params[:nolayout]
+  = render 'activities/thread', :thread => @task
 
-= people_watching @current_project, current_user, @task
-= render 'activities/thread', :thread => @task
+- else
+  = render 'header', :project => @current_project, :task_list => @task_list, :task => @task
+  = people_watching @current_project, current_user, @task
+  = render 'activities/thread', :thread => @task
 
-- content_for :column do
-  = task_list_column @current_project, @task
+  - content_for :column do
+    = task_list_column @current_project, @task

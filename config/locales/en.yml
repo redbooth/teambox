@@ -2,8 +2,10 @@
 # Mark missing translations by adding ##### at the end of the line
 en:
   # if latest_announcement is less than 5 characters, it will not be displayed
-  latest_announcement: "<strong>New</strong>: Earn money by referring new users into Teambox. Log in and go into your affiliate area to make up a 15% of the income you generate!<br/><br/>Read <a href='http://blog.teambox.com'>our blog</a> for more news about Teambox."
+  latest_announcement_html: "<strong>New</strong>: Earn money by referring new users into Teambox. Log in and go into your affiliate area to make up a 15% of the income you generate!<br/><br/>Read <a href='http://blog.teambox.com'>our blog</a> for more news about Teambox."
   common:
+    format_name: "%{first_name} %{last_name}"
+    format_name_short: "%{first_name_first_character}. %{last_name}"
     and: and
     or: or
     in_project: in
@@ -19,15 +21,14 @@ en:
     print: Print this page
     prev: Previous
     next: Next
-    tasks:
-      one: 1 task
-      other: "%{count} tasks"
     comment:
       one: "%{count} comment"
       other: "%{count} comments"
     not_allowed: You are not allowed to do that!
     calendar: Calendar
     gantt_chart: Gantt Chart
+    signup: Sign up
+    logged_out: You were logged out
   confirm:
     delete_task_list: Are you sure you want to delete this task list?
     delete_task: Are you sure you want to delete this task?
@@ -41,17 +42,19 @@ en:
     page: "Page %{id} not found in this project."
     task_list: "Task list %{id} not found in this project."
     task: "Task %{id} not found in this project."
+    data: "There was a problem locating your data."
   deleted:
     conversation: "Deleted %{name} conversation"
     task: "Deleted %{name} task"
     task_list: "Deleted %{name} task list"
-    page: "Deleted %{name}</b> page"
+    page: "Deleted %{name} page"
     upload: "Deleted %{name} file"
     person: "%{name} is no longer in the project"
     left_project: "You are no longer in this project"
   activities:
     create_upload:
-      title: "%{user} uploaded file %{file}"
+      title: "%{user} uploaded a file: %{file}"
+      title_with_page: "%{user} uploaded a file to %{page}:"
     create_conversation:
       create_conversation: started the conversation
       title: "%{user} started a conversation: %{conversation}"
@@ -78,7 +81,7 @@ en:
       title: "%{user} edited the page %{page}"
     create_note:
       create_note: added note
-      title: '%{user} created note <strong>%{note}</strong> in %{page}'
+      title: '%{user} created note "%{note}" in %{page}'
     edit_note:
       edit_note: edited note
       title: '%{user} edited the note "%{note}" in %{page}'
@@ -94,9 +97,13 @@ en:
     create_project:
       left: created the project
       title: "%{person} created the project %{project}"
+    create_teambox_data:
+      title: "%{person} imported the project %{project}"
       
     thread:
-      on_task_list: "on"
+      conversation_with_title_html: "%{conversation} on %{project} project"
+      conversation_without_title_html: "<a href='%{conversation_url}'>Conversation</a> on %{project} project"
+      task_on_task_list_html: "%{task} on %{task_list} task list"
       more_comments:
         one: "Show one previous comment"
         other: "Show %{count} previous comments"
@@ -119,19 +126,18 @@ en:
       back: Back to Login screen
       submit: Send me a link to reset my password
     create:
-      not_found: "We can't find a user with that email: %{email}<br/>Please check the email address and try again. If that doesn't work, contact us at %{support}"
-      invalid: "The change password URL you visited is either invalid or expired. Try using I Forgot my Password again from the home page.<br/>If that doesn't work, contact us at %{support}"
+      not_found_html: "We can't find a user with that email: %{email}<br/>Please check the email address and try again. If that doesn't work, contact us at %{support}"
+      invalid_html: "The change password URL you visited is either invalid or expired. Try using I Forgot my Password again from the home page.<br/>If that doesn't work, contact us at %{support}"
       password_not_updated: "New password is not valid. Try again."
       password_updated: "Password was successfully updated."
     sent:
       title: Reset Password
       login_link_sent: "We just sent you an email to %{email} so you can retrieve your password."
-      follow_the_link: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
-      not_found: "The email %{email} doesn't belong to any Teambox user. Maybe you misspelt it?"
-      change_password_now: "You are now logged in. <b>Choose a new password now</b> so you won't forget it!"
+      follow_the_link_html: "Follow the link inside this email to log into Teambox! If you can't find it, look in the spam folder."
     reset:
       title: You can now reset your password
       submit: Reset my password
+      reset_your_password: Please enter a new password and confirm it.
   cards:
     card:
       phone_numbers: Phone Numbers
@@ -169,12 +175,25 @@ en:
       phone_for_integration: Optional. For future SMS integration
       password: Password
       password_confirmation: Confirm Password
+      old_password: Old password
       sunday: Sunday
       monday: Monday
       betatester: Use beta features (less stable) before they're released.
       first_day_of_week: Week starts on
       change_password: Change password
       confirm_password: Confirm password
+      newsletter: Notify me about new features and tips!
+      agreement_html: "By signing up, you're accepting our %{terms} and %{privacy} conditions."
+      terms: terms of use
+      privacy: privacy
+      subscription:
+        new_org_name: Organization name
+        card_number: Card number
+        card_expiration: Expires on
+        coupon: Coupon code
+        info_price: You are going to be charged monthly %{price}.
+        info_unsubscribe: You can cancel your subscription at any moment.
+        coupon_question: Do you have a coupon code?
       notifications:
         clarification: |
           When someone mentions you (as '@%{login}' or '@all') in conversation or a task,
@@ -195,26 +214,23 @@ en:
         field: New avatar
         presence: "You can't upload a blank file"
         max_size: "File size can't exceed %{mb}"
-        we_have_this_avatar: "This is the picture we currently have of you:"
-        gravatar_in_use: "We don't have a picture of you, so we're using %{gravatar}."
-        upload_here_or_at_gravatar: "You can either upload a picture here or set one on %{gravatar}."
+        we_have_this_avatar_html: "This is the picture we currently have of you:"
+        gravatar_in_use_html: "We don't have a picture of you, so we're using %{gravatar}."
+        upload_here_or_at_gravatar_html: "You can either upload a picture here or set one on %{gravatar}."
         destroy: Delete avatar
-      tooltips:
-        login: "You need a username to login. People will be able to find you by username. Must be all lowercase, no spaces. You can use undescores."
-        first_name: Up to 20 characters.
-        last_name: Up to 20 characters.
-        email: Enter your real email so your teammates can contact you.
-        password: "Combining uppercase and lowercase letters and numbers is a good idea."
-        phone: "Preferrably cell phone. Enter it including the country code, e.g. +1 (415) 1234-567"
       new:
         use_this_email: "You have invitations to share projects for this email address. If you want to access these projects, don't change this email address. You can change your email address once you've completed the signup process."
+        account:
+          title: Your Teambox account
+          choose_username: Choose a username so people can find you. You will use it to log in.
+          validations: Must be all lowercase, no spaces allowed. You can use underscores.
     new:
       title: Create an Account
       submit: Create account
       no_public_signup: "Public signups are not allowed on this system."
       you_are_logged_in: "You already have an account. Log out first to sign up as a different user."
-      existing_user: "If you already have an account, <a href='%{login_url}'>log in</a> or <a href='%{forgot_url}'>retrieve your password</a>."
-      you_already_have_an_account: "You already have a Teambox account for the address %{email}. <a href='%{login_link}'>Log in with this email</a> or <a href='%{reset_password_link}'>reset your password</a> if you forgot it."
+      existing_user_html: "If you already have an account, <a href='%{login_url}'>log in</a> or <a href='%{forgot_url}'>retrieve your password</a>."
+      you_already_have_an_account_html: "You already have a Teambox account for the address %{email}. <a href='%{login_link}'>Log in with this email</a> or <a href='%{reset_password_link}'>reset your password</a> if you forgot it."
     create:
       thanks: Thanks for signing up!
       error: "We couldn't set up that account, sorry. Please try again, or contact an admin (link is above)."
@@ -234,7 +250,7 @@ en:
       resent: "We've re-sent the activation email. Take a look at your inbox!"
       already_done: "You have already confirmed your email! You can now use Teambox."
       activated: "Your account has been activated! Welcome to Teambox :)"
-      invalid: "<p>Invalid or expired access link. Login with your email and password.</p><p>If you don't remember your login data, follow the Forgot your Password link.</p>"
+      invalid_html: "<p>Invalid or expired access link. Login with your email and password.</p><p>If you don't remember your login data, follow the Forgot your Password link.</p>"
       invalid_user: Invalid user
     show:
       profile: Profile
@@ -245,23 +261,6 @@ en:
     user:
       formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: Remove from Project
-    welcome:
-      get_started: Get started with Teambox!
-      intro1: "You're our newest member! You'll soon see how Teambox can become your day's starting point."
-      intro2: "Where can you go now? Create a project to <b>collaborate</b>:" # or an agenda to <b>keep track of contacts</b>:"
-      projects:
-        title: Projects
-        share_and_collaborate: "Share and collaborate with your team! Project wall updates, conversations, tasks, pages and files."
-        create_your_first_project: "An event, a design, a product... Go ahead and <a href='%{link}'>create your first project</a> now!"
-      spread:
-        title: Do you love us too?
-        reasons: "We've been working on Teambox for years, hoping it will be useful for you.<br/>We're real people, motivated developers with a mission, just like you!"
-        help: You can <b>help us</b> by telling your friends how you enjoy Teambox on
-        twitter: 'Twitter,'
-        facebook: Facebook
-        in_your_site: in your site!
-        tell_us: "If you enjoy using Teambox, consider also <a href='mailto:%{address}'>telling us about it</a> in an email!"
-      stop_welcome: Stop showing this Welcome tab
     feeds:
       title: Sync your activity feeds
       follow_activities: "You can follow Teambox activities from News Readers (Desktop or Mobile)."
@@ -269,16 +268,16 @@ en:
       configure: "You can configure your feed reader to alert you every time something new happens in Teambox, even if you don't have it open in a window."
       import:
         title: How to import a news feed
-        body: "Beneath you have a list of feeds you can follow. To import them into your feed reader you need to <strong>right-click the link</strong> and select <strong>copy link address</strong>. Next, go to your feed reader, add a new Feed and paste the address of that feed."
+        body_html: "Beneath you have a list of feeds you can follow. To import them into your feed reader you need to <strong>right-click the link</strong> and select <strong>copy link address</strong>. Next, go to your feed reader, add a new Feed and paste the address of that feed."
       your_feeds: Your news feeds
       subscribe_to_all: Activity for All Projects
       subscribe_to_project: Activity for %{project}
       feed_reader:
         title: Which news reader should I use?
-        body: "Refer to the <a href='%{link}'>knowledge base</a> for this."
+        body_html: "Refer to the <a href='%{link}'>knowledge base</a> for this."
       more_tips:
         title: More tips
-        body: "Learn <a href='%{link}'>more ways to access Teambox</a>."
+        body_html: "Learn <a href='%{link}'>more ways to access Teambox</a>."
     calendars:
       title: Sync your calendars
       tasks_can_be_synced: "Teambox tasks can be synched with your usual Calendars so you don't forget what's coming up."
@@ -288,19 +287,19 @@ en:
       subscribe_to_project: "Project %{project}: "
       how_to:
         title: "How to sync your calendars"
-        body: "Basically, you should import the links below into your calendar client. Visit our <a href='%{link}'>knowledge base</a> to learn how to use them with your calendar app."
+        body_html: "Basically, you should import the links below into your calendar client. Visit our <a href='%{link}'>knowledge base</a> to learn how to use them with your calendar app."
       clients:
         title: Specific instructions
-        body: "Refer to the <a href='%{link}'>knowledge base</a> for instructions on how to configure Google Calendar, Apple's iCal, Outlook, Blackberry and others."
+        body_html: "Refer to the <a href='%{link}'>knowledge base</a> for instructions on how to configure Google Calendar, Apple's iCal, Outlook, Blackberry and others."
     unconfirmed_email:
       title: Confirm your email
-      invitation_sent_to: "An email invitation was sent to <i>%{email}</i>, in order to verify your email address."
-      follow_the_link: Please <b>open this email and follow the link inside it</b> to activate your account.
+      invitation_sent_to_html: "An email invitation was sent to <i>%{email}</i>, in order to verify your email address."
+      follow_the_link_html: Please <b>open this email and follow the link inside it</b> to activate your account.
       problems_title: Problems?
-      resend: "Can't find the email? Press <a href='%{link}'>here</a> to re-send the activation email."
+      resend_html: "Can't find the email? Press <a href='%{link}'>here</a> to re-send the activation email."
       spam: "Make sure the email wasn't classified as spam by your email client."
-      wrong_address: "Wrong address? If you mistyped your email address, <a href='%{link}'>cancel the signup process</a> and re-create your account with a valid address."
-      problems: "If you're still having problems, please contact us at %{support}"
+      wrong_address_html: "Wrong address? If you mistyped your email address, <a href='%{link}'>cancel the signup process</a> and re-create your account with a valid address."
+      problems_html: "If you're still having problems, please contact us at %{support}"
     daily_task_reminder_email:
       daily_task_reminder: "Daily task reminder"
       daily_task_reminder_from_teambox: "This is the daily task reminder email from Teambox"
@@ -309,7 +308,7 @@ en:
       tasks_for_tomorrow: "Tasks for tomorrow"
       tasks_for_next_two_weeks: "Tasks for next two weeks"
       tasks_without_a_due_date: "Tasks without a due date"
-      you_receive_this_message: "You received this message because you opted for it. You can disable it on your %{link}"
+      you_receive_this_message_html: "You received this message because you opted for it. You can disable it on your %{link}"
       settings_page: "settings page"
     text_styles:
       block_of_code: Paste your code indented (4 spaces or tabs) to paste it as a block of code.
@@ -332,17 +331,17 @@ en:
           * unordered list
           * leave empty lines around
       to_see_this:
-        bold_text: "<strong style=\"font-weight: bold\">bold</strong> text"
-        header: "<h3 style=\"font-size:18px\">Header</h3>"
-        image: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
-        italic_text: "<i>italics</i> text"
-        link: "<a href=\"http://www.teambox.com\">Link something</a>"
-        ordered_list: |
+        bold_text_html: "<strong style=\"font-weight: bold\">bold</strong> text"
+        header_html: "<h3 style=\"font-size:18px\">Header</h3>"
+        image_html: "<img src=\"http://www.w3.org/Icons/valid-html401\">"
+        italic_text_html: "<i>italics</i> text"
+        link_html: "<a href=\"http://www.teambox.com\">Link something</a>"
+        ordered_list_html: |
           <li>ordered list</li>
           <li>leave empty lines!</li>
-        smaller_header: "<h4 style=\"font-size:14px\">Smaller header</h4>"
-        title: To see this
-        unordered_list: |
+        smaller_header_html: "<h4 style=\"font-size:14px\">Smaller header</h4>"
+        title_html: To see this
+        unordered_list_html: |
           <li>unordered list</li>
           <li>leave empty lines around</li>
   projects:
@@ -357,15 +356,16 @@ en:
     primer:
       empty: You don't own or belong to any projects yet.
       create_first: Create your first project!
-      define1: "Use projects to <b>collaborate</b> with groups of people: A website, organizing a party, client work..."
-      define2: "You can create <b>as many projects as you wish</b> to share with different users online."
-      item1: "<b>Create a project</b>, name it and <b>invite some contacts</b> to it."
-      item2: "<b>Comment</b> about what you're doing in the main timeline."
-      item3: "<b>Discuss</b> important decisions with Conversations."
-      item4: "<b>Plan</b> what needs to be done and post updates with Tasks."
-      item5: "<b>Share information</b> with easily editable Pages for each project."
+      define1_html: "Use projects to <b>collaborate</b> with groups of people: A website, organizing a party, client work..."
+      define2_html: "You can create <b>as many projects as you wish</b> to share with different users online."
+      item1_html: "<b>Create a project</b>, name it and <b>invite some contacts</b> to it."
+      item2_html: "<b>Comment</b> about what you're doing in the main timeline."
+      item3_html: "<b>Discuss</b> important decisions with Conversations."
+      item4_html: "<b>Plan</b> what needs to be done and post updates with Tasks."
+      item5_html: "<b>Share information</b> with easily editable Pages for each project."
       footer: "Projects are a centralized way of collaborating, so you'll never need to email your team again."
     show:
+      title: Recent activity for %{project}
       update_your_status: "Update your status..."
       text_styling: Formatting help
       new_task_list_link: New Task List
@@ -386,93 +386,107 @@ en:
       view_all: View all conversations
       new: "+ New conversation"
       first: "+ Create the first conversation"
+    pages:
+      title: Pages
+      new: "+ New page"
     fields:
-      tracks_time: "Enable time tracking. <em>Will allow users to log time for tasks.</em>"
-      public_project: "Public project. <em>Anybody will be able to access it and join it at the <a href='/public'>public projects section</a>.</em>"
+      tracks_time_html: "Enable time tracking. <em>Will allow users to log time for tasks.</em>"
+      public_project_html: "Public project. <em>Anybody will be able to access it and join it at the <a href='/public'>public projects section</a>.</em>"
       archiving: "Archive this project"
       forever: "Delete this project forever"
       owner: "Owner"
       owner_description: "The owner is the main responsible for a project. He or she cannot be removed from the project before ownership is transferred to another user."
-      name: "Project Name <em>Keep it short and descriptive, for example: Taggart Transcontinental.</em>"
+      name_html: "Project Name <em>Keep it short and descriptive, for example: Taggart Transcontinental.</em>"
       name_example: Project name
-      permalink: "Permalink <em>Short identifier for the project</em>"
+      permalink_html: "Permalink <em>Short identifier for the project</em>"
       permalink_description: "This will be the web address for your project. Keep it as short as possible. No spaces allowed."
-      archived: "Archive this Project <em>This will keep it accessible for its members, but not writable anymore.</em>"
+      archived_html: "Archive this Project <em>This will keep it accessible for its members, but not writable anymore.</em>"
       confirm_delete: "Are you sure you want to delete this project forever? THERE IS NO WAY TO RECOVER IT. If you'd rather keep it, use Archive Project instead."
       settings:
-        you_cant_unarchive: "You have {{active}} active projects, and your current plan only allows {{max}} projects"
-        upgrade: "In order to <b>unarchive this project</b> and be able to edit it, you must <a href='{{link}}'>upgrade your account and get more storage and features</a> or archive other projects."
+        you_cant_unarchive: "You have %{active} active projects, and your current plan only allows %{max} projects"
+        upgrade_html: "In order to <b>unarchive this project</b> and be able to edit it, you must <a href='%{link}'>upgrade your account and get more storage and features</a> or archive other projects."
       extra_options: "More options"
       organization: Organization
+      select_an_organization: "Select an organization"
+      organizations:
+        available_projects: "project slots available: %{number_of_projects}"
+        current_organization: current organization
+        organization_has_too_many_project_in: "This organization has too many projects for its plan."
+        upgrade_organization: "You should now upgrade this organization."
+        upgrade: upgrade
       new:
         time_tracking_docs: Learn more.
         choose_organization:
-          new_org_name: "Organization name <em>You may later add more projects to this same organization</em>"
-          choose_org: "Organization <em>Which organization does this project belong to?</em>"
-          or_create_a_new_org: "or create a <a href='%{link}'>new organization</a>"
+          new_org_name_html: "Organization name <em>You may later add more projects to this same organization</em>"
+          choose_org_html: "Organization <em>Which organization does this project belong to?</em>"
+          or_create_a_new_org_html: "or create a <a href='%{link}'>new organization</a>"
       settings:
-        you_cant_transfer_this_project: "This project belongs to the <b>%{organization}</b> organization. You don't have the rights to transfer it."
+        you_cant_transfer_this_project_html: "This project belongs to the <b>%{organization}</b> organization. You don't have the rights to transfer it."
         manage_organizations: Manage organizations.
-    new_primer:
-      define1: A project is a shared group with your teammates.
-      define2: "Inside a project, each team member can:"
-      feature1: Post status updates.
-      feature2: Start conversations or reply.
-      feature3: Send attachments.
-      feature4: Assign and review tasks.
-      feature5: Comment on tasks.
-      feature6: Track hours spent on each item.
-      feature7: "Create, edit and view pages."
-      footer: This project will belong to you. You can transfer this project to other contacts at any time.
-      limited: "As a free account, you can only upload up to 50 Mb of attachments to this project."
-      upgrade: Upgrade your account now!
     new:
       title: Create a Project
-      submit: Create project and start collaborating
+      explain1_html: A project is a shared group with your teammates. Use it to post Conversations, Tasks and Files.
+      explain2_html: "You can create a project for each area: Development, Sales, your client projects, etc."
+      submit: Create project and invite members
       new_project: New Project...
-      created: Your project has been created!
       invalid_project: "Invalid project, correct errors and try again."
-      create_an_example_project: "First time in Teambox? <a href='%{link}'>Create an example project</a> to play around and learn."
       active_projects:
         zero: You have no active projects.
         one: You have one active project.
-        other: "You have {{count}} active projects."
+        other: "You have %{count} active projects."
       you_can_create_more:
-        zero: "You can't create any more projects.<br/>The maximum of projects with your current plan is {{max}}."
+        zero_html: "You can't create any more projects.<br/>The maximum of projects with your current plan is %{max}."
         one: You can create one more project with your current plan.
-        other: "You can create {{count}} more projects with your current plan."
+        other: "You can create %{count} more projects with your current plan."
       upgrade:
-        to_2: "<a href='{{link}}'>Upgrade your account now</a> to create <b>up to {{projects}} projects</b>, store up to <b>{{storage}} Gb</b> of files and use the <b>search bar across all projects</b>."
-      invite_people: Invite people to the project
-      invite_by_email: Invite users by entering their email addresses
+        to_2_html: "<a href='%{link}'>Upgrade your account now</a> to create <b>up to %{projects} projects</b>, store up to <b>%{storage} Gb</b> of files and use the <b>search bar across all projects</b>."
       not_allowed: "You can't create any more projects with your current account."
+      select_an_organization: "You need to select an organization for your project"
+      sending: Creating the project…
+    invite_people:
+      title: Invite people to %{project}
+      invite_from_this_organization: Invite users already in the %{organization} organization
+      invite_by_email: Invite users by entering their email addresses
+      explain_invitations: Choose who will have access to this project. You can add or remove people later.
+      submit: Send invitations and start collaborating
+      sending: Sending invitations...
     edit:
-      title_settings: General Settings
-      title_picture: Project Logo
-      title_deletion: Archive/Delete Project
-      title_ownership: Ownership
+      title_settings: General Settings for %{project}
+      title_picture: Project Logo for %{project}
+      title_deletion: Archive or Delete project %{project}
+      title_ownership: Ownership of %{project}
       submit: Save Changes
       change_owner: Change owner
       transferred: "Project ownership has been transferred."
       invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
       success: Project updated
       error: Couldn't change project settings
+      deleted: You deleted the project
     not_in_project:
       title: "Join '%{project}' project?"
-      explain_admin: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because you're an administrator of the <b>%{organization}</b> organization."
-      explain_public: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because this is a <b>public project</b>."
+      explain_admin_html: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because you're an administrator of the <b>%{organization}</b> organization."
+      explain_public_html: "In order to view this project, you must join it. This will give you access to its conversation wall, tasks, pages and files. You can do this because this is a <b>public project</b>."
       not_allowed: This is a private project and you're not authorized to access it.
       join: Join this project
     join:
       welcome: You're now part of this project
+    list:
+      archived: Archived
+      archived_at: archived at %{date}
+      show_archived:
+        one: Show one archived project
+        other: Show %{count} archived projects
   organizations:
     column:
       general_settings: General settings
+      appearance: Appearance
       admin_users: Manage users
       admin_projects: Manage projects
       billing: Plans and Billing
-      delete: Delete this organization
+      invoices: Invoices
+      delete: Delete this organization...
     edit:
+      title: Settings for %{organization}
       there_are: "There are"
       number_of_users: "%{count} users"
       public_site: "Your organization's public site is %{link}"
@@ -480,8 +494,11 @@ en:
       submit: Save changes
       saved: Changes saved
       invalid: Invalid organization
+    appearance:
+      title: Appearance for %{organization}
+      submit: Save changes
     external_view:
-      create_your_own_org: "However, you can <a href='%{link}'>create your own organization</a> for your projects."
+      create_your_own_org_html: "However, you can <a href='%{link}'>create your own organization</a> for your projects."
       request_permission: "To access this organization, you must request permission to some of the administrators:"
       title: "%{name}"
       you_cant_access: You don't have permission to access or edit this organization.
@@ -492,8 +509,22 @@ en:
       storage:
         title: "%{now} / %{max}"
         explain: Attached files on your organization.
+    invoices:
+      invoices: Your Invoices
+      update_billing_details: Update your billing address
+      no_invoices: You don't have any invoice
+      company_name: Company name
+      vat: VAT Code
+      invoice: Teambox invoice
+      print: Print
+      date: Date
+      amount: Amount
+      company: Company
+      name: Name
+      address: Address
+      optional: Optional data for the invoice
     billing:
-      billing_email: Billing e-mail <em>We will send invoices to this address</em>
+      billing_email_html: Billing e-mail <em>We will send invoices to this address</em>
       submit: Update billing e-mail
       plan: Plan
       storage: Storage
@@ -502,22 +533,30 @@ en:
       upgrade: Upgrade now!
       current_plan: Your current plan
       downgrade: Downgrade
-      billing_area: "You can access your invoices, downgrade or change your billing options at any time from the <a href='%{link}'>billing area</a>."
+      cancel: Cancel subscription
+      billing_area_html: "You can access your invoices, downgrade or change your billing options at any time from the <a href='%{link}'>billing area</a>."
       suggested_upgrade:
         upgrade_to: "Upgrade to %{plan}"
         for_only: "for $%{price} more a month"
-        get_projects: "Up to <b>%{number} projects</b>"
-        get_storage: "Up to <b>%{number}</b>"
+        get_projects_html: "Up to <b>%{number} projects</b>"
+        get_storage_html: "Up to <b>%{number}</b>"
       yearly_plans:
-        save_with_yearly_plans: <b>Save 20%</b>. You can also sign up for any plan yearly and <b>get two months free</b>.
-        signup_links: "Sign up yearly for <a href='%{corporate}'>Corporate ($2990)</a>, <a href='%{pro}'>Pro ($990)</a>, <a href='%{basic}'>Basic ($290)</a> or <a href='%{personal}'>Personal ($120)</a>."
+        save_with_yearly_plans_html: <b>Save 20%</b>. You can also sign up for any plan yearly and <b>get two months free</b>.
+        signup_links_html: "Sign up yearly for <a href='%{corporate}'>Corporate ($2990)</a>, <a href='%{pro}'>Pro ($990)</a>, <a href='%{basic}'>Basic ($290)</a> or <a href='%{personal}'>Personal ($120)</a>."
     fields:
-      logo: Logo <em>Ideally should be 134x36 pixels</em>
-      name: "Organization name"
+      name_html: "Organization name"
       name_placeholder: Your organization
-      permalink: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
-      domain: "Domain <em>You can use your own domain for your organization, check the <a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='How to use your own domain for your organization in Teambox'>documentation</a>.</em>"
-      description: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
+      permalink_html: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
+      domain_html: "Domain <em>You can use your own domain for your organization, check the <a href='http://help.teambox.com/faqs/more-ways-to-access-teambox/custom-domain' title='How to use your own domain for your organization in Teambox'>documentation</a>.</em>"
+    appearance_fields:
+      colours: Site colors
+      logo_html: Logo <em>Ideally should be 134x36 pixels</em>
+      links_colour: default link color
+      highlight_colour: highlight color
+      link_hover_colour: default link hover color
+      text_colour: default text color
+      header_bar_colour: header bar color
+      description_html: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
     index:
       about:
         title: About Organizations
@@ -536,7 +575,7 @@ en:
       created: Your organization has been created!
       invalid_organization: Invalid organization, correct errors and try again.
     organization:
-      you_are: "You're an <strong>%{role}</strong> of this organization"
+      you_are_html: "You're an <strong>%{role}</strong> of this organization"
       admin: admin
       participant: participant
       external: external worker
@@ -544,27 +583,36 @@ en:
         one: One project
         other: %{count} projects
       more_users: "and %{count} more users"
+      your_plan_is: "Your plan is %{plan}"
+      upgrade: "Upgrade your plan!"
     projects:
-      title: "'%{name}' organization"
+      title: Projects in %{organization}
       new_project: New project
-      active_projects: Active projects
-      archived_projects: Archived projects
-      role: "you're an <strong>%{role}</strong>"
-      last_activity: "last activity at %{date}"
-      instructions: "These are the projects for this organization. If you're an admin, you can transfer a project to <a href='%{organizations_link}'>other organizations</a> by opening the project's settings."
+      instructions_html: "These are the projects for this organization. If you're an admin, you can transfer a project to <a href='%{organizations_link}'>other organizations</a> by opening the project's settings."
+    active_projects:
+      title: Active projects
+      role_html: "you're an <strong>%{role}</strong>"
+      storage: "%{now} of files"
       settings: settings
+      no_active_projects: There are no active projects in this organization.
+      dont_belong: You're not part of this project
+    archived_projects:
+      title: Archived projects
+      last_activity: "last activity at %{date}"
     you_are_not_admin: You are not an admin of this organization. Only admins can edit its settings and manage users.
     delete:
       need_to_be_admin: You need to be an administrator to destroy this organization
       not_with_projects: You can't destroy this organization because it still has projects
-      go_delete_some_projects: "You need to <a href='%{link}'>delete or transfer</a> all the projects from this organization before deleting it."
+      go_delete_some_projects_html: "You can't delete an organization while it still has projects inside. Please <a href='%{link}'>delete or transfer</a> all the projects from this organization before deleting it."
+      not_paid_plan: You can't delete an organization with a paid plan.
+      go_downgrade_to_free_plan: "You need to <a href='%{link}'>unsubscribe</a> from the paid plan before deleting the organization. You can downgrade your account to the free plan from the <a href='%{link}'>billing</a> section."
       delete: Delete this organization
-      clarification: "If you delete this organization, all the information that's attached to this organization will be lost forever. The users that belong to this organization will still be able to login to Teambox and work with their other organizations."
+      clarification: "If you delete this organization, all the information that's attached to it organization will be lost forever. The users that belong to this organization will still be able to login to Teambox and work with their other organizations."
       confirm: I understand that deleting this organization is irreversible and I all the content related to this organization will be lost.
       deleted: You deleted the organization
   memberships:
     index:
-      title: "'%{name}' organization"
+      title: Users in %{name}
       admins:
         title: Admins
         explain: "Can access any project and manage the organization's settings."
@@ -588,15 +636,15 @@ en:
     fields:
       user_or_email: "Enter your teammate's username or email:"
     invitation:
-      invited_user: "%{inviter} invited <b>%{invitee}</b> to join the project."
-      invited_email: "%{inviter} invited <b>%{email}</b> to join the project."
+      invited_user_html: "%{inviter} invited <b>%{invitee}</b> to join the project."
+      invited_email_html: "%{inviter} invited <b>%{email}</b> to join the project."
       time_ago: "(%{time_ago_in_words} ago)"
+      just_now: "(just now)"
       resend: Re-send invitation email
       pending: "An email was sent to this user, but they still haven't confirmed."
       discard: Discard invitation
-    group_invitation:
-      invited_user: "%{inviter} invited <b>%{invitee}</b> to join the group."
-      invited_email: "%{inviter} invited <b>%{email}</b> to join the group."
+    new:
+      also_invite_to_organization: "Invite also to the organization '%{organization}'"
     sent:
       email_sent: "Email invitation has been sent"
     pending:
@@ -629,46 +677,49 @@ en:
         title: Enter this
       to_invite:
         title: To invite
-        not_example: '(NOT <span class="mention">@fred</span> or <span class="mention">@lisa</span>)'
+        not_example_html: '(NOT <span class="mention">@fred</span> or <span class="mention">@lisa</span>)'
   conversations:
     actions:
       confirm_delete: Are you sure you to delete this conversation?
+    convert_form:
+      name: "Name this task"
+      task_list: "Create task in"
+      status: "Status"
     link:
       edit: Edit
     fields:
       name: Title
       body: First comment
-      tooltips:
-        name: "As short as possible, this will appear in notification email's subjects"
-        body: "Ask a question, tell your team what's new, start a discussion"
     new:
       title: New Conversation
       submit: Create
     watcher_fields:
       add_suscribers: Which people will be watching this conversation?
-      subscribe_note: These people will be notified via email of this message and any following comments.<br/>They can unsubscribe at any time.
+      subscribe_note_html: These people will be notified via email of this message and any following comments.<br/>They can unsubscribe at any time.
       invite_users: You are the only user in this project!
-      no_users_yet: "Conversations are more useful when shared. <a href='%{invite_link}'>Invite some users</a> to this project now so they can access this conversation, answer and receive updates."
+      no_users_yet_html: "Conversations are more useful when shared. <a href='%{invite_link}'>Invite some users</a> to this project now so they can access this conversation, answer and receive updates."
       people_all: "All people in project"
       cant_notify: "This is a public project. To avoid unwanted emails, we're not showing the list of users that you can notify."
     edit:
       submit: 'Update Conversation'
     index:
+      title: Conversations in %{project}
       new_conversation: "New Conversation"
       view_single: Read more
+      cant_create: "You don't have permissions to create a conversation in this project"
       rss:
         title: "%{name} conversations"
         description: "Conversations for project %{name}"
     primer:
       empty: This project doesn't have any conversations yet.
       create_first: Create the first conversation in this project!
-      define: "Use conversations to <b>discuss decisions</b> and <b>update your team</b> in a centralized way.<br/>Each conversation is a thread of comments, which replace messy emails."
-      item1: "<b>Share files</b>. Comments can have attached files, too."
-      item2: "<b>Subscribe</b> to a conversation to be notified about future replies by email or RSS."
-      item3: "<b>Impress</b>. Any comment can be formatted with text styles."
-      item4: "<b>Inbox-driven?</b> You can reply to a conversation from your email."
-      footer1: "Conversations are great to <b>share a design</b>, <b>decide a date</b> for meeting or <b>report</b> some news."
-      footer2: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
+      define_html: "Use conversations to <b>discuss decisions</b> and <b>update your team</b> in a centralized way.<br/>Each conversation is a thread of comments, which replace messy emails."
+      item1_html: "<b>Share files</b>. Comments can have attached files, too."
+      item2_html: "<b>Subscribe</b> to a conversation to be notified about future replies by email or RSS."
+      item3_html: "<b>Impress</b>. Any comment can be formatted with text styles."
+      item4_html: "<b>Inbox-driven?</b> You can reply to a conversation from your email."
+      footer1_html: "Conversations are great to <b>share a design</b>, <b>decide a date</b> for meeting or <b>report</b> some news."
+      footer2_html: "Since they're threaded, it's easy to go back in time and see which files were sent and what did each teammate said. In Teambox, <b>collaborating is also reporting</b>."
     column:
       new_conversation: New Conversation
       cant_create: You don't have permission to create conversations in this project
@@ -711,9 +762,6 @@ en:
       all: "All organizations"
 
   tasks:
-    my_tasks_listing:
-      tasks: My Tasks
-      back: "Back to the Overview"
     errors:
       name:
         cant_be_blank: 'must not be blank'
@@ -721,25 +769,29 @@ en:
     fields:
       title: New Task
       task: "Choose an actionable task. The more specific, the better."
-      name: Enter a Task title <i>eg. Upload Logo Proposal</i>
+      name_html: Enter a Task title <i>eg. Upload Logo Proposal</i>
       optional: You can provide better instructions for this Task below.
-      body: What needs to be done? <i>optional</i>
-      due_on: Needs to be done before... <i>optional</i>
+      body_html: What needs to be done? <i>optional</i>
+      due_on_html: Needs to be done before... <i>optional</i>
       assigned_to: Who is responsible?
       assigned_to_nobody: Nobody
     assigned:
       assigned_to: "Assigned to %{user}"
       myself: "Assign to myself (%{user})"
+      unassigned: Cleared the assigned user
     due_on:
       due_on: Due on
       today: Today
       tomorrow: Tomorrow
+      undefined: No due date
     create: Add Task
     edit:
       submit: Update Task
+      sending: Updating the task…
     new:
       title: New Task
       submit: Add Task
+      sending: Creating the task…
     show:
       title: "Task: %{name}"
     link:
@@ -749,9 +801,9 @@ en:
         one: "Hide 1 archived task"
         other: "Hide %{count} archived tasks"
     destroy_message:
-      deleted: "The Task <b>%{name}</b> was successfully deleted!"
+      deleted_html: "The Task <b>%{name}</b> was successfully deleted!"
     archive_message:
-      archived: "The Task <b>%{name}</b> was successfully archived!"
+      archived_html: "The Task <b>%{name}</b> was successfully archived!"
     archive_box:
       you_are_done: It looks like you're done with this task!
       archive: Archive this task
@@ -792,36 +844,38 @@ en:
       submit: Update
   pages:
     index:
-      pages_in_this_project: Pages in this project
+      title: Pages in %{project}
+      new_page: New Page
+      cant_create: You don't have permission to create pages in this project
       rss:
         title: "%{name} pages"
         description: "Pages in project %{name}"
     primer:
       empty: This project doesn't have any pages yet.
       create_first: Create the first page in this project!
-      define1: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
-      define2: "Editing a page is easy and fun, with drag-and-drop elements you can edit in place."
-      item1: "<b>Share</b>. All your teammates can view and edit the project's pages."
-      item2: "<b>Publish</b>. Instant web publishing with shared pages. Show the world."
-      item3: "<b>Print</b>. Pages are printer-friendly. Try printing or exporting a PDF!"
-      item4: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
-      footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
-      footer2: "You can also attach files to any page inside each note. Enjoy!"
+      define1_html: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
+      define2_html: "Editing a page is easy and fun, with drag-and-drop elements you can edit in place."
+      item1_html: "<b>Share</b>. All your teammates can view and edit the project's pages."
+      item2_html: "<b>Publish</b>. Instant web publishing with shared pages. Show the world."
+      item3_html: "<b>Print</b>. Pages are printer-friendly. Try printing or exporting a PDF!"
+      item4_html: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
+      footer1_html: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
+      footer2_html: "You can also attach files to any page inside each note. Enjoy!"
     buttons:
       new_note: Text
       new_divider: Divider
-      new_upload: Upload
+      new_upload: Image or file
       new_task_list: Task List
     new:
       title: New Page
-      define1: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
-      define2: "Editing a page is easy and fun, with drag-and-drop elements you can edit in place."
-      feature1: "<b>Share</b>. All your teammates can view and edit the project's pages."
-      feature2: "<b>Publish</b>. Instant web publishing with shared pages. Show the world."
-      feature3: "<b>Print</b>. Pages are printer-friendly. Try printing or exporting a PDF!"
-      feature4: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
-      footer1: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
-      footer2: "You can also attach files to any page inside each note. Enjoy!"
+      define1_html: "Here you can <b>share useful information</b> for your team: A roadmap, interesting links, instructions, email templates..."
+      define2_html: "Editing a page is easy and fun, with drag-and-drop elements you can edit in place."
+      feature1_html: "<b>Share</b>. All your teammates can view and edit the project's pages."
+      feature2_html: "<b>Publish</b>. Instant web publishing with shared pages. Show the world."
+      feature3_html: "<b>Print</b>. Pages are printer-friendly. Try printing or exporting a PDF!"
+      feature4_html: "<b>Wiki</b>. Pages acts like a wiki, giving quick access to the project's information."
+      footer1_html: "Use Teambox as your <b>shared whiteboard</b> for frequently used stuff."
+      footer2_html: "You can also attach files to any page inside each note. Enjoy!"
       submit: Create page
       sending: Sending...
     edit:
@@ -835,8 +889,6 @@ en:
     slots:
       insert_here: Insert Here
     column:
-      new_page: New Page
-      cant_create: You don't have permission to create pages in this project
       all_pages: All Pages
       reorder: Reorder
       reorder_done: Done
@@ -862,11 +914,13 @@ en:
     fields:
       title: New Task List
       task_list: A task lists defines a milestone for your project. Inside a task list you can create Tasks and assign them to people.
-      name: "Choose a name for this Task List <i>eg. Prepare a Prototype</i>"
+      name_html: "Choose a name for this Task List <i>eg. Prepare a Prototype</i>"
       optional: "If you set starting and ending dates, this task will be displayed in the Gantt chart"
-      start_on: Starts on... <i>optional</i>
-      finish_on: End on... <i>optional</i>
+      start_on_html: Starts on... <i>optional</i>
+      finish_on_html: End on... <i>optional</i>
     filter:
+      filter_tasks: Filter tasks
+      by_name: By name...
       anybody: Anybody
       my_tasks: My tasks
       unassigned: Unassigned
@@ -875,12 +929,11 @@ en:
       no_date_assigned: No date assigned
       today: Today
       tomorrow: Tomorrow
-      due_date: "Display tasks with due date..."
-      assigned_to: "Display tasks assigned to..."
       week: "This week"
       2weeks: "Next 2 weeks"
       3weeks: "Next 3 weeks"
       month: "Within 1 month"
+      hide: Hide
     link:
       new: New Task List
       edit: Edit
@@ -894,7 +947,8 @@ en:
       add_link: New Task List
       empty: No tasks in this category!
       tasks_for_all_projects: Tasks across all projects
-      tasks_for_project: Task lists for this project
+      tasks_for_all_projects_explain: "Displaying all tasks. In order to manage task lists and reorder tasks, open each project's tasks."
+      tasks_for_project: Task lists for %{project}
       other_views: Other views
       gantt_view: Project Gantt and calendar
       rss:
@@ -906,18 +960,13 @@ en:
     primer:
       empty: This project doesn't have any task lists yet.
       create_first: Create the first task list in this project!
-      define: "Use tasks to <b>plan ahead</b>, <b>keep track of progress</b> and <b>review what's been done</b>.<br/><i>What? Who? When?</i> Tasks can have a status, an assigned person and due dates."
-      item1: "<b>Plan</b>. Create tasks inside each list and assign them to your teammates."
-      item2: "<b>Report</b>. Post comments for each task. Attach files. Ask for feedback."
-      item3: "<b>Follow</b>. Receive notifications for tasks related to you."
-      item4: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
-      footer1: "Tasks are a simple and agile way to <b>get things done</b> and let others now."
-      footer2: "It's time to forget about Excel planning sheets and complex Gantt charts!"
-    overview_box:
-      this_list: "This task list"
-      starts_on: "Starts on:"
-      ends_on: "Ends on:"
-      undefined: "Undefined"
+      define_html: "Use tasks to <b>plan ahead</b>, <b>keep track of progress</b> and <b>review what's been done</b>.<br/><i>What? Who? When?</i> Tasks can have a status, an assigned person and due dates."
+      item1_html: "<b>Plan</b>. Create tasks inside each list and assign them to your teammates."
+      item2_html: "<b>Report</b>. Post comments for each task. Attach files. Ask for feedback."
+      item3_html: "<b>Follow</b>. Receive notifications for tasks related to you."
+      item4_html: "<b>Review</b>. A completed task is not deleted, so you can later access its messages and files."
+      footer1_html: "Tasks are a simple and agile way to <b>get things done</b> and let others know."
+      footer2_html: "It's time to forget about Excel planning sheets and complex Gantt charts!"
     new:
       title: New Task List
       submit: Add Task List
@@ -932,7 +981,7 @@ en:
     show:
       title: "Task List: %{name}"
     destroy_message:
-      deleted: "The Task List <b>%{name}</b> was successfully deleted!"
+      deleted_html: "The Task List <b>%{name}</b> was successfully deleted!"
   people:
     link:
       edit: Edit
@@ -975,6 +1024,9 @@ en:
       attach: Attach
     attach:
       tooltip: Attach
+    conversations:
+      convert_to_task: "Convert to task"
+      task_name: "eg. Upload Logo Proposal"
     comment:
       commented_on: "-"
       commented_on_a_task_list: "-"
@@ -983,6 +1035,7 @@ en:
       hours_with_minutes: "%{hours}h %{minutes}m"
       cannot_edit: "Comment cannot be edited after 15 minutes"
       loading: "Loading..."
+      commented_in_project: "%{user} in %{project}"
     hours:
       add_hours: Hours
       tooltip: Add hours to this task
@@ -1014,47 +1067,86 @@ en:
     preview:
       close: Hide preview
       preview: Preview
-      showing: "..."
-      
-  example_projects:
-    new:
-      learn: Learn by example!
-      line1: "If it's your first time using Teambox, you can create an example project with some contents."
-      line2: "Navigating through the pages will teach you how to use each part of Teambox."
-      line3: "Make sure you <b>read the instructions</b> and <b>experiment</b> creating, editing and deleting elements!"
-      create: Create an example project
-      line4: "In this project you won't be able to invite other users, but you can do all the rest."
-      error: "Could not create example project."
-      error_list: "Could not create example project. The following projects are invalid: %{list}."
+    watchers:
+      explain: "Click on users to @mention them in your comment. Mentioned users will receive email notifications for your message and others after it."
+      popup_note_html: "Select <b>Notify people</b> to send notifications for this conversation."
+  teambox_datas:
+    new_import:
+      title: "Import data"
+      submit: Import data
+    import_fields:
+      select_file: Please choose a file containing your data.
+      service: "Which service did you export your data from?"
+      please_supply_user_map: We detected the following users in your import. Please confirm which users correspond to which user on Teambox.
+      in_organization: "Put all projects in this organization"
+      user: User
+      teambox_user: Teambox user
+    new_export:
+      title: "Export data"
+      submit: Export data
+    export_fields:
+      description: "Please select which projects you wish to export."
+    index:
+      title: "Import or export your data"
+      imports: "Import data from a file"
+      imports_explain: "You may import Teambox backup files, or Basecamp projects."
+      exports: "Export your projects"
+      no_imports: "There are no recent imports."
+      no_exports: "There are no recent exports."
+    show_export:
+      title: "Import / Export"
+      projects: "Projects exported:"
+      download: "Download export"
+    data:
+      processing: "Currently processing..."
+      processed_at: "Processed at %{processed_at}"
+      incomplete: "More information required."
+      remove: Remove
+      confirm_delete: "Are you sure you want to delete this data?"
+    show_import:
+      title: "Import data"
+      submit: Import
+      projects: "Imported projects"
+      import_error: "There was an error loading your import. Please try again."
+    column:
+      description: "Here you can move your data in and out of Teambox."
   uploads:
     tooltip: Upload a file
     comment_upload_link: Attachment
     new:
-      select_a_file: Select a file
+      select_a_file: Select a file to upload to Teambox
+      storage_remaining: "You can upload up to %{bytes} more with your current plan. <a href='%{url}'>Upgrade</a> for more storage."
       uploading: Uploading...
     index:
+      title: Files in %{project}
       new_file: Upload a File
-      cant_create: You don't have permission to upload files to this project
+      cant_create: "You don't have permission to upload files to this project"
       max_upload_size: "Max upload size is %{mb} Mb"
+      current_storage_size: "You can upload %{bytes} more in the organization %{organization_name}.<br/><br/><a href='%{url}'>Upgrade</a> your plan to store more documents."
+      no_storage_left: "You have reached the storage limit for your organization.<br/><br/><a href='%{url}'>Upgrade</a> your plan now."
     form:
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed %{mb} MB"
       select_file: Select file
-      description: Title <i>(optional)</i>
+      description_html: Title <i>(optional)</i>
       upload: Upload file
+      max_upload_size: "Max upload size is %{mb} Mb"
     primer:
       empty: This project doesn't have any files yet.
       create_first: Upload the first file to this project!
-      define1: "Ever had problems sharing a file with your team? Teambox makes sharing easy again."
-      define2: "You can upload files here or attach documents to conversations, tasks or pages. "
-      item1: "<b>Bigger files</b>. Upload files of any size and forget about email limitations."
-      item2: "<b>Versioning</b>. Upload new versions of a file and keep track of changes."
-      item3: "<b>Always available</b>. Files stay in context in the project for future reference."
+      define1_html: "Ever had problems sharing a file with your team? Teambox makes sharing easy again."
+      define2_html: "You can upload files here or attach documents to conversations, tasks or pages. "
+      item1_html: "<b>Bigger files</b>. Upload files of any size and forget about email limitations."
+      item2_html: "<b>Versioning</b>. Upload new versions of a file and keep track of changes."
+      item3_html: "<b>Always available</b>. Files stay in context in the project for future reference."
     upload:
       download: Download
       uploaded_by: Uploaded by
       remove: Delete
       on_: "on"
+    errors:
+      exceeded_storage_plan_limit: "You have exceeded your storage quota for %{organization_name}. To increase your storage limits, <a href='%{url}'>upgrade your plan now</a>."
+      general:  "There was an error uploading the file"
   sessions:
     fields:
       username_or_email: Email or Username
@@ -1065,7 +1157,7 @@ en:
       title: Login
       video: What's Teambox about?
       submit: Login
-      login_failed: "Couldn't log you in as %{login}"
+      login_failed: "Couldn't log you in as %{login}. Try inserting your email and password, or use Forgot your Password to set a new one."
   sites:
     show:
       submit: Login
@@ -1077,38 +1169,56 @@ en:
       title: Thank you for your support!
       explain: "By purchasing a premium account, you're contributing to Teambox's development and getting much more."
       you_can_now_create: "You can now create up to %{projects} projects."
+      reset_your_password: Please enter a new password and confirm it.
     show:
+      title: Which organization would you like to upgrade?
+      usage: "You can create <b>%{available_projects} more projects</b> on this organization"
       plan: Teambox plans
-      current_plan: "Your current plan is <strong>{{name}}</strong>."
-      max_projects: "You can have up to {{max}} projects."
-      max_storage: "You can store up to {{max}}."
+      current_plan_html: "Your current plan is <strong>%{name}</strong>."
+      max_projects: "You can have up to %{max} projects."
+      max_storage: "You can store up to %{max}."
       branding:
-        configure: "Your plan supports custom branding and domain names. <a href='{{link}}'>Configure your branding here</a>."
-        not_available: "Your plan doesn't support <strong>custom branding</strong>. Upgrade to a higher account to get it."
+        configure_html: "Your plan supports custom branding and domain names. <a href='%{link}'>Configure your branding here</a>."
+        not_available_html: "Your plan doesn't support <strong>custom branding</strong>. Upgrade to a higher account to get it."
     copies:
-      copy1: "Liking Teambox? We're full-time workers! <a href='{{link}}'>Upgrade now</a> to support our development!"
-      copy2: "<a href='{{link}}'>Upgrade now</a> to get more projects, storage and search across all projects."
-      copy3: "<a href='{{link}}'>Get more done</a> with a premium account! Extra storage, up to 2000 projects."
-      copy4: "<a href='{{link}}'>Work better</a> with a premium account: Search bar across all projects."
-      copy5: "<a href='{{link}}'>Upgrade your Teambox account now</a> and enjoy professional collaboration!"
-      copy6: "Search bar across all projects could save you hours. <a href='{{link}}'>Upgrade now</a> to have it!"
-      copy7: "Your business matters! <a href='{{link}}'>Get the best support</a> for Teambox with our premium plans."
+      copy1_html: "Liking Teambox? We're full-time workers! <a href='%{link}'>Upgrade now</a> to support our development!"
+      copy2_html: "<a href='%{link}'>Upgrade now</a> to get more projects, storage and search across all projects."
+      copy3_html: "<a href='%{link}'>Get more done</a> with a premium account! Extra storage, up to 2000 projects."
+      copy4_html: "<a href='%{link}'>Work better</a> with a premium account: Search bar across all projects."
+      copy5_html: "<a href='%{link}'>Upgrade your Teambox account now</a> and enjoy professional collaboration!"
+      copy6_html: "Search bar across all projects could save you hours. <a href='%{link}'>Upgrade now</a> to have it!"
+      copy7_html: "Your business matters! <a href='%{link}'>Get the best support</a> for Teambox with our premium plans."
 
   shared:
     strip:
-      archived: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
+      archived_html: "This project is archived. To edit or comment on this project you must unarchive it on the <a href='%{link}'>Project Settings page</a>"
+    collapsed_mode: View threads collapsed
+    expanded_mode: View threads expanded
     gantt_banner_primer:
       title: There are no task lists due to show
     upcoming_events_primer:
       title: There are no tasks due to show
-    projects:
-      projects: Projects
-    archived_projects:
-      archived_projects: Archived Projects
     navigation:
-      welcome: Welcome
-      all_projects: 'All Projects'
-      new_project: +
+      recent_activity: Recent activity
+      all_projects: Projects
+      show_all_projects: Show all projects...
+      new_project: + New Project
+      conversations: Conversations
+      tasks: Tasks
+      time: Time tracking
+      pages: Pages
+      files: Files
+      settings: Settings
+      people: "People & Permissions"
+      my_tasks: My Tasks
+      open_my_tasks: Open all my tasks
+      show_all_tasks: View all tasks in my projects...
+      organizations: Organizations
+      show_all_organizations: "Manage organizations..."
+      gantt_and_calendars: Gantts and calendars
+      show_more: Show more
+      show_less: Show less
+      affiliate: Affiliate area
     project_settings_navigation:
       general: General Settings
       picture: Project Picture
@@ -1133,10 +1243,6 @@ en:
       organizations: Organizations
       organization: Organization
       affiliate_area: Affiliate Area
-    projects_dropdown:
-      all_projects: Overview for all projects
-      new_project: + New project
-      recent_projects: Recent projects
     global_navigation:
       project_invitations: Project Invitations
       home: Home
@@ -1144,6 +1250,7 @@ en:
       login: Login
       project_invitations: "Invitations (%{count})"
       settings: Settings
+      help: Help
     public_navigation:
       home: Teambox
       tour: Tour
@@ -1161,6 +1268,7 @@ en:
       notifications: Notifications
       plans_and_billing: Plans and Billing
       delete_account: Delete Account...
+      your_data: Import / Export
     task_navigation:
       all_tasks: "All Tasks"
       unarchived_tasks: "Unarchived Tasks"
@@ -1173,7 +1281,8 @@ en:
     footer:
       support: Feedback and bugs
       mobile: Mobile version
-      help: Help and Support
+      feedback: Feedback
+      help: Support
     watchers:
       unwatch: Unwatch
       watch: Watch
@@ -1189,16 +1298,16 @@ en:
       firefox: "Firefox"
       safari: "Safari"
     chrome_frame:
-      enhance: Enhance your Teambox experience with Google Chrome Frame. Click <a href="%{link}" target=\"_blank\">here</a> to set it up.
+      enhance_html: Enhance your Teambox experience with Google Chrome Frame. Click <a href="%{link}" target=\"_blank\">here</a> to set it up.
     instructions:
       subscribe_to_feeds: Subscribe to feeds...
       subscribe_to_calendars: Subscribe to calendars...
       send_email: Post a new comment by email...
       send_email_conversations: Post a new conversation by email...
-      send_email_help_project: "To post a new comment to this project's activity wall send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the wall."
-      send_email_help_conversations: "To create a new conversation send an email to <a href=\"mailto:%{email}\">%{email}</a> with Subject for the title and Body for the comment. Only members from the project can create a new conversation."
-      send_email_help_conversation: "To post a new comment to this conversation send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the conversation."
-      send_email_help_task: "To post a new comment to this task send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can comment to the task."
+      send_email_help_project_html: "To post a new comment to this project's activity wall send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the wall."
+      send_email_help_conversations_html: "To create a new conversation send an email to <a href=\"mailto:%{email}\">%{email}</a> with Subject for the title and Body for the comment. Only members from the project can create a new conversation."
+      send_email_help_conversation_html: "To post a new comment to this conversation send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can post to the conversation."
+      send_email_help_task_html: "To post a new comment to this task send an email to <a href=\"mailto:%{email}\">%{email}</a>. Only members from the project can comment to the task."
   affiliate:
     area: Affiliate Area
     index:
@@ -1208,8 +1317,8 @@ en:
       send_invites: Invite to Teambox
       sent_invites_to: "The invitation email will be sent to the following addresses:"
       refer_info: "Refer %{users} users on %{plan} accounts, get $%{credit} every month."
-      desc_1: "With our partner tools, you can get <strong>free months</strong> using Teambox or make <strong>real money</strong> by referring others."
-      desc_2: "Bring new users to Teambox, and get <strong>%{percent}% of the income</strong> your referred users generate, <strong>forever</strong>."
+      desc_1_html: "With our partner tools, you can get <strong>free months</strong> using Teambox or make <strong>real money</strong> by referring others."
+      desc_2_html: "Bring new users to Teambox, and get <strong>%{percent}% of the income</strong> your referred users generate, <strong>forever</strong>."
       option_1: "Option 1: Share this link"
       option_2: "Option 2: Invite your contacts by entering their email"
       option_3: "Option 3: Invite your contacts by importing contacts from a CSV file"
@@ -1221,7 +1330,7 @@ en:
       premium_plan: "premium account"
       use_money_cash: "or to earn real cash."
       plan_for: "plan for"
-      over_200: "Whenever you have over $200,"
+      over_100: "Whenever you have over $100,"
       send_money: "and we will send you the money you've earned."
       get_in_touch: "get in touch with us"
       ideas: "Some ideas to make the most out of Teambox"
@@ -1256,10 +1365,14 @@ en:
     common:
       do_not_answer: "Do not reply to this email."
       answer_above_this_line: "REPLY ABOVE THIS LINE TO POST AN ANSWER"
+    project_membership_notification:
+      subject: "%{user} shared [%{project}] with you"
+      you_have_been_added_to: "You are now a member of the project %{project}"
+      project_link: "Click on the link below to start collaborating on %{project} now"
     invitation:
       subject: "%{user} shared [%{project}] with you"
       collaborate_with: "%{name} wants to collaborate with you on Teambox:"
-      you_have_been_invited_to: "You have been invited to the project <b>%{project}</b>"
+      you_have_been_invited_to: "You have been invited to the project %{project}"
       accept_the_invitation: Accept the invitation to start collaborating
       current_users: "Current users in this project:"
       plaintext_link: "If the above link doesn't work, copy and paste the following code into your browser bar: "
@@ -1267,50 +1380,73 @@ en:
       plan_share_and_collaborate: "Plan, share and keep track of what's been done. Simple as it should be."
       report_abuse: "This email was sent to you at your contact's request. Please report any abuse."
       subject_without_project: "%{name} invited you to Teambox"
+    teamboxdata:
+        hey: "Hey, %{user_name}!"
+        data_imported: "Your data has been successfully imported into Teambox. To view details, please visit the following link:"
+        data_import_failed: "Your data could not be imported into Teambox. Please check that the data you uploaded is valid. To try again, visit the following link:"
+        data_exported: "Your data has been exported from Teambox, and is available as a download from the following link:"
+        data_export_failed: "Your data could not be exported from Teambox. To try again, please visit the following link:"
+        exported: "Your data is ready for download"
+        export_failed: "Your data could not be exported"
+        imported: "Your data has been imported"
+        import_failed: "Your data could not be imported"
     confirm:
       subject: "Get started with Teambox"
       hey: "Hey, %{user_name}!"
-      follow_the_link: "In order to <b>complete your signup</b> for Teambox, we need you to log in by clicking here:"
+      follow_this_link: "In order to %{complete} for Teambox, we need you to log in by clicking here:"
+      complete: complete your signup
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
-      problems: "If you have any problems, please contact us at %{support}"
+      problems_html: "If you have any problems, please contact us at %{support}"
     reset_password:
       subject: "Your password has successfully been reset"
       hey: "Hey, %{user_name}!"
-      follow_the_link: "In order to <b>set a new password</b> for Teambox, we need you to log in with the following link:"
+      follow_this_link: "In order to %{new_password} for Teambox, we need you to log in with the following link:"
+      new_password: set a new password
       log_in: "Log into Teambox now!"
       plaintext_link: "If this doesn't work, copy and paste the following link in your browser's bar:"
       report_abuse: "You received this message because you signed up for a Teambox account with %{email}"
-      problems: "If you have any problems, please contact us at %{support}"
+      problems_html: "If you have any problems, please contact us at %{support}"
       successfully_reset: "Your password has been successfully reset." 
     forgot_password:
       subject: "Password retrieval for Teambox"
     notify:
       project: "Teambox Project:"
-      view_online: "You can <a href='%{link}'>view this conversation online</a> to answer and attach files."
+      view_this_conversation_online_html: "You can click on %{conversation} to answer and attach files."
+      view_this_task_online_html: "You can %{link} to comment and attach files."
+      conversation: view this conversation online
+      task_link: view this task online
       reply: "You can also reply to this email to post a reply in the conversation."
       task_commands: "Write #resolve, #reject or #hold on the top of your reply to change the task status. Write #%{username} to assign it to @%{username}, etc."
-      are_watching: " are suscribed to this conversation, and will be notified of future replies."
-      stop_watching: "<a href='%{stop_watching_url}'>Stop watching</a> this thread to stop receiving email notifications."
-      notification_settings: "You can change your <a href='%{url}'>notification settings</a> for further emails."
+      are_watching: 
+        one: " is suscribed to this conversation, and will be notified of future replies."
+        other: " are suscribed to this conversation, and will be notified of future replies."
+      are_watching_task: 
+        one: " is suscribed to this task, and will be notified of future replies."
+        other: " are suscribed to this task, and will be notified of future replies."
+      stop_watching_link_html: "%{stop_watch} this thread to stop receiving email notifications."
+      stop_watch: Stop watching
+      notification_settings_link_html: "You can change your %{settings_link} for further emails."
+      settings_link: notification settings
       comment: "Comment on project's wall: "
       conversation: "Conversation:"
       task: "Task:"
       task_list: "Task List:"
       comments: "%{number} comments"
-      assigned_to: "Assigned to <b>%{user}</b>"
+      assigned_to_html: "Assigned to <b>%{user}</b>"
       due_on: "Due on %{date}"
       status: "Status: %{status}"
       my_tasks: "More tasks assigned to you in %{project}"
     upload:
       file: "File:"
     bounce:
-      subject: "Your email was not properly formed"
-      user_not_found_error: "The sender of this message does not appear to have a teambox account"
-      not_project_member_error: "The sender of this message is not a member of the project specified"
-      project_not_found_error: "The specified project cannot be found"
-      target_not_found_error: "The specified item cannot be found to add to"
+      subject: "Error sending email to Teambox"
+      user_not_found_error: "This email address is not associated with any Teambox account."
+      not_project_member_error: "You are not a member of the specified Teambox project."
+      project_not_found_error: "There is no project on Teambox corresponding to this email address."
+      target_not_found_error: "We couldn't find the item where you are trying to post your comment."
+      not_delivered: "Your email couldn't be processed by Teambox. View our documentation to learn which types of email we accept: %{link}"
 
   weakling:
     default: Must be at least 5 characters
@@ -1339,7 +1475,6 @@ en:
     welcome_users: Welcome!
     new_projects: New Project
     archived_task_lists: Archived Tasks
-    new_example_projects: Create an Example Project
     new_conversations: New Conversation
     results_search: Search
     show_plans: Plans
@@ -1352,7 +1487,10 @@ en:
       title: Searching in all projects
       title_in_project: "Searching in project: %{project}"
       search_again: Search again
-      report: '%{count} results found for "%{term}"'
+      no_results:
+        title: "We didn't find any results for '%{term}', sorry!"
+        explain: "Try using more specific search terms to find more results."
+      report: "We found %{count} results for your search terms '%{term}'"
 
   number:
     # Used in number_with_delimiter()
@@ -1623,6 +1761,17 @@ en:
       words_connector: ", "
       two_words_connector: " and "
       last_word_connector: ", and "
+
+  password_strength:
+    too_short: Too short
+    weak: Weak
+    average: Average
+    strong: Strong
+    too_long: Too long
+
+  date_picker:
+    no_date_assigned: No date assigned
+
   oauth:
     this_account_will_be_linked_to: "This account will be linked with %{provider}"
     account_linked: "Your account has been linked."
@@ -1634,9 +1783,23 @@ en:
     auth_status_linked: Linked with the provider
     auth_status_link: Link with your account
     logged_in: Logged in successfully
-    your_account_is_linked: "Your %{provider} profile is <strong>linked</strong> to Teambox."
-    your_account_is_not_linked: "Your %{provider} profile is <strong>not linked</strong> to Teambox."
+    your_account_is_linked_html: "Your %{provider} profile is <strong>linked</strong> to Teambox."
+    your_account_is_not_linked_html: "Your %{provider} profile is <strong>not linked</strong> to Teambox."
     link_account: Link account.
     unlink_account: Unlink account.
-    user_already_exists_by_email: The user %{email} has already a Teambox account.<br/>Log in with that account and link it from your Settings panel.
-    user_already_exists_by_login: The user %{login} has already a Teambox account.<br/>Log in with that account and link it from your Settings panel.
+    user_exists: This %{provider} profile is not linked with any account yet.
+    user_already_exists_by_email: "Link '%{email}' to your Teambox account"
+    user_already_exists_by_login: "The username '%{login}' is already taken"
+    user_exists_instruction: If you already have a Teambox account, log in to link it automatically to your %{provider} profile.
+    user_exists_is_not_yours_html: If you don't own the account '%{account}', %{signup_for_a_new_account}.
+    signup_for_a_new_account: click here to sign up for a new account
+    
+  google_docs:
+    authorization_required: In order to use Google Docs you must first authorize Teambox to use your google account.
+    authorize_link: Authorize Google Docs
+    create_new: Create a New Blank Document
+    create: Create
+    creating: Creating...
+    attach: Attach a Google Document
+    search_placeholder: Search Google documents
+    new_document_placeholder: New document title

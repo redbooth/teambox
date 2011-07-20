@@ -2,13 +2,17 @@ class PeopleController < ApplicationController
   before_filter :load_person, :only => [:update, :destroy]
   before_filter :set_page_title
   
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = t('common.not_allowed')
+    redirect_to project_people_path(@current_project)
+  end
+  
   def index
-    @people = @current_project.people.all(:include => :user).sort_by { |p| p.user.updated_at }.reverse
+    @people = @current_project.people.in_alphabetical_order.all
     @invitations = @current_project.invitations
     
     respond_to do |f|
-      f.html
-      f.m
+      f.any(:html, :m)
       f.xml   { render :xml     => @people.to_xml(:root => 'people') }
       f.json  { render :as_json => @people.to_xml(:root => 'people') }
       f.yaml  { render :as_yaml => @people.to_xml(:root => 'people') }
@@ -16,6 +20,7 @@ class PeopleController < ApplicationController
   end
 
   def update
+    authorize! :update, @person
     @person.update_attributes params[:person]
     
     respond_to do |wants|
@@ -31,25 +36,21 @@ class PeopleController < ApplicationController
   end
 
   def destroy
-    if @user == current_user or @current_project.admin?(current_user)
-      @person.destroy
+    authorize! :destroy, @person
+    @person.destroy
       
-      respond_to do |wants|
-        wants.html {
-          if request.xhr?
-            head :ok
-          elsif @user == current_user
-            flash[:success] = t('deleted.left_project', :name => @user.name)
-            redirect_to root_path
-          else
-            flash[:success] = t('deleted.person', :name => @user.name)
-            redirect_to project_people_path(@current_project)
-          end
-        }
-      end
-    else
-      flash[:error] = t('common.not_allowed')
-      redirect_to project_people_path(@current_project)
+    respond_to do |wants|
+      wants.html {
+        if request.xhr?
+          head :ok
+        elsif @user == current_user
+          flash[:success] = t('deleted.left_project', :name => @user.name)
+          redirect_to root_path
+        else
+          flash[:success] = t('deleted.person', :name => @user.name)
+          redirect_to project_people_path(@current_project)
+        end
+      }
     end
   end
   
@@ -60,7 +61,7 @@ class PeopleController < ApplicationController
       users = @project.users
       
       invited_ids = @current_project.invitations.find(:all, :select => 'invited_user_id').map(&:invited_user_id).compact
-      users = users.scoped(:conditions => ['users.id NOT IN (?)', invited_ids]) if invited_ids.any?
+      users = users.where(['users.id NOT IN (?)', invited_ids]) if invited_ids.any?
       
       @contacts = users.all
       @contacts -= @current_project.users

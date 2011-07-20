@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<account>
+  <created-at type="datetime">2009-10-29T16:48:34Z</created-at>
+  <id type="integer">123229</id>
+  <ssl-enabled type="boolean">true</ssl-enabled>
+  <updated-at type="datetime">2009-10-29T16:48:34Z</updated-at>
+  <name>N/A</name>
+  <plan>Free</plan>
+  <account-holder-id type="integer">1232951</account-holder-id>
+  <created-on type="date" deprecated="true">2009-10-29</created-on>
+  <default-attachment-categories>
+    <category>Documents</category>
+    <category>Pictures</category>
+    <category>Sounds</category>
+  </default-attachment-categories>
+  <default-post-categories>
+    <category>Design</category>
+    <category>Code</category>
+    <category>Copywriting</category>
+    <category>Transcripts</category>
+    <category>Assets</category>
+    <category>Miscellaneous</category>
+  </default-post-categories>
+  <subscription>
+    <ssl type="boolean">true</ssl>
+    <storage type="integer">0</storage>
+    <writeboards type="integer">2</writeboards>
+    <time-tracking type="boolean">false</time-tracking>
+    <name>Free</name>
+    <projects type="integer">1</projects>
+  </subscription>
+  <firm>
+    <address-one nil="true"></address-one>
+    <address-two nil="true"></address-two>
+    <city nil="true"></city>
+    <country nil="true"></country>
+    <id type="integer">1230857</id>
+    <locale>en</locale>
+    <name>N/A</name>
+    <phone-number-fax nil="true"></phone-number-fax>
+    <phone-number-office nil="true"></phone-number-office>
+    <state nil="true"></state>
+    <time-zone-id>Eastern Time (US &amp; Canada)</time-zone-id>
+    <uuid>0677d150-53a5-3b3a-8ba0-09fe958c9b26</uuid>
+    <web-address nil="true"></web-address>
+    <zip nil="true"></zip>
+    <name>N/A</name>
+    <people type="array">
+      <person>
+        <client-id type="integer">0</client-id>
+        <created-at type="datetime">2009-10-29T16:48:34Z</created-at>
+        <id type="integer">1232951</id>
+        <im-handle nil="true"></im-handle>
+        <im-service nil="true"></im-service>
+        <phone-number-fax nil="true"></phone-number-fax>
+        <phone-number-home nil="true"></phone-number-home>
+        <phone-number-mobile nil="true"></phone-number-mobile>
+        <phone-number-office nil="true"></phone-number-office>
+        <phone-number-office-ext nil="true"></phone-number-office-ext>
+        <title nil="true"></title>
+        <updated-at type="datetime">2009-10-29T16:48:34Z</updated-at>
+        <uuid>2c1412da-21e0-33fd-a9b5-142f714ca610</uuid>
+        <name>Frodo Baggins</name>
+        <first-name>Frodo</first-name>
+        <last-name>Baggins</last-name>
+        <company-id type="integer">1230857</company-id>
+        <email-address>frodo@middle-earth.com</email-address>
+        <avatar-url>http://asset1.37img.com/global/missing/avatar.png?r=3</avatar-url>
+      </person>
+    </people>
+  </firm>
+  <clients type="array"/>
+  <projects type="array">
+    <project>
+      <created-on type="date">2009-10-29</created-on>
+      <id type="integer">1234648</id>
+      <last-changed-on type="datetime">2009-10-29T16:52:18Z</last-changed-on>
+      <name>Widgets</name>
+      <status>active</status>
+      <name>Widgets</name>
+      <company>
+        <id type="integer">1230857</id>
+        <name>N/A</name>
+        <name>N/A</name>
+      </company>
+      <attachment-categories type="array">
+        <attachment-category>
+          <elements-count type="integer">0</elements-count>
+          <id type="integer">12372274</id>
+          <name>Documents</name>
+          <project-id type="integer">1234648</project-id>
+          <name>Documents</name>
+          <type>AttachmentCategory</type>
+        </attachment-category>
+        <attachment-category>
+          <elements-count type="integer">0</elements-count>
+          <id type="integer">12372275</id>
+          <name>Pictures</name>
+          <project-id type="integer">1234648</project-id>
+          <name>Pictures</name>
+          <type>AttachmentCategory</type>
+        </attachment-category>
+        <attachment-category>
+          <elements-count type="integer">0</elements-count>
+          <id type="integer">12372276</id>
+          <name>Sounds</name>
+          <project-id type="integer">1234648</project-id>
+          <name>Sounds</name>
+          <type>AttachmentCategory</type>
+        </attachment-category>
+      </attachment-categories>
+      <milestones type="array">
+        <milestone>
+          <comments-count type="integer">1</comments-count>
+          <completed type="boolean">false</completed>
+          <created-on type="datetime">2009-10-29T16:51:17Z</created-on>
+          <creator-id type="integer">1232951</creator-id>
+          <deadline type="date">2009-10-29</deadline>
+          <id type="integer">12351634</id>
+          <project-id type="integer">1234648</project-id>
+          <responsible-party-id type="integer">1232951</responsible-party-id>
+          <responsible-party-type>Person</responsible-party-type>
+          <title>First 1000 widgets</title>
+          <wants-notification type="boolean">true</wants-notification>
+          <comments type="array">
+            <comment>
+              <attachments-count type="integer">0</attachments-count>
+              <author-id type="integer">1232951</author-id>
+              <body>&lt;div&gt;Seriously, this is important!&lt;/div&gt;</body>
+              <commentable-id type="integer">12351634</commentable-id>
+              <commentable-type>Milestone</commentable-type>
+              <created-at type="datetime">2009-10-29T16:51:33Z</created-at>
+              <emailed-from nil="true"></emailed-from>
+              <id type="integer">12337318</id>
+              <author-name>Frodo Baggins</author-name>
+            </comment>
+          </comments>
+          <creator-name>Frodo Baggins</creator-name>
+          <responsible-party-name>Frodo Baggins</responsible-party-name>
+        </milestone>
+      </milestones>
+      <todo-lists type="array">
+        <todo-list>
+          <completed-count type="integer">1</completed-count>
+          <description>Process list...</description>
+          <id type="integer">12357531</id>
+          <milestone-id type="integer" nil="true"></milestone-id>
+          <name>Process for making widgets</name>
+          <position type="integer">1</position>
+          <project-id type="integer">1234648</project-id>
+          <tracked type="boolean">false</tracked>
+          <uncompleted-count type="integer">2</uncompleted-count>
+          <name>Process for making widgets</name>
+          <todo-items type="array">
+            <todo-item>
+              <comments-count type="integer">0</comments-count>
+              <completed type="boolean">false</completed>
+              <content>Find manufacturer</content>
+              <created-at type="datetime">2009-10-29T16:50:45Z</created-at>
+              <creator-id type="integer">1232951</creator-id>
+              <due-at type="datetime">2009-10-01T04:00:00Z</due-at>
+              <id type="integer">12390949</id>
+              <position type="integer">1</position>
+              <responsible-party-id type="integer">1232951</responsible-party-id>
+              <responsible-party-type>Person</responsible-party-type>
+              <todo-list-id type="integer">12357531</todo-list-id>
+              <comments type="array"/>
+              <responsible-party-name>Frodo Baggins</responsible-party-name>
+              <created-on type="datetime" deprecated="true">2009-10-29T16:50:45Z</created-on>
+              <creator-name>Frodo Baggins</creator-name>
+            </todo-item>
+            <todo-item>
+              <comments-count type="integer">1</comments-count>
+              <completed type="boolean">true</completed>
+              <completed-at type="datetime">2009-10-29T16:50:33Z</completed-at>
+              <completer-id type="integer">1232951</completer-id>
+              <content>Gather materials</content>
+              <created-at type="datetime">2009-10-29T16:50:27Z</created-at>
+              <creator-id type="integer">1232951</creator-id>
+              <due-at type="datetime">2009-10-01T04:00:00Z</due-at>
+              <id type="integer">12390838</id>
+              <position type="integer">1</position>
+              <responsible-party-id type="integer">1232951</responsible-party-id>
+              <responsible-party-type>Person</responsible-party-type>
+              <todo-list-id type="integer">12357531</todo-list-id>
+              <comments type="array">
+                <comment>
+                  <attachments-count type="integer">0</attachments-count>
+                  <author-id type="integer">1232951</author-id>
+                  <body>&lt;div&gt;I lumbered far and wide, and got the materials!&lt;/div&gt;</body>
+                  <commentable-id type="integer">12390838</commentable-id>
+                  <commentable-type>TodoItem</commentable-type>
+                  <created-at type="datetime">2009-10-29T16:51:54Z</created-at>
+                  <emailed-from nil="true"></emailed-from>
+                  <id type="integer">12337379</id>
+                  <author-name>Frodo Baggins</author-name>
+                </comment>
+              </comments>
+              <completed-on type="datetime" deprecated="true">2009-10-29T16:50:33Z</completed-on>
+              <completer-name>Frodo Baggins</completer-name>
+              <responsible-party-name>Frodo Baggins</responsible-party-name>
+              <created-on type="datetime" deprecated="true">2009-10-29T16:50:27Z</created-on>
+              <creator-name>Frodo Baggins</creator-name>
+            </todo-item>
+            <todo-item>
+              <comments-count type="integer">0</comments-count>
+              <completed type="boolean">false</completed>
+              <content>Distribute</content>
+              <created-at type="datetime">2009-10-29T16:50:55Z</created-at>
+              <creator-id type="integer">1232951</creator-id>
+              <due-at type="datetime">2009-10-01T04:00:00Z</due-at>
+              <id type="integer">12390969</id>
+              <position type="integer">2</position>
+              <responsible-party-id type="integer">1232951</responsible-party-id>
+              <responsible-party-type>Person</responsible-party-type>
+              <todo-list-id type="integer">12357531</todo-list-id>
+              <comments type="array"/>
+              <responsible-party-name>Frodo Baggins</responsible-party-name>
+              <created-on type="datetime" deprecated="true">2009-10-29T16:50:55Z</created-on>
+              <creator-name>Frodo Baggins</creator-name>
+            </todo-item>
+          </todo-items>
+          <complete>false</complete>
+        </todo-list>
+      </todo-lists>
+      <post-categories type="array">
+        <post-category>
+          <elements-count type="integer">0</elements-count>
+          <id type="integer">12372272</id>
+          <name>Assets</name>
+          <project-id type="integer">1234648</project-id>
+          <name>Assets</name>
+          <type>PostCategory</type>
+        </post-category>
+        <post-category>
+          <elements-count type="integer">0</elements-count>
+          <id type="integer">12372269</id>
+          <name>Code</name>
+          <project-id type="integer">1234648</project-id>
+          <name>Code</name>
+          <type>PostCategory</type>
+        </post-category>
+        <post-category>
+          <elements-count type="integer">0</elements-count>
+          <id type="integer">12372270</id>
+          <name>Copywriting</name>
+          <project-id type="integer">1234648</project-id>
+          <name>Copywriting</name>
+          <type>PostCategory</type>
+        </post-category>
+        <post-category>
+          <elements-count type="integer">0</elements-count>
+          <id type="integer">12372268</id>
+          <name>Design</name>
+          <project-id type="integer">1234648</project-id>
+          <name>Design</name>
+          <type>PostCategory</type>
+        </post-category>
+        <post-category>
+          <elements-count type="integer">0</elements-count>
+          <id type="integer">12372273</id>
+          <name>Miscellaneous</name>
+          <project-id type="integer">1234648</project-id>
+          <name>Miscellaneous</name>
+          <type>PostCategory</type>
+        </post-category>
+        <post-category>
+          <elements-count type="integer">0</elements-count>
+          <id type="integer">12372271</id>
+          <name>Transcripts</name>
+          <project-id type="integer">1234648</project-id>
+          <name>Transcripts</name>
+          <type>PostCategory</type>
+        </post-category>
+      </post-categories>
+      <posts type="array">
+        <post>
+          <attachments-count type="integer">0</attachments-count>
+          <author-id type="integer">1232951</author-id>
+          <body>&lt;div&gt;Like...now!&lt;/div&gt;</body>
+          <category-id type="integer" nil="true"></category-id>
+          <comments-count type="integer">1</comments-count>
+          <id type="integer">12364207</id>
+          <milestone-id type="integer">0</milestone-id>
+          <posted-on type="datetime">2009-10-29T16:49:45Z</posted-on>
+          <project-id type="integer">1234648</project-id>
+          <title>We need to make widgets</title>
+          <use-textile type="boolean">false</use-textile>
+          <author-name>Frodo Baggins</author-name>
+          <comments type="array">
+            <comment>
+              <attachments-count type="integer">0</attachments-count>
+              <author-id type="integer">1232951</author-id>
+              <body>&lt;div&gt;Hell yes!&lt;/div&gt;</body>
+              <commentable-id type="integer">12364207</commentable-id>
+              <commentable-type>Post</commentable-type>
+              <created-at type="datetime">2009-10-29T16:49:53Z</created-at>
+              <emailed-from nil="true"></emailed-from>
+              <id type="integer">12337009</id>
+              <author-name>Frodo Baggins</author-name>
+              <author-name>Frodo Baggins</author-name>
+            </comment>
+          </comments>
+          <extended-body deprecated="true"></extended-body>
+        </post>
+      </posts>
+      <time-entries type="array"/>
+      <participants>
+        <person type="integer">1232951</person>
+      </participants>
+    </project>
+  </projects>
+</account>

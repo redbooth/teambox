@@ -1,22 +1,13 @@
-- if @task_list.nil?
-  - if project.editable?(current_user)
-    = task_list_link(project)
-  - else
+- unless @task_list
+  - unless can?(:make_task_lists, project)
     %p= t('.cant_create')
 
 - case location_name
   - when 'show_tasks'
-    = task_overview_box(@task)
-
     %h2= link_to h(@task_list), [@task_list.project, @task_list]
     = sidebar_tasks(@task_list.tasks.unarchived)
 
-  - when 'show_task_lists'
-    = task_list_overview_box(@task_list)
-    = filter_task_lists(project)
-
   - when 'index_task_lists'
-    = filter_task_lists(project)
 
 %h2= t('.other_views')
 = gantt_view_link(@current_project)

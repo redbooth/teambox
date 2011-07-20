@@ -1,0 +1,11 @@
+%h2= t('.title', :organization => @organization)
+
+- if can?(:admin, @organization)
+  = form_for @organization, :html => { :multipart => true } do |f|
+    = f.error_messages
+    = render 'organizations/appearance_fields', :f => f
+    .submit
+      = f.submit t('.submit')
+
+- else
+  %p= t('organizations.you_are_not_admin')

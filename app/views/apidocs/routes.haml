@@ -13,9 +13,9 @@
 .api_routes
   %ul.table
     - @consolidated_routes.each_with_index do |route, i|
-      - controller = link_to route[:controller].capitalize, api_model_path(route[:controller].singularize)
+      - controller = (link_to route[:controller].capitalize, api_model_path(route[:controller].singularize)).html_safe
       - unless route[:controller] == @consolidated_routes[i-1][:controller]
-        %li.title="#{controller}"
+        %li.title= controller
       %li.route
         %div.method="#{route[:action]}"
         - for path in route[:path]

@@ -1,0 +1,18 @@
+- if @organization.projects.unarchived.any?
+  %h3= t('.title')
+  .projects
+    - @organization.projects.unarchived.each do |project|
+      - role = @people.detect { |p| p.project_id == project.id }.try(:role)
+      - if role
+        %p.project
+          = link_to h(project), project
+          %span.status
+            = t('.role_html', :role => @roles[role])
+            - if @roles[role] == 'admin'
+              =raw "(" + link_to(t('.settings'), edit_project_path(project)) + ")"
+      - elsif can?(:admin, @organization)
+        %p.project
+          = link_to h(project), project
+          %span.status= t('.dont_belong')
+- else
+  %p= t('.no_active_projects')

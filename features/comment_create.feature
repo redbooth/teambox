@@ -10,7 +10,7 @@ Feature: Posting a comment on a project wall
     When I fill in the comment box with "<body>"
     And I press "Save"
     And I wait for 1 second
-    Then I should see "<formatted_body>"
+    Then I should see '<formatted_body>'
 
     Examples: 
       | body                                | formatted_body                  |
@@ -21,16 +21,16 @@ Feature: Posting a comment on a project wall
     When I fill in the comment box with ""
     And I press "Save"
     And I wait for 1 second
-    Then I should see "The conversation cannot start with an empty comment."
+    Then I should see 'The conversation cannot start with an empty comment.'
 
   Scenario: I compose a comment with line breaks
     When I fill in the comment box with line breaks
-    And I press "Preview"
-    Then I should see "Text with<br />a break" in the preview
+    And I wait for 1 second
+    Then I should see "Text with<br>a break" in the preview
 
   Scenario: I compose a comment with underscored words, links and emails
-    When I fill in the comment box with "_Text_ with an underscored_long_word and a link: teambox.com or an email: jordi@teambox.com"
-    And I press "Preview"
+    When I fill in the comment box with underscored words and links
+    And I wait for 1 second
     Then I should see "<em>Text</em> with an underscored_long_word" in the preview
     And I should see "http://teambox.com" in the preview
     And I should see "jordi@teambox.com" in the preview

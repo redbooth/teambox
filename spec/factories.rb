@@ -24,6 +24,7 @@ Factory.define :user do |user|
   user.password 'dragons'
   user.password_confirmation 'dragons'
   user.confirmed_user true
+  user.splash_screen false
 end
 
 # compatibility with older specs/cukes
@@ -31,6 +32,7 @@ Factory.define :confirmed_user, :parent => :user do |user|
 end
 
 Factory.define :unconfirmed_user, :parent => :user do |user|
+  user.splash_screen true
   user.confirmed_user false
 end
 
@@ -60,6 +62,16 @@ end
 Factory.define :ruby_rockstars, :class => 'Project' do |project|
   project.name "Ruby Rockstars"
   project.permalink "ruby_rockstars"
+  project.user_id do
+    (User.find_by_login('mislav') || Factory(:mislav)).id
+  end
+  project.association(:organization, :name => "ACME")
+end
+
+Factory.define :procial_network, :class => 'Project' do |project|
+  project.name "Procial Network"
+  project.permalink "procial_network"
+  project.public true
   project.user_id do
     (User.find_by_login('mislav') || Factory(:mislav)).id
   end
@@ -139,6 +151,8 @@ Factory.define :upload do |upload|
   upload.asset_file_name 'pic.png'
   upload.asset_file_size 42
   upload.asset_content_type 'image/png'
+  upload.association(:project)
+  upload.association(:user)
 end
 
 Factory.define :page do |page|

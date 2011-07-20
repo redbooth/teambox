@@ -13,6 +13,13 @@ module WithinHelpers
   def with_scope(locator)
     locator ? within(locator) { yield } : yield
   end
+
+  def with_css_scope(selector)
+    selector = selector.blank? ? nil : selector
+    scope = page.find(:css, selector) if selector
+    raise "Can't find selector '#{selector}' on page" if selector && !scope
+    scope ? yield(scope) : yield(page)
+  end
 end
 World(WithinHelpers)
 
@@ -67,6 +74,14 @@ When /^(?:|I )fill in the following(?: within "([^\"]*)")?:$/ do |selector, fiel
   end
 end
 
+When /^(?:|I )select the following(?: within "([^\"]*)")?:$/ do |selector, fields|
+  with_scope(selector) do
+    fields.rows_hash.each do |value, name|
+      When %{I select "#{name}" from "#{value}"}
+    end
+  end
+end
+
 When /^(?:|I )select "([^\"]*)" from "([^\"]*)"(?: within "([^\"]*)")?$/ do |value, field, selector|
   with_scope(selector) do
     select(value, :from => field)
@@ -74,8 +89,8 @@ When /^(?:|I )select "([^\"]*)" from "([^\"]*)"(?: within "([^\"]*)")?$/ do |val
 end
 
 When /^(?:|I )click the element that contain "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
-  with_scope(selector) do
-    find(:xpath,"//*[.='#{text}']").click
+  with_css_scope(selector) do |node|
+    node.find(:xpath,"//*[.='#{text}']").click
   end
 end
 
@@ -103,22 +118,6 @@ When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"(?: within "([^\"]*)")?$/ 
   end
 end
 
-When /^(.*) confirming with OK$/ do |main_task|
-  if Capybara.current_driver == Capybara.javascript_driver
-    page.evaluate_script("window.old_alert = window.alert")
-    page.evaluate_script("window.old_confirm = window.confirm")
-    page.evaluate_script("window.alert = function(msg) { return true; }")
-    page.evaluate_script("window.confirm = function(msg) { return true; }")
-  end
-  
-  When main_task
-  
-  if Capybara.current_driver == Capybara.javascript_driver
-    page.evaluate_script("window.alert = window.old_alert")
-    page.evaluate_script("window.confirm = window.old_confirm")
-  end
-end
-
 Then /^(?:|I )should see JSON:$/ do |expected_json|
   require 'json'
   expected = JSON.pretty_generate(JSON.parse(expected_json))
@@ -127,12 +126,32 @@ Then /^(?:|I )should see JSON:$/ do |expected_json|
 end
 
 Then /^(?:|I )should see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
-  with_scope(selector) do
-    if Capybara.current_driver == Capybara.javascript_driver
-      page.has_xpath?(Capybara::XPath.content(text), :visible => true)
-    elsif page.respond_to? :should
+  if Capybara.current_driver == Capybara.javascript_driver
+    with_css_scope(selector) do |scope|
+      assert scope.has_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
       page.should have_content(text)
-    else
+    end
+  else
+    with_scope(selector) do
+      assert page.has_content?(text)
+    end
+  end
+end
+
+Then /^(?:|I )should see '([^\']*)'(?: within '([^\']*)')?$/ do |text, selector|
+  if Capybara.current_driver == Capybara.javascript_driver
+    with_scope(selector) do
+      assert page.has_xpath?(XPath::HTML.content(text), :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
+      page.should have_content(text)
+    end
+  else
+    with_scope(selector) do
       assert page.has_content?(text)
     end
   end
@@ -152,13 +171,37 @@ Then /^(?:|I )should see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, selec
   end
 end
 
+Then /^I should see "([^\"]*)" only once$/ do |text|
+  all(:xpath,"//*[.='#{text}']").size.should == 1
+end
+
 Then /^(?:|I )should not see "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
-  with_scope(selector) do
-    if Capybara.current_driver == Capybara.javascript_driver
-      page.has_no_xpath?(Capybara::XPath.content(text), :visible => true)
-    elsif page.respond_to? :should
+  if Capybara.current_driver == Capybara.javascript_driver
+    with_css_scope(selector) do |scope|
+      assert scope.has_no_xpath?("//*[contains(text(), '#{text}')]", :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
       page.should have_no_content(text)
-    else
+    end
+  else
+    with_scope(selector) do
+      assert page.has_no_content?(text)
+    end
+  end
+end
+
+Then /^(?:|I )should not see '([^\']*)'(?: within '([^\']*)')?$/ do |text, selector|
+  if Capybara.current_driver == Capybara.javascript_driver
+    with_css_scope(selector) do |scope|
+      assert scope.has_xpath?(XPath::HTML.content(text), :visible => true)
+    end
+  elsif page.respond_to? :should
+    with_scope(selector) do
+      page.should have_no_content(text)
+    end
+  else
+    with_scope(selector) do
       assert page.has_no_content?(text)
     end
   end
@@ -177,6 +220,9 @@ Then /^(?:|I )should not see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, s
     end
   end
 end
+
+
+
 
 Then /^the "([^\"]*)" field(?: within "([^\"]*)")? should contain "([^\"]*)"$/ do |field, selector, value|
   with_scope(selector) do
@@ -216,10 +262,10 @@ end
 Then /^the "([^\"]*)" checkbox(?: within "([^\"]*)")? should not be checked$/ do |label, selector|
   with_scope(selector) do
     field_checked = find_field(label)['checked']
-    if field_checked.respond_to? :should_not
-      field_checked.should_not be_true
+    if field_checked.respond_to? :should
+      field_checked.should be_false
     else
-      assert ! field_checked
+      assert !field_checked
     end
   end
 end
@@ -248,4 +294,44 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+Then /^debugger/ do
+  debugger
+end
+
+When  /^(?:|I )drag the task list "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
+  with_scope(selector) do
+    dragged_item = find(:xpath,"//div[@class='task_list']/div[@class='head']/a[.='#{dragged_item}']/..//preceding-sibling::img[@class='drag']")
+    dropped_item = find(:xpath,"//*[.='#{dropped_item}']/..//preceding-sibling::img[@class='drag']")
+    l1 = dragged_item.native.location
+    l2 = dropped_item.native.location
+    right = l2.x - l1.x
+    down = l2.y - l1.y
+    dragged_item.native.drag_and_drop_by right, down - 10
+  end
+end
+
+When  /^(?:|I )drag the task "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$/ do |dragged_item, dropped_item, selector|
+  with_scope(selector) do
+    dragged_item = find(:xpath,"//div[@class='taskName']/a[.='#{dragged_item}']/..//preceding-sibling::*/img[@class='task_drag']")
+    dropped_item = find(:xpath,"//*[.='#{dropped_item}']")
+    dragged_item.drag_to dropped_item
+  end
+end
+
+When /^(.*) confirming with OK$/ do |main_task|
+  if Capybara.current_driver == Capybara.javascript_driver
+    page.evaluate_script("window.old_alert = window.alert")
+    page.evaluate_script("window.old_confirm = window.confirm")
+    page.evaluate_script("window.alert = function(msg) { return true; }")
+    page.evaluate_script("window.confirm = function(msg) { return true; }")
+  end
+  
+  When main_task
+  
+  if Capybara.current_driver == Capybara.javascript_driver
+    page.evaluate_script("window.alert = window.old_alert")
+    page.evaluate_script("window.confirm = window.old_confirm")
+  end
 end

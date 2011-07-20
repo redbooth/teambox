@@ -1,18 +1,21 @@
-- hidden = page || (action_name == 'index' && upload.errors.empty?)
+- is_valid = upload.asset.errors.empty? && upload.errors.empty?
 
-- form_for [project, upload], :html => { :multipart => true, :style => hidden ? 'display: none' : nil, :class => "upload_form app_form #{'form_error' unless upload.errors.empty?}" } do |f|
+= form_for [project, upload], upload_form_html_options(page,upload) do |f|
   .description.text_field
-    = f.label :description, t('.description')
+    = f.label :description, t('.description_html')
     = f.text_field :description
   .file
     = f.label :asset, t('.select_file')
     = f.file_field :asset, :size => 20
-    - unless upload.asset.errors.empty?
+    - unless is_valid
       %p
         - if upload.asset.errors.has_key?(:presence)
           %span= t('.presence')
         - if upload.asset.errors.has_key?(:size)
           %span= t('.max_size', :mb => Teambox.config.asset_max_file_size.to_i)
+        - upload.errors.each do |attr, message|
+          %span= message
+    %p= t('.max_upload_size', :mb => Teambox.config.asset_max_file_size)
   .submit
     - if page
       = page_slot_fields

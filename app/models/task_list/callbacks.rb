@@ -1,18 +1,17 @@
 class TaskList
-  def before_save
+  before_create :init_list
+  after_create :log_create
+  
+  def init_list
     unless self.position
-      first_task_list = self.project.task_lists.first(:select => 'position')
-      if first_task_list
-        last_position = first_task_list.position
-        self.position = last_position.nil? ? 1 : last_position.succ
-      else
-        self.position = 0
+      self.position = 0
+      project.task_lists.each do |t|
+        t.increment!(:position) unless t == self
       end
     end
   end
 
-  def after_create
-    self.move_to_top
+  def log_create
     self.project.log_activity(self,'create')
   end
 

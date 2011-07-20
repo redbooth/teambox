@@ -1,14 +1,14 @@
 %br
 %h2= t('.title')
 
-%p= t('.invitation_sent_to', :email => @email)
-%p= t('.follow_the_link')
+%p= t('.invitation_sent_to_html', :email => @email)
+%p= t('.follow_the_link_html')
 
 %h3= t('.problems_title')
 
 %ul
-  %li= t('.resend', :link => unconfirmed_email_user_path(current_user, :resend => true))
+  %li= t('.resend_html', :link => unconfirmed_email_user_path(current_user, :resend => true))
   %li= t('.spam')
-  %li= t('.wrong_address', :link => logout_path)
-    
-%p= t('.problems', :support => link_to(APP_CONFIG['support'], APP_CONFIG['support']))
+  %li= t('.wrong_address_html', :link => logout_path)
+
+%p= t('.problems_html', :support => link_to(Teambox.config.support, Teambox.config.support))

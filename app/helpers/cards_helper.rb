@@ -7,14 +7,14 @@ module CardsHelper
   end
 
   def render_card(card)
-    render 'cards/card', :card => card
+    render 'cards/card', :card => card if card
   end
 
   def remove_link_unless_new_record(fields)
     ''.tap do |out|
       out << fields.hidden_field(:_destroy) unless fields.object.new_record?
       out << link_to("", "##{fields.object.class.name.underscore}", :class => 'remove_nested_item trash_icon')
-    end
+    end.html_safe
   end
 
   def generate_html(form_builder, method, options = {})

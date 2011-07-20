@@ -1,38 +1,74 @@
 class Activity < ActiveRecord::Base
+
   belongs_to :target, :polymorphic => true
+  belongs_to :comment_target, :polymorphic => true
   belongs_to :user
   belongs_to :project
-  acts_as_paranoid
 
-  named_scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_type = 'TaskList' || comment_type = 'Task'"
-  named_scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_type = 'Conversation'"
-  
-  named_scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
+  scope :for_task_lists, :conditions => "target_type = 'TaskList' || target_type = 'Task' || comment_target_type = 'TaskList' || comment_target_type = 'Task'"
+  scope :for_conversations, :conditions => "target_type = 'Conversation' || comment_target_type = 'Conversation'"
+  scope :for_tasks, :conditions => "target_type = 'Task' || comment_target_type = 'Task'"
+  scope :in_targets, lambda {|targets| {:conditions => ["target_id IN (?) OR comment_target_id IN (?)", *(Array(targets).collect(&:id)*2)]}}
+
+  scope :latest, :order => 'id DESC', :limit => Teambox.config.activities_per_page
+
+  scope :in_projects, lambda { |projects| { :conditions => ["project_id IN (?)", Array(projects).collect(&:id) ] } }
+  scope :limit_per_page, :limit => Teambox.config.activities_per_page
+  scope :by_id, :order => 'id DESC'
+  scope :by_updated, :order => 'updated_at desc'
+  scope :threads, :conditions => "target_type != 'Comment'"
+  scope :before, lambda { |activity_id| { :conditions => ["id < ?", activity_id ] } }
+  scope :after, lambda { |activity_id| { :conditions => ["id > ?", activity_id ] } }
+  scope :from_user, lambda { |user| { :conditions => { :user_id => user.id } } }
 
   def self.log(project,target,action,creator_id)
     project_id = project.try(:id)
+    return if project.try(:is_importing)
 
     if target.is_a? Comment
-      comment_type = target.target_type
-    else
-      comment_type = nil
+      comment_target_type = target.target_type
+      comment_target_id = target.target_id
+      # touch activity related to that comment's thread
+      Activity.last(:conditions => ["target_type = ? AND target_id = ?", comment_target_type, comment_target_id]).try(:touch)
     end
-        
+    
     activity = Activity.new(
       :project_id => project_id,
       :target => target,
       :action => action,
       :user_id => creator_id,
-      :comment_type => comment_type)
+      :comment_target_type => comment_target_type,
+      :comment_target_id => comment_target_id)
     activity.created_at = target.try(:created_at) || nil
     activity.save
     
     activity
   end
+  
+  def refs_thread_comments
+    if target.respond_to? :first_comment
+      [target.first_comment] + target.recent_comments
+    else
+      []
+    end
+  end
+  
+  def refs_comment_target
+    if comment_target.respond_to? :first_comment
+      [comment_target,
+       comment_target.first_comment,
+       comment_target.user,
+       comment_target.first_comment.try(:user)] + 
+       comment_target.recent_comments + 
+       comment_target.recent_comments.map(&:user)
+    else
+      [comment_target]
+    end
+  end
 
   def action_comment_type
     i = "#{action}#{target_type}"
-    i +="#{comment_type}" if comment_type
+    i +="#{comment_target_type}" if comment_target_type
     i.underscore
   end
 
@@ -48,6 +84,14 @@ class Activity < ActiveRecord::Base
     i == current_type
   end
   
+  def target
+    @target ||= target_id ? Kernel.const_get(target_type).find_with_deleted(target_id) : nil
+  end
+  
+  def comment_target
+    @comment_target ||= comment_target_id ? Kernel.const_get(comment_target_type).find_with_deleted(comment_target_id) : nil
+  end
+  
   def user
     target.user
   end
@@ -56,52 +100,28 @@ class Activity < ActiveRecord::Base
     target.created_at
   end
 
-  def deleted_date
-    target.deleted_at
-  end
-
   def downcase_type
     target.type.to_s.downcase
   end
 
-  def target
-    case target_type
-    when 'Person'       then begin; Person.find_with_deleted(target_id); rescue; nil; end
-    when 'Comment'      then begin; Comment.find_with_deleted(target_id); rescue; nil; end
-    when 'Conversation' then begin; Conversation.find_with_deleted(target_id); rescue; nil; end
-    when 'TaskList'     then begin; TaskList.find_with_deleted(target_id); rescue; nil; end
-    when 'Task'         then begin; Task.find_with_deleted(target_id); rescue; nil; end
-    when 'Page'         then begin; Page.find_with_deleted(target_id); rescue; nil; end
-    when 'Note'         then begin; Note.find_with_deleted(target_id); rescue; nil; end
-    when 'Divider'      then begin; Divider.find_with_deleted(target_id); rescue; nil; end
-    when 'Upload'       then begin; Upload.find_with_deleted(target_id); rescue; nil; end
-    when 'Project'      then begin; Project.find_with_deleted(target_id); rescue; nil; end
-    end
-  end
-
   def user
-    @user ||= User.find_with_deleted(user_id)
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
 
   def thread
-    @thread ||= if target.is_a?(Comment) && !target.target.is_a?(Project)
-      target.target
+    @thread ||= if target.is_a?(Comment)
+      comment_target
     else
       target
     end || project
   end
 
   def thread_id
-    @thread_id ||= Rails.cache.fetch("#{cache_key}/thread_id") do
-      "#{thread.class}_#{thread.id}"
-    end
+    target_type == 'Comment' ? "#{comment_target_type}_#{comment_target_id}" : "#{target_type}_#{target_id}"
   end
 
-  def self.get_threads(activities)
-    activities.inject([]) do |result, a|
-      result << a unless result.collect(&:thread_id).include?(a.thread_id)
-      result
-    end
+  def self.for_projects(projects)
+    in_projects(projects).limit_per_page.by_updated
   end
 
   def to_xml(options = {})

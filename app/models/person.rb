@@ -2,29 +2,37 @@
 # A Person model describes the relationship of a User that follows a Project.
 
 class Person < ActiveRecord::Base
+  include Immortal
+
   belongs_to :user
   belongs_to :project
   belongs_to :source_user, :class_name => 'User'
-
-  acts_as_paranoid
+  has_many :tasks, :foreign_key => 'assigned_id', :dependent => :nullify
+  
+  after_create :log_create
+  after_destroy :log_delete, :cleanup_after
   
 #  validates_uniqueness_of :user, :scope => :project
   validates_presence_of :user, :project   # Make sure they both exist and are set
   validates_inclusion_of :role, :in => 0..3
+  validates_uniqueness_of :project_id, :scope => :user_id
 
   serialize :permissions
 
   ROLES = {:observer => 0, :commenter => 1, :participant => 2, :admin => 3}
   PERMISSIONS = [:view,:edit,:delete,:all]
   
-  named_scope :admins, :conditions => "role = #{ROLES[:admin]}"
+  scope :admins, :conditions => "role = #{ROLES[:admin]}"
   
-  named_scope :from_unarchived, :joins => :project,
+  scope :from_unarchived, :joins => :project,
     :conditions => ['projects.archived = ?', false]
   
-  named_scope :by_login, lambda { |login|
+  scope :by_login, lambda { |login|
     {:include => :user, :conditions => {'users.login' => login}}
   }
+
+  scope :in_alphabetical_order, :include => :user, :order => 'users.first_name ASC'
+
   
   attr_accessible :role, :permissions
 
@@ -52,16 +60,11 @@ class Person < ActiveRecord::Base
     user.login
   end
   
-  def after_create
+  def log_create
     # for a new project, we log create_project, not create_person
     project.log_activity(self, 'create', user_id) unless project.user == user
     # promote the project owner to admin
     update_attribute :role, ROLES[:admin] if project.user == user
-  end
-  
-  def after_destroy
-    project.log_activity(self, 'delete')
-    user.remove_recent_project(project)
   end
   
   def self.users_from_projects(projects)
@@ -69,21 +72,21 @@ class Person < ActiveRecord::Base
     User.find(:all, :conditions => {:id => user_ids}, :select => 'id, login, first_name, last_name').sort_by(&:name)
   end
   
-  def self.user_names_from_projects(projects)
+  def self.user_names_from_projects(projects, current_user = nil)
     project_ids = Array.wrap(projects).map(&:id)
     connection.select_rows(<<-SQL)
-      SELECT people.project_id, users.login, users.first_name, users.last_name
+      SELECT people.project_id, users.login, users.first_name, users.last_name, people.id, users.id
       FROM people
       INNER JOIN projects ON projects.id = people.project_id
       INNER JOIN users ON users.id = people.user_id
       WHERE people.project_id IN (#{project_ids.join(',')})
-        AND people.deleted_at IS NULL
-      ORDER BY users.login
+        AND (people.deleted IS NULL OR people.deleted IS FALSE)
+      ORDER BY users.id = #{current_user.try(:id).to_i} DESC,users.login
     SQL
   end
   
   def user
-    User.find_with_deleted(user_id)
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
 
   def to_xml(options = {})
@@ -121,5 +124,16 @@ class Person < ActiveRecord::Base
   
   def to_json(options = {})
     to_api_hash(options).to_json
+  end
+  
+  protected
+  
+  def log_delete
+    project.log_activity(self, 'delete')
+  end
+  
+  def cleanup_after
+    user.remove_recent_project(project)
+    user.tasks_counts_update
   end
 end

@@ -1,12 +1,12 @@
 .project
   = thumb_avatar(invitation.user)
   .text
-    = t('.invited_to_join', :by => user_link(invitation.user), :project => content_tag(:b,h(invitation.target.name)))
+    =raw t('.invited_to_join', :by => user_link(invitation.user), :project => content_tag(:b,h(invitation.target.name)))
   
   .actions
-    - form_for invitation.project, :url => accept_project_invitation_path(invitation.target,invitation), :html => { :class => 'accept_project' } do |f|
+    = form_for invitation.project, :url => accept_project_invitation_path(invitation.target,invitation), :html => { :class => 'accept_project' } do |f|
       = f.submit t('common.accept')
       %span 
       = t('.to_access_or')
-    - form_for invitation.project, :url => decline_project_invitation_path(invitation.target,invitation), :html => { :class => 'decline_project' } do |f|
+    = form_for invitation.project, :url => decline_project_invitation_path(invitation.target,invitation), :html => { :class => 'decline_project' } do |f|
       = f.submit t('common.decline')

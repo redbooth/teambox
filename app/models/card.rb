@@ -1,12 +1,12 @@
 class Card < ActiveRecord::Base
 
   belongs_to :user
-  has_many :phone_numbers
-  has_many :addresses
-  has_many :email_addresses
-  has_many :websites
-  has_many :ims
-  has_many :social_networks
+  has_many :phone_numbers, :dependent => :destroy
+  has_many :addresses, :dependent => :destroy
+  has_many :email_addresses, :dependent => :destroy
+  has_many :websites, :dependent => :destroy
+  has_many :ims, :dependent => :destroy
+  has_many :social_networks, :dependent => :destroy
 
   with_options :allow_destroy => true, :reject_if => proc { |a| a['name'].blank? } do |card|
     card.accepts_nested_attributes_for :phone_numbers

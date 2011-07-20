@@ -1,11 +1,9 @@
-- project = local_assigns[:project] || f.object.project || f.object.target.try(:project)
 - task_form = nil unless local_assigns[:task_form]
 
 .field.text_area
   %a.micro_avatar.my_avatar{ :href => '#' }
-  = f.text_area :body, :placeholder => local_assigns[:placeholder], :id => nil, :style => request.xhr? ? 'max-height: 300px' : nil
-
-- autocomplete_from_project(project)
+  .textarea
+    = f.text_area :body, :placeholder => local_assigns[:placeholder], :id => nil, :style => request.xhr? ? 'max-height: 300px' : nil
 
 .extra
   - if task_form
@@ -17,25 +15,59 @@
 
   .upload_area
     %p= t('uploads.new.select_a_file')
-
     - f.object.uploads.build
-    - f.fields_for :uploads do |fields|
+    = f.fields_for :uploads do |fields|
       = fields.file_field :asset, :id => 'upload_file'
 
+  .add_watchers_box{ :style => 'display: none' }
+    %p= t('comments.watchers.explain') 
+
   .actions
-    %span= t('.attach') + ": "
-    = link_to t('uploads.comment_upload_link'), project ? [:new, project, :upload] : '#uploads', :class => 'attach_icon'
-  
+    .attach
+      %span= t('.attach') + ": "
+      = link_to t('uploads.comment_upload_link'), '#uploads', :class => 'attach_icon hoverable', :title => "Attach a file"
+      = render 'google_docs/form', :f => f
+      - if task_form
+        = link_to t('comments.hours.tooltip'), '#hours', :class => 'add_hours_icon hoverable', :title => "Log hours"
+      = link_to "Watchers", '#watchers', :class => 'add_watchers hoverable', :title => "Notify people"
+
     - if task_form
-      = link_to t('comments.hours.tooltip'), '#hours', :class => 'add_hours_icon'
-    
       .task_actions
         = task_form.label :status
         = task_form.select :status, task_statuses_for_select
         = task_form.label :assigned_id, t('comments.new.assigned_to')
-        = task_form.select :assigned_id, people_from_project_for_select(project)
+        = task_form.select :assigned_id, [], {}, :'data-assigned' => task_form.object.assigned_id
+        = task_form.label :due_on
+        = date_picker(task_form, :due_on)
+
+    - if !local_assigns[:project]
+      %span.new{ :style => 'display: none' }
+        &larr; &nbsp;&nbsp;
+        = t('comments.watchers.popup_note_html')
+
+    - if local_assigns[:conversation_form] && local_assigns[:project]
+      - if f.object.target && can?(:update, f.object.target) && can?(:make_tasks, local_assigns[:project])
+        %span.convert_to_task
+          = link_to t('comments.conversations.convert_to_task'), '#convert_to_task'
+        .convert_to_task{:style => 'display:none;'}
+          .conversation_actions
+            .fields
+              = conversation_form.label :name, "#{t('conversations.convert_form.name')}:"
+              = conversation_form.text_field :name, :placeholder => t('comments.conversations.task_name'), :error_message => t('tasks.errors.name.cant_be_blank'), :disabled => true, :class => 'required'
+            .fields
+              = conversation_form.label :task_list_id, "#{t('conversations.convert_form.task_list')}:"
+              = conversation_form.select :task_list_id, [[t('comments.comment.loading'),""]], {}, :disabled => true
+            .fields
+              = conversation_form.label :status, "#{t('conversations.convert_form.status')}:"
+              = conversation_form.select :status, task_statuses_for_select, {}, :disabled => true
+              = conversation_form.select :assigned_id, [], {}, :'data-assigned' => conversation_form.object.assigned_id, :disabled => true
+            .fields
+              = date_picker(conversation_form, :due_on, false, :disabled => true)
+          .submit
+            = link_to t('common.cancel'), '#cancel_conversion', :class => 'cancel'
+            = f.submit t('comments.convert_form.submit'), :'data-disable-with' => t('comments.new.sending'), :disabled => true
 
   .submit
     %span.help= formatting_documentation_link
-    %button.preview{ :data => {:alternate => t('comments.preview.close')} }= t('comments.preview.preview')
+    = #preview_button
     = f.submit t('comments.new.submit'), :'data-disable-with' => t('comments.new.sending')

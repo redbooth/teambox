@@ -1,6 +1,6 @@
 .page_header
   .text_actions
-    - if @page.editable?(current_user)
+    - if can? :update, @page
       = rename_page_link(@current_project, @page)
       = t('common.or')
       = edit_mobile_page_link(@current_project, @page)

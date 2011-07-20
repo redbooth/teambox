@@ -1,9 +1,9 @@
 class ApiV1::PeopleController < ApiV1::APIController
   before_filter :load_person, :except => [:index]
-  before_filter :check_permissions, :only => [:update]
   
   def index
-    @people = @current_project.people(:include => [:project, :user])
+    @people = @current_project.people(:include => [:project, :user],
+                                      :order => 'id DESC')
     
     api_respond @people, :references => [:project, :user]
   end
@@ -13,7 +13,8 @@ class ApiV1::PeopleController < ApiV1::APIController
   end
   
   def update
-    if !@current_project.owner?(@person.user) && @person.update_attributes(params)
+    authorize! :update, @person
+    if @person.update_attributes(params)
       handle_api_success(@person)
     else
       handle_api_error(@person)
@@ -21,27 +22,16 @@ class ApiV1::PeopleController < ApiV1::APIController
   end
 
   def destroy
-    has_permission = !@current_project.owner?(@person.user) && ((current_user == @person.user) or 
-                      @current_project.admin?(current_user))
-    if has_permission
-      @person.destroy
-      handle_api_success(@person)
-    else
-      handle_api_error(@person, :status => :unauthorized)
-    end
+    authorize! :destroy, @person
+    @person.destroy
+    handle_api_success(@person)
   end
 
   protected
   
   def load_person
     @person = @current_project.people.find params[:id]
-    api_status(:not_found) unless @person
-  end
-  
-  def check_permissions
-    unless @current_project.admin?(current_user)
-      api_error("You don't have permission to administer within \"#{@current_project.name}\" project", :unauthorized)
-    end
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Person not found' unless @person
   end
   
 end

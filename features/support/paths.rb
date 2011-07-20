@@ -17,12 +17,16 @@ module NavigationHelpers
       login_path
     when /the forgot password page/
       "/forgot"
+    when /the your data page/
+      teambox_datas_path
     when /the pages of the "([^\"]*)" project/
       project_pages_path(Project.find_by_name($1))
     when /the page named "([^\"]*)"/
         project_page_path(@current_project, Page.find_by_name($1))
     when /the project page/
       project_path(@current_project)
+    when /the public project page/
+      public_project_path(@current_project)
     when /the page of the "([^\"]*)" project/
       project_path(Project.find_by_name($1))
     when /the conversations page/
@@ -44,7 +48,7 @@ module NavigationHelpers
     when /its task list page/
       project_task_list_path(@current_project,@task_list)
     when /its task page/
-      project_task_list_task_path(@current_project,@task_list,@task)
+      project_task_path(@current_project,@task)
     when /project settings page/
       project_settings_path(@current_project)
     when /the "(.+)" tasks page/
@@ -56,7 +60,7 @@ module NavigationHelpers
       project_task_list_path(project, task_list)
     when /the page of the "([^\"]*)" task/
       task = Task.find_by_name($1)
-      project_task_list_task_path(task.project, task.task_list, task)
+      project_task_path(task.project, task)
     when /the profile of "([^\"]*)"/
       user = User.find_by_login($1)
       user_path(user)
@@ -68,15 +72,25 @@ module NavigationHelpers
       public_projects_path
     when /the organizations page/
       organizations_path
+    when /the admin users page for the for "([^\"]*)" organization/
+      organization_memberships_path(Organization.find_by_name($1))
     when /the new organization page/
       new_organization_path
+    when /the participant page for the "([^\"]*)" organization/
+      organization = Organization.find_by_name($1)
+      organization_path(organization)
     when /the public site for "([^\"]*)" organization/
       organization = Organization.find_by_name($1)
       site_path(organization)
+    when /the appearance page for the "([^\"]*)" organization/
+      organization = Organization.find_by_name($1)
+      appearance_organization_path(organization)
     when /the apidocs page/
       '/api'
     when /time tracking/
       time_path
+    when /the results page for "(.+)"/
+      search_path :q => $1
     else
       begin
         page_name =~ /the (.*) page/

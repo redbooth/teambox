@@ -1,6 +1,7 @@
 @import shared
 @import forms
 @import header
+@import icons
 
 html
   margin: 0px
@@ -38,9 +39,6 @@ div
     clear: both
   &.header
     display: none
-  &.navigation_wrap
-    background: url(/images/nav_bg.gif) repeat-x top
-    height: 38px
   &.navigation
     width: 900px
     margin: 0px auto
@@ -163,27 +161,4 @@ form
     label
       font-weight: normal
 
-.new_users, .create_users
-  .text_field, .select
-    margin: 15px 0
-    label
-      display: inline-block
-      width: 130px
-      text-align: right
-      font-weight: normal
-      padding-right: 10px
-    select
-      margin-left: 5px
-  .errors_for, .fieldWithErrors
-    display: inline
-    font-size: 12px
-    color: red
-  .weakling, .field_note
-    font-weight: normal
-    padding: 5px 0 0 148px
-    font-size: 10px
-  .field_note
-    color: #A0A0A0
-
-.oauth_logins
-  margin-top: 50px
+@import signup

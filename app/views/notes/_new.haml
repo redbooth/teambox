@@ -1,7 +1,8 @@
-- form_for [project,page,note], :html => { :style => 'display: none', :'data-remote' => 'true' } do |f|
+= form_for [project,page,note], :html => { :style => 'display: none', :'data-remote' => 'true' } do |f|
   = page_slot_fields
   = note_fields(f)
   .submit{ :id => "note_submit" }
+    = #preview_button
     = f.submit t('.submit'), :'data-disable-with' => t('pages.new.sending')
     or
     = link_to t('common.cancel'), '#', :class => 'cancelPageWidget'

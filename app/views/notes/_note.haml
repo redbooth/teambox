@@ -1,6 +1,6 @@
 %div[note]
-  - if current_user && note.editable?(current_user)
+  - if current_user && can?(:update, note.page)
     = render 'notes/actions', :note => note
   %h3=h note.name
   .textilized
-    ~ note.body_html
+    ~raw note.body_html

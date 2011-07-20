@@ -7,9 +7,30 @@ Given /I am an administrator in the organization called "([^\"]*)"$/ do |name|
   organization.add_member(@current_user, :admin)
 end
 
+Given /I am an administrator in the organization of the project called "([^\"]*)"$/ do |name|
+  project = Project.find_by_name(name)
+  project.organization.add_member(@current_user, :admin)
+end
+
+Given /"([^\"]*)" is an administrator in the organization of the project called "([^\"]*)"$/ do |username,name|
+  project = Project.find_by_name(name)
+  project.organization.add_member(User.find_by_login(username), :admin)
+end
+
+
+Given /the organization of the project called "([^\"]*)" is called "([^\"]*)"$/ do |project_name, name|
+  project = Project.find_by_name(project_name)
+  project.organization.update_attribute(:name, name)
+end
+
 Given /I am a participant in the organization called "([^\"]*)"$/ do |name|
   organization = Organization.find_by_name(name) || Organization.create!(:name => name, :permalink => name)
   organization.add_member(@current_user, :participant)
+end
+
+Given /I am a participant in the organization of the project called "([^\"]*)"$/ do |name|
+  project = Project.find_by_name(name)
+  project.organization.add_member(@current_user, :participant)
 end
 
 Given /"([^\"]*)" is an administrator in the organization called "([^\"]*)"$/ do |user,name|
@@ -54,3 +75,10 @@ Then /"([^\"]*)" should not belong to the organization "([^\"]*)"$/ do |login, o
   organization.memberships.find_by_user_id(user.id).should be_nil
 end
 
+Then /^I fill in the organization description with "([^"]*)"$/ do |text|
+  Then %(I fill in "organization_description" with "#{text}")
+end
+
+Then /I should see "([^"]*)" within custom html/ do |text|
+  Then %(I should see "#{text}" within ".custom_html")
+end

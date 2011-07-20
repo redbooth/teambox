@@ -54,9 +54,62 @@ describe Invitation do
     it "should send an Invitation email to existing users" do
       user = Factory.create(:user)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_receive(:deliver_project_invitation).with(invitation).once
+      Emailer.should_receive(:send_with_language).once
       invitation.save
       user.invitations.length.should == 1
+    end
+
+    it "should send a project membership notification email to users in the inviter's organization" do
+      user = Factory.create(:user)
+      @project.organization.add_member(user, :participant)
+      invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
+      Emailer.should_receive(:send_with_language).once
+      invitation.save
+      user.invitations.length.should == 0
+    end
+    
+    it "should send a project membership notification email even when the invite is deleted" do
+      user = Factory.create(:user)
+      @project.organization.add_member(user, :participant)
+      invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
+      invitation.save
+      invitation.deleted?.should == true
+      user.invitations.length.should == 0
+      
+      Emailer.send_email(:project_membership_notification, invitation.id)# rescue assert(false)
+    end
+
+    it "should not send an Invitation email to users in the inviter's organization" do
+      user = Factory.create(:user)
+      @project.organization.add_member(user, :participant)
+      invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
+      Emailer.should_not_receive(:send_with_language).with(:project_invitation)
+      invitation.save
+    end
+
+    it "should auto accept the invitation if the user is in the inviter's organization" do
+      user = Factory.create(:user)
+      @project.organization.add_member(user, :participant)
+      invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
+      invitation.should_receive(:accept).with(user).once
+      invitation.save
+    end
+
+    it "should not auto accept the invitation if the user is not in the inviter's organization" do
+      user = Factory.create(:user)
+      invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
+      Invitation.should_not_receive(:accept)
+      invitation.save
+    end
+
+    it "should destroy itself after autoaccepting and having sent the project membership notification" do
+      user = Factory.create(:user)
+      @project.organization.add_member(user, :participant)
+      invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
+      Emailer.should_receive(:send_with_language).once
+      invitation.save
+      user.invitations.length.should == 0
+      invitation.should be_frozen
     end
 
     it "should create an invitation with an email but no assigned user for non-existing users" do
@@ -68,7 +121,7 @@ describe Invitation do
     
     it "should send a Signup and Invitation email to non-existing users" do
       invitation = @project.new_invitation(@inviter, :user_or_email => "carl.jung@hotmail.ch")
-      Emailer.should_receive(:deliver_signup_invitation).once
+      Emailer.should_receive(:send_with_language).once
       invitation.save
     end
     
@@ -137,13 +190,13 @@ describe Invitation do
     it "can resend an email to an already invited user with an account who hasn't accepted" do
       user = Factory.create(:user)
       invitation = @project.new_invitation(@project.user, :user_or_email => user.login)
-      Emailer.should_receive(:deliver_project_invitation).with(invitation).once
+      Emailer.should_receive(:send_with_language).once
       invitation.save!
     end
 
     it "can resend an email to an already invited user without an account who hasn't accepted" do
       invitation = @project.new_invitation(@project.user, :user_or_email => "carl.jung@hotmail.ch")
-      Emailer.should_receive(:deliver_signup_invitation).with(invitation).once
+      Emailer.should_receive(:send_with_language).once
       invitation.save!
     end
   end

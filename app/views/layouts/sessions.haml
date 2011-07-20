@@ -5,16 +5,11 @@
     = csrf_meta_tag
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title Teambox
-    = stylesheet_link_tag 'sessions'
-    = sprockets_include_tag
+    = include_stylesheets :sessions
+    = sprockets_include_tag :public
 
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
-    = javascript_include_tag 'modernizr'
     .container
-      .navigation_wrap
-        .navigation
-          %ul
-            %li= link_to 'Home', root_path
       .wrapper
         .content
           - show_flash
@@ -24,5 +19,5 @@
             = image_tag 'teambox-logo.gif', :alt => 'Teambox logo'
             = yield :column
       .footer
-        %p.copyright Copyright &copy; 2010 Teambox. All rights reserved
-    = javascripts
+        %p.copyright Copyright &copy; 2011 Teambox. All rights reserved
+

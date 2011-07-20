@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'spec/expectations'
+#require 'spec/expectations'
 
 class EmailSpecWorld
   def self.root_dir

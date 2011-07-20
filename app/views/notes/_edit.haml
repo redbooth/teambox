@@ -1,6 +1,7 @@
-- form_for [note.project,note.page,note], :html => { :'data-remote' => 'true' } do |f|
+= form_for [note.project,note.page,note], :html => { :'data-remote' => 'true' } do |f|
   = note_fields(f)
   .submit{ :id => "note_submit_#{note.id}" }
+    = #preview_button
     = f.submit t('.submit')
     = loading('note_form', note.id)
     = t('common.or')

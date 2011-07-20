@@ -22,7 +22,7 @@ describe Comment do
   describe "copying ownership" do
     before do
       @target = Factory.build(:simple_conversation, :body => nil)
-      @target.save(false)
+      @target.save(:validate => false)
       @comment = Factory.build(:comment, :target => @target, :user => nil, :project => nil)
     end
     
@@ -112,28 +112,28 @@ describe Comment do
       comment.mentioned.should_not include(@user)
     end
 
-    describe "commenting" do
+    describe "commenting adds you as a watcher" do
       before do
         @project = Factory(:project)
         @pablo = Factory(:confirmed_user)
         @project.add_user(@pablo)
       end
 
-      it "on a conversation should add you as a watcher" do
-        @conversation = Factory(:conversation, :project => @project, :user => @project.user)
-        @conversation.watchers_ids.should_not include(@pablo.id)
-        comment = Factory(:comment, :project => @project, :user => @pablo, :target => @conversation)
-        @conversation.reload.watchers_ids.should include(@pablo.id)
+      it "on a conversation" do
+        conversation = Factory(:conversation, :project => @project, :user => @project.user)
+        conversation.watchers_ids.should_not include(@pablo.id)
+        comment = Factory(:comment, :project => @project, :user => @pablo, :target => conversation)
+        conversation.reload.watchers_ids.should include(@pablo.id)
       end
 
-      it "on a task should add you as a watcher" do
+      it "on a task" do
         @task = Factory(:task, :project => @project, :user => @project.user)
         @task.watchers_ids.should_not include(@pablo.id)
         comment = Factory(:comment, :project => @project, :user => @pablo, :target => @task)
         @task.reload.watchers_ids.should include(@pablo.id)
       end
     end
-
+    
     describe "mentioning @user" do
       before do
         @project.add_user(@user)
@@ -208,6 +208,31 @@ describe Comment do
     end
   end
   
+  describe "commenting updates the updated_at field" do
+    before do
+      @project = Factory(:project)
+      @user = @project.user
+    end
+    
+    it "on a conversation" do
+      conversation = Factory(:conversation, :project => @project, :user => @project.user)
+      conversation.update_attribute :updated_at, 1.day.ago
+      lambda {
+        Factory(:comment, :project => @project, :user => @user, :target => conversation)
+        conversation.reload
+      }.should change(conversation, :updated_at)
+    end
+    
+    it "on a task" do
+      task = Factory(:task, :project => @project, :user => @project.user)
+      task.update_attribute :updated_at, 1.day.ago
+      lambda {
+        Factory(:comment, :project => @project, :user => @user, :target => task)
+        task.reload
+      }.should change(task, :updated_at)
+    end
+  end
+  
   describe "permissions" do
     before do
       @project = Factory(:project)
@@ -260,7 +285,8 @@ describe Comment do
     it "should link existing upload" do
       upload = Factory.create :upload
       comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
-        :body => 'Here is that cat video I promised'
+        :body => 'Here is that cat video I promised',
+        :project => upload.project, :user => upload.user
 
       comment.uploads.should == [upload]
       upload.reload
@@ -283,7 +309,9 @@ describe Comment do
     
     it "should allow the creation of a comment with a file but no body" do
       upload = Factory.create :upload
-      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => nil
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
+                                         :body => nil,
+                                         :project => upload.project
       
       comment.should have(1).upload
       upload = comment.uploads.first
@@ -292,7 +320,9 @@ describe Comment do
     
     it "should allow you to delete the upload and keep the comment if there is a body" do
       upload = Factory.create :upload
-      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => 'test'
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
+                                         :body => 'test',
+                                         :project => upload.project
       
       comment.should have(1).upload
       comment.uploads.first.destroy
@@ -316,7 +346,7 @@ describe Comment do
     
     it "should allow you to delete the upload and keep the comment if there is no body" do
       upload = Factory.create :upload
-      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => nil
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s], :body => nil, :project => upload.project
       
       comment.should have(1).upload
       
@@ -327,14 +357,51 @@ describe Comment do
       comment.reload.should have(0).uploads
       comment.body.should == "File deleted"
     end
+    
+    it "touches comment on upload destroy" do
+      upload = Factory.create :upload
+      comment = Factory.create :comment, :upload_ids => [upload.id.to_s],
+        :body => "Can't touch this"
+      Comment.update_all({:updated_at => 15.minutes.ago}, :id => comment.id)
+
+      comment.reload.updated_at.should be_within(1).of(15.minutes.ago)
+      upload.reload.destroy
+      comment.reload.updated_at.should be_within(1).of(Time.now)
+    end
   end
   
   context "hours" do
     it "assigns human hours" do
       comment = Factory.build :comment, :human_hours => "2:30"
-      comment.hours.should be_close(2.5, 0.001)
+      comment.hours.should be_within(0.001).of(2.5)
       comment.human_hours = " "
       comment.hours.should be_nil
+    end
+  end
+
+  context "deleting users" do
+    before do
+      assigned = Factory :user, :first_name => "Michael", :last_name => "Jackson"
+      project = Factory :project
+      @person = Factory :person, :user => assigned, :project => project
+      @comment = Factory :comment, :target => Factory(:task), :user => Factory(:mislav), :assigned => @person, :project => project
+      @user = @comment.user
+    end
+
+    it "should display information about the user after this being deleted" do
+      @user.destroy
+      @comment.reload.user.name.should == "Mislav Marohnić"
+    end
+
+    it "should display information about the assigned user after this being deleted" do
+      @person.destroy
+      @comment.reload.assigned.user.name.should == "Michael Jackson"
+    end
+
+    it "should display information about the previous assigned user after this being deleted" do
+      comment = Factory :comment, :target => @comment.target, :assigned => Factory(:person, :project => @comment.target.project), :previous_assigned => @person
+      @person.destroy
+      comment.reload.previous_assigned.user.name.should == "Michael Jackson"
     end
   end
 end

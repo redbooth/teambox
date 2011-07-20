@@ -1,8 +1,7 @@
 class Comment < ActiveRecord::Base
+  include Immortal
   
   extend ActiveSupport::Memoizable
-  
-  acts_as_paranoid
   
   concerned_with :tasks, :finders, :conversions
 
@@ -15,22 +14,40 @@ class Comment < ActiveRecord::Base
   def task_comment?
     self.target_type == "Task"
   end
+  
+  def user
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
+  end
+  
+  def assigned
+    @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
+  end
+  
+  def previous_assigned
+    @previous_assigned ||= previous_assigned_id ? Person.with_deleted.find_by_id(previous_assigned_id) : nil
+  end
 
   has_many :uploads
   accepts_nested_attributes_for :uploads, :allow_destroy => true,
     :reject_if => lambda { |upload| upload['asset'].blank? }
-
+  
+  has_many :google_docs
+  accepts_nested_attributes_for :google_docs, :allow_destroy => true,
+    :reject_if => lambda { |google_docs| google_docs['title'].blank? || google_docs['url'].blank? }
+  
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
-                  :upload_ids, :uploads_attributes
+                  :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes
 
-  named_scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
-  named_scope :latest, :order => 'id DESC'
+  attr_accessor :is_importing
+
+  scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
+  scope :latest, :order => 'id DESC'
 
   # TODO: investigate how we can enable this and not break nested attributes
   # validates_presence_of :target_id, :user_id, :project_id
   
-  validate_on_create :check_duplicate, :if => lambda { |c| c.target_id? and not c.hours? }
-  validates_presence_of :body, :unless => lambda { |c| c.task_comment? or c.uploads.any? }
+  validate :check_duplicate, :if => lambda { |c| !@is_importing and c.target_id? and not c.hours? }, :on => :create
+  validates_presence_of :body, :unless => lambda { |c| c.task_comment? or c.uploads.to_a.any? or c.google_docs.any? }
 
   # was before_create, but must happen before format_attributes
   before_save   :copy_ownership_from_target, :if => lambda { |c| c.new_record? and c.target_id? }
@@ -46,7 +63,7 @@ class Comment < ActiveRecord::Base
     hours and hours > 0
   end
 
-  named_scope :with_hours, :conditions => 'hours > 0'
+  scope :with_hours, :conditions => 'hours > 0'
 
   alias_attribute :human_hours, :hours
 
@@ -79,20 +96,6 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  define_index do
-    indexes body, :sortable => true
-    # indexes user(:name)
-    indexes uploads(:asset_file_name), :as => :upload_name
-    indexes target.name, :as => :target
-
-    has user_id, project_id, created_at
-  end
-  
-  # FIXME: avoid overriding the actual association
-  def user
-    user_id and User.find_with_deleted(user_id)
-  end
-  
   def duplicate_of?(another)
     [:body, :assigned_id, :status, :hours].all? { |prop|
       self.send(prop) == another.send(prop)
@@ -129,6 +132,10 @@ class Comment < ActiveRecord::Base
       new_watchers = defined?(@mentioned) ? @mentioned.to_a : []
       new_watchers << self.user if self.user
       target.add_watchers new_watchers
+    end
+    
+    if target.respond_to?(:updated_at)
+      target.update_attribute :updated_at, self.created_at
     end
   end
   

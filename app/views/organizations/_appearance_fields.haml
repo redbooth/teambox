@@ -1,0 +1,19 @@
+.option_fields
+  %label= t('.logo_html')
+  .option
+    = f.file_field :logo
+  %img.logo_square{ :src => @organization.logo.url(:square) }
+  %img.logo_top{ :src => @organization.logo.url(:top) }
+
+.option_fields
+  %label= t('.colours')
+  - Organization.default_settings['colours'].keys.each do |field|
+    .color_field
+      %label
+        = t(".#{field}_colour")
+      = custom_organization_colour_field(f, @organization, field)
+
+.text_area
+  %label= t('.description_html')
+  = errors_for @organization, :description
+  = f.text_area :description

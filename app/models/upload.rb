@@ -1,9 +1,10 @@
 class Upload < RoleRecord
+  include Immortal
 
   ICONS = %w(aac ai aiff avi bmp c cpp css dat dmg doc dotx dwg dxf eps exe flv gif h hpp html ics iso java jpg key mid mp3 mp4 mpg odf ods odt otp ots ott pdf php png ppt psd py qt rar rb rtf sql tga tgz tiff txt wav xls xlsx xml yml zip)
     
   belongs_to :user
-  belongs_to :comment, :touch => true
+  belongs_to :comment, :touch => true, :counter_cache => true
   belongs_to :project
   belongs_to :page
 
@@ -13,8 +14,7 @@ class Upload < RoleRecord
   after_destroy  :cleanup_activities
 
   before_create :copy_ownership_from_comment
-
-  default_scope :order => 'created_at DESC'
+  after_create  :log_create
 
   attr_accessible :asset,
                   :page_id,
@@ -22,19 +22,28 @@ class Upload < RoleRecord
   
   include PageWidget
 
+  DOWNLOADS_URL = "/downloads/:id/:style/:basename.:extension"
+
   has_attached_file :asset,
-    :styles => { :thumb => "64x48>" },
-    :url  => "/assets/:id/:style/:basename.:extension",
+    :styles => { :thumb => "150x150>" },
+    :url  => DOWNLOADS_URL,
     :path => Teambox.config.amazon_s3 ?
       "assets/:id/:style/:filename" :
-      ":rails_root/assets/:id/:style/:filename"
+      ":rails_root/assets/:id/:style/:filename",
+    :s3_permissions => 'private',
+    :s3_headers => {'Cache-Control' => 'max-age=157680000'}
 
   before_post_process :image?
   
-  validates_attachment_size :asset, :less_than => Teambox.config.asset_max_file_size.to_i.megabytes
-  validates_attachment_presence :asset
+  validates_attachment_size :asset, 
+                            :less_than => Teambox.config.asset_max_file_size.to_i.megabytes, 
+                            :message => I18n.t('uploads.form.max_size', 
+                                               :mb => Teambox.config.asset_max_file_size.to_i)
+
+  validates_attachment_presence :asset, :message => I18n.t('uploads.form.presence')
+
   validate :check_page
-  
+
   def check_page
     if page && (page.project_id != project_id)
       @errors.add :project, 'is not valid'
@@ -45,10 +54,14 @@ class Upload < RoleRecord
     !(asset_content_type =~ /^image.*/).nil?
   end
 
-  def url(*args)
-    u = asset.url(*args)
-    u = u.sub(/\.$/,'')
-    u
+  def url(style_name = nil, use_timestamp = false)
+    url = asset.original_filename.nil? ? Paperclip::Interpolations.interpolate(@default_url, asset, style_name) : Paperclip::Interpolations.interpolate(DOWNLOADS_URL, asset, style_name)
+    url = URI.escape(url)
+    use_timestamp && asset.updated_at ? [url, asset.updated_at].compact.join(url.include?("?") ? "&" : "?") : url
+  end
+
+  def s3_url(style_name = nil)
+    AWS::S3::S3Object.url_for(asset.path(style_name), asset.bucket_name, {:expires_in => Teambox.config.amazon_s3_expiration.to_i})
   end
 
   def file_name
@@ -70,9 +83,9 @@ class Upload < RoleRecord
     'uploads/upload_slot'
   end
 
-  def after_create
+  def log_create
     save_slot if page
-    project.log_activity(self, 'create', user_id) if page_id
+    project.log_activity(self, 'create', user_id) unless comment
   end
 
   def cleanup_activities
@@ -86,7 +99,7 @@ class Upload < RoleRecord
   end
 
   def downloadable?(user)
-    true
+    project.user_ids.include?(user.id)
   end
 
   def file_type
@@ -96,7 +109,7 @@ class Upload < RoleRecord
   end
   
   def user
-    User.find_with_deleted(user_id)
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
 
   def to_xml(options = {})
@@ -147,7 +160,7 @@ class Upload < RoleRecord
   end
   
   def update_comment_to_show_delete
-    if self.comment && self.comment.body.blank? && self.comment.uploads.size == 1
+    if self.comment && self.comment.body.blank? && self.comment.uploads.count == 1
       self.comment.update_attributes(:body => "File deleted")
     end
   end

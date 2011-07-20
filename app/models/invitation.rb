@@ -1,6 +1,7 @@
 require 'digest/sha1'
 
 class Invitation < RoleRecord
+  include Immortal
   belongs_to :invited_user, :class_name => 'User'
 
   validate :valid_user?
@@ -14,9 +15,9 @@ class Invitation < RoleRecord
 
   before_create :generate_token
   before_save :copy_user_email, :if => :invited_user
-  after_create :send_email
+  after_create :auto_accept, :send_email
 
-  named_scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
+  scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
 
   # Reserved so invitations can be sent for other targets, in addition to Project
   def target
@@ -66,11 +67,11 @@ class Invitation < RoleRecord
   protected
 
   def valid_user?
-    @errors.add_to_base('Must belong to a valid user') if user.nil? or user.deleted?
+    @errors.add(:base, 'Must belong to a valid user') if user.nil? or user.deleted?
   end
   
   def valid_role?
-    @errors.add_to_base('Not authorized') if target.is_a?(Project) and user and !target.admin?(user)
+    @errors.add(:base, 'Not authorized') if target.is_a?(Project) and user and !target.admin?(user)
   end
   
   def user_already_invited?
@@ -97,13 +98,22 @@ class Invitation < RoleRecord
   def generate_token
     self.token ||= ActiveSupport::SecureRandom.hex(20)
   end
-  
+
+  def auto_accept
+    self.accept(invited_user) if belongs_to_organization?
+  end
+
   def send_email
     return if @is_silent
     if invited_user
-      Emailer.deliver_project_invitation self
+      if belongs_to_organization?
+        Emailer.send_email :project_membership_notification, self.id
+        self.destroy
+      else
+        Emailer.send_email :project_invitation, self.id
+      end
     else
-      Emailer.deliver_signup_invitation self
+      Emailer.send_email :signup_invitation, self.id
     end
   end
   
@@ -114,4 +124,15 @@ class Invitation < RoleRecord
   def copy_user_email
     self.email ||= invited_user.email
   end
+
+  def belongs_to_organization?
+    invited_user and target.respond_to?(:organization) and target.organization.try(:is_user?, invited_user)
+  end
+
+  protected
+
+    def valid_email?(value)
+      EmailValidator.check_address(value)
+    end
+
 end

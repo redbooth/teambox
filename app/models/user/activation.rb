@@ -4,12 +4,12 @@ class User
   
   def send_activation_email
     self.generate_login_code!
-    Emailer.deliver_confirm_email self
+    Emailer.send_email :confirm_email, self.id
   end
 
   def send_reset_password
     self.generate_login_code!
-    Emailer.deliver_reset_password self
+    Emailer.send_email :reset_password, self.id
   end
   
   def is_active?
@@ -25,7 +25,7 @@ class User
   def generate_login_code!
     self.login_token = ActiveSupport::SecureRandom.hex(20)
     self.login_token_expires_at = 1.month.from_now
-    self.save!
+    self.save(:validate => false)
   end
   
   def expire_login_code!

@@ -2,7 +2,7 @@
 Feature: Public sites for organizations. Allow to view an entrance page and log in
 
   Background: 
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And the following confirmed users exist
       | login  | email                    | first_name | last_name |
       | pablo  | pablo@teambox.com        | Pablo      | Villalba  |
@@ -12,6 +12,7 @@ Feature: Public sites for organizations. Allow to view an entrance page and log 
     And "pablo" is a participant in the organization called "ACME"
     When I go to the organizations page
     And I follow "ACME"
+    And I go to the appearance page for the "ACME" organization
     And I fill in the following:
       | organization_description | <h2>A title!</h2> |
     And I press "Save changes"
@@ -29,5 +30,5 @@ Feature: Public sites for organizations. Allow to view an entrance page and log 
       | login     | mislav       |
       | password  | dragons      |
     And I press "Login"
-    Then I should see "ACME" within "ul#projects_tab_list"
+    Then I should see "ACME" within "#column"
 

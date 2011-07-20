@@ -1,0 +1,71 @@
+.nav_links
+
+  -# Recent Activity
+  .el= link_to t('.recent_activity'), root_path, :class => 'recent_activity'
+
+  -# All Projects
+  - show_only_recent = current_user.people.size > 3
+  - active_projects = current_user.projects.select{|p| !p.archived} #we select them in ruby because the query is done in the header already
+  - projects_to_show = show_only_recent ? current_user.recent_projects : active_projects
+  - projects_archived = current_user.people.size - projects_to_show.size
+
+  .el#my_projects
+    = link_to t('.all_projects'), projects_path, :class => 'home'
+    %span= active_projects.size
+  .contained
+    - for project in projects_to_show
+      - next if project.new_record?
+      .el= link_to project, project, :class => 'project'
+      .contained
+        .el= link_to t('.recent_activity'), project_path(project), :class => 'recent_activity ajax'
+        .el= link_to t('.conversations'), project_conversations_path(project), :class => 'conversations ajax'
+        .el= link_to t('.tasks'), project_task_lists_path(project), :class => 'tasks'
+        - if time_tracking_enabled? and project.tracks_time
+          .el= link_to t('.time'), project_time_path(project), :class => 'time ajax'
+        .el= link_to t('.pages'), project_pages_path(project), :class => 'pages ajax'
+        .el= link_to t('.files'), project_uploads_path(project), :class => 'files ajax'
+        - if can?(:update, project)
+          .el= link_to t('.settings'), project_settings_path(project), :class => 'settings'
+          .contained
+            .el= link_to t('shared.project_settings_navigation.general'), project_settings_path(project.permalink), :class => 'general_settings ajax'
+            .el= link_to t('shared.project_settings_navigation.deletion'), project_deletion_path(project.permalink, :sub_action => 'deletion'), :class => 'deletion ajax'
+            - if project.owner?(current_user)
+              .el= link_to t('shared.project_settings_navigation.ownership'), project_ownership_path(project.permalink, :sub_action => 'ownership'), :class => 'ownership ajax'
+        .el= link_to t('.people'), project_people_path(project), :class => 'people ajax'
+    - if projects_archived > 0
+      .el= link_to t('.show_all_projects'), all_projects_path, :class => 'more ajax'
+    - if !Teambox.config.community || (Teambox.config.community && !@community_organization) || (@community_organization && @community_role)
+      .el= link_to t('.new_project'), new_project_path, :class => 'more ajax'
+
+  -# My Tasks
+  - pending_tasks = current_user.pending_tasks
+  .el#my_tasks
+    = link_to t('.my_tasks'), task_lists_path, :class => 'tasks'
+    %span.clickable= link_to pending_tasks.length, task_lists_path(:filter_assigned => 'mine'), :class => 'hoverable', :'data-hoverable-class' => 'left', :id => 'open_my_tasks', :title => t('.open_my_tasks')
+  .contained
+    - for task in pending_tasks
+      .el.task{ :id => "my_task_#{task.id}"}
+        = link_to task, [task.project, task], :class => ''
+        = render_due_on(task,current_user)
+    .el= link_to t('.show_all_tasks'), task_lists_path, :class => 'more'
+    .el= link_to t('.gantt_and_calendars'), gantt_view_task_lists_path, :class => 'more'
+
+  -# Organizations
+  .el#my_organizations= link_to t('.organizations'), organizations_path, :class => 'people'
+  .contained
+    - for organization in current_user.organizations
+      - next if organization.new_record?
+      .el= link_to organization, organization_path(organization)
+      .contained
+        .el= link_to t('organizations.column.general_settings'), edit_organization_path(organization), :class => 'ajax'
+        .el= link_to t('organizations.column.admin_projects'), projects_organization_path(organization), :class => 'ajax'
+        - if can?(:admin, organization)
+          .el= link_to t('organizations.column.admin_users'), organization_memberships_path(organization), :class => 'ajax'
+          .el= link_to t('organizations.column.appearance'), appearance_organization_path(organization), :class => ''
+          .el= link_to t('organizations.column.delete'), delete_organization_path(organization), :class => 'ajax'
+    - unless Teambox.config.community
+      .el= link_to t('.show_all_organizations'), organizations_path, :class => 'more ajax'
+
+  -# More options
+  .el#show_more= link_to t('.show_more'), "#", :class => 'show_more'
+  .el.extra{ :style => 'display: none' }= link_to t('.time'), time_path, :class => 'ajax time'

@@ -7,11 +7,11 @@
 %p= t('.admins.explain')
 .users.users_admins
   - if @organization.admins.any?
-    - @organization.admins.each do |user|
+    - @organization.admins.in_alphabetical_order.each do |user|
       %p.user
         = micro_avatar(user)
         =h user.name
-        - if @organization.is_admin?(current_user) and user != current_user
+        - if can?(:admin, @organization) and user != current_user
           %span.role
             = link_to t('.remove_admin'), change_role_organization_membership_path(@organization, user.id, :role => Membership::ROLES[:participant])
             = t('common.or')
@@ -24,11 +24,11 @@
 %p= t('.users.explain')
 .users.users_participants
   - if @organization.participants.any?
-    - @organization.participants.each do |user|
+    - @organization.participants.in_alphabetical_order.each do |user|
       %p.user
         = micro_avatar(user)
         =h user.name
-        - if @organization.is_admin?(current_user)
+        - if can?(:admin, @organization)
           %span.role
             = link_to t('.make_admin'), change_role_organization_membership_path(@organization, user.id, :role => Membership::ROLES[:admin])
             = t('common.or')
@@ -45,7 +45,7 @@
       %p.user
         = micro_avatar(user)
         =h user.name
-        - if @organization.is_admin?(current_user)
+        - if can?(:admin, @organization)
           %span.role
             = link_to t('.add_to_the_org'), add_organization_membership_path(@organization, user.id, :role => 20)
             = t('common.or')
@@ -53,5 +53,3 @@
         .clear
   - else
     %p.empty= t('.no_users')
-
-= render 'organizations/column'

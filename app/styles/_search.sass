@@ -1,9 +1,11 @@
 .search_bar
-  float: right
+  float: left
   padding-top: 6px
-  margin-right: 1.5em
+  margin
+    right: 1.5em
   form.search
-    margin: 0
+    margin:
+      left: 20px
     padding: 0
     background: transparent
     border: none
@@ -11,36 +13,56 @@
       display: none
     .no-inputsearch &
       input[type=search]
+        width: 10em
         border: 1px solid silver
+    .no-inputsearch.borderradius &
+      input[type=search]
         padding: 3px 1em 2px 1em
         +rounded(10px)
-        width: 10em
         +box-shadow(inset rgba(0,0,0,.2) 0px 1px 2px)
+    .no-inputsearch.no-borderradius &
+      input[type=search]
+        padding: 2px
+
 
 .index_search
+  .search_bar
+    visibility: hidden
   #report
     +light-box
     margin: 10px 0
     padding: 10px 1.2em
     h1
+      font-size: 14px
       margin-top: 0
-    form input[type=search]
+    form input#search_terms
       width: 20em
-      font-size: 1.1em
+      font-size: 1em
+      padding: 2px
   
   h2
-    font-size: 1.1em
+    font-size: 14px
     padding-bottom: 0
     border-bottom: none
-    margin: 1em 0 .1em 6px
-    color: lighten($text, 30%)
+    margin: 1.5em 0 1em 6px
+  p
+    font-size: 12px
+    margin: 1em 0 1em 6px
     
   #results
-    .comment
-      .block
-        width: 880px
-    .highlight
-      background-color: yellow
+    .result
+      font-size: 12px
+      margin: 5px 0
+      span.time
+        float: right
+        font-size: 12px
+        color: #777
+      a
+        margin-left: 10px
+        color: #333
+    span.match
+      background-color: #ffc
+      font-weight: bold
 
 .pagination
   text-align: left

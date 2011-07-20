@@ -4,9 +4,10 @@
 
 %h2= t('.title')
 
-- form_for [@current_project, @conversation], :html => { 'data-project-id' => @current_project.id } do |f|
+= form_for [@current_project, @conversation], :html => { 'data-project-id' => @current_project.id, :multipart => true } do |f|
   = render 'fields', :f => f, :project => @current_project
   = render 'watcher_fields', :f => f, :project => @current_project
   .submit
     %span.help= formatting_documentation_link
+    = preview_button
     = f.submit t('.submit')

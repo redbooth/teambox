@@ -10,15 +10,9 @@ module TasksHelper
       classes << 'due_month' if task.due_in?(1.months)
       classes << 'overdue' if task.overdue?
       classes << 'unassigned_date' if task.due_on.nil?
+      classes << "status_#{task.status_name}"
       classes << (task.assigned.nil? ? 'unassigned' : "user_#{task.assigned.user_id}")
-      classes << 'mine' if task.assigned_to?(current_user)
     end.join(' ')
-  end
-
-  def my_tasks(tasks)
-    if tasks.any?
-      render 'tasks/my_tasks', :tasks => tasks
-    end
   end
 
   def sidebar_tasks(tasks)
@@ -35,44 +29,45 @@ module TasksHelper
   def render_assignment(task,user)
     render 'tasks/assigned', :task => task, :user => user
   end
-
-  def check_status_type(task,status_type)
-    unless [:column,:content,:header].include?(status_type)
-      raise ArgumentError, "Invalid Status type, was expecting :column, :content or :header but got #{status_type}"
-    end
-    case status_type
-      when :column
-        "column_task_status_#{task.id}"
-      when :content
-        "content_task_status_#{task.id}"
-      when :header
-        "header_task_status_#{task.id}"
-    end
+  
+  def task_status_badge(name)
+    content_tag(:span, localized_status_name(name), :class => "task_status task_status_#{name}")
   end
 
   def comment_task_status(comment)
-    if comment.status_transition?
-      content_tag(:span, short_status_name(comment, true),
-        :class => "task_status task_status_#{comment.previous_status_name}") +
-      content_tag(:span, '&rarr;', :class => "arr status_arr") +
-      content_tag(:span, short_status_name(comment, false),
-        :class => "task_status task_status_#{comment.status_name}")
-    elsif comment.initial_status?
-      content_tag(:span, short_status_name(comment, false),
-            :class => "task_status task_status_#{comment.status_name}")
+    if comment.initial_status? or comment.status_transition?
+      [].tap { |out|
+        if comment.status_transition?
+          out << task_status_badge(comment.previous_status_name)
+          out << content_tag(:span, '&rarr;'.html_safe, :class => "arr status_arr")
+        end
+        out << task_status_badge(comment.status_name)
+      }.join(' ').html_safe
+    end
+  end
+
+  def comment_task_due_on(comment)
+    if comment.due_on_change?
+      [].tap { |out|
+        if comment.due_on_transition?
+          out << span_for_due_date(comment.previous_due_on)
+          out << content_tag(:span, '&rarr;'.html_safe, :class => "arr due_on_arr")
+        end
+        out << span_for_due_date(comment.due_on)
+      }.join(' ').html_safe
     end
   end
 
   def task_status(task,status_type)
-    id = check_status_type(task,status_type)
-    out = "<span id='#{id}' class='task_status task_status_#{task.status_name}'>"
+    status_for_column = status_type == :column ? "task_status_#{task.status_name}" : "task_counter"
+    out = %(<span data-task-id=#{task.id} class='task_status #{status_for_column}'>)
     out << case status_type
     when :column  then localized_status_name(task)
     when :content then task.comments_count.to_s
     when :header  then localized_status_name(task)
     end
-    out << "</span>"
-    out
+    out << %(</span>)
+    out.html_safe
   end
 
   def due_on(task)
@@ -90,33 +85,6 @@ module TasksHelper
       :editable => editable
   end
 
-  def task_fields(f,project,task_list,task)
-    render 'tasks/fields',
-      :f => f,
-      :project => project,
-      :task_list => task_list,
-      :task => task
-  end
-  
-  def insert_task_options(project,task_list,task,editable=true)
-    {:partial => 'tasks/task',
-    :locals => {
-      :task => task,
-      :project => project,
-      :task_list => task_list,
-      :current_target => nil,
-      :editable => editable}}
-  end
-
-  def short_status_name(comment, previous = false)
-    prev = previous ? 'previous_' : ''
-    if comment.try("#{prev}status_open?") && comment.try("#{prev}assigned?")
-      h(comment.try("#{prev}assigned").user.short_name)
-    else
-      localized_status_name(comment.try("#{prev}status_name"))
-    end
-  end
-
   def localized_status_name(task_or_status)
     task_or_status = task_or_status.status_name if task_or_status.respond_to? :status_name
     t("tasks.status.#{task_or_status}")
@@ -127,38 +95,22 @@ module TasksHelper
       [localized_status_name(name), code]
     }
   end
-  
-  def people_from_project_for_select(project)
-    people = project.people(:include => :user).to_a
-    current_person = people.detect { |p| p.user_id == current_user.id }
-    people.delete(current_person)
-    
-    options = [
-      [t('comments.new.assigned_to_nobody'), nil],
-      [current_user.name, current_person.id]
-    ]
-    options.concat people.map { |p| [p.name, p.id] }.compact.sort_by(&:first)
-  end
-
-  def task_overview_box(task)
-    render 'tasks/overview_box', :task => task
-  end
 
   def time_tracking_doc
     link_to(t('projects.fields.new.time_tracking_docs'), "http://help.teambox.com/faqs/advanced-features/time-tracking", :target => '_blank')
   end
 
-  def date_picker(f, field, embedded = false)
-    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : nil
+  def date_picker(f, field, embedded = false, html_options = {})
+    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>".html_safe
     div_id = "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}"
     content_tag :div, :class => "date_picker #{'embedded' if embedded}" do
       image_tag('/images/calendar_date_select/calendar.gif', :class => 'calendar_date_select_popup_icon') <<
-      f.hidden_field(field) << content_tag(:span, date_field, :class => 'localized_date')
+      f.hidden_field(field, html_options) << content_tag(:span, date_field, :class => 'localized_date')
     end
   end
   
   def embedded_date_picker(f, field)
-    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : nil
+    date_field = f.object.send(field) ? localize(f.object.send(field), :format => :long) : "<i>#{t('date_picker.no_date_assigned')}</i>".html_safe
     div_id = "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}"
     content_tag :div, :class => "date_picker_embedded", :id => div_id do
       f.hidden_field(field) << content_tag(:span, date_field, :class => 'localized_date', :style => 'display: none') <<
@@ -167,7 +119,15 @@ module TasksHelper
   end
   
   def value_for_assigned_to_select
-    value = params[:assigned_to] == 'all' ? 'task' : params[:assigned_to]
-    value ||= 'task'
+    params[:assigned_to] == 'all' ? 'task' : (params[:assigned_to] || 'task')
   end
+
+  protected
+
+    def span_for_due_date(due_date)
+      content_tag(:span, due_date ?
+          localize(due_date, :format => :short) :
+          t('tasks.due_on.undefined'),
+        :class => "assigned_date")
+    end
 end

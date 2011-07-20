@@ -6,7 +6,9 @@
 .sass-cache
 /assets
 config/database.yml
+config/teambox.local.yml
 /coverage
+/exports
 db/*.sqlite3
 db/sphinx
 config/*.sphinx.conf
@@ -15,7 +17,9 @@ log/*.pid
 tmp
 public/avatars
 public/logos
+public/jammit/*
 public/stylesheets
+public/sprockets.js
 /uploads
 webrat-*
 capybara-*

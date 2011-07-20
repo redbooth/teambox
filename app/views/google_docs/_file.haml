@@ -1,0 +1,4 @@
+%li.upload
+  %span.file_icon.google_icon= google_docs_image google_doc.document_type
+  %span.filename= link_to google_doc.title, project_google_doc_path(:project_id => google_doc.project, :id => google_doc), :target => :blank
+  

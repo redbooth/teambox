@@ -1,10 +1,10 @@
-%h1= image_tag @organization.logo.url(:top), :alt => h(@organization.name)
+%h1= image_tag @organization.logo.url(:top), :alt => @organization.name
 
 .custom_html
-  %p= @organization.description
+  = @organization.description.try(:html_safe) || "Configure this text by going editing your organization's preferences."
 
 - content_for :column do
-  - form_tag sites_path, :class => 'new_session', :id => 'new_session' do
+  = form_tag sites_path, :class => 'new_session', :id => 'new_session' do
     = hidden_field_tag :id, @organization.permalink
     = upgrade_browser
     = render 'sites/fields'

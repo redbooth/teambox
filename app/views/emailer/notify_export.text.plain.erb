@@ -1,0 +1,11 @@
+<%= dont_answer %>
+
+<%= t('emailer.teamboxdata.hey', :user_name => h(@user.name)) %>
+
+<% if @error %>
+<%= t('emailer.teamboxdata.data_export_failed') %>
+<%= teambox_data_url(@data) %>
+<% else %>
+<%= t('emailer.teamboxdata.data_exported') %>
+<%= Teambox.config.amazon_s3 ? @data.processed_data.url : "http://#{Teambox.config.app_domain}#{@data.processed_data.url}" %>
+<% end %>

@@ -4,10 +4,15 @@
     %meta{ 'http-equiv' => "content-type", :content => "text/html;charset=utf-8" }
     %title
       = @page_title || 'Teambox'
-    = stylesheet_link_tag 'print', :media => :all
+    = include_stylesheets :print, :media => :all
+    = sprockets_include_tag
+    = load_javascript_user_data
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}  
     %h1= @page_title
     .container
       .wrapper
         .content#content
           = yield
+    .filter{:style => "display: none"}
+      = filter_task_lists
+      = javascript_tag "Filter.updateFilters();"

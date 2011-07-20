@@ -1,10 +1,10 @@
 .name.text_field
-  = f.label :name, t('projects.fields.name')
+  = f.label :name, t('projects.fields.name_html')
   = errors_for project, :name
   = f.text_field :name
 
 .permalink.text_field
-  = f.label :permalink, t('projects.fields.permalink')
+  = f.label :permalink, t('projects.fields.permalink_html')
   = errors_for project, :permalink
   = f.text_field :permalink
   = permalink_example(project.permalink)
@@ -21,21 +21,21 @@
     = f.label :organization_id, t('projects.fields.organization')
     = errors_for project, :organization_id
     %p
-      = t('.you_cant_transfer_this_project', :organization => @current_project.organization)
+      = t('.you_cant_transfer_this_project_html', :organization => @current_project.organization)
       = link_to t('.manage_organizations'), organizations_path
 
 .check_box.archived
   = f.check_box :archived
-  = f.label :archived, t('projects.fields.archived')
+  = f.label :archived, t('projects.fields.archived_html')
 
 - if time_tracking_enabled?
   .check_box.archived
     = f.check_box :tracks_time
-    = f.label :tracks_time, t('projects.fields.tracks_time')
+    = f.label :tracks_time, t('projects.fields.tracks_time_html')
 
 .check_box.archived
   = f.check_box :public
-  = f.label :public, t('projects.fields.public_project')
+  = f.label :public, t('projects.fields.public_project_html')
 
 - if @current_project.try(:public)
   %div{ :style => 'margin: 10px 0 15px 22px; display: block' }

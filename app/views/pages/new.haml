@@ -1,20 +1,20 @@
 %h2= t('.title')
 
-- form_for [@current_project,@page] do |f|
+= form_for [@current_project,@page] do |f|
   = page_fields(f)
 
   .submit
-    = f.submit t('.submit')
+    = f.submit t('.submit'), :'data-disable-with' => t('.sending')
     = t('common.or')
     = link_to t('common.cancel'), project_pages_path(@current_project)
   
 - content_for :column do
-  %p= t '.define1'
-  %p= t '.define2'
+  %p= t '.define1_html'
+  %p= t '.define2_html'
   %ul
-    %li= t '.feature1'
-    %li= t '.feature2'
-    %li= t '.feature3'
-    %li= t '.feature4'
-  %p= t '.footer1'
-  %p= t '.footer2'
+    %li= t '.feature1_html'
+    %li= t '.feature2_html'
+    %li= t '.feature3_html'
+    %li= t '.feature4_html'
+  %p= t '.footer1_html'
+  %p= t '.footer2_html'

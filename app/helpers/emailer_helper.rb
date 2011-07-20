@@ -59,11 +59,11 @@ module EmailerHelper
   end
 
   def emailer_answer_to_this_email
-    content_tag(:p,I18n.t('emailer.notify.reply')) if APP_CONFIG['allow_incoming_email']
+    content_tag(:p,I18n.t('emailer.notify.reply')) if Teambox.config.allow_incoming_email
   end
 
   def emailer_commands_for_tasks(user)
-    if APP_CONFIG['allow_incoming_email']
+    if Teambox.config.allow_incoming_email
       content_tag(:p,I18n.t('emailer.notify.task_commands', :username => user.login))
     end
   end
@@ -104,6 +104,18 @@ module EmailerHelper
     styles << "display: table-cell"
     styles << "color: rgb(200,0,0)"
     styles.join(";")
+  end
+
+  def email_navigation
+    "#{organization_header_bar_colour}order-bottom-left-radius: 5px 5px; border-bottom-right-radius: 5px 5px; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px;padding: 4px 10px;"
+  end
+
+  def inline_organization_link_colour
+    "color: ##{@organization ? @organization.settings['colours']['links'] : ''}"
+  end
+
+  def inline_organization_text_colour
+    "font-color: ##{@organization ? @organization.settings['colours']['text'] : ''}"
   end
 
 end

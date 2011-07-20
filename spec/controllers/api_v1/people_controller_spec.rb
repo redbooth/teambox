@@ -50,7 +50,7 @@ describe ApiV1::PeopleController do
       login_as @admin
       
       put :update, :project_id => @project.permalink, :id => @owner.person_for(@project).id, :role => Person::ROLES[:participant]
-      response.status.should == '422 Unprocessable Entity'
+      response.status.should == 401
       
       @project.reload.admin?(@owner).should == true
     end
@@ -59,7 +59,7 @@ describe ApiV1::PeopleController do
       login_as @user
       
       put :update, :project_id => @project.permalink, :id => @observer.person_for(@project).id, :role => Person::ROLES[:admin]
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.reload.admin?(@user).should == false
     end
@@ -79,7 +79,7 @@ describe ApiV1::PeopleController do
       login_as @owner
       
       put :destroy, :project_id => @project.permalink, :id => @owner.person_for(@project).id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.people(true).length.should == 4
     end
@@ -97,7 +97,7 @@ describe ApiV1::PeopleController do
       login_as @user
       
       put :destroy, :project_id => @project.permalink, :id => @observer.person_for(@project).id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.people(true).length.should == 4
     end

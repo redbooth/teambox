@@ -3,12 +3,7 @@ class CommentsController < ApplicationController
   before_filter :load_comment, :except => :create
   
   rescue_from CanCan::AccessDenied do |exception|
-    if request.xhr?
-      head :forbidden
-    else
-      flash[:error] = exception.message
-      redirect_to root_url
-    end
+    handle_cancan_error(exception)
   end
   
   def create
@@ -18,7 +13,7 @@ class CommentsController < ApplicationController
     comment = target.comments.create_by_user current_user, params[:comment]
     
     respond_to do |wants|
-      wants.html {
+      wants.any(:html, :m)  {
         if request.xhr? or iframe?
           if comment.new_record?
             output_errors_json(comment)
@@ -26,7 +21,7 @@ class CommentsController < ApplicationController
             render :partial => 'comment', :locals => { :comment => comment, :threaded => true }
           end
         else
-          redirect_to :back
+          redirect_back_or_to root_path
         end
       }
     end
@@ -34,7 +29,10 @@ class CommentsController < ApplicationController
   
   def edit
     authorize! :edit, @comment
-    render :layout => false if request.xhr?
+    
+    respond_to do |wants|
+      wants.any(:html, :m) { render :layout => false if request.xhr? }
+    end
   end
   
   def update
@@ -43,7 +41,7 @@ class CommentsController < ApplicationController
     @comment.update_attributes params[:comment]
     
     respond_to do |wants|
-      wants.html {
+      wants.any(:html, :m) {
         if request.xhr? or iframe?
           render :partial => 'comment', :locals => { :comment => @comment, :threaded => true }
         else

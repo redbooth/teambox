@@ -12,7 +12,7 @@ module EmailSpec
 
     def click_email_link_matching(regex, email = current_email)
       url = links_in_email(email).detect { |link| link =~ regex }
-      raise "No link found matching #{regex.inspect} in #{email.body}" unless url
+      raise "No link found matching #{regex.inspect} in #{email.default_part_body}" unless url
       request_uri = URI::parse(url).request_uri
       visit request_uri
     end
@@ -40,8 +40,12 @@ module EmailSpec
     def current_email(address=nil)
       address = convert_address(address)
       email = address ? email_spec_hash[:current_emails][address] : email_spec_hash[:current_email]
-      raise Spec::Expectations::ExpectationNotMetError, "Expected an open email but none was found. Did you forget to call open_email?" unless email
+      raise   RSpec::Expectations::ExpectationNotMetError, "Expected an open email but none was found. Did you forget to call open_email?" unless email
       email
+    end
+
+    def current_email_attachments(address=nil)
+      current_email(address).attachments || Array.new
     end
 
     def unread_emails_for(address)
@@ -57,14 +61,14 @@ module EmailSpec
       if opts[:with_subject]
         mailbox_for(address).find { |m| m.subject =~ Regexp.new(opts[:with_subject]) }
       elsif opts[:with_text]
-        mailbox_for(address).find { |m| m.body =~ Regexp.new(opts[:with_text]) }
+        mailbox_for(address).find { |m| m.default_part_body =~ Regexp.new(opts[:with_text]) }
       else
         mailbox_for(address).first
       end
     end
 
     def links_in_email(email)
-      URI.extract(email.body, ['http', 'https'])
+      URI.extract(email.default_part_body.to_s, ['http', 'https'])
     end
 
     private
@@ -77,14 +81,14 @@ module EmailSpec
       email = find_email(address, opts)
       if email.nil?
         error = "#{opts.keys.first.to_s.humanize unless opts.empty?} #{('"' + opts.values.first.to_s.humanize + '"') unless opts.empty?}"
-        raise Spec::Expectations::ExpectationNotMetError, "Could not find email #{error}. \n Found the following emails:\n\n #{all_emails.to_s}"
+        raise   RSpec::Expectations::ExpectationNotMetError, "Could not find email #{error}. \n Found the following emails:\n\n #{all_emails.to_s}"
        end
       email
     end
 
     def set_current_email(email)
       return unless email
-      email.to.each do |to|
+      [email.to, email.cc, email.bcc].compact.flatten.each do |to|
         read_emails_for(to) << email
         email_spec_hash[:current_emails][to] = email
       end
@@ -110,9 +114,16 @@ module EmailSpec
 
     # e.g. Click here in  <a href="http://confirm">Click here</a>
     def parse_email_for_anchor_text_link(email, link_text)
-      email.body =~ %r{<a[^>]*href=['"]?([^'"]*)['"]?[^>]*?>[^<]*?#{link_text}[^<]*?</a>}
-      URI.split($~[1])[5..-1].compact!.join("?").gsub("&amp;", "&")
-      # sub correct ampersand after rails switches it (http://dev.rubyonrails.org/ticket/4002)
+      if textify_images(email.default_part_body) =~ %r{<a[^>]*href=['"]?([^'"]*)['"]?[^>]*?>[^<]*?#{link_text}[^<]*?</a>}
+        URI.split($1)[5..-1].compact!.join("?").gsub("&amp;", "&")
+        # sub correct ampersand after rails switches it (http://dev.rubyonrails.org/ticket/4002)
+      else
+        return nil
+      end
+    end
+
+    def textify_images(email_body)
+      email_body.to_s.gsub(%r{<img[^>]*alt=['"]?([^'"]*)['"]?[^>]*?/>}) { $1 }
     end
 
     def parse_email_count(amount)

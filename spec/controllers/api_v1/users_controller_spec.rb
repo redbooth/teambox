@@ -49,7 +49,7 @@ describe ApiV1::UsersController do
       login_as @user
       
       get :show, :id => @fred.login
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
     end
   end
   
@@ -70,6 +70,13 @@ describe ApiV1::UsersController do
       response.should be_success
       
       JSON.parse(response.body)['id'].to_i.should == @fred.id
+    end
+    
+    it "fails if you are not logged in" do
+      get :current
+      response.status.should == 401
+      
+      JSON.parse(response.body)['errors']['type'].should == 'AuthorizationFailed'
     end
   end
 end

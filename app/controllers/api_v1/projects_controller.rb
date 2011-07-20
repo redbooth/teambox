@@ -1,9 +1,9 @@
 class ApiV1::ProjectsController < ApiV1::APIController
   before_filter :load_organization
-  before_filter :can_modify?, :only => [:edit, :update, :transfer, :destroy]
   
   def index
-    @projects = current_user.projects(:include => [:organization, :user])
+    @projects = current_user.projects(:include => [:organization, :user],
+                                      :order => 'id DESC')
     
     api_respond @projects, :references => [:organization, :user]
   end
@@ -13,12 +13,8 @@ class ApiV1::ProjectsController < ApiV1::APIController
   end
   
   def create
+    authorize! :create_project, current_user
     @project = current_user.projects.new(params)
-
-    unless current_user.can_create_project?
-      api_error(t('projects.new.not_allowed'), :unauthorized)
-      return
-    end
 
     if @project.save
       handle_api_success(@project, :is_new => true)
@@ -28,6 +24,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
   end
   
   def update
+    authorize! :update, @current_project
     if @current_project.update_attributes(params)
       handle_api_success(@current_project)
     else
@@ -36,10 +33,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
   end
   
   def transfer
-    unless @current_project.owner?(current_user)
-      api_error(t('common.not_allowed'), :unauthorized)
-      return
-    end
+    authorize! :transfer, @current_project
     
     # Grab new owner
     user_id = params[:user_id] rescue nil
@@ -57,6 +51,7 @@ class ApiV1::ProjectsController < ApiV1::APIController
   end
 
   def destroy
+    authorize! :destroy, @current_project
     @current_project.destroy
     handle_api_success(@current_project)
   end
@@ -64,25 +59,11 @@ class ApiV1::ProjectsController < ApiV1::APIController
   protected
   
   def load_project
-    if project_id ||= params[:id]
-      @current_project = if project_id.match(API_NONNUMERIC)
-        Project.find_by_permalink(project_id)
-      else
-        Project.find_by_id(project_id)
-      end
-      api_status(:not_found) unless @current_project
-    end
-  end
-  
-  def can_modify?
-    if !( @current_project.owner?(current_user) or 
-          ( @current_project.admin?(current_user) and 
-            !['transfer', 'destroy'].include?(params[:action])))
-      
-      api_error(t('common.not_allowed'), :unauthorized)
-      false
-    else
-      true
+    project_id ||= params[:id]
+    
+    if project_id
+      @current_project = Project.find_by_id_or_permalink(project_id)
+      api_error 404, :type => 'ObjectNotFound', :message => 'Project not found' unless @current_project
     end
   end
   

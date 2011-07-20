@@ -6,12 +6,14 @@ var TaskList = {
   },
   
   sortableUpdate: function() {
-    var ids = this.currentDraggable.id.match(/project_(\d+)_task_list_(\d+)/),
-        position = this.currentDraggable.up().select('.task_list_container').indexOf(this.currentDraggable) + 1
-    
-    new Ajax.Request('/projects/' + ids[1] + '/task_lists/' + ids[2] + '/reorder', {
+    task_list_ids = this.currentDraggable.up().select('.task_list').collect(
+    function(task_list) {
+        return task_list.readAttribute('data-task-list-id')
+    }).join(',')
+
+    new Ajax.Request('/projects/' + current_project + '/task_lists/reorder', {
       method: 'put',
-      parameters: { position: position }
+      parameters: { task_list_ids: task_list_ids }
     })
   }.debounce(100),
 
@@ -216,7 +218,7 @@ var TaskList = {
   },
 
   setTitle: function(element, visible) {
-    var title = $(element.readAttribute('jennybase') + 'title');
+    var title = $(element.readAttribute('toggleformbase') + 'title');
     if (title == null)
       return;
     if (visible)
@@ -231,10 +233,12 @@ var TaskList = {
     if (active) {
       $('reorder_task_lists_link').swapVisibility('done_reordering_task_lists_link')
       Filter.showAllTaskLists()
+      $$('.filters').invoke('hide')
       TaskList.makeSortable()
     } else {
       $('done_reordering_task_lists_link').swapVisibility('reorder_task_lists_link')
       Filter.updateFilters()
+      $$('.filters').invoke('show')
       TaskList.destroySortable()
     }
   },
@@ -245,6 +249,30 @@ var TaskList = {
       primer.show();
     else if (primer)
       primer.hide();
+  },
+  populateTaskListSelect: function(project_id, select, callback) {
+
+    new Ajax.Request('/api/1/projects/' + project_id + '/task_lists.json', {
+      method:'get',
+      requestHeaders: {Accept: 'application/json'},
+      onSuccess: function(transport){
+        var json = transport.responseText.evalJSON(true);
+        select.options.length = 0;
+        json.objects.each(function(taskList) {
+          select.options.add(new Option(taskList.name, taskList.id));
+        });
+
+        if (!select.childElements().any(function(option) {return option.text == 'Inbox';})) {
+          select.options.add(new Option("Inbox", ''));
+        }
+      },
+      onFailure: function() {
+        alert('Error loading page! Please reload.');
+        if (callback) {
+          callback();
+        }
+      }
+    });
   }
 };
 
@@ -258,7 +286,7 @@ document.on('click', '#done_reordering_task_lists_link', function(e, element){
   TaskList.setReorder(false);
 });
 
-document.observe('jenny:loaded:edit_task_list', function(evt) {
+document.observe('toggleform:loaded:edit_task_list', function(evt) {
   // Reload sort
   if (TaskList.in_sort) {
     setTimeout(function(){
@@ -270,7 +298,7 @@ document.observe('jenny:loaded:edit_task_list', function(evt) {
   TaskList.updatePage('column', TaskList.restoreColumn);
 });
 
-document.observe('jenny:loaded:new_task_list', function(evt) {
+document.observe('toggleform:loaded:new_task_list', function(evt) {
   // Reload sort
   if (TaskList.in_sort) {
 	setTimeout(function(){
@@ -282,11 +310,10 @@ document.observe('jenny:loaded:new_task_list', function(evt) {
     Task.make_all_sortable();
     TaskList.updatePrimer();
     TaskList.saveColumn();
-    TaskList.updatePage('column', TaskList.restoreColumn);
   }, 0);
 });
 
-document.observe('jenny:cancel:edit_task_list', function(evt) {
+document.observe('toggleform:cancel:edit_task_list', function(evt) {
   // Only do this on the index
   if (evt.memo.form.up('.task_list_container'))
   {
@@ -321,12 +348,12 @@ document.on('click', 'a.taskListResolve', function(e, el) {
 
 document.on('click', 'a.create_first_task_list_link', function(e, el) {
   e.stop();
-  Jenny.toggleElement(el); // edit form on task list show
+  ToggleForm.toggleElement(el); // edit form on task list show
 });
 
 document.on('click', 'a.edit_task_list_link', function(e, el) {
   e.stop();
-  Jenny.toggleElement(el); // edit form on task list show
+  ToggleForm.toggleElement(el); // edit form on task list show
 });
 
 document.on('click', 'a.unarchive_task_list_link', function(e, el) {
@@ -351,10 +378,25 @@ document.on('click', '.task_list .new_task form a[href="#cancel"]', function(e, 
   hideTaskFormAndShowLink(link.up('form'))
 })
 
-document.on('keyup', '.task_list .new_task form:has(a[href="#cancel"])', function(e, form) {
+document.on('keyup', '.task_list .new_task form', function(e, form) {
   if (e.keyCode == Event.KEY_ESC) hideTaskFormAndShowLink(form)
 })
 
-document.on('ajax:success', '.task_list .new_task form', function(e, form) {
-  Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(e.memo.responseText)
+document.on('ajax:success', '.task_list form.new_task', function(e, form) {
+  var person = form['task[assigned_id]'].getValue();
+  var task_count = Number($('open_my_tasks').innerHTML)
+  var is_assigned_to_me = my_projects[person]
+
+  if (e.memo.transport) {
+    var response = e.memo.responseText
+  } else {
+    var response = e.memo.responseText.unescapeHTML()
+    resetCommentsForm(form)
+  }
+
+  if (is_assigned_to_me) {
+    task_count += 1
+    $('open_my_tasks').update(task_count)
+  }
+  Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(response)
 })

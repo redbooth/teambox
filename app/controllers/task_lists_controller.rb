@@ -1,21 +1,35 @@
 class TaskListsController < ApplicationController
-  before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive,:reorder]
-  before_filter :load_task_lists, :only => [:index]
-  before_filter :check_permissions, :only => [:new,:create,:edit,:update,:destroy,:archive,:unarchive]
+  around_filter :set_time_zone, :only => [:index, :show, :gantt_view]
+  before_filter :load_task_list, :only => [:edit,:update,:show,:destroy,:watch,:unwatch,:archive,:unarchive]
+  before_filter :load_task_lists, :only => [:index, :reorder]
   before_filter :set_page_title
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    # Can they even edit the project?
+    if @task_list
+      respond_to do |f|
+        f.any(:html, :m) { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
+        f.js   {
+          render :text => "alert(\"#{t('common.not_allowed')}\");", :status => :unprocessable_entity
+        }
+        handle_api_error(f, @task_list)
+      end
+    else
+      handle_cancan_error(exception)
+    end
+  end
 
   def index
     @on_index = true
     respond_to do |f|
-      f.html
-      f.m
+      f.any(:html, :m)
       f.rss {
         @activities = @current_project.activities.for_task_lists.latest
         render :layout => false
       }
       f.js {
         @show_part = params[:part]
-        render :template => 'task_lists/reload'
+        render 'task_lists/reload', :layout => false
       }
       f.print { render :layout => 'print' }
       f.xml   { render :xml     => @task_lists.to_xml(:include => :tasks, :root => 'task-lists') }
@@ -28,9 +42,8 @@ class TaskListsController < ApplicationController
     @comments = @task_list.comments
 
     respond_to do |f|
-      f.html
-      f.m
-      f.js    { calc_onindex; @show_part = params[:part]; render :template => 'task_lists/reload' }
+      f.any(:html, :m)
+      f.js    { calc_onindex; @show_part = params[:part]; render 'task_lists/reload', :layout => false }
       f.xml   { render :xml     => @task_list.to_xml(:include => [:tasks, :comments]) }
       f.json  { render :as_json => @task_list.to_xml(:include => [:tasks, :comments]) }
       f.yaml  { render :as_yaml => @task_list.to_xml(:include => [:tasks, :comments]) }
@@ -41,16 +54,17 @@ class TaskListsController < ApplicationController
   end
 
   def new
+    authorize! :make_task_lists, @current_project
     @on_index = true
     @task_list = @current_project.task_lists.new
     respond_to do |f|
-      f.html
-      f.m
-      f.js
+      f.any(:html, :m)
+      f.js { render :layout => false }
     end
   end
 
   def create
+    authorize! :make_task_lists, @current_project
     @on_index = true
     @task_list = @current_project.create_task_list(current_user,params[:task_list])
     
@@ -58,60 +72,66 @@ class TaskListsController < ApplicationController
       respond_to do |f|
         f.html { redirect_to_task_list @task_list }
         f.m    { redirect_to_task_list }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @task_list, true)
       end
     else
       respond_to do |f|
         f.html { render :new }
         f.m    { render :new }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @task_list)
       end
     end
   end
   
   def edit
+    authorize! :update, @task_list
     @edit_part = params[:part]
     calc_onindex
     
     respond_to do |f|
-      f.html
-      f.m
-      f.js
+      f.any(:html, :m)
+      f.js { render :layout => false }
     end
   end
 
   def update
+    authorize! :update, @task_list
     calc_onindex
     @saved = @task_list.update_attributes(params[:task_list])
     
     if @saved
       respond_to do |f|
-        f.html { non_js_list_redirect }
-        f.m    { non_js_list_redirect }
-        f.js {}
+        f.any(:html, :m) { non_js_list_redirect }
+        f.js   { render :layout => false }
         handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
-        f.html { render :edit }
-        f.m    { render :edit }
-        f.js {}
+        f.any(:html, :m) { render :edit }
+        f.js   { render :layout => false }
         handle_api_error(f, @task_list)
       end
     end
   end
 
   def reorder
-    @task_list.insert_at params[:position].to_i
+    authorize! :reorder_objects, @current_project
+    task_list_ids = params[:task_list_ids].split(',').collect {|t| t.to_i}
+    @task_lists.each do |t|
+      next unless task_list_ids.include?(t.id)
+      t.position = task_list_ids.index(t.id)
+      t.save
+    end
     head :ok
   end
   
   def archive
+    authorize! :update, @task_list
     calc_onindex
     
-    if request.method == :put and !@task_list.archived
+    if !@task_list.archived
       # Prototype for comment
       comment_attrs = {}
       comment_attrs[:status] = Task::STATUSES[:resolved]
@@ -132,15 +152,13 @@ class TaskListsController < ApplicationController
       @task_list.save!
       
       respond_to do |f|
-        f.html { non_js_list_redirect }
-        f.m    { non_js_list_redirect }
-        f.js
+        f.any(:html, :m) { non_js_list_redirect }
+        f.js   { render :layout => false }
         handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
-        f.html { flash[:error] = "Not allowed!"; non_js_list_redirect }
-        f.m    { flash[:error] = "Not allowed!"; non_js_list_redirect }
+        f.any(:html, :m) { flash[:error] = "Not allowed!"; non_js_list_redirect }
         f.js   { render :text => 'alert("Not allowed!");'; }
         handle_api_error(f, @task_list)
       end
@@ -148,21 +166,22 @@ class TaskListsController < ApplicationController
   end
   
   def unarchive
+    authorize! :update, @task_list
     calc_onindex
     
-    if request.method == :put and @task_list.editable?(current_user) and @task_list.archived
+    if @task_list.archived
       @task_list.archived = false
       @saved = @task_list.save
     end
     
     if @saved
       respond_to do |f|
-        f.js { render :template => 'task_lists/update' }
+        f.js { render 'task_lists/update', :layout => false }
         handle_api_success(f, @task_list)
       end
     else
       respond_to do |f|
-        f.js { render :template => 'task_lists/update' }
+        f.js { render 'task_lists/update', :layout => false }
         handle_api_error(f, @task_list)
       end
     end
@@ -170,26 +189,21 @@ class TaskListsController < ApplicationController
 
   def destroy
     calc_onindex
-    if @task_list.editable?(current_user)
-      @task_list.try(:destroy)
+    authorize! :destroy, @task_list
+    
+    @task_list.try(:destroy)
 
-      respond_to do |f|
-        f.html { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
-        f.m    { flash[:success] = t('deleted.task_list', :name => @task_list.to_s); redirect_to_task_list }
-        f.js
-        handle_api_success(f, @task_list)
-      end
-    else
-      respond_to do |f|
-        f.html { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
-        f.m    { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
-        f.js   { render :text => 'alert("Not allowed!");'; }
-        handle_api_error(f, @task_list)
-      end
+    respond_to do |f|
+      f.any(:html, :m) {
+        flash[:success] = t('deleted.task_list', :name => @task_list.to_s)
+        redirect_to_task_list }
+      f.js   { render :layout => false }
+      handle_api_success(f, @task_list)
     end
   end
 
   def watch
+    authorize! :watch, @task_list
     @task_list.add_watcher(current_user)
     respond_to{|f|f.js}
   end
@@ -276,19 +290,5 @@ class TaskListsController < ApplicationController
     def redirect_to_task_list(task_list=nil)
       redirect_to task_list ? project_task_list_path(@current_project, @task_list) :
                                project_task_lists_path(@current_project)
-    end
-    
-    def check_permissions
-      # Can they even edit the project?
-      unless @current_project.editable?(current_user)
-        respond_to do |f|
-          f.html { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
-          f.m    { flash[:error] = t('common.not_allowed'); redirect_to_task_list @task_list }
-          f.js   {
-            render :text => "alert(\"#{t('common.not_allowed')}\");", :status => :unprocessable_entity
-          }
-        end
-        return false
-      end
     end
 end

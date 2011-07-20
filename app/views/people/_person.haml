@@ -3,7 +3,7 @@
   = render 'header', :person => person, :project => project
   
   - unless person.user == current_user
-    - form_for person, :url => [project, person], :html => { 'data-remote' => true } do |f|
+    = form_for person, :url => [project, person], :html => { 'data-remote' => true } do |f|
       %h2=h person.user.name
       %ol.roles
         %li

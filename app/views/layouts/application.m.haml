@@ -4,14 +4,15 @@
   %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
   %meta{ :name => 'viewport', :content => 'width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' }
   = csrf_meta_tag
-  = stylesheet_link_tag 'mobile', :media => :all
+  = include_stylesheets :mobile, :media => :all
+  = organization_link_colour
 
 %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
   #header
     = header
     = navigation(@current_project,current_user.projects,current_user.recent_projects)
   #content
-    = project_navigation(@current_project) if @current_project
+    = render 'shared/project_navigation', :project => @current_project if @current_project
     = yield
   #footer
     = link_to "Use full Teambox", change_format_path(:html)

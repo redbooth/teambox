@@ -1,0 +1,17 @@
+
+t.named t('shared.project_navigation.all_task_lists')
+t.named t('shared.project_navigation.gantt')
+
+organization_header_bar_colour
+
+leave project, invite and others should become part of People in a project
+
+Add or check permissions for...
+- New Project (community check, org check)
+- Time tracking (maybe make it globally available?)
+- New conv, task, page, file
+- Project settings (if project.admin?)
+- Time tracking: time_tracking_enabled? and project.tracks_time
+
+Verify Mobile version (shared.project_navigation)
+Make sure we're not doing super-slow queries with the sidebar

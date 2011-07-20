@@ -1,10 +1,13 @@
-%p= "An activity is a record of what happened in a #{link_to_doc_model(:project)}."
+%p=raw "An activity is a record of what happened in a #{link_to_doc_model(:project)}."
 
-- doc_for :index, :example => example_api_wrap([@activity], :references => [:target, :project, :user]) do
-  %p= "Returns the most recent activities in the project."
+- doc_for :index,
+          :example => example_api_wrap([@activity],
+            :references => [:target, :project, :user, :refs_thread_comments, :refs_comment_target]) do
+  %p=raw "Returns the most recent activities in the project. Related objects required to reconstruct a Teambox timeline are stored in <tt>references</tt>."
 
-- doc_for :show, :example => @activity.to_api_hash(:include => [:project, :target, :user]) do
-  %p= "Returns the data for a an activity in the project"
+- doc_for :show,
+          :example => @activity.to_api_hash(:include => [:project, :target, :user, :thread_comments]) do
+  %p=raw "Returns the data for an activity in the project."
 
 - ignore_doc_for :create
 - ignore_doc_for :update

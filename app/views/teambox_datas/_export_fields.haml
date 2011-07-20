@@ -1,0 +1,12 @@
+- if @data.status_name == :selecting
+  %p= t('.description')
+
+  .projects
+    - for organization in current_user.admin_organizations
+      - if organization.projects.any?
+        %h3= h(organization.name)
+        - for project in organization.projects
+          .project
+            = check_box_tag 'teambox_data[project_ids][]', project.id, false, :id => "teambox_project_#{project.id}"
+            %label{:for => "teambox_project_#{project.id}"}= h project.name
+  

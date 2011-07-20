@@ -11,7 +11,7 @@ describe Emailer do
       @task = Factory(:task, :user_id => @owner.id, :project_id => @project.id)
       @conversation = Factory(:conversation, :user_id => @owner.id, :project_id => @project.id)
       
-      @email_template = TMail::Mail.new
+      @email_template = Mail.new
       @email_template.from = @owner.email
     end
     
@@ -27,7 +27,7 @@ describe Emailer do
           Emailer.receive(@email_template.to_s)
         end.should change(Task, :count).by(1)
       
-        task = Task.last(:order => 'tasks.id')
+        task = Task.first(:order => 'tasks.id DESC')
         task.user.should == @owner
         task.name.should == @email_template.subject
         task.status_name.should == :new
@@ -47,19 +47,68 @@ describe Emailer do
           end.should raise_error
         end.should change(Task, :count).by(0)
       end
-      
-      it "should set the body as the task name if there is no subject" do
+
+     it "should set the truncated body as the task name if there is no subject" do
         @email_template.subject = ""
-        
+        @email_template.body = "b" * 500
+
         lambda do
           Emailer.receive(@email_template.to_s)
         end.should change(Task, :count).by(1)
-        
-        task = Task.last(:order => 'tasks.id')
-        task.name.should == @email_template.body
+
+        task = Task.order('id desc').first
+        task.name.should == @email_template.body.to_s[0,252] + "..."
         task.status_name.should == :new
       end
-    
+
+     it "should strip any html tags from the body" do
+        @email_template.subject = ""
+        @email_template.body = "<b>Bold</b> no more!  <a href='more.html'>See more here</a>..."
+
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should change(Task, :count).by(1)
+
+        task = Task.order('id desc').first
+        task.name.should == "Bold no more!  See more here..."
+        task.status_name.should == :new
+      end
+
+     it "should strip any html tags from the body" do
+        @email_template.subject = ""
+        @email_template.body = <<-EMAIL
+          Get things done:
+          <ul>
+           <li>Cook</li>
+           <li>Clean</li>
+           <li>Play</li>
+          </ul>
+          On 19 August 2010 13:48, User <proj+conversation+22245@app.teambox.com<proj%2Bconversation%2B22245@app.teambox.com>> wrote:"
+          #{Emailer::ANSWER_LINE}
+          <div class="email">
+          <div class="people">
+          John, Rob, Jennifer
+          </div>
+          <div class="message">
+          This message is supposed to shrink with the browser.
+          </div>
+          <div class="date">
+          4:15 pm 12/05/07
+          </div>
+          </div>
+        EMAIL
+
+        lambda do
+          Emailer.receive(@email_template.to_s)
+        end.should change(Task, :count).by(1)
+
+        task = Task.first(:order => 'tasks.id DESC')
+        task.name.should == "Get things done:\n          \n           Cook\n           Clean\n           Play"
+        task.status_name.should == :new
+      end
+
+
+
       it "should add the Inbox list if it exists" do
         list = @project.task_lists.create(:user => @owner, :name => 'Inbox')
         
@@ -67,7 +116,7 @@ describe Emailer do
           Emailer.receive(@email_template.to_s)
         end.should change(Task, :count).by(1)
       
-        task = Task.last(:order => 'tasks.id')
+        task = Task.first(:order => 'tasks.id DESC')
         task.task_list.should == list
       end
     
@@ -79,7 +128,7 @@ describe Emailer do
         end.should change(TaskList, :count).by(1)
         
         task_list = TaskList.find_by_name('Inbox')
-        task = Task.last(:order => 'tasks.id')
+        task = Task.first(:order => 'tasks.id DESC')
         task.task_list.should == task_list
       end
       
@@ -87,7 +136,7 @@ describe Emailer do
         @email_template.body = "##{@fred.login}\nWe did some stuff"
         Emailer.receive(@email_template.to_s)
         
-        task = Task.last(:order => 'tasks.id')
+        task = Task.first(:order => 'tasks.id DESC')
         task.assigned.user.id.should == @fred.id
         comment = task.comments.last
         comment.assigned.user.id.should == @fred.id
@@ -100,7 +149,7 @@ describe Emailer do
         @email_template.body = "#hold\nWe did some stuff"
         Emailer.receive(@email_template.to_s)
         
-        task = Task.last(:order => 'tasks.id')
+        task = Task.first(:order => 'tasks.id DESC')
         task.assigned.should be_nil
         comment = task.comments.last
         comment.assigned.should be_nil
@@ -196,6 +245,16 @@ describe Emailer do
       comment.previous_status.should == Task::STATUSES[:new]
     end
     
+    it "should extract actions from emails" do
+      @email_template.to = "#{@project.permalink}+task+#{@task.id}@#{Teambox.config.smtp_settings[:domain]}"
+      @email_template.body = "\n\n  \n\n \n\n#hold\nPeople like newlines too. So lets implement that!"
+      Emailer.receive(@email_template.to_s)
+      
+      @task.reload
+      comment = @task.comments.last
+      comment.body.should == "People like newlines too. So lets implement that!"
+    end
+    
     it "should post a comment to a project if no subject is given" do
       @email_template.to = "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}"
       @email_template.body = "Yes i agree completely!"
@@ -227,7 +286,7 @@ describe Emailer do
         Emailer.receive(@email_template.to_s)
       }.should change(Comment, :count).by(1)
       
-      comment = @conversation.comments(true).last(:order => 'comments.id')
+      comment = @conversation.comments(true).first(:order => 'comments.id DESC')
       comment.body.should == "I am outraged!"
     end
 
@@ -256,7 +315,9 @@ describe Emailer do
         
         lambda do
           Emailer.receive(@email_template.to_s)
-        end.should raise_error(Emailer::Incoming::UserNotFoundError) {|e| e.from.should == @email_template.from.first}
+        end.should raise_error(Emailer::Incoming::UserNotFoundError) { |e|
+          e.mail.from.should == @email_template.from
+        }
       end
       
       it "the specified project does not exist" do

@@ -1,1 +1,17 @@
-= render 'uploads/upload', :object => upload, :activity => true
+.activity{ :class => activity.action_type }
+  = micro_avatar(activity.user)
+  .activity_block
+    - unless rss?
+      .date= posted_date(activity.created_at)
+    - if upload.page
+      - link_to_page = link_to upload.page, [activity.project, upload.page]
+      %p= t('.title_with_page', :user => link_to(activity.user, activity.user), :page => link_to_page).html_safe
+    - else 
+      %p= t('.title', :user => link_to(activity.user, activity.user), :file => "").html_safe
+
+    - if upload.image?
+      .upload_images
+        = list_uploads_inline_with_thumbnails [upload]
+    - else
+      .upload_list
+        = list_uploads_inline [upload]

@@ -14,14 +14,14 @@ describe SearchController do
       p1 = Factory.create :project, :user => @user
       p2 = Factory.create :project, :user => @user
       
-      Comment.should_receive(:search).
+      ThinkingSphinx.should_receive(:search).
         with(*search_params([p1.id, p2.id])).and_return(@results)
       
       get :index, :q => 'important'
       response.should be_success
       
       assigns[:search_terms].should == 'important'
-      assigns[:comments].should == @results
+      assigns[:results].should == @results
     end
     
     it "rejects unauthorized search" do
@@ -42,13 +42,13 @@ describe SearchController do
       owner.stub!(:can_search?).and_return(true)
       controller.stub!(:project_owner).and_return(owner)
       
-      Comment.should_receive(:search).
+      ThinkingSphinx.should_receive(:search).
         with(*search_params(project.id)).and_return(@results)
       
       get :index, :q => 'important', :project_id => project.permalink
       response.should be_success
       
-      assigns[:comments].should == @results
+      assigns[:results].should == @results
     end
     
     it "reject searching in unauthorized project" do
@@ -57,12 +57,13 @@ describe SearchController do
       project = Factory.create :project, :permalink => 'important-project'
       
       get :index, :q => 'important', :project_id => project.permalink
-      response.status.should == "403 Forbidden"
+      response.status.should == 403
     end
     
     def search_params(project_ids)
-      ['important', { :retry_stale => true, :order => 'created_at DESC',
+      ['important', { :retry_stale => true, :order => 'updated_at DESC',
         :with => { :project_id => project_ids },
+        :classes => [Conversation, Task, TaskList, Page],
         :page => nil}]
     end
   end

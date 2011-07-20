@@ -1,5 +1,5 @@
-%p= t(user.avatar?? '.we_have_this_avatar' : '.gravatar_in_use', :gravatar => gravatar_url)
-%p= t('.upload_here_or_at_gravatar', :gravatar => gravatar_url)
+%p= t(user.avatar?? '.we_have_this_avatar_html' : '.gravatar_in_use_html', :gravatar => gravatar_url)
+%p= t('.upload_here_or_at_gravatar_html', :gravatar => gravatar_url)
 %p
   = f.label :avatar, t('.field')
   = f.file_field :avatar

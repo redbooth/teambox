@@ -1,0 +1,21 @@
+- content_for :column do
+  = render 'shared/user_navigation'
+
+%h2
+  = t('.title')
+
+.teambox_data
+  - if @data.processing?
+    %p= t('teambox_datas.data.processing')
+    .actions
+      %a{:href => teambox_data_path(@data), :class => 'cancel', 'data-method' => 'delete'}= t('common.cancel')
+  - else
+    %p= t('teambox_datas.data.processed_at', :processed_at => @data.processed_at)
+
+  %p= t('.projects')
+  %ul
+    - @data.projects.each do |project|
+      %li= link_to h(project.name), project_path(project)
+
+  - unless @data.processing?
+    %p= link_to t('.download'), download_teambox_data_path(@data)

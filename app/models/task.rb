@@ -1,4 +1,5 @@
 class Task < RoleRecord
+  include Immortal
   
   include Watchable
 
@@ -9,17 +10,19 @@ class Task < RoleRecord
 
   ACTIVE_STATUS_CODES = [:new, :open].map { |name| STATUSES[name] }
 
-  concerned_with :scopes, :callbacks
+  concerned_with :scopes, :callbacks, :conversions
+  
+  has_one  :first_comment, :class_name => 'Comment', :as => :target, :order => 'created_at ASC'
+  has_many :recent_comments, :class_name => 'Comment', :as => :target, :order => 'created_at DESC', :limit => 2
 
   belongs_to :task_list, :counter_cache => true
   belongs_to :page
+
   belongs_to :assigned, :class_name => 'Person'
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
 
   accepts_nested_attributes_for :comments, :allow_destroy => false,
-    :reject_if => lambda { |comment| %w[body hours human_hours uploads_attributes].all? { |k| comment[k].blank? } }
-
-  acts_as_list :scope => :task_list
+    :reject_if => lambda { |comment| %w[body hours human_hours uploads_attributes google_docs_attributes].all? { |k| comment[k].blank? } }
 
   attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes
 
@@ -31,15 +34,23 @@ class Task < RoleRecord
   
   # set by controller to indicate user that's doing task updating
   attr_accessor :updating_user
-  
+  attr_accessor :updating_date
+
+  after_save :update_tasks_counts
   before_validation :copy_project_from_task_list, :if => lambda { |t| t.task_list_id? and not t.project_id? }
   before_save :set_comments_author, :if => :updating_user
-  before_save :save_changes_to_comment, :if => :track_changes?
   before_save :transition_from_new_to_open, :if => :assigned_id?
+  before_save :save_changes_to_comment, :if => :track_changes?
+  before_save :save_completed_at
   before_update :remember_comment_created
   
+  def assigned
+    @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
+  end
+  
   def track_changes?
-    updating_user and (status_changed? or assigned_id_changed?)
+    (new_record? and not status_new?) or
+    (updating_user and (status_changed? or assigned_id_changed? or due_on_changed?))
   end
 
   def archived?
@@ -91,11 +102,11 @@ class Task < RoleRecord
   end
 
   def overdue
-    (Time.now.to_date - due_on).to_i
+    (Time.current.to_date - due_on).to_i
   end
 
   def overdue?
-    !archived? && due_on && (Time.now.to_date > due_on)
+    !archived? && due_on && (Time.current.to_date > due_on)
   end
 
   def due_today?
@@ -117,9 +128,14 @@ class Task < RoleRecord
   def to_s
     name
   end
+  
+  def refs_comments
+    [first_comment, first_comment.try(:user)] +
+     recent_comments + recent_comments.map(&:user)
+  end
 
   def user
-    user_id && User.find_with_deleted(user_id)
+    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end
   
   TRACKER_STATUS_MAP = {
@@ -170,59 +186,29 @@ class Task < RoleRecord
     else
       "#{activity[:description]} #PT"
     end
-    
-    self.comments_attributes = [{ :body => comment }]
+
+    #If this is a new_record, use #save_changes_to_comment callback
+    if track_changes?
+      comments << Comment.new(:body => comment)
+    else
+      #use nested attributes
+      self.comments_attributes = [{ :body => comment }]
+    end
+
     save!
   end
 
-  def to_xml(options = {})
-    options[:indent] ||= 2
-    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
-    xml.instruct! unless options[:skip_instruct]
-    xml.task :id => id do
-      xml.tag! 'project-id',      project_id
-      xml.tag! 'user-id',         user_id
-      xml.tag! 'name',            name
-      xml.tag! 'position',        position
-      xml.tag! 'comments-count',  comments_count
-      xml.tag! 'assigned-id',     assigned_id
-      xml.tag! 'status',          status
-      xml.tag! 'due-on',          due_on.to_s(:db) if due_on
-      xml.tag! 'created-at',      created_at.to_s(:db)
-      xml.tag! 'updated-at',      updated_at.to_s(:db)
-      xml.tag! 'completed-at',    completed_at.to_s(:db) if completed_at
-      xml.tag! 'watchers',        Array.wrap(watchers_ids).join(',')
-      unless Array(options[:include]).include? :tasks
-        task_list.to_xml(options.merge({ :skip_instruct => true }))
-      end
-    end
-  end
-  
-  def to_api_hash(options = {})
-    base = {
-      :id => id,
-      :project_id => project_id,
-      :task_list_id => task_list_id,
-      :user_id => user_id,
-      :name => name,
-      :position => position,
-      :comments_count => comments_count,
-      :assigned_id => assigned_id,
-      :status => status,
-      :created_at => created_at.to_s(:api_time),
-      :updated_at => updated_at.to_s(:api_time),
-      :watchers => Array.wrap(watchers_ids)
-    }
-    
-    base[:type] = self.class.to_s if options[:emit_type]
-    base[:due_on] = due_on.to_s(:db) if due_on
-    base[:completed_at] = completed_at.to_s(:db) if completed_at
-    
-    if Array(options[:include]).include? :task_list
-      base[:task_list] = task_list.to_api_hash(options)
-    end
-    
-    base
+  define_index do
+    where "`tasks`.`deleted` = 0"
+
+    indexes name, :sortable => true
+
+    indexes comments.body, :as => :body
+    indexes comments.user.first_name, :as => :user_first_name
+    indexes comments.user.last_name, :as => :user_last_name
+    indexes comments.uploads(:asset_file_name), :as => :upload_name
+
+    has project_id, created_at, updated_at
   end
 
   protected
@@ -245,20 +231,52 @@ class Task < RoleRecord
   end
 
   def save_changes_to_comment # before_save
+    # We should only ever execute this method once per callback cycle
+    return if @saved_changes_to_comment
+
     comment = comments.detect(&:new_record?) || comments.build_by_user(updating_user)
     
-    if status_changed?
+    comment.project = project
+    comment.created_at = @updating_date if @updating_date
+    
+    if status_changed? or self.new_record?
       comment.status = self.status
-      comment.previous_status = self.status_was
+      comment.previous_status = self.status_was if status_changed?
     end
     
-    if assigned_id_changed?
+    if assigned_id_changed? or self.new_record?
       comment.assigned_id = self.assigned_id
-      comment.previous_assigned_id = self.assigned_id_was
+      comment.previous_assigned_id = self.assigned_id_was if assigned_id_changed?
+    end
+
+    if due_on_changed? or self.new_record?
+      comment.due_on = self.due_on
+      comment.previous_due_on = self.due_on_was if due_on_changed?
+    end
+
+    @saved_changes_to_comment = true
+    true
+  end
+
+  def update_tasks_counts # after_save
+    if assigned_id_changed? or status_changed? or self.new_record?
+      [self.assigned_id, self.assigned_id_was].compact.each do |person_id|
+        if person = Person.find_by_id(person_id)
+          person.user.tasks_counts_update
+        end
+      end
     end
     true
   end
-  
+
+  def save_completed_at
+    if [:resolved, :rejected].include? self.status_name
+      self.completed_at = Time.current
+    else
+      self.completed_at = nil
+    end if status_changed? or self.new_record?
+  end
+
   def copy_project_from_task_list
     self.project_id = task_list.project_id
   end

@@ -1,7 +1,7 @@
 class OrganizationsController < ApplicationController
   skip_before_filter :load_project
-  before_filter :load_organization, :only => [:show, :edit, :update, :projects, :delete, :destroy]
-  before_filter :load_page_title, :only => [:show, :members, :projects, :edit, :update, :delete]
+  before_filter :load_organization, :only => [:show, :edit, :appearance, :update, :projects, :delete, :destroy]
+  before_filter :load_page_title, :only => [:show, :members, :projects, :edit, :appearance, :update, :delete]
   before_filter :redirect_community, :only => [:index, :new, :create]
 
   def index
@@ -11,10 +11,6 @@ class OrganizationsController < ApplicationController
 
   def show
     redirect_to edit_organization_path(@organization)
-  end
-
-  def members
-    @users_not_belonging_to_org = @organization.external_users
   end
 
   def projects
@@ -48,11 +44,21 @@ class OrganizationsController < ApplicationController
   def edit
   end
 
+  def appearance
+  end
+
   def update
     if @organization.update_attributes(params[:organization])
-      flash.now[:success] = t('organizations.edit.saved')
+      flash[:success] = t('organizations.edit.saved')
     end
-    render :edit
+
+    redirect_path = if request.referer =~ /appearance/
+                      appearance_organization_path(@organization)
+                    else
+                      edit_organization_path(@organization)
+                    end
+
+    redirect_to redirect_path
   end
 
   def external_view
@@ -60,14 +66,14 @@ class OrganizationsController < ApplicationController
   end
 
   def delete
-    if !@organization.is_admin? current_user
+    if !can?(:admin, @organization)
       flash[:error] = t('organizations.delete.need_to_be_admin')
       redirect_to @organization
     end
   end
 
   def destroy
-    if !@organization.is_admin? current_user
+    if !can?(:admin, @organization)
       flash[:error] = t('organizations.delete.need_to_be_admin')
       redirect_to @organization
     elsif @organization.projects.any?

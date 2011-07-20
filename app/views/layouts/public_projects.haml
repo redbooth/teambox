@@ -5,11 +5,9 @@
     = csrf_meta_tag
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title= @title || h(@project).presence || "Teambox public projects"
-    = stylesheet_link_tag 'public_projects'
-    = sprockets_include_tag
+    = include_stylesheets :public_projects
 
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
-    = javascript_include_tag 'modernizr'
     - unless current_user
       .top{ :style => 'background-color: rgb(255,255,220); border-bottom: 1px solid rgb(200,200,150); width: 100%; display: block; font-size: 12px; padding: 10px 0; text-align: center' }
         = link_to "Log into Teambox", login_path
@@ -34,4 +32,4 @@
           - unless current_user
             = link_to "Sign up for a free account", signup_path
             to create your own community.
-      = javascripts
+

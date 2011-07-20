@@ -1,11 +1,17 @@
 class Conversation < RoleRecord
+  include Immortal
 
   # needed for `truncate`
   include ActionView::Helpers::TextHelper
   
   include Watchable
+
+  concerned_with :tasks, :conversions
   
-  attr_accessor :is_importing
+  attr_accessor :is_importing, :updating_user
+  
+  has_one  :first_comment, :class_name => 'Comment', :as => :target, :order => 'created_at ASC'
+  has_many :recent_comments, :class_name => 'Comment', :as => :target, :order => 'created_at DESC', :limit => 2
   
   has_many :uploads
   has_many :comments, :as => :target, :order => 'created_at DESC', :dependent => :destroy
@@ -19,21 +25,32 @@ class Conversation < RoleRecord
   
   validate :check_comments_presence, :on => :create, :unless => :is_importing
 
-  named_scope :only_simple, :conditions => { :simple => true }
-  named_scope :not_simple, :conditions => { :simple => false }
-  named_scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
+  scope :only_simple, :conditions => { :simple => true }
+  scope :not_simple, :conditions => { :simple => false }
+  scope :recent, lambda { |num| { :limit => num, :order => 'updated_at desc' } }
+
+  before_save :set_comments_author, :if => :updating_user
+  before_update :set_simple
+  after_create :log_create
+  after_destroy :clear_targets
   
+
+  def set_simple
+    self.simple = false if simple? and name_changed? and !name.nil?
+    true
+  end
+
   def self.from_github(payload)
     text = description_for_github_push(payload)
     
-    self.create!(:body => "<div class='hook_github'>#{text}</div>", :simple => true) do |conversation|
+    self.create!(:body => text, :simple => true) do |conversation|
       conversation.user = conversation.project.user if conversation.project
       yield conversation if block_given?
     end
   end
   
   def self.description_for_github_push(payload)
-    text = "<h3>New code on <a href='%s'>%s</a> %s</h3>\n\n" % [
+    text = "New code on <a href='%s'>%s</a> %s\n\n" % [
       payload['repository']['url'], payload['repository']['name'], payload['ref']
     ]
     
@@ -49,12 +66,17 @@ class Conversation < RoleRecord
     return text
   end
 
-  def after_create
+  def log_create
     project.log_activity(self,'create')
   end
 
-  def after_destroy
+  def clear_targets
     Activity.destroy_all :target_id => self.id, :target_type => self.class.to_s
+  end
+  
+  def refs_comments
+    [first_comment, first_comment.try(:user)] +
+     recent_comments + recent_comments.map(&:user)
   end
 
   def owner?(u)
@@ -73,44 +95,18 @@ class Conversation < RoleRecord
   def to_s
     name || ""
   end
-  
-  def to_xml(options = {})
-    options[:indent] ||= 2
-    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
-    xml.instruct! unless options[:skip_instruct]
-    xml.conversation :id => id do
-      xml.tag! 'project-id',      project_id
-      xml.tag! 'user-id',         user_id
-      xml.tag! 'name',            name
-      xml.tag! 'created-at',      created_at.to_s(:db)
-      xml.tag! 'updated-at',      updated_at.to_s(:db)
-      xml.tag! 'watchers',        watchers_ids.join(',')
-      if Array(options[:include]).include? :comments
-        comments.to_xml(options.merge({ :skip_instruct => true }))
-      end
-    end
-  end
-  
-  def to_api_hash(options = {})
-    base = {
-      :id => id,
-      :project_id => project_id,
-      :user_id => user_id,
-      :name => name,
-      :simple => simple,
-      :created_at => created_at.to_s(:api_time),
-      :updated_at => updated_at.to_s(:api_time),
-      :watchers => Array.wrap(watchers_ids),
-      :comments_count => comments_count,
-    }
+
+  define_index do
+    where "`conversations`.`deleted` = 0"
+
+    indexes name, :sortable => true
+
+    indexes comments.body, :as => :body
+    indexes comments.user.first_name, :as => :user_first_name
+    indexes comments.user.last_name, :as => :user_last_name
+    indexes comments.uploads(:asset_file_name), :as => :upload_name
     
-    base[:type] = self.class.to_s if options[:emit_type]
-    
-    if Array(options[:include]).include? :comments
-      base[:comments] = comments.map{|c| c.to_api_hash(options)}
-    end
-    
-    base
+    has project_id, created_at, updated_at
   end
 
   protected
@@ -119,5 +115,12 @@ class Conversation < RoleRecord
     unless comments.any?
       errors.add :comments, :must_have_one
     end
+  end
+
+  def set_comments_author # before_save
+    comments.select(&:new_record?).each do |comment|
+      comment.user = updating_user
+    end
+    true
   end
 end

@@ -2,4 +2,4 @@
   = new_page_note_link(project, page)
   = new_page_divider_link(project, page)
   - unless request.format == :m
-    = link_to "<span>#{t('.new_upload')}</span>", new_project_page_upload_path(project, page), :class => 'add_button upload_button'
+    = link_to "<span>#{t('.new_upload')}</span>".html_safe, new_project_page_upload_path(project, page), :class => 'add_button upload_button'

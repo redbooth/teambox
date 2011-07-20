@@ -1,17 +1,20 @@
 class ApiV1::NotesController < ApiV1::APIController
   before_filter :load_page
   before_filter :load_note, :except => [:index,:create]
-  before_filter :check_permissions, :only => [:create,:update,:destroy]
   
   def index
-    query = {:include => :page}
+    query = {:conditions => api_range,
+             :limit => api_limit,
+             :order => 'id DESC',
+             :include => [:project, :page]}
+    
     @notes = if target
-      target.notes(query)
+      target.notes.all(query)
     else
       Note.find_all_by_project_id(current_user.project_ids, query)
     end
     
-    api_respond @notes, :references => [:page]
+    api_respond @notes, :references => [:project, :page]
   end
 
   def show
@@ -19,6 +22,7 @@ class ApiV1::NotesController < ApiV1::APIController
   end
   
   def create
+    authorize! :update, @page
     @note = @page.build_note(params)
     @note.updated_by = current_user
     calculate_position(@note)
@@ -32,6 +36,7 @@ class ApiV1::NotesController < ApiV1::APIController
   end
   
   def update
+    authorize! :update, @page
     @note.updated_by = current_user
     if @note.update_attributes(params)
       handle_api_success(@note)
@@ -41,6 +46,7 @@ class ApiV1::NotesController < ApiV1::APIController
   end
 
   def destroy
+    authorize! :update, @page
     @note.destroy
     handle_api_success(@note)
   end
@@ -52,8 +58,12 @@ class ApiV1::NotesController < ApiV1::APIController
   end
   
   def load_note
-    @note = @page.notes.find params[:id]
-    api_status(:not_found) unless @note
+    @note = if target
+      target.notes.find params[:id]
+    else
+      Note.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
+    end
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Note not found' unless @note
   end
   
 end

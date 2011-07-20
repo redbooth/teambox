@@ -1,0 +1,11 @@
+- if recent_tasks.any?
+  %h3{ :style => email_text(:normal) }
+    = t('emailer.notify.my_tasks', :project => h(project.name))
+  - for task in recent_tasks
+    %p{ :style => email_text(:small) }
+      = link_to h(task.name), project_task_url(project, task), :style => "color: rgb(50,50,50);padding-left:15px;#{inline_organization_link_colour}"
+      %span
+        = localized_status_name(task)
+        - if task.due_on
+          = "-"
+          = task.overdue? ? t('tasks.overdue', :days => task.overdue) : I18n.l(task.due_on, :format => '%b %d')

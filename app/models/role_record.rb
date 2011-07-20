@@ -1,8 +1,8 @@
 class RoleRecord < ActiveRecord::Base
+
   self.abstract_class = true
 
   include GrabName
-  acts_as_paranoid
   
   belongs_to :project
   belongs_to :user

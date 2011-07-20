@@ -1,9 +1,13 @@
 class DividersController < ApplicationController
   before_filter :load_page
   before_filter :load_divider, :only => [:show, :edit, :update, :destroy]
-  before_filter :check_permissions
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    handle_cancan_error(exception)
+  end
   
   def new
+    authorize! :update, @page
     @divider = @page.build_divider(params[:divider])
     
     respond_to do |f|
@@ -13,6 +17,7 @@ class DividersController < ApplicationController
   end
   
   def create
+    authorize! :update, @page
     @divider = @page.build_divider(params[:divider])
     @divider.updated_by = current_user
     calculate_position(@divider)
@@ -22,12 +27,12 @@ class DividersController < ApplicationController
       if !@divider.new_record?
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @divider, true)
       else
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @divider)
       end
     end
@@ -42,27 +47,29 @@ class DividersController < ApplicationController
   end
   
   def edit
+    authorize! :update, @page
     respond_to do |f|
-      f.m
-      f.js
+      f.any(:html, :m)
+      f.js   { render :layout => false }
     end
   end
   
   def update
+    authorize! :update, @page
     @divider.updated_by = current_user
     
     if @divider.editable?(current_user) and @divider.update_attributes(params[:divider])
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @divider)
       end
     end
@@ -71,25 +78,24 @@ class DividersController < ApplicationController
   def destroy
     @slot_id = @divider.page_slot.id
     
-    if @divider.editable?(current_user)
+    if can?(:destroy, @page)
       @divider.destroy
       respond_to do |f|
-        f.html { reload_page }
-        f.m    { reload_page }
-        f.js
+        f.any(:html, :m)  { reload_page }
+        f.js   { render :layout => false }
         handle_api_success(f, @divider)
       end
     else
       respond_to do |f|
-        f.html { reload_page }
-        f.m    { reload_page }
-        f.js
+        f.any(:html, :m) { reload_page }
+        f.js   { render :layout => false }
         handle_api_error(f, @divider)
       end
     end
   end
   
   private
+    
     def load_page
       page_id = params[:page_id]
       @page = @current_project.pages.find_by_permalink(page_id) || @current_project.pages.find_by_id(page_id)
@@ -108,7 +114,7 @@ class DividersController < ApplicationController
         @divider = @page.dividers.find(params[:id])
       rescue
         respond_to do |f|
-          f.js
+          f.js   { render :layout => false }
           handle_api_error(f, @divider)
         end
       end

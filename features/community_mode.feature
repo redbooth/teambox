@@ -13,7 +13,6 @@ Feature: When I use Teambox community version, there is only one organization
     When I go to the login page
     And I follow "Create your admin account now"
     Then I should not see "If you already have an account"
-    And I should not see "log in"
     And I should not see "retrieve your password"
     When I fill in the following:
       | Username         | mislav                    |
@@ -31,19 +30,20 @@ Feature: When I use Teambox community version, there is only one organization
     Then I should see "Welcome"
 
   Scenario: I create a user account, but without an organization the system is not fully configured
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I log out
+    And I go to the login page
     Then I should see "The configuration didn't finish. Please log in as Mislav Marohnić and complete it by creating an organization."
 
   Scenario: I can't create a second user account without an invitation for it
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And I log out
     When I go to the signup page
     Then I should see "Public signups are not allowed on this system."
 
   Scenario: Users can sign up with an invitation
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And "mislav" is the owner of the project "Ruby Rockstars"
     And "mislav" sent an invitation to "ed_bloom@spectre.com" for the project "Ruby Rockstars"
@@ -65,9 +65,10 @@ Feature: When I use Teambox community version, there is only one organization
     And I should see "Mislav Marohnić"
 
   Scenario: I create a user account and a project (with its organization), and I can log in through the branded page
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     When I log out
+    And I go to the login page
     When I fill in "login" with "mislav"
     And I fill in "password" with "wrong"
     And I press "Login"
@@ -77,10 +78,9 @@ Feature: When I use Teambox community version, there is only one organization
     And I press "Login"
     Then I should see "All Projects"
     And I should see "Organization"
-    But I should not see "Organizations"
 
   Scenario: I can't create a second organization
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And "mislav" is an administrator in the organization called "ACME"
     When I go to the organizations page
@@ -89,47 +89,48 @@ Feature: When I use Teambox community version, there is only one organization
     Then I should see "The community version doesn't support multiple organizations"
 
   Scenario: I create a second project in the organization as an administrator
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And "mislav" is an administrator in the organization called "ACME"
     When I go to the home page
-    And I follow "+ New project" within "#projects_tab_list"
+    And I follow "+ New Project"
     And I fill in "Name" with "Another project"
-    And I press "Create project and start collaborating"
-    Then I should see "Ruby Rockstars" within "#projects_tab_list"
-    Then I should see "Another project" within "#projects_tab_list"
+    And I press "Create project and invite members"
+    Then I should see "Another project" within "#column"
 
   Scenario: I create a second project in the organization as a participant
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And "mislav" is a participant in the organization called "ACME"
     When I go to the home page
-    And I follow "+ New project" within "#projects_tab_list"
+    And I follow "+ New Project"
     And I fill in "Name" with "Another project"
-    And I press "Create project and start collaborating"
-    Then I should see "Ruby Rockstars" within "#projects_tab_list"
-    Then I should see "Another project" within "#projects_tab_list"
+    And I press "Create project and invite members"
+    Then I should see "Another project" within "#column"
 
   Scenario: I can't create a project if I'm not part of the organization
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And "mislav" is not a member of the organization called "ACME"
     And I go to the home page
-    Then I should not see "+ New project" within "#projects_tab_list"
+    Then I should not see "+ New Project"
     And I should not see "New project"
     When I go to the new project page
     Then I should see "You're not authorized to create projects on this organization."
 
   Scenario: I'm asked to customize my deployment
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And "mislav" is an administrator in the organization called "ACME"
     And I go to the home page
     Then I should see "configure your organization"
     When I follow "Click here"
     Then I should see "Introduce some HTML code for your main site to configure your site"
-    When I fill in "organization_description" with "<h1>TITLE</h1>"
+    And I follow "Appearance"
+    When I fill in the organization description with "<h2>TITLE</h2>"
     And I press "Save changes"
+    And I follow "General settings"
     Then I should not see "Introduce some HTML code for your main site to configure your site"
     When I log out
-    Then I should see "TITLE" within "h1"
+    And I go to the login page
+    Then I should see "TITLE" within custom html

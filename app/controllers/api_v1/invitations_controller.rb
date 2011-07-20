@@ -1,20 +1,23 @@
 class ApiV1::InvitationsController < ApiV1::APIController
   before_filter :load_target
-  before_filter :belongs_to_target?
-  before_filter :admins_target?, :except => [:index, :accept, :decline, :invite_format]
   before_filter :load_invite, :except => [:index]
   
   def index
-    @invitations = @target.invitations.all(:conditions => api_range, :limit => api_limit)
+    authorize! :admin, @target
+    @invitations = @target.invitations.all(:conditions => api_range,
+                                           :limit => api_limit,
+                                           :order => 'id DESC')
     
     api_respond @invitations, :include => [:project, :user], :references => [:project, :user]
   end
 
   def show
+    authorize! :admin, @target
     api_respond @invitation, :include => [:project, :user]
   end
   
   def create
+    authorize! :admin, @target
     if @target != current_user
       user_or_email = params[:user_or_email]
       role = params || Person::ROLES[:participant]
@@ -24,7 +27,7 @@ class ApiV1::InvitationsController < ApiV1::APIController
       
       @invitations = @targets.map { |target| make_invitation(target, role) }
     else
-      return api_error(t('invitations.errors.invalid'), :unprocessable_entity)
+      return api_error(:unprocessable_entity, :type => 'InvalidRecord', :message => t('invitations.errors.invalid'))
     end
     
     if @saved_count > 0
@@ -38,6 +41,7 @@ class ApiV1::InvitationsController < ApiV1::APIController
   end
   
   def resend
+    authorize! :admin, @target
     @invitation.send(:send_email)
     
     handle_api_success(@invitation)
@@ -51,6 +55,7 @@ class ApiV1::InvitationsController < ApiV1::APIController
   end
   
   def destroy
+    authorize! :destroy, @invitation
     @invitation.destroy
     
     handle_api_success(@invitation)
@@ -76,23 +81,4 @@ class ApiV1::InvitationsController < ApiV1::APIController
     @saved_count += 1 if invitation.save
     invitation
   end
-  
-  def belongs_to_target?
-    if @current_project
-      unless Person.exists?(:project_id => @current_project.id, :user_id => current_user.id)
-        api_error(t('common.not_allowed'), :unauthorized)
-        false
-      end
-    end
-  end
-  
-  def admins_target?
-    if !(@target == current_user) and !(@target.owner?(current_user) or @target.admin?(current_user))
-      api_error(t('common.not_allowed'), :unauthorized)
-      false
-    else
-      true
-    end
-  end
-  
 end

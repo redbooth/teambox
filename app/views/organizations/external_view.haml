@@ -2,7 +2,7 @@
 
 %p= t('.you_cant_access')
 - unless Teambox.config.community
-  %p= t('.create_your_own_org', :link => organizations_path)
+  %p= t('.create_your_own_org_html', :link => organizations_path)
 
 %br
 
@@ -15,6 +15,3 @@
         = micro_avatar(user)
         = link_to h(user), user
         .clear
-
-- content_for :column do
-  = "&nbsp;"

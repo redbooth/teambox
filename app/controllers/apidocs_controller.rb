@@ -98,19 +98,14 @@ class ApidocsController < ApplicationController
     end
     
     def mock_upload(file, type = 'image/png', data=nil)
-      upload = ActionController::UploadedStringIO.new
-      unless data.nil?
-        upload.write(data)
-        upload.seek(0)
-        upload.original_path = file
+      file_path = data ? file : "%s/%s" % [ File.dirname(__FILE__), file ]
+      tempfile = Tempfile.new(file_path)
+      if data
+        tempfile << data
       else
-        upload.original_path = "%s/%s" % [ File.dirname(__FILE__), file ]
-        upload.write(File.read(uploader.original_path))
-        upload.seek(0)
+        tempfile << File.read(file_path)
       end
-
-      upload.content_type = type
-      upload
+      ActionDispatch::Http::UploadedFile.new({ :type => type, :filename => file_path, :tempfile => tempfile })
     end
     
     def example_upload(page, filename, content_type, content=nil)
@@ -122,7 +117,7 @@ class ApidocsController < ApplicationController
     end
     
     def load_example_data
-      @apiman = User.find_or_create_example_user('API Man', 'example_api_user')
+      @apiman = find_or_create_example_user('API Man', 'example_api_user')
       @project = @apiman.projects.first
       @organization = @apiman.organizations.first
       if @project.nil?
@@ -180,7 +175,11 @@ class ApidocsController < ApplicationController
 
     def load_api_routes
       @routes = ActionController::Routing::Routes.routes.select do |route|
-        route.defaults[:controller].starts_with? 'api_v1'
+        unless route.defaults[:controller].nil?
+          route.defaults[:controller].starts_with? 'api_v1'
+        else
+          false
+        end
       end.collect do |route|
         { :controller => route.defaults[:controller].split('/').second,
           :action => route.defaults[:action],
@@ -201,6 +200,27 @@ class ApidocsController < ApplicationController
           base
         end
       end.compact
+    end
+
+    def find_or_create_example_user(name, login=nil)
+      first_name, last_name = name.split
+      login ||= first_name
+      if user = User.find_by_login(login)
+        user
+      else
+        pass = ActiveSupport::SecureRandom.hex(10)
+        user = User.new(
+          :login => login,
+          :email => "#{login}@teambox.com",
+          :first_name => first_name,
+          :last_name => last_name,
+          :password => pass,
+          :password_confirmation => pass)
+
+        user.notify_conversations = false
+        user.notify_tasks = false
+        user.activate!
+      end
     end
 
 end

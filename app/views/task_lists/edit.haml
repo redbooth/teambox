@@ -1,6 +1,6 @@
 %h2= h(@task_list.name)
 
-- form_for [@current_project,@task_list], :html => {:class => 'app_form'} do |f|
+= form_for [@current_project,@task_list], :html => {:class => 'app_form'} do |f|
   - if @edit_part == 'title'
     = task_list_title_fields(f,@current_project,@task_list)
   - elsif @edit_part == 'date'

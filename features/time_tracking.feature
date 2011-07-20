@@ -2,7 +2,7 @@
 Feature: When I view the time tracking reports globally
 
   Background:
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am a participant in the organization called "ACME"
     And I am a participant in the organization called "Teambox"
     And there is a project called "Teambox Accounting"

@@ -1,32 +1,39 @@
-%p= "A page is a collection of #{link_to_doc_model(:note)}s, #{link_to_doc_model(:divider)}s, and #{link_to_doc_model(:upload)}s in a #{link_to_doc_model(:project)}."
+%p=raw "A page is a collection of #{link_to_doc_model(:note)}s, #{link_to_doc_model(:divider)}s, and #{link_to_doc_model(:upload)}s in a #{link_to_doc_model(:project)}."
 
-- doc_for :index, :example => example_api_wrap(@page, :references => [:user]) do
-  %p= "Returns the most recent pages in a project."
+- doc_for :index,
+          :example => example_api_wrap(@page, :include => :slots, :references => [:project, :user, :refs_objects]) do
+  %p=raw "Returns the most recent pages in a project."
 
-- doc_for :show,  :example => @page.to_api_hash(:include => [:slots, :objects]) do
-  %p= "Returns the data for a page."
+- doc_for :show,
+          :example => @page.to_api_hash(:include => [:slots, :objects]) do
+  %p=raw "Returns the data for a page. Slots are included in <tt>slots</tt> and objects in <tt>dividers</tt>, <tt>notes</tt> and <tt>uploads</tt>."
 
-- doc_for :create, :parameters => {:name => 'Name', :description => 'Description', :project_id => 123 },
-                   :example => @page.to_api_hash,
-                   :status => :created,
-                   :role => :participant do
-  %p= "Creates a new page."
+- doc_for :create,
+          :parameters => {:name => 'Name', :description => 'Description', :project_id => 123 },
+          :example => @page.to_api_hash,
+          :status => :created,
+          :role => :participant do
+  %p=raw "Creates a new page."
 
-- doc_for :update, :parameters => {:name => @page.name, :description => @page.description },
-                   :status => :updated,
-                   :role => :participant do
-  %p= "Updates the name and description of a page."
+- doc_for :update,
+          :parameters => {:name => @page.name, :description => @page.description },
+          :status => :updated,
+          :role => :participant do
+  %p=raw "Updates the name and description of a page."
 
-- doc_for :reorder, :status => :updated,
-                    :parameters => { :slots => [1,2,3] },
-                    :role => :participant do
-  %p= "Reorders the slots in a page according to the order each slot id is presented in <tt>slots</tt>."
+- doc_for :reorder,
+          :status => :updated,
+          :parameters => { :slots => [1,2,3] },
+          :role => :participant do
+  %p=raw "Reorders the slots in a page according to the order each slot id is presented in <tt>slots</tt>."
 
-- doc_for :resort, :status => :updated,
-                    :parameters => { :pages => [1,2,3] },
-                    :role => :participant do
-  %p= "Reorders the pages in a project according to the order each pahe id is presented in <tt>pages</tt>."
+- doc_for :resort,
+          :status => :updated,
+          :parameters => { :pages => [1,2,3] },
+          :role => :participant do
+  %p=raw "Reorders the pages in a project according to the order each page id is presented in <tt>pages</tt>."
 
-- doc_for :destroy, :status => :deleted,
-                    :role => :participant do
-  %p= "Destroys a page."
+- doc_for :destroy,
+          :status => :deleted,
+          :role => :participant do
+  %p=raw "Destroys a page."

@@ -85,15 +85,8 @@ zh:
         too_short: "过短（最短为 %{count} 个字符）"
         wrong_length: "长度非法（必须为 %{count} 个字符）"
       models: 
-        comment: 
-          attributes: 
-            body: 
-              no_body_generic: 请在下面的输入框写下您完成的工作。
-              no_body_task: 请在下面的输入框写下这个任务中您完成的工作。
         conversation: 
           attributes: 
-            body: 
-              no_body_generic: 请写一个评论以开始这个话题。
             name: 
               no_title: 请为这个话题指定一个标题。
     models: 
@@ -223,14 +216,14 @@ zh:
       title: 新的话题
     primer: 
       create_first: 在这个项目中创建第一个话题！
-      define: 使用话题作为一个集中的方式<b>讨论决定</b>和<b>同步您的团队</b>。<br/>每个话题是一系列的评论，用于代替成堆的邮件。
+      define_html: 使用话题作为一个集中的方式<b>讨论决定</b>和<b>同步您的团队</b>。<br/>每个话题是一系列的评论，用于代替成堆的邮件。
       empty: 当前项目还没有任何话题。
-      footer1: "话题是一个很好的方式，用于<b>分享设计</b>, <b>决定会议日期</b>或者<b>报告新闻动态</b>。"
-      footer2: 因为话题是线程式的，它很容易回溯了解到某个文件已经发布，每个成员说过的内容。在Teambox中，<b>协作也是汇报的过程</b>.
-      item1: "<b>分享文件</b>. 评论也可以包含附件。"
-      item2: <b>订阅</b>一个话题可以通过Email或RSS得到将来回复的通知。
-      item3: "<b>加深印象</b>. 任何评论都可以使用文本样式进行格式化。"
-      item4: "<b>收件箱驱动?</b> 您可以通过回复您的邮件的方式，向一个话题发表回复。"
+      footer1_html: "话题是一个很好的方式，用于<b>分享设计</b>, <b>决定会议日期</b>或者<b>报告新闻动态</b>。"
+      footer2_html: 因为话题是线程式的，它很容易回溯了解到某个文件已经发布，每个成员说过的内容。在Teambox中，<b>协作也是汇报的过程</b>.
+      item1_html: "<b>分享文件</b>. 评论也可以包含附件。"
+      item2_html: <b>订阅</b>一个话题可以通过Email或RSS得到将来回复的通知。
+      item3_html: "<b>加深印象</b>. 任何评论都可以使用文本样式进行格式化。"
+      item4_html: "<b>收件箱驱动?</b> 您可以通过回复您的邮件的方式，向一个话题发表回复。"
     short_conversation: 
       comment: 评论
       comments: 评论
@@ -242,9 +235,9 @@ zh:
     watcher_fields: 
       add_suscribers: 哪些人将关注这个话题？
       invite_users: 您是这个项目的唯一成员！
-      no_users_yet: "话题因分享而更有用。现在就<a href='%{invite_link}'>邀请某人</a>加入此项目，以便他们可以读取这个话题，解答问题或收到更新提示。"
+      no_users_yet_html: "话题因分享而更有用。现在就<a href='%{invite_link}'>邀请某人</a>加入此项目，以便他们可以读取这个话题，解答问题或收到更新提示。"
       people_all: 所有项目成员
-      subscribe_note: 这些人将通过email得到这个消息及相关评论的提醒。<br/>他们可以随时取消订阅。
+      subscribe_note_html: 这些人将通过email得到这个消息及相关评论的提醒。<br/>他们可以随时取消订阅。
   countries: 
     AC: 阿森松岛
     AD: 安道尔
@@ -617,11 +610,10 @@ zh:
       answer_above_this_line: 回复此行以发表回复
       do_not_answer: 请不要回复此邮件。
     confirm: 
-      follow_the_link: 为了<b>完成您的Teambox注册</b>，我们需要您通过点击这里登录：
       hey: "您好, %{user_name}!"
       log_in: 现在就登录Teambox！
       plaintext_link: 如果出现问题，复制并粘贴以下链接到您的浏览器地址栏：
-      problems: "如果您有任何问题，请通过%{support}联系我们"
+      problems_html: "如果您有任何问题，请通过%{support}联系我们"
       report_abuse: "您收到此邮件是因为您使用了%{email}注册了一个Teambox帐号"
     invitation: 
       accept_the_invitation: 接受邀请开始协作
@@ -632,8 +624,6 @@ zh:
       report_abuse: 此邮件应您的朋友要求而发送给您。如有滥用请及时报告。
       teambox_is_a_pm_platform: Teambox是一个用于真实世界协作的项目管理平台。
       you_have_been_invited_to: "您已经被邀请加入项目<b>%{project}</b>"
-    invitation_group: 
-      you_have_been_invited_to: "您已被邀请加入小组<b>%{group}</b>"
     notify: 
       are_watching: 已经订阅了此话题，将能够收到回复的提醒。
       assigned_to: "分配给<b>%{user}</b>"
@@ -644,7 +634,6 @@ zh:
       my_tasks: "分配给您的更多%{project}中的任务"
       notification_settings: "您可以通过<a href='%{url}'>提醒设置</a>修改更多邮件相关设置。"
       project: "Teambox项目:"
-      recent_conversations: "%{project}的近期话题"
       reply: 您也可以通过回复此邮件来发表您对这个话题的答复。
       status: "状态: %{status}"
       stop_watching: "<a href='%{stop_watching_url}'>停止订阅</a>这一话题将中止收到邮件提醒。"
@@ -652,15 +641,13 @@ zh:
       task_list: "任务列表:"
       view_online: "您可以<a href='%{link}'>在线查看这个话题</a>，进行答复，也可以附加文件。"
     reset_password: 
-      follow_the_link: 为了<b>设置新的Teambox密码</b>，我们需要您通过以下链接进行登录：
       hey: "您好, %{user_name}!"
       log_in: 现在就登录Teambox！
       plaintext_link: 如果出现问题，复制并粘贴以下链接到您的浏览器地址栏：
-      problems: "如果您有任何问题，请通过%{support}联系我们"
+      problems_html: "如果您有任何问题，请通过%{support}联系我们"
       report_abuse: "您收到此邮件是因为您使用了%{email}注册了一个Teambox帐号"
     upload: 
       file: "文件:"
-      uploaded_by: 上传者：
   example_projects: 
     new: 
       create: 创建一个样例项目
@@ -673,50 +660,6 @@ zh:
       line4: 在这个项目您不能邀请其它用户，但您可以做其它任何事。
   form: 
     cancel: 取消
-  groups: 
-    edit: 
-      submit: 更新
-    errors: 
-      already_own: 您已经拥有一个小组！
-      no_edit: 您不能编辑这个小组
-      not_admin: 您不能管理这个小组
-      not_enabled: 这个系统不支持小组功能
-    fields: 
-      description: 说明
-      name: 名称
-      permalink: Permalink
-      permalink_description: 您的小组被访问的来源域名
-    header: 
-      leave: 离开
-      remove: 删除
-    index: 
-      description: 用户小组用于分享资源，并且可以通过一个小组名字快捷的绑定到项目！
-      groups_in: 您所在的小组
-      no_groups: 您不属于任何小组。
-      remove_project: 移除
-      submit_project: 添加
-      title: 小组
-      your_group: 您的小组
-    logo_fields: 
-      current: 当前Logo
-      delete: 删除
-      description: 这个Logo将出现在所有属于此小组的项目上
-      upload: 上传
-    new: 
-      created: 您的小组已经被创建
-      explain: 您只能拥有一个小组。
-      submit: 创建
-      title: 创建小组
-    primer: 
-      create_group: 创建小组
-      no_group_create: "您没有拥有任何小组。%{link}."
-    search: 
-      invite: 邀请
-      invite_people: 邀请其他人加入此小组
-      username_or_email: 用户名或Email
-    show: 
-      add_project: 添加一个项目
-      edit: 修改
   hours: 
     all_tasks: 全部任务
     all_users: 所有用户
@@ -737,24 +680,19 @@ zh:
       invalid_code: 无效的邀请码
     fields: 
       user_or_email: 请输入你队友的用户名或email：
-    group_invitation: 
-      invited_email: "%{inviter}邀请<b>%{email}</b>加入这个小组。"
-      invited_user: "%{inviter}邀请<b>%{invitee}</b>加入这个小组。"
     index_user: 
       no_invitations: 您没有未处理的项目邀请。
       title: 待确认的邀请
     invitation: 
       discard: 放弃邀请
       invited_email: "%{inviter}邀请<b>%{email}</b>加入这个项目。"
-      invited_user: "%{inviter}邀请<b>%{invitee}</b>加入这个项目。"
+      invited_user_html: "%{inviter}邀请<b>%{invitee}</b>加入这个项目。"
       pending: 已经向此用户发送邀请邮件，但对方还没有确认邀请。
       resend: 重新发送邀请邮件
       time_ago: "(%{time_ago_in_words}以前)"
     pending: 
       invited_to_join: "%{by}已邀请您加入项目%{project}."
-      invited_to_join_group: "%{by}已邀请您加入小组%{group}."
       to_access_or: 访问项目或者
-      to_access_or_group: 访问小组或者
     recent: 
       invite: "邀请 %{username}"
     resend: 
@@ -769,12 +707,11 @@ zh:
       username_or_email: 请输入您的团队成员的用户名或email
     sent: 
       email_sent: "<b>我们刚刚发布了一个提醒邮件给此用户，邮件中包含了一个接受您项目邀请的链接。</b>. 如果他们不能收到此邮件，请确保此邮件不会作为垃圾邮件处理，或者尝试换一个邮件地址。如果还有问题，请联系我们。"
-  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  last_announcement_html: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   locales: 
     zh: 中文
   not_found: 
     conversation: "在这个项目中找不到话题%{id}。"
-    group: "小组%{id}不存在。"
     page: "在这个项目中找不到页面%{id}。"
     project: "项目%{id}不存在。"
     task: "在这个项目中找不到任务%{id}。"
@@ -801,6 +738,7 @@ zh:
     format: 
       delimiter: ","
       separator: "."
+      precision: 2
     human: 
       storage_units: 
         format: "%n %u"
@@ -852,23 +790,23 @@ zh:
       rss: 
         description: "%{name}项目的页面"
     new: 
-      define1: 这里您可以和您的团队<b>分享有用的信息</b>：路线图，有意思的链接，规定，邮件模板等等...
-      define2: 修改一个项目是相当容易和有趣的事，通过拖曳元素您可以即时修改页面。
-      footer1: 使用Teambox作为您的频繁使用的<b>共享白板</b>。
-      footer2: 您也可以添加附件到任何页面。使用愉快！
+      define1_html: 这里您可以和您的团队<b>分享有用的信息</b>：路线图，有意思的链接，规定，邮件模板等等...
+      define2_html: 修改一个项目是相当容易和有趣的事，通过拖曳元素您可以即时修改页面。
+      footer1_html: 使用Teambox作为您的频繁使用的<b>共享白板</b>。
+      footer2_html: 您也可以添加附件到任何页面。使用愉快！
       submit: 创建
       title: 新增页面
     primer: 
       create_first: 在这个项目中创建第一个页面！
-      define1: 这里您可以和您的团队<b>分享有用的信息</b>：路线图，有意思的链接，规定，邮件模板等等...
-      define2: 修改一个项目是相当容易和有趣的事，通过拖曳元素您可以即时修改页面。
+      define1_html: 这里您可以和您的团队<b>分享有用的信息</b>：路线图，有意思的链接，规定，邮件模板等等...
+      define2_html: 修改一个项目是相当容易和有趣的事，通过拖曳元素您可以即时修改页面。
       empty: 这个项目还没有任何页面。
-      footer1: 使用Teambox作为您的频繁使用的<b>共享白板</b>。
-      footer2: 您也可以添加附件到任何页面。使用愉快！
-      item1: "<b>分享</b>. 所有您的团队成员都可以查看和修改项目的页面。"
-      item2: "<b>发布</b>. 通过共享页面进行即时网络发布，全世界都可以看到。"
-      item3: "<b>打印</b>. 页面是打印友好的，请尝试一下打印或导出为PDF！"
-      item4: "<b>Wiki</b>. 页面就象是wiki，提供了一种快速访问项目信息的方式。"
+      footer1_html: 使用Teambox作为您的频繁使用的<b>共享白板</b>。
+      footer2_html: 您也可以添加附件到任何页面。使用愉快！
+      item1_html: "<b>分享</b>. 所有您的团队成员都可以查看和修改项目的页面。"
+      item2_html: "<b>发布</b>. 通过共享页面进行即时网络发布，全世界都可以看到。"
+      item3_html: "<b>打印</b>. 页面是打印友好的，请尝试一下打印或导出为PDF！"
+      item4_html: "<b>Wiki</b>. 页面就象是wiki，提供了一种快速访问项目信息的方式。"
     slots: 
       insert_here: 插入在这里
   people: 
@@ -920,9 +858,9 @@ zh:
       name: 名称
       owner: 所有者
       owner_description: 所有者是一个项目的主要负责人，他不能被从此项目中移除，除非先行指定另一个所有者。
-      permalink: URL
+      permalink_html: URL
       permalink_description: 这是您项目的网址。请尽量简短，不允许有空格。
-      tracks_time: 启用时间跟踪
+      tracks_time_html: 启用时间跟踪
     index: 
       archived: "显示%{count}个已存档项目..."
       new_project: 新增项目
@@ -940,29 +878,29 @@ zh:
       submit: 创建项目并开始邀请其他人
       title: 创建项目
     new_primer: 
-      define1: 项目是一个与您的团队成员共享的群。
-      define2: 在项目中，每个项目成员可以：
-      feature1: 发表状态更新
-      feature2: 开始话题或回复话题
-      feature3: 发送附件
-      feature4: 分配并解决任务
-      feature5: 评论任务
-      feature6: 跟踪花费在每件事上的时间
-      feature7: 创建，修改和查看页面
+      define1_html: 项目是一个与您的团队成员共享的群。
+      define2_html: 在项目中，每个项目成员可以：
+      feature1_html: 发表状态更新
+      feature2_html: 开始话题或回复话题
+      feature3_html: 发送附件
+      feature4_html: 分配并解决任务
+      feature5_html: 评论任务
+      feature6_html: 跟踪花费在每件事上的时间
+      feature7_html: 创建，修改和查看页面
       footer: 此项目归你所有。你可以随时发送这个项目给其他人。
       limited: 作为免费帐户，你最多只能上传50M的附件到这个项目。
       upgrade: 现在就升级您的帐号！
     primer: 
       create_first: 创建您第一个项目!
-      define1: 项目用户与一组人进行<b>协作</b>：建立网站，组织一次聚会，客户工作...
-      define2: 您可以创建<b>您需要多少就多少个项目</b>，以便和不同的在线用户分享。
+      define1_html: 项目用户与一组人进行<b>协作</b>：建立网站，组织一次聚会，客户工作...
+      define2_html: 您可以创建<b>您需要多少就多少个项目</b>，以便和不同的在线用户分享。
       empty: 您还不能拥有或属于任何项目。
       footer: 项目是一个集中化协作的通用方式，所以您不再需要发送电子邮件给您的团队。
-      item1: <b>创建一个项目</b>，命名它，然后<b>邀请一些相关人士</b>使用它。
-      item2: <b>评论</b>您所做的每一件事，在任何时候都可以。
-      item3: <b>讨论</b>关于任何重要的决定（话题）
-      item4: <b>计划</b>需要完成的任何及发布对任务的更新。
-      item5: <b>分享信息</b>于多个项目，通过易于修改的页面。
+      item1_html: <b>创建一个项目</b>，命名它，然后<b>邀请一些相关人士</b>使用它。
+      item2_html: <b>评论</b>您所做的每一件事，在任何时候都可以。
+      item3_html: <b>讨论</b>关于任何重要的决定（话题）
+      item4_html: <b>计划</b>需要完成的任何及发布对任务的更新。
+      item5_html: <b>分享信息</b>于多个项目，通过易于修改的页面。
     show: 
       new_task_list_link: 新建任务列表
       rss: 
@@ -975,7 +913,7 @@ zh:
   reset_passwords: 
     create: 
       invalid: "您输入的修改密码地址无效或已经过期。请尝试再次使用主页上的找回密码功能。<br/>请检查电子邮箱地址并重新尝试。如果不能成功，请联系我们%{support}"
-      not_found: "我们不能找到任何使用此电子邮箱的用户： %{email}<br/>请检查电子邮箱地址并重新尝试。如果不能成功，请联系我们%{support}"
+      not_found_html: "我们不能找到任何使用此电子邮箱的用户： %{email}<br/>请检查电子邮箱地址并重新尝试。如果不能成功，请联系我们%{support}"
       password_not_updated: 新密码无效，请重试。
       password_updated: 密码修改成功，请重新登录
     new: 
@@ -984,10 +922,8 @@ zh:
       submit: 发给我一个重置密码的链接
       title: 忘记密码？
     sent: 
-      change_password_now: 您现在已经登录。<b>现在就重新设置密码</b>，这样您就不会再忘记密码！
-      follow_the_link: 点击此邮件中的链接以登录Teambox！如果您找不到邮件，请尝试看一下垃圾邮件夹。
+      follow_the_link_html: 点击此邮件中的链接以登录Teambox！如果您找不到邮件，请尝试看一下垃圾邮件夹。
       login_link_sent: "我们将发送邮件到%{email}给您以重置您的密码。"
-      not_found: "此邮件地址<b>%{email}</b>不属于任何Teambox用户，可能您的拼写有误？"
       title: 重置密码
   sessions: 
     fields: 
@@ -1025,7 +961,6 @@ zh:
       all_task_lists: 所有任务
       conversations: 话题
       files: 文件
-      groups: 项目小组
       invitations: 邀请
       login: 登录
       overview: 概述
@@ -1052,7 +987,7 @@ zh:
       tour: 教程
       users: 我们的用户
     strip: 
-      archived: "此项目已经存档。要修改或评论此项目，你必须首先通过<a href='%{link}'>项目设置页面</a>取消归档这个项目"
+      archived_html: "此项目已经存档。要修改或评论此项目，你必须首先通过<a href='%{link}'>项目设置页面</a>取消归档这个项目"
     task_navigation: 
       all_tasks: 全部任务
       everybodys_tasks: 所有人的任务
@@ -1101,7 +1036,7 @@ zh:
       new_task_list: 创建任务列表
       subscribe: 订阅动态反馈
     destroy_message: 
-      deleted: "任务列表<b>%{name}</b>已经被成功删除！"
+      deleted_html: "任务列表<b>%{name}</b>已经被成功删除！"
     edit: 
       submit: 更新任务列表
     errors: 
@@ -1126,14 +1061,14 @@ zh:
       title: 创建任务列表
     primer: 
       create_first: 在这个项目中创建第一个任务列表！
-      define: "使用任务进行<b>事前计划</b>, <b>跟踪进程</b>和<b>了解已经完成的工作</b>。<br/><i>何事？何人？何时？</i> 任务可以有状态，执行者和截止日期。"
+      define_html: "使用任务进行<b>事前计划</b>, <b>跟踪进程</b>和<b>了解已经完成的工作</b>。<br/><i>何事？何人？何时？</i> 任务可以有状态，执行者和截止日期。"
       empty: 这个项目还没有任何话题。
-      footer1: 任务是一个简单而敏捷的方式去<b>完成事情</b>，所以，马上使用它吧。
-      footer2: 是时候忘记Excel计划表和复杂的甘特图了！
-      item1: "<b>计划</b>. 在列表中创建任务并分配给您的团队成员。"
-      item2: "<b>报告</b>. 发表评论到每个任务，添加附件，回复反馈信息。"
-      item3: "<b>跟进</b>. 得到与您相关任务的提醒。"
-      item4: "<b>预览</b>. 已经完成的任务不会被删除，您可以在将来继续读取到这些消息和文件。"
+      footer1_html: 任务是一个简单而敏捷的方式去<b>完成事情</b>，所以，马上使用它吧。
+      footer2_html: 是时候忘记Excel计划表和复杂的甘特图了！
+      item1_html: "<b>计划</b>. 在列表中创建任务并分配给您的团队成员。"
+      item2_html: "<b>报告</b>. 发表评论到每个任务，添加附件，回复反馈信息。"
+      item3_html: "<b>跟进</b>. 得到与您相关任务的提醒。"
+      item4_html: "<b>预览</b>. 已经完成的任务不会被删除，您可以在将来继续读取到这些消息和文件。"
     show: 
       title: "任务列表: %{name}"
   tasks: 
@@ -1142,12 +1077,12 @@ zh:
       reopen: 重新打开任务
       you_are_done: 看上去您已经完成了这个任务！
     archive_message: 
-      archived: "任务 <b>%{name}</b>已经成功存档！"
+      archived_html: "任务 <b>%{name}</b>已经成功存档！"
     assigned: 
       assigned_to: "分配给%{user}"
     create: 添加任务
     destroy_message: 
-      deleted: "任务 <b>%{name}</b>已经成功删除！"
+      deleted_html: "任务 <b>%{name}</b>已经成功删除！"
     due_on: 
       due_on: 截止于
       today: 今天
@@ -1195,7 +1130,7 @@ zh:
   uploads: 
     comment_upload_link: 附件
     form: 
-      description: "标题 <i>(可选)</i>"
+      description_html: "标题 <i>(可选)</i>"
       max_size: "文件大小不能超过%{mb}"
       presence: 您不能上传空文件
       select_file: 选择文件
@@ -1207,12 +1142,12 @@ zh:
       select_a_file: 选择文件
     primer: 
       create_first: 在这个项目中上传第一个文件！
-      define1: 还有与您的团队分享文件的问题？Teambox再次让分享更容易。
-      define2: 您可以在这里上传文件，或者附加文件到话题，任务或页面。
+      define1_html: 还有与您的团队分享文件的问题？Teambox再次让分享更容易。
+      define2_html: 您可以在这里上传文件，或者附加文件到话题，任务或页面。
       empty: 这个项目还没有任何文件。
-      item1: "<b>更大的文件</b>. 上传任意大小的文件，忘记电子邮件附件大小的限制吧。"
-      item2: "<b>版本</b>. 上传新版本的文件，同时保留旧版本的变更记录。"
-      item3: "<b>永远可用</b>. 文件保存在项目上下文相关的地方，将来查找引用更方便。"
+      item1_html: "<b>更大的文件</b>. 上传任意大小的文件，忘记电子邮件附件大小的限制吧。"
+      item2_html: "<b>版本</b>. 上传新版本的文件，同时保留旧版本的变更记录。"
+      item3_html: "<b>永远可用</b>. 文件保存在项目上下文相关的地方，将来查找引用更方便。"
     upload: 
       download: 下载
       on_: 打开
@@ -1222,7 +1157,7 @@ zh:
     activation: 
       activated: "您的帐号已经激活！欢迎使用Teambox :)"
       already_done: 您已经确认了您的email地址！现在您可以使用Teambox了。
-      invalid: <p>无效或已经过期的链接。请使用您的email和密码登录。</p><p>如果您忘记了您的登录密码，请点击下面的“忘记密码”链接。</p>
+      invalid_html: <p>无效或已经过期的链接。请使用您的email和密码登录。</p><p>如果您忘记了您的登录密码，请点击下面的“忘记密码”链接。</p>
       invalid_user: 无效用户
       resent: 我们已经重新发送了激活邮件。请检查您的收件箱！
     create: 
@@ -1237,7 +1172,7 @@ zh:
       tasks_for_today: 今日任务
       tasks_for_tomorrow: 明日任务
       tasks_without_a_due_date: 无截止日期任务
-      you_receive_this_message: "您收到此邮件是因为您设置了提醒选项。您可以通过%{link}不再收到这些邮件"
+      you_receive_this_message_html: "您收到此邮件是因为您设置了提醒选项。您可以通过%{link}不再收到这些邮件"
     edit: 
       submit: 更新帐号
       title_deletion: 项目存档/回收站
@@ -1250,8 +1185,8 @@ zh:
         field: 您的头像
         max_size: "文件大小不能超过%{mb}"
         presence: 您不能上传空文件
-        upload_here_or_at_gravatar: "您可以在这里上传新的头像，或上传到%{gravatar}作为一个通用的头像，用于Teambox或其它网站。"
-        we_have_this_avatar: 当前您的头像：
+        upload_here_or_at_gravatar_html: "您可以在这里上传新的头像，或上传到%{gravatar}作为一个通用的头像，用于Teambox或其它网站。"
+        we_have_this_avatar_html: 当前您的头像：
       biography: 自我介绍
       change_password: 修改密码
       confirm_password: 确认密码
@@ -1263,13 +1198,18 @@ zh:
       last_name: 名
       login: 用户名
       monday: 周一
-      notifications:
+      notifications: 
         notify_conversations: 在我关注的话题变化时通知我
-        notify_mentions: "在消息中提及我时通知我。例如：“你好，@%{login}!”您将收到一封提醒的电子邮件"
         notify_tasks: 在我关注的任务变化时通知我
         wants_task_reminder: 发送我的任务每日情况报告
       password: 密码
       password_confirmation: 确认密码
+      picture: 
+        field: 您的头像
+        max_size: "文件大小不能超过%{mb}"
+        presence: 您不能上传空文件
+        upload_here_or_at_gravatar: "您可以在这里上传新的头像，或上传到%{gravatar}作为一个通用的头像，用于Teambox或其它网站。"
+        we_have_this_avatar: 当前您的头像：
       sunday: 周日
       time_zone: 时区
       tooltips: 
@@ -1279,12 +1219,11 @@ zh:
         login: 您需要用户名才能登录。其他人通过用户名可以找到你。必须全为小写字母，不能有空格，可以使用下划线。
         password: 组合字母，数字，大小写混合是个好注意。
     new: 
-      existing_user: "如果您已经有一个帐号，请<a href='%{login_url}'>登录</a>或者<a href='%{forgot_url}'>找回密码</a>。"
+      existing_user_html: "如果您已经有一个帐号，请<a href='%{login_url}'>登录</a>或者<a href='%{forgot_url}'>找回密码</a>。"
       no_public_signup: 此系统不允许公共注册。
       submit: 创建帐号
-      use_this_email: 您已经被邀请使用此电子邮件地址共享使用项目。如果您希望使用这些项目，请不要修改此邮件地址。在您完成注册过程后，您可以修改您的邮件地址。
       title: 创建新帐号
-      you_already_have_an_account: "您已经有一个使用了地址%{email}的Teambox帐号。<a href='%{login_link}'>使用此邮箱登录</a>或<a href='%{reset_password_link}'>重置密码</a>，如果您已经忘记密码。"
+      you_already_have_an_account_html: "您已经有一个使用了地址%{email}的Teambox帐号。<a href='%{login_link}'>使用此邮箱登录</a>或<a href='%{reset_password_link}'>重置密码</a>，如果您已经忘记密码。"
       you_are_logged_in: 您已经有一个帐号。请先注销，并使用另一个帐号登录。
     show: 
       pending_invite: "%{name}当前已经有一个您的项目的未受理邀请。在此邀请被接受前，您不允许操作任何信息。"
@@ -1292,14 +1231,14 @@ zh:
       projects: 项目
       recent_activity_for: "%{user_name}的近期活动"
     unconfirmed_email: 
-      follow_the_link: 请<b>打开此邮件并点击邮件中的链接</b>，以激活您的帐号。
-      invitation_sent_to: "已经向<i>%{email}</i>发出一封邮件邀请，以确认您的邮件地址。"
-      problems: "如果还有其它问题，请通过%{support}联系我们"
+      follow_the_link_html: 请<b>打开此邮件并点击邮件中的链接</b>，以激活您的帐号。
+      invitation_sent_to_html: "已经向<i>%{email}</i>发出一封邮件邀请，以确认您的邮件地址。"
+      problems_html: "如果还有其它问题，请通过%{support}联系我们"
       problems_title: 问题？
       resend: "没有收到邮件？请点击<a href='%{link}'>这里</a>重新发布激活邮件。"
       spam: 请确保在您的邮件客户端程序中，此邮件没有被标识为垃圾邮件。
       title: 确认您的邮件
-      wrong_address: "不正确的邮件地址？如果您的邮件地址拼写错误，<a href='%{link}'>取消注册过程</a>并使用一个有效的邮件地址重新创建您的帐号。"
+      wrong_address_html: "不正确的邮件地址？如果您的邮件地址拼写错误，<a href='%{link}'>取消注册过程</a>并使用一个有效的邮件地址重新创建您的帐号。"
     update: 
       error: 不能保存修改的个性设置，请修正错误并重试。
       updated: 用户个性设置已更新！

@@ -5,7 +5,7 @@ Feature: Showing users
       | login  | email                 | first_name | last_name |
       | balint | balint.erdi@gmail.com | Balint     | Erdi      |
       | pablo  | pablo@teambox.com     | Pablo      | Villalba  |
-    Given I am logged in as mislav
+    Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
     And I go to project settings page
     Given "balint" is in the project called "Ruby Rockstars"
@@ -22,7 +22,7 @@ Feature: Showing users
 
   Scenario: Pablo should only see the profile of users in the project
     Given I log out
-    And I am logged in as pablo
+    And I am logged in as @pablo
     Given I go to the profile of "pablo"
     Then I should see "Recent activity for Pablo Villalba"
     Given I go to the profile of "balint"

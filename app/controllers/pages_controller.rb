@@ -1,7 +1,10 @@
 class PagesController < ApplicationController
   before_filter :load_page, :only => [ :show, :edit, :update, :reorder, :destroy ]
-  before_filter :check_permissions, :only => [:new,:create,:edit,:update,:reorder,:destroy]
   before_filter :set_page_title
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    handle_cancan_error(exception)
+  end
   
   def index
     if @current_project
@@ -11,8 +14,7 @@ class PagesController < ApplicationController
     end
     
     respond_to do |f|
-      f.html
-      f.m
+      f.any(:html, :m)
       f.xml { render :xml    => @pages.to_xml(:include => :slots, :root => 'pages') }
       f.json{ render :as_json => @pages.to_xml(:include => :slots, :root => 'pages') }
       f.yaml{ render :as_yaml => @pages.to_xml(:include => :slots, :root => 'pages') }
@@ -21,19 +23,23 @@ class PagesController < ApplicationController
   end
   
   def new
+    authorize! :make_pages, @current_project
     @page = Page.new
+    
+    respond_to do |f|
+      f.any(:html, :m)
+    end
   end
   
   def create
+    authorize! :make_pages, @current_project
     @page = @current_project.new_page(current_user,params[:page])    
     respond_to do |f|
       if @page.save
-        f.html { redirect_to project_page_path(@current_project,@page) }
-        f.m    { redirect_to project_page_path(@current_project,@page) }
+        f.any(:html, :m) { redirect_to project_page_path(@current_project,@page) }
         handle_api_success(f, @page, true)
       else
-        f.html { render :new }
-        f.m { render :new }
+        f.any(:html, :m) { render :new }
         handle_api_error(f, @page)
       end
     end
@@ -43,8 +49,7 @@ class PagesController < ApplicationController
     @pages = @current_project.pages
     
     respond_to do |f|
-      f.html
-      f.m
+      f.any(:html, :m)
       f.xml { render :xml    => @page.to_xml(:include => [:slots, :objects]) }
       f.json{ render :as_json => @page.to_xml(:include => [:slots, :objects]) }
       f.yaml{ render :as_yaml => @page.to_xml(:include => [:slots, :objects]) }
@@ -52,6 +57,7 @@ class PagesController < ApplicationController
   end
   
   def edit
+    authorize! :update, @page
     respond_to do |f|
       f.html
       f.m   {
@@ -66,20 +72,20 @@ class PagesController < ApplicationController
   end
   
   def update
+    authorize! :update, @page
     respond_to do |f|
       if @page.update_attributes(params[:page])
-        f.html { redirect_to project_page_path(@current_project,@page) }
-        f.m    { redirect_to project_page_path(@current_project,@page) }
+        f.any(:html, :m)  { redirect_to project_page_path(@current_project,@page) }
         handle_api_success(f, @page)
       else
-        f.html { render :edit }
-          f.html { render :edit }
+        f.any(:html, :m)  { render :edit }
         handle_api_error(f, @page)
       end
     end
   end
   
   def reorder
+    authorize! :update, @page
     order = params[:slots].collect { |id| id.to_i }
     current = @page.slots.map { |slot| slot.id }
     
@@ -103,12 +109,13 @@ class PagesController < ApplicationController
     end
     
     respond_to do |f|
-      f.js
+      f.js   { render :layout => false }
       handle_api_success(f, @page)
     end
   end
   
   def resort
+    authorize! :reorder_objects, @current_project
     order = params[:pages].map(&:to_i)
     
     @current_project.pages.each do |page|
@@ -118,25 +125,23 @@ class PagesController < ApplicationController
     end
     
     respond_to do |f|
-      f.js { render :reorder }
+      f.js { render :reorder, :layout => false }
     end
   end
 
   def destroy
-    if @page.editable?(current_user)
+    if can? :destroy, @page
       @page.try(:destroy)
 
       respond_to do |f|
         flash[:success] = t('deleted.page', :name => @page.to_s)
-        f.html { redirect_to project_pages_path(@current_project) }
-        f.m { redirect_to project_pages_path(@current_project) }
+        f.any(:html, :m)  { redirect_to project_pages_path(@current_project) }
         handle_api_success(f, @page)
       end
     else
       respond_to do |f|
         flash[:error] = t('common.not_allowed')
-        f.html { redirect_to project_page_path(@current_project,@page) }
-        f.m { redirect_to project_page_path(@current_project,@page) }
+        f.any(:html, :m) { redirect_to project_page_path(@current_project,@page) }
         handle_api_error(f, @page)
       end
     end

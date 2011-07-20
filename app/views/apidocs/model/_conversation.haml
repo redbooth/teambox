@@ -1,33 +1,48 @@
-%p= "A conversation is a group of comments. It can also act as a thread in the project overview."
-%p= "Comments belong to a #{link_to_doc_model(:project)}."
+%p=raw "A conversation is a group of comments. It can also act as a thread in the project overview."
+%p=raw "Comments belong to a #{link_to_doc_model(:project)}."
 
-- doc_for :index, :example => example_api_wrap(@conversation, :references => [:user, :project]), :parameters => {:type => "thread|conversation"} do
-  %p= "Returns the most recent conversations in a project."
-  %p= "Conversations can either be threads (i.e. simple = true), or normal conversations visible in the conversations section. Use the <tt>type</tt> parameter to filter between the two, or omit it to enumerate both."
+- doc_for :index,
+          :example => example_api_wrap(@conversation, :references => [:user, :project]), :parameters => {:type => "thread|conversation"} do
+  %p=raw "Returns the most recent conversations in a project."
+  %p=raw "Conversations can either be threads (i.e. simple = true), or normal conversations visible in the conversations section. Use the <tt>type</tt> parameter to filter between the two, or omit it to enumerate both."
 
-- doc_for :show,  :example => @conversation.to_api_hash,
-                  :includes => [:comments, :user] do
-  %p= "Returns the data for a conversation."
+- doc_for :show,
+          :example => @conversation.to_api_hash,
+          :includes => [:comments, :user] do
+  %p=raw "Returns the data for a conversation."
   
-- doc_for :create, :parameters => {:name => 'Conversation', :body => 'Well...', :project_id => 123 },
-                   :example => @conversation.to_api_hash(:include => [:comments]),
-                   :status => :created,
-                   :role => :participant do
-  %p= "Creates a new conversation. The <tt>body</tt> parameter is used for the first comment, which is returned in <tt>comments</tt>."
+- doc_for :create,
+          :parameters => {:name => 'Conversation', :body => 'Well...', :project_id => 123 },
+          :example => @conversation.to_api_hash(:include => [:comments]),
+          :status => :created,
+          :role => :participant do
+  %p=raw "Creates a new conversation. The <tt>body</tt> parameter is used for the first comment, which is returned in <tt>comments</tt>."
 
-- doc_for :update, :parameters => {:name => @conversation.name },
-                   :status => :updated,
-                   :role => :participant do
-  %p= "Updates the title of a conversation."
+- doc_for :update,
+          :parameters => {:name => @conversation.name },
+          :status => :updated,
+          :role => :participant do
+  %p=raw "Updates the title of a conversation."
 
-- doc_for :watch, :status => :updated,
-                  :role => :participant do
-  %p= "Adds the current user to the watchers list of the comment."
+- doc_for :convert_to_task,
+          :parameters => {:conversation => {:name => 'Mobile App', :comment => 'Optional comment'}},
+          :status => :created,
+          :example => @task.to_api_hash(:include => [:comments]),
+          :role => :participant do
+  %p=raw "Converts a conversation to a task, returning the created task."
+  %p=raw "<tt>conversation</tt> parameters are optional except in the case of simple conversations."
 
-- doc_for :unwatch, :status => :updated,  
-                    :role => :participant do
-  %p= "Removes the current user from the watchers list of the comment."
+- doc_for :watch,
+          :status => :updated,
+          :role => :participant do
+  %p=raw "Adds the current user to the watchers list of the comment."
 
-- doc_for :destroy, :status => :deleted,
-                    :role => :admin do
-  %p= "Destroys a conversation."
+- doc_for :unwatch,
+          :status => :updated,  
+          :role => :participant do
+  %p=raw "Removes the current user from the watchers list of the comment."
+
+- doc_for :destroy,
+          :status => :deleted,
+          :role => :admin do
+  %p=raw "Destroys a conversation."

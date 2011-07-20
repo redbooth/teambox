@@ -2,17 +2,19 @@
   = f.label :login, t('users.form.login')
   = f.text_field :login
   = errors_for user, :login
-  - tooltip t('users.form.tooltips.login')
 .email.text_field
   = f.label :email, t('users.form.email')
   - if (@invitation || @app_link)
     = f.text_field :email, :readonly => 'readonly', :style => 'color: #999'
   - else
     = f.text_field :email
-    - tooltip t('.tooltips.email')
   = errors_for user, :email
-      
+
 #password_fields{ :style => 'display: none' }
+  .password.text_field
+    = f.label :old_password, t('users.form.old_password')
+    = f.password_field :old_password, :autocomplete => 'off'
+    = errors_for user, :old_password
   .password.text_field
     = f.label :password, t('users.form.password')
     = f.password_field :password, :autocomplete => 'off'
@@ -35,7 +37,7 @@
   
 .time_zone.select
   = f.label :time_zone, t('users.form.time_zone')
-  = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"    
+  = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"
 
 .betatester.check_box
   = f.check_box :betatester

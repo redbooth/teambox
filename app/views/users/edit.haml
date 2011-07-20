@@ -6,7 +6,7 @@
 - secure_post = @sub_action == 'settings' && Teambox.config.secure_logins
 - secure_url = secure_post ? polymorphic_url(current_user, :protocol => 'https') : nil
 
-- form_for current_user, :url => secure_url, :html => { :multipart => true } do |form|
+= form_for current_user, :url => secure_url, :html => { :multipart => true } do |form|
   = form.error_messages
   = render "users/form/#{@sub_action}", :f => form, :sub_action => @sub_action, :user => form.object
   = hidden_field_tag 'sub_action', @sub_action
@@ -14,8 +14,8 @@
     .submit= submit_tag t('.submit')
 
 - if 'profile' == @sub_action
-  - form_for current_user do |form|
-    - form.fields_for :card do |card_form|
+  = form_for current_user do |form|
+    = form.fields_for :card do |card_form|
       - content_for :js_templates do
         - %w(phone_numbers email_addresses websites addresses ims social_networks).each do |field|
-          = "var #{field}='#{generate_template(card_form, field.to_sym)}'"
+          = "var #{field}='#{generate_template(card_form, field.to_sym)}'".html_safe

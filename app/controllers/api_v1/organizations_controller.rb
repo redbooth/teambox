@@ -1,10 +1,9 @@
 class ApiV1::OrganizationsController < ApiV1::APIController
   skip_before_filter :load_project
   before_filter :load_organization, :except => [:create, :index]
-  before_filter :can_modify?, :only => [:edit, :update, :destroy]
   
   def index
-    @organizations = current_user.organizations
+    @organizations = current_user.organizations(:order => 'id DESC')
     api_respond current_user.organizations, :references => []
   end
 
@@ -26,6 +25,7 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   end
   
   def update
+    authorize! :admin, @organization
     if @organization.update_attributes(params)
       handle_api_success(@organization)
     else
@@ -34,6 +34,7 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   end
 
   def destroy
+    authorize! :admin, @organization
     @organization.destroy
     handle_api_success(@organization)
   end
@@ -41,20 +42,13 @@ class ApiV1::OrganizationsController < ApiV1::APIController
   protected
   
   def load_organization
-    @organization = if params[:id].match(API_NONNUMERIC)
-      current_user.organizations.find_by_permalink(params[:id])
-    else
-      current_user.organizations.find_by_id(params[:id])
-    end
-    api_status(:not_found) unless @organization
-  end
-  
-  def can_modify?
-    if !@organization.is_admin?(current_user)
-      api_error(t('common.not_allowed'), :unauthorized)
-      false
-    else
-      true
+    organization_id ||= params[:id]
+    
+    if organization_id
+      @organization = Organization.find_by_id_or_permalink(organization_id)
+      unless @organization and @organization.is_user?(current_user)
+        api_error :not_found, :type => 'ObjectNotFound', :message => 'Organization not found'
+      end
     end
   end
   

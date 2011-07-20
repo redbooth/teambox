@@ -1,27 +1,33 @@
-%p= "Projects contain most of the objects present in Teambox."
+%p=raw "Projects contain most of the objects present in Teambox."
 
-- doc_for :index, :example => example_api_wrap(@project, :references => [:organization, :user]) do
-  %p= "Returns the most recent projects you own or belong to. You can also filter by organization by passing in <tt>organization_id</tt>."
+- doc_for :index,
+          :example => example_api_wrap(@project, :references => [:organization, :user]) do
+  %p=raw "Returns the most recent projects you own or belong to. You can also filter by organization by passing in <tt>organization_id</tt>."
 
-- doc_for :show, :example => @project.to_api_hash,
-                 :includes => [:organization, :people, :user] do
-  %p= "Returns the data for a given project"
+- doc_for :show,
+          :example => @project.to_api_hash,
+          :includes => [:organization, :people, :user] do
+  %p=raw "Returns the data for a given project"
   
-- doc_for :create, :parameters => {:organization_id => @project.organization_id, :name => 'Name', :permalink => 'project' },
-                   :example => @project.to_api_hash,
-                   :status => :created do
-  %p= "Creates a new project"
+- doc_for :create,
+          :parameters => {:organization_id => @project.organization_id, :name => 'Name', :permalink => 'project' },
+          :example => @project.to_api_hash,
+          :status => :created do
+  %p=raw "Creates a new project"
 
-- doc_for :update, :parameters => {:name => @project.name, :permalink => @project.permalink },
-                   :status => :updated,
-                   :role => [:admin, :owner] do
-  %p= "Updates a project"
+- doc_for :update,
+          :parameters => {:name => @project.name, :permalink => @project.permalink },
+          :status => :updated,
+          :role => [:admin, :owner] do
+  %p=raw "Updates a project"
 
-- doc_for :transfer, :parameters => {:user_id => 'id'  },
-                     :status => :updated,
-                     :role => [:owner] do
-  %p= "Transfers a project to the new owner"
+- doc_for :transfer,
+          :parameters => {:user_id => 'id'  },
+          :status => :updated,
+          :role => [:owner] do
+  %p=raw "Transfers a project to the new owner"
 
-- doc_for :destroy, :status => :deleted,
-                     :role => [:owner] do
-  %p= "Destroys a project. You must be the owner in order to perform this action."
+- doc_for :destroy,
+          :status => :deleted,
+          :role => [:owner] do
+  %p=raw "Destroys a project. You must be the owner in order to perform this action."

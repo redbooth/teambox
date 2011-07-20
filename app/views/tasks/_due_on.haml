@@ -10,5 +10,5 @@
     - elsif task.due_tomorrow?
       = t('.tomorrow')
     - else
-      /= t('.due_on')
+      /= t('.due_on_html')
       = I18n.l(task.due_on, :format => '%b %d')

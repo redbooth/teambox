@@ -9,15 +9,17 @@ module ActivitiesHelper
       out << "#{t('common.in_project')} "
       out <<   link_to(h(project), project_path(project))
       out << "</span>"
-      out
-    end  
+      out.html_safe
+    end
   end
   
   def activity_section(activity)
     haml_tag 'div', :class => "activity #{activity.action_type}" do
       haml_concat micro_avatar(activity.user)
-      yield activity_title(activity)
-      haml_tag 'div', posted_date(activity.created_at), :class => :date unless rss?
+      haml_tag 'div', :class => :activity_block do
+        haml_tag 'div', posted_date(activity.created_at), :class => :date unless rss?
+        yield activity_title(activity)
+      end
     end
   end
 
@@ -31,14 +33,15 @@ module ActivitiesHelper
                       create_upload
                       create_person delete_person
                       create_project
+                      create_teambox_data
                       )
 
   def list_activities(activities)
-    activities.map { |activity| show_activity(activity) }.join('')
+    activities.map { |activity| show_activity(activity) }.join('').html_safe
   end
 
   def list_threads(activities)
-    activities.map { |activity| show_threaded_activity(activity) }.join('')
+    activities.map { |activity| show_threaded_activity(activity) }.join('').html_safe
   end
 
   def show_threaded_activity(activity)
@@ -48,7 +51,9 @@ module ActivitiesHelper
         render('activities/thread', :activity => activity).to_s
       end
     else
-      Rails.cache.fetch("#{activity.cache_key}/#{current_user.locale}") { show_activity(activity).to_s }
+      Rails.cache.fetch("#{activity.cache_key}/#{current_user.locale}") do
+        show_activity(activity).to_s
+      end
     end
   end
 
@@ -89,10 +94,13 @@ module ActivitiesHelper
       { :person => link_to_unless(plain, h(object.user.name), object.user),
         :project => link_to_unless(plain, h(activity.project), activity.project) }
     when 'create_task'
-      { :task => link_to_unless(plain, h(object), [activity.project, object.task_list, object]),
+      { :task => link_to_unless(plain, h(object), [activity.project, object]),
         :task_list => link_to_unless(plain, h(object.task_list), [activity.project, object.task_list]) }
     when 'create_task_list'
       { :task_list => link_to_unless(plain, h(object), [activity.project, object]) }
+    when 'create_teambox_data'
+      { :person => link_to_unless(plain, h(object.user.name), object.user),
+        :project => link_to_unless(plain, h(activity.project), activity.project) }
     when 'create_upload'
       text = object.description.presence || object.file_name
       { :file => link_to_unless(plain, h(text), project_uploads_path(activity.project, :anchor => dom_id(object))) }
@@ -105,7 +113,7 @@ module ActivitiesHelper
       type << "_#{object.class.name.underscore}"
       
       target = case object
-      when Task then link_to_unless(plain, h(object.name), [object.project, object.task_list, object])
+      when Task then link_to_unless(plain, h(object.name), [object.project, object])
       when Project then link_to_unless(plain, h(object.name), object)
       when Conversation then link_to_unless(plain, h(object.name), [object.project, object])
       end
@@ -113,16 +121,16 @@ module ActivitiesHelper
     else
       raise ArgumentError, "unknown activity type #{type}"
     end
-    t("activities.#{type}.title", values)
+    t("activities.#{type}.title", values).html_safe
   end
   
   def activity_target_url(activity)
     if activity.target_type == 'Task'
       task = activity.target
-      project_task_list_task_url(activity.project, task.task_list_id, task)
-    elsif activity.comment_type == 'Task'
-      task = activity.target.target
-      project_task_list_task_url(activity.project, task.task_list_id, task)
+      project_task_url(activity.project, task)
+    elsif activity.comment_target_type == 'Task'
+      task = activity.comment_target
+      project_task_url(activity.project, task)
     elsif activity.target_type == 'TaskList'
       project_task_list_url(activity.project, activity.target)
     elsif activity.target_type == 'Page'
@@ -131,8 +139,8 @@ module ActivitiesHelper
       project_uploads_url(activity.project)
     elsif activity.target_type == 'Conversation'
       project_conversation_url(activity.project, activity.target)
-    elsif activity.comment_type == 'Conversation'
-      project_conversation_url(activity.project, activity.target.target)
+    elsif activity.comment_target_type == 'Conversation'
+      project_conversation_url(activity.project, activity.comment_target)
     else
       project_url(activity.project, :anchor => "activity_#{activity.id}")
     end
@@ -170,61 +178,40 @@ module ActivitiesHelper
     end
   end
   
-  def link_to_conversation(conversation)
-    link_to h(conversation), project_conversation_path(conversation.project, conversation)
-  end
-  
-  def link_to_task_list(task_list)
-    link_to h(task_list), project_task_list_path(task_list.project, task_list)
-  end
-
-  def link_to_task(task)
-    link_to h(task), project_task_list_task_path(task.project, task.task_list,task)
-  end
-
   def activities_paginate_link(*args)
     options = args.extract_options!
 
-    if location_name == 'index_projects'
+    if location_name == 'index_projects' or location_name == 'show_activities'
       url = show_more_path(options[:last_activity].id)
     elsif location_name == 'show_more_activities' and params[:project_id].nil? and params[:user_id].nil?
       url = show_more_path(options[:last_activity].id)
     elsif location_name == 'show_users'
-        url = user_show_more_path(@user.id, options[:last_activity].id)
+      url = user_show_more_path(@user.id, options[:last_activity].id)
     elsif location_name == 'show_projects'
       url = project_show_more_path(@current_project.permalink, options[:last_activity].id)
     elsif location_name == 'show_more_activities' and params[:project_id]
       url = project_show_more_path(params[:project_id], options[:last_activity].id)
     elsif location_name == 'show_more_activities' and params[:user_id]
-        url = user_show_more_path(params[:user_id], options[:last_activity].id)
+      url = user_show_more_path(params[:user_id], options[:last_activity].id)
     else
       raise "unexpected location #{location_name}"
     end
-    link_to_remote content_tag(:span, t('common.show_more')),
-      :url => url,
-      :loading => activities_paginate_loading,
-      :html => {
-        :class => 'activity_paginate_link button',
-        :id => 'activity_paginate_link' }
+    link_to(content_tag(:span, t('common.show_more')),
+            url,
+            :remote => true,
+            :class => 'activity_paginate_link button',
+            :id => 'activity_paginate_link'
+            )
   end
   
-  def activities_paginate_loading
-    update_page do |page|
-      page['activity_paginate_link'].hide
-      page['activity_paginate_loading'].show
-    end
-  end
-
   def show_more(after)
     update_page do |page|
       page['activities'].insert list_activities(@activities)
     end
   end
   
-  def show_more_button(activities)
-    if activities.size == APP_CONFIG['activities_per_page']
-      render 'activities/show_more'
-    end
+  def show_more_button
+    render 'activities/show_more' if @last_activity
   end
   
   def fluid_badge(count)

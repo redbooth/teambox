@@ -1,6 +1,6 @@
 %h2= t('.title')
 
-- form_for @project do |f|
+= form_for @project do |f|
   = project_fields(f,@project)
   .submit
     = f.submit t('.submit')

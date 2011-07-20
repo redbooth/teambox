@@ -1,40 +1,46 @@
-%p= "A task list is a collection of #{link_to_doc_model(:task)}s in a #{link_to_doc_model(:project)}."
+%p=raw "A task list is a collection of #{link_to_doc_model(:task)}s in a #{link_to_doc_model(:project)}."
 
 - doc_for :index,
           :parameters => {:archived => 'true|false'},
           :example => example_api_wrap(@task_list, :references => [:user]) do
-  %p= "Returns the most recent task lists in a project. To filter by archived or unarchived lists, pass in the optional <tt>archived</tt> parameter. To view everything, simply omit the <tt>archived</tt> parameter."
+  %p=raw "Returns the most recent task lists in a project. To filter by archived or unarchived lists, pass in the optional <tt>archived</tt> parameter. To view everything, simply omit the <tt>archived</tt> parameter."
 
 - doc_for :show,  
           :example => @task_list.to_api_hash(:include => [:tasks]),
           :includes => [:tasks] do
-  %p= "Returns the data for a task list."
+  %p=raw "Returns the data for a task list."
   
-- doc_for :create, :parameters => {:name => 'Task list', :start_on => '2010-01-01', :finish_on => '2010-02-01', :project_id => 123},
-                   :example => @task_list.to_api_hash,
-                   :status => :created,
-                   :role => :participant do
-  %p= "Creates a new task list."
+- doc_for :create,
+          :parameters => {:name => 'Task list', :start_on => '2010-01-01', :finish_on => '2010-02-01', :project_id => 123},
+          :example => @task_list.to_api_hash,
+          :status => :created,
+          :role => :participant do
+  %p=raw "Creates a new task list."
 
-- doc_for :update, :parameters => {:name => @task_list.name, :start_on => @task_list.start_on, :finish_on => @task_list.finish_on },
-                   :status => :updated,
-                   :role => :participant do
-  %p= "Updates the name, start date and end date of a task list."
+- doc_for :update,
+          :parameters => {:name => @task_list.name, :start_on => @task_list.start_on, :finish_on => @task_list.finish_on },
+          :status => :updated,
+          :role => :participant do
+  %p=raw "Updates the name, start date and end date of a task list."
 
-- doc_for :reorder, :status => :updated,
-                    :parameters => { :task_lists => [1,2,3] },
-                    :role => :participant do
-  %p= "Reorders the task lists in a project according to the order each task list id is presented in <tt>task_lists</tt>."
+- doc_for :reorder,
+          :status => :updated,
+          :parameters => { :task_lists => [1,2,3] },
+          :role => :participant do
+  %p=raw "Reorders the task lists in a project according to the order each task list id is presented in <tt>task_lists</tt>."
 
-- doc_for :archive, :status => :updated,
-                    :role => :participant do
-  %p= "Archives the task list. All tasks belonging to the task list will be updated and resolved."
+- doc_for :archive,
+          :status => :updated,
+          :role => :participant do
+  %p=raw "Archives the task list. All tasks belonging to the task list will be updated and resolved."
 
-- doc_for :unarchive, :status => :updated,
-                      :role => :participant do
-  %p= "Unarchives the task list."
+- doc_for :unarchive,
+          :status => :updated,
+          :role => :participant do
+  %p=raw "Unarchives the task list."
 
-- doc_for :destroy, :status => :deleted,
-                    :role => :participant do
-  %p= "Destroys a task list."
+- doc_for :destroy,
+          :status => :deleted,
+          :role => :participant do
+  %p=raw "Destroys a task list."
 

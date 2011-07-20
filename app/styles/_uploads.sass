@@ -1,67 +1,53 @@
-$upload_icon_width: 48px
+$upload_icon_width: 16px
 
-.upload
-  font-size: 12px
-  +clearing
-  padding: 15px 10px 15px $upload_icon_width + 20px
-  .info
-    width: $upload_icon_width
-    margin-left: -$upload_icon_width - 10px
-    float: left
-    .file_icon
-      background: #ffffff
-      padding: 0
-    a
+.uploads
+  .upload
+    font-size: 12px
+    padding: 0 0 6px 5px
+    border: 1px solid transparent
+    &.alternate
+      background: lighten($navbar, 30)
+    &:hover
+      background-color: #ffe
+      border-color: #aaa
+    .header
       display: block
-      text-align: center
-      text-transform: uppercase
-      background: rgb(100, 100, 100)
-      color: rgb(255, 255, 255)
-      font-size: 16px
-      padding: 14px 0 3px 0
+      margin: 0
+      padding: 0
+      height: auto
+      cursor: pointer
+    .icon, .file, .size, .author, .more
+      display: inline-block
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+    .icon
       width: $upload_icon_width
-      height: 28px
-      +rounded(5px)
-      letter-spacing: 0.1em
-      font-family: Georgia
-    a.jpg, a.gif, a.png, a.tga, a.tiff, a.eps, a.bmp
-      background: rgb(11, 183, 182)
-    a.xls, a.xlsx
-      background: rgb(94, 148, 48)
-    a.txt, a.c, a.cpp, a.css, a.dat, a.exe, a.h, a.hpp, a.html, a.java, a.php, a.py, a.rb, a.rtf, a.sql, a.xml, a.yml
-      color: rgb(87, 107, 116)
-      background: rgb(215, 224, 229)
-    a.rar, a.tzg, a.zip, a.iso, a.dmg
-      background: rgb(222, 185, 54)
-    a.avi, a.flv, a.qt, a.mp4, a.mov, a.mpg
-      background: rgb(157, 71, 154)
-    a.aac, a.aiff, a.mid, a.mp3, a.wav
-      background: rgb(98, 95, 155)
-    a.pdf, a.ics
-      background: rgb(202, 33, 39)
-    a.doc, a.odt, a.ott
-      background: rgb(24, 93, 128)
-    a.psd
-      background: rgb(0, 111, 148)
-    a.ai
-      background: rgb(216, 71, 108)
-    a.key, a.odf, a.otp, a.ppt
-      background: rgb(214, 103, 39)
-    a.dotx, a.ods, a.ots
-      background: rgb(105, 161, 53)
-    a.dxf, a.dwg
-      background: rgb(12, 164, 227)
-  .date
-    float: right
-    font-size: 10px
-    color: rgb(180, 180, 180)
-  .description
-    color: #999
-    font-style: italic
-  .reference
-    margin-top: .3em
-  a[data-method="delete"]
-    color: red
+      position: relative
+      top: 4px
+    .file
+      width: 400px
+      a
+        color: black
+    .size, .author
+      width: 75px
+      font-size: 10px
+      color: #777
+      margin: 0px 5px
+    .more
+      display: none
+      width: 20px
+      font-size: 10px
+    &:hover .more
+      display: inline-block
+    .reference
+      display: block
+      padding: 7px 0px 2px 20px
+      a
+        display: inline-block
+        margin-right: 10px
+      a[data-method="delete"]
+        color: red
 
 .uploads_current, .upload_images
   margin: 5px
@@ -89,6 +75,17 @@ $upload_icon_width: 48px
       top: -2px
     .size
       color: rgb(120, 120, 120)
+
+.activity
+  .upload_list
+    margin:
+      left: 34px
+      bottom: 20px
+    .upload_file
+      img
+        vertical-align: bottom
+      span
+        position: static
 
 .index_uploads
   .content

@@ -1,8 +1,3 @@
 - content_for :column do
-  - if project.editable?(current_user)
-    = new_conversation_link(project)
-  - else
-    %p= t('.cant_create')
-  = instructions_for_email(project)
   .conversations
     = render conversations, :project => project, :current_target => conversation

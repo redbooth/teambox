@@ -1,0 +1,28 @@
+- @organizations.each do |organization|
+
+  - next unless organization[:active_projects].any? or organization[:archived_projects].any?
+
+  %h4= organization[:organization]
+
+  - if organization[:active_projects].any?
+    .projects
+      - for project in organization[:active_projects]
+        - role = @people.detect { |p| p.project_id == project.id }.try(:role)
+        - if role
+          %p.project
+            = link_to h(project), project
+            %span.status
+              = t('organizations.active_projects.role_html', :role => @roles[role])
+              - if @roles[role] == 'admin'
+                =raw "(" + link_to(t('organizations.active_projects.settings'), edit_project_path(project)) + ")"
+  - else
+    %p.none= t('organizations.active_projects.no_active_projects')
+
+  - if organization[:archived_projects].any?
+    %p= link_to t('.show_archived', :count => organization[:archived_projects].length), '#', :class => 'show_archived'
+    .archived_projects{ :style => 'display: none' }
+      - for project in organization[:archived_projects]
+        %p.project
+          = link_to "#{t('.archived')}: #{h(project)}", project
+          %span.status
+            = t('.archived_at', :date => project.updated_at.to_date)

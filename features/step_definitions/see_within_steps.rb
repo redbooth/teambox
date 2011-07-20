@@ -7,7 +7,11 @@
 each do |within, selector|
   Then /^(?:|I )should( not)? see "([^\"]*)" #{within}$/ do |negate, text|
     with_scope(selector) do
-      Then %(I should#{negate} see "#{text}")
+      if content = page['innerHTML']
+        assert negate ? !content.include?(text) : content.include?(text)
+      else
+        Then %(I should#{negate} see "#{text}")
+      end
     end
   end
 end

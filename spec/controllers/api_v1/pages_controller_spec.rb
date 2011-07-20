@@ -18,6 +18,19 @@ describe ApiV1::PagesController do
       JSON.parse(response.body)['objects'].length.should == 1
     end
     
+    it "includes references" do
+      login_as @user
+      
+      get :index
+      response.should be_success
+      
+      refs = JSON.parse(response.body)['references']
+      refs.length.should == 2
+      objtypes = refs.map {|r| r['type']}
+      objtypes.include?('Project').should == true
+      objtypes.include?('User').should == true
+    end
+    
     it "shows pages in all projects" do
       login_as @user
       
@@ -88,10 +101,18 @@ describe ApiV1::PagesController do
     it "shows a page" do
       login_as @user
       
+      @note = @page.build_note({:name => 'Office Ettiquete'}).tap do |n|
+        n.updated_by = @user
+        n.save
+      end
+      
       get :show, :project_id => @project.permalink, :id => @page.id
       response.should be_success
       
-      JSON.parse(response.body)['id'].to_i.should == @page.id
+      page = JSON.parse(response.body)
+      page['id'].to_i.should == @page.id
+      page['objects'][0]['type'].should == 'Note'
+      page['slots'][0]['rel_object_id'].should == @note.id
     end
   end
   
@@ -109,7 +130,7 @@ describe ApiV1::PagesController do
       login_as @observer
       
       put :update, :project_id => @project.permalink, :id => @page.id, :name => 'Unimportant Plans'
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @page.reload.name.should == 'Important plans!'
     end
@@ -129,7 +150,7 @@ describe ApiV1::PagesController do
       login_as @observer
       
       put :destroy, :project_id => @project.permalink, :id => @page.id
-      response.status.should == '401 Unauthorized'
+      response.status.should == 401
       
       @project.pages.length.should == 1
     end

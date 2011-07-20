@@ -1,0 +1,228 @@
+--- 
+ar: 
+  activerecord: 
+    attributes: 
+      address: 
+        city: المدينة
+        country: الدولة
+        state: الولاية
+        street: شارع
+        zip: "الرمز البريدي"
+      card: 
+        city: المدينة
+        country: الدولة
+        state: الولاية
+        street: شارع
+        zip: "الرمز البريدي"
+      comment: 
+        body: الموضوع
+        hours: ساعات
+        status: الحالة
+      conversation: 
+        name: الإسم
+      divider: 
+        name: الإسم
+      email_address: 
+        account_type: النوع
+        name: العنوان
+      im: 
+        account_im_type: الخدمة
+        account_type: النوع
+        name: العنوان
+      invitation: 
+        email: "البريد الإلكتروني"
+      note: 
+        body: الموضوع
+        name: الإسم
+      pages: 
+        description: الوصف
+        name: صفحة
+      phone_number: 
+        account_type: النوع
+        name: "رقم الهاتف"
+      project: 
+        name: الإسم
+        permalink: الرابط
+      social_network: 
+        account_network_type: الشبكة
+        account_type: النوع
+        name: العنوان
+      task: 
+        due_on: "تاريخ الإستحقاق"
+        name: الإسم
+        status: الحالة
+      task_list: 
+        finish_on: "تاريخ الإنتهاء"
+        name: الإسم
+        start_on: "تاريخ البدء"
+      upload: 
+        description: الوصف
+      user: 
+        biography: نبذة
+        email: "البريد الإلكتروني"
+        first_day_of_week: "أول يوم في الأسبوع"
+        first_name: "الإسم الأول"
+        language: اللغة
+        last_name: "الإسم الأخير"
+        login: "إسم المستخدم"
+        time_zone: "التوقيت المحلي"
+      website: 
+        name: الموقع
+    errors: 
+      full_messages: 
+        format: "%{attribute} %{message}"
+      messages: 
+        accepted: "يجب الموافقة"
+        blank: "لا يمكن تركه خاليا"
+        confirmation: "لا يطابق التأكيد"
+        empty: "لا يمكن تركه خاليا"
+        equal_to: "يجب أن يساوي %{count}"
+        even: "يجب أن يكون زوجيا"
+        exclusion: محجوز
+        greater_than: "يجب أن يكون أكثر من %{count}"
+        greater_than_or_equal_to: "يجب أن يكون أكثر من أو يساوي %{count}"
+        inclusion: "غير مشمول في القائمة"
+        invalid: "غير صحيح"
+        less_than: "يجب أن يكون أقل من %{count}"
+        less_than_or_equal_to: "يجب أن يكون أقل من أو يساوي %{count}"
+        not_a_number: "ليس رقما"
+        odd: "يجب أن يكون فردي"
+        record_invalid: "فشل في التأكد من صحة المعلومات: %{errors}"
+        taken: "مأخوذ سابقا"
+        too_long: "طويل جدا (الحد الأقصى %{count} حرف)"
+        too_short: "قصير جدا (الحد الأدنى %{count} حرف)"
+        wrong_length: "الطول خطأ (يجب أن يكون %{count} حرف)"
+      models: 
+        conversation: 
+          attributes: 
+            name: 
+              no_title: "أعط عنوانا للحوار"
+      template: 
+        body: "توجد مشاكل في الخانات التالية:"
+    models: 
+      address: العنوان
+      card: البطاقة
+      comment: تعليق
+      conversation: حوار
+      divider: القاسم
+      email_address: "البريد الإلكتروني"
+      im: IM
+      invitation: دعوة
+      note: نص
+      page: صفحة
+      phone_number: "رقم الهاتف"
+      project: مشروع
+      social_network: "شبكة اجتماعية"
+      task: مهمة
+      task_list: "قائمة المهام"
+      upload: تحميل
+      website: الويب
+  activities: 
+    create_comment: 
+      create_comment: "أضاف التعليق"
+      title: "%{user} علق على %{target}"
+    create_comment_conversation: 
+      title: "%{user} أكمل على الحوار %{target}"
+    create_comment_project: 
+      title: "%{user} حدث الحالة على %{target}"
+    create_comment_task: 
+      title: "%{user} حدث المهمة %{target}"
+    create_conversation: 
+      create_conversation: "بدء الحوار"
+      title: "%{user} بدء الحوار: %{conversation}"
+    create_note: 
+      create_note: "أضاف ملاحظة"
+      title: "%{user} أضاف ملاحظة <strong>%{note}</strong> في %{page}"
+    create_page: 
+      create_page: "خلق الصفحة"
+      title: "%{user} خلق الصفحة %{page}"
+    create_person: 
+      by: "عن طريق"
+      create_person: "إنضم إلى المشروع"
+      title: "%{person} إنضم إلى المشروع %{project}"
+    create_project: 
+      left: "خلق المشروع"
+      title: "%{person} خلق المشروع %{project}"
+    create_task: 
+      create_task: "خلق المهمة"
+      title: "%{user} خلق المهمة %{task} في %{task_list}"
+    create_task_list: 
+      create_task_list: "خلق قائمة المهام"
+      title: "%{user} خلق قائمة المهام %{task_list}"
+    create_upload: 
+      title: "%{user} حمل الملف %{file}"
+    delete_person: 
+      by: "عن طريق"
+      delete_person: "غادر المشروع"
+      left: "غادر المشروع"
+      title: "%{person} غادر المشروع %{project}"
+    edit_note: 
+      edit_note: "حدث الملاحظة"
+      title: "%{user} حدث الملاحظة \"%{note}\" في %{page}"
+    edit_page: 
+      edit_page: "حدث الصفحة"
+      title: "%{user} حدث الصفحة %{page}"
+    thread: 
+      created: 
+        conversation: "خلق الحوار"
+        task: "خلق المهمة"
+      on_task_list: على
+  affiliate: 
+    area: "قسم الانتساب"
+    index: 
+      addresses: العناوين
+      credits_earned: "رصيدك "
+      desc_1_html: "باستخدام أدوات الشركاء، يمكنك الحصول على <strong>أشهر مجانية</strong> من استخدام Teambox أو تحقيق <strong>مبالغ فعلية</strong> بإرسال الآخرين إلينا."
+      desc_2_html: "أحضر مستخدمين جدد إلى  Teambox, واحصل على <strong>%{percent}% من الدخل</strong> العائد ممن أرسلتهم, <strong>مدى الحياة</strong>."
+      facebook: فيسبوك
+      get_in_touch: "تواصل معنا"
+      idea1: "اخلق موقع عن طيفية استخدام Teambox، مع إرشادات للمبتدئين."
+      idea2: "أضف رابط ل Teambox على مدونتك وتحدث عن كيف قام بمساعدتك."
+      idea3: "نظم حدث عن التعاون في المشاريع وأرشد الحضور إلينا."
+      idea4: "أرسل دعوات عن طريق البريد الإلكتروني لمستخدمين جدد."
+      ideas: "بعض الطرق للاستفادة المثلى من Teambox."
+      learn_more: "تعلم المزيد..."
+      no_referred_users: "لم تقم بإرشاد أي مستخدمين بعد."
+      option_1: "الاختيار 1: شارك الرابط مع الآخرين."
+      option_2: "الاختيار 2: ادعوا أصدقاءك بإضافة بريدهم الإلكتروني."
+      option_3: "الاختيار 3: ادعوا أصدقاءك بتوريد ملف CSV."
+      over_200: "متى ما كان لديك أكثر من $200."
+      plan_for: "خطط ل"
+      premium_plan: "حساب ممتاز"
+      refer_info: "أرشد %{users} مستخدم على حساب %{plan} , احصل على $%{credit} كل شهر."
+      referred_users: "المستخدمون الذين أرشدتهم"
+      send_invites: "دعوة إلى Teambox."
+      send_money: "وسنرسل لك النقود التي حصلت عليها."
+      sent_invites_to: "يستم إرسال الدعولة إلى عناوين البريد الإلكتروني التالية:"
+  number: 
+    currency: 
+      format: 
+        delimiter: ","
+        format: "%u%n"
+        precision: 2
+        separator: "."
+        unit: $
+    format: 
+      delimiter: ","
+      precision: 3
+      separator: "."
+    human: 
+      format: 
+        delimiter: "-"
+        precision: 1
+      storage_units: 
+        format: "%n %u"
+        units: 
+          byte: 
+            one: byte
+            other: bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage: 
+      format: 
+        delimiter: "-"
+    precision: 
+      format: 
+        delimiter: "-"

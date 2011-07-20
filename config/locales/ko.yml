@@ -91,15 +91,8 @@ ko:
         too_short: "너무 짧습니다(최소 %{count}자)"
         wrong_length: "길이가 틀립니다(%{count}자 여야 함)"
       models: 
-        comment: 
-          attributes: 
-            body: 
-              no_body_generic: "위 박스에서 한 것과 같이 작성해주시기 바랍니다."
-              no_body_task: "이 테스크에 대해 위 박스에서 한 것과 같이 작성해주시기 바랍니다."
         conversation: 
           attributes: 
-            body: 
-              no_body_generic: "대화를 시작하시려면 코멘트를 작성해주시기 바랍니다."
             name: 
               no_title: "이 대화에 제목을 달아주시기 바랍니다."
     models: 
@@ -306,14 +299,14 @@ ko:
       title: "새로운 대화"
     primer: 
       create_first: "이 프로젝트에서 첫 대화를 만드세요!"
-      define: "<b>의견을 교환</b> 하고 <b>팀의 상태를 업데이트</b>하기 위해 대화를 사용하세요.<br/>각각의 대화는 복잡한 이메일 대화의 수고를 줄여줍니다."
+      define_html: "<b>의견을 교환</b> 하고 <b>팀의 상태를 업데이트</b>하기 위해 대화를 사용하세요.<br/>각각의 대화는 복잡한 이메일 대화의 수고를 줄여줍니다."
       empty: "프로젝트 내의 대화가 아직 없습니다."
-      footer1: "<b>디자인을 공유</b>하고, 회의 <b>날짜를 결정</b>하거나 새로운 뉴스를 <b>보고</b>하는데 대화는 좋은 수단입니다."
-      footer2: "대화가 시작되면 이전의 대화를 거슬러 올라가 어떤 파일이 발송되었는지, 어떤 대화가 오고 갔는지 쉽게 알 수 있습니다. <b>협동은 곧 대화입니다.</b>."
-      item1: "<b>파일 공유</b>. 또한 코멘트에서도 파일을 공유할 수 있습니다."
-      item2: "<b>구독</b> 이메일이나 RSS로 차후에 달린 답변들을 구독하세요."
-      item3: "<b>강조</b>. 코멘트는 다양한 텍스트 스타일이 적용됩니다."
-      item4: "<b>편지함에서 전송</b> 편지함에서 답장을 해서 코멘트를 다실 수도 있습니다."
+      footer1_html: "<b>디자인을 공유</b>하고, 회의 <b>날짜를 결정</b>하거나 새로운 뉴스를 <b>보고</b>하는데 대화는 좋은 수단입니다."
+      footer2_html: "대화가 시작되면 이전의 대화를 거슬러 올라가 어떤 파일이 발송되었는지, 어떤 대화가 오고 갔는지 쉽게 알 수 있습니다. <b>협동은 곧 대화입니다.</b>."
+      item1_html: "<b>파일 공유</b>. 또한 코멘트에서도 파일을 공유할 수 있습니다."
+      item2_html: "<b>구독</b> 이메일이나 RSS로 차후에 달린 답변들을 구독하세요."
+      item3_html: "<b>강조</b>. 코멘트는 다양한 텍스트 스타일이 적용됩니다."
+      item4_html: "<b>편지함에서 전송</b> 편지함에서 답장을 해서 코멘트를 다실 수도 있습니다."
     short_conversation: 
       comment: 코멘트
       comments: 코멘트
@@ -325,9 +318,9 @@ ko:
     watcher_fields: 
       add_suscribers: "누가 이 대화를 봅니까?"
       invite_users: "당신이 이 프로젝트의 유일한 사용자 입니다!"
-      no_users_yet: "대화는 공유했을대 더욱 유용합니다. <a href='%{invite_link}'>다른 유저를 초대하세요</a> 초대된 사용자들은 대화에 참여할 수 있고 업데이트를 볼 수 있습니다."
+      no_users_yet_html: "대화는 공유했을대 더욱 유용합니다. <a href='%{invite_link}'>다른 유저를 초대하세요</a> 초대된 사용자들은 대화에 참여할 수 있고 업데이트를 볼 수 있습니다."
       people_all: "프로젝트에 속한 모든 사람"
-      subscribe_note: "이 사람들은 메일로 메시지와 앞으로의 코멘트에 대해 알림을 받습니다.<br/>언제라도 이 사람들은 알림을 받지 않을 수 있습니다."
+      subscribe_note_html: "이 사람들은 메일로 메시지와 앞으로의 코멘트에 대해 알림을 받습니다.<br/>언제라도 이 사람들은 알림을 받지 않을 수 있습니다."
   countries: 
     AC: "어센션 섬"
     AD: 안도라
@@ -711,11 +704,10 @@ ko:
       answer_above_this_line: "답글을 달기 위해서는 이 라인 위의 내용에 대한 답을 해주세요"
       do_not_answer: "이 이메일에 답장을 보내지 말아주세요."
     confirm: 
-      follow_the_link: "팀박스 <b>계정 등록을 완료</b>하기 위해서, 이곳을 클릭해서 로그인해주세요:"
       hey: "%{user_name}님 안녕하세요!"
       log_in: "팀박스에 로그인 하세요!"
       plaintext_link: "만약 제대로 동작하지 않는다면 다음 링크 주소를 복사해서 웹브라우저의 주소창에 붙여넣으시기 바랍니다:"
-      problems: "만약 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
+      problems_html: "만약 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
       report_abuse: "팀박스에 %{email}과 같은 메일로 회원가입을 하셔서 이 메세지를 받으셨습니다."
       subject: "팀박스 시작하기"
     forgot_password: 
@@ -730,9 +722,6 @@ ko:
       subject: "%{user}님이 프로젝트 [%{project}]를 공유 했습니다."
       teambox_is_a_pm_platform: "팀박스는 real-world 협업을 하기위한 프로젝트 관리 플렛폼입니다."
       you_have_been_invited_to: "프로젝트 <b>%{project}</b>에 초대되셨습니다."
-    invitation_group: 
-      subject: "%{user}님이 그룹 [%{group}]을 공유하셨습니다."
-      you_have_been_invited_to: "그룹 <b>%{group}</b>에 초대되었습니다."
     notify: 
       are_watching: " 이 대화를 구독하고 있으며 이후 답글들에 대해 알려드리겠습니다."
       assigned_to: "<b>%{user}</b>님에게 할당되었습니다."
@@ -743,7 +732,6 @@ ko:
       my_tasks: "%{project}에 할당된 테스크들이 더 있습니다."
       notification_settings: "<a href='%{url}'>알림 설정</a>을 통해 이메일 알림을 바꿀 수 있습니다."
       project: "팀박스 프로젝트:"
-      recent_conversations: "%{project}의 최근 대화"
       reply: "이 이메일에 대한 답장을 보냄으로써 대화에 답글을 남기실 수 있습니다."
       status: "상태: %{status}"
       stop_watching: "알림 이메일을 거절하기 위해 이 글타래에 대해 <a href='%{stop_watching_url}'>살펴보기를 멈춤니다</a>."
@@ -752,16 +740,14 @@ ko:
       task_list: "테스크 리스트:"
       view_online: "대화에 응답하거나 파일을 첨부하기 위해서 <a href='%{link}'>온라인으로 이 대화를 보실 수 있습니다.</a>"
     reset_password: 
-      follow_the_link: "팀박스의 <b>새로운 패스워드를 설정</b>하기 위해서는, 다음의 링크로 로그인해주시기 바랍니다:"
       hey: "%{user_name}님 안녕하세요!"
       log_in: "팀박스에 로그인하세요!"
       plaintext_link: "만약 제대로 동작하지 않는다면 다음 링크 주소를 복사해서 웹브라우저의 주소창에 붙여넣으시기 바랍니다:"
-      problems: "만약 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
+      problems_html: "만약 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
       report_abuse: "팀박스에 %{email}과 같은 메일로 회원가입을 하셔서 이 메세지를 받으셨습니다."
       subject: "패스워드가 성공적으로 리셋되었습니다."
     upload: 
       file: "파일:"
-      uploaded_by: 업로더
   example_projects: 
     new: 
       create: "예제 프로젝트 생성"
@@ -774,55 +760,6 @@ ko:
       line4: "이 프로젝트에서는 다른 사용자들을 초대할 수 없습니다. 나머지 기능들은 모두 사용하실 수 있습니다."
   form: 
     cancel: 취소
-  groups: 
-    column_group: 
-      projects: 프로젝트
-      your_groups: "당신의 그룹"
-    edit: 
-      submit: 업데이트
-    errors: 
-      already_own: "이미 그룹을 가지고 있습니다!"
-      no_edit: "이 그룹을 수정할 수 없습니다."
-      not_admin: "이 그룹을 관리할 권한이 없습니다."
-      not_enabled: "그룹이 허용되지 않은 시스템입니다."
-    fields: 
-      description: 설명
-      name: 이름
-      permalink: Permalink
-      permalink_description: "당신의 그룹에서 접근할 수 있는"
-    header: 
-      leave: 나가기
-      remove: 삭제
-    index: 
-      description: "사람들과 자원을 공유하고 그룹의 이름으로 프로젝트를 수행하세요!"
-      groups_in: "당신이 속한 그룹"
-      no_groups: "그룹에 속해 있지 않습니다."
-      remove_project: 제거
-      submit_project: 추가
-      title: 그룹
-      whats_this: 무엇인가요?
-      your_group: "당신의 그룹"
-    logo_fields: 
-      current: "현제 로고"
-      delete: 삭제
-      description: "이 로고는 그룹에 속해 있는 모든 프로젝트에 나타납니다."
-      upload: 업로드
-    new: 
-      created: "그룹이 만들어 졌습니다."
-      explain: "하나의 그룹만 가질 수 있습니다."
-      invalid_group: "부적절한 그룹"
-      submit: 만들기
-      title: "그룹 만들기"
-    primer: 
-      create_group: "그룹 만들기"
-      no_group_create: "당신의 그룹이 없습니다. %{link}."
-    search: 
-      invite: 초대
-      invite_people: "다른 사용자를 그룹에 초대"
-      username_or_email: "사용자명 또는 이메일"
-    show: 
-      add_project: "프로젝트 추가"
-      edit: 수정
   hours: 
     all_tasks: "모든 테스크"
     all_users: "모든 사용자"
@@ -854,24 +791,19 @@ ko:
       invalid_code: "부적절한 초대 오류번호"
     fields: 
       user_or_email: "다른 팀원의 사용자명이나 이메일을 입력하세요:"
-    group_invitation: 
-      invited_email: "%{inviter}님께서 <b>%{email}</b> 주소를 그룹에 초대했습니다."
-      invited_user: "%{inviter}님께서 <b>%{invitee}</b>님을 그룹에 초대했습니다."
     index_user: 
       no_invitations: "수락하지 않은 초대가 없습니다."
       title: "수락하지 않은 초대"
     invitation: 
       discard: "초대 취소"
       invited_email: "%{inviter}님께서 <b>%{email}</b> 주소를 프로젝트에 초대했습니다."
-      invited_user: "%{inviter}님께서 <b>%{invitee}</b>님을 프로젝트에 초대했습니다."
+      invited_user_html: "%{inviter}님께서 <b>%{invitee}</b>님을 프로젝트에 초대했습니다."
       pending: "이메일이 사용자에게 발송되었습니다만, 아직까지 사용자가 확인하지 않았습니다."
       resend: "초대메일 재전송"
       time_ago: "(%{time_ago_in_words} 이전)"
     pending: 
       invited_to_join: "%{by}님께서 %{project} 프로젝트에 초대하셨습니다."
-      invited_to_join_group: "%{by}님께서 %{group} 그룹에 초대하셨습니다."
       to_access_or: "to access the project or"
-      to_access_or_group: "to access the group or"
     recent: 
       invite: "%{username}님을 초대"
     resend: 
@@ -887,12 +819,11 @@ ko:
       username_or_email: "다른 팀원의 이름이나 이메일을 입력하세요"
     sent: 
       email_sent: "초대장이 발송되었습니다."
-  latest_announcement: "Teambox의 최신 소식은 <a href='http://blog.teambox.com'>블로그</a>를 읽어보세요."
+  last_announcement_html: "Teambox의 최신 소식은 <a href='http://blog.teambox.com'>블로그</a>를 읽어보세요."
   locales: 
     ko: 한국어
   not_found: 
     conversation: "해당 대화내용%{id} 이 이 프로젝트에서 검색되지 않았습니다."
-    group: "그룹 %{id}이 존재하지 않습니다."
     page: "페이지%{id}."
     project: "프로젝트%{id}가 존재하지 않습니다."
     task: "이 프로젝트에서는 테스크%{id}가 검색되지 않았습니다."
@@ -919,6 +850,7 @@ ko:
     format: 
       delimiter: ","
       separator: "."
+      precision: 2
     human: 
       storage_units: 
         format: "%n %u"
@@ -945,8 +877,8 @@ ko:
     unlink_account: "계정 연결 해제"
     user_already_exists_by_email: "사용자 %{email}님은 이미 팀박스 계정을 가지고 있습니다.<br/>그 계정으로 로그인하시고 환경설정 패널에서 연결해보시기 바랍니다."
     user_already_exists_by_login: "사용자 %{login}님은 이미 팀박스 계정을 가지고 있습니다.<br/>그 계정으로 로그인하시고 환경설정 패널에서 연결해보시기 바랍니다."
-    your_account_is_linked: "%{provider}프로필이 팀박스에 <strong>연결되었습니다.</strong>"
-    your_account_is_not_linked: "%{provider}프로필이 팀박스에 <strong>연결되지 않았습니다.</strong>"
+    your_account_is_linked_html: "%{provider}프로필이 팀박스에 <strong>연결되었습니다.</strong>"
+    your_account_is_not_linked_html: "%{provider}프로필이 팀박스에 <strong>연결되지 않았습니다.</strong>"
   page_title: 
     archived_task_lists: "보관된 테스크들"
     create_uploads: "파일 업로드"
@@ -990,27 +922,27 @@ ko:
         description: "%{name} 프로젝트 안의 페이지"
         title: "%{name} 페이지"
     new: 
-      define1: "로드맵, 흥미로운 링크, 설명서, 이메일 양식등, 다른 팀원들과 함께 <b>유용한 정보</b>를 공유하세요."
-      define2: "즉시 사용가능한 드래그 앤 드롭을 이용해서 페이지를 쉽게 편집해 보세요."
-      feature1: "<b>공유</b>. 모든 팀원들은 프로젝트에 속한 페이지를 보고 편집할 수 있습니다."
-      feature2: "<b><b>발행</b>. 공유한 페이지를 즉시 인터넷에 발행 가능합니다. 모든 사람들에게 보여주세요."
-      feature3: "<b>출력</b>. 페이지는 쉽게 프린트 가능합니다. 프린트를 하거나 PDF로 출력하세요!"
-      feature4: "<b>위키</b>. 페이지는 위키처럼 동작합니다. 프로젝트 정보를 쉽게 얻으세요!."
-      footer1: "Teambox를 자주쓰는 정보를 위한 <b>칠판</b>처럼 사용하세요."
-      footer2: "또한 페이지 안에 어느곳에서나 파일을 첨부할 수 있습니다. 시작하세요!"
+      define1_html: "로드맵, 흥미로운 링크, 설명서, 이메일 양식등, 다른 팀원들과 함께 <b>유용한 정보</b>를 공유하세요."
+      define2_html: "즉시 사용가능한 드래그 앤 드롭을 이용해서 페이지를 쉽게 편집해 보세요."
+      feature1_html: "<b>공유</b>. 모든 팀원들은 프로젝트에 속한 페이지를 보고 편집할 수 있습니다."
+      feature2_html: "<b><b>발행</b>. 공유한 페이지를 즉시 인터넷에 발행 가능합니다. 모든 사람들에게 보여주세요."
+      feature3_html: "<b>출력</b>. 페이지는 쉽게 프린트 가능합니다. 프린트를 하거나 PDF로 출력하세요!"
+      feature4_html: "<b>위키</b>. 페이지는 위키처럼 동작합니다. 프로젝트 정보를 쉽게 얻으세요!."
+      footer1_html: "Teambox를 자주쓰는 정보를 위한 <b>칠판</b>처럼 사용하세요."
+      footer2_html: "또한 페이지 안에 어느곳에서나 파일을 첨부할 수 있습니다. 시작하세요!"
       submit: 생성
       title: "새 페이지"
     primer: 
       create_first: "이 프로젝트 안에서 페이지를 만드세요!"
-      define1: "로드맵, 흥미로운 링크, 설명서, 이메일 양식등, 다른 팀원들과 함께 <b>유용한 정보</b>를 공유하세요."
-      define2: "즉시 사용가능한 드래그 앤 드롭을 이용해서 페이지를 쉽게 편집해 보세요."
+      define1_html: "로드맵, 흥미로운 링크, 설명서, 이메일 양식등, 다른 팀원들과 함께 <b>유용한 정보</b>를 공유하세요."
+      define2_html: "즉시 사용가능한 드래그 앤 드롭을 이용해서 페이지를 쉽게 편집해 보세요."
       empty: "프로젝트 안에 페이지가 아직 없습니다."
-      footer1: "Teambox를 자주쓰는 정보를 위한 <b>칠판</b>처럼 사용하세요."
-      footer2: "또한 페이지 안에 어느곳에서나 파일을 첨부할 수 있습니다. 시작하세요!"
-      item1: "<b>공유</b>. 모든 팀원들은 프로젝트에 속한 페이지를 보고 편집할 수 있습니다."
-      item2: "<b>발행</b>. 공유한 페이지를 즉시 인터넷에 발행 가능합니다. 모든 사람들에게 보여주세요."
-      item3: "<b>출력</b>. 페이지는 쉽게 프린트 가능합니다. 프린트를 하거나 PDF로 출력하세요!"
-      item4: "<b>위키</b>. 페이지는 위키처럼 동작합니다. 프로젝트 정보를 쉽게 얻으세요!."
+      footer1_html: "Teambox를 자주쓰는 정보를 위한 <b>칠판</b>처럼 사용하세요."
+      footer2_html: "또한 페이지 안에 어느곳에서나 파일을 첨부할 수 있습니다. 시작하세요!"
+      item1_html: "<b>공유</b>. 모든 팀원들은 프로젝트에 속한 페이지를 보고 편집할 수 있습니다."
+      item2_html: "<b>발행</b>. 공유한 페이지를 즉시 인터넷에 발행 가능합니다. 모든 사람들에게 보여주세요."
+      item3_html: "<b>출력</b>. 페이지는 쉽게 프린트 가능합니다. 프린트를 하거나 PDF로 출력하세요!"
+      item4_html: "<b>위키</b>. 페이지는 위키처럼 동작합니다. 프로젝트 정보를 쉽게 얻으세요!."
     slots: 
       insert_here: "이곳에 입력"
   people: 
@@ -1069,9 +1001,9 @@ ko:
         time_tracking_docs: "Learn more."
       owner: 소유자
       owner_description: "소유자는 프로젝트의 책임자입니다. 소유자는 소유권을 다른 사용자에게 넘기기 전까지 해당 프로젝트에서 삭제되지 않습니다."
-      permalink: "Permalink: <em>프로젝트를 인식하기 위한 짧은 텍스트</em>"
+      permalink_html: "Permalink: <em>프로젝트를 인식하기 위한 짧은 텍스트</em>"
       permalink_description: "당신의 프로젝트의 웹 주소가 됩니다. 가급적 짧게 작성해 주시고 공백은 허용되지 않습니다."
-      tracks_time: "타임 트래킹 활성화. <em>작업한 테스크에 대한 시간기록 활성화.</em>"
+      tracks_time_html: "타임 트래킹 활성화. <em>작업한 테스크에 대한 시간기록 활성화.</em>"
     index: 
       archived: "%{count} 개의 보관된 프로젝트 보기..."
       new_project: "새로운 프로젝트"
@@ -1091,29 +1023,29 @@ ko:
       submit: "프로젝트를 만들고 사람들을 초대"
       title: "프로젝트 생성"
     new_primer: 
-      define1: "프로젝트는 당신의 팀원과 가진 공동 그룹입니다."
-      define2: "프로젝트에 포함되면 다음과 같은 활동이 가능합니다:"
-      feature1: "현재 상태 업데이트."
-      feature2: "대화 시작 또는 답변달기."
-      feature3: "파일 전송."
-      feature4: "태스크 승인 또는 재검토."
-      feature5: "테스크에 달린 코멘트."
-      feature6: "각각의 아이템에 사용한 시간 확인."
-      feature7: "페이지를 만들고 수정하고 보기."
+      define1_html: "프로젝트는 당신의 팀원과 가진 공동 그룹입니다."
+      define2_html: "프로젝트에 포함되면 다음과 같은 활동이 가능합니다:"
+      feature1_html: "현재 상태 업데이트."
+      feature2_html: "대화 시작 또는 답변달기."
+      feature3_html: "파일 전송."
+      feature4_html: "태스크 승인 또는 재검토."
+      feature5_html: "테스크에 달린 코멘트."
+      feature6_html: "각각의 아이템에 사용한 시간 확인."
+      feature7_html: "페이지를 만들고 수정하고 보기."
       footer: "당신은 이 프로젝트에 속하게 될 것입니다. 언제라도 이 프로젝트를 다른사람에게 넘길 수 있습니다."
       limited: "무료계정으로는 이 프로젝트에 첨부파일을 50MB만 업로드 할 수 있습니다."
       upgrade: "지금 계정을 업그레이드 하세요!"
     primer: 
       create_first: "첫번째 프로젝트를 생성하세요!"
-      define1: "다양한 그룹의 사람들과 <b>협업</b>을 하기 위해 프로젝트를 사용하세요: 웹사이트, 파티 계획, 클라이언트 프로젝트..."
-      define2: "온라인에서 공유를 하기위해 <b>원하는 만큼</b> 얼마든지 프로젝트를 생성할 수 있습니다."
+      define1_html: "다양한 그룹의 사람들과 <b>협업</b>을 하기 위해 프로젝트를 사용하세요: 웹사이트, 파티 계획, 클라이언트 프로젝트..."
+      define2_html: "온라인에서 공유를 하기위해 <b>원하는 만큼</b> 얼마든지 프로젝트를 생성할 수 있습니다."
       empty: "속해 있는 프로젝트가 없습니다."
       footer: "프로젝트들은 협업에 집중을하는 방법입니다. 따라서 팀원들에게 이메일을 보낼 필요가 없습니다."
-      item1: "<b>프로젝트 생성</b> 프로젝트를 생성하고 사람들을 <b>초대</b>해 보세요"
-      item2: "<b>코멘트</b> 타임라인의 순간에대해 코멘트를 달 수 있습니다."
-      item3: "<b>토의</b> 대화를 통해 중요한 결정에 대한 토의를 할 수 있습니다."
-      item4: "<b>계획</b> 할일에 대한 계획을 세우고 테스크를 작성해서 업데이트할 수 있습니다."
-      item5: "<b>정보 공유</b> 쉬운 페이지 수정을 통해 정보를 공유하세요."
+      item1_html: "<b>프로젝트 생성</b> 프로젝트를 생성하고 사람들을 <b>초대</b>해 보세요"
+      item2_html: "<b>코멘트</b> 타임라인의 순간에대해 코멘트를 달 수 있습니다."
+      item3_html: "<b>토의</b> 대화를 통해 중요한 결정에 대한 토의를 할 수 있습니다."
+      item4_html: "<b>계획</b> 할일에 대한 계획을 세우고 테스크를 작성해서 업데이트할 수 있습니다."
+      item5_html: "<b>정보 공유</b> 쉬운 페이지 수정을 통해 정보를 공유하세요."
     show: 
       new_task_list_link: "새로운 테스크 목록"
       rss: 
@@ -1126,7 +1058,7 @@ ko:
   reset_passwords: 
     create: 
       invalid: "페스워드 수정 URL이 옳바르지 않거나 기간이 만료되었습니다. 홈페이지에서 패스워드를 잃어버린 경우 안내되는 페이지를 방문해주시기 바랍니다.<br/> 만약 문제가 발생하면 %{support}로 연락해주시기 바랍니다."
-      not_found: "해당 이메일 %{email}을 가진 사용자를 찾지 못했습니다. <br/>이메일을 다시한번 확인하신후 시도해주세요. 만약 문제가 발생하면 %{support}로 연락해주시기 바랍니다."
+      not_found_html: "해당 이메일 %{email}을 가진 사용자를 찾지 못했습니다. <br/>이메일을 다시한번 확인하신후 시도해주세요. 만약 문제가 발생하면 %{support}로 연락해주시기 바랍니다."
       password_not_updated: "새로운 패스워드가 옳바르지 않습니다. 다시 시도해주세요."
       password_updated: "패스워드가 성공적으로 업데이트되었습니다. 로그인 해주세요."
     new: 
@@ -1135,10 +1067,8 @@ ko:
       submit: "페스워드 리셋을 위한 링크를 보내주세요."
       title: "페스워드를 잊어버리셨습니까?"
     sent: 
-      change_password_now: "로그인 되었습니다. 잊어버리지 않도록 <b>새로운 패스워드를 선택하세요.</b>"
-      follow_the_link: "이 이메일에 있는 링크에서 팀박스 로그인을 하세요. 만약 찾을 수 없으면 스팸함을 확인해 보시기 바랍니다."
+      follow_the_link_html: "이 이메일에 있는 링크에서 팀박스 로그인을 하세요. 만약 찾을 수 없으면 스팸함을 확인해 보시기 바랍니다."
       login_link_sent: "패스워드를 이메일 %{email}로 보내드렸습니다."
-      not_found: "이 이메일 <b>%{email}</b>을 가진 팀박스 사용자가 없습니다. 혹시 오타가 있는지 확인해 보세요."
       title: "패스워드 리셋"
   sessions: 
     fields: 
@@ -1169,10 +1099,10 @@ ko:
     instructions: 
       send_email: "이메일로 코멘트 달기..."
       send_email_conversations: "이메일로 새로운 대화 생성하기..."
-      send_email_help_conversation: "이 대화에 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 대화에 코멘트를 작성할 수 있습니다."
-      send_email_help_conversations: "새로운 대화를 생성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 이메일 제목이 대화의 제목이 되고 이메일 내용이 코멘트가 됩니다. 프로젝트의 멤버들만이 대화를 생성할 수 있습니다."
-      send_email_help_project: "이 프로젝트의 최근활동 페이지에 새로운 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 최근활동 페이지에 코멘트를 달 수 있습니다."
-      send_email_help_task: "이 테스크에 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 테스크에 코멘트를 작성할 수 있습니다."
+      send_email_help_conversation_html: "이 대화에 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 대화에 코멘트를 작성할 수 있습니다."
+      send_email_help_conversations_html: "새로운 대화를 생성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 이메일 제목이 대화의 제목이 되고 이메일 내용이 코멘트가 됩니다. 프로젝트의 멤버들만이 대화를 생성할 수 있습니다."
+      send_email_help_project_html: "이 프로젝트의 최근활동 페이지에 새로운 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 최근활동 페이지에 코멘트를 달 수 있습니다."
+      send_email_help_task_html: "이 테스크에 코멘트를 작성하시려면, 이메일을 <a href=\"mailto:%{email}\">%{email}</a> 로 보내주세요. 프로젝트의 멤버들만이 테스크에 코멘트를 작성할 수 있습니다."
       subscribe_to_calendars: "캘린더 구독하기..."
       subscribe_to_feeds: "피드 구독하기..."
     navigation: 
@@ -1186,7 +1116,6 @@ ko:
       conversations: 대화
       files: 파일들
       gantt: "캘린더과 간트 차트"
-      groups: 그룹
       invitations: 초대장
       login: 로그인
       overview: 개요
@@ -1213,7 +1142,7 @@ ko:
       tour: 소개
       users: 추천글들
     strip: 
-      archived: "이 프로젝트는 따로 보관해놓았습니다. 이 프로젝트를 수정하거나 코멘트를 남기시려면 <a href='%{link}'>프로젝트 설정 페이지</a>에서 보관을 취소해주세요."
+      archived_html: "이 프로젝트는 따로 보관해놓았습니다. 이 프로젝트를 수정하거나 코멘트를 남기시려면 <a href='%{link}'>프로젝트 설정 페이지</a>에서 보관을 취소해주세요."
     task_navigation: 
       all_tasks: "모든 테스크들"
       everybodys_tasks: "모든 사람들의 테스크들"
@@ -1275,7 +1204,7 @@ ko:
       other_views: "다른 뷰"
       subscribe: "뉴스 피드 구독하기"
     destroy_message: 
-      deleted: "테스크 리스트 <b>%{name}</b>가 삭제되었습니다!"
+      deleted_html: "테스크 리스트 <b>%{name}</b>가 삭제되었습니다!"
     edit: 
       submit: "테스크 리스트 업데이트"
     errors: 
@@ -1325,21 +1254,16 @@ ko:
     new: 
       submit: "새로운 테스크 재목 추가"
       title: "새로운 테스크 리스트"
-    overview_box: 
-      ends_on: "종료시점:"
-      starts_on: "시작시점:"
-      this_list: "이 테스크 리스트"
-      undefined: "정해지지 않음"
     primer: 
       create_first: "첫 번째 테스크 리스트를 만드세요!"
-      define: "테스크를 사용해서<b>미리 계획을 하고</b>, <b>진척상황을 확인</b>하고 <b>무엇이 완료되었는지</b>검토해 보세요.<br/><i>언제, 누가, 무엇을</i>하는지에 대해 확인할 수 있습니다. 테스크는 상태, 할당된 사람, 완료기한을 가질 수 있습니다."
+      define_html: "테스크를 사용해서<b>미리 계획을 하고</b>, <b>진척상황을 확인</b>하고 <b>무엇이 완료되었는지</b>검토해 보세요.<br/><i>언제, 누가, 무엇을</i>하는지에 대해 확인할 수 있습니다. 테스크는 상태, 할당된 사람, 완료기한을 가질 수 있습니다."
       empty: "이 프로젝트에 테스크 리스트가 아직 없습니다.."
-      footer1: "테스크들은 <b>get things done</b>을 위한 간단하고 애자일한 방법입니다."
-      footer2: "이제는 엑셀 시트와 복잡한 간트챠트는 잊을 때 입니다!"
-      item1: "<b>계획</b>. 각각의 리스트 밑에 테스크를 생성하고 팀원들이 할 일을 할당해 보세요."
-      item2: "<b>리포트</b>. 각각의 테스크에 대해 코멘트 작성, 파일 첨부, 피드백 요청을 할 수 있습니다."
-      item3: "<b>추적</b>. 본인과 관계된 테스크들에 대해서는 알림 설정을 할 수 있습니다."
-      item4: "<b>검토</b>. 완료된 테스크들은 삭제되지 않습니다. 따라서 차후에 첨부된 파일들과 메세지들을 다시 볼 수 있습니다."
+      footer1_html: "테스크들은 <b>get things done</b>을 위한 간단하고 애자일한 방법입니다."
+      footer2_html: "이제는 엑셀 시트와 복잡한 간트챠트는 잊을 때 입니다!"
+      item1_html: "<b>계획</b>. 각각의 리스트 밑에 테스크를 생성하고 팀원들이 할 일을 할당해 보세요."
+      item2_html: "<b>리포트</b>. 각각의 테스크에 대해 코멘트 작성, 파일 첨부, 피드백 요청을 할 수 있습니다."
+      item3_html: "<b>추적</b>. 본인과 관계된 테스크들에 대해서는 알림 설정을 할 수 있습니다."
+      item4_html: "<b>검토</b>. 완료된 테스크들은 삭제되지 않습니다. 따라서 차후에 첨부된 파일들과 메세지들을 다시 볼 수 있습니다."
     show: 
       title: "테스크 리스트: %{name}"
   tasks: 
@@ -1348,12 +1272,12 @@ ko:
       reopen: "이 테스크를 다시 시작"
       you_are_done: "테스크를 완료한것 같습니다!"
     archive_message: 
-      archived: "<b>%{name}</b> 테스크가 보관되었습니다!"
+      archived_html: "<b>%{name}</b> 테스크가 보관되었습니다!"
     assigned: 
       assigned_to: "%{user}님이 책임자 입니다."
     create: "테스크 추가"
     destroy_message: 
-      deleted: "<b>%{name}</b> 테스크가 삭제되었습니다!"
+      deleted_html: "<b>%{name}</b> 테스크가 삭제되었습니다!"
     due_on: 
       due_on: 완료일
       today: 오늘
@@ -1410,7 +1334,7 @@ ko:
   uploads: 
     comment_upload_link: 첨부
     form: 
-      description: "타이틀 <i>(옵션)</i>"
+      description_html: "타이틀 <i>(옵션)</i>"
       max_size: "파일 사이즈는 %{mb}을 넘을 수 없습니다."
       presence: "빈 파일을 업로드할 수 없습니다."
       select_file: "파일 선택"
@@ -1423,12 +1347,12 @@ ko:
       select_a_file: "파일을 선택해주세요"
     primer: 
       create_first: "이 프로젝트에 먼저 파일을 업로드하세요."
-      define1: "당신의 팀과 파일을 공유하는 어려움이 있엇나요? 팀박스가 팀 파일공유를 쉽게 해드립니다."
-      define2: "여기에 파일을 업로드하거나 대화, 태스크(할일) 페이지등에 문서를 첨부할 수 있습니다."
+      define1_html: "당신의 팀과 파일을 공유하는 어려움이 있엇나요? 팀박스가 팀 파일공유를 쉽게 해드립니다."
+      define2_html: "여기에 파일을 업로드하거나 대화, 태스크(할일) 페이지등에 문서를 첨부할 수 있습니다."
       empty: "이 프로젝트는 아직 어떤 파일도 가지고 있지 않습니다."
-      item1: "<b>보다 큰 용량의 파일</b>. 어떤 사이즈의 파일이라도 업로드 할 수 있습니다. 이메일 첨부파일 용량제한은 잊으세요."
-      item2: "<b>버전</b>. 새로운 버전의 파일을 업로드 하고 변경된 사항에 대한 이력을 추적할 수 있습니다."
-      item3: "<b>언제나</b>. 파일들은 향후 참고를 하기위해 남아있습니다."
+      item1_html: "<b>보다 큰 용량의 파일</b>. 어떤 사이즈의 파일이라도 업로드 할 수 있습니다. 이메일 첨부파일 용량제한은 잊으세요."
+      item2_html: "<b>버전</b>. 새로운 버전의 파일을 업로드 하고 변경된 사항에 대한 이력을 추적할 수 있습니다."
+      item3_html: "<b>언제나</b>. 파일들은 향후 참고를 하기위해 남아있습니다."
     tooltip: "파일 업로드"
     upload: 
       download: 다운로드
@@ -1439,15 +1363,15 @@ ko:
     activation: 
       activated: "계정이 활성화 되었습니다! Teambox에 오신것을 환영합니다. :)"
       already_done: "메일이 확인되었습니다! Teambox를 사용하실 수 있습니다."
-      invalid: "<p>부적절하거나 만료된 링크입니다. 이메일과 비밀번호로 로그인 하세요.</p><p>로그인 정보를 잊으셨다면, 아래의 패스워드를 잊었습니다. 링크를 이용해 주세요.</p>"
+      invalid_html: "<p>부적절하거나 만료된 링크입니다. 이메일과 비밀번호로 로그인 하세요.</p><p>로그인 정보를 잊으셨다면, 아래의 패스워드를 잊었습니다. 링크를 이용해 주세요.</p>"
       invalid_user: "부적절한 사용자"
       resent: "확인 메일을 다시 보냈습니다. 수신함을 확인해 주세요!"
     calendars: 
       clients: 
-        body: "구글 켈린더나 애플의 iCal, Outlook, Blackberry 및 기타 클라이언트에서 동기화하는 방법은 <a href='%{link}'>knowledge base</a>를 참해조해주시기 바랍니다."
+        body_html: "구글 켈린더나 애플의 iCal, Outlook, Blackberry 및 기타 클라이언트에서 동기화하는 방법은 <a href='%{link}'>knowledge base</a>를 참해조해주시기 바랍니다."
         title: "특정 지침"
       how_to: 
-        body: "기본적으로, 밑에 있는 링크들을 캘린더 클라이언트에서 불러와야 합니다. <a href='%{link}'>knowledge base</a>에 방문하셔서 자세한 방법을 배워보세요."
+        body_html: "기본적으로, 밑에 있는 링크들을 캘린더 클라이언트에서 불러와야 합니다. <a href='%{link}'>knowledge base</a>에 방문하셔서 자세한 방법을 배워보세요."
         title: "캘린더와 동기화 하는 법"
       possible_clients: "구글 켈린더나 애플의 iCal, Outlook, Blackberry나 다른 캘린더와 동기화 할 수 있습니다."
       subscribe_to_all: "모든 프로젝트: "
@@ -1467,7 +1391,7 @@ ko:
       tasks_for_today: "오늘의 테스크들"
       tasks_for_tomorrow: "내일의 테스크들"
       tasks_without_a_due_date: "기한이 없는 테스크들"
-      you_receive_this_message: "허락을 하셨기 때문에 이 메세지를 받으셨습니다. %{link}에서 취소하실 수 있습니다."
+      you_receive_this_message_html: "허락을 하셨기 때문에 이 메세지를 받으셨습니다. %{link}에서 취소하실 수 있습니다."
     edit: 
       submit: "계정 업데이트"
       title_delete: "계정 삭제"
@@ -1480,14 +1404,14 @@ ko:
     feeds: 
       configure: "프로그램 창을 열지 않더라도, 설정을 해서 팀박스 내에 어떤 일이 일어나면 피드리더를 통해 알려드릴 수 있습니다."
       feed_reader: 
-        body: "<a href='%{link}'>knowledge base</a>를 참조하시기 바랍니다."
+        body_html: "<a href='%{link}'>knowledge base</a>를 참조하시기 바랍니다."
         title: "어떤 뉴스 리더기를 사용해야 할까요?"
       follow_activities: "팀박스의 최근 활동들을 구독하여 뉴스 리더기에서도 내용을 보실 수 있습니다(데스크탑 또는 모바일)."
       import: 
         body: "아래에 구독할 수 있는 피드 리스트가 있습니다. 피드 리더기에 불러오기 위해서, 먼저 원하는 피드 <strong>링크에 오른쪽 마우스 버튼</strong>을 클릭 한 후 <strong>링크 복사하기</strong>를 합니다. 이제 피드 리더기에서 새로운 피드 추가를 하신후 복사한 피드 주소를 붙여넣으시면 됩니다."
         title: "뉴스 피드 불러오는 방법"
       more_tips: 
-        body: "<a href='%{link}'>팀박스에 액세스하는 다양한 방법들</a>에 대해 배워보세요."
+        body_html: "<a href='%{link}'>팀박스에 액세스하는 다양한 방법들</a>에 대해 배워보세요."
         title: "자세한 도움말"
       receive_notifications: "모바일이나 데스크탑의 피드 리더를 사용하여 프로젝트 내의 활동들에 대한 소식들을 받아보실 수 있습니다."
       subscribe_to_all: "모든 프로젝트의 최근 활동들"
@@ -1495,6 +1419,9 @@ ko:
       title: "최근 활동 피드 싱크"
       your_feeds: "뉴스 피드"
     form: 
+      biography: 자기소개
+      change_password: "패스워드 수정"
+      confirm_password: "패스워드 확인"
       delete: 
         account_deleted: "계정이 삭제되었습니다. 감사합니다."
         couldnt_delete_account: "아직 삭제되지 않은 프로젝트가 있어서 계정삭제가 되지 않았습니다."
@@ -1506,11 +1433,11 @@ ko:
       picture: 
         destroy: "아바타 삭제"
         field: "새로운 아바타"
-        gravatar_in_use: "사진이 업로드 되어있지 않습니디. 다음의 기본 사진을 아바타로 사용하겠습니다 %{gravatar}:"
+        gravatar_in_use_html: "사진이 업로드 되어있지 않습니디. 다음의 기본 사진을 아바타로 사용하겠습니다 %{gravatar}:"
         max_size: " 파일 크기는 %{mb} 메가 를 넘을 수 없습니다."
         presence: " 파일을 첨부해주시기 바랍니다."
-        upload_here_or_at_gravatar: "사진을 업로드 하거나 다음중에서 고를 수 있습니다. %{gravatar}."
-        we_have_this_avatar: "다음의 사진이 업로드 되어 있습니다 :"
+        upload_here_or_at_gravatar_html: "사진을 업로드 하거나 다음중에서 고를 수 있습니다. %{gravatar}."
+        we_have_this_avatar_html: "다음의 사진이 업로드 되어 있습니다 :"
       biography: 자기소개
       change_password: "패스워드 수정"
       confirm_password: "패스워드 확인"
@@ -1522,15 +1449,24 @@ ko:
       last_name: 이름
       login: "로그인 아이디"
       monday: 월요일
-      notifications:
+      new: 
+        use_this_email: "이 이메일 주소로 프로젝트를 공유할 수 있는 초대권을 받으셨습니다. 만약 이 프로젝트들에 접근하시고 싶으시다면 이메일을 변경하지 말아주세요. 등록 절차를 한번 거치고 나서 이메일 주소를 수정할 수 있습니다."
+      notifications: 
         notify_conversations: "대화를 \"살펴보기\" 하면 알림"
-        notify_mentions: "예를 들어 Howdy @%{login}을 언급하게 되면 알려주세요. 이메일을 발송해 드립니다."
         notify_tasks: "테스크를 \"살펴보기\" 하면 알림"
         wants_task_reminder: "매일 내 테스크들에 대한 이메일 보내기"
       password: 패스워드
       password_confirmation: "패스워드 확인"
       phone: 전화번호
       phone_for_integration: "(선택사항) 차후 SMS 문자메세지 발송 기능이 추가 될 예정입니다."
+      picture: 
+        destroy: "아바타 삭제"
+        field: "새로운 아바타"
+        gravatar_in_use: "사진이 업로드 되어있지 않습니디. 다음의 기본 사진을 아바타로 사용하겠습니다 %{gravatar}:"
+        max_size: " 파일 크기는 %{mb} 메가 를 넘을 수 없습니다."
+        presence: " 파일을 첨부해주시기 바랍니다."
+        upload_here_or_at_gravatar: "사진을 업로드 하거나 다음중에서 고를 수 있습니다. %{gravatar}."
+        we_have_this_avatar: "다음의 사진이 업로드 되어 있습니다 :"
       sunday: 일요일
       time_zone: 시간대
       tooltips: 
@@ -1540,14 +1476,12 @@ ko:
         login: "로그인하기 위한 계정이 필요합니다. 계정이름으로 다른사람들이 당신을 찾을 수 있습니다. 반드시 소문자를 쓰고, 공백은 허용되지 앟습니다. _ 문자를 사용 가능합니다."
         password: "글자와 숫자, 대소문자 조합으로 패스워드를 설정하는것이 좋습니다."
         phone: "전화번호는 동료들에게 공개됩니다. 완전하게 기입하여 주십시오. +82가 한국 지역번호 입니다. 010으로 시작하는 번호는 +8210으로 기입하시면 됩니다,  (예시) +821011112222"
-      new:
-        use_this_email: "이 이메일 주소로 프로젝트를 공유할 수 있는 초대권을 받으셨습니다. 만약 이 프로젝트들에 접근하시고 싶으시다면 이메일을 변경하지 말아주세요. 등록 절차를 한번 거치고 나서 이메일 주소를 수정할 수 있습니다."
     new: 
-      existing_user: "이미 걔정을 가지고 있다면, <a href='%{login_url}'>로그인 하거나</a> 또는 <a href='%{forgot_url}'>아이디 를 찾으세요.</a>."
+      existing_user_html: "이미 걔정을 가지고 있다면, <a href='%{login_url}'>로그인 하거나</a> 또는 <a href='%{forgot_url}'>아이디 를 찾으세요.</a>."
       no_public_signup: "계정을 만들어야 접속하실 수 있습니다."
       submit: "계정 생성"
       title: "새 계정 생성"
-      you_already_have_an_account: "다음 이메일 주소로 이미 계정이 있습니다. %{email}. <a href='%{login_link}'>이메일로 로그인</a> 또는 <a href='%{reset_password_link}'>비밀번호 재설정</a> if you forgot it."
+      you_already_have_an_account_html: "다음 이메일 주소로 이미 계정이 있습니다. %{email}. <a href='%{login_link}'>이메일로 로그인</a> 또는 <a href='%{reset_password_link}'>비밀번호 재설정</a> if you forgot it."
       you_are_logged_in: "이미 계정이 있습니다. 로그아웃하시고 해당 유저로 접속해 주세요."
     show: 
       pending_invite: "%{name}님이 아직 초청을 수락하시지 않았습니다. 이 초청이 수락될까지 더 이상의 정보에 접근하실 수 없습니다."
@@ -1555,14 +1489,14 @@ ko:
       projects: 프로젝트
       recent_activity_for: "%{user_name}님의 최근 활동"
     unconfirmed_email: 
-      follow_the_link: "계정 활성화를 위해 <b>이메일을 확인하시고 링크를 클릭</b>해 주시기 바랍니다."
-      invitation_sent_to: "이메일 주소 확인을 위해 초대장이 <i>%{email}</i>로 발송되었습니다."
-      problems: "만약 아직도 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
+      follow_the_link_html: "계정 활성화를 위해 <b>이메일을 확인하시고 링크를 클릭</b>해 주시기 바랍니다."
+      invitation_sent_to_html: "이메일 주소 확인을 위해 초대장이 <i>%{email}</i>로 발송되었습니다."
+      problems_html: "만약 아직도 문제가 있으시다면 %{support}로 연락 주시기 바랍니다."
       problems_title: "문제가 있으신가요?"
       resend: "이메일을 찾으실 수 없으십니까? <a href='%{link}'>이곳</a>을 클릭해서 초대장을 다시 발송해 보세요."
       spam: "혹시 초대장이 스팸함으로 분류되었는지 확인해보시기 바랍니다."
       title: "이메일 확인"
-      wrong_address: "이메일 주소가 잘못되었습니까? 이메일 주소에 오타가 있었다면 <a href='%{link}'>회원등록 절차</a>를 취소하시고 정확한 이메일 주소로 회원등록을 다시 해주시기 바랍니다."
+      wrong_address_html: "이메일 주소가 잘못되었습니까? 이메일 주소에 오타가 있었다면 <a href='%{link}'>회원등록 절차</a>를 취소하시고 정확한 이메일 주소로 회원등록을 다시 해주시기 바랍니다."
     update: 
       error: "새로운 프로필을 저장하지 못했습니다. 수정후 다시 시도해 주세요."
       updated: "프로필이 업데이트 되었습니다!"

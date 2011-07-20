@@ -22,7 +22,6 @@
             bottom: 8px
           padding: 0px
           font-size: 16px
-          border-bottom: none
           a
             text-decoration: underline
             color: #333
@@ -86,21 +85,41 @@ body.new_conversations, body.create_conversations
           bottom: 10px
       .user
         float: left
-        width: 170px
+        width: 185px
+        label
+          width: 155px
+          white-space: nowrap
+          overflow-x: hidden
+          display: inline-block
+          text-overflow: ellipsis
       p
         margin-top: 10px
+    div.attach
+      display: inline
+    .actions
+      display: inline-block
+      span
+        font-size: 12px
+        margin-right: 5px
+      .attach_icon
+        text-indent: -9999em
+        margin-right: 5px
+        top: 2px
+        *:first-child+html &
+          text-indent: 16px
+          overflow: hidden
+          top: -2px
+      *:first-child+html & .attach_icon
+        margin-left: -16px
+    .preview
+      margin: 4px 8px 4px 0
 
 .show_conversations
-  h2
-    border: none
   #comments
     font-size: 12px
 
 .conversation_header
   display: block
-  .text_actions
-    float: right
-    font-size: 12px
-    color: rgb(200, 200, 200)
-    a
-      text-decoration: underline
+
+.create_bar
+  margin: 20px 0

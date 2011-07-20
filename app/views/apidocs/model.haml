@@ -1,17 +1,15 @@
 %h2= @model.capitalize
 
-= render "apidocs/model/#{@model}"
+= raw render("apidocs/model/#{@model}")
 
 %h2 All the routes
 
-- for route in @consolidated_routes
-  - next unless route[:controller].singularize == @model.underscore
-  - next if ['edit', 'new'].include? route[:action]
+- for route in routes_for_model(@model)
   - doc = @api_docs["#{@model}##{route[:action]}"]
   - next if doc && doc[:ignore]
   .route
-    - controller = link_to route[:controller], api_model_path(route[:controller].singularize)
-    %h3= "#{controller}##{route[:action]} #{route[:method]}"
+    - controller = link_to(route[:controller], api_model_path(route[:controller].singularize))
+    %h3= "#{controller}##{route[:action]} #{route[:method]}".html_safe
     .path
       %span.title= "Paths:"
       %ul
@@ -24,13 +22,13 @@
         %span.title= "Status:"
         - case doc[:status]
         - when :created
-          = "<tt>201</tt> on success, <tt>422</tt> on error."
+          =raw "<tt>201</tt> on success, <tt>422</tt> on error."
         - when :updated
-          = "<tt>200</tt> on success, <tt>422</tt> on error."
+          =raw "<tt>200</tt> on success, <tt>422</tt> on error."
         - when :deleted
-          = "<tt>200</tt> on success, <tt>422</tt> on error."
+          =raw "<tt>200</tt> on success, <tt>422</tt> on error."
         - else
-          = "<tt>200</tt> on success"
+          =raw "<tt>200</tt> on success"
       - if doc[:role]
         - roles = Array(doc[:role])
         %strong= roles.length > 1 ? "Minimum roles:" : "Minimum role:"
@@ -39,8 +37,8 @@
       - if doc[:includes]
         .docfield
           %span.title= "Includes:"
-          = doc[:includes].map{|i|"<tt>#{i}</tt>"}.join(',')
-      = doc[:description]
+          = doc[:includes].map{|i|"<tt>#{i}</tt>"}.join(',').html_safe
+      = raw doc[:description]
       - if doc[:parameters]
         %h4= "Parameters you should pass"
         %pre= "\n" + JSON.pretty_generate(doc[:parameters])

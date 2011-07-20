@@ -1,3 +1,4 @@
+@javascript
 Feature: Creating a conversation
 
   Background: 
@@ -6,7 +7,7 @@ Feature: Creating a conversation
 
   Scenario: No conversations
     When I go to the conversations page
-    Then I should see "This project doesn't have any conversations yet"
+    Then I should not see any conversations
 
   Scenario: Valid conversation
     When I go to the conversations page

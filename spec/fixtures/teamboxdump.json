@@ -1,0 +1,172 @@
+{
+    "account": {
+        "organizations": [{
+            "language": "en",
+            "updated_at": "2009-11-05 14:00:02",
+            "logo_url": "/logos/original/missing.png",
+            "created_at": "2009-11-05 14:00:02 +0000",
+            "description": null,
+            "projects": [{
+                "owner_user_id": 1362,
+                "updated_at": "2009-11-05 14:00:02 +0000",
+                "created_at": "2009-11-05 14:00:02 +0000",
+                "archived": false,
+                "permalink": "teambox-1",
+                "organization_id": 517,
+                "name": "Teambox #1",
+                "id": 494
+            }],
+            "members": [{
+                "updated_at": "2009-11-05 14:00:02",
+                "role": 30,
+                "created_at": "2009-11-05 14:00:02 +0000",
+                "user": {
+                    "utc_offset": -18000,
+                    "first_name": "Andrew",
+                    "avatar_url": "http://www.gravatar.com/avatar/f6c276b1da0fc935e3e7a69eacc97baf?size=48&default=identicon",
+                    "updated_at": "2009-11-05 14:00:02 +0000",
+                    "biography": null,
+                    "created_at": "2009-11-05 14:00:02 +0000",
+                    "locale": "en",
+                    "last_name": "Wiggin",
+                    "username": "gandhi_1",
+                    "id": 1362,
+                    "time_zone": "Eastern Time (US & Canada)"
+                },
+                "organization_id": 517,
+                "user_id": 1362,
+                "id": 499
+            }],
+            "permalink": "teambox1",
+            "domain": null,
+            "name": "Teambox #2",
+            "id": 517,
+            "time_zone": "Eastern Time (US & Canada)"
+        }],
+        "users": [{
+            "utc_offset": -18000,
+            "first_name": "Andrew",
+            "email": "gandhi_1@localhost.com",
+            "avatar_url": "http://www.gravatar.com/avatar/f6c276b1da0fc935e3e7a69eacc97baf?size=48&default=identicon",
+            "updated_at": "2009-11-05 14:00:02 +0000",
+            "biography": null,
+            "created_at": "2009-11-05 14:00:02 +0000",
+            "locale": "en",
+            "last_name": "Wiggin",
+            "username": "gandhi_1",
+            "id": 1362,
+            "time_zone": "Eastern Time (US & Canada)"
+        },
+        {
+            "utc_offset": -18000,
+            "first_name": "Andrew",
+            "email": "gandhi_2@localhost.com",
+            "avatar_url": "http://www.gravatar.com/avatar/c34c98187af2f84a6ed2df48f65356ab?size=48&default=identicon",
+            "updated_at": "2009-11-05 14:00:02 +0000",
+            "biography": null,
+            "created_at": "2009-11-05 14:00:02 +0000",
+            "locale": "en",
+            "last_name": "Wiggin",
+            "username": "gandhi_2",
+            "id": 1363,
+            "time_zone": "Eastern Time (US & Canada)"
+        },
+        {
+            "utc_offset": -18000,
+            "first_name": "Andrew",
+            "email": "gandhi_3@localhost.com",
+            "avatar_url": "http://www.gravatar.com/avatar/39545bcc440c93771812ed41bc8274bd?size=48&default=identicon",
+            "updated_at": "2009-11-05 14:00:02 +0000",
+            "biography": null,
+            "created_at": "2009-11-05 14:00:02 +0000",
+            "locale": "en",
+            "last_name": "Wiggin",
+            "username": "gandhi_3",
+            "id": 1364,
+            "time_zone": "Eastern Time (US & Canada)"
+        },
+        {
+            "utc_offset": -18000,
+            "first_name": "Andrew",
+            "email": "gandhi_4@localhost.com",
+            "avatar_url": "http://www.gravatar.com/avatar/1da1184f2f08def1847919fb34e4efdb?size=48&default=identicon",
+            "updated_at": "2009-11-05 14:00:02 +0000",
+            "biography": null,
+            "created_at": "2009-11-05 14:00:02 +0000",
+            "locale": "en",
+            "last_name": "Wiggin",
+            "username": "gandhi_4",
+            "id": 1365,
+            "time_zone": "Eastern Time (US & Canada)"
+        }],
+        "projects": [{
+            "conversations": [{
+                "watchers": [1364,1362],
+                "updated_at": "2009-11-05 14:00:02 +0000",
+                "simple": false,
+                "created_at": "2009-11-05 14:00:02 +0000",
+                "comments": [{
+                    "target_type": "Conversation",
+                    "updated_at": "2009-11-05 14:00:02 +0000",
+                    "body": "Shorter than a New York minute",
+                    "created_at": "2009-11-05 14:00:02 +0000",
+                    "body_html": "<p>Shorter than a New York minute</p>n",
+                    "project_id": 494,
+                    "user_id": 1364,
+                    "target_id": 240,
+                    "id": 325,
+                    "hours": null
+                }],
+                "user_id": 1364,
+                "project_id": 494,
+                "name": "The Master Plan",
+                "id": 240,
+                "comments_count": 1
+            }],
+            "uploads": [],
+            "invitations": [],
+            "owner_user_id": 1362,
+            "updated_at": "2009-11-05 14:00:02 +0000",
+            "created_at": "2009-11-05 14:00:02 +0000",
+            "pages": [],
+            "task_lists": [{
+                "watchers": [1363],
+                "position": 1,
+                "tasks": [{
+                    "watchers": [1365],
+                    "status": 0,
+                    "position": 1,
+                    "updated_at": "2009-11-05 14:00:02 +0000",
+                    "assigned_id": null,
+                    "created_at": "2009-11-05 14:00:02 +0000",
+                    "user_id": 1365,
+                    "project_id": 494,
+                    "name": "Buy milk",
+                    "task_list_id": 297,
+                    "id": 321,
+                    "comments_count": 0
+                }],
+                "updated_at": "2009-11-05 14:00:02 +0000",
+                "created_at": "2009-11-05 14:00:02 +0000",
+                "comments": [],
+                "archived": false,
+                "user_id": 1363,
+                "project_id": 494,
+                "name": "Buy Groceries",
+                "id": 297,
+                "comments_count": 0
+            }],
+            "archived": false,
+            "permalink": "teambox-1",
+            "organization_id": 517,
+            "people": [{
+                "source_user_id": null,
+                "role": 3,
+                "user_id": 1362,
+                "id": 634
+            }],
+            "name": "Teambox #1",
+            "id": 494
+        }]
+    }
+}

@@ -8,12 +8,12 @@
     first_day_of_week = 1
   end
 %>
-Date.weekdays = <%= weekday_list.to_json %>;
-Date.first_day_of_week = <%= first_day_of_week %>;
+Date.weekdays = <%=raw weekday_list.to_json %>;
+Date.first_day_of_week = <%=raw first_day_of_week %>;
 
-Date.months = <%= t('date.month_names').compact.to_json %>;
+Date.months = <%=raw t('date.month_names').compact.to_json %>;
 
-_translations = <%= Hash[
+_translations = <%=raw Hash[
   %w[OK Now Today Clear].map { |w| [w, t("calendar.#{w.downcase}")] }
 ].to_json %>;
 
@@ -22,27 +22,29 @@ _translations = <%= Hash[
   less_than_one_ago = I18n.t('datetime.time_ago', :time_ago_in_words => less_than_one)
   one_minute = I18n.t('datetime.distance_in_words.x_minutes.one')
   one_minute_ago = I18n.t('datetime.time_ago', :time_ago_in_words => one_minute)
-  minutes = I18n.t('datetime.distance_in_words.x_minutes', :count => '" + minutes + "')
+  minutes = I18n.t('datetime.distance_in_words.x_minutes', :count => '$minutes$')
   minutes_ago = I18n.t('datetime.time_ago', :time_ago_in_words => minutes)
 %>
 function minutesAgoInWords(minutes) {
-  if(minutes == 0) { return '<%= less_than_one %>'; }
-  if(minutes == 1) { return '<%= one_minute_ago %>'; }
-  return "<%= minutes_ago %>";
+  if(minutes == 0) { return '<%=raw escape_javascript less_than_one %>'; }
+  if(minutes == 1) { return '<%=raw escape_javascript one_minute_ago %>'; }
+  return "<%=raw escape_javascript minutes_ago %>".gsub('$minutes$', minutes);
 }
 
 /* strftime strings */
-time_format_short = '<%= I18n.t('time.formats.short') %>';
-time_pm = '<%= I18n.t('time.pm') %>';
-time_am = '<%= I18n.t('time.am') %>';
+time_format_short = '<%=raw escape_javascript I18n.t('time.formats.short') %>';
+time_pm = '<%=raw escape_javascript I18n.t('time.pm') %>';
+time_am = '<%=raw escape_javascript I18n.t('time.am') %>';
 
-date_format_short = '<%= I18n.t('date.formats.short')%>';
-date_format_long = '<%= I18n.t('date.formats.long')%>';
-date_abbr_day_names = $w("<%= I18n.t('date.abbr_day_names').join(" ") %>");
-date_day_names = $w("<%= I18n.t('date.day_names').join(" ") %>");
-date_abbr_month_names = $w("<%= I18n.t('date.abbr_month_names').join(" ") %>");
-date_month_names = $w("<%= I18n.t('date.month_names').join(" ") %>");
-date_yesterday = '<%= I18n.t 'date.yesterday' %> ';
+date_format_short = '<%=raw escape_javascript I18n.t('date.formats.short')%>';
+date_format_long = '<%=raw escape_javascript I18n.t('date.formats.long')%>';
+date_abbr_day_names = $w("<%=raw escape_javascript I18n.t('date.abbr_day_names').join(" ") %>");
+date_day_names = $w("<%=raw escape_javascript I18n.t('date.day_names').join(" ") %>");
+date_abbr_month_names = $w("<%=raw escape_javascript I18n.t('date.abbr_month_names').join(" ") %>");
+date_month_names = $w("<%=raw escape_javascript I18n.t('date.month_names').join(" ") %>");
+date_yesterday = '<%=raw escape_javascript I18n.t('date.yesterday') %> ';
+
+task_unassigned = '<%=raw escape_javascript I18n.t('comments.new.assigned_to_nobody') %>'
 
 document.on("dom:loaded", function() {
   format_posted_date();

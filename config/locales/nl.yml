@@ -2,6 +2,12 @@
 nl: 
   activerecord: 
     attributes: 
+      address: 
+        city: Stad
+        country: Land
+        state: Provonsie
+        street: Straat
+        zip: Kode
       card: 
         city: Stad
         country: Land
@@ -84,6 +90,11 @@ nl:
         too_long: "is te lang (maximum is %{count} tekens)"
         too_short: "is te kort (minimum is %{count} tekens)"
         wrong_length: "is de verkeerde lengte (moet %{count} tekens zijn)"
+      models: 
+        conversation: 
+          attributes: 
+            name: 
+              no_title: "Gee hierdie gesprek 'n naam"
       template: 
         body: "Controleer alstublieft de volgende velden:"
         header: 
@@ -108,6 +119,15 @@ nl:
       upload: Upload
       website: Web
   activities: 
+    create_comment: 
+      create_comment: "het die kommentaar geskryf"
+      title: "%{user} het kommentaar gelewer op %{target}"
+    create_comment_conversation: 
+      title: "%{user} het opgevolg op die %{target} gesprek"
+    create_comment_project: 
+      title: "%{user} het saamgesels in %{target}"
+    create_comment_task: 
+      title: "%{user} het op die volgende taak kommentaar gelewer %{target}"
     create_conversation: 
       create_conversation: "Conversie is gestart"
     create_page: 
@@ -212,13 +232,13 @@ nl:
       title: "Nieuwe conversatie"
     primer: 
       create_first: "Maak uw eerste conversatie aan in dit project!"
-      define: "Gebruik conversaties om <b>beslissingen te bespreken</b> en <b>update uw team</b> in een gecentraliseerde manier.<br/>Elke conversatie is een draad van opmerkingen, die rommelige e-mails vervangen."
+      define_html: "Gebruik conversaties om <b>beslissingen te bespreken</b> en <b>update uw team</b> in een gecentraliseerde manier.<br/>Elke conversatie is een draad van opmerkingen, die rommelige e-mails vervangen."
       empty: "Dit project heeft nog geen conversaties."
-      footer1: "Conversaties zijn goed voor <b>een ontwerp te delen</b>, <b>een datum te beslissen</b> voor bijeenkomsten of nieuws te <b>raporteren</b>."
-      item1: "<b>Deel bestanden</b>. Reacties kunnen ook bijlagen bestanden hebben."
-      item2: "<b>Registreer</b> in een conversatie om op de hoogte gehouden te worden voor toekomstige reacties door e-mail of RSS."
-      item3: "<b>Impress</b>. Elke reactie kan worden geformatteerd met tekststijlen."
-      item4: "<b>Inbox-driven?</b> U kunt door middel van uw e-mail reacties plaatsen op conversaties."
+      footer1_html: "Conversaties zijn goed voor <b>een ontwerp te delen</b>, <b>een datum te beslissen</b> voor bijeenkomsten of nieuws te <b>raporteren</b>."
+      item1_html: "<b>Deel bestanden</b>. Reacties kunnen ook bijlagen bestanden hebben."
+      item2_html: "<b>Registreer</b> in een conversatie om op de hoogte gehouden te worden voor toekomstige reacties door e-mail of RSS."
+      item3_html: "<b>Impress</b>. Elke reactie kan worden geformatteerd met tekststijlen."
+      item4_html: "<b>Inbox-driven?</b> U kunt door middel van uw e-mail reacties plaatsen op conversaties."
     short_conversation: 
       comment: reactie
       comments: reacties
@@ -230,9 +250,9 @@ nl:
     watcher_fields: 
       add_suscribers: "Welke mensen zullen deze conversatie bekijken?"
       invite_users: "U bent de enige gebruiker in dit project!"
-      no_users_yet: "Conversaties zijn meer zinvol wanneer ze gedeeld zijn. <a href='%{invite_link}'>Nodig wat gebruikers uit</a> bij dit project zodat ze deze conversatie kunnen inzien, beantwoorden en updates kunnen ontvangen."
+      no_users_yet_html: "Conversaties zijn meer zinvol wanneer ze gedeeld zijn. <a href='%{invite_link}'>Nodig wat gebruikers uit</a> bij dit project zodat ze deze conversatie kunnen inzien, beantwoorden en updates kunnen ontvangen."
       people_all: "Alle mensen in dit project"
-      subscribe_note: "Deze mensen zullen op de hoogte gesteld worden via een e-mail van dit bericht en elk volgende reacties.<br/>Ze kunnen op elk moment zichzelf uitschrijven."
+      subscribe_note_html: "Deze mensen zullen op de hoogte gesteld worden via een e-mail van dit bericht en elk volgende reacties.<br/>Ze kunnen op elk moment zichzelf uitschrijven."
   countries: 
     AC: "Ascension; [draft=contributed]"
     AD: Andorra
@@ -606,11 +626,10 @@ nl:
       answer_above_this_line: "BEANTWOORD BOVEN DEZE LIJN OM EEN ANTWOORD TE STUREN"
       do_not_answer: "Beantwoord deze mail niet."
     confirm: 
-      follow_the_link: "Om uw <b>aanmelding compleet</b> te maken, log dan hier in op de volgende link:"
       hey: "Hey, %{user_name}!"
       log_in: "Log nu in op Teambox!"
       plaintext_link: "Als het niet werkt, kopiëer the volgende link in uw browser:"
-      problems: "Als u enkele problemen ondervindt, alstublieft neem contact met ons op, op %{support}"
+      problems_html: "Als u enkele problemen ondervindt, alstublieft neem contact met ons op, op %{support}"
       report_abuse: "U heeft dit bericht ontvangen, omdat u zich heeft ingeschreven voor een Teambox account met %{email}"
     invitation: 
       accept_the_invitation: "Accepteer de uitnodiging om de samenwerking te starten"
@@ -631,7 +650,6 @@ nl:
       my_tasks: "Meer taken toegewezen aan u in %{project}"
       notification_settings: "U kunt uw <a href='%{url}'>aanmelding instellingen</a> veranderen voor verdere emails."
       project: "Teambox Project:"
-      recent_conversations: "Recente conversaties voor %{project}"
       reply: "U kunt ook antwoorden op deze e-mail om een antwoord te geven op de conversatie."
       status: "Status: %{status}"
       stop_watching: "<a href='%{stop_watching_url}'>Uitschrijven</a> van email berichten voor deze thread."
@@ -639,15 +657,13 @@ nl:
       task_list: "Takenlijst:"
       view_online: "U kunt <a href='%{link}'>deze conversatie online bekijken</a> om te beantwoorden en bestanden mee geven."
     reset_password: 
-      follow_the_link: "Om een <b>nieuw wachtwoord</b> voor Teambox aan te vragen, moet u inloggen met de volgende link:"
       hey: "Hey, %{user_name}!"
       log_in: "Log nu in op Teambox!"
       plaintext_link: "Als het niet werkt, kopiëer the volgende link in uw browser:"
-      problems: "Als u enkele problemen ondervindt, alstublieft neem contact met ons op, op %{support}"
+      problems_html: "Als u enkele problemen ondervindt, alstublieft neem contact met ons op, op %{support}"
       report_abuse: "U heeft dit bericht ontvangen, omdat u zich heeft ingeschreven voor een Teambox account met %{email}"
     upload: 
       file: "Bestand:"
-      uploaded_by: "geupload door"
   example_projects: 
     new: 
       create: "Maak een voorbeeldproject aan"
@@ -667,7 +683,7 @@ nl:
     invitation: 
       discard: "Verwerp uitnodiging"
       invited_email: "%{inviter} nodigde <b>%{email}</b> uit om mee te doen aan het project."
-      invited_user: "%{inviter} nodigt <b>%{invitee}</b> uit om mee te doen aan het project."
+      invited_user_html: "%{inviter} nodigt <b>%{invitee}</b> uit om mee te doen aan het project."
       pending: "Een e-mail is verzonden naar deze gebruiker, maar het is nog steeds niet bevestigd."
       resend: "Herzend uitnodigings e-mail"
       time_ago: "(%{time_ago_in_words} geleden)"
@@ -686,7 +702,7 @@ nl:
       username_or_email: "Vul uw teammaat zijn gebruikersnaam of e-mail in"
     sent: 
       email_sent: "<b>We hebben zojuist een e-mailbericht gestuurd naar deze gebruiker met een link om de projectuitnodiging te accepteren</b>. Als ze de e-mail niet kunnen vinden, zorg dan dat het niet geclassificeerd is als spam of probeer een ander e-mailadres. Als de problemen aanhouden, neem dan alstublieft contact op met onze medewerkers."
-  latest_announcement: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
+  last_announcement_html: "Read <a href='http://blog.teambox.com'>our blog</a> for the latest news about Teambox."
   locales: 
     nl: Nederlands
   notes: 
@@ -710,6 +726,7 @@ nl:
     format: 
       delimiter: ","
       separator: "."
+      precision: 2
     human: 
       storage_units: 
         format: "%n %u"
@@ -761,27 +778,27 @@ nl:
       rss: 
         description: "Paginas in project %{name}"
     new: 
-      define1: "Hier kan u <b>nuttige informatie delen</b> voor uw team: Een roadmap, interessante links, instructies, e-mail templates..."
-      define2: "Een pagina wijzigen is makkelijk en leuk, met drag-and-drop elementen kunt u ter plaatse wijzigen."
-      feature1: "<b>Delen</b>. Al uw teammaten kunnen the project pagina's bekijken en wijzigen."
-      feature2: "<b>Publiceren</b>. Instant web publishing met gedeelde pagina's. Show the world."
-      feature3: "<b>Printen</b>. Pagina's zijn printvriendelijk. Probeer te printen of naar PDF exporteren!"
-      feature4: "<b>Wiki</b>. Pagina's gedragen zich als een wiki en geven snelle toegang naar de projectinformatie."
-      footer1: "Gebruik Teambox als uw <b>gedeelde whiteboard</b> voor veelgebruikte dingen."
-      footer2: "U kunt ook bijlagen toevegen bij elke pagina in elke notitie. Veel plezier!"
+      define1_html: "Hier kan u <b>nuttige informatie delen</b> voor uw team: Een roadmap, interessante links, instructies, e-mail templates..."
+      define2_html: "Een pagina wijzigen is makkelijk en leuk, met drag-and-drop elementen kunt u ter plaatse wijzigen."
+      feature1_html: "<b>Delen</b>. Al uw teammaten kunnen the project pagina's bekijken en wijzigen."
+      feature2_html: "<b>Publiceren</b>. Instant web publishing met gedeelde pagina's. Show the world."
+      feature3_html: "<b>Printen</b>. Pagina's zijn printvriendelijk. Probeer te printen of naar PDF exporteren!"
+      feature4_html: "<b>Wiki</b>. Pagina's gedragen zich als een wiki en geven snelle toegang naar de projectinformatie."
+      footer1_html: "Gebruik Teambox als uw <b>gedeelde whiteboard</b> voor veelgebruikte dingen."
+      footer2_html: "U kunt ook bijlagen toevegen bij elke pagina in elke notitie. Veel plezier!"
       submit: Aanmaken
       title: "Nieuwe Pagina"
     primer: 
       create_first: "Maak de eerste pagina aan voor dit project!"
-      define1: "Hier kan u <b>nuttige informatie delen</b></b> voor uw team: een roadmap, interessante links, instructies, e-mail templates..."
-      define2: "Een pagina wijzigen is makkelijk en leuk, met drag-and-drop elementen kunt u ter plaatse wijzigen."
+      define1_html: "Hier kan u <b>nuttige informatie delen</b></b> voor uw team: een roadmap, interessante links, instructies, e-mail templates..."
+      define2_html: "Een pagina wijzigen is makkelijk en leuk, met drag-and-drop elementen kunt u ter plaatse wijzigen."
       empty: "Dit project heeft nog geen pagina's"
-      footer1: "Gebruik Teambox als uw <b>gedeelde whiteboard</b> voor veelgebruikte dingen."
-      footer2: "U kunt ook bijlagen toevegen bij elke pagina in elke notitie. Veel plezier!"
-      item1: "<b>Delen</b>. Al uw teammaten kunnen the project pagina's bekijken en wijzigen."
-      item2: "<b>Publiceren</b>. Instant web publishing met gedeelde pagina's. Show the world."
-      item3: "<b>Printen</b>. Pagina's zijn printvriendelijk. Probeer te printen of naar PDF exporteren!"
-      item4: "<b>Wiki</b>. Pagina's gedragen zich als een wiki en geven snelle toegang naar de projectinformatie."
+      footer1_html: "Gebruik Teambox als uw <b>gedeelde whiteboard</b> voor veelgebruikte dingen."
+      footer2_html: "U kunt ook bijlagen toevegen bij elke pagina in elke notitie. Veel plezier!"
+      item1_html: "<b>Delen</b>. Al uw teammaten kunnen the project pagina's bekijken en wijzigen."
+      item2_html: "<b>Publiceren</b>. Instant web publishing met gedeelde pagina's. Show the world."
+      item3_html: "<b>Printen</b>. Pagina's zijn printvriendelijk. Probeer te printen of naar PDF exporteren!"
+      item4_html: "<b>Wiki</b>. Pagina's gedragen zich als een wiki en geven snelle toegang naar de projectinformatie."
     slots: 
       insert_here: "Hier invoegen"
   people: 
@@ -823,7 +840,7 @@ nl:
       name: Naam
       owner: Eigenaar
       owner_description: "De eigenaar is de hoofdverantwoordelijke voor een project. Hij kan niet verwijderd worden uit het project tenzij eigendom wordt overgedragen aan een andere gebruiker."
-      permalink: URL
+      permalink_html: URL
       permalink_description: "Dit zal het webadres van uw project zijn. Houd het zo kort mogelijk. geen spaties toegestaan."
     index: 
       archived: "Toon %{count} Gearchiveerde projecten..."
@@ -841,29 +858,29 @@ nl:
       submit: "Maak een project aan en nodig mensen uit"
       title: "Maak een project aan"
     new_primer: 
-      define1: "Een project is een gedeelde groep met je teammaatjes."
-      define2: "In een project, elke teamlid kan:"
-      feature1: "Status updates posten."
-      feature2: "Start conversaties of reageer."
-      feature3: "Zend Bijlagen."
-      feature4: "Wijs toe en herzie taken."
-      feature5: "Reageer op taken."
-      feature6: "Track uren besteed op elk item."
-      feature7: "Maak aan, wijzig en bekijk pagina's."
+      define1_html: "Een project is een gedeelde groep met je teammaatjes."
+      define2_html: "In een project, elke teamlid kan:"
+      feature1_html: "Status updates posten."
+      feature2_html: "Start conversaties of reageer."
+      feature3_html: "Zend Bijlagen."
+      feature4_html: "Wijs toe en herzie taken."
+      feature5_html: "Reageer op taken."
+      feature6_html: "Track uren besteed op elk item."
+      feature7_html: "Maak aan, wijzig en bekijk pagina's."
       footer: "Dit project zal tot u behoren. U kunt dit project overdragen aan andere contacten op elk moment."
       limited: "Met een gratis account, kunt u bijlagen uploaden voor dit project tot 50 mb."
       upgrade: "Upgrade nu uw account!"
     primer: 
       create_first: "Maak uw eerste project!"
-      define1: "Gebruik projecten om <b>samen te werken</b> met groepen of personen: Een website, organisatie, een feest, client, werk..."
-      define2: "U kan <b>zoveel projecten aanmaken als u wilt</b> om met verschillende gebruikers online samen te werken."
+      define1_html: "Gebruik projecten om <b>samen te werken</b> met groepen of personen: Een website, organisatie, een feest, client, werk..."
+      define2_html: "U kan <b>zoveel projecten aanmaken als u wilt</b> om met verschillende gebruikers online samen te werken."
       empty: "U bezit of behoort not niet tot projecten."
       footer: "Projecten zijn a gecentraliseerde manier van samenwerken, zodat het nooit meer nodig zal zijn om uw team te e-mailen."
-      item1: "<b>Maak een project aan</b>, geef het een naam en <b>nodig wat contacten uit.</b>"
-      item2: "<b>Commentaar</b> over wat je doet op elk moment in de algemene tijdlijn."
-      item3: "<b>Discussieer </b> over belangrijke beslissingen met Conversaties."
-      item4: "<b>Plan</b> over wat er moet worden gedaan en post updates met taken."
-      item5: "<b>Deel informatie</b> door makkelijke wijzigbare Pagina's voor elk project."
+      item1_html: "<b>Maak een project aan</b>, geef het een naam en <b>nodig wat contacten uit.</b>"
+      item2_html: "<b>Commentaar</b> over wat je doet op elk moment in de algemene tijdlijn."
+      item3_html: "<b>Discussieer </b> over belangrijke beslissingen met Conversaties."
+      item4_html: "<b>Plan</b> over wat er moet worden gedaan en post updates met taken."
+      item5_html: "<b>Deel informatie</b> door makkelijke wijzigbare Pagina's voor elk project."
     show: 
       new_task_list_link: "Nieuwe Takenlijst"
       rss: 
@@ -876,7 +893,7 @@ nl:
   reset_passwords: 
     create: 
       invalid: "De URL om het wachtwoord te veranderen is ongeldig of verlopen. Probeer 'Ik heb mijn wachtwoord vergeten' nog een keer op de startpagina.<br/>Als dat niet werkt, neem dan contact met ons op, op %{support}"
-      not_found: "We kunnen geen gebruiker vinden met e-mailadres: %{email}<br/>Alstublief controleer het e-mailadres en probeer het nog een keer. Als dat niet werkt neem dan contact met ons op, op %{support}"
+      not_found_html: "We kunnen geen gebruiker vinden met e-mailadres: %{email}<br/>Alstublief controleer het e-mailadres en probeer het nog een keer. Als dat niet werkt neem dan contact met ons op, op %{support}"
       password_not_updated: "Het nieuwe wachtwoord is niet geldig. Probeer het nog een keer."
       password_updated: "Het wachtwoord is bijgewerkt. Meld u aan alstublieft."
     new: 
@@ -885,10 +902,8 @@ nl:
       submit: "Stuur mij een link om mijn wachtwoord te resetten"
       title: "U heeft uw wachtwoord vergeten?"
     sent: 
-      change_password_now: "U bent nu ingelogd. <b>Kies nu een nieuw wachtwoord</b> dat u het de volgende keer niet vergeet!"
-      follow_the_link: "Volg de link in het e-mail om uw aan te melden bij Teambox! Als u het niet kan vinden, kijk in uw spam folder."
+      follow_the_link_html: "Volg de link in het e-mail om uw aan te melden bij Teambox! Als u het niet kan vinden, kijk in uw spam folder."
       login_link_sent: "We hebben net een e-mail verzonden naar %{email}. U kan uw wachtwoord ophalen."
-      not_found: "Het e-mailadres <b>%{email}</b> doesn't behoort niet tot een Teambox gebruiker. Misschien heeft u het verkeerd gespeld?"
       title: "Wachtwoord Resetten"
   sessions: 
     fields: 
@@ -950,7 +965,7 @@ nl:
       tour: Rondleiding
       users: "Onze Gebruikers"
     strip: 
-      archived: "Dit project is gearchiveerd. Om dit project te wijzigen of reacties eraan te geven, moet u het eerst uit het archief halen in de <a href='%{link}'>Project Instellingen pagina</a>"
+      archived_html: "Dit project is gearchiveerd. Om dit project te wijzigen of reacties eraan te geven, moet u het eerst uit het archief halen in de <a href='%{link}'>Project Instellingen pagina</a>"
     task_navigation: 
       all_tasks: "Alle Taken"
       everybodys_tasks: "Iedereen zijn taken"
@@ -995,7 +1010,7 @@ nl:
       new_task_list: "Nieuwe takenlijst"
       subscribe: "Abboneer u op een nieuws-feed"
     destroy_message: 
-      deleted: "De takenlijst <b>%{name}</b> was succesvol verwijderd!"
+      deleted_html: "De takenlijst <b>%{name}</b> was succesvol verwijderd!"
     edit: 
       submit: "Update Takenlijst"
     errors: 
@@ -1020,14 +1035,14 @@ nl:
       title: "Nieuwe Takenlijst"
     primer: 
       create_first: "Maak uw eerste takenlijst aan voor dit project!"
-      define: "Gebruik taken om <b>vooruit te plannen</b>, <b>blijf op de hoogte van de voortgang</b> end <b>herzie wat er gebeurd is</b>.<br/><i>Wat? Wie? Wanneer?</i> Taken kunnen een status hebben, een toegewezen persoon en vervaldata."
+      define_html: "Gebruik taken om <b>vooruit te plannen</b>, <b>blijf op de hoogte van de voortgang</b> end <b>herzie wat er gebeurd is</b>.<br/><i>Wat? Wie? Wanneer?</i> Taken kunnen een status hebben, een toegewezen persoon en vervaldata."
       empty: "Dit project heeft nog geen conversaties."
-      footer1: "Taken zijn een eenvoudige en flexibele manier om <b>dingen gedaan te krijgen</b> en anderen dat te laten weten."
-      footer2: "Het is tijd om excel planning sheets en complexe GANTT charts te vergeten!"
-      item1: "<b>Plannen</b>. Maak taken aan in elke lijst en ze toewijzen aan uw teammaten."
-      item2: "<b>Reporteren</b>. Plaats reacties voor elke taak. Plaats bijlagens. Vraag voor feedback."
-      item3: "<b>Volg</b>. Ontvang kennisgevingen voor taken gerelateerd aan u."
-      item4: "<b>Herzien</b>. een voltooide taak is niet verwijderd, dus u heeft later nog steeds toegang tot de berichten en bestanden."
+      footer1_html: "Taken zijn een eenvoudige en flexibele manier om <b>dingen gedaan te krijgen</b> en anderen dat te laten weten."
+      footer2_html: "Het is tijd om excel planning sheets en complexe GANTT charts te vergeten!"
+      item1_html: "<b>Plannen</b>. Maak taken aan in elke lijst en ze toewijzen aan uw teammaten."
+      item2_html: "<b>Reporteren</b>. Plaats reacties voor elke taak. Plaats bijlagens. Vraag voor feedback."
+      item3_html: "<b>Volg</b>. Ontvang kennisgevingen voor taken gerelateerd aan u."
+      item4_html: "<b>Herzien</b>. een voltooide taak is niet verwijderd, dus u heeft later nog steeds toegang tot de berichten en bestanden."
     show: 
       title: "Takenlijst: %{name}"
   tasks: 
@@ -1036,12 +1051,12 @@ nl:
       reopen: "Heropen deze taak"
       you_are_done: "Het ziet er naar uit dat u klaar bent met deze taak!"
     archive_message: 
-      archived: "De taak  <b>%{name}</b> was succesvol gearchiveerd!"
+      archived_html: "De taak  <b>%{name}</b> was succesvol gearchiveerd!"
     assigned: 
       assigned_to: "Toewijzen aan %{user}"
     create: "Voeg Taak Toe"
     destroy_message: 
-      deleted: "Te taak <b>%{name}</b> is succesvol verwijderd!"
+      deleted_html: "Te taak <b>%{name}</b> is succesvol verwijderd!"
     due_on: 
       due_on: "Door op"
       today: Vandaag
@@ -1089,7 +1104,7 @@ nl:
   uploads: 
     comment_upload_link: Bijlage
     form: 
-      description: "Titel <i>(optioneel)</i>"
+      description_html: "Titel <i>(optioneel)</i>"
       max_size: "Bestandsgrootte mag niet meer zijn dan %{mb}"
       presence: "U kan geen leeg bestand uploaden"
       select_file: "Selecteer bestand"
@@ -1101,12 +1116,12 @@ nl:
       select_a_file: "Selecteer een bestand"
     primer: 
       create_first: "Upload het eerste bestand bij dit project!"
-      define1: "Altijd problemen gehad om bestanden te delen met uw team? Teambox maakt delen weer makkelijk."
-      define2: "U kunt hier bestanden uploaden or documenten aan deze conversatie, taken of pagina's hechten."
+      define1_html: "Altijd problemen gehad om bestanden te delen met uw team? Teambox maakt delen weer makkelijk."
+      define2_html: "U kunt hier bestanden uploaden or documenten aan deze conversatie, taken of pagina's hechten."
       empty: "Dit project heeft nog geen enkele bestanden."
-      item1: "<b>Grotere bestanden</b>. Upload bestanden van elke grote en vergeet e-mail beperkingen"
-      item2: "<b>Versiebeheer</b>. Upload nieuwe versies van files en blijf op de hoogte van veranderingen."
-      item3: "<b>Altijd beschikbaar</b>. Bestanden blijven in de context van het project voor toekomstig gebruik."
+      item1_html: "<b>Grotere bestanden</b>. Upload bestanden van elke grote en vergeet e-mail beperkingen"
+      item2_html: "<b>Versiebeheer</b>. Upload nieuwe versies van files en blijf op de hoogte van veranderingen."
+      item3_html: "<b>Altijd beschikbaar</b>. Bestanden blijven in de context van het project voor toekomstig gebruik."
     upload: 
       download: Downloaden
       on_: op
@@ -1116,7 +1131,7 @@ nl:
     activation: 
       activated: "Uw account is geactiveerd. Welkom op Teambox :)"
       already_done: "Uw had uw email al bevestigd! U kunt nu Teambox gebruiken."
-      invalid: "<p>Ongeldige of verlopen toegang link. Log in met uw e-mail en wachtwoord.</p><p>Als u uw login gegevens niet meer kan herinneren, Volg dan de link 'wachtwoord vergeten'</p>"
+      invalid_html: "<p>Ongeldige of verlopen toegang link. Log in met uw e-mail en wachtwoord.</p><p>Als u uw login gegevens niet meer kan herinneren, Volg dan de link 'wachtwoord vergeten'</p>"
       invalid_user: "Ongeldige gebruiker"
       resent: "We hebben de activeringsmail herzonden. We've re-sent the activation email. Neem een kijkje in uw inbox!"
     create: 
@@ -1131,7 +1146,7 @@ nl:
       tasks_for_today: "Taken voor vandaag"
       tasks_for_tomorrow: "Taken voor morgen"
       tasks_without_a_due_date: "Taken zonder vervaldatum"
-      you_receive_this_message: "U ontvangen omdat u er zich voor heeft aangemeld. U kan het uitschakelen op uw %{link}"
+      you_receive_this_message_html: "U ontvangen omdat u er zich voor heeft aangemeld. U kan het uitschakelen op uw %{link}"
     edit: 
       submit: "Account updaten"
       title_deletion: "Project Archivering/Verwijdering"
@@ -1144,8 +1159,8 @@ nl:
         field: "Uw avatar"
         max_size: "Bestandsgrootte mag niet meer zijn dan %{mb}"
         presence: "U kunt geen leeg bestand uploaden"
-        upload_here_or_at_gravatar: "U kunt hier een nieuwe avatar uploaden, of upload het naar %{gravatar} voor een globale avatar die u kunt gebruiken bij Teambox en vele andere websites."
-        we_have_this_avatar: "Dit is uw tijdelijke avatar:"
+        upload_here_or_at_gravatar_html: "U kunt hier een nieuwe avatar uploaden, of upload het naar %{gravatar} voor een globale avatar die u kunt gebruiken bij Teambox en vele andere websites."
+        we_have_this_avatar_html: "Dit is uw tijdelijke avatar:"
       biography: Biografie
       change_password: "Wachtwoord veranderen"
       confirm_password: "Bevestig wachtwoord"
@@ -1157,13 +1172,18 @@ nl:
       last_name: Achternaam
       login: Gebruikersnaam
       monday: Maandag
-      notifications:
+      notifications: 
         notify_conversations: "Laat me weten wanneer ik een conversatie volg"
-        notify_mentions: "Laat me weten wanneer ik ben vermeld bijv. Howdy @%{login}! U heeft een nieuwe e-mail!"
         notify_tasks: "Laat me weten wanneer ik een taak volg"
         wants_task_reminder: "Stuur me een dagelijkse e-mail van mij taken"
       password: Wachtwoord
       password_confirmation: "Wachtwoord bevestigen"
+      picture: 
+        field: "Uw avatar"
+        max_size: "Bestandsgrootte mag niet meer zijn dan %{mb}"
+        presence: "U kunt geen leeg bestand uploaden"
+        upload_here_or_at_gravatar: "U kunt hier een nieuwe avatar uploaden, of upload het naar %{gravatar} voor een globale avatar die u kunt gebruiken bij Teambox en vele andere websites."
+        we_have_this_avatar: "Dit is uw tijdelijke avatar:"
       sunday: Zondag
       time_zone: Tijdzone
       tooltips: 
@@ -1173,25 +1193,25 @@ nl:
         login: "U heeft een gebruikersnaam nodig om in te loggen. Leden kunnen u op uw gebruikersnaam vinden. De gebruikersnaam kan alleen bestaan uit kleine letters. Spaties zijn niet toegestaan. U kunt ook de underscore gebruiken."
         password: "De combinatie van letters, cijfers, hoofdletters en kleine letters is een goed idee."
     new: 
-      existing_user: "Als u al een account heeft, <a href='%{login_url}'>log in</a> of <a href='%{forgot_url}'>herstel uw wachtwoord</a>."
+      existing_user_html: "Als u al een account heeft, <a href='%{login_url}'>log in</a> of <a href='%{forgot_url}'>herstel uw wachtwoord</a>."
       submit: "Maak account aan"
       title: "Maak een Account aan"
       use_this_email: "U heeft voor dit e-mailadres uitnodigingen om projecten te delen. Als bij deze projecten deel wilt nemen, verander dan het wachtwoord niet. U kunt uw wachtwoord veranderen na het aanmeldproces."
-      you_already_have_an_account: "U heeft al een Teambox account voor het adres %{email}. <a href='%{login_link}'>Log in met dit adres</a> of <a href='%{reset_password_link}'>reset uw wachtwoord</a> als u het vergeten heeft."
+      you_already_have_an_account_html: "U heeft al een Teambox account voor het adres %{email}. <a href='%{login_link}'>Log in met dit adres</a> of <a href='%{reset_password_link}'>reset uw wachtwoord</a> als u het vergeten heeft."
       you_are_logged_in: "U heeft al een account. Log eerst uit om als een andere gebruiker aan te melden."
     show: 
       profile: Profiel
       projects: Projecten
       recent_activity_for: "Recente activiteit door %{user_name}"
     unconfirmed_email: 
-      follow_the_link: "<b>open deze e-mail alstublief en volg de link erin</b> om uw account te activeren."
-      invitation_sent_to: "Een e-mail uitnodiging is verzonden naar <i>%{email}</i>, om uw e-mail adres te verifiëren."
-      problems: "Als u nog steeds problemen heeft neem dan contact met ons op, op %{support}"
+      follow_the_link_html: "<b>open deze e-mail alstublief en volg de link erin</b> om uw account te activeren."
+      invitation_sent_to_html: "Een e-mail uitnodiging is verzonden naar <i>%{email}</i>, om uw e-mail adres te verifiëren."
+      problems_html: "Als u nog steeds problemen heeft neem dan contact met ons op, op %{support}"
       problems_title: Problemen?
       resend: "Kan u de e-mail niet vinden? Klik <a href='%{link}'>hier</a> om de activatie e-mail nog een keer te verzenden."
       spam: "Zorg ervoor dat de e-mail niet is geclassificeerd als spam door uw e-mail client."
       title: "Bevestig uw e-mail"
-      wrong_address: "Verkeerde adres? Als u uw e-mail verkeerd gespeld heeft, <a href='%{link}'>annuleren de aanmeldingsprocedure</a> en maak een nieuwe gebruikersaccount aan met een geldig e-mailadres."
+      wrong_address_html: "Verkeerde adres? Als u uw e-mail verkeerd gespeld heeft, <a href='%{link}'>annuleren de aanmeldingsprocedure</a> en maak een nieuwe gebruikersaccount aan met een geldig e-mailadres."
     update: 
       error: "Kon het geupdate profiel niet opslaan. Corrigeer de fouten en probeer het opnieuw."
       updated: "Gebruikersprofiel is geupdate!"

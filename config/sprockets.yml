@@ -7,4 +7,12 @@
     - vendor/plugins/*/app/javascripts
   :source_files:
     - app/javascripts/application.js
-    - app/javascripts/**/*.js
+:public:
+  :asset_root: public
+  :load_path:
+    - app/javascripts
+    - vendor/sprockets/*/src
+    - vendor/plugins/*/javascripts
+    - vendor/plugins/*/app/javascripts
+  :source_files:
+    - app/javascripts/public.js

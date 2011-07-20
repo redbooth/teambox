@@ -11,8 +11,6 @@ defaults: &defaults
   # If needed, configure per-environment bucket names in the bottom.
   bucket: <%= ENV['S3_BUCKET'] %>
 
-  # http://docs.amazonwebservices.com/AmazonS3/latest/dev/index.html?RESTAccessPolicy.html#RESTCannedAccessPolicies
-  s3_permissions: :public_read
   # set to HTTPS when read permissions are more restrictive
   s3_protocol: http
 

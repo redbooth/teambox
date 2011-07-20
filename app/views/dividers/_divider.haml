@@ -1,6 +1,6 @@
 %div[divider]
-  - if current_user && divider.editable?(current_user)
-    = render 'dividers/actions', :divider => divider
+  - if current_user && can?(:update, divider.page)
+    = render :partial => 'dividers/actions', :locals => {:divider => divider}
   %h3
     %span
       = divider.name.empty?? '&nbsp;' : h(divider.name)

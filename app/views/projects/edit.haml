@@ -1,11 +1,8 @@
-- content_for :column do
-  = project_settings_navigation
-
-%h2= t(".title_#{@sub_action}")
+%h2= t(".title_#{@sub_action}", :project => @current_project)
 
 - sub_params = @sub_action == 'ownership' ? transfer_project_path(@current_project) : nil
 
-- form_for @current_project, :url => sub_params do |f|
+= form_for @current_project, :url => sub_params do |f|
   = project_fields(f,@current_project,@sub_action)
   - unless @sub_action == 'deletion'
     - if @sub_action == 'ownership'

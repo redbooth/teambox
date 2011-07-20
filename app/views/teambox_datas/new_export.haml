@@ -1,0 +1,12 @@
+- content_for :column do
+  = render 'shared/user_navigation'
+
+%h2= t('.title')
+
+= form_for @data do |f|
+  = hidden_field_tag 'teambox_data[type_name]', 'export'
+  = fields_for_teambox_export(f, @data)
+  .submit
+    = f.submit t('.submit')
+    = t('common.or')
+    = link_to t('common.cancel'), teambox_datas_path

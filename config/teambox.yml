@@ -25,6 +25,9 @@ defaults: &defaults
   # Automatically true on Heroku.
   # See "config/amazon_s3.yml" for info about credentials.
   amazon_s3: false
+  # Upload expiration for public URL, in minutes
+  # Take fragment caching into consideration when setting this value
+  amazon_s3_expiration: 157680000
 
   asset_max_file_size: 50 # in megabytes
 
@@ -74,6 +77,8 @@ defaults: &defaults
   # This will allow users to post answers and comments by email.
   # When set to true, "reply above this line" notice will be displayed where relevant and accept emails.
   allow_incoming_email: false
+  
+  delay_data_processing: false
 
   # You will need to:
   # * Setup catch-all address for email received for any username of the incoming mail server.
@@ -107,10 +112,13 @@ defaults: &defaults
   #  - :provider: facebook
   #    :key: 
   #    :secret: 
+  
+  heroku: <%= !!ENV['HEROKU_TYPE'] %>
 
 development:
   <<: *defaults
   app_domain: localhost:3000
+  asset_max_file_size: 1
   allow_outgoing_email: false
   autorefresh_interval: 20 # in seconds
 
@@ -123,5 +131,7 @@ test: &test
   allow_outgoing_email: false
   asset_max_file_size: 1
   amazon_s3: false
+  smtp_settings:
+    :domain: domain.com
 cucumber:
   <<: *test

@@ -1,9 +1,13 @@
 class NotesController < ApplicationController
   before_filter :load_page
   before_filter :load_note, :only => [:show, :edit, :update, :destroy]
-  before_filter :check_permissions
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    handle_cancan_error(exception)
+  end
   
   def new
+    authorize! :update, @page
     @note = @page.build_note(params[:note])
     
     respond_to do |f|
@@ -13,6 +17,7 @@ class NotesController < ApplicationController
   end
   
   def create
+    authorize! :update, @page
     @note = @page.build_note(params[:note])
     @note.updated_by = current_user
     calculate_position(@note)
@@ -22,10 +27,10 @@ class NotesController < ApplicationController
       if !@note.new_record?
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @note, true)
       else
-        f.js
+        f.js   { render :layout => false }
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
         handle_api_error(f, @note)
@@ -42,27 +47,29 @@ class NotesController < ApplicationController
   end
   
   def edit
+    authorize! :update, @page
     respond_to do |f|
-      f.m
-      f.js
+      f.any(:html, :m)
+      f.js   { render :layout => false }
     end
   end
   
   def update
+    authorize! :update, @page
     @note.updated_by = current_user
     
     if @note.editable?(current_user) and @note.update_attributes(params[:note])
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_success(f, @note)
       end
     else
       respond_to do |f|
         f.html { reload_page }
         f.m    { reload_edit_page(:edit_part => 'page') }
-        f.js
+        f.js   { render :layout => false }
         handle_api_error(f, @note)
       end
     end
@@ -71,19 +78,17 @@ class NotesController < ApplicationController
   def destroy
     @slot_id = @note.page_slot.id
     
-    if @note.editable?(current_user)
+    if can?(:destroy, @page)
       @note.destroy
       respond_to do |f|
-        f.html { reload_page }
-        f.m    { reload_page }
-        f.js
+        f.any(:html, :m) { reload_page }
+        f.js   { render :layout => false }
         handle_api_success(f, @note)
       end
     else
       respond_to do |f|
-        f.html { reload_page }
-        f.m    { reload_page }
-        f.js
+        f.any(:html, :m) { reload_page }
+        f.js   { render :layout => false }
         handle_api_error(f, @note)
       end
     end
@@ -108,7 +113,7 @@ class NotesController < ApplicationController
         @note = @page.notes.find(params[:id])
       rescue
         respond_to do |f|
-          f.js
+          f.js   { render :layout => false }
           handle_api_error(f, @note)
         end
       end

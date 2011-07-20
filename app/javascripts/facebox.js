@@ -33,7 +33,7 @@
           this.open(response.responseText)
         }.bind(this),
         onFailure: function(response) {
-          this.open('There has been an error.', 'error')
+          this.open('<br/><p>There has been an error.</p>', 'error')
         }.bind(this)
       })
     },
@@ -80,7 +80,7 @@
           var source = $(RegExp.$1)
           if (source) Facebox.open(source.innerHTML, 'html', extra)
         }
-        else if (/\.(png|jpe?g|gif|bmp|tga)$/i.test(href)) {
+        else if (/\.(png|gif|jpe?g|bmp|tif?f)(\?|$)/i.test(href)) {
           Facebox.openImage(href, extra)
         }
         else {

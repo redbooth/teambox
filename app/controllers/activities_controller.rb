@@ -4,12 +4,21 @@ class ActivitiesController < ApplicationController
 
   before_filter :get_target
 
-  def show
-    @activities = Project.get_activities_for @target
-    @last_activity = @activities.last
+  def show # also handles #index, see routes.rb
+    @activities = Activity.for_projects(@target)
+    @threads = @activities.threads
+    @last_activity = @threads.all.last
 
     respond_to do |format|
-      format.html { redirect_to projects_path }
+      format.html do
+        if params[:nolayout]
+          @new_conversation = Conversation.new(:simple => true)
+          @projects = current_user.projects.unarchived
+          render :layout => false
+        else
+          redirect_to projects_path
+        end
+      end
       format.m
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
@@ -18,15 +27,17 @@ class ActivitiesController < ApplicationController
   end
 
   def show_more
-    opts = {:before => params[:id]}
-    opts[:user_id] = @user.id if @user
-    
-    @activities = Project.get_activities_for @target, opts
-    @last_activity = @activities.last
-    
+    @activities = if @user
+      Activity.for_projects(@target).before(params[:id]).from_user(@user)
+    else
+      Activity.for_projects(@target).before(params[:id])
+    end
+    @threads = @activities.threads
+    @last_activity = @threads.all.last
+
     respond_to do |format|
       format.html { redirect_to projects_path }
-      format.js { @threads = Activity.get_threads(@activities) }
+      format.js   { render :layout  => false }
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }
@@ -34,12 +45,13 @@ class ActivitiesController < ApplicationController
   end
 
   def show_new
-    @activities = Project.get_activities_for @target, :after => params[:id]
-    @last_activity = @activities.last
-    
+    @activities = Activity.for_projects(@target).after(params[:id])
+    @threads = @activities.threads
+    @last_activity = @threads.all.last
+
     respond_to do |format|
       format.html { redirect_to projects_path }
-      format.js { @threads = Activity.get_threads(@activities) }
+      format.js { render :layout => false }
       format.xml  { render :xml     => @activities.to_xml }
       format.json { render :as_json => @activities.to_xml }
       format.yaml { render :as_yaml => @activities.to_xml }
@@ -51,14 +63,12 @@ class ActivitiesController < ApplicationController
     target = params[:thread_type].constantize.find params[:id]
 
     @comments = target.comments
-    # TODO: ask why
-    @comments.pop if target.is_a?(Conversation) and target.simple?
     
     respond_to do |format|
       format.html {
         if request.xhr?
           render :partial => 'comments/comment',
-            :collection => @comments.reverse, # regular chronological order
+            :collection => @comments.reverse,
             :locals => { :threaded => true }
         end
       }

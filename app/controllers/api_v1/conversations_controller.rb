@@ -1,16 +1,19 @@
 class ApiV1::ConversationsController < ApiV1::APIController
-  before_filter :load_conversation, :only => [:show,:update,:destroy,:watch,:unwatch]
+  before_filter :load_conversation, :except => [:index, :create]
   
   def index
-    query = {:conditions => api_range, :limit => api_limit, :include => [:user, :project]}
+    query = {:conditions => api_range,
+             :limit => api_limit,
+             :order => 'id DESC',
+             :include => [:user, :project, {:first_comment => :user}, {:recent_comments => :user}]}
     
     @conversations = if @current_project
-      @current_project.conversations.scoped(api_scope).all(query)
+      @current_project.conversations.where(api_scope).all(query)
     else
-      Conversation.scoped(api_scope).find_all_by_project_id(current_user.project_ids, query)
+      Conversation.where(api_scope).find_all_by_project_id(current_user.project_ids, query)
     end
     
-    api_respond @conversations, :references => [:user, :project]
+    api_respond @conversations, :references => [:user, :project, :refs_comments]
   end
 
   def show
@@ -44,6 +47,26 @@ class ApiV1::ConversationsController < ApiV1::APIController
     handle_api_success(@conversation)
   end
   
+  def convert_to_task
+    authorize! :update, @conversation
+
+    @conversation.attributes = params[:conversation]
+    @conversation.updating_user = current_user
+    @conversation.comments_attributes = {"0" => params[:comment]} if params[:comment]
+
+    success = @conversation.save
+    if success
+      @task = @conversation.convert_to_task!
+      success = @task && @task.errors.empty?
+    end
+
+    if success
+      handle_api_success(@task, :is_new => true, :include => [:comments])
+    else
+      handle_api_error(@task||@conversation)
+    end
+  end
+  
   def watch
     authorize! :update, @conversation
     @conversation.add_watcher(current_user)
@@ -64,7 +87,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     else
       Conversation.find_by_id(params[:id], :conditions => {:project_id => current_user.project_ids})
     end
-    api_status(:not_found) unless @conversation
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Conversation not found' unless @conversation
   end
   
   def api_scope
@@ -80,7 +103,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     unless params[:user_id].nil?
       conditions[:user_id] = params[:user_id].to_i
     end
-    {:conditions => conditions}
+    conditions
   end
   
   def add_watchers(hash)

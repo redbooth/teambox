@@ -2,15 +2,16 @@ require 'spec_helper'
 
 describe HooksController do
   it "should route to hooks controller" do
-    params_from(:post, '/hooks/email').should == {
-      :action => "create", :hook_name => "email", :controller => "hooks"
-    }
+    { :post => '/hooks/email' }.should route_to(:action => "create", 
+                                                :hook_name => "email", 
+                                                :controller => "hooks")
   end
-  
+
   it "should route to hooks controller scoped under project" do
-    params_from(:post, '/projects/12/hooks/pivotal').should == {
-      :action => "create", :hook_name => "pivotal", :controller => "hooks", :project_id => "12"
-    }
+    { :post => '/projects/12/hooks/pivotal' }.should route_to(:action => "create", 
+                                                              :hook_name => "pivotal", 
+                                                              :controller => "hooks", 
+                                                              :project_id => "12")
   end
 
   describe "#create" do
@@ -42,53 +43,51 @@ describe HooksController do
         conversation.name.should == 'Hey, check this awesome file!'
         conversation.comments.last.body.should == 'Lorem ipsum dolor sit amet, ...'
         conversation.comments.last.uploads.count.should == 2
-        conversation.comments.last.uploads.first(:order => 'id asc').asset_file_name.should == 'tb-space.jpg'
+        conversation.comments.last.uploads.first.asset_file_name.should == 'tb-space.jpg'
       end
       
       it "handles encoded headers" do
-        post :create,
-             :hook_name => 'email',
-             :from => @project.user.email,
-             :to => "=?ISO-8859-1?Q?Moo?= <#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}>\n",
-             :text => "Hello there",
-             :subject => "Just testing"
+        post :create, default_params(
+          :to => "=?ISO-8859-1?Q?Moo?= <#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}>\n",
+          :text => "Hello there"
+        )
         
         response.should be_success
         comment = @project.conversations.last(:order => 'id asc').comments.first
         comment.body.should == "Hello there"
       end
       
+      it "handles encoded body" do
+        post :create, default_params(
+          :text => "\350\346\276\271\360",
+          :charsets => '{"text":"iso-8859-2"}'
+        )
+        post :create, default_params(
+          :text => "\351\361 \370\374\347 \337\360",
+          :charsets => '{"text":"iso-8859-1"}'
+        )
+        
+        comments = Comment.all(:limit => 2, :order => 'id desc')
+        comments.first.body.should == "éñ øüç ßð"
+        comments.second.body.should == "čćžšđ"
+      end
+      
       it "ignores email with missing info" do
-        post :create,
-             :hook_name => 'email',
-             :from => '',
-             :to => "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}",
-             :text => "Hello there",
-             :subject => "Just testing"
+        post :create, default_params(:from => '')
         
         response.should be_success
         response.body.should == "Invalid From field"
       end
       
       it "ignores email without plaintext part" do
-        post :create,
-             :hook_name => 'email',
-             :from => @project.user.email,
-             :to => "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}",
-             :html => "<p>Hello there</p>",
-             :subject => "Just testing"
+        post :create, default_params(:text => nil)
         
         response.should be_success
         response.body.should == "Invalid mail body"
       end
       
       it "ignores email with invalid 'to' address" do
-        post :create,
-             :hook_name => 'email',
-             :from => @project.user.email,
-             :to => "me@moo.com",
-             :text => "Hello there",
-             :subject => "Just testing"
+        post :create, default_params(:to => 'me@moo.com')
         
         response.should be_success
         response.body.should == "Invalid To fields"
@@ -113,7 +112,7 @@ describe HooksController do
                         '',
                         'I would say something about this conversation'
 
-        comment = @conversation.comments(true).last(:order => 'id asc')
+        comment = @conversation.comments(true).except(:order).last(:order => 'ID ASC')
         comment.body.should == 'I would say something about this conversation'
         comment.uploads.count.should == 2
       end
@@ -124,7 +123,7 @@ describe HooksController do
         end
         
         it "should raise (200 for sendgrid) and create a bounce message if an unknown user posts to a project" do
-          options =  @options.merge!(:from => 'random_person@teambox.com')
+          options = @options.merge!(:from => 'random_person@teambox.com')
           check_bounce_message(options) do
             post :create, options
           end
@@ -132,14 +131,14 @@ describe HooksController do
         end
         
         it "should raise (200 for sendgrid) and create a bounce message if a user does not belong to a project" do
-          options =  @options.merge!(:from => Factory(:user).email)
+          options = @options.merge!(:from => Factory(:user).email)
           check_bounce_message(options) do
             post :create, options
           end
           response.response_code.should == 200
         end
       
-        it "should raise (200 for sendgrid) and create a bounce message if a project is not found" do |variable|
+        it "should raise (200 for sendgrid) and create a bounce message if a project is not found" do
           options = @options.merge!(:to => "#{@project.permalink}+task+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}")
           check_bounce_message(options) do
             post :create, options
@@ -147,26 +146,28 @@ describe HooksController do
           response.response_code.should == 200
         end
         
-        it "should raise (200 for sendgrid) and create a bounce message if a conversation is not found" do |variable|
+        it "should raise (200 for sendgrid) and create a bounce message if a conversation is not found" do
           options = @options.merge(:to => "#{@project.permalink}+conversation+#{rand(1000) + 1000}@#{Teambox.config.smtp_settings[:domain]}")
           check_bounce_message(options) do
             post :create, options
           end
           response.response_code.should == 200
         end
-      
-        it "should only create one bounce message every day if an exception is raised" do
-          options =  @options.merge!(:from => Factory.build(:user).email) # Do not save just build for email
-          Emailer.should_receive(:deliver_bounce_message).once
+        
+        it "should raise (200 for sendgrid) and create a bounce message for invalid target" do
+          address = "#{@project.permalink}+tasknuevo@#{Teambox.config.smtp_settings[:domain]}"
+          options = @options.merge(:to => address)
           
-          post :create, options
-          post :create, options
+          check_bounce_message(options) do
+            post :create, options
+          end
+          response.response_code.should == 200
         end
       end
       
       def check_bounce_message(options, &block)
-        Emailer.should_receive(:deliver_bounce_message).with(
-          kind_of(Emailer::Incoming::Error)
+        Emailer.should_receive(:send_with_language).with(
+          :bounce_message, :en, kind_of(Array), kind_of(String)
         ).once
         
         lambda do
@@ -190,6 +191,15 @@ describe HooksController do
            :attachment1 => upload_file("#{Rails.root}/spec/fixtures/tb-space.jpg", 'image/jpg'),
            :attachment2 => upload_file("#{Rails.root}/spec/fixtures/users.yml", 'text/plain')
          }
+      end
+      
+      def default_params(more = {})
+        { :hook_name => 'email',
+          :from => @project.user.email,
+          :to => "#{@project.permalink}@#{Teambox.config.smtp_settings[:domain]}",
+          :text => "Nothing to say",
+          :subject => "Just testing"
+        }.update(more)
       end
     end
     
@@ -278,14 +288,13 @@ describe HooksController do
         conversation.name.should be_nil
         
         expected = (<<-HTML).strip
-        <div class='hook_github'><h3>New code on <a href='http://github.com/defunkt/github'>github</a> refs/heads/master</h3>
+        New code on <a href='http://github.com/defunkt/github'>github</a> refs/heads/master
 
 Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59'>okay i give in</a><br>
 Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0'>update pricing a tad</a><br>
-</div>
         HTML
         
-        conversation.comments.first.body.should == expected
+        conversation.comments.first.body.strip.should == expected.strip
       end
     end
   end
