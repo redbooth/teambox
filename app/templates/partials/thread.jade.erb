@@ -32,7 +32,7 @@
         = self.last_comment.body
   .clear
 .comments
-  - if (self.first_comment)
+  - if (self.first_comment && !self.hidden_comments_count)
     != self.partial('partials.comment', self.first_comment)
 
   - if (self.hidden_comments_count)
@@ -40,5 +40,6 @@
       a(href= '/activities/' + self.id + '/show_thread?thread_type=' + self.type)= 'Show ' + self.hidden_comments_count + ' previous comments'
 
   - each recent_comment in self.recent_comments
-    != self.partial('partials.comment', recent_comment)
+    - if (!self.first_comment || self.first_comment.id !== recent_comment.id)
+      != self.partial('partials.comment', recent_comment)
 .new_comment_wrap

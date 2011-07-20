@@ -77,9 +77,6 @@
           .sortBy(function (c) {
             return c.id;
           })
-          .reject(function (c) {
-            return c.id === e.first_comment_id;
-          })
           .value();
         e.hidden_comments_count = _([e.comments_count - 1 - e.recent_comments.length, 0]).max();
         e.last_comment = _(e.recent_comments).last();
