@@ -13,28 +13,6 @@ describe ApiV1::TaskListsController do
     
   end
 
-#  describe "Task list from template" do
-#    describe "#new" do
-#      pending
-#    end
-#  end
-
-
-#  if params[:task_list][:template].present? and params[:task_list][:name].blank?
-#      if template = @current_project.organization.task_list_templates.find(params[:task_list][:template])
-#        @task_list = template.create_task_list(@current_project, current_user)
-#      end
-#    else
-#      @task_list = @current_project.create_task_list(current_user,params[:task_list])
-#    end
-
-
-
-
-
-
-
-
   describe "#index" do
     it "shows task lists in the project" do
       login_as @user
