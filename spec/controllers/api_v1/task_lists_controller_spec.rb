@@ -158,7 +158,7 @@ describe ApiV1::TaskListsController do
       @project.task_lists(true).length.should == 2
     end
 
-    it "should allow participants to create task lists from template" do
+    it "should allow participants to create task lists from template with optional task list name" do
       login_as @user
 
       @task_list_template = Factory.create(:task_list_template, :name => 'Lunch tasks template', :organization => @project.organization)
@@ -168,6 +168,16 @@ describe ApiV1::TaskListsController do
 
       @project.task_lists(true).length.should == 3
       @project.task_lists.first.name.should == 'Lunch tasks template'
+      
+
+      post :create, :project_id => @project.permalink, :template_id => @task_list_template.id, :name => "Dinner tasks"
+      response.should be_success
+
+      @project.task_lists(true).length.should == 4
+      @project.task_lists.first.name.should == 'Dinner tasks'
+
+      @project.task_lists.first.tasks.last.name.should == @task_list_template.tasks.last[0]
+
     end
 
   end
