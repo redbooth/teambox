@@ -15,7 +15,7 @@
           :example => @task_list.to_api_hash,
           :status => :created,
           :role => :participant do
-  %p=raw "Creates a new task list."
+  %p=raw "Creates a new task list.<br />If you provide template_id parameter, new task list will be created using task list template, name parameter in this case is optional"
 
 - doc_for :update,
           :parameters => {:name => @task_list.name, :start_on => @task_list.start_on, :finish_on => @task_list.finish_on },
