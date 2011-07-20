@@ -26,7 +26,6 @@ class TaskList
       :project_id => project_id,
       :user_id => user_id,
       :name => name,
-      :template_id => template_id,
       :position => position,
       :archived => archived,
       :created_at => created_at.to_s(:api_time),
