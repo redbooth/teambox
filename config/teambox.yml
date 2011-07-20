@@ -148,6 +148,7 @@ defaults: &defaults
   - "*.tasks"
   - "*.projects"
   - "*.conversations"
+  - "*.activerecord"
 
 development:
   <<: *defaults
