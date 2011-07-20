@@ -6,7 +6,13 @@ class AuthController < ApplicationController
   def callback
     provider = params[:provider]
     begin
-      auth_hash = params[:auth]
+      auth_hash = request.env['omniauth.auth']
+      auth_hash.symbolize_keys!
+      auth_hash[:credentials].symbolize_keys!
+      auth_hash[:user_info].symbolize_keys!
+      auth_hash[:extra].symbolize_keys!
+      auth_hash[:extra][:user_hash].symbolize_keys!
+      
       AppLink.find_by_provider_and_app_user_id_and_user_id(provider, auth_hash[:uid], nil).try(:destroy)
       load_profile(auth_hash, provider)
 
