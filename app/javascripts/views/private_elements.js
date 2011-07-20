@@ -12,14 +12,14 @@
   /*
   */
   PrivateElements.events = {
-      'change  .private_options .option.normal input' : 'update'
-    , 'change  .private_options .option.private input': 'update'
+      'change  .private_options .option.normal input' : 'handleOptionChange'
+    , 'change  .private_options .option.private input': 'handleOptionChange'
     , 'change  .private_users .private_all input'     : 'updatePrivateUsers'
     , 'change  .private_users .private_user input'    : 'updateAllUsers'
   };
 
   PrivateElements.initialize = function (options) {
-    _.bindAll(this, "render");
+    _.bindAll(this, "render", "update");
     options = options || {};
 
     this.comment_form = options.comment_form;
@@ -31,12 +31,8 @@
   /* Render private elements area
    */
   PrivateElements.render = function () {
-    this.el.writeAttribute({
-      'object-prefix': this.model.prefix()
-    , 'object-type': this.model.className().toLowerCase() + "[comments_attributes][0]"
-    }).hide();
-
-    // this.el.update(this.template());
+    this.update();
+    this.el.hide();
 
     return this;
   };
@@ -59,27 +55,14 @@
 
   PrivateElements.toggle = function(event) {
     event.stop();
-    var el = event.target;
-
-    // Make sure the private options are populated
-    if (!this.activated) {
-      this.activate();
-      this.activated = true;
-    }
-
-    var options = this.el;
+    var el = event.target
+    , options = this.el;
 
     if (options.visible()) {
       options.select('input').invoke('disable');
-    } else {
-      options.select('input').invoke('enable');
-    }
-
-    this.update();
-
-    if (options.visible()) {
       options.hide();
     } else {
+      options.select('input').invoke('enable');
       options.show();
     }
   };
@@ -105,13 +88,22 @@
   * @return (Array)
   */
   PrivateElements.people = function() {
-    return Teambox.collections.projects.get(this.model.get('project_id')).attributes.people.models;
+    var project_id = this.model.get('project_id');
+    return project_id ? Teambox.collections.projects.get(project_id).attributes.people.models : [];
   };
 
-  /* Update Private Elements selections
-   */
-  PrivateElements.update = function () {
+  /*
+  * Returns all user ids belonging to this model's project
+  * @return (Array)
+  */
+  PrivateElements.watchers = function() {
+    var watchers = _.map(this.people(), function(model) {
+      return model.get('user').id;
+    });
+    return _.isEmpty(watchers) ? false : watchers;
+  };
 
+  PrivateElements.handleOptionChange = function() {
     var private_option = this.el.down('.option.private input')
     , i18n = I18n.translations;
 
@@ -121,6 +113,30 @@
     }
 
     this.redrawBox();
+  };
+
+  /* Update Private Elements selections
+   */
+  PrivateElements.update = function () {
+    this.el.update('');
+    this.activate();
+
+    var watchers = this.watchers();
+    if (!this.model.get('watchers') && watchers) {
+      this.model.attributes.watchers = watchers;
+    }
+
+    this.el.writeAttribute({
+      'object-prefix': this.model.prefix()
+    , 'object-type': this.model.className().toLowerCase() + "[comments_attributes][0]"
+    });
+
+    this.handleOptionChange();
+
+    if (this.el.visible()) {
+      this.el.select('input').invoke('enable');
+    }
+
     return this;
   };
 

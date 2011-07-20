@@ -5,6 +5,7 @@
                     , default_attributes: {type: 'Conversation', simple: true, title: 'Untitled', recent_comments: []}
                     };
 
+
   /* updates thread el using a template
    *
    * @return {Object} self
@@ -17,7 +18,7 @@
   };
 
   SimpleConversationForm.setup = function() {
-    this.model = new Teambox.Models.Thread(this.default_attributes);
+    this.model = new Teambox.Models.Thread(_.extend(this.default_attributes, {user_id: Teambox.models.user.id}));
     this.comment_form = new Teambox.Views.CommentForm({
         model: this.model
       , thread: this
@@ -29,10 +30,12 @@
   SimpleConversationForm.resetModel = function() {
     this.model.id = null;
     this.model.cid = _.uniqueId('c');
-    var project_id = this.model.get('project_id');
-    var project = this.model.get('project');
+    var project_id = this.model.get('project_id')
+    , project = this.model.get('project')
+    , user_id = this.model.get('user_id');
+
     this.model.clear({silent: true});
-    this.model.set(_.extend(_.clone(this.default_attributes), {recent_comments: [], project_id: project_id, project: project}), {silent: true});
+    this.model.set(_.extend(_.clone(this.default_attributes), {recent_comments: [], project_id: project_id, project: project, user_id: user_id}), {silent: true});
 
     /*
     * collection.add() calls _add which binds 'all' event to the model
@@ -48,7 +51,8 @@
   SimpleConversationForm.render = function () {
     var projects = Teambox.collections.projects.map(function(p) { return {id: p.id, value: p.get('name')};})
       , model = this.model
-      , watchers_update = this.comment_form.watchers.update;
+      , watchers_update = this.comment_form.watchers.update
+      , private_elements_update = this.comment_form.private_elements.update;
 
     this.el.update('');
     this.el.insert({bottom: this.comment_form.render().el});
@@ -64,7 +68,7 @@
       model.set({'project_id': project_id}); 
     };
 
-    var dropdown_callbacks = [watchers_update, updateProjectInModel, this.updateFormAttributes];
+    var dropdown_callbacks = [watchers_update, updateProjectInModel, this.updateFormAttributes, private_elements_update];
 
     _.each(dropdown_callbacks, function(callback) {
       dropdown.bind('change:selection', callback);
