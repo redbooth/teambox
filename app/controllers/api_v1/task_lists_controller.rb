@@ -24,9 +24,17 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
 
   def create
+   
     authorize! :make_task_lists, @current_project
-    @task_list = @current_project.create_task_list(current_user,params)
-    
+
+    if params[:template_id].present? and params[:name].blank?
+      if template = @current_project.organization.task_list_templates.find(params[:template_id])
+        @task_list = template.create_task_list(@current_project, current_user)
+      end
+    else
+      @task_list = @current_project.create_task_list(current_user,params)
+    end
+
     if @task_list.new_record?
       handle_api_error(@task_list)
     else

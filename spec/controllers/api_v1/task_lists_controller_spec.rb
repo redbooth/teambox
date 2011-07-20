@@ -10,7 +10,30 @@ describe ApiV1::TaskListsController do
     @other_task_list = @project.create_task_list(@owner, {:name => 'Another TODO list'})
     @other_task_list.archived = true
     @other_task_list.save!
+    
   end
+
+#  describe "Task list from template" do
+#    describe "#new" do
+#      pending
+#    end
+#  end
+
+
+#  if params[:task_list][:template].present? and params[:task_list][:name].blank?
+#      if template = @current_project.organization.task_list_templates.find(params[:task_list][:template])
+#        @task_list = template.create_task_list(@current_project, current_user)
+#      end
+#    else
+#      @task_list = @current_project.create_task_list(current_user,params[:task_list])
+#    end
+
+
+
+
+
+
+
 
   describe "#index" do
     it "shows task lists in the project" do
@@ -156,6 +179,19 @@ describe ApiV1::TaskListsController do
 
       @project.task_lists(true).length.should == 2
     end
+
+    it "should allow participants to create task lists from template" do
+      login_as @user
+
+      @task_list_template = Factory.create(:task_list_template, :name => 'Lunch tasks template', :organization => @project.organization)
+
+      post :create, :project_id => @project.permalink, :template_id => @task_list_template.id
+      response.should be_success
+
+      @project.task_lists(true).length.should == 3
+      @project.task_lists.first.name.should == 'Lunch tasks template'
+    end
+
   end
 
   describe "#update" do
