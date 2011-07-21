@@ -26,9 +26,6 @@
     if (!this.simple) {
       this.events['focusin textarea'] = 'focusTextarea';
     }
-    else {
-      this.model.validate = this.validateSimpleForm;
-    }
 
     this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
     this.watchers = new Teambox.Views.Watchers({model: this.model});
@@ -177,7 +174,8 @@
 
     Teambox.helpers.forms.showDisabledInput(this.el);
 
-    this.model.save(data, {
+    //Add the type if it's missing for valiate method
+    this.model.save(_.extend(data, {type: this.model.className()}), {
       success: this.addComment.bind(this)
     , error: this.handleError.bind(this)
     });
@@ -292,19 +290,6 @@
 
   CommentForm.togglePrivateElements = function(event) {
     this.private_elements.toggle(event);
-  };
-
-  /*
-  * Form validations for simple case
-  * TODO: i18n error message.
-  */
-  CommentForm.validateSimpleForm = function(attrs) {
-    if (attrs.comments_attributes 
-        && attrs.comments_attributes['0'] 
-        && (!attrs.comments_attributes['0'].body
-            || !attrs.comments_attributes['0'].body.length)) {
-      return I18n.translations.activerecord.errors.models.conversation.attributes.comments.must_have_one;
-    }
   };
 
   // exports

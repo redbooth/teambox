@@ -2,6 +2,30 @@
 
   var Thread = {};
 
+  /*
+  * Run validations
+  */
+  Thread.validate = function(attrs) {
+    switch(attrs.type) {
+      case 'Conversation':
+        if (attrs.simple) {
+          if (attrs.comments_attributes
+              && attrs.comments_attributes['0']
+              && (!attrs.comments_attributes['0'].body
+                  || !attrs.comments_attributes['0'].body.length)) {
+            return I18n.translations.activerecord.errors.models.conversation.attributes.comments.must_have_one;
+          }
+        }
+
+        break;
+
+      default:
+        return false;
+    }
+  };
+
+
+
  /**
   * Returns the class name
   *

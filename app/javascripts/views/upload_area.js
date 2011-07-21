@@ -122,7 +122,8 @@
     var data = _.deparam(this.form.serialize(), true);
 
     //Run data through validator first
-    if (this.model._performValidation(data, {error: this.comment_form.handleError.bind(this.comment_form)})) {
+    if (this.model._performValidation(_.extend(data, {type: this.model.className()}), {
+          error: this.comment_form.handleError.bind(this.comment_form)})) {
      // we may have cancelled xhr, but we still need to trigger form submit manually
      this.form.submit();
     }
