@@ -12,7 +12,7 @@ input(name= 'utf8', type= 'hidden', value= '✓')
     a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= '<%= t('projects.show.text_styling')%>')
 .clear
 .new_extra(style= 'display: none')
-  input.button_blue.submit(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
+  input.button_blue_75.submit(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
   - if (self.is_task)
     .field.text_field.hours_field(style= 'display: none')
       label
