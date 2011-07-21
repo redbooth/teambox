@@ -140,9 +140,11 @@ class Invitation < RoleRecord
   # In the future we should add a per-user setting to not autoaccept invites
   # (by default users will autoaccept invites)
   def auto_accept
-    self.accept(invited_user) if invited_user
-    self.destroy
-    @autoaccepted = true
+    if invited_user.try(:auto_accept_invites)
+      self.accept(invited_user)
+      self.destroy
+      @autoaccepted = true
+    end
   end
 
   def copy_user_email
