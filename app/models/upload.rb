@@ -146,6 +146,7 @@ class Upload < RoleRecord
     base = {
       :id => id,
       :page_id => page_id,
+      :project_id => project_id,
       :slot_id => page_slot ? page_slot.id : nil,
       :filename => asset_file_name,
       :description => description,
