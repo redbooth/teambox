@@ -64,6 +64,8 @@
       , authToken = $$('meta[name=csrf-token]').first().readAttribute('content')
       , authParam = $$('meta[name=csrf-param]').first().readAttribute('content');
 
+    Teambox.helpers.forms.showDisabledInput(this.form);
+
     function changeFormat(action) {
       if (action.endsWith('.text')) {
         return action.gsub(/\.text$/, '');
@@ -103,26 +105,28 @@
     this.form.insert(new Element('input', {type: 'hidden', 'class': 'x-pushsession-id', name: '_x-pushsession-id', value: Teambox.controllers.application.push_session_id}));
 
     if (this.form[authParam]) {
-      this.form[authParam].value = authToken;
+     this.form[authParam].value = authToken;
     } else {
-      this.form.insert(new Element('input', {type: 'hidden', name: authParam, value: authToken}).hide());
+     this.form.insert(new Element('input', {type: 'hidden', name: authParam, value: authToken}).hide());
     }
 
     // for IE (7)
     iframe.onreadystatechange = function () {
-      if (this.readyState === 'complete') {
-        callback();
-      }
+     if (this.readyState === 'complete') {
+       callback();
+     }
     };
 
     // non-IE
     iframe.onload = callback;
+    var data = _.deparam(this.form.serialize(), true);
 
-    // we may have cancelled xhr, but we still need to trigger form submit manually
-    this.form.submit();
-    Teambox.helpers.forms.showDisabledInput(this.form);
-   };
-
+    //Run data through validator first
+    if (this.model._performValidation(data, {error: this.comment_form.handleError.bind(this.comment_form)})) {
+     // we may have cancelled xhr, but we still need to trigger form submit manually
+     this.form.submit();
+    }
+  };
 
   /*  Enable/Disable functionality based on supported features
    *
