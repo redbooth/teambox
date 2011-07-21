@@ -23,6 +23,7 @@
     this.collection = options.collection;
     this.tagName = options.tagName || 'div';
     this.className = options.className || 'dropdown';
+    this.selected = options.selected;
   };
 
   DropDown.events = {
@@ -42,7 +43,13 @@
 
     this.reset();
     this.setupBlurFocusHandlers();
-    this.selectFirstEntry();
+
+    if (this.selected) {
+      this.selectOption(this.selected);
+    }
+    else {
+      this.selectFirstEntry();
+    }
     return this;
   };
 
@@ -52,15 +59,15 @@
    * an entry in the collection.
    */
   DropDown.selectFirstEntry = function() {
-    var value = this.el.down('input[type=text]').value;
+    var label = this.el.down('input[type=text]').value;
 
-    if (!value || !value.length) {
-      this.selectOption(this.collection.first());
+    if (!label || !label.length) {
+      this.selectOption(_.toArray(this.collection).first());
     }
-    else if(!this.collection.any(function(entry){
-      return entry.value.toLowerCase().startsWith(value.toLowerCase());
-    })){
-      this.selectOption(this.collection.first());
+    else if (!_.any(this.collection, function(entry){
+      return entry.label.toLowerCase() === label.toLowerCase();
+    })) {
+      this.selectOption(_.toArray(this.collection).first());
     }
   };
 
@@ -106,9 +113,9 @@
    * @param {Array} collection
    */
   DropDown.updateOptions = function(collection) {
-    this.el.down('.dropdown_autocomplete').update(collection.reduce(function (memo, entry) {
-      memo += '<li data-entry-id="'  + entry.id + '"><span class="entry">';
-      memo += entry.value + '</span></li>';
+    this.el.down('.dropdown_autocomplete').update(_.reduce(collection, function (memo, entry) {
+      memo += '<li data-entry-id="'  + entry.value + '"><span class="entry">';
+      memo += entry.label + '</span></li>';
       return memo;
     }, ''));
   };
@@ -118,9 +125,9 @@
    * @param {Object} entry
    */
   DropDown.selectOption = function(entry) {
-    this.el.down('input[type=hidden]').value = entry.id;
-    this.el.down('input[type=text]').value = entry.value;
-    this.trigger('change:selection', entry.id);
+    this.el.down('input[type=hidden]').value = entry.value;
+    this.el.down('input[type=text]').value = entry.label;
+    this.trigger('change:selection', entry.value);
   };
 
   /* Handles selecting an entry either via click or return key
@@ -132,7 +139,7 @@
     event.stop();
     li = li || event.target;
 
-    var entry = _.detect(this.collection, function(e) { return e.id.toString() === li.getAttribute('data-entry-id');});
+    var entry = _.detect(this.collection, function(e) { return e.value.toString() === li.getAttribute('data-entry-id');});
     this.selectElement(false, li);
     this.selectOption(entry);
     if (event.type === 'click') {
@@ -188,8 +195,8 @@
       var search_term = this.el.down('input[type=text]').value;
 
       if (search_term.length) {
-        this.updateOptions(this.collection.select(function(entry){
-          return entry.value.toLowerCase().startsWith(search_term.toLowerCase());
+        this.updateOptions(_.select(this.collection, function(entry){
+          return entry.label.toLowerCase().startsWith(search_term.toLowerCase());
         }));
       }
       else {

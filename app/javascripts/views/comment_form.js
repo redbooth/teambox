@@ -37,6 +37,8 @@
    * @returns self;
    */
   CommentForm.render = function () {
+    var self = this;
+
     this.updateFormAttributes(this.model.get('project_id'));
 
     this.el.addClassName("edit_" + this.model.get('type').toLowerCase());
@@ -45,18 +47,22 @@
     this.el.update(template(_.extend({view: this}, this.model.getAttributes())));
 
     if (this.model.get('type') === 'Task') {
-      // select status
-      (new Teambox.Views.SelectStatus({
-        el: this.el.select('#task_status')[0]
-      , selected: this.model.get('status')
-      })).render();
+      var statusCollection = Teambox.Models.Task.status.status;
+      var assignedCollection = Teambox.helpers.tasks.assignedIdCollection(this.model.get('project_id'));
 
-      // select assigned
-      (new Teambox.Views.SelectAssigned({
-        el: this.el.select('#task_assigned_id')[0]
-      , selected: this.model.get('assigned_id')
-      , project: Teambox.collections.projects.get(this.model.get('project_id'))
-      })).render();
+      var dropdown_task_status = new Teambox.Views.DropDown({
+          el: this.el.down('.dropdown_task_status')
+        , collection: statusCollection
+        , className: 'dropdown_task_status'
+        , selected: _.detect(statusCollection, function(stat) { return stat.value === self.model.get('status');})
+       }).render();
+
+      var dropdown_task_assigned = new Teambox.Views.DropDown({
+          el: this.el.down('.dropdown_task_assigned_id')
+        , collection: assignedCollection
+        , className: 'dropdown_task_assigned_id'
+        , selected: _.detect(assignedCollection, function(stat) { return stat.value === self.model.get('assigned_id');})
+       }).render();
     }
 
     if (/\d+$/.test(this.model.url())) {

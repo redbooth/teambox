@@ -39,11 +39,8 @@ input(name= 'utf8', type= 'hidden', value= '✓')
 
   - if (self.is_task)
     .task_actions
-      label(for= 'task_status') <%= t('activerecord.attributes.task.status') %>
-      select#task_status(name= 'status')
-
-      label(for= 'task_assigned_id') <%= t('comments.new.assigned_to') %>
-      select#task_assigned_id(name= 'assigned_id')
+      != self.partial('partials.dropdown', {name: 'task_status', attr: 'status', placeholder: '', label_msg: '<%= t("activerecord.attributes.task.status") %>'})
+      != self.partial('partials.dropdown', {name: 'task_assigned_id', attr: 'assigned_id', placeholder: '', label_msg: '<%= t("comments.new.assigned_to") %>'})
 
       label(for= 'task_due_on') <%= t('activerecord.attributes.task.due_on') %>
       .date_picker

@@ -14,6 +14,17 @@
       }));
     };
 
+    ProjectsHelper.getPeople = function(project_id) {
+      var project = Teambox.collections.projects.get(project_id);
+      return project.get('people').models;
+    };
+
+    ProjectsHelper.getUsers = function(project_id) {
+      return _.map(ProjectsHelper.getPeople(project_id), function(person) { return person.get('user');});
+    };
+
+
+
   // expose
   Teambox.helpers.projects = ProjectsHelper;
 

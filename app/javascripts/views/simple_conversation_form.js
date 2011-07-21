@@ -49,7 +49,7 @@
   };
 
   SimpleConversationForm.render = function () {
-    var projects = Teambox.collections.projects.map(function(p) { return {id: p.id, value: p.get('name')};})
+    var projects = Teambox.collections.projects.map(function(p) { return {value: p.id, label: p.get('name')};})
       , model = this.model
       , watchers_update = this.comment_form.watchers.update
       , private_elements_update = this.comment_form.private_elements.update;
@@ -59,9 +59,9 @@
     this.el.insert({bottom: this.google_docs.render().el});
 
     var dropdown = new Teambox.Views.DropDown({
-        el: this.el.down('.dropdown_projects')
+        el: this.el.down('.dropdown_project')
       , collection: projects
-      , className: 'dropdown_projects'
+      , className: 'dropdown_project'
      });
 
     function updateProjectInModel(project_id) { 

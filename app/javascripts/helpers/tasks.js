@@ -192,6 +192,12 @@
     };
   });
 
+  TasksHelper.assignedIdCollection = function(project_id) {
+    return _.sortBy(Teambox.helpers.projects.getUsers(project_id), function(user) {
+      return user.first_name
+    }).map(function(user) { return {value: user.id, label: user.first_name + ' ' + user.last_name};});
+  }
+
   // expose
   Teambox.helpers.tasks = TasksHelper;
 
