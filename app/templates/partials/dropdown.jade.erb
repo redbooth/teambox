@@ -1,0 +1,9 @@
+- var field_name = "field_" + self.name + "s";
+div(class="dropdown_" + self.name + "s")
+  label.info_label(for=field_name)= self.label_msg
+  div
+    input(class=self.attr, type="hidden", name=self.attr)
+    input(id=field_name, autocomplete="on", :placeholder=self.placeholder, type="text")
+    a.dropdown_arrow(href="#")
+    ol(class="dropdown_autocomplete select_" + self.name)
+
