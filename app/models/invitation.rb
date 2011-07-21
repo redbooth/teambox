@@ -136,9 +136,7 @@ class Invitation < RoleRecord
     self.token ||= ActiveSupport::SecureRandom.hex(20)
   end
 
-  # We are auto-accepting all invites, which could lead to spam problems
-  # In the future we should add a per-user setting to not autoaccept invites
-  # (by default users will autoaccept invites)
+  # Autoaccept the invite if the user has this setting
   def auto_accept
     if invited_user.try(:auto_accept_invites)
       self.accept(invited_user)

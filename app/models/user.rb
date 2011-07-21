@@ -115,6 +115,10 @@ class User < ActiveRecord::Base
   end
 
   # This should be a user setting in Settings
+  #
+  # We are auto-accepting all invites, which could lead to spam problems
+  # In the future we should add a per-user setting to not autoaccept invites
+  # (by default users will autoaccept invites)
   def auto_accept_invites
     true
   end
