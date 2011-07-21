@@ -116,13 +116,18 @@ a.add_button, a.new_task_list_link
       
 .button_blue_75
   @extend .button_blue
-  width: 75px
+  width: 75px !important
   background-position: -50px -112px
-  text-align: center
+  text-align: center !important
   color: $clr_blue_a
   float: right
   display: inline-block
   padding: 0
+  &:hover, &:visited
+    color: $clr_blue_b
+  &:active
+    color: $clr_blue_b
+    background-position-y: -140px
 
 
 input.button_blue
