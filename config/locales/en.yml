@@ -683,7 +683,7 @@ en:
       omit_email_processing_html: Do not process incoming emails
     appearance_fields:
       logo_html: Logo <em>Ideally should be 134x36 pixels</em>
-      description_html: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
+      description_html: HTML to be displayed on the entrance page <a href="http://help.teambox.com/knowledgebase/articles/10249-customizing-your-login-page">Learn how to use this</a>
       delete_custom_logo: Delete custom logo (and revert back to the Teambox one)
     index:
       about:
