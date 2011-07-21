@@ -7,9 +7,10 @@
   = errors_for @organization, :permalink
   = f.text_field :permalink
 .check_box
-  %labels= t('.omit_email_processing_html')
   = errors_for @organization, :omit_email_processing
   = f.check_box :omit_email_processing
+  %label{:for => 'organization_omit_email_processing'}= t('.omit_email_processing_html')
+%br
 -#.text_field
 -#  %label Default language <em>invitations will be sent in this language</em>
 -#  = select_tag :language, "<option>English</option>"

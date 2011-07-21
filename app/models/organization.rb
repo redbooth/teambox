@@ -132,6 +132,10 @@ class Organization < ActiveRecord::Base
     base
   end
 
+  def omit_email_processing
+    !!settings['omit_email_processing']
+  end
+
   def omit_email_processing?
     !!settings['omit_email_processing']
   end
