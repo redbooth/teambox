@@ -114,6 +114,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  # This should be a user setting in Settings
+  def auto_accept_invites
+    true
+  end
+
   def self.find_by_username_or_email(login)
     return unless login
     if login.include? '@' # usernames are not allowed to contain '@'
