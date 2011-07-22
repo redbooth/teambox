@@ -192,10 +192,16 @@
     };
   });
 
+  /**
+   * Returns a collection suitable for assigned_id dropdowns
+   *
+   * @param {Number} project_id
+   * @return {Array} dropdown entries
+   */
   TasksHelper.assignedIdCollection = function(project_id) {
-    return _.sortBy(Teambox.helpers.projects.getUsers(project_id), function(user) {
-      return user.first_name
-    }).map(function(user) { return {value: user.id, label: user.first_name + ' ' + user.last_name};});
+    return _.sortBy(Teambox.helpers.projects.getPeople(project_id), function(person) {
+      return person.get('user').first_name;
+    }).map(function(person) { return {value: person.id, label: person.get('user').first_name + ' ' + person.get('user').last_name};});
   }
 
   // expose
