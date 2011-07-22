@@ -24,7 +24,6 @@
       , thread: this
       , simple: true
     });
-    this.google_docs = new Teambox.Views.GoogleDocs({comment_form: this.comment_form});
   };
 
   SimpleConversationForm.resetModel = function() {
@@ -56,7 +55,6 @@
 
     this.el.update('');
     this.el.insert({bottom: this.comment_form.render().el});
-    this.el.insert({bottom: this.google_docs.render().el});
 
     var dropdown = new Teambox.Views.DropDown({
         el: this.el.down('.dropdown_project')
@@ -87,8 +85,6 @@
    */
   SimpleConversationForm.reset = function () {
     this.resetModel();
-    this.el.select('.google_docs_attachment_form_area .fields input').invoke('remove');
-    this.el.select('.google_docs_attachment_form_area .file_list li').invoke('remove');
   };
 
   // exports

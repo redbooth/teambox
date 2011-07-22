@@ -1,55 +1,56 @@
--var type = self.type.toLowerCase();
+form
+  -var type = self.type.toLowerCase();
 
-input(name= 'utf8', type= 'hidden', value= '✓')
+  input(name= 'utf8', type= 'hidden', value= '✓')
 
-.field.text_area
-  .marco_avatar
-    a.micro_avatar.my_avatar
-  .textarea
-    textarea(cols= '40', name='comments_attributes[0][body]', placeholder= '<%= t('comments.new.task') %>', rows= '20', autocomplete= 'off')
-    .autocomplete(style= 'display: none')
-  span.help
-    a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= '<%= t('projects.show.text_styling')%>')
-.clear
-.new_extra(style= 'display: none')
-  input.button_blue_75.submit(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
-  - if (self.is_task)
-    .field.text_field.hours_field(style= 'display: none')
-      label
-        | <%= t('comments.hours.hours') %>
-        input(class= 'human_hours', name= 'comments_attributes[0][human_hours]', size= '30', type= 'text')
-      a(href= 'http://help.teambox.com/faqs/advanced-features/time-tracking', target= '_blank') <%= t('projects.fields.new.time_tracking_docs')%>.
-
-  .google_docs_attachment_form_area(data-object-name= 'comments_attributes[0]')
-    .fields
-    ul.file_list
-
-  ol.new_comment_actions
-    li
-      a.btn_attach(href= '#uploads', class= 'attach_icon hoverable', title= '<%= t('uploads.tooltip')%>')
-    li
-      a.btn_doc(href= '/google_docs', class='google_doc_icon hoverable', title='<%= t('google_docs.attach')%>')
+  .field.text_area
+    .marco_avatar
+      a.micro_avatar.my_avatar
+    .textarea
+      textarea(cols= '40', name='comments_attributes[0][body]', placeholder= '<%= t('comments.new.task') %>', rows= '20', autocomplete= 'off')
+      .autocomplete(style= 'display: none')
+    span.help
+      a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= '<%= t('projects.show.text_styling')%>')
+  .clear
+  .new_extra(style= 'display: none')
+    input.button_blue_75.submit(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
     - if (self.is_task)
+      .field.text_field.hours_field(style= 'display: none')
+        label
+          | <%= t('comments.hours.hours') %>
+          input(class= 'human_hours', name= 'comments_attributes[0][human_hours]', size= '30', type= 'text')
+        a(href= 'http://help.teambox.com/faqs/advanced-features/time-tracking', target= '_blank') <%= t('projects.fields.new.time_tracking_docs')%>.
+
+    .google_docs_attachment_form_area(data-object-name= 'comments_attributes[0]')
+      .fields
+      ul.file_list
+
+    ol.new_comment_actions
       li
-        a.btn_hours(href= '#hours', class= 'add_hours_icon hoverable', title= '<%= t('comments.hours.tooltip_short') %>')
-    li
-      a.btn_users(href= '#', class= 'add_watchers hoverable', title= '<%= t('shared.watchers.notify_people')%>')
-    li
-      a.btn_lock(href='#privacy', class='private_switch hoverable', title='<%=t("comments.private.control")%>')
+        a.btn_attach(href= '#uploads', class= 'attach_icon hoverable', title= '<%= t('uploads.tooltip')%>')
+      li
+        a.btn_doc(href= '/google_docs', class='google_doc_icon hoverable', title='<%= t('google_docs.attach')%>')
+      - if (self.is_task)
+        li
+          a.btn_hours(href= '#hours', class= 'add_hours_icon hoverable', title= '<%= t('comments.hours.tooltip_short') %>')
+      li
+        a.btn_users(href= '#', class= 'add_watchers hoverable', title= '<%= t('shared.watchers.notify_people')%>')
+      li
+        a.btn_lock(href='#privacy', class='private_switch hoverable', title='<%=t("comments.private.control")%>')
 
-  - if (self.is_task)
-    .task_actions
-      != self.partial('partials.dropdown', {name: 'task_status', attr: 'status', placeholder: '', label_msg: '<%= t("activerecord.attributes.task.status") %>'})
-      != self.partial('partials.dropdown', {name: 'task_assigned_id', attr: 'assigned_id', placeholder: '', label_msg: '<%= t("comments.new.assigned_to") %>'})
+    - if (self.is_task)
+      .task_actions
+        != self.partial('partials.dropdown', {name: 'task_status', attr: 'status', placeholder: '', label_msg: '<%= t("activerecord.attributes.task.status") %>'})
+        != self.partial('partials.dropdown', {name: 'task_assigned_id', attr: 'assigned_id', placeholder: '', label_msg: '<%= t("comments.new.assigned_to") %>'})
 
-      label(for= 'task_due_on') <%= t('activerecord.attributes.task.due_on') %>
-      .date_picker
-        img(alt= 'Calendar', class= 'calendar_date_select_popup_icon', src= '/images/calendar_date_select/calendar.gif')
-        input(id= 'task_due_on', name= 'due_on', type= 'hidden')
-        span(class= 'localized_date')
-          i <%= t('date_picker.no_date_assigned') %>
-  - else
-    a.button_gray.convert_to_task(href="#convert_to_task")
-      span <%= t('comments.conversations.convert_to_task') %>
+        label(for= 'task_due_on') <%= t('activerecord.attributes.task.due_on') %>
+        .date_picker
+          img(alt= 'Calendar', class= 'calendar_date_select_popup_icon', src= '/images/calendar_date_select/calendar.gif')
+          input(id= 'task_due_on', name= 'due_on', type= 'hidden')
+          span(class= 'localized_date')
+            i <%= t('date_picker.no_date_assigned') %>
+    - else
+      a.button_gray.convert_to_task(href="#convert_to_task")
+        span <%= t('comments.conversations.convert_to_task') %>
 
-    span.new(style= 'display: none') ← &nbsp;&nbsp; <%= t('comments.watchers.popup_note_html') %>
+      span.new(style= 'display: none') ← &nbsp;&nbsp; <%= t('comments.watchers.popup_note_html') %>

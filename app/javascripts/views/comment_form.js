@@ -1,7 +1,6 @@
 (function () {
 
-  var CommentForm = { tagName: 'form'
-                    , className: 'new_comment'
+  var CommentForm = { className: 'new_comment_wrap'
                     , template: Teambox.modules.ViewCompiler('partials.comment_form')
                     , simple_template: Teambox.modules.ViewCompiler('partials.comment_form_simple')
                     };
@@ -14,6 +13,8 @@
   , 'click a.convert_to_task'      : 'toggleConvertToTask'
   , 'click .date_picker'           : 'showCalendar'
   , 'click  a.private_switch'      : 'togglePrivateElements'
+  , 'click a.google_doc_icon'      : 'showGoogleDocs'
+  , 'focusin textarea'             : 'focusTextarea'
   };
 
   CommentForm.initialize = function (options) {
@@ -23,13 +24,10 @@
     this.thread = options.thread;
     this.simple = options.simple;
 
-    if (!this.simple) {
-      this.events['focusin textarea'] = 'focusTextarea';
-    }
-
     this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
     this.watchers = new Teambox.Views.Watchers({model: this.model});
     this.private_elements = new Teambox.Views.PrivateElements({comment_form: this, model: this.model});
+    this.google_docs = new Teambox.Views.GoogleDocs({comment_form: this});
   };
 
   /* Updates the comment_form el
@@ -38,27 +36,27 @@
    */
   CommentForm.render = function () {
     var self = this;
+    var template = this.simple ? this.simple_template : this.template;
+    this.el.insert({bottom: template(_.extend({view: this}, this.model.getAttributes()))});
+
+    this.form = this.el.down('form');
+    this.delegateEventsTo(this.events, this.form);
 
     this.updateFormAttributes(this.model.get('project_id'));
-
-    this.el.addClassName("edit_" + this.model.get('type').toLowerCase());
-
-    var template = this.simple ? this.simple_template : this.template;
-    this.el.update(template(_.extend({view: this}, this.model.getAttributes())));
 
     if (this.model.get('type') === 'Task') {
       var statusCollection = Teambox.Models.Task.status.status;
       var assignedCollection = Teambox.helpers.tasks.assignedIdCollection(this.model.get('project_id'));
 
       var dropdown_task_status = new Teambox.Views.DropDown({
-          el: this.el.down('.dropdown_task_status')
+          el: this.form.down('.dropdown_task_status')
         , collection: statusCollection
         , className: 'dropdown_task_status'
         , selected: _.detect(statusCollection, function(stat) { return stat.value === self.model.get('status');})
        }).render();
 
       var dropdown_task_assigned = new Teambox.Views.DropDown({
-          el: this.el.down('.dropdown_task_assigned_id')
+          el: this.form.down('.dropdown_task_assigned_id')
         , collection: assignedCollection
         , className: 'dropdown_task_assigned_id'
         , selected: _.detect(assignedCollection, function(stat) { return stat.value === self.model.get('assigned_id');})
@@ -66,10 +64,10 @@
     }
 
     if (/\d+$/.test(this.model.url())) {
-      this.el.insert({top: new Element('input', {type: 'hidden', name: '_method', value: 'put'})});
+      this.form.insert({top: new Element('input', {type: 'hidden', name: '_method', value: 'put'})});
     }
 
-    var actions = this.el.down('.new_comment_actions');
+    var actions = this.form.down('.new_comment_actions');
     // upload area
     actions.insert({before: this.upload_area.render().el})
 
@@ -79,11 +77,14 @@
     // private elements box
     actions.insert({before: this.private_elements.render().el});
 
+    // google docs
+    this.form.insert({after: this.google_docs.render().el});
+
     return this;
   };
 
   CommentForm.updateFormAttributes = function(project_id) {
-   this.el.writeAttribute({
+   this.form.writeAttribute({
       'accept-charset': 'UTF-8'
     , 'action': this.model.url()
     , 'data-project-id': project_id
@@ -92,7 +93,7 @@
     , 'id': this.simple ? 'new_conversation_form' : ''
     });
 
-
+    this.form.addClassName("new_comment edit_" + this.model.get('type').toLowerCase());
   };
 
  
@@ -104,24 +105,24 @@
    */
   CommentForm.reset = function () {
     // clear comment and reset textarea height
-    this.el.down('textarea').update('').setStyle({height: ''}).value = '';
-    var preview = this.el.down('.preview');
+    this.form.down('textarea').update('').setStyle({height: ''}).value = '';
+    var preview = this.form.down('.preview');
     if (preview) {
       preview.remove();
     }
 
     if (this.model.className() === 'Task') {
-      this.el.down('.human_hours').value = '';
-      this.el.select('.hours_field').invoke('hide');
+      this.form.down('.human_hours').value = '';
+      this.form.select('.hours_field').invoke('hide');
     }
 
     this.private_elements.reset();
 
-    this.el.select('.error').invoke('remove');
-    this.el.select('.x-pushsession-id').invoke('remove');
+    this.form.select('.error').invoke('remove');
+    this.form.select('.x-pushsession-id').invoke('remove');
 
-    //Clear out google docs
-    this.thread.reset();
+    this.el.select('.google_docs_attachment_form_area .fields input').invoke('remove');
+    this.el.select('.google_docs_attachment_form_area .file_list li').invoke('remove');
   };
 
   CommentForm.addComment = function (m, resp, upload) {
@@ -144,11 +145,11 @@
   CommentForm.handleError = function (m, resp) {
     if (typeof resp === 'string') {
       var error = resp;
-      this.el.down('textarea').up('div').insertOrUpdate('p.error', error);
+      this.form.down('textarea').up('div').insertOrUpdate('p.error', error);
     }
     else if (resp.errors && resp.errors.length) {
       resp.errors.each(function (error) {
-        this.el.down('textarea').up('div').insertOrUpdate('p.error', error.value);
+        this.form.down('textarea').up('div').insertOrUpdate('p.error', error.value);
       });
     }
 
@@ -176,7 +177,7 @@
       return this.upload_area.uploadFile();
     }
 
-    data = _.deparam(this.el.serialize(), true);
+    data = _.deparam(this.form.serialize(), true);
 
     Teambox.helpers.forms.showDisabledInput(this.el);
 
@@ -255,7 +256,7 @@
    */
   CommentForm.toggleWatchers = function (evt) {
     evt.stop();
-    this.el.down('.add_watchers_box').toggle();
+    this.form.down('.add_watchers_box').toggle();
   };
 
   /* Displays the calendar
@@ -279,11 +280,15 @@
    * @param {Event} evt
    */
   CommentForm.focusTextarea = function (evt) {
+    if (this.simple) {
+      return;
+    }
+
     var textarea = evt.element()
       , people = Teambox.collections.projects.get(this.model.get('project_id')).getAutocompleterUserNames()
       , container;
 
-    this.el.down('.new_extra').show();
+    this.form.down('.new_extra').show();
 
     if (this.autocompleter) {
       this.autocompleter.options.array = people;
@@ -297,6 +302,13 @@
   CommentForm.togglePrivateElements = function(event) {
     this.private_elements.toggle(event);
   };
+
+  CommentForm.showGoogleDocs = function(event) {
+    this.google_docs.openGoogleDocsList(event);
+  };
+
+
+  CommentForm = _.extend(CommentForm, Teambox.helpers.views);
 
   // exports
   Teambox.Views.CommentForm = Backbone.View.extend(CommentForm);

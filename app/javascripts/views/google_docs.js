@@ -116,7 +116,7 @@
    */
   GoogleDocs.removeGoogleDocFromForm = function (data_id){
     var selector = '[data-gform="' + data_id + '"]';
-    this.comment_form.el.select(selector).each(function(element){
+    this.comment_form.form.select(selector).each(function(element){
       element.remove()
     })
   };
@@ -125,7 +125,7 @@
    */
   GoogleDocs.addGoogleDocToForm = function (fn) {
     // Find the various elements we are going to interact with
-    var form_area = this.comment_form.el.down('.google_docs_attachment_form_area')
+    var form_area = this.comment_form.form.down('.google_docs_attachment_form_area')
     , getFormValue = fn
     , prefix = form_area.readAttribute('data-object-name')
     , previous_field = form_area.select('input').last();
