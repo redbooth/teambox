@@ -281,7 +281,12 @@ class User < ActiveRecord::Base
   def keyboard_shortcuts=(v)
     self.settings = { 'keyboard_shortcuts' => v == "1" }
   end
-  
+
+  def collapse_activities
+    # true if unset, true if true, false if false
+    settings["collapse_activities"] == false ? false : true
+  end
+
   def google_calendar(gcal = nil)
     gcal = gcal || get_calendar_app
     return nil if gcal.nil?
