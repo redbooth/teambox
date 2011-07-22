@@ -7,17 +7,11 @@
 
   .fields
     label(for= 'conversation_name') Name this task:
-    input(class= 'required', error_message= 'must not be blank', id= 'conversation_name', name= 'name', placeholder= 'eg. Upload Logo Proposal', size= '30', type= 'text', value= 'Project Welcome')
+    input(class= 'required', error_message= 'must not be blank', id= 'conversation_name', name= 'name', placeholder= 'eg. Upload Logo Proposal', size= '30', type= 'text')
 
-  .fields
-    label(for= 'conversation_task_list_id') Create task in:
-    select(id= 'conversation_task_list_id', name= 'task_list_id')
-
-  .fields
-    label(for= 'conversation_status') Status:
-    select(id= 'conversation_status', name= 'status')
-
-    select(id= 'conversation_assigned_id', name= 'assigned_id')
+  != self.partial('partials.dropdown', {name: 'conversation_task_list_id', attr: 'task_list_id', placeholder: '', label_msg: '<%= t("conversations.convert_form.task_list") %>'})
+  != self.partial('partials.dropdown', {name: 'conversation_status', attr: 'status', placeholder: '', label_msg: '<%= t("conversations.convert_form.status") %>:'})
+  != self.partial('partials.dropdown', {name: 'conversation_assigned_id', attr: 'assigned_id', placeholder: '', label_msg: '<%= t("comments.new.assigned_to") %>:'})
 
   .fields
     .date_picker
