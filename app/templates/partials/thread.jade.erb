@@ -14,7 +14,7 @@
         a(href= self.task_url(self, self.project))= self.name + ' on'
 
         - if (self.task_list && self.project)
-          a(href= self.task_list_url(self.task_list, self.project))= self.name + ' task list'
+          a(href= self.task_list_url(self.task_list, self.project))= self.task_list.name + ' task list'
       - else
         a(href= self.conversation_url(self, self.project))= self.name ? self.name : '<%= t('conversations.untitled')%>'
 
