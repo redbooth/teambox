@@ -5,20 +5,19 @@ describe Folder do
   it { should belong_to(:user) }
   it { should belong_to(:project) }
 
-  pending "model validations" do
-    it { should validate_presence_of(:name) }
-    it { should validate_length_of(:name, :within => Folder::NAME_LENGTH) }
-    it { should validate_uniqueness_of(:name) }
+  it { should validate_presence_of(:name) }
+  it { should validate_length_of(:name, :within => Folder::NAME_LENGTH) }
+  it { should validate_uniqueness_of(:name) }
+
+  before do
+    @project = Factory(:project)
+    @user = Factory(:user)
+    @project.add_user(@user)
+    @folder = Factory(:folder, :project => @project, :user => @user)
   end
 
   describe "a new root folder" do
-    before do
-      @project = Factory(:project)
-      @user = Factory(:user)
-      @project.add_user(@user)
-      @folder = Factory(:folder, :project => @project, :user => @user)
-    end
-
+    
     it "should have no parent" do
       @folder.has_parent?.should be_false
     end
@@ -38,6 +37,23 @@ describe Folder do
       @folder.uploads_count.should eql(2)
     end
 
+  end
+
+  describe "any folder" do
+    before do
+      @name = @folder.name
+    end
+    
+    it "should not allow create a neighbour folder with the same name" do
+      @neighbour_folder = Folder.create(:name => @name, :project => @project, :user => @user)
+      @neighbour_folder.should_not be_valid
+    end
+
+    it "should allow create a folder with the same name but in different path" do
+      @child_folder = Factory(:folder, :project => @project, :user => @user, :parent_folder_id => @folder.id)
+      @same_name_folder = Factory(:folder, :name => @name, :project => @project, :user => @user, :parent_folder_id => @child_folder.id)
+      @same_name_folder.should be_valid
+    end
   end
 
 end

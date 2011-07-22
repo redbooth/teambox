@@ -27,7 +27,6 @@ document.on('change', '.upload_area input[type=file]', function(e, input) {
   }
 });
 
-/*
 document.on('click', '.uploads .upload .header', function(e, el) {
   e.stop();
   var upload = el.up('.upload');
@@ -42,4 +41,4 @@ document.on('click', '.uploads .upload .header', function(e, el) {
     reference.show();
   }
 });
-*/
+

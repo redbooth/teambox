@@ -8,8 +8,12 @@ class Folder < RoleRecord
   has_many :uploads, :foreign_key => :parent_folder_id, :conditions => {:deleted => false}
 
   NAME_LENGTH = 3..40
-  
-  # TODO: Validate it has a name, a project and a user
+  NAME_REGEXP = /^[a-z0-9\-_\s]+$/i
+
+  validates :name, :project, :user, :presence => true
+  validates_uniqueness_of :name, :scope => [:parent_folder_id, :project_id]
+  validates_format_of :name, :with => NAME_REGEXP
+  validates_length_of :name, :within => NAME_LENGTH
 
   #after_create  :log_create
 
@@ -17,8 +21,6 @@ class Folder < RoleRecord
   #                :page_id,
   #                :description
   
-  # validate uniqueness of name
-
   def user
     @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
   end

@@ -35,5 +35,4 @@ Feature: Folders
     When I follow "Upload a File"
     And I attach the file "features/support/sample_files/dragon.jpg" to "upload_asset"
     And I press "Upload file"
-    And show me the page
     Then I should see "dragon.jpg" within ".file_upload"

@@ -10,9 +10,10 @@ class FoldersController < ApplicationController
     if folder.save
       redirect_to project_folder_path(@current_project, folder)
     else
-      flash[:error] = t('folders.new.invalid_folder')
+      flash[:error] = [t('folders.new.invalid_folder'), folder.errors.full_messages.to_sentence].join('. ')
+      redirect_to project_uploads_path(@current_project)
     end
-    #end
+
   end
 
 end
