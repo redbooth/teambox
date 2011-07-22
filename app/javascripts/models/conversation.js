@@ -13,6 +13,8 @@
     return 'Conversation';
   };
 
+  Conversation.klassName = Conversation.className;
+
   /**
    * TODO: Remove this hack, `isConversation` belongs to a Thread
    * no one should be talkin to a Conversation if its

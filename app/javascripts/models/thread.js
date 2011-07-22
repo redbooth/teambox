@@ -24,10 +24,17 @@
     }
   };
 
-
+ /**
+  * Returns the actual class name
+  *
+  * @return {String}
+  */
+  Thread.klassName = function () {
+    return 'Thread';
+  };
 
  /**
-  * Returns the class name
+  * Returns the target's class name
   *
   * @return {String}
   */
@@ -100,6 +107,39 @@
   Thread.commentsUrl = function () {
     return this.url() + '/comments';
   };
+
+  /**
+   * Return the `convert_to_task` url
+   *
+   * @return {String}
+   */
+  Thread.convertToTaskUrl = function () {
+    return '/api/1/projects/' + this.get('project_id') + '/conversations/' + this.id + '/convert_to_task';
+  };
+
+  /**
+   * Calls to the convert_to_task API
+   *
+   * @param {Object} parameters
+   * @param {Function} onSuccess
+   * @param {Function} onFailure
+   *
+   * @return {self}
+   */
+  Thread.convertToTask = function (parameters, onSuccess, onFailure) {
+    if (this.isConversation()) {
+      var url = this.convertToTaskUrl()
+        , a = new Ajax.Request(url, { method: 'post'
+                                    , parameters: parameters
+                                    , requestHeaders: {Accept: 'application/json'}
+                                    , onSuccess: onSuccess
+                                    , onFailure: onFailure});
+    }
+    return self;
+  };
+
+
+
 
   /**
    * Parses response and removes junk from thread attributes

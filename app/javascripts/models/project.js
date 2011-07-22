@@ -9,6 +9,8 @@
     return 'Project';
   };
 
+  Project.klassName = Project.className;
+
   /* Get the public url
    *
    * @return {String}
