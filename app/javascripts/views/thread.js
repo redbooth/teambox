@@ -11,7 +11,6 @@
     'mouseover .textilized a': 'setTargetBlank'
   , 'click .thread .comments .more_comments a': 'reloadComments'
   , 'click a.delete': 'deleteComment'
-  , 'click a.google_doc_icon'      : 'showGoogleDocs'
   };
 
   Thread.initialize = function (options) {
@@ -30,17 +29,6 @@
         , controller: this.controller
         , thread: this
     });
-    this.google_docs = new Teambox.Views.GoogleDocs({comment_form: this.comment_form});
-  };
-
-  /* Cleans the thread
-   *
-   * @param {Event} evt
-   * @returns false;
-   */
-  Thread.reset = function () {
-    this.el.select('.google_docs_attachment_form_area .fields input').invoke('remove');
-    this.el.select('.google_docs_attachment_form_area .file_list li').invoke('remove');
   };
 
   /* sets the target attribute to '_blank'
@@ -159,20 +147,14 @@
     this.el.update(this.template(this.model.getAttributes()));
 
     // Insert the comment form at bottom of the thread element
-    this.el.down('div.new_comment_wrap').insert({bottom: this.comment_form.render().el});
+
+    this.comment_form.el = this.el.down('div.new_comment_wrap');
+    this.comment_form.render();
     if (this.model.isConversation()) {
       this.el.down('div.new_comment_wrap').insert({bottom: this.convert_to_task.render().el});
     }
-    // google docs
-    // Because comment_form view's el is the actual form tag, 
-    // the google docs view needs to be inserted at the thread level
-    this.el.down('div.new_comment_wrap').insert({bottom: this.google_docs.render().el});
 
     return this;
-  };
-
-  Thread.showGoogleDocs = function(event) {
-    this.google_docs.openGoogleDocsList(event);
   };
 
   // exports

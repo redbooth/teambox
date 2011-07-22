@@ -57,7 +57,7 @@
     evt.stop();
 
     this.el.toggle();
-    this.comment_form.el.toggle();
+    this.comment_form.form.toggle();
   };
 
   /* Calls to convert to task API

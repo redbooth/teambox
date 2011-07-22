@@ -183,7 +183,7 @@
 
     // Update buttons & people list
     // TODO: which form?
-    var watchers = this.comment_form.el.down('.watchers') // see new conversation form
+    var watchers = this.comment_form.form.down('.watchers') // see new conversation form
     , private_input = box.down('.option.private input')
     , public_input = box.down('.option.normal input')
     , i18n = I18n.translations;

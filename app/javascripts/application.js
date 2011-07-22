@@ -41,6 +41,7 @@
 //= require <helpers/projects>
 //= require <helpers/deparam>
 //= require <helpers/forms>
+//= require <helpers/views>
 
 //= require <controllers/base>
 //= require <controllers/bootstrap>

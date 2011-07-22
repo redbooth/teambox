@@ -17,7 +17,7 @@
     options = options || {};
 
     this.comment_form = options.comment_form;
-    this.form = this.comment_form.el;
+    this.form = this.comment_form.form;
     this.model = this.comment_form.model;
   };
 
