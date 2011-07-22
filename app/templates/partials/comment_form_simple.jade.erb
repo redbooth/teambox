@@ -9,10 +9,12 @@ form
       a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= '<%= t('projects.show.text_styling')%>')
   .info_new_conversation
     != self.partial('partials.dropdown', {name: 'project', attr: 'project_id', placeholder: '<%= t('people.column.select_project') %>', label_msg: '<%= t("comments.new.comment_on_project") %>'})
+    .subviews
+      .google_docs_attachment_form_area(data-object-name= 'comments_attributes[0]')
+        .fields
+        ul.file_list
+
     input.button_blue_75.submit(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
-    .google_docs_attachment_form_area(data-object-name= 'comments_attributes[0]')
-      .fields
-      ul.file_list
     .new_comment_actions_div
       span.info_label More actions
       ol.new_comment_actions

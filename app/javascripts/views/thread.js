@@ -18,6 +18,7 @@
 
 
     this.model.attributes.is_task = this.model.get('type') === 'Task';
+    this.model.attributes.is_conversation = this.model.get('type') === 'Conversation';
     this.model.bind('comment:added', Thread.addComment.bind(this));
     this.model.bind('comment:added', Thread.updateThreadAttributes.bind(this));
 

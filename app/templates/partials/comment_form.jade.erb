@@ -13,17 +13,22 @@ form
       a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= '<%= t('projects.show.text_styling')%>')
   .clear
   .new_extra(style= 'display: none')
-    input.button_blue_75.submit(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
     - if (self.is_task)
       .field.text_field.hours_field(style= 'display: none')
         label
           | <%= t('comments.hours.hours') %>
           input(class= 'human_hours', name= 'comments_attributes[0][human_hours]', size= '30', type= 'text')
         a(href= 'http://help.teambox.com/faqs/advanced-features/time-tracking', target= '_blank') <%= t('projects.fields.new.time_tracking_docs')%>.
+    .subviews
+      .google_docs_attachment_form_area(data-object-name= 'comments_attributes[0]')
+        .fields
+        ul.file_list
 
-    .google_docs_attachment_form_area(data-object-name= 'comments_attributes[0]')
-      .fields
-      ul.file_list
+    - if (self.is_conversation)
+      a.button_gray.convert_to_task(href="#convert_to_task")
+        span <%= t('comments.conversations.convert_to_task') %>
+
+    input.button_blue_75.submit(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
 
     ol.new_comment_actions
       li
@@ -49,8 +54,5 @@ form
           input(id= 'task_due_on', name= 'due_on', type= 'hidden')
           span(class= 'localized_date')
             i <%= t('date_picker.no_date_assigned') %>
-    - else
-      a.button_gray.convert_to_task(href="#convert_to_task")
-        span <%= t('comments.conversations.convert_to_task') %>
 
       span.new(style= 'display: none') ← &nbsp;&nbsp; <%= t('comments.watchers.popup_note_html') %>

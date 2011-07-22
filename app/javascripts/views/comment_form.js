@@ -12,7 +12,7 @@
   , 'submit .new_comment'          : 'postComment'
   , 'click a.convert_to_task'      : 'toggleConvertToTask'
   , 'click .date_picker'           : 'showCalendar'
-  , 'click  a.private_switch'      : 'togglePrivateElements'
+  , 'click a.private_switch'       : 'togglePrivateElements'
   , 'click a.google_doc_icon'      : 'showGoogleDocs'
   , 'focusin textarea'             : 'focusTextarea'
   };
@@ -67,15 +67,15 @@
       this.form.insert({top: new Element('input', {type: 'hidden', name: '_method', value: 'put'})});
     }
 
-    var actions = this.form.down('.new_comment_actions');
+    var actions = this.form.down('.subviews');
     // upload area
-    actions.insert({before: this.upload_area.render().el})
+    actions.insert({bottom: this.upload_area.render().el})
 
     // watchers box
-    actions.insert({before: this.watchers.render().el})
+    actions.insert({bottom: this.watchers.render().el})
 
     // private elements box
-    actions.insert({before: this.private_elements.render().el});
+    actions.insert({bottom: this.private_elements.render().el});
 
     // google docs
     this.form.insert({after: this.google_docs.render().el});
