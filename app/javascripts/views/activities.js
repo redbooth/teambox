@@ -24,7 +24,9 @@
     _.bindAll(this, 'render');
 
     this.collection.unbind('add');
+    this.collection.unbind('remove');
     this.collection.bind('add', Activities.appendActivity.bind(this));
+    this.collection.bind('remove', Activities.removeActivity.bind(this));
   };
 
   Activities.showMore = function showMore(event) {
@@ -66,6 +68,22 @@
 
     return this;
   };
+
+  /* Removes the thread from the DOM
+   *
+   * @return self
+   */
+  Activities.removeActivity = function (thread) {
+    var el = this.el.down('.thread[data-class=' + thread.type() + '][data-id=' + thread.id + ']');
+
+    if (el) {
+      el.remove();
+    }
+
+    return this;
+  };
+
+
 
   // exports
   Teambox.Views.Activities = Backbone.View.extend(Activities);

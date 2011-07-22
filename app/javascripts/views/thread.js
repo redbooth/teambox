@@ -23,7 +23,7 @@
     this.model.bind('comment:added', Thread.updateThreadAttributes.bind(this));
 
     var Views = Teambox.Views;
-    this.convert_to_task = new Views.ConvertToTask({model: new Teambox.Models.Conversation(this.model.attributes)});
+    this.convert_to_task = new Views.ConvertToTask({model: this.model});
     this.comment_form = new Views.CommentForm({
           model: this.model
         , convert_to_task: this.convert_to_task

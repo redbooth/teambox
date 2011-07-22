@@ -77,26 +77,29 @@
     this.model.convertToTask(
       this.el.serialize(true)
     , function onSuccess(transport) {
-        var task = new Teambox.Models.Task({ id: transport.responseJSON.id
-                                           , project_id: transport.responseJSON.project_id
-                                           });
+        var data = _.parseFromAPI(transport.responseJSON);
+        switch(self.model.klassName()) {
+          case 'Thread':
+            Teambox.collections.threads.remove(self.model);
+            var task = new Teambox.Models.Thread(data);
+            Teambox.collections.threads.add(task);
 
-        window.location.hash = '#!' + task.publicUrl();
-        // var person = this.el.select('conversation_assigned_id')[0].getValue()
-        //   , task_count = +$('open_my_tasks').innerHTML
-        //   , is_assigned_to_me = my_projects[person];
+            setTimeout(function() {
+              var el = $('activities').down('.thread[data-class=' + task.type() + '][data-id=' + task.id + ']');
+              if (el) { 
+                Effect.ScrollTo(el, { duration: '0.4'});
+              }
+            }, 500);
 
-        // if (is_assigned_to_me) {
-        //   task_count += 1;
-        //   $('open_my_tasks').update(task_count);
-        // }
+            break;
+          case 'Conversation':
+            Teambox.collections.conversations.remove(this.model);
+            var task = new Teambox.Models.Task(data);
+            Teambox.collections.tasks.add(task);
 
-        // if ($$('.conversation_header').length === 1) {
-        //   document.location.href = task.url();
-        // } else {
-        //   e.element().up('.thread').update(e.memo.responseText).highlight({ duration: 2 });
-        //   Task.insertAssignableUsers();
-        // }
+            window.location.hash = '#!' + task.publicUrl();
+            break;
+        }
       }
     , function onError(transport) {
         var message = transport.responseJSON;

@@ -24,6 +24,8 @@
     return 'Task';
   };
 
+  Task.klassName = Task.className;
+
   /**
    * Gets the status_name
    *
