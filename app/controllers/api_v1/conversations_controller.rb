@@ -67,7 +67,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     end
 
     if success
-      handle_api_success(@task, :is_new => true, :include => [:comments])
+      handle_api_success(@task, :is_new => true, :references => true)
     else
       handle_api_error(@task||@conversation)
     end
