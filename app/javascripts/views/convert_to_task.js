@@ -29,22 +29,27 @@
     this.el.hide();
     this.el.update(this.template());
 
-    // select status
-    (new Teambox.Views.SelectStatus({
-      el: this.el.select('#conversation_status')[0]
-    })).render();
+    var statusCollection = Teambox.Models.Task.status.status
+    ,   assignedCollection = Teambox.helpers.tasks.assignedIdCollection(this.model.get('project_id'))
+    ,   taskListCollection = Teambox.helpers.task_lists.taskListsCollection(this.model.get('project_id'));
 
-    // select assigned
-    (new Teambox.Views.SelectAssigned({
-      el: this.el.select('#conversation_assigned_id')[0]
-    , selected: null
-    , project: this.project
-    })).render();
+    var dropdown_task_task_list = new Teambox.Views.DropDown({
+        el: this.el.down('.dropdown_conversation_task_list_id')
+      , collection: taskListCollection
+      , className: 'dropdown_conversation_task_list_id'
+     }).render();
 
-    select = this.el.select('#conversation_task_list_id')[0];
-    this.project.get('task_lists').models.each(function (task_list) {
-      select.options.add(new Option(task_list.get('name'), task_list.id));
-    });
+    var dropdown_task_status = new Teambox.Views.DropDown({
+        el: this.el.down('.dropdown_conversation_status')
+      , collection: statusCollection
+      , className: 'dropdown_conversation_status'
+     }).render();
+
+    var dropdown_task_assigned = new Teambox.Views.DropDown({
+        el: this.el.down('.dropdown_conversation_assigned_id')
+      , collection: assignedCollection
+      , className: 'dropdown_conversation_assigned_id'
+     }).render();
 
     return this;
   };
