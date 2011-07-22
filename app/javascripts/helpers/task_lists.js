@@ -15,7 +15,7 @@
       return {value: task_list.id, label: task_list.get('name')};
     });
 
-    if (!_.include(collection, function(e) {return e.label == 'Inbox';})) {
+    if (!_.any(collection, function(e) {return e.label === 'Inbox';})) {
       collection.unshift({value: '', label: 'Inbox'});
     }
 
