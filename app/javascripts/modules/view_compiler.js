@@ -15,7 +15,7 @@
 
     // <3 curry
     return function (locals) {
-      _.defaults(locals || {}, Teambox.helpers.jade);
+      locals = _.defaults(locals || {}, Teambox.helpers.jade);
       return require('jade').compile(template, jade_opts)(locals);
     };
   };
