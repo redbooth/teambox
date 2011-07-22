@@ -1,11 +1,8 @@
 .person_header
   .name
-    %h2== #{user_link(person.user)} @#{person.user.login}
-    %p
-      %strong= t(person.owner?? '.owner' : ".#{person.role_name}")
-      
-    %p= time_ago_in_words(person.user.updated_at)
-  
+    %h2= user_link(person.user)
+    %p= t(person.owner?? '.owner' : ".#{person.role_name}")
+
   - if request.format != :m and can?(:update, person)
     .actions
       = link_to t('people.link.edit'), '#edit'
