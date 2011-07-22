@@ -90,6 +90,13 @@ document.on('click', 'a.delete_project', function(e, el){
 	})
 })
 
+// Make new project suggestion boxes clickable
+document.on('click', '#new_project_suggestions .box', function(e,el) {
+  e.stop();
+  var link = el.down('a');
+  document.location = link.readAttribute('href');
+});
+
 document.on("dom:loaded", function () {
   Projects.fastCommentForm();
 })

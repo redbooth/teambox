@@ -480,8 +480,18 @@ en:
         description: Overview of all projects in Teambox
       archived: "Show %{count} Archived Projects..."
       close_pane: Close projects view
+    new_project_suggestions:
+      add_people:
+        title: Add collaborators
+        content: This project is private. Invite anyone you would like to have access to it.
+      add_conversations:
+        title: Post a conversation
+        content: "Start a discussion with the group, it's as easy as sending an email."
+      add_tasks:
+        title: Create some tasks
+        content: Start planning your project with deadlines and deliverables by using tasks.
     primer:
-      empty: You don't own or belong to any projects yet.
+      empty: "You don't own or belong to any projects yet."
       create_first: Create your first project!
       define1_html: "Use projects to <b>collaborate</b> with groups of people: A website, organizing a party, client work..."
       define2_html: "You can create <b>as many projects as you wish</b> to share with different users online."

@@ -12,10 +12,13 @@
     = form.fields_for :comments do |fields|
       = render 'comments/fields', :f => fields,
         :placeholder => t('comments.new.project'), :project => @current_project
-  
+
 #activities
   = list_threads(@threads)
   = show_more_button
+  -# 7 days is a bit arbitrary. We should use the activity count for the project
+  - if @current_project.created_at > 7.days.ago
+    = render 'projects/new_project_suggestions'
 
 - content_for :column do
   .more_links

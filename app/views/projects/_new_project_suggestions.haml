@@ -1,0 +1,17 @@
+#new_project_suggestions
+  .box
+    %h2
+      %img{ :src => '/famfamfam/group.png' }
+      = link_to t('.add_people.title'), project_people_path(@current_project)
+    %p= t('.add_people.content') 
+  .box
+    %h2
+      %img{ :src => '/famfamfam/comment.png' }
+      = link_to t('.add_conversations.title'), new_project_conversation_path(@current_project)
+    %p= t('.add_conversations.content') 
+  .box
+    %h2
+      %img{ :src => '/famfamfam/tick.png' }
+      = link_to t('.add_tasks.title'), project_task_lists_path(@current_project)
+    %p= t('.add_tasks.content') 
+  .clear
