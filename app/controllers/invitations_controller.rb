@@ -4,7 +4,7 @@ class InvitationsController < ApplicationController
   before_filter :set_page_title
   before_filter :load_user_invitation, :only => [ :accept, :decline ]
   skip_before_filter :belongs_to_project?, :only => [ :accept, :decline ]
-  
+
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
       message = t('common.not_allowed')
@@ -15,7 +15,7 @@ class InvitationsController < ApplicationController
       f.js { render :text => "alert('#{message}')" }
     end
   end
-  
+
   def index
     if @invite_target
       if @invite_target.has_member?(current_user)
@@ -28,7 +28,7 @@ class InvitationsController < ApplicationController
           return
         end
       end
-      
+
       respond_to do |f|
         f.any(:html, :m) {
           if @invitation
@@ -48,12 +48,12 @@ class InvitationsController < ApplicationController
   def new
     authorize! :admin, @invite_target
     @invitation = @invite_target.invitations.new
-    
+
     respond_to do |f|
       f.any(:html, :m)
     end
   end
-  
+
   def create
     authorize! :admin, @invite_target
     if params[:invitation]
@@ -71,7 +71,7 @@ class InvitationsController < ApplicationController
       redirect_to target_people_path
       return
     end
-    
+
     respond_to do |f|
       if @invitations and @saved_count.to_i > 0
         f.any(:html, :m) { redirect_to target_people_path }
@@ -82,12 +82,12 @@ class InvitationsController < ApplicationController
       end
     end
   end
-  
+
   def resend
     authorize! :admin, @invite_target
     @invitation = Invitation.find_by_id params[:id]
     @invitation.send_email
-    
+
     respond_to do |wants|
       wants.any(:html, :m) {
         flash[:notice] = t('invitations.resend.resent', :recipient => @invitation.email)
@@ -100,7 +100,7 @@ class InvitationsController < ApplicationController
       wants.js
     end
   end
-  
+
   def destroy
     @invitation = Invitation.find_by_id params[:id]
     authorize! :destroy, @invitation
@@ -113,50 +113,52 @@ class InvitationsController < ApplicationController
       redirect_back_or_to root_path
     end
   end
-  
+
   def accept
     @invitation.accept(current_user)
     @invitation.destroy
     redirect_to project_path(@invitation.project)
   end
-  
+
   def decline
     @invitation.destroy
     redirect_to(user_invitations_path(current_user))
   end
-  
+
   def invite_format
     render :layout => false
   end
-  
+
   private
     def load_target_project
       load_project
-      
+
       @invite_target = @current_project
     end
-    
+
     def load_user_invitation
       conds = { :project_id => @current_project.id,
                 :invited_user_id => current_user.id }
-      
+
       @invitation = Invitation.find(:first,:conditions => conds)
       unless @invitation
         flash[:error] = t('invitations.errors.invalid_code')
         redirect_to user_invitations_path(current_user)
       end
     end
-    
+
     def target
       @current_project
     end
-    
+
     def target_people_path
       project_people_path(@current_project)
     end
-    
+
     def make_invitation(user_or_email, params, locale)
-      invitation = @invite_target.invitations.new(params.merge({:user_or_email => user_or_email.strip}))
+      invitation = @invite_target.invitations.new(
+        params.merge({
+          :user_or_email => user_or_email.strip }))
       invitation.locale = locale
       invitation.user = current_user
       @saved_count ||= 0

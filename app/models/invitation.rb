@@ -30,7 +30,9 @@ class Invitation < RoleRecord
 
   def user_or_email=(value)
     self.invited_user = User.find_by_username_or_email(value)
-    self.email = value unless self.invited_user
+    unless self.invited_user
+      self.email = value # used when there is no user yet
+    end
     @user_or_email = value
   end
   
@@ -126,6 +128,25 @@ class Invitation < RoleRecord
       # One final check: do we have an invite for this email?
       if Invitation.exists?(:project_id => project_id, :email => email)
         @errors.add :user_or_email, 'already has a pending invitation'
+      else
+        # TODO: Super ugly way of making sure a user is created
+        # so every invitation creates a user
+        password = ActiveSupport::SecureRandom.base64(15)
+        self.invited_user = User.create!(
+          :login => User.find_available_login(email.split("@").first),
+          :password => password,
+          :password_confirmation => password,
+          :first_name => 'first',
+          :last_name => 'last',
+          :betatester => false,
+          :notify_conversations => true,
+          :notify_tasks => true,
+          :notify_pages => true,
+          # TODO: add "incomplete profile"
+          # TODO: add "unconfirmed email"
+          :email => email)
+          # TODO: Insert a reminder that the user is unconfirmed
+          # in case we're sending an invite to the wrong address
       end
     else
       @errors.add :user_or_email, 'is not a valid username or email'
