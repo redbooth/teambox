@@ -1,0 +1,42 @@
+.invite_users
+  padding: 10px
+  h2
+    font-size: 16px
+    margin: 5px 0 15px
+  form
+    label
+      font-weight: bold
+    input[type=text]
+      font-size: 14px
+      padding: 3px
+      border: 1px solid #aaa
+  .results
+    margin: 20px 0
+    p
+      margin: 20px 0
+    .user
+      margin: 10px 0
+      a
+        color: black
+      .button
+        float: right
+  form.send_invite
+    border: none
+    padding: 0
+    .text_field
+      margin: 10px
+      &.name
+        font-size: 16px
+      &.one_line
+        label
+          display: inline-block
+          width: 130px
+          text-align: right
+        input
+          display: inline-block
+      &.half_row
+        display: inline-block
+      select, &.half_row
+        max-width: 280px
+    input[type=submit]
+      float: right

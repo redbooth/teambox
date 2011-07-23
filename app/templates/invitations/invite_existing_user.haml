@@ -1,0 +1,22 @@
+%form.send_invite{ :'accept-charset' => "UTF-8", :action => "/invitations", :method => "post" }
+  <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
+  .text_field
+    %a.micro_avatar{ :style => "background: url({{micro_avatar_path}}) no-repeat" }
+    {{first_name}} {{last_name}}
+  .text_field.half_row
+    = label_tag :role, t('invitations.search.role')
+    -#= select_tag :role, options_from_person_roles
+    <select id="invitation_role" name="invitation[role]"><option value="0">Observer. Read-only access to the project.</option>
+    <option value="1">Commenter. Can comment, but not create new elements.</option>
+    <option value="2">Participant. Can do everything, but not invite users.</option>
+    <option value="3" selected="selected">Admin. Can invite users to the project, and delete comments.</option></select>
+  .text_field.half_row
+    %div{ :style => 'display: none' }
+    = label_tag :membership, t('invitations.new.also_invite_to_organization', :organization => "ORGANIZATION NAME")
+    <select id="invitation_membership" name="invitation[membership]"><option value="10" selected="selected">Don't invite. User won't be able to create projects in this organization.</option>
+    <option value="20">As a participant. Will be able to create his own projects.</option>
+    <option value="30">As an administrator. Will be able to add new users and manage the organization.</option></select>
+    </div>
+    -#= select_tag :membership, options_from_organization_roles
+  = submit_tag "Invite user to this project"
+  .clear

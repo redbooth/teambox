@@ -19,6 +19,9 @@ class Invitation < RoleRecord
 
   scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
 
+  # for new style invites asking for name...
+  attr_accessor :first_name, :last_name
+
   # Reserved so invitations can be sent for other targets, in addition to Project
   def target
     project

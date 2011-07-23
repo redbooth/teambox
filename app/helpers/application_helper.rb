@@ -208,10 +208,6 @@ module ApplicationHelper
       [t(code, :scope => :locales, :locale => code), code.to_s]
     }.sort_by(&:first)
   end
-  
-  def current_locale_name
-    t(I18n.locale, :scope => :locales, :locale => I18n.locale)
-  end
 
   # collecting stats about Teambox installations
   def tracking_code

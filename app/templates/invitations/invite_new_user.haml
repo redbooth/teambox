@@ -1,0 +1,33 @@
+%form.send_invite{ :'accept-charset' => "UTF-8", :action => "/invitations", :method => "post" }
+  <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
+  .text_field.half_row
+    = label_tag :email, "Email:"
+    = text_field_tag :email, "{{email}}", :size => 30
+  .text_field.half_row
+    .select_language
+      - current_locale_name = t(I18n.locale, :scope => :locales, :locale => I18n.locale)
+      %p= t("invitations.select_language.invitations_will_be_sent_in_language_html", :language => link_to(current_locale_name, "#", :id => :invitation_select_language))
+      #all_locales{:style => "display: none"}
+        -#= select_tag :locale, options_for_select(locale_select_values, I18n.locale)
+  .text_field.half_row
+    = label_tag :first_name, "First name:"
+    = text_field_tag :first_name, nil, :size => 30
+  .text_field.half_row
+    = label_tag :last_name, "Last name:"
+    = text_field_tag :last_name, nil, :size => 30
+  .text_field.half_row
+    = label_tag :role, t('invitations.search.role')
+    -#= select_tag :role, options_from_person_roles
+    <select id="invitation_role" name="invitation[role]"><option value="0">Observer. Read-only access to the project.</option>
+    <option value="1">Commenter. Can comment, but not create new elements.</option>
+    <option value="2">Participant. Can do everything, but not invite users.</option>
+    <option value="3" selected="selected">Admin. Can invite users to the project, and delete comments.</option></select>
+  .text_field.half_row
+    = label_tag :membership, t('invitations.new.also_invite_to_organization', :organization => "ORGANIZATION NAME")
+    -#= select_tag :membership, options_from_organization_roles
+    <select id="invitation_membership" name="invitation[membership]"><option value="10" selected="selected">Don't invite. User won't be able to create projects in this organization.</option>
+    <option value="20">As a participant. Will be able to create his own projects.</option>
+    <option value="30">As an administrator. Will be able to add new users and manage the organization.</option></select>
+  = submit_tag "Invite user to this project"
+  .clear
+

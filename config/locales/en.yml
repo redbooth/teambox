@@ -776,7 +776,7 @@ en:
       admin: As an administrator. Will be able to add new users and manage the organization.
   invitations:
     select_language:
-      invitations_will_be_sent_in_language_html: The invitations will be sent in %{language}
+      invitations_will_be_sent_in_language_html: This invitation will be sent in %{language}
     fields:
       user_or_email: "Enter your teammate's username or email:"
     invitation:

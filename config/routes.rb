@@ -11,7 +11,7 @@ Teambox::Application.routes.draw do
 
   match '/public' => 'public/projects#index', :as => :public_projects
   match '/goodbye' => 'static_pages#goodbye', :as => :goodbye 
-  match '/user_finder' => 'user_finder#find'
+  match '/user_finder' => 'user_finder#find', :as => :user_finder
 
   namespace :public do
     match ':id' => 'projects#show', :as => :project

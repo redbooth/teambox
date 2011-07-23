@@ -15,8 +15,12 @@ module Teambox
       include Rails.application.routes.url_helpers
       include ActionView::Helpers::TagHelper
       include ActionView::Helpers::AssetTagHelper
+      include ActionView::Helpers::FormTagHelper
+      include ActionView::Helpers::FormHelper
       include ActionView::Helpers::TranslationHelper
       include ActionView::Helpers::RawOutputHelper
+      include ApplicationHelper
+      include PeopleHelper
 
       def config
         @config ||= Config.new

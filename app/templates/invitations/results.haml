@@ -1,0 +1,11 @@
+{{#users}}
+.user{ :'data-user-id' => '{{id}}' }
+  .avatar
+    %a.thumb_avatar{ :style => "background: url({{thumb_avatar_path}}) no-repeat" }
+  .main
+    %a{ :href => '#' } {{first_name}} {{last_name}}
+    %a.button{ :href => '#' } Select
+  .clear
+{{/users}}
+
+%p Select a user. Next, you will be asked to define the permissions for this user. 

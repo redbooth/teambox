@@ -10,20 +10,18 @@ class UserFinderController < ActionController::Base
   # THOUGHT: Unify email and text search?
   # TODO: Spam prevention
   def find
-    terms = params[:q] || ''
-
-    if terms.length < 3
-      # TODO: Spec this error
-      render :text => "Need at least 3 characters to search", :status => :error
-      return
-    end
+    terms = (params[:q] || '').strip
 
     emails = terms.extract_emails
-    users = if emails[0]
-      User.find_by_email(emails[0])
+    users = if emails.any?
+      User.where(:email => emails[0,5])
     else
-      # TODO: Replace for Sphinx
-      User.where(["first_name LIKE ?", terms]).limit(3)
+      if terms.length < 3
+        []
+      else
+        # TODO: Replace for Sphinx and look for first and last name too
+        User.where(["login LIKE ?", terms]).limit(3).order("visited_at DESC")
+      end
     end
     render :json => shortened_user_profiles(users)
   end
@@ -37,7 +35,8 @@ class UserFinderController < ActionController::Base
           :username => user.login,
           :first_name => user.first_name,
           :last_name => user.last_name,
-          :avatar => 'avatar_path',
+          :thumb_avatar_path => user.avatar_or_gravatar_path(:thumb),
+          :micro_avatar_path => user.avatar_or_gravatar_path(:micro),
           :projects => user.people.collect do |person|
             { :role => person.role,
               :project_id => person.project_id }
