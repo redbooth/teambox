@@ -104,29 +104,34 @@ describe Project do
       @user1 = Factory.create(:user)
       @user2 = Factory.create(:user)
       @user3 = Factory.create(:user)
-      
-      @project = Factory.create(:project,
-        :invite_users => [@user1.id, @user2.id],
-        :invite_emails => "#{@user2.email} #{@user3.email} richard.roe@law.uni",
-        :invite_role => Person::ROLES[:admin]
-      )
     end
     
-    it "creates 4 invitations" do
+    it "creates 4 invitations if no user autoaccepts" do
+      [@user1, @user2, @user3].each { |u| u.update_attribute(:auto_accept_invites, false) }
+        @project = project_with_invites
       @project.should have(4).invitations
     end
     
-    it "doesn't invite same user twice" do
+    it "creates 1 invitation if every user autoaccepts" do
+      @project = project_with_invites
+      @project.should have(1).invitations
+    end
+    
+    it "doesn't invite same user twice if no user autoaccepts" do
+      [@user1, @user2, @user3].each { |u| u.update_attribute(:auto_accept_invites, false) }
+      @project = project_with_invites
       to_user2 = @project.invitations.select { |i| i.email == @user2.email }
       to_user2.size.should == 1
     end
     
     it "invites non-existing user" do
+      @project = project_with_invites
       to_richard = @project.invitations.find_by_email 'richard.roe@law.uni'
       to_richard.invited_user.should be_nil
     end
     
     it "invites using the correct role" do
+      @project = project_with_invites
       @project.invitations.each{|i| i.role.should == Person::ROLES[:admin]}
     end
   end

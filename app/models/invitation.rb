@@ -139,9 +139,9 @@ class Invitation < RoleRecord
   # Autoaccept the invite if the user has this setting
   def auto_accept
     if invited_user.try(:auto_accept_invites)
+      @autoaccepted = true
       self.accept(invited_user)
       self.destroy
-      @autoaccepted = true
     end
   end
 
