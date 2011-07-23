@@ -254,6 +254,7 @@ en:
       agreement_html: "By signing up, you're accepting our %{terms} and %{privacy} conditions."
       terms: terms of use
       privacy: privacy
+      auto_accept_invites: "Accept invites to projects automatically (recommended)"
       subscription:
         new_org_name: Organization name
         card_number: Card number

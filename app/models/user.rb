@@ -120,7 +120,7 @@ class User < ActiveRecord::Base
   # In the future we should add a per-user setting to not autoaccept invites
   # (by default users will autoaccept invites)
   def auto_accept_invites
-    true
+    self[:auto_accept_invites]
   end
 
   def self.find_by_username_or_email(login)

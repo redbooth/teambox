@@ -39,6 +39,10 @@
   = f.label :time_zone, t('users.form.time_zone')
   = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"
 
+.autoaccept.check_box
+  = f.check_box :auto_accept_invites
+  = f.label :auto_accept_invites, t('users.form.auto_accept_invites'), :style => 'float: none'
+
 .betatester.check_box
   = f.check_box :betatester
   = f.label :betatester, t('users.form.betatester'), :style => 'float: none'
