@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110623083525) do
+ActiveRecord::Schema.define(:version => 20110722194606) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -554,6 +554,7 @@ ActiveRecord::Schema.define(:version => 20110623083525) do
     t.boolean  "default_watch_new_page",                         :default => false
     t.boolean  "notify_pages",                                   :default => false
     t.string   "google_calendar_url_token"
+    t.boolean  "auto_accept_invites",                            :default => true
   end
 
   add_index "users", ["deleted"], :name => "index_users_on_deleted"
