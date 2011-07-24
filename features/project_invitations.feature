@@ -70,7 +70,6 @@ Feature: Invite a user to a project
     Then I should see the unauthorized private project message
     Given the owner of the project "Teambox Roulette" sent an invitation to "mislav"
     When I go to the page of the "Teambox Roulette" project
-    And I press "Accept"
     Then I should see "Teambox Roulette"
 
   Scenario: Mislav invites a user who belongs to the project's organization
