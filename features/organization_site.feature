@@ -24,11 +24,11 @@ Feature: Public sites for organizations. Allow to view an entrance page and log 
     When I fill in the following:
       | login     | pablo  |
       | password  | wrong |
-    And I press "Login"
+    And I press "Log in"
     Then I should see an error message: "Couldn't log you in as pablo"
     When I fill in the following:
       | login     | mislav       |
       | password  | dragons      |
-    And I press "Login"
+    And I press "Log in"
     Then I should see "ACME" within "#column"
 

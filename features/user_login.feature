@@ -6,7 +6,7 @@ Feature: Logging In
     And I go to the login page
     And I fill in "Email or Username" with "mislav"
     And I fill in "Password" with "dragons"
-    And I press "Login"
+    And I press "Log in"
 
   Scenario: Mislav successfully logs in with a confirmed email
     When I have confirmed my email
@@ -23,5 +23,5 @@ Feature: Logging In
     Then I should see "Email or Username"
     And I fill in "Email or Username" with "dragons"
     And I fill in "Password" with "mislav"
-    And I press "Login"
+    And I press "Log in"
     Then I should see an error message: "Couldn't log you in as dragons"

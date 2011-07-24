@@ -72,11 +72,11 @@ Feature: When I use Teambox community version, there is only one organization
     And I go to the login page
     When I fill in "login" with "mislav"
     And I fill in "password" with "wrong"
-    And I press "Login"
+    And I press "Log in"
     Then I should see "Couldn't log you in as mislav"
     When I fill in "login" with "mislav"
     And I fill in "password" with "dragons"
-    And I press "Login"
+    And I press "Log in"
     Then I should see "Organization"
 
   Scenario: I can't create a second organization

@@ -47,7 +47,7 @@ Feature: Authentication with third party service
     And I go to the login page
     And I fill in "Email or Username" with "charles"
     And I fill in "Password" with "dragons"
-    And I press "Login"
+    And I press "Log in"
     Then I should see "Your account has been linked."
 
     Examples:

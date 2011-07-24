@@ -51,7 +51,7 @@ Feature: Daily reminder for tasks email
     When I follow "Give water to the flowers" in the email
     And I fill in "Email or Username" with "mislav"
     And I fill in "Password" with "dragons"
-    And I press "Login"
+    And I press "Log in"
     Then I should see "Aquaculture"
     Then I should see "Give water to the flowers"
 
@@ -64,7 +64,7 @@ Feature: Daily reminder for tasks email
     And I follow "Aquaculture" in the email
     And I fill in "Email or Username" with "mislav"
     And I fill in "Password" with "dragons"
-    And I press "Login"
+    And I press "Log in"
     Then I should see "Aquaculture"
 
   Scenario Outline: User with a task due doesn't receive reminders on weekends
