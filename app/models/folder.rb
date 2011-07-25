@@ -4,26 +4,22 @@ class Folder < RoleRecord
   belongs_to :user
   belongs_to :project
   belongs_to :parent_folder, :class_name => 'Folder'
-  has_many :folders, :foreign_key => :parent_folder_id, :conditions => {:deleted => false}
-  has_many :uploads, :foreign_key => :parent_folder_id, :conditions => {:deleted => false}
+  has_many :folders, :foreign_key => :parent_folder_id
+  has_many :uploads, :foreign_key => :parent_folder_id
 
   NAME_LENGTH = 3..40
   NAME_REGEXP = /^[a-z0-9\-_\s]+$/i
 
   validates :name, :project, :user, :presence => true
-  validates_uniqueness_of :name, :scope => [:parent_folder_id, :project_id]
+  validate :validate_unique_name, :on => :create
   validates_format_of :name, :with => NAME_REGEXP
   validates_length_of :name, :within => NAME_LENGTH
 
   #after_create  :log_create
 
-  #attr_accessible :asset,
-  #                :page_id,
-  #                :description
-  
-  def user
-    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
-  end
+#  def user
+#    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
+#  end
 
   def to_s
     name
@@ -49,9 +45,14 @@ class Folder < RoleRecord
 
   protected
 
+  def validate_unique_name
+    if Folder.find_by_project_id_and_name_and_parent_folder_id_and_deleted(project_id, name, parent_folder_id, false)
+      errors.add(:name, :taken)
+    end
+  end
+
   def log_create
-    save_slot if page
-    project.log_activity(self, 'create', user_id) unless comment
+    project.log_activity(self, 'create', user_id)
   end
 
 end

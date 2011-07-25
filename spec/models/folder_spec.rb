@@ -2,18 +2,17 @@ require 'spec_helper'
 
 describe Folder do
 
-  it { should belong_to(:user) }
-  it { should belong_to(:project) }
-
-  it { should validate_presence_of(:name) }
-  it { should validate_length_of(:name, :within => Folder::NAME_LENGTH) }
-  it { should validate_uniqueness_of(:name) }
-
   before do
     @project = Factory(:project)
     @user = Factory(:user)
     @project.add_user(@user)
     @folder = Factory(:folder, :project => @project, :user => @user)
+  end
+
+  describe 'validate' do
+    it { should belong_to(:user) }
+    it { should belong_to(:project) }
+    it { should validate_length_of(:name, :within => Folder::NAME_LENGTH) }
   end
 
   describe "a new root folder" do

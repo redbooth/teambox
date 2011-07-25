@@ -52,7 +52,7 @@ class UploadsController < ApplicationController
                        includes(:user).
                        order('updated_at DESC')
     @folders = @current_project.folders.
-                       where(:parent_folder_id => @current_folder).
+                       where(:parent_folder_id => @current_folder, :deleted => false).
                        order('name DESC')
     @upload ||= @current_project.uploads.new
   end

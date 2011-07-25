@@ -16,4 +16,20 @@ class FoldersController < ApplicationController
 
   end
 
+  def destroy
+    #authorize! :destroy, @folder
+
+    @folder = @current_project.folders.find_by_id(params[:id])
+    @parent_folder = @folder.parent_folder
+    @folder.destroy
+
+    respond_to do |f|
+      f.js   { render :layout => false }
+      f.any(:html, :m) do
+        flash[:success] = t('deleted.folder', :name => @folder.name)
+        redirect_to @parent_folder.nil? ? project_uploads_path(@current_project) : project_folder_path(@current_project, @parent_folder)
+      end
+    end
+  end
+
 end

@@ -27,8 +27,7 @@ document.on('change', '.upload_area input[type=file]', function(e, input) {
   }
 });
 
-document.on('click', '.uploads .upload .header', function(e, el) {
-  e.stop();
+var toggle_task_row = function(el) {
   var upload = el.up('.upload');
   var reference = upload.down('.reference');
   if (reference.visible()) {
@@ -40,5 +39,16 @@ document.on('click', '.uploads .upload .header', function(e, el) {
     upload.addClassName('selected');
     reference.show();
   }
+};
+
+// If clicked on the name, perform the default action
+document.on('click', '.uploads .upload .header .file a', function(e, el) {
+  toggle_task_row(el);
 });
+
+// When clicking on the row, display the dropdown menu
+document.on('click', '.uploads .upload .header', function(e, el) {
+  toggle_task_row(el);
+});
+
 
