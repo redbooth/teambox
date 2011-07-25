@@ -4,6 +4,7 @@ class UploadsController < ApplicationController
   before_filter :set_page_title
   before_filter :load_folder, :only => :index
   before_filter :check_private_download_access, :only => :download
+  before_filter :check_public_download_access, :only => :tokenized_download
   
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
@@ -11,6 +12,11 @@ class UploadsController < ApplicationController
       f.js             { render :text => "alert('#{error_message}')" }
       f.any(:html, :m) { render :text => "alert('#{error_message}')" }
     end
+  end
+
+  def tokenized_download
+    @extra_sendfile_options = {:disposition => 'inline'}
+    download
   end
 
   def download
@@ -146,6 +152,11 @@ class UploadsController < ApplicationController
     def check_private_download_access
       head(:not_found) and return if (@upload = Upload.find_by_id(params[:id])).nil?
       head(:forbidden) and return unless @upload.downloadable?(current_user)
+    end
+
+    def check_public_download_access
+      head(:not_found) and return if (@upload = Upload.find_by_token(params[:token])).nil?
+      head(:forbidden) and return unless @upload.public_downloadable?
     end
 
     def find_upload
