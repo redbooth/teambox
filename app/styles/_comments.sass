@@ -63,13 +63,17 @@ span.comments_count
     padding-left: 0
     //47px
     width: 100%
+    .subviews
+      display: block
+      float: left
+      width: 100%
     .convert_to_task
       margin-left: 47px
     .button_blue
       float: right
       margin:
         right: 18px
-        top: 12px
+        top: 0
     .new_comment_actions
       margin: 0
         bottom: 0
@@ -321,7 +325,7 @@ form .upload_area
   max-height: 480px
   max-width: 385px
 
-#new_conversation_form, .new_comment, .convert_to_task
+#new_conversation_form, .new_comment, form.convert_to_task
   display: block
   float: left
   clear: both
