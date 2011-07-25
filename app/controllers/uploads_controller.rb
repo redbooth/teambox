@@ -55,6 +55,12 @@ class UploadsController < ApplicationController
                        where(:parent_folder_id => @current_folder, :deleted => false).
                        order('name DESC')
     @upload ||= @current_project.uploads.new
+
+    respond_to do |format|
+      format.js   { render :layout => false }
+      format.any(:html, :m)  {}
+    end
+
   end
 
   def show

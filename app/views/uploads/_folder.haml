@@ -3,7 +3,7 @@
     .icon
       = image_tag '/famfamfam/folder.png'
     .file
-      = link_to folder.name, project_folder_path(@current_project, folder)
+      = link_to folder.name, project_folder_path(@current_project, folder), :remote => true, :class => "ajax"
     .size
       = pluralize (folder.uploads_count + folder.folders_count), 'file'
     .author

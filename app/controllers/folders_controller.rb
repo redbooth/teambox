@@ -6,7 +6,6 @@ class FoldersController < ApplicationController
     folder = @current_project.folders.new(params[:folder])
     folder.user_id = @current_user.id
 
-    #respond_to do |f|
     if folder.save
       redirect_to project_folder_path(@current_project, folder)
     else

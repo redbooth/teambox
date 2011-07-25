@@ -1,0 +1,1 @@
+page.replace "uploads_list", render(:partial => "uploads/list")

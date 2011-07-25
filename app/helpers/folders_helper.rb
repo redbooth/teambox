@@ -7,7 +7,7 @@ module FoldersHelper
       bc << (folder == @current_folder ? folder.name : link_to(folder.name, project_folder_path(@current_project, folder)))
       folder = folder.parent_folder
     end
-    bc << link_to(@current_project, project_uploads_path(@current_project))
+    bc << link_to(@current_project, project_uploads_path(@current_project), :remote => true)
     bc.reverse.join(" » ").html_safe
   end
 

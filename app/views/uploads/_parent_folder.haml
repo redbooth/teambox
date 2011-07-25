@@ -3,12 +3,6 @@
     .icon
       = image_tag '/famfamfam/arrow_turn_left.png'
     .file
-      = link_to t('.parent_folder'), @parent_folder ? project_folder_path(@current_project, @parent_folder) : project_uploads_path(@current_project)
+      = link_to t('.parent_folder'), @parent_folder ? project_folder_path(@current_project, @parent_folder) : project_uploads_path(@current_project), :remote => true
     .size
-      =# number_to_human_size upload.size
     .author
-      =# upload.user
-    .more
-      [+]
-
-  .reference{ :style => 'display: none' }

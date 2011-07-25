@@ -30,14 +30,16 @@ document.on('change', '.upload_area input[type=file]', function(e, input) {
 var toggle_task_row = function(el) {
   var upload = el.up('.upload');
   var reference = upload.down('.reference');
-  if (reference.visible()) {
-    upload.removeClassName('selected');
-    reference.hide();
-  } else {
-    $$('.uploads .upload').invoke('removeClassName', 'selected');
-    $$('.uploads .reference').invoke('hide');
-    upload.addClassName('selected');
-    reference.show();
+  if(reference) {
+    if (reference.visible()) {
+      upload.removeClassName('selected');
+      reference.hide();
+    } else {
+      $$('.uploads .upload').invoke('removeClassName', 'selected');
+      $$('.uploads .reference').invoke('hide');
+      upload.addClassName('selected');
+      reference.show();
+    }
   }
 };
 
@@ -50,5 +52,3 @@ document.on('click', '.uploads .upload .header .file a', function(e, el) {
 document.on('click', '.uploads .upload .header', function(e, el) {
   toggle_task_row(el);
 });
-
-
