@@ -1,6 +1,7 @@
 class Upload < RoleRecord
   include Immortal
   include PrivateElementMethods
+  include Tokenized
 
   ICONS = %w(aac ai aiff avi bmp c cpp css dat dmg doc dotx dwg dxf eps exe flv gif h hpp html ics iso java jpg key mid mp3 mp4 mpg odf ods odt otp ots ott pdf php png ppt psd py qt rar rb rtf sql tga tgz tiff txt wav xls xlsx xml yml zip)
     
@@ -104,6 +105,11 @@ class Upload < RoleRecord
   def downloadable?(user)
     project.user_ids.include?(user.id) &&
     user_can_access_private_target?(user)
+  end
+
+  #TODO: do we need a flag like this ?
+  def public_downloadable?
+    true
   end
 
   def file_type

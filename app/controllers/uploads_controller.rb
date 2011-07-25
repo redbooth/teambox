@@ -3,6 +3,8 @@ class UploadsController < ApplicationController
   skip_before_filter :load_project, :only => [:download]
   before_filter :set_page_title
   before_filter :load_folder, :only => :index
+  before_filter :check_private_download_access, :only => :download
+  before_filter :check_public_download_access, :only => :tokenized_download
   
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
@@ -12,28 +14,31 @@ class UploadsController < ApplicationController
     end
   end
 
-  def download
-    head(:not_found) and return if (upload = Upload.find_by_id(params[:id])).nil?
-    head(:forbidden) and return unless upload.downloadable?(current_user)
+  def tokenized_download
+    @extra_sendfile_options = {:disposition => 'inline'}
+    download
+  end
 
+  def download
+    
     if !!Teambox.config.amazon_s3
-      unless upload.asset.exists?(params[:style])
+      unless @upload.asset.exists?(params[:style])
         head(:bad_request)
         raise "Unable to download file"
       end
-      redirect_to upload.s3_url(params[:style])
+      redirect_to @upload.s3_url(params[:style])
     else
-      path = upload.asset.path(params[:style])
+      path = @upload.asset.path(params[:style])
       unless File.exist?(path)
         head(:bad_request)
         raise "Unable to download file"
       end  
 
-      mime_type = File.mime_type?(upload.asset_file_name)
+      mime_type = File.mime_type?(@upload.asset_file_name)
 
       mime_type = 'application/octet-stream' if mime_type == 'unknown/unknown'
 
-      send_file_options = { :type => mime_type }
+      send_file_options = {:type => mime_type}.merge(@extra_sendfile_options || {})
 
       response.headers['Cache-Control'] = 'private, max-age=31557600'
 
@@ -122,7 +127,17 @@ class UploadsController < ApplicationController
   end
   
   private
-    
+
+    def check_private_download_access
+      head(:not_found) and return if (@upload = Upload.find_by_id(params[:id])).nil?
+      head(:forbidden) and return unless @upload.downloadable?(current_user)
+    end
+
+    def check_public_download_access
+      head(:not_found) and return if (@upload = Upload.find_by_token(params[:token])).nil?
+      head(:forbidden) and return unless @upload.public_downloadable?
+    end
+
     def find_upload
       if params[:id].to_s.match /^\d+$/
         @upload = @current_project.uploads.find(params[:id])

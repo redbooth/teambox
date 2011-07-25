@@ -405,6 +405,7 @@ Teambox::Application.routes.draw do
     match '/my_projects' => 'projects#list', :as => :all_projects
 
     match 'downloads/:id(/:style)/:filename' => 'uploads#download', :constraints => {:filename => /.*/}, :via => :get
+    match 'downloads/:token' => 'uploads#tokenized_download', :via => :get, :as => :download_file
 
   end
 

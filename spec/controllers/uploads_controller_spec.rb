@@ -191,4 +191,5 @@ describe UploadsController do
       lambda { delete :destroy, :project_id => @project.permalink, :id => @upload.id }.should change(Activity, :count)
     end
   end
+
 end
