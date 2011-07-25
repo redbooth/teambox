@@ -8,7 +8,7 @@ class Folder < RoleRecord
   has_many :uploads, :foreign_key => :parent_folder_id
 
   NAME_LENGTH = 3..40
-  NAME_REGEXP = /^[a-z0-9\-_\s]+$/i
+  NAME_REGEXP = /^[a-z0-9\-_\s\.]+$/i
 
   validates :name, :project, :user, :presence => true
   validate :validate_unique_name, :on => :create
@@ -16,10 +16,6 @@ class Folder < RoleRecord
   validates_length_of :name, :within => NAME_LENGTH
 
   #after_create  :log_create
-
-#  def user
-#    @user ||= user_id ? User.with_deleted.find_by_id(user_id) : nil
-#  end
 
   def to_s
     name
