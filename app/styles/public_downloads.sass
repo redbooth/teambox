@@ -1,0 +1,89 @@
+@import shared
+
+body
+  background-color: #eee
+  font-family: 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif
+  font-size: 12px
+
+#wrapper
+  margin: 120px auto
+  width: 450px
+
+#logo
+  margin: 10px 0
+  span
+    float: right
+    a
+      font-size: 16px
+      font-weight: bold
+      color: #555
+      text-shadow: white 1px 1px 1px
+      text-decoration: none
+      position: relative
+      top: 7px
+      left: -10px
+      &:hover
+        color: black
+
+#content
+  display: block
+  background: white
+  border: 1px solid #ccc
+  border-radius: 5px 5px
+  margin: 30px 0
+  padding: 15px
+  height: 50px
+  .file
+    position: relative
+    .info
+      display: inline-block
+      position: absolute
+    .filename
+      display: inline-block
+      position: absolute
+      left: 65px
+      white-space: nowrap
+      width: 350px
+      overflow: hidden
+      a
+        color: #333
+        text-decoration: none
+        font-size: 24px
+        display: block
+        width: 350px
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+      p
+        display: block
+        color: #777
+        margin-top: 5px
+    .fade
+      background: -moz-linear-gradient(left, rgba(255,255,255,0), rgba(255,255,255,1))
+      background: -webkit-gradient(linear, left top, right top, from(rgba(255,255,255,0)), to(rgba(255,255,255,1)))
+      display: inline-block
+      height: 40px
+      right: 0px
+      position: absolute
+      width: 30px
+      z-index: 1000
+  &:hover
+    +gradient(#0269C9, #3682C9)
+    cursor: pointer
+    .fade
+      display: none
+    .file
+      .filename
+        a, p
+          color: white
+
+#promo
+  text-align: center
+  a
+    font-size: 24px
+    font-weight: bold
+    color: #555
+    text-shadow: white 1px 1px 1px
+    text-decoration: none
+    &:hover
+      color: black

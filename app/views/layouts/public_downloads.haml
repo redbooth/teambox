@@ -1,0 +1,21 @@
+!!! Strict
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang'=>"en", :lang=>"en" }
+  %head
+    %meta{ :charset => "UTF-8" }
+    = csrf_meta_tag
+    %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
+    %title= @page_title || "Teambox"
+    = stylesheet_link_tag 'public_downloads'
+    = javascript_include_tag '/javascripts/prototype'
+  %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env} controller_#{controller.controller_name}"}
+    #wrapper
+      #logo
+        = link_to image_tag("header_logo_black.png", :alt => "Project Management Software"), "http://teambox.com"
+        %span= link_to "team collaboration", "http://teambox.com"
+      #content
+        = yield
+      #promo
+        %p This file was sent using Teambox, a collaboration platform for your projects.
+        %p Enjoy task management, file synchronization and better project collaboration.
+        %p= link_to "Create a free account now!", "http://teambox.com/signup"
+    = javascripts
