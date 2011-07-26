@@ -24,7 +24,6 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
 
   def create
-   
     authorize! :make_task_lists, @current_project
 
     if params[:template_id].present?

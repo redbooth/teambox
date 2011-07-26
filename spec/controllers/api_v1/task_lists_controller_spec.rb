@@ -10,7 +10,6 @@ describe ApiV1::TaskListsController do
     @other_task_list = @project.create_task_list(@owner, {:name => 'Another TODO list'})
     @other_task_list.archived = true
     @other_task_list.save!
-    
   end
 
   describe "#index" do
@@ -168,7 +167,7 @@ describe ApiV1::TaskListsController do
 
       @project.task_lists(true).length.should == 3
       @project.task_lists.first.name.should == 'Lunch tasks template'
-      
+
 
       post :create, :project_id => @project.permalink, :template_id => @task_list_template.id, :name => "Dinner tasks"
       response.should be_success
