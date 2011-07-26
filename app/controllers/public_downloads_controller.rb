@@ -48,8 +48,7 @@ class PublicDownloadsController < ApplicationController
   private
 
   def get_upload_by_token
-    unless @upload = Upload.find_by_token(params[:token])
-      flash.now[:error] = 'File not found'
+    unless @upload = Upload.find_by_token_and_deleted(params[:token], false)
       render :template => "public_downloads/not_found", :layout => "public_downloads", :status => :not_found and return
     end
   end
