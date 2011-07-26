@@ -117,15 +117,40 @@ $upload_icon_width: 16px
 
 .upload_div
   position: relative
+  .info_label
+    margin: 4px 0 0 73px !important
+    clear: both
   div.upload_fake
     position: absolute
-    top: 0px
+    top: 24px
     left: 0px
     z-index: 1
+    width: 620px
+    display: inline-block
+    input
+      height: 18px
+      padding: 4px
+      +rounded(3px 0 0 3px)
+      border: $brd_gray
+      display: inline-block
+      float: left
+      clear: none
+      width: 465px
+      margin: 0
+        left: 67px
+        right: -1px
+      
   input.upload_input
+    display: inline-block
+    width: 550px
+    height: 27px
+    margin: 0
+      bottom: 4px
+      left: 67px
     position: relative
-    text-align: right
+    text-align: left
     -moz-opacity: 0
     //filter: alpha(opacity: 0)
     opacity: 0
     z-index: 2
+    top: 9px

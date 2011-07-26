@@ -1294,6 +1294,7 @@ en:
     new:
       select_a_file: Select a file to upload to Teambox
       select_a_file_short: Select a file
+      add_files: Add files
       storage_remaining: "You can upload up to %{bytes} more with your current plan. <a href='%{url}'>Upgrade</a> for more storage."
       uploading: Uploading...
     index:
