@@ -206,7 +206,9 @@
     // this.initUploader();
 
     var upload_area = $(this.el).down('.upload_area');
-    upload_area.toggle().highlight();
+
+    Effect.SlideDown(upload_area, { duration: 0.5 });
+    // upload_area.toggle().highlight();
 
     // if (upload_area.visible()) {
     //   this.uploader.refresh();
