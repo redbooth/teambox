@@ -113,6 +113,7 @@ class Person < ActiveRecord::Base
     base = {
       :id => id,
       :user_id => user_id,
+      :project_id => project_id,
       :source_user_id => source_user_id,
       :role => role
     }
