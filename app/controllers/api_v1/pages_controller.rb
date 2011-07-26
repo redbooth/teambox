@@ -1,5 +1,5 @@
 class ApiV1::PagesController < ApiV1::APIController
-  before_filter :load_page, :only => [:show, :update, :reorder, :destroy]
+  before_filter :load_page, :only => [:show, :update, :reorder, :watch, :unwatch, :destroy]
   
   def index
     authorize! :show, @current_project||current_user
