@@ -2,8 +2,9 @@ div(id="file_drop_#{self.type.toLowerCase()}_#{self.id}")
   div(id="file_list_#{self.type.toLowerCase()}_#{self.id}")
     ol(class='file_list')
     // p <%= t('uploads.new.select_a_file') %>
-    div.upload_input
-      input(name='comments_attributes[0][uploads_attributes][0][asset]', type='file')
+    div.upload_div
+      input.upload_input(name='comments_attributes[0][uploads_attributes][0][asset]', type='file')
       div.upload_fake
         input
-        span <%= t('uploads.new.select_a_file_short') %>
+        span.button_gray_straight
+          span <%= t('uploads.new.select_a_file_short') %>

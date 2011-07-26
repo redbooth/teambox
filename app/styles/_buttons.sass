@@ -129,6 +129,28 @@ a.add_button, a.new_task_list_link
     color: $clr_blue_b
     background-position-y: -140px
 
+.button_gray_75
+  @extend .button_gray
+  width: 75px !important
+  background-position: -50px -252px
+  text-align: center !important
+  float: right
+  display: inline-block
+  padding: 0
+  &:active
+    background-position-y: -280px
+
+.button_gray_straight
+  @extend .button_gray
+  background-position: -126px -224px
+  text-align: center !important
+  float: right
+  display: inline-block
+  padding: 0
+  &:active
+    background-position-y: -252px
+  span
+    margin-left: 2px
 
 input.button_blue
   border: none

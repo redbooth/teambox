@@ -114,3 +114,18 @@ $upload_icon_width: 16px
   padding: 1px
   &:hover
     border: 1px solid rgb(160, 160, 160)
+
+.upload_div
+  position: relative
+  div.upload_fake
+    position: absolute
+    top: 0px
+    left: 0px
+    z-index: 1
+  input.upload_input
+    position: relative
+    text-align: right
+    -moz-opacity: 0
+    //filter: alpha(opacity: 0)
+    opacity: 0
+    z-index: 2
