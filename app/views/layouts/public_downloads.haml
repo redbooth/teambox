@@ -6,7 +6,7 @@
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title= @page_title || "Teambox"
     = stylesheet_link_tag 'public_downloads'
-    = javascript_include_tag '/javascripts/prototype'
+    =# javascript_include_tag '/javascripts/prototype'
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env} controller_#{controller.controller_name}"}
     #wrapper
       #logo
@@ -18,4 +18,3 @@
         %p This file was sent using Teambox, a collaboration platform for your projects.
         %p Enjoy task management, file synchronization and better project collaboration.
         %p= link_to "Create a free account now!", "http://teambox.com/signup"
-    = javascripts
