@@ -5,6 +5,7 @@
   };
 
   Comments.initialize = function (models, options) {
+    this.models = models;
     this.project_id = options.project_id;
     this.task_id = options.task_id;
     this.conversation_id = options.conversation_id;

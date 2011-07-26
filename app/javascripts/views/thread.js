@@ -45,7 +45,7 @@
       , comments;
 
     options[this.model.get('type').toLowerCase() + '_id'] = this.model.id;
-    comments = new Teambox.Collections.Comments(options);
+    comments = new Teambox.Collections.Comments([],options);
     el.update("<img src='/images/loading.gif' alt='Loading' />");
 
     comments.fetch({
