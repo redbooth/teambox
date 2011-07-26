@@ -141,6 +141,10 @@ class Ability
       api_write?(user) && project.editable?(user)
     end
     
+    can :reorder_objects, Project do |project|
+      api_write?(user) && project.editable?(user)
+    end
+    
     can :update, Project do |project|
       api_write?(user) && project.manage?(user)
     end
