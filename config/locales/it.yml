@@ -120,7 +120,7 @@ it:
       page: Pagina
       phone_number: Telefono
       project: Progetto
-      social_network: "Social network"
+      social_network: "Rete Sociale"
       task: Task
       task_list: "Lista di task"
       upload: Caricamento
@@ -169,7 +169,7 @@ it:
       title: "%{person} ha lasciato il progetto %{project}"
     edit_note: 
       edit_note: "nota modificata"
-      title: "%{user} ha modificato la nota \"%{note}\" in %{page}\n"
+      title: "%{user} ha modificato la nota '%{note}' in %{page}\n"
     edit_page: 
       edit_page: "ha modificato la pagina"
       title: "%{user} ha modificato la pagina %{page}"
@@ -205,7 +205,7 @@ it:
       over_100: "Ogni volta che avrai più di 100$"
       plan_for: "piano per"
       premium_plan: "account premium"
-      refer_info: "Portaci %{users} utenti con abbonamento %{plan}, ricevi ogni mese $%{credit} .\n"
+      refer_info: "Portaci %{users} utenti con abbonamento %{plan} e ricevi ogni mese $%{credit} .\n"
       referred_users: "Gli utenti portati da te"
       send_invites: "Invita su Teambox"
       send_money: "e noi ti invieremo i soldi che avrai guadagnato."
@@ -241,7 +241,14 @@ it:
     show: 
       save: "Salva le modifiche"
   calendar: 
-    abbr_weekdays: [D, L, M, M, G, V, S]
+    abbr_weekdays: 
+      - D
+      - L
+      - M
+      - M
+      - G
+      - V
+      - S
     clear: Cancella
     now: Adesso
     ok: OK
@@ -252,7 +259,7 @@ it:
       email_addresses: "Indirizzi e-mail"
       ims: IM
       phone_numbers: Telefoni
-      social_networks: "Social networks"
+      social_networks: "Reti Sociali"
       vcard: "Scarica vCard"
       websites: "Siti web"
     card_types: 
@@ -319,10 +326,10 @@ it:
       preview: Anteprima
     private: 
       all: Tutto
-      private: "Questo elemento è visualizzabile solo dalle persone che tu specifichi..."
+      private: "Questo elemento è visualizzabile solo dalle persone da te definite..."
       private_foreveralone: "Questo elemento è visualizzabile solo da te"
       private_global: "Questo elemento è visualizzabile solo dalle seguenti persone..."
-      public: "Questo elemento è visualizzabile da tutti le persone di questo progetto"
+      public: "Questo elemento è visualizzabile da tutte le persone di questo progetto"
       readonly_warning: "Solo %{user} può cambiale le opzioni sulla privacy. "
     watchers: 
       explain: "Clicca sugli utenti per @menzionarli nel tuo commento. Gli utenti menzionati riceveranno una notifica via email per il tuo commento e per quelli che seguiranno."
@@ -345,7 +352,7 @@ it:
     gantt_chart: "Grafica Gantt"
     in_project: in
     loading: Caricando...
-    logged_out: "Sei uscito"
+    logged_out: "Sei stato scollegato"
     next: Successivo
     not_allowed: "Non sei autorizzato a farlo!"
     or: o
@@ -400,7 +407,7 @@ it:
       footer1_html: "Le conversazioni sono perfette per <b>condividere un disegno</b>, <b>decidere una data</b> per una riunione o <b>segnalare</b> alcune notizie."
       footer2_html: "Essendo tutto collegato, è facile tornare indietro nel tempo e vedere quali file sono stati inviati e cosa ha detto ciascun membro del team. In Teambox, <b>collaborare</b> vuol dire anche <b>mantenere una traccia</b>."
       item1_html: "<b>Condividi files</b>. Puoi allegare files ad ogni commento, se vuoi."
-      item2_html: "<b>Iscriviti</b> ad una conversazione per ricevere notifiche di future risposte via mail e RSS."
+      item2_html: "<b>Iscriviti</b> ad una conversazione per ricevere notifiche di future risposte via mail o RSS."
       item3_html: "<b>Esprimiti</b>. Ogni commento può essere formattato utilizzando il grassetto, il corsivo e stili di testo."
       item4_html: "<b>Amante della posta elettronica?</b> Puoi rispondere a una conversazione dalla tua email."
     short_conversation: 
@@ -797,7 +804,7 @@ it:
     time_ago: "%{time_ago_in_words} fa"
   deleted: 
     conversation: "La conversazione <b>%{name}</b> è stata cancellata"
-    left_project: "Hai lasciato il progetto"
+    left_project: "Non sei più in questo progetto"
     page: "La pagina <b>%{name}</b> è stata cancellata"
     person: "%{name} non fa più parte del progetto"
     task: "Il task <b>%{name}</b> è stato cancellato"
@@ -891,7 +898,7 @@ it:
       stop_watch: "Smetti di osservare "
       stop_watching_link_html: "%{stop_watch} questa discussione per non ricevere più email di notifica.\n"
       task: "Task:"
-      task_commands: "Scrivi #concludi, #rifiuta o #interrompi in alto nella tua risposta per cambiare lo status del tak. Scrivi #%{username} per assegnarlo a @%{username}, etc."
+      task_commands: "Scrivi #concludi, #rifiuta o #interrompi in alto nella tua risposta per cambiare lo stato del task. Scrivi #%{username} per assegnarlo a @%{username}, etc."
       task_link: "visualizza questo task online"
       task_list: "Lista di task:"
       view_conversation_online: "Visualizza questa conversazione on-line"
@@ -917,7 +924,7 @@ it:
       data_import_failed: "I tuoi dati non possono essere importati in Teambox. Controlla che i dati caricati siano validi. Per riprovare, usa il link seguente:"
       data_imported: "I tuoi dati sono stati importati con successo in Teambox. Per maggiori dettagli, clicca sul seguente link: "
       export_failed: "I tuoi dati non possono essere esportati"
-      exported: "I tuoi dati sono pronti per il download"
+      exported: "I tuoi dati sono pronti per essere scaricati"
       hey: "Ciao, %{user_name}!"
       import_failed: "I tuoi dati non possono essere importati"
       imported: "I tuoi dati sono stati importati"
@@ -1048,9 +1055,9 @@ it:
       title: "Nel campo nome utente/email, inserisci o una lista di nomi utente o una lista di indirizzi email. Es.:\n"
       to_invite: 
         not_example_html: "(NOT <span class='mention'>@paolo</span> o <span class='mention'>@lisa</span>)\n"
-        title: Invita
+        title: "Per invitare"
     new: 
-      also_invite_to_organization: "Invita all'organizzazione '%{organization}'\n"
+      also_invite_to_organization: "Invita anche all'organizzazione '%{organization}'\n"
     pending: 
       invited_to_join: "%{by} ti ha invitato a unirti al progetto %{project}."
       to_access_or: "per accedere al progetto o"
@@ -1058,12 +1065,12 @@ it:
       invite: "Invita %{username}"
     resend: 
       resent: "Abbiamo rimandato l'invito a %{recipient}"
-      return: Indietro
+      return: Retrocedi
     search: 
       help: Aiuto
-      invite: "Cerca e invita"
+      invite: Invita
       invite_from_project: "Invita dal progetto"
-      invite_people: "Invita utenti al progetto"
+      invite_people: "Invita utenti a questo progetto"
       role: "Seleziona un ruolo per questo progetto"
       submit: Invia
       username_or_email: "Scrivi l'indirizzo email o il nome utente del tuo collega"
@@ -1071,7 +1078,7 @@ it:
       invitations_will_be_sent_in_language_html: "Gli inviti saranno spediti in %{language} "
     sent: 
       email_sent: "Abbiamo inviato una mail avvisando l'utente di accettare il tuo invito"
-  latest_announcement_html: "<strong>New</strong>: Guadagna € portando nuovi utenti su Teambox. Entra e vai nella tua area Affiliati per ricevere fino al 15% del guadagno che generi!<br/><br/>Per altre notizie su Teambox leggi il <a href='http://blog.teambox.com'>nostro blog</a>.\n"
+  latest_announcement_html: "<strong>Novità</strong>: Guadagna € portando nuovi utenti su Teambox. Entra e vai nella tua area Affiliati per ricevere fino al 15% del guadagno che generi!<br/><br/>Per maggiori informazioni su Teambox leggi <a href='http://blog.teambox.com'>il nostro blog</a>. \n"
   locales: 
     af: Afrikaan
     ar: Arabo
@@ -1150,10 +1157,10 @@ it:
     tour_pages_title: "Software Wiki con le Pagine"
     tour_projects: Progetti
     tour_projects_title: "Tools di Gestione Progetti"
-    tour_social: "Social tools"
-    tour_social_title: "Social productivity software"
+    tour_social: "Tools sociali"
+    tour_social_title: "Software sociale di produttività "
     tour_tasklists: "Liste di task"
-    tour_tasklists_title: "Getting Things Done e gestione dei Task "
+    tour_tasklists_title: "Gestione delle Attività e dei Task "
     tour_time: "Time tracking"
     tour_time_title: "Software di time tracking"
     tour_title: "Collaborazione progetti per team agili"
@@ -1182,7 +1189,7 @@ it:
         explain: "Possono creare progetti all'interno dell'organizzazione, ma accedono solo a quelli in cui sono invitati."
         title: Partecipanti
     roles: 
-      admin: "Come amministratore. Sarà in grado di aggiungere nuovi utenti e gestire l'organizzazione. "
+      admin: "Come amministratore. Sarai in grado di aggiungere nuovi utenti e gestire l'organizzazione. "
       external: "Non invitare. Gli utenti non potranno creare progetti in questa organizzazione."
       participant: "Come partecipante. Potrà creare i suoi progetti."
   not_found: 
@@ -1245,7 +1252,7 @@ it:
     account_linked: "Il tuo account è stato collegato."
     already_linked_to_your_account: "Questo servizio è già collegato al tuo account. Lo puoi usare per entrare."
     already_taken_by_other_account: "Questo servizio è già collegato a un altro account nel sistema. Prova a uscire e a rientrare. Per collegarlo a un account differente, devi sganciarlo dall'account a cui è attualmente collegato."
-    app_unlinked: "App scollegata"
+    app_unlinked: "Applicazione scollegata"
     auth_status: "OAuth Auth\n"
     auth_status_link: "Collegalo col tuo account"
     auth_status_linked: "Collegato col provider"
@@ -1322,7 +1329,7 @@ it:
       cancel: "Cancella abbonamento"
       current_plan: "Il tuo piano attuale"
       downgrade: Riduci
-      plan: Piano
+      plan: Abbonamento
       projects: Progetti
       search: Cerca
       storage: "Spazio disco"
@@ -1417,7 +1424,7 @@ it:
       you_are_html: "Per questa organizzazione, tu sei un <strong>%{role}</strong> \n"
       your_plan_is: "Il tuo piano d'abbonamento è %{plan}"
     projects: 
-      instructions_html: "Questi sono i progetti di questa organizzazione. Se sei un amministratore, puoi trasferire un progetto a un'<a href='%{organizations_link}'>altra organizzazione</a> entrando nelle impostazioni del progetto.\n"
+      instructions_html: "Questi sono i progetti di questa organizzazione. Se sei un amministratore, puoi trasferire un progetto a <a href='%{organizations_link}'>altre organizzazioni</a> entrando nelle impostazioni del progetto.\n"
       new_project: "Nuovo progetto"
       title: "Progetti in %{organization}"
     usage: 
@@ -1445,7 +1452,7 @@ it:
     new_projects: "Nuovo progetto"
     new_users: "Crea account"
     results_search: Ricerca
-    show_plans: Piani
+    show_plans: Abbonamenti
     show_projects: Panoramica
     welcome_users: Benvenuto/a!
   pages: 
@@ -1543,18 +1550,18 @@ it:
       success: "Hai modificato il ruolo di %{name}"
   plans: 
     copies: 
-      copy1_html: "Ti piace Teambox? Noi facciamo del nostro meglio! <a href='%{link}'>Fai subito l'upgrade</a> per supportare il nostro lavoro!"
-      copy2_html: "<a href='%{link}'>Fai l'upgrade adesso</a> per avere più progetti, spazio d'archiviazione e poter effettuare ricerche su tutti i progetti.\n"
-      copy3_html: "<a href='%{link}'>Fai di più</a> con un account premium! Più spazio, fino a 2000 progetti.\n"
+      copy1_html: "Ti piace Teambox? Apri altri progetti! <a href='%{link}'>Fai l'upgrade adesso</a> per supportare il nostro lavoro!"
+      copy2_html: "<a href='%{link}'>Fai l'upgrade adesso</a> per avere più progetti, più spazio d'archiviazione e poter effettuare ricerche su tutti i progetti.\n"
+      copy3_html: "<a href='%{link}'>Fai di più</a> con un account premium! Più spazio e più progetti.\n"
       copy4_html: "<a href='%{link}'>Lavora meglio</a> con un account premium: barra di ricerca su tutti i progetti.\n"
-      copy5_html: "<a href='%{link}'>Fai subito l'upgrade del tuo account Teambox</a> e divertiti a collaborare con altri!\n"
-      copy6_html: "La ricerca su tutti i progetti può farti risparmiare ore. <a href='%{link}'>Fai subito l'upgrade</a> per averla!\n"
-      copy7_html: "I tuoi affari sono importanti! <a href='%{link}'>Ottieni il miglior supporto</a> per Teambox con i nostri piani premium."
+      copy5_html: "<a href='%{link}'>Fai adesso l'upgrade del tuo account Teambox</a> e divertiti a collaborare con altri!\n"
+      copy6_html: "La ricerca su tutti i progetti può farti risparmiare ore. <a href='%{link}'>Fai adesso l'upgrade</a> per averla!\n"
+      copy7_html: "I tuoi affari sono importanti! <a href='%{link}'>Ottieni il miglior supporto</a> per Teambox con i nostri abbonamenti premium."
     show: 
       branding: 
         configure_html: "Il tuo piano supporta la personalizzazione del logo e il dominio internet. <a href='%{link}'>Configurali qui</a>."
-        not_available_html: "Il tuo piano non supporta la <strong>personalizzazione del logo</strong>. Fai l'upgrade a un piano superiore per averla.\n"
-      current_plan_html: "il tuo piano attuale è <strong>%{name}</strong>.\n"
+        not_available_html: "Il tuo abbonamento non supporta la <strong>personalizzazione del logo</strong>. Fai l'upgrade a un abbonamento superiore per averla.\n"
+      current_plan_html: "il tuo abbonamento attuale è <strong>%{name}</strong>.\n"
       max_projects: "Puoi avere fino a %{max} progetti."
       max_storage: "Puoi archiviare fino a %{max}.\n"
       plan: "Abbonamenti Teambox"
@@ -1582,7 +1589,7 @@ it:
       archived_html: "Archivia questo progetto <em>Questo lo manterrà accessibile ai membri, ma non più modificabile.</em>\n"
       archiving: "Archivia questo progetto"
       delete_project: 
-        body_extra_html: "Cancellando questo progetto non cancellerai il tuo abbonamento a Teambox. Per cancellare il tuo abbonamento <a href='%{url}'>clicca qui</a>. "
+        body_extra_html: "Cancellando questo progetto non cancellerai il tuo abbonamento a Teambox. Per cancellare il tuo abbonamento <a href='%{url}''>clicca qui</a>. "
         body_html: "Questo cancellerà  <strong>permanentemente</strong> tutti i dati del progetto. "
         title: "Sei sicuro di voler cancellare %{project}?"
       delete_this_project: "Cancella questo progetto"
@@ -1605,7 +1612,7 @@ it:
         upgrade_organization: "Adesso dovresti aggiornare questa organizzazione."
       owner: Proprietario
       owner_description: "Il propietario è il responsabile principale di un progetto. Il proprietario non può essere rimosso da un progetto a meno che la proprietà non venga trasferita ad un altro utente."
-      permalink_description: "Questo sarà l'indirizzo web del tuo progetto. Mantienilo breve. Non si accettano spazi."
+      permalink_description: "Questo sarà l'indirizzo web del tuo progetto. Più corto è meglio è. Non si accettano spazi."
       permalink_html: "Permalink <em>Identificativo breve del progetto</em>"
       public_project_html: "Progetto pubblico. <em>Chiunque potrà accedere e unirsi al progetto dalla <a href='/public'>sezione dei progetti pubblici</a>.</em>\n"
       select_an_organization: "Seleziona un organizzazione"
@@ -1654,7 +1661,7 @@ it:
       upgrade: 
         to_2_html: "<a href='%{link}'>Fai l' upgrade del tuo account adesso</a> per poter creare <b>fino a %{projects} progetti</b>, memorizzare fino a <b>%{storage} Gb</b> di file e usare la <b>barra di ricerca per tutti i progetti</b>. "
       you_can_create_more: 
-        one: "Puoi creare un altro progetto con il piano attuale."
+        one: "Puoi creare un altro progetto con l' abbonamento attuale."
         other: "Puoi creare altri %{count} progetti con il tuo abbonamento attuale. "
         zero_html: "Non puoi creare altri progetti.<br/>Il numero massimo di progetti per il tuo abbonamento attuale è %{max}. "
     not_in_project: 
@@ -1674,14 +1681,14 @@ it:
       people_in_project: "Persone in questo progetto"
     primer: 
       create_first: "Crea il tuo primo progetto!"
-      define1_html: "Usa i progetti per <b>collaborare</b> con gruppi di persone per: un sito web, organizzare una festa, attività clienti..."
-      define2_html: "Puoi creare <b>tanti progetti quanti ne vuoi</b> e condividerli con altri utenti online."
+      define1_html: "Usa i progetti per <b>collaborare</b> con gruppi di persone per: un sito web, organizzare una festa, le attività clienti..."
+      define2_html: "Puoi creare <b>tanti progetti quanti ne vuoi</b> e condividerli con altri utenti on-line."
       empty: "Non fai parte ancora di nessun progetto."
       footer: "I progetti sono una forma centralizzata di collaborazione, così puoi evitare di mandare continue email al tuo team."
       item1_html: "<b>Crea un progetto</b>, dagli un nome e <b>invita i tuoi contatti</b> a collaborare."
       item2_html: "<b>Scrivi un commento</b> su quello che fai in ogni momento nella bacheca del progetto."
       item3_html: "<b>Discuti</b> sulle decisioni importanti usando le Conversazioni."
-      item4_html: "<b>Pianifica</b> quello che si deve fare con i Compiti."
+      item4_html: "<b>Pianifica</b> quello che si deve fare con i task."
       item5_html: "<b>Condividi informazioni</b> usando le Pagine di ciascun progetto."
     recent_conversations: 
       first: "+ Creare la prima conversazione"
@@ -1701,7 +1708,7 @@ it:
       update_your_status: "Dì cosa stai facendo..."
   reset_passwords: 
     create: 
-      invalid_html: "La URL per cambiare la password que hai visitato è scaduta o non è valida. Prova a cliccare di nuovo su Non Ricordo la mia Password dalla Home page.<br/>se non funziona contattaci in %{support} "
+      invalid_html: "La URL per cambiare la password que hai visitato è scaduta o non è valida. Prova a cliccare di nuovo su Non Ricordo la Password dalla Home page.<br/>se non funziona contattaci in %{support} "
       not_found_html: "Non è stato trovato nessun utente con la email: %{email}<br/>Controlla di aver scritto bene e prova di nuovo. Se continua a non funzionare, contattaci su: %{support}"
       password_not_updated: "Nuova password non valida. Riprova."
       password_updated: "La password è stata aggiornata."
@@ -1717,7 +1724,7 @@ it:
     sent: 
       follow_the_link_html: "Fai click sul link che appare in questa email per entrare in Teambox! Se non la trovi, controlla nella cartella della posta indesiderata o della spam. "
       login_link_sent: "Ti abbiamo appena inviato una mail a %{email} per la modifica della password."
-      title: "Reimposta password"
+      title: "Reimposta Password"
   roles: 
     admin: amministratore
     commenter: commentatore
@@ -1748,7 +1755,7 @@ it:
       video: "Breve introduzione a Teambox"
   shared: 
     chrome_frame: 
-      enhance_html: "Aumenta la tua conoscenza di Teambox con il  Frame di Google Chrome. Clicca <a href='%{link}' target='_blank'>here</a> per configurarlo. "
+      enhance_html: "Aumenta la tua conoscenza di Teambox con il  Frame di Google Chrome. Clicca <a href='%{link}' target=\\'_blank\\'>here</a> per configurarlo. "
     collapsed_mode: "Visualizza le discussioni compattate"
     confirm_email: 
       change_email: "usa un indirizzo email differente"
@@ -1763,12 +1770,12 @@ it:
     gantt_banner_primer: 
       title: "Non ci sono liste di task scadute da mostrare"
     global_navigation: 
-      help: Help
+      help: "Help & Feedback "
       home: Home
       login: Login
       logout: Esci
       project_invitations: "Inviti (%{count})"
-      settings: Opzioni
+      settings: Impostazioni
     instructions: 
       send_email: "Inserisci un nuovo commento via e-mail ..."
       send_email_conversations: "Inserisci una nuova conversazione via e-mail ..."
@@ -1795,9 +1802,9 @@ it:
       open_my_tasks: "Apri tutti i miei task"
       organizations: Organizzazioni
       pages: Pagine
-      people: "Permessi & degli utenti"
+      people: "Persone & Permessi"
       recent_activity: "Attività recente"
-      settings: Opzioni
+      settings: Impostazioni
       show_all_organizations: "Gestisci le organizzazioni..."
       show_all_projects: "Mostra tutti i progetti..."
       show_all_tasks: "Visualizza tutti i task dei miei progetti ..."
@@ -1819,18 +1826,18 @@ it:
       overview: Panoramica
       pages: Pagine
       people: Persone
-      project_settings: "Opzioni Progetto"
-      signup: "Crea un account"
+      project_settings: "Impostazioni Progetto"
+      signup: Registrati
       task_lists: "Liste di Task"
       time_tracking: "Time Tracking"
     project_settings_navigation: 
       deletion: "Archiviare/Cancellare il progetto"
-      general: "Opzioni Generali"
+      general: "Impostazioni Generali"
       ownership: Proprietario
       picture: "Immagine del Progetto"
     public_navigation: 
       community: Comunità
-      help: "Aiuto y Supporto"
+      help: "Help e Supporto"
       home: Teambox
       privacy: Privacy
       services: Servizi
@@ -1838,7 +1845,7 @@ it:
       tour: Tour
       users: "I nostri Utenti"
     strip: 
-      archived_html: "Questo progetto è archiviato. Per modificare o scrivere commenti devi ripristinarlo nelle <a href='%{link}'>Impostazioni del Progetto</a>"
+      archived_html: "Questo progetto è archiviato. Per modificare o scrivere commenti devi ripristinarlo nella <a href='%{link}'>pagina Impostazioni Progetto</a>"
     task_navigation: 
       all_tasks: "Tutti i task"
       everybodys_tasks: "I Task di tutti"
@@ -1865,12 +1872,12 @@ it:
       notifications: Notifiche
       plans_and_billing: "Piani e fatturazione"
       profile_information: "Informazioni di Profilo"
-      profile_picture: Immagine
+      profile_picture: "Foto Profilo"
       your_data: "Importa / Esporta"
     watchers: 
-      nobody_watching: "Nessuno segue i cambiamenti di questo elemento"
+      nobody_watching: "Nessuno sta seguendo"
       people_watching: "Seguono questo elemento: "
-      started_watching: "Ora riceverai emails con gli aggiornamenti di questo elemento."
+      started_watching: "Ora riceverai emails con gli aggiornamenti."
       stopped_watching: "Non riceverai più notifiche su questo elemento."
       unwatch: "Smetti di seguire"
       watch: Segui
@@ -1987,7 +1994,7 @@ it:
       define_html: "Usa i task per <b>pianificare</b>, <b>vedere cosa hai fatto</b> e <b>rivedere cosa è stato fatto</b><br/><i>Che cosa? Chi? Quando?</i> I task possono avere uno stato, un responsabile e una data di scadenza."
       empty: "Non c'è ancora nessuna lista di task in questo progetto."
       footer1_html: "I task sono una forma semplice e agile di <b>riuscire a fare quello che ti proponi</b> e farlo sapere agli altri."
-      footer2_html: "E' ora che dimentichi i plannings in Excel e i complessi diagrammi GANTT!"
+      footer2_html: "E' ora che dimentichi i plannings in Excel e i complessi diagrammi Gantt!"
       item1_html: "<b>Pianifica</b>. Crea tutti i task dentro ad ogni lista e assegnali ai tuoi collaboratori."
       item2_html: "<b>Informa</b>. Pubblica i commenti di ogni task. Allega files. Chiedi feedback."
       item3_html: "<b>Tieniti aggiornato</b>. Ricevi notifiche dei task che ti riguardano."
@@ -2145,7 +2152,7 @@ it:
     activation: 
       activated: "Abbiamo attivato il tuo account! Benvenuto su Teambox :)"
       already_done: "Hai già confermato la tua registrazione. Puoi già utilizzare Teambox!"
-      invalid_html: "<p>Hai utilizzato un link non valido per entrare in Teambox. Entra con il tuo nome utente e password dalla home page.</p><p>Se non ricordi le tue credenziali, utilizza il link Ricordami la password.</p>"
+      invalid_html: "<p>Hai utilizzato un link non valido per entrare in Teambox. Entra con il tuo nome utente e password dalla home page.</p><p>Se non ricordi le tue credenziali, utilizza il link Non Ricordo la password.</p>"
       invalid_user: "Utente non valido"
       resent: "Ti abbiamo rimandato la mail di attivazione. Controlla la tua casella di posta!"
     calendars: 
@@ -2153,7 +2160,7 @@ it:
         body_html: "Fai riferimento al <a href='%{link}'>knowledge base</a> per istruzioni su come configurare Google Calendar, Apple's iCal, Outlook, Blackberry ecc... "
         title: "Istruzioni specifiche"
       how_to: 
-        body_html: "In sostanza, si dovrebbe importare il link qui sotto nel client del tuo calendario. Visita il nostro <a href='%{link}'>knowledge base</a> per sapere come usarli con la tua applicazione di calendario. "
+        body_html: "In sostanza, dovresti importare i link qui sotto elencati nel client del tuo calendario. Visita il nostro <a href='%{link}'>knowledge base</a> per sapere come usarli con la tua applicazione di calendario. "
         title: "Come sincronizzare i tuoi calendari"
       possible_clients: "Puoi sincronizzare i tuo Google Calendar, Apple iCal, Outlook, Blackberry ecc... "
       subscribe_to_all: "Tutti i Progetti:"
@@ -2165,10 +2172,10 @@ it:
       error: "Non è stato possible registrare l'account, siamo spiacenti! Ritenta, o contatta un amministratore (link in alto)."
       thanks: "Grazie per esserti registrato!"
     daily_task_reminder_email: 
-      daily_task_reminder: "Promemoria giornaliero dei task"
+      daily_task_reminder: "Promemoria quotidiano dei task"
       daily_task_reminder_from_teambox: "Questo è la mail promemoria quotidiana dei task di Teambox"
       late_tasks: "Task recenti"
-      settings_page: "Pagina Opzioni"
+      settings_page: "pagina impostazioni"
       tasks_for_next_two_weeks: "Task per le prossime due settimane"
       tasks_for_today: "Task per oggi"
       tasks_for_tomorrow: "Task per domani"
@@ -2180,7 +2187,7 @@ it:
       title_deletion: "Elimina / Archivia un progetto"
       title_linked_accounts: "Account delle Applicazioni Collegate"
       title_notifications: "Le tue Notifiche"
-      title_picture: "Immagine del tuo Profilo"
+      title_picture: "Foto del tuo Profilo"
       title_profile: "Opzioni del tuo Profilo"
       title_settings: "Opzioni del tuo Account"
     email_posts: 
@@ -2230,8 +2237,8 @@ it:
       email: Email
       first_day_of_week: "La settimana inizia"
       first_name: Nome
-      invalid_login: "usa solo lettere, numeri e _"
-      keyboard_shortcuts: "Abilita i shortcuts. Premere 'h' per aiuto una volta attivati."
+      invalid_login: "usa solo lettere, numeri e _ (sottolinea)"
+      keyboard_shortcuts: "Abilita i shortcuts. Premere 'h' per accede all' Help una volta attivati."
       language: Lingua
       last_name: Cognome
       linked_accounts: 
@@ -2245,10 +2252,13 @@ it:
         account: 
           choose_username: "Scegli un nome utente così la gente ti può trovare. Si utilizzerà per fare login."
           title: "Il tuo account Teambox"
-          validations: "Devo essere tutte minuscole e non si ammettono spazi. Puoi usare i carattere _ (sottolinea)."
+          validations: "Devono essere tutte minuscole e non si ammettono spazi. Puoi usare il carattere _ (sottolinea)."
         use_this_email: "Sei stato invitato a condividere progetti con questo indirizzo email. Se desideri accedere a questi progetti, non modificare questo indirizzo email. Potrai cambiare il tuo indirizzo e-mail una volta completato il processo di registrazione."
       newsletter: "Informami sulle nuove funzionalità e suggerimenti!"
       notifications: 
+        clarification: |
+          Quando qualcuno ti menziona (usando '@% {login}' o '@all') in una conversazione o un task,
+          riceverai una notifica via email e sarai aggiunto come osservatore a tale elemento.
         default: Default
         digest: "Modalità di consegna email"
         digest_delivery_time: "Invia un reminder e promemoria a"
@@ -2332,7 +2342,7 @@ it:
         title: Twitter
     new: 
       existing_user_html: "Se hai già un account, <a href='%{login_url}'>entra</a> o <a href='%{forgot_url}'>reimposta la tua password</a>."
-      no_public_signup: "Ie iscrizioni pubbliche non sono consentite su questo sistema."
+      no_public_signup: "Le iscrizioni pubbliche non sono consentite su questo sistema."
       submit: "Crea account"
       title: "Crea un account"
       you_already_have_an_account_html: "Hai già un account Teambox con questo indirizzo %{email}. <a href='%{login_link}'>Entra con questa email</a> or <a href='%{reset_password_link}'>reimposta la tua password</a> se l' hai dimenticata. "
@@ -2346,25 +2356,25 @@ it:
     text_styles: 
       block_of_code: "Incolla il tuo codice indentato (4 spazi o tab) per incollarlo come un blocco di codice."
       enter_this: 
-        bold_text: "testo in **negretto**"
+        bold_text: "testo **grassetto**"
         header: "Testata<br />======<br /> "
         image: "![alt text](http://w3.org/img.jpg) "
-        italic_text: "testo *italico*"
+        italic_text: "testo *corsivo*"
         link: "[Descrizione Link](http://teambox.com)"
-        ordered_list: "1. lista ordinata<br />2. lasciare righe vuote!<br /> "
+        ordered_list: "1. lista numerata<br />2. lasciare righe vuote prima e dopo<br /> "
         smaller_header: "Testata intermedia ---------"
         title: "Introduci questo"
-        unordered_list: "* lista non ordinata<br />* lasciare righe vuote intorno<br />"
+        unordered_list: "* lista ordinata<br />* lasciare righe vuote prima e dopo<br />"
       to_see_this: 
         bold_text_html: "<strong style='font-weight: bold'>bold</strong> text "
         header_html: "<h3 style='font-size:18px'>Header</h3> "
         image_html: "<img src='http://www.w3.org/Icons/valid-html401'> "
-        italic_text_html: "testo <i>italico</i> "
+        italic_text_html: "testo <i>corsivo</i> "
         link_html: "<a href='http://www.teambox.com'>Descrizione Link</a> "
-        ordered_list_html: "<li>lista ordinata</li><br /><li>lasciare righe vuote!</li><br /> "
+        ordered_list_html: "<li>lista numerata</li><br /><li>lasciare righe vuote prima e dopo</li><br /> "
         smaller_header_html: "<h4 style='font-size:14px'>Testata intermedia</h4> "
         title_html: "Per vedere questo"
-        unordered_list_html: "<li>lista non ordinata</li><br /><li>lasciare righe vuote intorno</li><br /> "
+        unordered_list_html: "<li>lista ordinata</li><br /><li>lasciare righe vuote prima e dopo</li><br /> "
     unconfirmed_email: 
       follow_the_link_html: "Per attivare il tuo account <b>apri questa mail e segui il link che trovi al suo interno</b>."
       invitation_sent_to_html: "Abbiamo inviato un invito a <i>%{email}</i>, per verificare il tuo indirizzo email."
