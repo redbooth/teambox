@@ -70,6 +70,10 @@ class Ability
       target = object.try(:comment).try(:target)
       api_write?(user) && (object.owner?(user) or object.project.admin?(user)) && private_access?(user, target)
     end
+
+    can :destroy, Folder do |object|
+      api_write?(user) && (object.owner?(user) or object.project.admin?(user))
+    end
     
     can :destroy, [TaskList, Page] do |object|
       api_write?(user) && (object.owner?(user) or object.project.admin?(user))
@@ -118,6 +122,10 @@ class Ability
     end
     
     can :upload_files, Project do |project|
+      api_write?(user) && project.editable?(user)
+    end
+
+    can :create_folders, Project do |project|
       api_write?(user) && project.editable?(user)
     end
     

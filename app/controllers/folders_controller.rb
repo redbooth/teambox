@@ -1,7 +1,13 @@
 class FoldersController < ApplicationController
 
+  #TODO: before_filter :set_page_title
+
+  rescue_from CanCan::AccessDenied do |exception|
+    handle_cancan_error(exception)
+  end
+
   def create
-    #authorize! :make_tasks, @current_project
+    authorize! :create_folders, @current_project
 
     params[:folder].merge!({:user_id => current_user.id, :project_id => @current_project.id})
 
@@ -15,9 +21,10 @@ class FoldersController < ApplicationController
   end
 
   def destroy
-    #authorize! :destroy, @folder
-
+    
     @folder = @current_project.folders.find_by_id(params[:id])
+    authorize! :destroy, @folder
+
     @parent_folder = @folder.parent_folder
     @folder.destroy
 
