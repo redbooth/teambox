@@ -25,7 +25,7 @@ class ApiV1::PagesController < ApiV1::APIController
     authorize! :make_pages, @current_project
     @page = @current_project.new_page(current_user,params)
     if @page.save
-      handle_api_success(@page, true)
+      handle_api_success(@page, :is_new => true)
     else
       handle_api_error(@page)
     end

@@ -151,6 +151,18 @@ describe ApiV1::PagesController do
     end
   end
 
+  describe "#create" do
+    it "should allow participants to create pages" do
+      login_as @user
+
+      post :create, :project_id => @project.permalink, :name => 'Important!'
+      response.should be_success
+
+      @project.pages.length.should == 2
+      @project.pages.first.name.should == 'Important!'
+    end
+  end
+
   describe "#update" do
     it "should allow participants to modify the page" do
       login_as @user
