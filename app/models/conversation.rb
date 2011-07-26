@@ -47,7 +47,7 @@ class Conversation < RoleRecord
 
     self.create!(:body => text, :simple => true) do |conversation|
       author = payload['commits'].any? ? conversation.project.users.detect { |u| u.name == payload['commits'][0]['author']['name'] } : nil
-      conversation.user = author || conversation.project.user
+      conversation.user = author || conversation.project.hook_user
       yield conversation if block_given?
     end
   end

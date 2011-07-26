@@ -24,8 +24,7 @@
           :admins => @admins.collect { |user| link_to(h(user), user) }.to_sentence,
           :count => @admins.size).html_safe
 
-  - unless @current_project.owner?(current_user)
-    - current_person = @people.find { |p| p.user == current_user }
-    %h2= t('people.column.leaving')
-    %p= t('people.column.you_can_leave')
-    %p= leave_project_link(@current_project)
+  - current_person = @people.find { |p| p.user == current_user }
+  %h2= t('people.column.leaving')
+  %p= t('people.column.you_can_leave')
+  %p= leave_project_link(@current_project)

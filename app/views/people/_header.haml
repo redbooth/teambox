@@ -1,11 +1,12 @@
 .person_header
   .name
-    %h2= user_link(person.user)
-    %p= t(person.owner?? '.owner' : ".#{person.role_name}")
-
+    %h2== #{user_link(person.user)} @#{person.user.login}
+    %p
+      %strong= ".#{person.role_name}"
+      
+    %p= time_ago_in_words(person.user.updated_at)
   - if request.format != :m and can?(:update, person)
     .actions
       = link_to t('people.link.edit'), '#edit'
-      - unless project.owner?(person.user)
-        = link_to t('people.header.remove'), project_person_path(project, person, :anchor => 'destroy'),
-          'data-confirm' => t('people.header.confirm_delete'), 'data-method' => 'delete', 'data-remote' => true
+      = link_to t('people.header.remove'), project_person_path(project, person, :anchor => 'destroy'),
+        'data-confirm' => t('people.header.confirm_delete'), 'data-method' => 'delete', 'data-remote' => true

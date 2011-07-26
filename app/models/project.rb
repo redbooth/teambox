@@ -102,6 +102,14 @@ class Project < ActiveRecord::Base
                            :limit => limit)
   end
   
+  def can_search?
+    true
+  end
+  
+  def hook_user
+    users.first
+  end
+  
   def references
     { :users => [user_id], :organizations => [organization_id] }
   end

@@ -537,8 +537,6 @@ en:
       public_project_html: "Public project. <em>Anybody will be able to access it and join it at the <a href='/public'>public projects section</a>.</em>"
       archiving: "Archive this project"
       forever: "Delete this project forever"
-      owner: "Owner"
-      owner_description: "The owner is the main responsible for a project. He or she cannot be removed from the project before ownership is transferred to another user."
       name_html: "Project Name <em>Keep it short and descriptive, for example: Taggart Transcontinental.</em>"
       name_example: Project name
       permalink_html: "Permalink <em>Short identifier for the project</em>"
@@ -603,9 +601,6 @@ en:
       title_deletion: Archive or Delete project %{project}
       title_ownership: Ownership of %{project}
       submit: Save Changes
-      change_owner: Change owner
-      transferred: "Project ownership has been transferred."
-      invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
       success: Project updated
       error: Couldn't change project settings
       deleted: You deleted the project
@@ -1447,7 +1442,6 @@ en:
       general: General Settings
       picture: Project Picture
       deletion: Project Archiving/Deletion
-      ownership: Ownership
     project_navigation:
       overview: Overview
       all_conversations: All Conversations

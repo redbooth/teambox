@@ -1,4 +1,0 @@
-.owner
-  .description= t('projects.fields.owner_description')
-  = f.label :user_id, t('projects.fields.owner')
-  = f.select :user_id, options_for_owner(@current_project.people)	

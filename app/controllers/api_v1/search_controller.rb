@@ -34,7 +34,7 @@ class ApiV1::SearchController < ApiV1::APIController
     end
 
     def project_owner
-      @current_project.user
+      @current_project.can_search?
     end
 
     def project_ids

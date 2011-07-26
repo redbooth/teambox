@@ -107,7 +107,7 @@ module ProjectsHelper
 
   def leave_project_link(project)
     person = current_user.people.detect { |p| p.project_id == project.id }
-    unless (project.user == current_user) || !person
+    unless !person
       link_to t('people.column.leave_project'),
         project_person_path(project, person),
         :method => :delete, :confirm => t('people.column.confirm_delete'), :class => :leave_link
@@ -123,10 +123,6 @@ module ProjectsHelper
       msg = t('projects.not_in_project.explain_public_html', :organization => h(@current_project.organization))
       link_to t('projects.not_in_project.join'), join_project_path(project), :title => msg, :class => :public_link
     end
-  end
-
-  def options_for_owner(people)
-    people.map {|person| [ person.name, person.user_id ]}
   end
   
   def options_for_projects(projects)
