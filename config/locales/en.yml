@@ -1171,6 +1171,7 @@ en:
       hours: "%{hours}h"
       hours_with_minutes: "%{hours}h %{minutes}m"
       cannot_edit: "Comment cannot be edited after 15 minutes"
+      cannot_delete: "Comment cannot be deleted after 15 minutes"
       loading: "Loading..."
     hours:
       add_hours: Hours

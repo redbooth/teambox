@@ -11,6 +11,7 @@
     'mouseover .textilized a': 'setTargetBlank'
   , 'click .thread .comments .more_comments a': 'reloadComments'
   , 'click a.delete': 'deleteComment'
+  , 'mouseover .comment .actions_menu': 'applyCommentActionRules'
   };
 
   Thread.initialize = function (options) {
@@ -156,6 +157,47 @@
     }
 
     return this;
+  };
+
+  Thread.applyCommentActionRules = function(event) {
+    var actions_menu = $(event.target);
+    if (!actions_menu.hasClassName('actions_menu')) {
+      actions_menu = actions_menu.up('.actions_menu');
+    }
+
+    var comment = actions_menu.up('.comment')
+    ,   current_user = Teambox.models.user
+    ,   projects = Teambox.collections.projects.models
+    ,   user_id = parseInt(comment.readAttribute('data-user'), 10)
+    ,   project_id = parseInt(comment.readAttribute('data-project'), 10)
+    ,   timestamp = parseInt(comment.readAttribute('data-editable-before'), 10);
+
+    // My own comments: I can modify them, a later filter will ensure that only for 15 minutes
+    if(user_id == current_user.id) {
+      actions_menu.down('.edit').forceShow();
+    }
+
+    // Projects where I'm admin: I can destroy comments at any time
+    var projects_im_admin = Teambox.helpers.projects.getMyAdminProjects(current_user.id);
+    if(projects_im_admin.include(project_id)) {
+      actions_menu.down('.edit').forceShow();
+      actions_menu.down('.delete').forceShow();
+    }
+
+    // Disable editing comments 15 minutes after posting them
+    var now = new Date()
+    ,   editableBefore = new Date(parseInt(timestamp));
+
+    if (now >= editableBefore) {
+      _.each(['edit', 'delete'], function(className) {
+
+         var link = actions_menu.down('a.' + className);
+         if (link) {
+           var message = link.readAttribute('data-un' + className + 'able-message');
+           link.replace(new Element('span').update(message).addClassName(className));
+         }
+      });
+    }
   };
 
   // exports

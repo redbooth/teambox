@@ -9,9 +9,9 @@
     .actions_menu
       img(src="/img_3_2/ico/arrow-dropdown.png", alt="Triangle",class="triangle")
       .extra
-        a.edit(style= 'display:block;') Edit
-        a.reply_email(rel= 'facebox', href= '#email_post_' + self.id) Reply via email
-        a.delete(style= 'display:block;', href= "#") Delete
+        a.edit(style= 'display:none;', data-uneditable-message='<%=t('comments.comment.cannot_edit')%>') <%= t('comments.actions.edit') %>
+        a.reply_email(rel= 'facebox', href= '#email_post_' + self.id) <%= t('comments.actions.post_by_email') %>
+        a.delete(style= 'display:none;', href= "#", data-undeleteable-message='<%=t('comments.comment.cannot_delete')%>', data-confirm='<%= t('comments.comment.confirm_delete') %>') <%= t('common.delete') %>
     .actiondate
       time.timeago(data-msec= self.ms(self.updated_at), pubdate= 'true')= self.timeAgo(self.updated_at)
     .body.textilized
