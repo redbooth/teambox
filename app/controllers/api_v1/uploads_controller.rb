@@ -30,10 +30,10 @@ class ApiV1::UploadsController < ApiV1::APIController
   
   def create
     authorize! :upload_files, @current_project
-    authorize! :update, @page if @page
+    authorize! :update, page if page
       
     @upload = @current_project.uploads.new params
-    @upload.page = @page if @page
+    @upload.page = page if page
     @upload.user = current_user
     calculate_position(@upload) if @upload.page
 
@@ -60,6 +60,10 @@ class ApiV1::UploadsController < ApiV1::APIController
     @target ||= (@page || @current_project)
   end
   
+  def page
+    @page || @upload.try(:page)
+  end
+
   def load_page
     return unless params[:page_id]
     @page = @current_project.pages.find_by_id(params[:page_id])

@@ -28,8 +28,8 @@ class ApiV1::NotesController < ApiV1::APIController
   end
   
   def create
-    authorize! :update, @page
-    @note = @page.build_note(params)
+    authorize! :update, page
+    @note = page.build_note(params)
     @note.updated_by = current_user
     calculate_position(@note)
     @note.save
@@ -42,7 +42,7 @@ class ApiV1::NotesController < ApiV1::APIController
   end
   
   def update
-    authorize! :update, @page
+    authorize! :update, page
     @note.updated_by = current_user
     if @note.update_attributes(params)
       handle_api_success(@note)
@@ -52,7 +52,7 @@ class ApiV1::NotesController < ApiV1::APIController
   end
 
   def destroy
-    authorize! :update, @page
+    authorize! :update, page
     @note.destroy
     handle_api_success(@note)
   end
@@ -63,6 +63,10 @@ class ApiV1::NotesController < ApiV1::APIController
     @target ||= (@page || @current_project)
   end
   
+  def page
+    @page || @note.try(:page)
+  end
+
   def load_note
     @note = if target
       target.notes.find_by_id(params[:id])
