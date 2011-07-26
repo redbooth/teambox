@@ -2,6 +2,7 @@
 
   var UploadArea = { className: 'upload_area'
                    , template: Teambox.modules.ViewCompiler('partials.upload_area')
+                   , inputTemplate: Teambox.modules.ViewCompiler('partials.upload_input')
                    , fileListEntrytemplate: Teambox.modules.ViewCompiler('partials.upload_entry')
                    , files: []
                    };
@@ -24,9 +25,13 @@
   /* updated upload area element
    */
   UploadArea.render = function () {
+    if (!this.form) {
+      this.form = this.comment_form.form;
+    }
+
     this.el
       .setStyle({display: 'none'})
-      .update(this.template(this.model.getAttributes()));
+      .update(this.template(_.extend(this.model.getAttributes(), {number: 0})));
 
     return this;
   };
@@ -343,10 +348,16 @@
     }
 
     var el = evt.element()
-      , new_input = new Element('input', {type: 'file', name: incrementLastNumber(el.name)});
+      , current_value = el.value.split(/\\/).last()
+      , fake_input = el.next('.upload_fake').down('input');
+
+    fake_input.value = current_value;
+    var new_input = this.inputTemplate({number: incrementLastNumber(el.name)});
 
     if (!this.hasEmptyFileUploads()) {
-      el.insert({after: new_input});
+      el.up('.upload_div').insert({after: new_input});
+      el.up('.upload_div').next('div').down('.upload_div').hide();
+      Effect.SlideDown(el.up('.upload_div').next('div').down('.upload_div'), { duration: 0.5 });
     }
   };
 
