@@ -20,6 +20,8 @@
 
     this.dragndrop = options.dragndrop;
     this.model.set({task_list: Teambox.collections.tasks_lists.get(this.model.get('task_list_id'))}, {silent: true});
+    this.model.attributes.is_task = this.model.get('type') === 'Task';
+    this.model.attributes.is_conversation = this.model.get('type') === 'Conversation';
 
     this.model.bind('change', this.render);
     this.model.get('task_list').bind('change', this.render);
