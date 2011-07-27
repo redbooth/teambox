@@ -79,6 +79,7 @@ class Person < ActiveRecord::Base
   # Returns a hash with all the user's projects and the people in that project
   # in the format project_id => [[person_id, login, full_name, user_id], ...]
   def self.people_data_for_user(user)
+    return nil unless user
     projects = user.projects.reject{ |p| p.new_record? }
     return nil if projects.empty?
 
