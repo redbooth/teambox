@@ -142,24 +142,9 @@ module ProjectsHelper
   end
 
   def projects_people_data_json
-    Rails.cache.fetch("projects_people_data.#{current_user.id}") do
-      projects = current_user.projects.reject{ |p| p.new_record? }
-      return nil.to_json if projects.empty?
-      data = {}
-      rows = Person.user_names_from_projects(projects)
-      rows.each do |project_id, login, first_name, last_name, person_id, user_id|
-        data[project_id] ||= []
-        data[project_id] << [person_id.to_s, login, "#{first_name} #{last_name}", user_id]
-      end
-
-      # current_user goes first
-      data.keys.each do |k|
-        index_current = data[k].index { |p| p[3].to_i == current_user.id }
-        person_current = data[k].delete_at(index_current)
-        data[k] = [person_current] + data[k]
-      end
-      data.to_json
-    end
+    Rails.cache.fetch "projects_people_data.#{current_user.id}" do
+      Person.people_data_for_user(current_user)
+    end.to_json
   end
 
   def project_link_with_overlay(project)

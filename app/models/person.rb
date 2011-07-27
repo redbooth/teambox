@@ -75,8 +75,32 @@ class Person < ActiveRecord::Base
     user_ids = Person.find(:all, :conditions => {:project_id => projects.map(&:id)}).map(&:user_id).uniq
     User.find(:all, :conditions => {:id => user_ids}, :select => 'id, login, first_name, last_name').sort_by(&:name)
   end
-  
-  def self.people_in_projects()
+
+  # Returns a hash with all the user's projects and the people in that project
+  # in the format project_id => [[person_id, login, full_name, user_id], ...]
+  def self.people_data_for_user(user)
+    projects = user.projects.reject{ |p| p.new_record? }
+    return nil if projects.empty?
+
+    data = Person.people_in_projects(projects)
+
+    # user goes first
+    data.keys.each do |k|
+      index_current = data[k].index { |p| p[3].to_i == user.id }
+      person_current = data[k].delete_at(index_current)
+      data[k] = [person_current] + data[k]
+    end
+    data.as_json
+  end
+
+  def self.people_in_projects(projects)
+    data = {}
+    rows = Person.user_names_from_projects(projects)
+    rows.each do |project_id, login, first_name, last_name, person_id, user_id|
+      data[project_id] ||= []
+      data[project_id] << [person_id.to_s, login, "#{first_name} #{last_name}", user_id]
+    end
+    data
   end
 
   def self.user_names_from_projects(projects)
