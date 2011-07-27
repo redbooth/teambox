@@ -108,6 +108,15 @@ describe Emailer do
           lambda { Emailer.confirm_email(@user.id) }.should_not raise_error
         end
       end
+
+      it "should render valid public download for #{locale}" do
+        @upload = Factory(:upload)
+
+        with_locale(locale) do
+          lambda { Emailer.public_download(@upload.id) }.should_not raise_error
+        end
+      end
+
     end
   end
 

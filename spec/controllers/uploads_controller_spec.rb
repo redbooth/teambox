@@ -171,6 +171,7 @@ describe UploadsController do
       @project.uploads(true).length.should == 2
     end
   end
+
   describe "#destroy" do
     it "should allow participants to destroy uploads" do
       login_as @user
@@ -189,6 +190,19 @@ describe UploadsController do
       @upload = Upload.find(:first, :order => 'created_at desc')
       Activity.count(:conditions => {:target_type => @upload.class.name, :target_id => @upload.id}).should == 1
       lambda { delete :destroy, :project_id => @project.permalink, :id => @upload.id }.should change(Activity, :count)
+    end
+  end
+
+  describe "#email_public" do
+    it "should send email with download link" do
+      login_as @user
+      recepient = 'this.is@valid.ema.il'
+
+      post :email_public, :project_id => @project.permalink, :id => @upload.id, :upload => {:invited_user_email => recepient}
+      response.should redirect_to(project_uploads_path)
+
+      last_email_sent.should deliver_to(recepient)
+
     end
   end
 

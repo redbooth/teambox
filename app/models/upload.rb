@@ -179,7 +179,7 @@ class Upload < RoleRecord
 
   def send_public_download_email
     return if @is_silent
-    Emailer.send_with_language :public_download, user.locale, self.id
+    Emailer.send_with_language :public_download, user.locale, self.id, self.invited_user_email
   end
 
   protected

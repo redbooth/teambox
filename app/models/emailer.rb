@@ -248,14 +248,13 @@ class Emailer < ActionMailer::Base
     })
   end
 
-  def public_download(upload_id)
+  def public_download(upload_id, recipient)
     @upload = Upload.find(upload_id)
     @user   = @upload.user
     mail(
-      :to         => @upload.invited_user_email,
+      :to         => recipient,
       :from       => self.class.from_user(nil, @user),
-      :subject    => I18n.t("emailer.public_download.subject",
-                            :user => @user.name)
+      :subject    => I18n.t("emailer.public_download.subject", :user => @user.name)
     )
   end
 
