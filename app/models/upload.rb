@@ -23,7 +23,10 @@ class Upload < RoleRecord
                   :page_id,
                   :description,
                   :parent_folder_id
-  
+                
+  attr_accessor :invited_user_email
+
+                
   include PageWidget
 
   DOWNLOADS_URL = "/downloads/:id/:style/:basename.:extension"
@@ -44,6 +47,7 @@ class Upload < RoleRecord
                             :message => I18n.t('uploads.form.max_size', 
                                                :mb => Teambox.config.asset_max_file_size.to_i)
 
+  validates_format_of :invited_user_email, :with => /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, :allow_nil => true
   validates_attachment_presence :asset, :message => I18n.t('uploads.form.presence')
 
   validate :check_page
@@ -171,6 +175,11 @@ class Upload < RoleRecord
     base[:type] = self.class.to_s if options[:emit_type]
     
     base
+  end
+
+  def send_public_download_email
+    return if @is_silent
+    Emailer.send_with_language :public_download, user.locale, self.id
   end
 
   protected

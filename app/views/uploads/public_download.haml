@@ -1,0 +1,20 @@
+%p
+  You can share this file with people outside your team
+  Enter an email to send this file to:
+
+  = form_for @upload, :url => email_public_project_upload_path(@current_project, @upload), :html => {:method => :post} do |f|
+    .text_field
+      = f.label :invited_user_email, 'Email'
+      = f.text_field :invited_user_email
+    = f.submit t('uploads.public_download.email.submit')
+
+%p
+  %br
+  or
+  %br
+  Send them the following link:
+  = public_download_file_url(:token => @upload.token)
+
+%p
+  Anybody with this link will be able to access this file and only this file.
+  They will not be granted access to your projects or files.

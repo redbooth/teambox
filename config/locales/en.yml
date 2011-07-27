@@ -1331,6 +1331,14 @@ en:
       uploaded_by: Uploaded by
       remove: Delete
       on_: "on"
+    public_download:
+      link:
+        anchor: Public download
+        title: Share this file with people outside your team
+      email:
+        submit: Send link
+        sent: "Email with a link to download has been sent"
+        not_sent: "Email has not been sent. %{error}"
     errors:
       exceeded_storage_plan_limit_html: "You have exceeded your storage quota for %{organization_name}. To increase your storage limits, <a href='%{url}'>upgrade your plan now</a>."
       general:  "There was an error uploading the file"
@@ -1666,6 +1674,11 @@ en:
           body: "%{name} edited the page %{page}."
     upload:
       file: "File:"
+    public_download:
+      subject: "%{user} wants to share a file with you on Teambox"
+      user_sent_you_a_link: "%{user} sent you a link to download a file stored on Teambox"
+      go_to_download_page: Go to download page
+      plaintext_link: "If the above link doesn't work, copy and paste the following url into your browser bar: "
     bounce:
       subject: "Error sending email to Teambox"
       user_not_found_error: "This email address is not associated with any Teambox account."

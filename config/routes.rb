@@ -164,6 +164,10 @@ Teambox::Application.routes.draw do
       match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
       match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
       resources :uploads do
+        member do
+          get :public_download
+          post :email_public
+        end
         collection do
           resources :folders, :except => [:show, :index, :new]
         end

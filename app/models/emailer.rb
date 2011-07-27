@@ -248,6 +248,17 @@ class Emailer < ActionMailer::Base
     })
   end
 
+  def public_download(upload_id)
+    @upload = Upload.find(upload_id)
+    @user   = @upload.user
+    mail(
+      :to         => @upload.invited_user_email,
+      :from       => self.class.from_user(nil, @user),
+      :subject    => I18n.t("emailer.public_download.subject",
+                            :user => @user.name)
+    )
+  end
+
   # requires data from rake db:seed
   class Preview < MailView
     def notify_task

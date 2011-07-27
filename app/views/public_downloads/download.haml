@@ -12,6 +12,3 @@
   .filename
     = link_to upload.asset_file_name, public_send_file_path(upload.token)
     %p== #{number_to_human_size(upload.size)}, by #{upload.user.name}
-
-= #FIXME below one seems to be unnecessary ?
-= javascript_tag "document.on('click', '#content', function(e,el) { e.stop(); window.location = el.down('.filename a').readAttribute('href') })"
