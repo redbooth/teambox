@@ -206,7 +206,7 @@
     // this.initUploader();
 
     var upload_area = $(this.el).down('.upload_area');
-    upload_area.toggle().highlight();
+    upload_area.toggle();
 
     // if (upload_area.visible()) {
     //   this.uploader.refresh();
