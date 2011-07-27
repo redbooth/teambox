@@ -8,7 +8,7 @@ module Tokenized
 
   def generate_token
     self.token = Digest::SHA512.hexdigest([Time.now, rand, self.object_id].join)[0...16]
-    generate_token unless self.class.find_by_token(self.token).nil?
+    generate_token if self.class.exists_by_token(self.token)
   end
 
 end
