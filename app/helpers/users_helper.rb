@@ -219,8 +219,8 @@ module UsersHelper
     end
 
     def json_organizations
-      current_user.memberships.joins(:organization).
-        select("organizations.id, organizations.name, organizations.permalink, memberships.role").where(:organizations => { :deleted => false }).
-        collect(&:attributes).to_json
+      Rails.cache.fetch("json_organizations.#{current_user.id}") do
+        Organization.json_organizations(current_user)
+      end.to_json
     end
 end

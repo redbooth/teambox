@@ -144,6 +144,12 @@ class Organization < ActiveRecord::Base
     self.settings = { 'omit_email_processing' => v == "1" }
   end
 
+  def self.json_organizations(user)
+    user.memberships.joins(:organization).
+      select("organizations.id, organizations.name, organizations.permalink, memberships.role").where(:organizations => { :deleted => false }).
+      collect(&:attributes).as_json
+  end
+
   protected
 
     def delete_logo= value
