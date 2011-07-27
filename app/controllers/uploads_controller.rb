@@ -61,9 +61,10 @@ class UploadsController < ApplicationController
                        order('name DESC')
     @upload ||= @current_project.uploads.new
 
-    respond_to do |format|
-      format.js   { render :layout => false }
-      format.any(:html, :m)  {}
+    unless params[:extractparts]
+      respond_to do |format|
+        format.js   { render "browsing", :layout => false }
+      end
     end
 
   end
