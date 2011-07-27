@@ -117,9 +117,10 @@ $upload_icon_width: 16px
 
 .upload_div
   position: relative
+  margin-bottom: 4px
   .info_label
-    margin: 4px 0 0 73px !important
-    clear: both
+    //margin: 4px 0 0 73px !important
+    //clear: both
   div.upload_fake
     position: absolute
     top: 24px
@@ -127,7 +128,9 @@ $upload_icon_width: 16px
     z-index: 1
     width: 620px
     display: inline-block
+    
     input
+      color: $clr_gray_60
       height: 18px
       padding: 4px
       +rounded(3px 0 0 3px)
@@ -139,7 +142,8 @@ $upload_icon_width: 16px
       margin: 0
         left: 67px
         right: -1px
-      
+    input.selected
+      background-color: $clr_gray_10
   input.upload_input
     display: inline-block
     width: 550px
@@ -153,4 +157,4 @@ $upload_icon_width: 16px
     //filter: alpha(opacity: 0)
     opacity: 0
     z-index: 2
-    top: 9px
+    top: 23px
