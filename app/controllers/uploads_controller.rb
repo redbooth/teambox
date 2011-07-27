@@ -64,6 +64,7 @@ class UploadsController < ApplicationController
     unless params[:extractparts]
       respond_to do |format|
         format.js   { render "browsing", :layout => false }
+        format.any(:html, :m) {}
       end
     end
 
