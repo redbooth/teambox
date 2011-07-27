@@ -1,7 +1,5 @@
-div
-  div(id="file_drop_#{self.type.toLowerCase()}_#{self.id}")
-    div(id="file_list_#{self.type.toLowerCase()}_#{self.id}")
-      ol(class='file_list')
-      // p <%= t('uploads.new.select_a_file') %>
-      label.info_label.add_file <%= t('uploads.new.add_files') %>
-      != self.partial('partials.upload_input', {number: self.number});
+div(id="file_drop_#{self.type.toLowerCase()}_#{self.id}")
+  div(id="file_list_#{self.type.toLowerCase()}_#{self.id}")
+    ol(class='file_list')
+    // p <%= t('uploads.new.select_a_file') %>
+    != self.partial('partials.upload_input', {number: self.number});

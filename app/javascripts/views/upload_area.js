@@ -356,8 +356,6 @@
 
     if (!this.hasEmptyFileUploads()) {
       el.up('.upload_div').insert({after: new_input});
-      el.up('.upload_div').next('div').down('.upload_div').hide();
-      Effect.SlideDown(el.up('.upload_div').next('div').down('.upload_div'), { duration: 0.5 });
     }
   };
 

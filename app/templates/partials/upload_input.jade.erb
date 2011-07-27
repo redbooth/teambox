@@ -1,7 +1,7 @@
-div
-  div.upload_div
-    input.upload_input(name='comments_attributes[0][uploads_attributes][' + self.number + '][asset]', type='file')
-    div.upload_fake
-      input
-      span.button_gray_straight
-        span <%= t('uploads.new.select_a_file_short') %>
+div.upload_div
+  label.info_label <%= t('uploads.new.add_files') %>
+  input.upload_input(name='comments_attributes[0][uploads_attributes][' + self.number + '][asset]', type='file')
+  div.upload_fake
+    input
+    span.button_gray_straight
+      span <%= t('uploads.new.select_a_file_short') %>
