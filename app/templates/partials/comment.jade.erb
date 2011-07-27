@@ -2,7 +2,7 @@
 - var conversation_url = self.project.permalink + '+' + 'conversation@<%= Teambox.config.smtp_settings[:domain]%>'
 - var task_url = self.project.permalink + '+' + 'task@<%= Teambox.config.smtp_settings[:domain]%>'
 
-.comment(data-editable-before= self.ms(self.updated_at), id= 'comment_' + self.id, data-project= self.project_id, data-id= self.id, data-user= self.user_id)
+.comment(data-editable-before= self.ms_since(<%= 15.minutes.to_s %>, self.created_at), id= 'comment_' + self.id, data-project= self.project_id, data-id= self.id, data-user= self.user_id)
   .info
     a.micro_avatar(href= self.user_url(self.user), style= 'background: url(' + self.user.micro_avatar_url + ') no-repeat')
   .block

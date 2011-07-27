@@ -20,6 +20,16 @@
     return time ? Date.parse(time) : '';
   };
 
+  /*
+  *  add seconds_since to the time in milliseconds
+  */
+  JADE.ms_since = function (seconds_since, time) {
+    var date = new Date(JADE.ms(time))
+    , time_in_ms = date.getTime();
+
+    return time_in_ms + (seconds_since*1000);
+  };
+
   JADE.date = function (time) {
     if (!time) {
       return;
