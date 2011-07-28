@@ -3,8 +3,14 @@
   .avatar
     %a.thumb_avatar{ :style => "background: url({{thumb_avatar_path}}) no-repeat" }
   .main
-    %a{ :href => '#' } {{first_name}} {{last_name}}
+    {{#belongs_to_project}}
+    %a{ :href => '/users/{{id}}' } {{first_name}} {{last_name}}
+    %p This user is already in the project.
+    {{/belongs_to_project}}
+    {{^belongs_to_project}}
+    %a.invite_user{ :href => '#' } {{first_name}} {{last_name}}
     %a.button{ :href => '#' } Select
+    {{/belongs_to_project}}
   .clear
 {{/users}}
 

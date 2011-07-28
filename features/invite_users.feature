@@ -33,13 +33,12 @@ Feature: Invite users to a project
     And I should see "Select a role for this project"
     And I should see "Invite also to the organization"
     When I press "Invite user to this project"
-    #Then I should see "Jordi Romero is now part of this project"
-    # TODO: What if he doesn't autoaccept invites?
+    Then I should see "Jordi Romero is now part of this project"
 
   Scenario: I invite an existing Teambox user by searching his name
     Given I am logged in as @mislav
     And I go to the people page of the "Ruby Rockstars" project
-    When I fill in "Enter name or email:" with "jordi"
+    When I fill in "Enter name or email:" with "Jordi"
     And I press "Search"
     Then I should see "Jordi Romero"
     And I should see "Jordi Priu"
@@ -48,8 +47,18 @@ Feature: Invite users to a project
     And I should see "Select a role for this project"
     And I should see "Invite also to the organization"
     When I press "Invite user to this project"
-    #Then I should see "Jordi Romero is now part of this project"
-    # TODO: What if he doesn't autoaccept invites?
+    Then I should see "Jordi Romero is now part of this project"
+
+  Scenario: I invite an existing Teambox user who doesn't autoaccept invites
+
+  Scenario: I attempt to invite an existing member of the project
+    Given I am logged in as @mislav
+    And I go to the people page of the "Ruby Rockstars" project
+    When I fill in "Enter name or email:" with "Pablo"
+    And I press "Search"
+    And I wait for 1 seconds
+    Then I should see "Pablo Villalba"
+    And I should see "This user is already in the project."
 
 
 

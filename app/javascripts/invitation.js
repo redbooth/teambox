@@ -13,7 +13,7 @@ UserSearchForm = {
     el.up('.invite_users').down('.results').update(html);
   },
   getUserData: function(id) {
-    this.users.detect(function(u) { u.id == id });
+    return this.users.detect(function(u) { return u.id == id });
   },
   displayInviteForExistingUser: function(el, user) {
     var html = Mustache.to_html(
@@ -34,6 +34,13 @@ UserSearchForm = {
       html = "<p>No results found. <b>Type in your contact's email</b> to send an invitation to your project.</p>";
     }
     el.up('.invite_users').down('.results').update(html);
+  },
+  processUserData: function(users) {
+    users.each(function(user){
+      user.belongs_to_project = user.projects.any(function(p){ return p.id == current_project });
+    });
+    console.log(users)
+    return users;
   }
 };
 
@@ -45,10 +52,10 @@ document.on('ajax:create', '.invite_users form', function(e,el) {
 
 // Search form: get results and display them
 document.on('ajax:success', '.invite_users form', function(e, el) {
-  var users = e.memo.responseJSON;
+  var users = UserSearchForm.processUserData(e.memo.responseJSON);
   if(users.length === 0) {
     UserSearchForm.noResults(el);
-  } else if(users.length === 1) {
+  } else if (users.length === 1 && !users[0].belongs_to_project) {
     UserSearchForm.displayInviteForExistingUser(el, users[0]);
   } else {
     UserSearchForm.displaySearchResults(el, users);
@@ -56,10 +63,12 @@ document.on('ajax:success', '.invite_users form', function(e, el) {
 });
 
 // Select a user when there's more than one in the results list
-document.on('click', '.invite_users .results .user a', function(e,el) {
+var selectInviteUserFunc = function(e,el) {
   var user = UserSearchForm.getUserData(el.up('.user').readAttribute('data-user-id'));
   UserSearchForm.displayInviteForExistingUser(el, user);
-});
+};
+document.on('click', '.invite_users .results .user a.button', selectInviteUserFunc);
+document.on('click', '.invite_users .results .user a.invite_user', selectInviteUserFunc);
 
 // Failed search
 document.on('ajax:failure', '.invite_users form', function(e, el) {

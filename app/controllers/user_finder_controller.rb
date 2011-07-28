@@ -20,7 +20,7 @@ class UserFinderController < ActionController::Base
         []
       else
         # TODO: Replace for Sphinx and look for first and last name too
-        User.where(["login LIKE ?", terms]).limit(3).order("visited_at DESC")
+        User.where(["login LIKE ? OR first_name LIKE ? OR last_name LIKE ?", terms,terms,terms]).limit(3).order("visited_at DESC")
       end
     end
     render :json => shortened_user_profiles(users)
@@ -39,11 +39,11 @@ class UserFinderController < ActionController::Base
           :micro_avatar_path => user.avatar_or_gravatar_path(:micro),
           :projects => user.people.collect do |person|
             { :role => person.role,
-              :project_id => person.project_id }
+              :id => person.project_id }
           end,
           :organizations => user.memberships.collect do |member|
             { :role => member.role,
-              :organization_id => member.organization_id }
+              :id => member.organization_id }
           end
         }
       end
