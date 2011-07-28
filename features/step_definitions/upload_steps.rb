@@ -15,3 +15,7 @@ Given /^"([^\"]*)" has been uploaded to the "([^\"]*)" project$/ do |file_name, 
   project = Project.find_by_name(project_name)
   Factory.create(:upload, :asset_file_name => file_name, :project => project)
 end
+
+When /^I click upload list item for "([^\"]*)" file$/ do |filename|
+  page.find(:xpath, "//div[@class = 'header' and .//a[contains(text(),'#{filename}')]]").click
+end
