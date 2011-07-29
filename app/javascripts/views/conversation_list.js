@@ -31,11 +31,14 @@
     this.trigger('change_selection', model);
   };
 
-  ConversationList.reload = function(collection) {
+  ConversationList.reload = function(collection, project_id) {
     var self = this;
-    collection.each(function(model){
-      var view = new Teambox.Views.ConversationListItem({model:model, root_view: self});
-      self.conversation_list.insert({bottom: view.render().el});
+    // Only add them to the DOM if their project_id matches
+    collection.each(function(conversation){
+      if(conversation.get('project').permalink === project_id){
+        var view = new Teambox.Views.ConversationListItem({model:conversation, root_view: self});
+        self.conversation_list.insert({bottom: view.render().el});
+      }
     });
   };
 
@@ -44,14 +47,14 @@
     this.el.update(this.template({project_id: this.project_id}));
     this.conversation_list = this.el.down('.conversation_list');
     this.conversation_view = this.el.down('.conversation_view');
-    this.reload(this.collection);
+    this.reload(this.collection, this.project_id);
     if (this.conversation) {
       var view;
       if (this.conversation.id == null) {
         view = new Teambox.Views.ConversationNew({model: this.conversation});
       } else {
         view = new Teambox.Views.Conversation({model: this.conversation});
-      }	
+      }
       this.conversation_view.update(view.render().el);
     }
     return this;

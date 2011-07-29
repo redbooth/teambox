@@ -1,5 +1,6 @@
 (function () {
-  var AllTasks = { title: 'All tasks in your projects'
+  var AllTasks = { className: 'all_tasks'
+                 , title: 'All tasks in your projects'
                  , template: Teambox.modules.ViewCompiler('tasks.index')
                  , primer_template: Teambox.modules.ViewCompiler('primers.all_tasks')
                  }

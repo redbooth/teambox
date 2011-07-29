@@ -15,8 +15,9 @@
   };
 
   Thread.initialize = function (options) {
-    _.bindAll(this, "render");
-
+    _.bindAll(this, "render", "reloadComments");
+    
+    this.options = options;
 
     this.model.attributes.is_task = this.model.get('type') === 'Task';
     this.model.attributes.is_conversation = this.model.get('type') === 'Conversation';
@@ -31,6 +32,7 @@
         , controller: this.controller
         , thread: this
     });
+    
   };
 
   /* sets the target attribute to '_blank'
@@ -38,12 +40,18 @@
    * @param {Event} evt
    */
   Thread.reloadComments = function (evt) {
-    evt.stop();
+    evt && evt.stop();
 
-    var el = evt.element()
+    var el
       , self = this
-      , options = {project_id: this.model.get('project_id')}
       , comments;
+    
+    el = evt? evt.element() : $(".conversation_view")[0]; 
+    
+    // 'options' determine the fetching rules
+    var options = {project_id: this.model.get('project_id')}
+    if(this.options.conversation_id)
+      options = {conversation_id: this.options.conversation_id};
 
     options[this.model.get('type').toLowerCase() + '_id'] = this.model.id;
     comments = new Teambox.Collections.Comments([],options);
