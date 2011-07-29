@@ -62,14 +62,22 @@
       .comment_count
         display: none
         text-align: center
+        float: left
         span
-          display: inline-block
-          padding: 2px 5px
-          font-size: 9px
-          background-color: #aaa
-          color: white
-          font-weight: bold
-          +rounded(5px)
+          color: $clr_gray_80
+          width: 25px
+          height: 20px
+          padding: 0
+            top: 2px
+          margin: 0px
+          display: block
+          float: left
+          clear: both
+          text-align: center
+          background: url(/img_3_2/sprite_base.png) -37px -36px no-repeat
+      img
+        margin: 3px 3px 3px 4px
+        float: left
     .block
       float: left
       display: block
@@ -105,8 +113,10 @@
   .new_comment_wrap .new_comment .new_extra .subviews
     .add_watchers_box
       margin-left: 50px
+      padding-bottom: 10px
       p
         width: 500px
+        margin: 0 0 5px 0
     .private_options
       .option
         margin-left: 50px
@@ -170,12 +180,22 @@
     font-size: 10px
 
 .thread.collapsed
+  height: 42px
   span.time
     display: inline-block
+    position: absolute
+    right: 6px
+  .block
+    margin: 0
   .comments, form
     display: none
   p.excerpt, .comment_count
     display: block !important
+  .comment_header .info
+    width: 65px
+    .comment_count
+  .comment_header
+    background: none
 
 #activities
   margin-left: 10px
