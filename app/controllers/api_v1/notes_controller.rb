@@ -37,7 +37,7 @@ class ApiV1::NotesController < ApiV1::APIController
     if @note.new_record?
       handle_api_error(@note)
     else
-      handle_api_success(@note, :is_new => true)
+      handle_api_success(@note, :is_new => true, :references => true)
     end
   end
   
@@ -45,7 +45,7 @@ class ApiV1::NotesController < ApiV1::APIController
     authorize! :update, page
     @note.updated_by = current_user
     if @note.update_attributes(params)
-      handle_api_success(@note)
+      handle_api_success(@note, :wrap_objects => true, :references => true)
     else
       handle_api_error(@note)
     end

@@ -37,7 +37,7 @@ class ApiV1::DividersController < ApiV1::APIController
     if @divider.new_record?
       handle_api_error(@divider)
     else
-      handle_api_success(@divider, :is_new => true)
+      handle_api_success(@divider, :is_new => true, :references => true)
     end
   end
   
@@ -45,7 +45,7 @@ class ApiV1::DividersController < ApiV1::APIController
     authorize! :update, page
     @divider.updated_by = current_user
     if @divider.update_attributes(params)
-      handle_api_success(@divider)
+      handle_api_success(@divider, :wrap_objects => true, :references => true)
     else
       handle_api_error(@divider)
     end
