@@ -93,6 +93,12 @@ describe ApiV1::DividersController do
       post :create, :project_id => @project.permalink, :page_id => @page.id, :name => 'Divisions'
       response.should be_success
 
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+
+      references.include?("#{@page.dividers.last.project_id}_Project").should == true
+      references.include?("#{@page.dividers.last.page_slot.id}_PageSlot").should == true
+
       @page.dividers(true).length.should == 2
       @page.dividers.last.name.should == 'Divisions'
     end

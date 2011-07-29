@@ -44,7 +44,7 @@ class ApiV1::UploadsController < ApiV1::APIController
     if @upload.new_record?
       handle_api_error(@upload)
     else
-      handle_api_success(@upload, :is_new => true)
+      handle_api_success(@upload, :is_new => true, :references => true)
     end
   end
 
