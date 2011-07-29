@@ -56,7 +56,9 @@ class UploadsController < ApplicationController
     else
       flash[:error] = t('uploads.public_download.email.not_sent', :error => @upload.errors.full_messages.to_sentence)
     end
-    redirect_to project_uploads_path
+    
+    redirect_to @upload.parent_folder ? project_folder_path(@current_project, @upload.parent_folder) : project_uploads_path(@current_project)
+
   end
 
   def index

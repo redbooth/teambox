@@ -10,8 +10,9 @@ class FoldersController < ApplicationController
     authorize! :create_folders, @current_project
 
     params[:folder].merge!({:user_id => current_user.id, :project_id => @current_project.id})
-
-    if folder = Folder.create(params[:folder])
+    folder = Folder.new(params[:folder])
+    
+    if folder.save
       redirect_to project_folder_path(@current_project, folder)
     else
       flash[:error] = [t('folders.new.invalid_folder'), folder.errors.full_messages.to_sentence].join('. ')
