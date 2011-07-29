@@ -47,7 +47,7 @@
     }
 
     this.el.addClassName(this.model.getClasses());
-    this.el.down('.thread').insert({bottom: (new Teambox.Views.CommentForm({
+    this.el.down('.thread_child').insert({bottom: (new Teambox.Views.CommentForm({
       model: (new Teambox.Models.Thread(this.model.attributes))
     , controller: this.controller
     })).render().el});
@@ -61,7 +61,7 @@
    * @param {Event} evt
    */
   Task.toggleComments = function (evt) {
-    var thread_block = this.el.down('.thread'), foo;
+    var thread_block = this.el.down('.thread_child'), foo;
 
     evt.stop();
 
