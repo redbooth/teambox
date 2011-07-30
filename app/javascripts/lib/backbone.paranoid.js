@@ -13,7 +13,10 @@ window.isPageDirty = function() {
 
 window.onbeforeunload = function(e) {
   e = e || window.event;  
-  if (window.isPageDirty()) {
+  // TODO: Actually, we should only count POST, PUT and DELETE AJAX
+  // requests, and activeRequestCount is also counting the ones with GET
+  // which do not generally represent "unsaved changes"
+  if ((Ajax.activeRequestCount > 0) || window.isPageDirty()) {
     // For IE and Firefox
     if (e) { e.returnValue = "You have unsaved changes."; }
     // For Webkit

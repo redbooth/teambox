@@ -32,6 +32,7 @@
 //= require <modules/view_compiler>
 //= require <modules/uploader>
 //= require <modules/clock>
+//= require <modules/ajax_loading_spinner>
 
 // TODO: move it to modules
 //= require <lib/teambox_api>
