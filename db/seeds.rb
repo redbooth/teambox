@@ -181,6 +181,13 @@ def seed_data
     p.save!
   end
 
+  ["Rumasa redesign", "Madoff financials", "Forum filatelico"].each do |name|
+    frank.projects.new(:name => name).tap do |p|
+      p.organization = organization
+      p.save!
+    end
+  end
+
   earthworks.add_users [corrina, tomas, maya, marco]
 
 
