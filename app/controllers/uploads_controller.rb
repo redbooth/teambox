@@ -46,19 +46,17 @@ class UploadsController < ApplicationController
   end
 
   def email_public
-    
     @upload = @current_project.uploads.find(params[:id])
     @upload.invited_user_email = params[:upload][:invited_user_email]
 
     if @upload.valid?
       @upload.send_public_download_email
-      flash[:notice] = t('uploads.public_download.email.sent')
+      flash[:notice] = t('uploads.public_download.email.sent', :email => @upload.invited_user_email)
     else
       flash[:error] = t('uploads.public_download.email.not_sent', :error => @upload.errors.full_messages.to_sentence)
     end
-    
-    redirect_to @upload.parent_folder ? project_folder_path(@current_project, @upload.parent_folder) : project_uploads_path(@current_project)
 
+    redirect_to @upload.parent_folder ? project_folder_path(@current_project, @upload.parent_folder) : project_uploads_path(@current_project)
   end
 
   def index

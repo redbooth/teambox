@@ -1335,12 +1335,16 @@ en:
       remove: Delete
       on_: "on"
     public_download:
+      share_outside_your_team: You can share this file with people outside your team.
+      enter_an_email: 'Enter an Email address to send a link to this file:'
+      share_link: 'Alternatively, you can share the following link to this file:'
+      security_clarification: Anybody with this link will be able to access this file and only this file. They will not be granted access to your projects or files.
       link:
-        anchor: Public download
+        anchor: Send this file to somebody...
         title: Share this file with people outside your team
       email:
         submit: Send link
-        sent: "Email with a link to download has been sent"
+        sent: "We just sent a link to the file to %{email}"
         not_sent: "Email has not been sent. %{error}"
     errors:
       exceeded_storage_plan_limit_html: "You have exceeded your storage quota for %{organization_name}. To increase your storage limits, <a href='%{url}'>upgrade your plan now</a>."

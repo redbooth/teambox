@@ -14,8 +14,8 @@
       [+]
 
   .reference{ :style => 'display: none' }
-    = link_to t('uploads.public_download.link.anchor'), public_download_project_upload_path(upload.project, upload), :rel => 'facebox', :title => t('uploads.public_download.link.title')
     = link_to_upload upload, t('.download'), {:rel => nil}
+    = link_to t('uploads.public_download.link.anchor'), public_download_project_upload_path(upload.project, upload), :rel => 'facebox', :title => t('uploads.public_download.link.title')
     - if can?(:update, upload) # and request.format != :m
       = link_to t('.remove'), [upload.project, upload], :'data-remote' => true,
         :'data-method' => 'delete', :'data-confirm' => t('confirm.delete_upload')
