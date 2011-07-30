@@ -9,6 +9,7 @@
 //= require <juggernaut>
 //= require <lib/jquery>
 //= require <lib/backbone-prototype>
+//= require <lib/backbone.paranoid>
 //= require <lib/chosen.proto>
 
 //= require <lib/handlebars>
