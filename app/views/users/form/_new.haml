@@ -12,9 +12,9 @@
 .email.text_field
   = f.label :email, t('users.form.email')
   - if (@invitation || @app_link)
-    = f.text_field :email, :readonly => 'readonly', :style => 'color: #999'
+    = f.email_field :email, :readonly => 'readonly', :style => 'color: #999'
   - else
-    = f.text_field :email
+    = f.email_field :email
   = errors_for user, :email
 - if @invitation
   .use_this_email{ :style => 'margin: 10px; padding: 10px; border: 1px rgb(220,220,150) solid; background-color: rgb(255,255,200)' }
