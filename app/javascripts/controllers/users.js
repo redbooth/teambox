@@ -4,7 +4,6 @@ Teambox.Controllers.UsersController = Teambox.Controllers.BaseController.extend(
   },
 
   users_show: function() {
-    $('content_header').update('');
     $('content').update( 'show user' );
   }
 });

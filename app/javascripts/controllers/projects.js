@@ -13,13 +13,11 @@
 
   ProjectsController.projects_index = function () {
     Views.Sidebar.highlightSidebar('projects_link');
-    $('content_header').update('');
     $('content').update((new Views.Projects({collection: collections.projects})).render().el);
   };
 
   ProjectsController.projects_new = function () {
     Teambox.Views.Sidebar.highlightSidebar('new_project_link');
-    $('content_header').update('');
     $('content').update('new project');
   };
 
@@ -29,8 +27,9 @@
 
     Views.Sidebar.highlightSidebar('project_' + permalink + '_activities');
     $('view_title').update(project.get('name') + ' - Recent activity');
-    $('content_header').update((new Teambox.Views.SimpleConversationForm()).render().el);
     $('content').update((new Teambox.Views.Activities({collection: threads})).render().el);
+    $('content').insert({
+      top: (new Teambox.Views.SimpleConversationForm()).render().el });
   };
 
   ProjectsController.task_lists = function (permalink) {
@@ -39,7 +38,6 @@
       , task_lists = project.get('task_lists').setTasks(tasks)
       , view = new Views.TaskLists({collection: task_lists, project: project, el: $('content')});
 
-    $('content_header').update('');
     Teambox.Views.Sidebar.highlightSidebar('project_' + permalink + '_task_lists');
 
     // render

@@ -22,7 +22,6 @@
     var collection = Teambox.collections.conversations;
     var view = new Teambox.Views.ConversationList({collection: collection, conversation: model, project_id: project});
 
-    $('content_header').update('');
     $('content').update(view.render().el);
 
     view.setActive(model);
@@ -34,7 +33,6 @@
   ConversationsController.index = function (project, id) {
     var collection = Teambox.collections.conversations;
     var view = new Teambox.Views.ConversationList({collection: collection, project_id: project});
-    $('content_header').update((new Teambox.Views.SimpleConversationForm()).render().el);
     $('content').update(view.render().el);
 
     Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_conversations');
