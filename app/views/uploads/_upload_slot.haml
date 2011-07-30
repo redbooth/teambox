@@ -14,14 +14,9 @@
       .body
         .file
           = link_to_upload(upload, upload.file_name)
-          == (#{number_to_human_size(upload.size)})
         - unless upload.description.blank?
           .description
-            =h upload.description
+            = upload.description
         .reference
-          = t('uploads.upload.uploaded_by')
-          = user_link(upload.user)
-          = activity_comment_target_link(upload.comment, t('uploads.upload.on_')) if upload.comment
-          .date
-            = posted_date upload.created_at
+          = number_to_human_size(upload.size)
   .clear

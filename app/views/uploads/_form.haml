@@ -14,9 +14,6 @@
           %span= t('.max_size', :mb => Teambox.config.asset_max_file_size.to_i)
         - upload.errors.each do |attr, message|
           %span= message
-  .description.text_field
-    = f.label :description, t('.description_html')
-    = f.text_field :description
   .submit
     - if page
       = page_slot_fields

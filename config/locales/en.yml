@@ -1315,10 +1315,10 @@ en:
       default_text: New folder name
       submit: Create folder
     form:
+      title: Upload a file
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed %{mb} MB"
       select_file: Select file
-      description_html: Title <i>(optional)</i>
       upload: Upload file
       max_upload_size: "Max upload size is %{mb} Mb"
     primer:
@@ -1331,9 +1331,7 @@ en:
       item3_html: "<b>Always available</b>. Files stay in context in the project for future reference."
     upload:
       download: Download
-      uploaded_by: Uploaded by
       remove: Delete
-      on_: "on"
     public_download:
       share_outside_your_team: You can share this file with people outside your team.
       enter_an_email: 'Enter an Email address to send a link to this file:'
