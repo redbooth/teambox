@@ -1,1 +1,4 @@
-TODO make text version of this email when html version will be commited
+<%= t('emailer.public_download.user_sent_you_a_link', :user => @user.name, :filename => @upload.file_name) %>
+
+<%= t('emailer.public_download.go_to_download_page') %>:
+<%= public_download_file_url(@upload.token) %>

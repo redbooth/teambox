@@ -1683,8 +1683,8 @@ en:
       file: "File:"
     public_download:
       subject: "%{user} wants to share a file with you on Teambox"
-      user_sent_you_a_link: "%{user} sent you a link to download a file stored on Teambox"
-      go_to_download_page: Go to download page
+      user_sent_you_a_link: "%{user} sent you a link to download %{filename}"
+      go_to_download_page: Download this file
       plaintext_link: "If the above link doesn't work, copy and paste the following url into your browser bar: "
     bounce:
       subject: "Error sending email to Teambox"

@@ -1,11 +1,10 @@
 .email{ :style => email_global }
 
-  =# dont_answer
+  = dont_answer
 
   .box{ :style => email_box }
-    =#%p= t('emailer.public_download.', :name => h(@referral.name))
     %p{ :style => email_text(:big) }
-      = t('emailer.public_download.user_sent_you_a_link', :user => h(@user.name))
+      = t('emailer.public_download.user_sent_you_a_link', :user => @user.name, :filename => @upload.file_name)
     %h2{ :style => email_text(:big) }
       = link_to t('emailer.public_download.go_to_download_page'), public_download_file_url(@upload.token)
   %p{ :style => email_text(:small) }
@@ -14,6 +13,4 @@
     = link_to public_download_file_url(@upload.token), public_download_file_url(@upload.token)
 
   .footer{ :style => email_text(:small) }
-    %p
-      ??????
-      =# t('emailer.invitation.report_abuse')
+    %p= t('emailer.invitation.report_abuse')
