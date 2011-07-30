@@ -33,13 +33,12 @@ document.on('click', '.nav_links a.ajax', function(e,a) {
       var parts = extractParts(r.responseText)
       if (!parts.content)
         return this.onFailure(r);
-      
+
       // Mark the new element as selected
       Teambox.views.sidebar.selectElement(a.up('.el'))
 
       document.body.className = parts.body_classes
       $('content').update(parts.content)
-      $$('.view_sidebar').first().update(parts.column)
       Date.format_posted_dates()
       Task.insertAssignableUsers()
       disableConversationHttpMethodField()

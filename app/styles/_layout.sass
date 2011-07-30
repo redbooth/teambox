@@ -9,11 +9,12 @@ body
   width: 100%
   height: 100%
 
-div.content_wrap, div.column_wrap, div.aux_wrap
+div.content_wrap, div.column_wrap
   position: absolute
   top: $header_height + 2px
   bottom: 0
   overflow: hidden
+
 // Beta notice on the top of the page
 body.production
   .beta_notice
@@ -25,7 +26,7 @@ body.production
     a
       color:  black
       text-decoration: underline
-  div.content_wrap, div.column_wrap, div.aux_wrap
+  div.content_wrap, div.column_wrap
     top: 68px
 
 #column
@@ -40,21 +41,7 @@ div.column_wrap
   div.column
     select
       max-width: $column_width - 20px
-    .view_sidebar
-      margin-left: 15px
 
-
-
-div.aux_wrap
-  width: $aux_width
-  right: 0
-  border-left: 1px solid #B7B7B7
-  background: $sidebar_bkg
-  overflow: hidden
-  a
-    color: black
-  .view_sidebar
-    padding: 5px
 
 //Content DIV to add the form in activities to the scrolling content
 div.content_scroll
@@ -67,11 +54,10 @@ div.content_scroll
   right: 0
 div.content_wrap
   left: $column_width +1px
-  right: $aux_width
+  right: 0
   border-left: 1px solid $clr_gray_60
   .content
-    position: relative
-    float: left
+    position: absolute
     clear: both
     top: 10px
     bottom: 0
@@ -196,24 +182,6 @@ p.flash-notice
   -o-user-select: none
   user-select: none
   -webkit-background-clip: padding-box
-
-body
-  .unfold_sidebar, .unfold_aux
-    display: none
-  &.folded_aux
-    .aux_wrap
-      display: none
-    .content_wrap
-      right: 0
-    .unfold_aux
-      display: inline-block
-  &.folded_sidebar
-    .column_wrap
-      display: none
-    .content_wrap
-      left: 0
-    .unfold_sidebar
-      display: inline-block
 
 ::-webkit-scrollbar
   width: 9px

@@ -150,7 +150,6 @@
 //= require <hoverable>
 //= require <invitation>
 //= require <keyboard>
-//= require <layout>
 //= require <toggleform>
 //= require <navigation_ajax>
 //= require <overlays>
