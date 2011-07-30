@@ -3,12 +3,11 @@
 
 .file
   .fade
-  .info
-    - if Rails.root.join("public/images/#{icon_path}").exist?
+  - if Rails.root.join("public/images/#{icon_path}").exist?
+    .info
       = link_to image_tag(icon_path), public_send_file_path(upload.token), :class => 'file_icon', :rel => (upload.image? ? 'facebox' : '')
-    - else
-      = link_to upload.file_type, public_send_file_path(upload.token), :class => upload.file_type, :rel => (upload.image? ? 'facebox' : '')
 
   .filename
+    %p.title= t('.download_file')
     = link_to upload.asset_file_name, public_send_file_path(upload.token)
     %p== #{number_to_human_size(upload.size)}, by #{upload.user.name}

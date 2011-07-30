@@ -98,6 +98,9 @@ en:
     folder: "Deleted %{name} folder"
     person: "%{name} is no longer in the project"
     left_project: "You are no longer in this project"
+  public_downloads:
+    download:
+      download_file: "Download file:"
   activities:
     create_upload:
       title: "%{user} uploaded a file: %{file}"

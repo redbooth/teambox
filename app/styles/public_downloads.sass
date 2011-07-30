@@ -6,7 +6,7 @@ body
   font-size: 12px
 
 #wrapper
-  margin: 120px auto
+  margin: 60px auto
   width: 450px
 
 #logo
@@ -30,14 +30,19 @@ body
   background: white
   border: 1px solid #ccc
   border-radius: 5px 5px
-  margin: 30px 0
+  margin: 80px 0
   padding: 15px
-  height: 50px
+  height: 80px
+  -webkit-user-select: none
+  &:active
+    position: relative
+    bottom: -2px
   .file
     position: relative
     .info
       display: inline-block
       position: absolute
+      top: 28px
     .filename
       display: inline-block
       position: absolute
@@ -45,6 +50,9 @@ body
       white-space: nowrap
       width: 350px
       overflow: hidden
+      p.title
+        margin: 0 0 10px 0
+        font-size: 16px
       a
         color: #333
         text-decoration: none
@@ -85,5 +93,14 @@ body
     color: #555
     text-shadow: white 1px 1px 1px
     text-decoration: none
+    display: block
+    background: white
+    border: 1px solid #ccc
+    border-radius: 5px 5px
+    margin: 20px 0
+    padding: 15px
     &:hover
+      +gradient(#0269C9, #3682C9)
+      color: white
+      cursor: pointer
       color: black
