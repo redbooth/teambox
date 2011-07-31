@@ -32,6 +32,11 @@
       collections.tasks    = this.my_tasks    = new Teambox.Collections.Tasks();
       collections.threads  = this.my_threads  = new Teambox.Collections.Threads();
       collections.projects = this.my_projects = new Teambox.Collections.Projects();
+      
+      // Threads allways sorted by update time
+      collections.threads.comparator = function(thread) {
+        return thread.get('updated_at');
+      };
 
       this.fetchData({
         user: _loader.load()
