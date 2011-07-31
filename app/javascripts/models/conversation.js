@@ -94,6 +94,10 @@
                                   , onSuccess: onSuccess
                                   , onFailure: onFailure});
   };
+  
+  Conversation.prefix = function() {
+    return "conversation" + this.id;
+  };
 
   // exports
   Teambox.Models.Conversation = Teambox.Models.Base.extend(Conversation);

@@ -8,30 +8,24 @@
     _.bindAll(this, 'render');
     this.model.bind('change', this.render);
     this.title = 'Conversation ' + this.name;
+    
+    var Views = Teambox.Views;
+    this.convert_to_task = new Views.ConvertToTask({model: this.model});
+    this.comment_form = new Views.CommentForm({
+          model: this.model
+        , convert_to_task: this.convert_to_task
+        , controller: this.controller
+    });
   },
 
 
   /* TODO: Handle 404s or permission denied for conversations
    * TODO: Shouldn't render to the DOM!
    */
-/*
   Conversation.render = function () {
+    var self = this;
+    
     if(this.model.isLoaded()) {
-      var html = this.template(this.model.getAttributes());
-      this.el.update(html);
-      var thread = this.el.down('.thread');
-      if (thread) thread.remove();
-      var threadView = new Teambox.Views.Thread({ model: this.model });
-      this.el.insert({ bottom: threadView.render().el });
-    } else {
-      this.el.update(loading());
-    }
-    return this;
-  }
-*/
-  Conversation.render = function () {
-    if(this.model.isLoaded()) {
-      var self = this;
       
       var html = this.template(this.model.getAttributes());
       this.el.update(html);
@@ -40,11 +34,10 @@
         conversation_id: this.model.id
       };
       
-      comments = new Teambox.Collections.Comments([],options);
+      comments = new Teambox.Collections.Comments([], options);
       
       // Show loader
       this.el.down('.comments').update("<img src='/images/loading.gif' alt='Loading' />");
-      
       
       comments.fetch({
         success: function (collection) {
@@ -56,9 +49,14 @@
         }
       });
       
-
+      // Render comment form
+      this.comment_form.el = this.el.down('div.new_comment_wrap');
+      this.comment_form.render();
+      this.el.down('div.new_comment_wrap').insert({bottom: this.convert_to_task.render().el});
       
     } else {
+      
+      // TODO: loader() is not defined
       this.el.update(loading());
     }
     return this;

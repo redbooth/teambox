@@ -127,7 +127,7 @@
     }
 
     this.el.writeAttribute({
-      'object-prefix': this.model.prefix()
+      'object-prefix': this.model.prefix
     , 'object-type': this.model.className().toLowerCase() + "[comments_attributes][0]"
     });
 
@@ -222,8 +222,8 @@
 
     if (can_modify) {
       this.el.insert({bottom: this.private_box_template({
-        object_prefix: this.model.prefix(),
-        object_type: this.model.type(),
+        object_prefix: this.model.prefix,
+        object_type: this.model.type,
         is_public: I18n.translations.comments['private']['public'],
         is_private: I18n.translations.comments['private']['private']
       })});

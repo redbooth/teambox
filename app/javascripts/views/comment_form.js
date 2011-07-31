@@ -43,7 +43,7 @@
 
     this.form = this.el.down('form');
     this.delegateEventsTo(this.events, this.form);
-
+    
     this.updateFormAttributes(this.model.get('project_id'));
 
     if (this.model.get('type') === 'Task') {
