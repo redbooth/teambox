@@ -98,6 +98,34 @@
   Conversation.prefix = function() {
     return "conversation" + this.id;
   };
+  
+  Conversation.parseComments = function (response) {
+    var thread_attributes = response.objects || response
+      , comment_attributes = _.detect(response.references, function (ref) {
+          return thread_attributes.recent_comment_ids[0] === ref.id;
+        })
+      , assigned_user = _.detect(response.references, function (ref) {
+          return ref.type === 'Person' && comment_attributes.assigned_id === ref.id;
+        })
+      , project = _.detect(response.references, function (ref) {
+          return ref.type === 'Project' && comment_attributes.project_id === ref.id;
+        });
+
+    if (assigned_user) {
+      comment_attributes.assigned = assigned_user;
+    }
+
+    if (project) {
+      comment_attributes.project = project;
+    }
+
+    if (typeof comment_attributes.body_html === 'string') {
+      comment_attributes.body = _.unescapeHTML(comment_attributes.body);
+      comment_attributes.body_html = _.unescapeHTML(comment_attributes.body_html);
+    }
+
+    return comment_attributes;
+  };
 
   // exports
   Teambox.Models.Conversation = Teambox.Models.Base.extend(Conversation);

@@ -9,6 +9,10 @@
     this.model.bind('change', this.render);
     this.title = 'Conversation ' + this.name;
     
+    
+    this.model.bind('comment:added', this.addComment.bind(this));
+    // this.model.bind('comment:added', this.updateThreadAttributes.bind(this));
+    
     var Views = Teambox.Views;
     this.convert_to_task = new Views.ConvertToTask({model: this.model});
     this.comment_form = new Views.CommentForm({
@@ -61,6 +65,18 @@
     }
     return this;
   };
+  
+  Conversation.addComment = function(comment) {
+    var el = this.comment_template(comment);
+    
+    this.el
+      .select('.comments')[0]
+      .insert({ bottom: el })
+      .childElements()
+      .last()
+      .highlight({duration: 1});
+  };
+  
   // exports
   Teambox.Views.Conversation = Backbone.View.extend(Conversation);
 }());

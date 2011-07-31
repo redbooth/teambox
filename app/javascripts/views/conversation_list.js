@@ -13,7 +13,13 @@
     this.collection.bind('add', this.addConversation);
     this.collection.bind('remove', this.removeConversation);
     this.collection.bind('refresh', this.reload);
-    this.title = 'Conversations on project';
+    
+    // Get real complete name of project
+    var project = Teambox.collections.projects.detect(function(model) {
+      return model.get('permalink') === options.project_id;
+    });
+    
+    this.title = 'Conversations on ' + project.get('name');
     this.project_id = options.project_id;
     this.conversation = options.conversation;
   };

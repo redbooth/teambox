@@ -131,7 +131,7 @@ body.new_conversations, body.create_conversations
   .header
     background-color: #eeeeee
     padding: 4px
-    width: 292px
+    width: auto
   .conversation
     overflow: hidden
     cursor: pointer
@@ -154,5 +154,10 @@ body.new_conversations, body.create_conversations
 .conversation_view
   float: left
 
-.conversations
-  margin: -10px
+#content .conversations
+  margin: -10px 0 0
+
+.conversation
+  header
+    border-bottom: 1px solid #000
+    padding: 0 5px

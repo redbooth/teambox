@@ -141,11 +141,9 @@
    * @param {Object} user
    */
   Thread.addComment = function (comment, user, simple) {
-    if (simple) { return; }
+    if (simple)  return;
 
-    if (user) {
-      comment.user = user.attributes;
-    }
+    if (user) comment.user = user.attributes;
 
     var el = this.comment_template(comment);
 
