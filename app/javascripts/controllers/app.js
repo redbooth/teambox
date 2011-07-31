@@ -18,7 +18,6 @@
 
   AppController.index = function () {
     var threads = Teambox.collections.threads;
-    console.log(threads);
 
     Views.Sidebar.highlightSidebar('activity_link');
     $('view_title').update('Recent activity');
