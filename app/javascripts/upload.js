@@ -3,6 +3,11 @@ document.on('click', '#upload_file_button', function(e, button) {
   $('new_upload').toggle();
 });
 
+// Display spinner wheel when loading folders via AJAX
+document.on("click", ".upload .file a.ajax", function(e,el) {
+  el.up('.upload').down('img').setAttribute('src', '/images/loading.gif');
+});
+
 document.on('click', '#new_folder_button, #new_folder_form a.close', function(e, button) {
   e.preventDefault();
   $('new_folder_form').toggle();

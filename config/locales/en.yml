@@ -1314,6 +1314,8 @@ en:
     new_folder:
       default_text: New folder name
       submit: Create folder
+    parent_folder:
+      parent_folder: Parent folder
     form:
       title: Upload a file
       presence: "You can't upload a blank file"
