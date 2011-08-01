@@ -1,0 +1,95 @@
+.status
+  background: #fce69c
+  color: white
+  padding: 1px 3px
+  text-transform: uppercase
+  font-size: 11px
+  +rounded(3px)
+  border: 1px solid #b0a16d
+  display: inline-block
+  line-height: 14px
+  float: right
+  clear: none
+  overflow: hidden
+  text-align: center
+  color: $clr_gray_80
+  margin: 10px 10px 0 0
+  min-width: 53px
+// NEW
+.status_0
+  +gradient($clr_gray_05, $clr_gray_15)
+  .status
+    border-color: #8397a1
+    background-color: #bbd8e6
+  .taskName
+    font-weight: bold
+    a
+      color: $clr_gray_90
+    .extended
+      font-weight: normal
+// OPEN
+.status_1
+  +gradient($clr_gray_05, $clr_gray_15)
+  .status
+    color: #857952
+    //background: $clr_gray_30
+    //border-color: $clr_gray_60
+// HOLD
+.status_2
+  +gradient($clr_gray_05, $clr_gray_15)
+  .status
+    background: $clr_gray_30
+    border-color: $clr_gray_60
+// RESOLVED
+.status_3
+  background-color: $clr_gray_20
+  .taskName
+    border-top-color: $clr_gray_10
+    a, .extended span a
+      color: $clr_gray_60
+  .status
+    padding-right: 0
+    text-transform: none
+    background: none
+    border: none
+    color: $clr_gray_50
+    text-align: right
+  .taskStatus
+    display: block
+    float: left
+    clear: none
+    height: 25px
+    width: 26px
+    margin: 5px 14px 0 8px
+    background: url(/img_3_2/ico/tick-gray.png) no-repeat 7px 6px
+    .task_counter
+      display: none
+// REJECTED
+.status_4
+  background-color: $clr_gray_30
+  .taskName
+    border-top-color: $clr_gray_20
+    a, 
+      text-decoration: line-through
+      color: $clr_gray_60
+    .extended span a
+      color: $clr_gray_50
+      text-decoration: none
+  .status
+    padding-right: 0
+    text-transform: none
+    background: none
+    border: none
+    color: $clr_gray_50
+    text-align: right
+  .taskStatus
+    text-decoration: line-through
+    display: block
+    float: left
+    clear: none
+    height: 25px
+    width: 26px
+    margin: 5px 14px 0 8px
+    background: url(/img_3_2/ico/slash-gray.png) no-repeat 7px 6px
+    .task_counter
+      display: none
