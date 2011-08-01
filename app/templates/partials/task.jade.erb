@@ -21,7 +21,7 @@
 
   - if (self.assigned)
     span.assigned_user
-      a(href= self.user_url(self.assigned.user))= self.short_name(self.assigned.user)
+      a(href= self.user_url(self.assigned.user))= self.short_name(self.assigned.user, 'firstname')
 
   .extended
     span.project

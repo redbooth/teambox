@@ -2,9 +2,10 @@ Handlebars.registerHelper('downcase', function (str) {
   return str.toLowerCase();
 });
 
-Handlebars.registerHelper('short_name', function (user) {
+Handlebars.registerHelper('short_name', function (user, mode) {
   user = user || this;
-  return user.first_name[0] + ". " + user.last_name;
+  if( !mode || mode === 'lastname' ) return user.first_name[0] + ". " + user.last_name;
+  if( mode ===  'firstname' ) return user.first_name + " " + user.last_name[0];
 });
 
 Handlebars.registerHelper('full_name', function (user) {
@@ -122,7 +123,7 @@ Handlebars.registerHelper('status_text', function () {
 Handlebars.registerHelper('status_transition', function () {
   var status = $w('new open hold resolved rejected')
     .collect(function (s) {
-      return '<span class="task_status task_status_'+s+'">'+s+'</span>';
+      return '<span class="task_status status task_status_'+s+'">'+s+'</span>';
     });
   var before = status[this.previous_status];
   var now = status[this.status];
