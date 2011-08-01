@@ -8,7 +8,7 @@ Feature: Public downloads for uploaded files
   Scenario: User downloads public file
     When I go to the public download page for "dragon.jpg" file
     Then I should see "dragon.jpg"
-    And I should see "This file was sent using Teambox"
+    And I should see "This file is shared using Teambox"
     When I follow "dragon.jpg"
     Then I should get a download with the filename "dragon.jpg"
 
