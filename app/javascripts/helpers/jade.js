@@ -112,7 +112,7 @@
   JADE.status_transition = function () {
     var status = $w('new open hold resolved rejected')
       .collect(function (s) {
-        return '<span class="task_status task_status_' + s + '">' + s + '</span>';
+        return '<span class="task_status task_status_' + s + '">' + I18n.translations.tasks.status[s] + '</span>';
       })
       , before = status[this.previous_status]
       , now = status[this.status];
