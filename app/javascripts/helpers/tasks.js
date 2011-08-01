@@ -204,6 +204,19 @@
     }).map(function(person) { return {value: person.id, label: person.get('user').first_name + ' ' + person.get('user').last_name};});
   }
 
+  /**
+   * Returns an object containing the attributes of the comment
+   * whose id is supplied.
+   *
+   * @param {Number} project_id
+   * @return {Array} dropdown entries
+   */
+  TasksHelper.getComment = function(thread, comment_id) {
+    return _.detect(thread.get('recent_comments'), function(c) {
+      return c.id === comment_id;
+    });
+  }
+
   // expose
   Teambox.helpers.tasks = TasksHelper;
 

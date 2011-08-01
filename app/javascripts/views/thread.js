@@ -10,6 +10,7 @@
   Thread.events = {
     'mouseover .textilized a': 'setTargetBlank'
   , 'click .thread .comments .more_comments a': 'reloadComments'
+  , 'click a.edit': 'editComment'
   , 'click a.delete': 'deleteComment'
   , 'mouseover .comment .actions_menu': 'applyCommentActionRules'
   };
@@ -17,10 +18,10 @@
   Thread.initialize = function (options) {
     _.bindAll(this, "render");
 
-
     this.model.attributes.is_task = this.model.get('type') === 'Task';
     this.model.attributes.is_conversation = this.model.get('type') === 'Conversation';
     this.model.bind('comment:added', Thread.addComment.bind(this));
+    this.model.bind('comment:change', Thread.updateComment.bind(this));
     this.model.bind('comment:added', Thread.updateThreadAttributes.bind(this));
 
     var Views = Teambox.Views;
@@ -31,7 +32,19 @@
         , controller: this.controller
         , thread: this
     });
+
+    this.initializeComments();
+
   };
+
+  Thread.initializeComments = function() {
+    var options = {project_id: this.model.get('project_id')}
+    ,   comments = [];
+
+    options[this.model.get('type').toLowerCase() + '_id'] = this.model.id;
+    this.comments = new Teambox.Collections.Comments(this.model.attributes.recent_comments, options);
+  };
+
 
   /* sets the target attribute to '_blank'
    *
@@ -60,14 +73,48 @@
     });
   };
 
+  /* Loads up the comment in the comment form and
+   * switches the comment form to edit mode.
+   *
+   * @param {Event} evt
+   */
+  Thread.editComment = function (event) {
+    var comment = $(event.target).up('.comment')
+    , comment_id = parseInt(comment.getAttribute('data-id'), 10)
+    , comment = this.comments.get(comment_id);
+    this.comment_form.editComment(comment);
+    this.toggleCommentEditMode(comment_id);
+  };
+
+  Thread.toggleCommentEditMode = function(comment_id) {
+    var comments = this.el.select('.comments .comment')
+    ,   comment = this.el.down('.comment[data-id=' + comment_id + ']');
+    _.each(comments, function(c) {
+      if (c.getAttribute('data-id') !== comment_id.toString()) {
+        c.toggleClassName('editing');
+      }
+    });
+  };
+
+  Thread.cancelEditMode = function() {
+    var comments = this.el.select('.comments .comment');
+    _.each(comments, function(c) {
+        c.removeClassName('editing');
+    });
+  };
+
   /* alerts the user and deletes the comment if dangerous
    *
    * @param {Event} evt
    */
   Thread.deleteComment = function (evt) {
-    var element = evt.element().up('.comment'), comment;
+    var element = evt.element().up('.comment')
+    , comment_id = parseInt(element.readAttribute('data-id'), 10)
+    , comment;
 
-    comment = new Teambox.Models.Comment({id: element.readAttribute('data-id'), parent_url: this.model.url()});
+    comment = this.comments.get(comment_id);
+    comment.set({parent_url: this.model.url()}, {silent: true});
+    this.comments.remove(comment, {silent: true});
 
     evt.stop();
 
@@ -115,10 +162,45 @@
                    + '</strong> ' + comment.body);
     }
 
+    this.comments.add(comment, {silent: true});
+
     // TODO: backbonize this [leftovers from comment.js]
     //Task.insertAssignableUsers();
     //my_user.stats.conversations++;
     //document.fire("stats:update");
+  };
+
+  /* Updates a comment in the thread
+   *
+   * @param {Object} comment attributes
+   */
+  Thread.updateComment = function (comment, user) {
+    if (user) {
+      comment.user = user.attributes;
+    }
+
+    var markup = this.comment_template(comment)
+    ,   el = this.el.down('.comment[data-id=' + comment.id + ']');
+
+    el.replace(markup);
+
+    this.toggleCommentEditMode(comment.id);
+
+    //Update comment model attributes in comments collection
+    var model = this.comments.get(comment.id);
+    model.set(comment, {silent: true});
+
+    //Refind
+    el = this.el.down('.comment[data-id=' + comment.id + ']');
+    Teambox.helpers.views.scrollTo(el);
+    setTimeout(function() {el.highlight({duration: 1});}, 1000);
+
+    // update excerpt
+    var excerpt = this.el.down('.comment_header .excerpt');
+    if (excerpt) {
+      excerpt.update('<strong>' + comment.user.first_name + ' ' + comment.user.last_name
+                   + '</strong> ' + comment.body);
+    }
   };
 
   /* updates thread tag attributes

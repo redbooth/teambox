@@ -33,6 +33,17 @@
     return this;
   };
 
+  ViewsHelper.scrollTo = function(el, old_position) {
+    var scrollable = $('container').down('.content_scroll')
+    , center = Math.round(document.viewport.getDimensions().height / 2)
+    , new_position = el ? el.cumulativeOffset().top - (80 + center) : scrollable.scrollTop;
+    scrollable.scrollTop = old_position ? old_position : new_position;
+  }
+
+  ViewsHelper.scrollableElement = function(el) {
+    return $('container').down('.content_scroll');
+  }
+
   // exports
   Teambox.helpers.views = ViewsHelper;
 

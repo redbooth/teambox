@@ -25,13 +25,14 @@
   /* updated upload area element
    */
   UploadArea.render = function () {
-    if (!this.form) {
-      this.form = this.comment_form.form;
-    }
+    this.form = this.comment_form.form;
 
     this.el
       .setStyle({display: 'none'})
       .update(this.template(_.extend(this.model.getAttributes(), {number: 0})));
+
+    //Reattach event handlers on each render
+    this.delegateEvents();
 
     return this;
   };
@@ -88,7 +89,7 @@
 
       if (iframe_body.className !== "error") {
         self.model.set(response.objects ? response.objects : response, {error: self.comment_form.handleError.bind(self)});
-        self.comment_form.addComment(false, response, true);
+        self.comment_form.editing ? self.comment_form.updateComment(false, response, true) : self.comment_form.addComment(false, response, true);
       } else {
         self.comment_form.handleError(false, response);
       }
@@ -335,16 +336,8 @@
   UploadArea.insertNewUpload = function (evt) {
 
     function incrementLastNumber(str) {
-      var i = 0, matches = str.match(/\[(\d)\]([^\d]+)$/);
-
-      return str.gsub(/\[(\d)\]([^\d]+)$/, function (m) {
-        var rest = m.pop()
-        , number = m.pop();
-
-        m.push(parseInt(number, 10) + 1);
-        m.push(rest);
-        return "[" + m[1] + "]" + m[2];
-      });
+      var match;
+      return (match = str.match(/\[(\d)\]([^\d]+)$/)) ? parseInt(match[1], 10) + 1 : false;
     }
 
     var el = evt.element()
