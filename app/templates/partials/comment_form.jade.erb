@@ -2,6 +2,8 @@ form
   -var type = self.type.toLowerCase();
 
   input(name= 'utf8', type= 'hidden', value= '✓')
+  - if (self.editing)
+    input(type='hidden', name='comments_attributes[0][id]', value=self.comment_id)
 
   .field.text_area
     .marco_avatar
@@ -29,6 +31,8 @@ form
         span <%= t('comments.conversations.convert_to_task') %>
 
     input.button_blue_75.submit(name= 'commit', type= 'submit', data-disable-with= '<%= t('comments.new.sending') %>', value= '<%= t('common.save')%>')
+    - if (self.editing)
+      input.button_blue_75.cancel(name= 'cancel', type= 'submit', value= '<%= t('common.cancel')%>')
 
     ol.new_comment_actions
       li
