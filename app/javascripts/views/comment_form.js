@@ -337,10 +337,10 @@
 
   CommentForm.editComment = function(comment) {
     this.toggleEditMode(false, comment.id);
-    // this.focusTextarea(false, textarea);
     var textarea = this.el.down('textarea')
     ,   comment_body = comment.get('body');
 
+    this.focusTextarea(false, textarea);
     textarea.focus();
     textarea.setValue(comment_body);
     textarea.select();
