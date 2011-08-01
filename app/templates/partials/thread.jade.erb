@@ -23,8 +23,10 @@
 
     - if (self.is_task)
       .task_summary
-        != self.status_transition()
-        = 'Assigned to ' + self.full_name(self.user)
+        - if(self.status === 1)
+          span.assigned= 'Assigned to ' + self.full_name(self.user)
+        - else
+          != self.status_transition()
 
     - if (self.last_comment)
       p.excerpt
