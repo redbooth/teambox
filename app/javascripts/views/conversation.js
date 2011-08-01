@@ -50,11 +50,12 @@
             html += self.comment_template(model.attributes);
           });
           self.el.down('.comments').update(html);
+          self.comment_form.el.show();
         }
       });
       
       // Render comment form
-      this.comment_form.el = this.el.down('div.new_comment_wrap');
+      this.comment_form.el = this.el.down('div.new_comment_wrap').hide();
       this.comment_form.render();
       this.el.down('div.new_comment_wrap').insert({bottom: this.convert_to_task.render().el});
       
