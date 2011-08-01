@@ -6,7 +6,7 @@
   +rounded(5px)
   .thread_title
     background: url(/img_3_2/sprite_v.png) 0px -110px repeat-x #eee
-    margin: 4px 0 2px
+    margin-top: 2px
     font-size: 12px
     a
       display: block
@@ -55,17 +55,19 @@
       clear: none
       width: 32px
       height: 30px
-      margin: 0 7px 4px 0
+      margin: 0 5px 4px 0
       padding: 0
         left: 5px
       //border: 1px solid red
       .comment_count
-        display: none
+        display: inline-block
         text-align: center
-        float: left
+        position: absolute
+        top: 4px
+        right: 5px
         margin: 5px 5px 0 4px
         span
-          color: $clr_gray_80
+          color: $clr_gray_60
           width: 25px
           height: 20px
           padding: 0
@@ -76,6 +78,7 @@
           clear: both
           text-align: center
           background: url(/img_3_2/sprite_base.png) -37px -36px no-repeat
+          font-size: 11px
       img
         margin: 3px 3px 3px 4px
         float: left
@@ -87,7 +90,7 @@
       a
         font-weight: bold
         text-decoration: none
-        color: black
+        //color: black
         &:hover
           color: $link_hover
       p
@@ -181,7 +184,7 @@
     font-size: 10px
 
 .thread.collapsed
-  height: 42px
+  height: 47px
   span.time
     display: inline-block
     position: absolute
@@ -195,10 +198,6 @@
     display: none
   p.excerpt, .comment_count
     display: block !important
-  .comment_header .info
-    img
-      display: none
-    .comment_count
   .comment_header
     background: none
 
