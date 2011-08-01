@@ -162,10 +162,15 @@
    * @param {Response} response
    * @return {Array}
    */
-  Thread.parseComments = function (response) {
+  Thread.parseComments = function (response, comment_id) {
     var thread_attributes = response.objects || response
       , comment_attributes = _.detect(response.references, function (ref) {
-          return thread_attributes.recent_comment_ids[0] === ref.id;
+          if (comment_id) {
+            return comment_id === ref.id;
+          }
+          else {
+            return thread_attributes.recent_comment_ids[0] === ref.id;
+          }
         })
       , assigned_user = _.detect(response.references, function (ref) {
           return ref.type === 'Person' && comment_attributes.assigned_id === ref.id;

@@ -15,10 +15,11 @@
   , 'click a.private_switch'       : 'togglePrivateElements'
   , 'click a.google_doc_icon'      : 'showGoogleDocs'
   , 'focusin textarea'             : 'focusTextarea'
+  , 'click .cancel'                : 'cancelEditMode'
   };
 
   CommentForm.initialize = function (options) {
-    _.bindAll(this, "render");
+    _.bindAll(this, "render", "addComment", "updateComment");
 
     this.convert_to_task = options.convert_to_task;
     this.thread = options.thread;
@@ -37,7 +38,8 @@
   CommentForm.render = function () {
     var self = this;
     var template = this.simple ? this.simple_template : this.template;
-    this.el.insert({bottom: template(_.extend({view: this}, this.model.getAttributes()))});
+    this.el.update('');
+    this.el.insert({bottom: template(_.extend({view: this, editing: this.editing, comment_id: this.comment_id}, this.model.getAttributes()))});
 
     this.form = this.el.down('form');
     this.delegateEventsTo(this.events, this.form);
@@ -142,6 +144,16 @@
     }
   };
 
+  CommentForm.updateComment = function (m, resp, upload) {
+    this.reset();
+
+    var comment_attributes = this.model.parseComments(resp, this.comment_id);
+    //TODO: To be made redundant with APIv2
+    this.model.set(_.parseFromAPI(resp), {silent: true});
+    this.model.trigger('comment:change', _.extend({id: this.comment_id}, comment_attributes), _.clone(Teambox.models.user));
+    this.toggleEditMode();
+  };
+
   CommentForm.handleError = function (m, resp) {
     if (typeof resp === 'string') {
       var error = resp;
@@ -183,7 +195,7 @@
 
     //Add the type if it's missing for valiate method
     this.model.save(_.extend(data, {type: this.model.className()}), {
-      success: this.addComment.bind(this)
+      success: this.editing ? this.updateComment : this.addComment
     , error: this.handleError.bind(this)
     });
 
@@ -279,12 +291,12 @@
    *
    * @param {Event} evt
    */
-  CommentForm.focusTextarea = function (evt) {
+  CommentForm.focusTextarea = function (evt, element) {
     if (this.simple) {
       return;
     }
 
-    var textarea = evt.element()
+    var textarea = evt ? evt.element() : element
       , people = Teambox.collections.projects.get(this.model.get('project_id')).getAutocompleterUserNames()
       , container;
 
@@ -305,6 +317,34 @@
 
   CommentForm.showGoogleDocs = function(event) {
     this.google_docs.openGoogleDocsList(event);
+  };
+
+  CommentForm.cancelEditMode = function(event) {
+    this.toggleEditMode(event);
+    this.thread.cancelEditMode();
+  };
+
+  CommentForm.toggleEditMode = function(event, comment_id) {
+    if (event) {
+      event.stop();
+    }
+
+    this.editing = !this.editing;
+    this.form.toggleClassName('editing');
+    this.comment_id = comment_id;
+    this.render();
+  };
+
+  CommentForm.editComment = function(comment) {
+    this.toggleEditMode(false, comment.id);
+    var textarea = this.el.down('textarea')
+    ,   comment_body = comment.get('body');
+
+    this.focusTextarea(false, textarea);
+    textarea.focus();
+    textarea.setValue(comment_body);
+    textarea.select();
+    Teambox.helpers.views.scrollTo(textarea);
   };
 
 
