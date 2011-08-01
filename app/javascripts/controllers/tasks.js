@@ -11,15 +11,18 @@
     , collections = Teambox.collections;
 
   TasksController.index = function () {
+    $('content_header').update('');
     $('content').update('index task');
   };
 
   TasksController['new'] = function () {
+    $('content_header').update('');
     $('content').update('new task');
   };
 
   TasksController.show = function (project, id) {
     var task = collections.tasks.get(id);
+    $('content_header').update('');
     $('content').update((new Views.Thread({model: new Teambox.Models.Thread(task.attributes)})).render().el);
     Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_task_lists');
   };
@@ -28,6 +31,7 @@
     var view = new Views.TodayTasks({collection: collections.tasks});
 
     Views.Sidebar.highlightSidebar('today_link');
+    $('content_header').update('');
     $('content').update(view.render().el);
     $('view_title').update(view.title);
   };
@@ -36,6 +40,7 @@
     var view = new Views.MyTasks({collection: collections.tasks});
 
     Views.Sidebar.highlightSidebar('my_tasks_link');
+    $('content_header').update('');
     $('content').update(view.render().el);
     $('view_title').update(view.title);
   };
@@ -50,6 +55,7 @@
 
     Views.Sidebar.highlightSidebar('all_tasks_link');
 
+    $('content_header').update('');
     $('content')
       .update(view.render().el)
       .insert({top: filters.render().el});

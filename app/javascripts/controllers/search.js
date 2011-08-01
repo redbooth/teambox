@@ -9,6 +9,7 @@
     Views.Sidebar.highlightSidebar(null);
 
     // TODO: add spin
+    $('content_header').update('');
     $('content').update('loading...');
 
     (new Teambox.Collections.SearchResults([], {query: query})).fetch({success: function (collection, response) {
