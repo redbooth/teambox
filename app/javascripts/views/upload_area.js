@@ -336,16 +336,8 @@
   UploadArea.insertNewUpload = function (evt) {
 
     function incrementLastNumber(str) {
-      var i = 0, matches = str.match(/\[(\d)\]([^\d]+)$/);
-
-      return str.gsub(/\[(\d)\]([^\d]+)$/, function (m) {
-        var rest = m.pop()
-        , number = m.pop();
-
-        m.push(parseInt(number, 10) + 1);
-        m.push(rest);
-        return "[" + m[1] + "]" + m[2];
-      });
+      var match;
+      return (match = str.match(/\[(\d)\]([^\d]+)$/)) ? parseInt(match[1], 10) + 1 : false;
     }
 
     var el = evt.element()
