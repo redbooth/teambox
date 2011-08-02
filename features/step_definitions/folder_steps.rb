@@ -11,13 +11,9 @@ When /^(?:|I )fill in the form name with "([^\"]*)"$/ do |value|
   end
 end
 
-#Given /^a current project has (\d+) levels deep folders tree$/ do |levels|
-#  parent_folder_id = nil
-#  levels.to_i.times do
-#    folder = Factory.create(:folder, :parent_folder_id => parent_folder_id)
-#    parent_folder_id = folder.id
-#  end
-#end
+Given /^there is a folder called "([^\"]*)" in a current project$/ do |name|
+  @current_project.folders.find_by_name(name) || Factory(:folder, :name => name, :project => @current_project)
+end
 
 Given /^a current project has nested folders$/ do |folders_table|
   folder = nil
@@ -30,4 +26,8 @@ end
 
 When /^I enter "([^"]*)" folder$/ do |name|
   find(:xpath, "//a[text()='#{name}']").click
+end
+
+When /^I click upload list item for "([^\"]*)" folder$/ do |foldername|
+  page.find(:xpath, "//div[@class = 'header' and .//a[contains(text(),'#{foldername}')]]").click
 end
