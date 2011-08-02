@@ -16,20 +16,30 @@ UserSearchForm = {
     return this.users.detect(function(u) { return u.id == id });
   },
   displayInviteForExistingUser: function(el, user) {
+    var invite_url = '/api/1/projects/' + current_project + '/invitations';
     var html = Mustache.to_html(
       Templates.invitations.invite_existing_user,
-      user
+      $H(user).merge({'invite_url': invite_url}).toObject()
     );
     el.up('.invite_users').down('.results').update(html);
   },
+  displayInvitation: function(el, invitation) {
+    var invite_url = '/api/1/projects/' + current_project + '/invitations';
+    var html = Mustache.to_html(
+      Templates.invitations.invitation,
+      $H(invitation).merge({'invite_url': invite_url}).toObject()
+    );
+    el.update(html);
+  },
   noResults: function(el) {
     var terms = el.up('.invite_users').down('input#q').value;
+    var invite_url = '/api/1/projects/' + current_project + '/invitations';
     var email = (terms.match(this.email_regex) || [])[0];
     var html;
     if ((email || "").length > 0) {
       html = Mustache.to_html(
         Templates.invitations.invite_new_user,
-        { email: email });
+        { email: email, invite_url: invite_url });
     } else {
       html = "<p>No results found. <b>Type in your contact's email</b> to send an invitation to your project.</p>";
     }
@@ -39,19 +49,20 @@ UserSearchForm = {
     users.each(function(user){
       user.belongs_to_project = user.projects.any(function(p){ return p.id == current_project });
     });
-    console.log(users)
     return users;
+  },
+  loading: function(){
+    return "<p class='loading'><img src='/images/loading.gif'/> Loading...</p>";
   }
 };
 
 // Display spinner when searching
-document.on('ajax:create', '.invite_users form', function(e,el) {
-  el.up('.invite_users').down('.results').update(
-    "<p><img src='/images/loading.gif'/> Loading...</p>");
+document.on('ajax:create', 'form.user_finder', function(e,el) {
+  el.up('.invite_users').down('.results').update(UserSearchForm.loading());
 });
 
 // Search form: get results and display them
-document.on('ajax:success', '.invite_users form', function(e, el) {
+document.on('ajax:success', 'form.user_finder', function(e, el) {
   var users = UserSearchForm.processUserData(e.memo.responseJSON);
   if(users.length === 0) {
     UserSearchForm.noResults(el);
@@ -71,9 +82,31 @@ document.on('click', '.invite_users .results .user a.button', selectInviteUserFu
 document.on('click', '.invite_users .results .user a.invite_user', selectInviteUserFunc);
 
 // Failed search
-document.on('ajax:failure', '.invite_users form', function(e, el) {
+document.on('ajax:failure', 'form.user_finder', function(e, el) {
   alert("There was an error and we couldn't find that user. If the problem persists, please contact support");
 });
+
+// Submit invite form
+// Search form: get results and display them
+
+document.on('ajax:before', 'form.send_invite', function(e, el) {
+  var inner = el.down('.inner');
+  inner.hide();
+  inner.insert({before: UserSearchForm.loading()});
+});
+
+document.on('ajax:success', 'form.send_invite', function(e, el) {
+  UserSearchForm.displayInvitation(el, JSON.parse(e.memo.responseText).objects[0]);
+});
+
+
+// Search form: get results and display them
+document.on('ajax:failure', 'form.send_invite', function(e, el) {
+  el.down('.loading').remove();
+  el.down('.inner').show();
+  el.down('.inner').down('input').insert({before:'<p class=\'error\'>User could not be invited!</p>'});
+});
+
 
 // Select language
 document.on('click','#invitation_select_language', function(e) {

@@ -14,6 +14,10 @@ Given /^(@\w+) exists?$/ do |username|
   each_user(username, true) {}
 end
 
+Given /^(@\w+) does not autoaccept invites?$/ do |username|
+  each_user(username, true) { |u| u.update_attribute(:auto_accept_invites, true) }
+end
+
 Given /^@(\w+) exists and is logged in$/ do |username|
   Given %(@#{username} exists)
     And %(I'm logged in as @#{username})

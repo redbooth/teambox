@@ -1,7 +1,7 @@
 .invite_users
   %h2 Invite people to this project
 
-  - form_tag user_finder_path, :method => 'get', :remote => true do
+  - form_tag user_finder_path, :method => 'get', :remote => true, :class => 'user_finder' do
     = label_tag 'q', 'Enter name or email:'
     = text_field_tag 'q', nil, :size => 30
     = submit_tag "Search", :disable_with => "Searching..."
