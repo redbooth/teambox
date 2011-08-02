@@ -10,6 +10,7 @@ document.on("click", ".upload .file a.ajax", function(e,el) {
 
 document.on("click", ".upload .reference a.link_rename", function(e,el) {
   el.up('.reference').hide();
+  el.up('.reference').up('.upload').down('.header').down('.icon').down('img').setAttribute('src', '/images/loading.gif');
 });
 
 document.on('click', '#new_folder_button, #new_folder_form a.close', function(e, button) {
