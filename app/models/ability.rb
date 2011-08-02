@@ -61,6 +61,10 @@ class Ability
       target = object.try(:comment).try(:target)
       api_write?(user) && object.editable?(user) && private_access?(user, target)
     end
+
+    can :update, Folder do |object|
+      api_write?(user) && (object.owner?(user) or object.project.admin?(user))
+    end
     
     can :destroy, [Conversation, Task] do |object|
       api_write?(user) && (object.owner?(user) or object.project.admin?(user)) && private_access?(user, object)

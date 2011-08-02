@@ -52,4 +52,32 @@ describe FoldersController do
 
   end
 
+  describe "#rename" do
+
+    before do
+      @folder = Factory(:folder, :project_id => @project.id, :user_id => @user.id, :name => 'Keep this name')
+    end
+
+    it "should allow participants to rename folders" do
+      login_as @user
+
+      put :rename, :project_id => @project.permalink, :id => @folder.id,
+           :folder => {:name => "Changed"}
+
+      @folder.reload
+      @folder.name.should eql 'Changed'
+    end
+
+    it "should not allow observers to create folders" do
+      login_as @observer
+
+      put :rename, :project_id => @project.permalink, :id => @folder.id,
+           :folder => {:name => "Wanna change"}
+
+      @folder.reload
+      @folder.name.should eql 'Keep this name'
+    end
+
+  end
+
 end

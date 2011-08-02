@@ -1,7 +1,5 @@
 class FoldersController < ApplicationController
 
-  #TODO: before_filter :set_page_title
-
   before_filter :get_current_project_folder, :only => [:edit, :rename]
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -9,23 +7,19 @@ class FoldersController < ApplicationController
   end
 
   def edit
-    
-    #authorize! :edit, @folder
+    authorize! :update, @folder
+
     respond_to do |f|
       f.js   { render :layout => false }
-      f.any(:html, :m) do
-        
-      end
+      f.any(:html, :m) {}
     end
 
   end
   
   def rename
-
-    #authorize! :edit, @folder
+    authorize! :update, @folder
 
     @folder.update_attributes(params[:folder])
-
     respond_to do |f|
       f.js   { render :layout => false }
       f.any(:html, :m) do
