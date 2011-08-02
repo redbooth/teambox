@@ -6,6 +6,23 @@ class FoldersController < ApplicationController
     handle_cancan_error(exception)
   end
 
+  def edit
+    @folder = @current_project.folders.find(params[:id])
+    #authorize! :edit, @folder
+    respond_to do |f|
+      f.js   { render :layout => false }
+      f.any(:html, :m) do
+        #flash[:success] = t('deleted.folder', :name => @folder.name)
+        #redirect_to @parent_folder.nil? ? project_uploads_path(@current_project) : project_folder_path(@current_project, @parent_folder)
+      end
+    end
+
+  end
+#  
+#  def rename
+#    authorize! :edit, @folder
+#  end
+
   def create
     authorize! :create_folders, @current_project
 

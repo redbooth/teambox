@@ -1355,6 +1355,8 @@ en:
     new:
       submit: Create folder
       invalid_folder: Folder contain errors
+    edit:
+      submit: Save
   sessions:
     fields:
       username_or_email: Email or Username

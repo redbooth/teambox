@@ -1,0 +1,12 @@
+#page.replace_html "folder_#{@folder.id} .actions_container", "yttttttttttttttttt"
+#
+
+page.select("#folder_#{@folder.id}").pluck('actions_container', 'innerHTML')
+
+#page.select('.amounts').pluck('amounts', 'innerHTML')
+
+
+
+#page.alert(element)
+#element.replace_html("yyyyyyyyyy")
+#element.show()

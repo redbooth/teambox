@@ -1,0 +1,9 @@
+= form_for [@current_project, @current_folder], :html => {:style => 'display: none', :id => 'edit_folder_form'} do |f|
+  .header
+    .icon
+      = image_tag '/famfamfam/folder.png'
+    .full_row
+      = f.text_field :name, :value => @current_folder.name, :id => 'edit_folder_name'
+      .actions
+        = link_to t('common.cancel'), '#', :class => 'close'
+        = f.submit t('folders.edit.submit'), :class => 'button'

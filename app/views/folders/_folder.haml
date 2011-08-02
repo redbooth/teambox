@@ -1,4 +1,4 @@
-%div.upload{ :class => cycle('alternate', '') }
+%div.upload{ :class => cycle('alternate', ''), :id => "folder_#{folder.id}" }
   .header
     .icon
       = image_tag '/famfamfam/folder.png'
@@ -15,3 +15,6 @@
     - if true or can?(:update, folder)
       = link_to t('.remove'), [@current_project, folder], :'data-remote' => true,
         :'data-method' => 'delete', :'data-confirm' => t('confirm.delete_folder')
+      = link_to t('.rename'), edit_project_folder_path(@current_project, folder), :remote => true
+
+  .actions_container

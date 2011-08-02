@@ -169,7 +169,11 @@ Teambox::Application.routes.draw do
           post :email_public
         end
         collection do
-          resources :folders, :except => [:show, :index, :new]
+          resources :folders, :except => [:show, :index, :new] do
+            member do
+              put :rename
+            end
+          end
         end
       end
       match 'uploads/folders/:id' => 'uploads#index', :via => :get

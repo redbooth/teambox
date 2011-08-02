@@ -7,7 +7,7 @@ class Folder < RoleRecord
   has_many :folders, :foreign_key => :parent_folder_id
   has_many :uploads, :foreign_key => :parent_folder_id
 
-  NAME_LENGTH = 3..40
+  NAME_LENGTH = 1..40
   NAME_REGEXP = /^[a-z0-9\-_\s\.]+$/i
 
   validates :name, :project, :user, :presence => true
