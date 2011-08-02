@@ -1,0 +1,7 @@
+if @folder.valid?
+  page.hide "edit_folder_#{@folder.id}"
+  folder_html = render :partial => 'folders/folder', :locals => {:folder => @folder}
+  page.replace "folder_#{@folder.id}", folder_html
+else
+  page.alert @folder.errors.full_messages.to_sentence
+end

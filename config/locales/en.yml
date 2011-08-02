@@ -1314,8 +1314,6 @@ en:
     new_folder:
       default_text: New folder name
       submit: Create folder
-    parent_folder:
-      parent_folder: Parent folder
     form:
       title: Upload a file
       presence: "You can't upload a blank file"
@@ -1357,6 +1355,13 @@ en:
       invalid_folder: Folder contain errors
     edit:
       submit: Save
+    parent_folder: Parent folder
+    remove: 
+      link: Remove
+    rename:
+      link: Rename
+      success: Folder name has been changed
+      error: Folder name has not been changed
   sessions:
     fields:
       username_or_email: Email or Username

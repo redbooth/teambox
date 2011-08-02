@@ -13,8 +13,7 @@
 
   .reference{ :style => 'display: none' }
     - if true or can?(:update, folder)
-      = link_to t('.remove'), [@current_project, folder], :'data-remote' => true,
-        :'data-method' => 'delete', :'data-confirm' => t('confirm.delete_folder')
-      = link_to t('.rename'), edit_project_folder_path(@current_project, folder), :remote => true
+      = link_to t('folders.remove.link'), [@current_project, folder], :remote => true, :method => :delete, :confirm => t('confirm.delete_folder')
+      = link_to t('folders.rename.link'), edit_project_folder_path(@current_project, folder), :remote => true, :class => "link_rename"
 
   .actions_container

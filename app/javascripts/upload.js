@@ -8,6 +8,10 @@ document.on("click", ".upload .file a.ajax", function(e,el) {
   el.up('.upload').down('img').setAttribute('src', '/images/loading.gif');
 });
 
+document.on("click", ".upload .reference a.link_rename", function(e,el) {
+  el.up('.reference').hide();
+});
+
 document.on('click', '#new_folder_button, #new_folder_form a.close', function(e, button) {
   e.preventDefault();
   $('new_folder_form').toggle();
