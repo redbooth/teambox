@@ -23,7 +23,11 @@
     var view = new Teambox.Views.ConversationList({collection: collection, conversation: model, project_id: project});
 
     $('content_header').update('');
-    $('content').update(view.render().el);
+    $('content')
+      .hide()
+      .update(view.render().el)
+      .scrollTo(200)
+      .show();
 
     view.setActive(model);
 
