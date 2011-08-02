@@ -40,6 +40,8 @@ class ApiV1::ConversationsController < ApiV1::APIController
   def update
     authorize! :update, @conversation
 
+    @conversation.updating_user = current_user
+
     if @conversation.update_attributes params
       handle_api_success(@conversation, :wrap_objects => true, :references => true, :include => [:user, :uploads, :google_docs])
     else
