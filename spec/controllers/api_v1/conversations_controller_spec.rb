@@ -246,6 +246,20 @@ describe ApiV1::ConversationsController do
       @conversation.reload.name.should_not == 'Modified'
     end
 
+    it "should not allow hacking the comment author" do
+      login_as @user
+
+      put :update, :project_id => @project.permalink, :id => @conversation.id, :name => 'Modified',
+          :comments_attributes => { 0 => { :body => 'modified....'}}, :user_id => @observer.id
+
+      response.should be_success
+
+      @conversation.reload.comments.size.should == 2
+      comment = @conversation.reload.recent_comments.detect {|c| c.body == 'modified....'}
+      comment.should_not be_nil
+      comment.user.id.should == @user.id
+    end
+
     it "should not allow participants not watching to modify a private conversation" do
       @conversation.update_attribute(:is_private, true)
       login_as @user
