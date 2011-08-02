@@ -23,15 +23,28 @@ class ApiV1::InvitationsController < ApiV1::APIController
   def create
     authorize! :admin, @target
     if @target != current_user
-      user_or_email = params[:user_or_email]
-      role = params[:role] || Person::ROLES[:participant]
-      membership = params[:membership] || Membership::ROLES[:external]
+      if params[:email]
+        # Single invite
+        invitation = @target.invitations.new(:user_or_email => params[:email].strip)
+        invitation.role = params[:role] || Person::ROLES[:participant]
+        invitation.locale = params[:locale] if params[:locale]
+        invitation.membership = params[:membership] || Membership::ROLES[:external]
+        invitation.user = current_user
+        invitation.first_name = params[:first_name]
+        invitation.last_name = params[:last_name]
+        @saved_count = invitation.save ? 1 : 0
+        @invitations = [invitation]
+      else
+        user_or_email = params[:user_or_email]||''
+        role = params[:role] || Person::ROLES[:participant]
+        membership = params[:membership] || Membership::ROLES[:external]
       
-      mentions = user_or_email.gsub!(/(?:^|\W)@(\w+)/).collect{ |u| u.strip.delete('@') }
-      emails = user_or_email.extract_emails!
-      @targets = user_or_email.split + mentions + emails
+        mentions = user_or_email.gsub!(/(?:^|\W)@(\w+)/).collect{ |u| u.strip.delete('@') }
+        emails = user_or_email.extract_emails!
+        @targets = user_or_email.split + mentions + emails
       
-      @invitations = @targets.map { |target| make_invitation(target, role, membership, params[:locale]) }
+        @invitations = @targets.map { |target| make_invitation(target, role, membership, params[:locale]) }
+      end
     else
       return api_error(:unprocessable_entity, :type => 'InvalidRecord', :message => t('invitations.errors.invalid'))
     end

@@ -8,10 +8,11 @@ class Invitation < RoleRecord
   validate :valid_role?
   validate :user_already_invited?
   validate :email_valid?
+  validate :name_valid?
 
   attr_reader :user_or_email
   attr_accessor :is_silent, :locale
-  attr_accessible :user_or_email, :role, :membership, :invited_user, :locale
+  attr_accessible :user_or_email, :role, :membership, :invited_user, :locale, :first_name, :last_name
 
   before_create :generate_token
   before_save :copy_user_email, :if => :invited_user
@@ -66,12 +67,15 @@ class Invitation < RoleRecord
       :user_id => user_id,
       :invited_user_id => invited_user_id,
       :role => role,
+      :membership => membership,
+      :email => email,
       :project => {
         :permalink => project.permalink,
         :name => project.name
       }
     }
     
+    base[:invited_user] = invited_user.to_api_hash unless invited_user.nil?
     base[:type] = self.class.to_s if options[:emit_type]
     
     base
@@ -95,7 +99,8 @@ class Invitation < RoleRecord
       end
     else
       # Users who don't have an account yet
-      Emailer.send_with_language :signup_invitation, (self.locale || user.locale), self.id
+      # NOTE: User now created afterwards
+      #Emailer.send_with_language :signup_invitation, (self.locale || user.locale), self.id
     end
   end
   
@@ -134,6 +139,21 @@ class Invitation < RoleRecord
       @errors.add :user_or_email, 'is not a valid username or email'
     end
   end
+  
+  def generate_login
+    "#{first_name}_#{last_name}"
+  end
+  
+  def name_valid?
+    return if !invited_user.nil?
+    
+    temp_user = User.new(:first_name => first_name,
+                        :last_name => last_name,
+                        :email => email,
+                        :login => generate_login,
+                        :password => 'papapa', :password_confirmation => 'papapa')
+    @errors.add :user_or_email, 'could not be created' if !temp_user.valid?
+  end
 
   def generate_token
     self.token ||= ActiveSupport::SecureRandom.hex(20)
@@ -143,6 +163,17 @@ class Invitation < RoleRecord
   def auto_accept
     if invited_user.try(:auto_accept_invites)
       @autoaccepted = true
+      self.accept(invited_user)
+      self.destroy
+    elsif invited_user.nil?
+      # Automagically make the user
+      @autoaccepted = true
+      @password = ActiveSupport::SecureRandom.hex(8)
+      self.invited_user = User.create(:first_name => first_name,
+                                 :last_name => last_name,
+                                 :email => email,
+                                 :login => generate_login,
+                                 :password => @password, :password_confirmation => @password)
       self.accept(invited_user)
       self.destroy
     end
