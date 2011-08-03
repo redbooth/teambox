@@ -16,6 +16,13 @@ class Person < ActiveRecord::Base
   after_destroy :log_delete, :cleanup_after
   before_destroy :set_deleted_date
   
+  before_destroy :validate_presence_of_at_least_one_admin, :if => lambda { |person|
+    person.role_name == :admin and !person.project.marked_for_destruction?
+  }
+  before_update :validate_presence_of_at_least_one_admin, :if => lambda { |person|
+    person.role_changed? and person.role_was == ROLES[:admin]
+  }
+  
 #  validates_uniqueness_of :user, :scope => :project
   validates_presence_of :user, :project   # Make sure they both exist and are set
   validates_inclusion_of :role, :in => 0..3
@@ -62,6 +69,13 @@ class Person < ActiveRecord::Base
   
   def login
     user.login
+  end
+
+  def validate_presence_of_at_least_one_admin
+    if project.admins.count == 1
+      errors.add(:base, "A project needs at least one administrator")
+      false
+    end
   end
   
   def log_create

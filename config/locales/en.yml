@@ -97,7 +97,9 @@ en:
     upload: "Deleted %{name} file"
     folder: "Deleted %{name} folder"
     person: "%{name} is no longer in the project"
+    failed_person: "%{name} could not be removed from the project"
     left_project: "You are no longer in this project"
+    failed_left_project: "You cannot leave this project"
   public_downloads:
     download:
       download_file: "Download file:"

@@ -35,17 +35,29 @@ class PeopleController < ApplicationController
 
   def destroy
     authorize! :destroy, @person
-    @person.destroy
+    success = @person.destroy
       
     respond_to do |wants|
       wants.html {
         if request.xhr?
-          head :ok
+          if success
+            head :ok
+          else
+            head :error
+          end
         elsif @user == current_user
-          flash[:success] = t('deleted.left_project', :name => @user.name)
+          if success
+            flash[:success] = t('deleted.left_project', :name => @user.name)
+          else
+            flash[:error] = t('deleted.failed_left_project', :name => @user.name)
+          end
           redirect_to root_path
         else
-          flash[:success] = t('deleted.person', :name => @user.name)
+          if success
+            flash[:success] = t('deleted.person', :name => @user.name)
+          else
+            flash[:error] = t('deleted.failed_person', :name => @user.name)
+          end
           redirect_to project_people_path(@current_project)
         end
       }

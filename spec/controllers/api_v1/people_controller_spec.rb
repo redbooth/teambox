@@ -86,15 +86,6 @@ describe ApiV1::PeopleController do
       @project.reload.admin?(@user).should == true
     end
 
-    it "should not allow the owner to be modified" do
-      login_as @admin
-
-      put :update, :project_id => @project.permalink, :id => @owner.person_for(@project).id, :role => Person::ROLES[:participant]
-      response.status.should == 401
-
-      @project.reload.admin?(@owner).should == true
-    end
-
     it "should not allow a non-admin to modify a person" do
       login_as @user
 
@@ -102,6 +93,17 @@ describe ApiV1::PeopleController do
       response.status.should == 401
 
       @project.reload.admin?(@user).should == false
+    end
+    
+    it "should ensure the last admin isn't updated out of the project" do
+      @project.people.each{|p|p.destroy}
+      @project.people(true).length.should == 1
+      login_as @project.people.last.user
+
+      put :update, :project_id => @project.permalink, :id => @project.people.first.id, :role => Person::ROLES[:observer]
+      response.status.should == 422
+      
+      @project.people(true).length.should == 1
     end
   end
 
@@ -113,15 +115,6 @@ describe ApiV1::PeopleController do
       response.should be_success
 
       @project.people(true).length.should == 3
-    end
-
-    it "should not allow an owner to remove themselves from the project" do
-      login_as @owner
-
-      put :destroy, :project_id => @project.permalink, :id => @owner.person_for(@project).id
-      response.status.should == 401
-
-      @project.people(true).length.should == 4
     end
 
     it "should allow a user to remove themselves from the project" do
@@ -140,6 +133,17 @@ describe ApiV1::PeopleController do
       response.status.should == 401
 
       @project.people(true).length.should == 4
+    end
+    
+    it "should not destroy the last person in a project" do
+      @project.people.each{|p|p.destroy}
+      @project.people(true).length.should == 1
+      login_as @project.people.last.user
+
+      put :destroy, :project_id => @project.permalink, :id => @project.people.first.id
+      response.status.should == 422
+      
+      @project.people(true).length.should == 1
     end
   end
 end

@@ -90,11 +90,11 @@ class Ability
     # Person permissions
     
     can :update, Person do |person|
-      api_write?(user) && (person.project.admin?(user) and !person.project.owner?(person.user))
+      api_write?(user) && (person.project.admin?(user))
     end
     
     can :destroy, Person do |person|
-      api_write?(user) && (!person.project.owner?(person.user) and (person.user == user or person.project.admin?(user)))
+      api_write?(user) && (person.user == user or person.project.admin?(user))
     end
     
     # Invite permissions
@@ -143,15 +143,15 @@ class Ability
     end
     
     can :update, Project do |project|
-      api_write?(user) && (project.owner?(user) or project.admin?(user))
+      api_write?(user) && project.admin?(user)
     end
     
     can :destroy, Project do |project|
-      api_write?(user) && project.owner?(user)
+      api_write?(user) && project.admin?(user)
     end
     
     can :admin, Project do |project|
-      api_write?(user) && (project.owner?(user) or project.admin?(user))
+      api_write?(user) && project.admin?(user)
     end
     
     # Organization permissions

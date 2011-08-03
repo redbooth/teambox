@@ -23,6 +23,7 @@ class Project
   has_many :pages, :dependent => :destroy
 
   has_many :users, :through => :people
+  has_many :admins, :through => :people, :source => :user, :conditions => {'people.role' => Person::ROLES[:admin]}
   
   has_one  :first_comment, :class_name => 'Comment', :as => :target, :order => 'created_at ASC'
   has_many :recent_comments, :class_name => 'Comment', :as => :target, :order => 'created_at DESC', :limit => 2

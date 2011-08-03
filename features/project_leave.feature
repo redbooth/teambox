@@ -15,3 +15,9 @@ Feature: Leaving a project
     And I wait for 1 second
     Then I should not see "Pablo"
     And I should see "Mislav"
+  
+  Scenario: Mislav leaves
+    Given I go to the people page of the "Ruby Rockstars" project
+    When I follow "Leave project" confirming with OK
+    And I wait for 1 second
+    Then I should see "You cannot leave this project"

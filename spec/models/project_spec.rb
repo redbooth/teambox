@@ -16,7 +16,6 @@ describe Project do
   it { should have_many(:activities) }
 
   it { should validate_presence_of(:user) }
-  # it { should validate_associated     :people }
   it { should validate_length_of(:name, :minimum => 3) }
   it { should validate_length_of(:permalink, :minimum => 5) }
 
@@ -26,13 +25,9 @@ describe Project do
       @project = Factory.create(:project, :user => @owner)
     end
 
-    it "should belong to its owner" do
-      @project.user.should == @owner
-      @project.owner?(@owner).should be_true
-      @project.users.should include(@owner)
+    it "should have at least 1 admin" do
       @project.people.first.role.should == Person::ROLES[:admin]
-      @owner.reload
-      @owner.projects.should include(@project)
+      @project.people.first.user.should == @owner
     end
   end
 
@@ -168,6 +163,11 @@ describe Project do
       @project.people(true).each do |person|
         person.user.recent_projects.should_not include(@project)
       end
+    end
+    
+    it "should ensure at least 1 admin remains in the project" do
+      @project.people.each{|p|p.destroy}
+      @project.reload.people.first.role.should == Person::ROLES[:admin]
     end
 
     it "make sure activities still work when the object is deleted"
