@@ -89,7 +89,7 @@ class TeamboxData
     user = @imported_users[id]
     if !user
       need_user = ids_to_users[id] || {'username' => id}
-      throw Exception.new("User '#{need_user['username']}' not present. Please map it to an existing user or create it.")
+      add_unprocessed_object("users","User '#{need_user['username']}' not present. Please map it to an existing user or create it.")
     end
     user
   end
@@ -100,7 +100,27 @@ class TeamboxData
   end
   
   def import_log(object, remark="")
-    Rails.logger.warn "Imported #{object} (#{remark})"
+    Rails.logger.warn "[IMPORT] Imported #{object}[id: #{object.id}] (#{remark})"
+  end
+
+  def add_unprocessed_object(model, msg="")
+    if model.kind_of?(ActiveRecord::Base)
+      @unprocessed_objects[model.klass.table_name] = model
+    else
+      dummy = DummyObject.new
+      dummy.errors.add_to_base(msg)
+      @unprocessed_objects[model] = dummy
+    end
+  end
+
+  def attempt_save(model)
+    begin
+      model.save!
+      yield if block_given?
+    rescue ActiveRecordError => err
+      add_unprocessed_object(model)
+      false
+    end
   end
   
   def self.import_from_file(name, user_map, opts={})
