@@ -124,10 +124,14 @@ body.new_conversations, body.create_conversations
 .create_bar
   margin: 20px 0
 
+
+$list_width: 271px
+
 .conversation_list
   float: left
-  width: 300px
+  width: $list_width
   position: fixed
+  z-index: 10
   border-right: 1px solid #ccc
   .header
     background-color: #eeeeee
@@ -135,11 +139,12 @@ body.new_conversations, body.create_conversations
     width: auto
   .conversation
     overflow: hidden
-    cursor: pointer
     height: 65px
     border-bottom: 1px solid #A0A0A0
     background-color: #fafafa
     padding: 0px 4px
+    &:hover
+      cursor: pointer
     &.active
       background-color: #cccccc
     .thread_title
@@ -155,12 +160,14 @@ body.new_conversations, body.create_conversations
       color: #999
 
 .conversation_view
-  float: left
+  position: relative
+  padding-left: $list_width
 
 #content .conversations
-  margin: -10px 0 0
+  margin: 0
 
 .conversation
   header
     border-bottom: 1px solid #000
     padding: 0 5px
+

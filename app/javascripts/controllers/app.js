@@ -21,7 +21,7 @@
 
     Views.Sidebar.highlightSidebar('activity_link');
     $('view_title').update('Recent activity');
-    $('content_header').update((new Teambox.Views.SimpleConversationForm()).render().el);
+    $('content_header').show().update((new Teambox.Views.SimpleConversationForm()).render().el);
     $('content').update((new Teambox.Views.Activities({collection: threads})).render().el);
   };
 

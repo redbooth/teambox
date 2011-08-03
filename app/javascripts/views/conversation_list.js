@@ -54,11 +54,6 @@
     this.conversation_list = this.el.down('.conversation_list');
     this.conversation_view = this.el.down('.conversation_view');
 
-    // Conversation list 100% height
-    this.conversation_list.setStyle({
-      height: (document.viewport.getHeight() - $('header_wrap').getHeight()) + 'px'
-    });
-
     this.reload(this.collection, this.project_id);
     if (this.conversation) {
       var view;

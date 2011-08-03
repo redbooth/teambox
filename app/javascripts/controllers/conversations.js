@@ -4,6 +4,8 @@
                                           , '/projects/:project/conversations/:id' : 'show'}};
 
   ConversationsController['new'] = function (project) {
+    $('content_header').update('').hide();
+
     var collection = Teambox.collections.conversations;
     var conversation = new Teambox.Models.Conversation();
     var view = new Teambox.Views.ConversationList({collection: collection, conversation: conversation, project_id: project});
@@ -22,12 +24,8 @@
     var collection = Teambox.collections.conversations;
     var view = new Teambox.Views.ConversationList({collection: collection, conversation: model, project_id: project});
 
-    $('content_header').update('');
-    $('content')
-      .hide()
-      .update(view.render().el)
-      .scrollTo(200)
-      .show();
+    $('content_header').update('').hide();
+    $('content').update(view.render().el);
 
     view.setActive(model);
 
@@ -38,7 +36,7 @@
   ConversationsController.index = function (project, id) {
     var collection = Teambox.collections.conversations;
     var view = new Teambox.Views.ConversationList({collection: collection, project_id: project});
-    $('content_header').update((new Teambox.Views.SimpleConversationForm()).render().el);
+    $('content_header').update('').hide();
     $('content').update(view.render().el);
 
     Teambox.Views.Sidebar.highlightSidebar('project_' + project + '_conversations');

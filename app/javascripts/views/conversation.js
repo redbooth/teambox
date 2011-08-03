@@ -6,7 +6,6 @@
 
   Conversation.initialize = function (options) {
     _.bindAll(this, 'render');
-    this.model.bind('change', this.render);
     this.title = 'Conversation ' + this.name;
     
     
