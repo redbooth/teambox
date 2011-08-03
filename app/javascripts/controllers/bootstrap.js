@@ -121,10 +121,13 @@
           // preload project >> conversations
           collection = new Teambox.Collections.Conversations([], {project_id: project.id});
           projects.models[i].set({conversations: collection});
-          collection.fetch({success: _loader.load(function (conversations) {
-            collections.conversations.add(conversations.models, {silent: true});
-            if (log) { log('conversations')(); }
-          })});
+          collection.fetch({
+            success: _loader.load(function (conversations) {
+              collections.conversations.add(conversations.models, {silent: true});
+              // TODO: Filter private conversations?
+              if (log) log('conversations')();
+            })
+          });
 
           // preload project >> people
           collection = new Teambox.Collections.People([], {project_id: project.id});

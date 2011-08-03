@@ -155,8 +155,6 @@
   Task.url = function () {
     var url = '/api/1';
 
-    console.log(this);
-
     if (this.get('project_id')) {
       url += '/projects/' + this.get('project_id');
     }

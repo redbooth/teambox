@@ -6,7 +6,10 @@
                , template: Teambox.modules.ViewCompiler('conversations.index')
                };
 
-  ConversationList.events = {};
+  ConversationList.events = {
+    "mouseover .conversation_list": "showScroll",
+    "mouseout .conversation_list": "hideScroll"
+  };
 
   ConversationList.initialize = function (options) {
     _.bindAll(this, "render");
@@ -22,6 +25,7 @@
     this.title = 'Conversations on ' + project.get('name');
     this.project_id = options.project_id;
     this.conversation = options.conversation;
+    this.showing_scrollbar = false;
   };
 
   ConversationList.addConversation = function(conversation, collection) {
@@ -39,9 +43,12 @@
 
   ConversationList.reload = function(collection, project_id) {
     var self = this;
-    // Only add them to the DOM if their project_id matches
+    // Only add them to the DOM if their project_id matches and have permisions
     collection.each(function(conversation){
-      if(conversation.get('project').permalink === project_id){
+
+      var project_matches = conversation.get('project').permalink === project_id;
+
+      if(project_matches){
         var view = new Teambox.Views.ConversationListItem({model:conversation, root_view: self});
         self.conversation_list.insert({bottom: view.render().el});
       }
@@ -65,6 +72,24 @@
       this.conversation_view.update(view.render().el);
     }
     return this;
+  };
+  
+  // When mouse over conversations list, show the scrollbar
+  ConversationList.showScroll = function() {
+    if(this.showing_scrollbar) return;
+    this.showing_scrollbar = true;
+    this.el.down('.conversation_list').setStyle({
+      "overflow-y": 'auto'
+    });
+  };
+  
+  // When mouse out conversations list, hide the scrollbar
+  ConversationList.hideScroll = function() {
+    if(!this.showing_scrollbar) return;
+    this.showing_scrollbar = false;
+    this.el.down('.conversation_list').setStyle({
+      "overflow-y": 'hidden'
+    });
   };
 
   // exports

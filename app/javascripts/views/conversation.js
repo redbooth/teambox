@@ -50,6 +50,9 @@
           });
           self.el.down('.comments').update(html);
           self.comment_form.el.show();
+        },
+        error: function(c, r) {
+          self.showError.call(self, r);
         }
       });
       
@@ -70,11 +73,15 @@
     var el = this.comment_template(comment);
     
     this.el
-      .select('.comments')[0]
+      .down('.comments')
       .insert({ bottom: el })
       .childElements()
       .last()
       .highlight({duration: 1});
+  };
+  
+  Conversation.showError = function(r) {
+    this.el.update('<div class="error">Error: ' + r.responseText.evalJSON().errors.message + '</div>');
   };
   
   // exports

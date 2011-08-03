@@ -133,20 +133,20 @@ $list_width: 271px
   position: fixed
   z-index: 10
   border-right: 1px solid #ccc
+  overflow-x: hidden
   .header
-    background-color: #eeeeee
-    padding: 4px
-    width: auto
+    background-color: #eee
+    width: 100%
   .conversation
     overflow: hidden
     height: 65px
-    border-bottom: 1px solid #A0A0A0
+    width: 100%
     background-color: #fafafa
     padding: 0px 4px
     &:hover
       cursor: pointer
     &.active
-      background-color: #cccccc
+      background-color: #ccc
     .thread_title
       font-size: 14px
       margin: 5px
@@ -162,12 +162,15 @@ $list_width: 271px
 .conversation_view
   position: relative
   padding-left: $list_width
+  .comment
+    padding: 8px 0
 
 #content .conversations
   margin: 0
+  background: #fff
 
 .conversation
   header
-    border-bottom: 1px solid #000
-    padding: 0 5px
+    border-bottom: 1px solid #f0f0f0
+    padding: 3px 5px 0
 
