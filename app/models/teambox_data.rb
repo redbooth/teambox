@@ -67,7 +67,7 @@ class TeamboxData < ActiveRecord::Base
           @dispatch = true
         else
           self.status_name = :processing
-          do_import
+          do_import(Teambox.config.import_options)
         end
       end
     else
@@ -90,7 +90,7 @@ class TeamboxData < ActiveRecord::Base
     store_import_data if @do_store_import_data
   end
 
-  def do_import
+  def do_import(options={})
     self.processed_at = Time.now
     next_status = :imported
 
@@ -102,7 +102,7 @@ class TeamboxData < ActiveRecord::Base
 
       throw Exception.new("Import is invalid #{errors.full_messages}") if !valid?
 
-      unserialize({'User' => user_map, 'Organization' => org_map})
+      unserialize({'User' => user_map, 'Organization' => org_map}, options)
 
     rescue Exception => e
       # Something went wrong?!
@@ -138,7 +138,7 @@ class TeamboxData < ActiveRecord::Base
   end
   
   def self.delayed_import(data_id)
-    TeamboxData.find_by_id(data_id).try(:do_import)
+    TeamboxData.find_by_id(data_id).try(:do_import, Teambox.config.import_options)
   end
   
   def exported?

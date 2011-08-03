@@ -1,7 +1,6 @@
 class TeamboxData
-  attr_accessor :data
-  attr_accessor :import_data
-  
+  attr_accessor :data, :import_data, :unprocessed_objects
+
   serialize :project_ids
   serialize :processed_objects
   serialize :user_map
