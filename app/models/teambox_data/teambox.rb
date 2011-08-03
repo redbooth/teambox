@@ -226,7 +226,11 @@ class TeamboxData
         project.log_activity(self, 'create', user.id) if user
       end
       unless @unprocessed_objects.empty?
-        raise "Some objects were not processed during this import. See @unprocessed_objects"
+        logger.warn "Some objects were not processed during this import."
+        @unprocessed_objects.each do |object|
+          logger.warn "[#{object.klass}##{object.id} - new?: #{object.new_record?}] Errors: * #{object.errors.full_messages.join("\n* ")}"
+        end
+        raise "UnprocessedObjectsException"
       end
     end
   end
