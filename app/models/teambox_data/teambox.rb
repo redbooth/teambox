@@ -225,6 +225,9 @@ class TeamboxData
         project.is_importing = false
         project.log_activity(self, 'create', user.id) if user
       end
+      unless @unprocessed_objects.empty?
+        raise "Some objects were not processed during this import. See @unprocessed_objects"
+      end
     end
   end
   
