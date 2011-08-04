@@ -19,7 +19,6 @@ Feature: Invite a user to a project
     When I go to the people page of the "Ruby Rockstars" project
     Then I should see "Invite people to this project"
     And I should see "Mislav Marohnić"
-    And I should see "Project Owner"
     And I should not see "Remove from project"
     And I should not see "Transfer Ownership"
     When I fill in "invitation_user_or_email" with "invalid user"

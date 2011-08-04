@@ -26,5 +26,8 @@
 
   - current_person = @people.find { |p| p.user == current_user }
   %h2= t('people.column.leaving')
-  %p= t('people.column.you_can_leave')
-  %p= leave_project_link(@current_project)
+  - if can? :destroy, current_person
+    %p= t('people.column.you_can_leave')
+    %p= leave_project_link(@current_project)
+  - else
+    %p= t('people.column.you_cannot_leave')

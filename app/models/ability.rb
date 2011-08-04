@@ -16,6 +16,10 @@ class Ability
   def owner?(user, object)
     object.user == user
   end
+  
+  def last_admin_in_project?(person)
+    person.role == Person::ROLES[:admin] && person.project.admins.length == 1 && person.project.admins.first.id == person.id
+  end
 
   def initialize(user)
     
@@ -90,11 +94,11 @@ class Ability
     # Person permissions
     
     can :update, Person do |person|
-      api_write?(user) && (person.project.admin?(user))
+      api_write?(user) && person.project.admin?(user) && !last_admin_in_project?(person)
     end
     
     can :destroy, Person do |person|
-      api_write?(user) && (person.user == user or person.project.admin?(user))
+      api_write?(user) && (person.user == user or person.project.admin?(user)) && !last_admin_in_project?(person)
     end
     
     # Invite permissions
@@ -137,17 +141,12 @@ class Ability
       api_write?(user) && project.editable?(user)
     end
     
-    # TODO: remove, this should be consolidated into the organization
-    can :transfer, Project do |project|
-      api_write?(user) && project.admin?(user)
-    end
-    
     can :update, Project do |project|
-      api_write?(user) && project.admin?(user)
+      api_write?(user) && project.manage?(user)
     end
     
     can :destroy, Project do |project|
-      api_write?(user) && project.admin?(user)
+      api_write?(user) && project.manage?(user)
     end
     
     can :admin, Project do |project|

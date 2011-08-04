@@ -24,10 +24,6 @@
       %a.general_settings.ajax{ :href => "/projects/{{permalink}}/settings" }= t('shared.project_settings_navigation.general')
     .el
       %a.deletion.ajax{ :href => "/projects/{{permalink}}/deletion" }= t('shared.project_settings_navigation.deletion')
-    {{#owner}}
-    .el
-      %a.ownership.ajax{ :href => "/projects/{{permalink}}/ownership" }= t('shared.project_settings_navigation.ownership')
-    {{/owner}}
   {{/can_admin}}
   .el
     %a.people.ajax{ :href => "/projects/{{permalink}}/people" }= t('shared.navigation.people')

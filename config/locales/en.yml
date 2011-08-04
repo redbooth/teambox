@@ -1145,7 +1145,6 @@ en:
       participant: "Participant. Can do everything, but not invite users."
       admin: "Admin. Can invite users to the project, and delete comments."
     header:
-      owner: Project Owner
       observer: Observer
       commenter: Commenter
       participant: Participant
@@ -1165,6 +1164,7 @@ en:
       contact_admins: "In this project, only %{admins} can invite new members."
       leaving: "Leaving the project"
       you_can_leave: "You can leave this project at any time. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
+      you_cannot_leave: "You cannot leave this project as you are the only administrator present."
       leave_project: "Leave this project"
       confirm_delete: Are you sure you want to leave this project?
       leave_project: Leave project

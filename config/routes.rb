@@ -141,7 +141,6 @@ Teambox::Application.routes.draw do
       member do
         post :accept
         post :decline
-        put :transfer
         get :join
       end
 
@@ -259,9 +258,6 @@ Teambox::Application.routes.draw do
     namespace :api_v1, :path => 'api/1' do
       resources :app_links, :except => [ :edit, :update ]
       resources :projects, :except => [:new, :edit] do
-        member do
-          put :transfer
-        end
 
         resources :activities, :only => [:index, :show]
 
@@ -387,9 +383,6 @@ Teambox::Application.routes.draw do
 
       resources :organizations, :except => [:new, :edit, :destroy] do
         resources :projects, :except => [:new, :edit] do
-          member do
-            put :transfer
-          end
         end
 
         resources :memberships, :except => [:new, :edit, :create]
