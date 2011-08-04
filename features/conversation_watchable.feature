@@ -37,6 +37,27 @@ Feature: Watchers for conversations
     Then @enric and @pablo should receive 2 emails
     And @james should receive 0 emails
 
+  Scenario: New conversation watchers but with user who watches all conversations in given project
+    Given I am logged in as @pablo
+    When I go to the account notifications page
+    And I check the conversation column for the first project setting
+    And I press "Update account"
+    Then the checkbox on the conversation column for the first project setting should be checked
+    When I am logged in as @mislav
+    And I go to the new conversation page
+    And I fill in "Title" with "Talk!"
+    And I fill in the comment box with "We need to discuss!"
+    And I uncheck "James Urquhart"
+    And I press "Create"
+    Then @enric and @pablo should be watching the conversation "Talk!"
+    And @james should not be watching the conversation "Talk!"
+    When I go to the new conversation page
+    And I fill in "Title" with "Talk again!"
+    And I fill in the comment box with "We need to discuss again!"
+    And I uncheck "Pablo Villalba"
+    And I press "Create"
+    Then @enric and @pablo and @james should be watching the conversation "Talk again!"
+
   Scenario: Existing conversation with watchers
     Given I started a conversation named "Politics"
     And the conversation "Politics" is watched by @pablo and @james
