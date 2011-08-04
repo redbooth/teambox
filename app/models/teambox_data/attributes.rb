@@ -64,7 +64,7 @@ class TeamboxData
   
   def organizations_to_export
     if user
-      Organization.where(:projects => {:id => project_ids, :organization_id => user.admin_organization_ids}).joins([:projects]).all
+      Organization.where(:projects => {:id => project_ids, :organization_id => user.admin_organization_ids}).joins([:projects]).all.uniq
     else
       Organization.where(:projects => {:id => project_ids}).joins([:projects]).all
     end
