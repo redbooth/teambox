@@ -8,8 +8,8 @@ module UploadsHelper
     link_to(h(text), upload.url, {:rel => (upload.image? ? 'facebox' : nil), :target => (upload.image? ? nil : '_blank')}.merge(attributes))
   end
   
-  def upload_link_with_thumbnail(upload)
-    link_to image_tag(upload.url(:thumb)),
+  def upload_link_with_thumbnail(upload, size = :thumb)
+    link_to image_tag(upload.url(size)),
       upload.url,
       :class => 'link_to_upload', :rel => 'facebox'
   end
