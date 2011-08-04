@@ -225,11 +225,18 @@ class TeamboxData
         project.is_importing = false
         project.log_activity(self, 'create', user.id) if user
       end
+
       unless @unprocessed_objects.empty?
-        logger.warn "Some objects were not processed during this import."
+        logger.warn "[IMPORT] FAILURE! Some objects were not processed during this import."
         @unprocessed_objects.each do |object|
-          logger.warn "[#{object.klass}##{object.id} - new?: #{object.new_record?}] Errors: * #{object.errors.full_messages.join("\n* ")}"
+          if object.is_a?(DummyObject)
+            logger.warn "[IMPORT] [UNPROCESSED] Errors: * #{object.errors.full_messages.join("\n* ")}"
+          else
+            logger.warn "[IMPORT] [UNPROCESSED] [#{object.klass}##{object.id} - new?: #{object.new_record?}] Errors: * #{object.errors.full_messages.join("\n* ")}"
+          end
         end
+
+        #Finally raise exception rolling back transaction. Time to check the logs and fix the export data.
         raise "UnprocessedObjectsException"
       end
     end

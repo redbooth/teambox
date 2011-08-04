@@ -105,7 +105,7 @@ class TeamboxData < ActiveRecord::Base
 
     rescue Exception => e
       # Something went wrong?!
-      logger.warn "#{user} imported an invalid dump (#{self.id}) #{e.inspect} #{self.errors.inspect}"
+      logger.warn "[IMPORT] #{user} imported an invalid dump (#{self.id}) #{e.inspect} #{self.errors.inspect}"
       self.processed_at = nil
       next_status = :uploading
     end
