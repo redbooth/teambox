@@ -2,6 +2,7 @@
   var Conversation = {};
 
   Conversation.initialize = function (options) {
+    this.attributes.type = 'Conversation';
   };
 
  /**

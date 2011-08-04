@@ -19,7 +19,7 @@
         , convert_to_task: this.convert_to_task
         , controller: this.controller
     });
-  },
+  };
 
 
   /* TODO: Handle 404s or permission denied for conversations

@@ -22,7 +22,8 @@
       return model.get('permalink') === options.project_id;
     });
     
-    this.title = 'Conversations on ' + project.get('name');
+    // TODO: use I18n (translations.conversations.index.title)
+    this.title = 'Conversations in ' + project.get('name');
     this.project_id = options.project_id;
     this.conversation = options.conversation;
     this.showing_scrollbar = false;

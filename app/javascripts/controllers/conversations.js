@@ -6,10 +6,15 @@
   ConversationsController['new'] = function (project) {
     $('content_header').update('').hide();
 
+    var project_id = _.detect(Teambox.collections.projects.models, function(p) {
+      return p.get('permalink') === project;
+    });
+
     var collection = Teambox.collections.conversations;
-    var conversation = new Teambox.Models.Conversation();
+    var conversation = new Teambox.Models.Conversation({project_id: project_id});
     var view = new Teambox.Views.ConversationList({collection: collection, conversation: conversation, project_id: project});
     $('content').update(view.render().el);
+    $('view_title').update(I18n.translations.conversations.new.title);
   };
 
     // Display 'loading', fetch the conversation and display it
