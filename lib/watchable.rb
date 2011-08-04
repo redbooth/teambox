@@ -3,7 +3,7 @@ module Watchable
     model.before_save :before_save_collection_association
     model.after_save :update_watchers
     model.after_update :autosave_associated_records_for_watchers
-    model.after_create :create_watchers, :autosave_associated_records_for_watchers
+    model.after_create :autosave_associated_records_for_watchers, :create_watchers
     model.attr_accessible :watchers_ids, :watcher_ids
     model.send :attr_writer, :watchers_ids
     model.has_many :watcher_tags, :as => :watchable, :class_name => 'Watcher', :dependent => :destroy
