@@ -87,7 +87,6 @@ class TeamboxData < ActiveRecord::Base
   def post_check_state
     TeamboxData.send_later(:"delayed_#{type_name}", self.id) if @dispatch
     Emailer.send_with_language("notify_#{type_name}", user.locale, self.id) if @dispatch_notification
-    store_import_data if @do_store_import_data
   end
 
   def do_import(options={})
