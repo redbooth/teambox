@@ -217,7 +217,8 @@ class TeamboxData
             attempt_save(page, page_data) do
               import_log(page)
 
-              obj_type_map = {'Note' => :notes, 'Divider' => :dividers, 'Upload' => :uploads}
+              obj_type_map = {'Note' => :notes, 'Divider' => :dividers}
+              obj_type_map['Upload'] = :uploads if Teambox.config.import_options.create_uploads
 
               Array(page_data['slots']).each do |slot_data|
                 next if obj_type_map[slot_data['rel_object_type']].nil? # not handled yet
