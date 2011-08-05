@@ -77,20 +77,24 @@ class Upload < RoleRecord
   
   def rename_asset(new_file_name)
     styles = [:original] + self.asset.styles.keys
-    original_paths = Hash[styles.map { |style| [style, self.asset.path(style)] }]
-    if !styles.all? { |style| self.asset.exists?(style) }
-      self.errors.add(:base, "Cannot rename asset: original files not found")
+    original_paths = Hash[styles.map do |style|
+      if self.asset.exists?(style)
+        [style, self.asset.path(style)]
+       end 
+    end.compact]
+    
+    if original_paths.empty?
+      self.errors.add(:base, "Cannot rename asset: no files found")
       false
     elsif !self.update_attributes(:asset_file_name => new_file_name)
       false
     else
-      styles.each do |style|
-        path = original_paths[style]
-        new_path = File.join(File.dirname(path), new_file_name)
+      original_paths.each do |style, old_path|
+        new_path = File.join(File.dirname(old_path), new_file_name)
         if Teambox.config.amazon_s3
-          AWS::S3::S3Object.rename(path, new_path, self.asset.bucket_name)
+          AWS::S3::S3Object.rename(old_path, new_path, self.asset.bucket_name)
         else
-          FileUtils.mv(path, new_path)    
+          FileUtils.mv(old_path, new_path)    
         end
       end
       true

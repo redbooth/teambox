@@ -26,10 +26,10 @@ describe Upload do
   
   describe '#rename_asset' do
     it 'should fail when original names are not found' do
-      @upload.asset.should_receive(:exists?).with(:original).and_return(true)
+      @upload.asset.should_receive(:exists?).with(:original).and_return(false)
       @upload.asset.should_receive(:exists?).with(:thumb).and_return(false)
       @upload.rename_asset("new_pic.png").should be_false
-      @upload.errors[:base].first.should match(/original files/)
+      @upload.errors[:base].first.should match(/no files found/)
     end     
 
     it 'should fail when file name does not validate' do
