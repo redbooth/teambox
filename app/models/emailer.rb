@@ -7,6 +7,23 @@ class Emailer < ActionMailer::Base
   ANSWER_LINE = '-----------------------------==-----------------------------'
 
   class << self
+    attr_accessor :delivery_interceptor
+
+    def register_interceptor(interceptor)
+      @delivery_interceptor = (interceptor.is_a?(String) ? interceptor.constantize : interceptor)
+    end
+
+    def unregister_interceptor
+      @delivery_interceptor = nil
+    end
+
+    def inform_interceptor(template, *args)
+      if @delivery_interceptor
+        @delivery_interceptor.delivering_email(self, template, *args)
+      else
+        send(template, *args).deliver
+      end
+    end
 
     def emailer_defaults
       {
@@ -21,12 +38,8 @@ class Emailer < ActionMailer::Base
     end
 
     def send_with_language(template, language, *args)
-      old_locale = I18n.locale
-      I18n.locale = language
-      begin
-        send(template, *args).deliver
-      ensure
-        I18n.locale = old_locale
+      I18n.with_locale(language) do
+        inform_interceptor(template, *args)
       end
     end
 

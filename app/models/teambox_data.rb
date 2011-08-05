@@ -102,11 +102,9 @@ class TeamboxData < ActiveRecord::Base
 
       throw Exception.new("Import is invalid #{errors.full_messages}") if !valid?
 
-      only_import_emails(logger) do
-        unserialize({'User' => user_map, 'Organization' => org_map}, {
-          :create_users => self.can_create_users, 
-          :create_organizations => self.can_create_organizations})
-      end
+      unserialize({'User' => user_map, 'Organization' => org_map}, {
+        :create_users => self.can_create_users, 
+        :create_organizations => self.can_create_organizations})
 
     rescue Exception => e
       # Something went wrong?!
@@ -142,7 +140,9 @@ class TeamboxData < ActiveRecord::Base
   end
   
   def self.delayed_import(data_id)
-    TeamboxData.find_by_id(data_id).try(:do_import)
+    only_import_export_emails do
+      TeamboxData.find_by_id(data_id).try(:do_import)
+    end
   end
   
   def exported?

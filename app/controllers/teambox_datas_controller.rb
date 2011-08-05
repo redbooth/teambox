@@ -1,7 +1,10 @@
 class TeamboxDatasController < ApplicationController
+  include EmailDeliveryControl
+
   skip_before_filter :load_project
   before_filter :find_data, :except => [:index, :new, :create]
-  
+  around_filter :only_import_export_emails, :only => [:update]
+    
   def index
     # show current imports/exports
     @data_imports = current_user.teambox_datas.find_all_by_type_id(0)
