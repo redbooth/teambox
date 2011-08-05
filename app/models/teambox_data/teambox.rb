@@ -283,10 +283,10 @@ class TeamboxData
   
   def unpack_object(object, data, non_mass=[])
     object.tap do |obj|
-      obj.attributes = data
+      obj.attributes = data.reject {|key,value| key.to_s[/_ids$/]}
       
       non_mass.each do |key|
-        obj.send("#{key}=", data[key]) if data[key]
+        obj.send("#{key}=", data[key]) if data[key] && !key.to_s[/_ids$/]
       end
       
       obj.project = @project if obj.respond_to? :project
