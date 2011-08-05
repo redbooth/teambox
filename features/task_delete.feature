@@ -4,7 +4,7 @@ Feature: Deleting a task
   Background:
     Given a project exists with name: "My pet project"
     And @enric exists and is logged in
-    And "enric" is the owner of the project "My pet project"
+    And "enric" is an administrator in the project called "My pet project"
     And the task list called "Stupid tasks" belongs to the project called "My pet project"
     And the task called "Figure what this project is about" belongs to the task list called "Stupid tasks"
     And the task called "Figure what this project is about" belongs to the project called "My pet project"

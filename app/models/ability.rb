@@ -18,7 +18,7 @@ class Ability
   end
   
   def last_admin_in_project?(person)
-    person.role == Person::ROLES[:admin] && person.project.admins.length == 1 && person.project.admins.first.id == person.id
+    person.role == Person::ROLES[:admin] && person.project.admins.length == 1
   end
 
   def initialize(user)
@@ -94,7 +94,7 @@ class Ability
     # Person permissions
     
     can :update, Person do |person|
-      api_write?(user) && person.project.admin?(user) && !last_admin_in_project?(person)
+      api_write?(user) && person.project.admin?(user) && !last_admin_in_project?(person)# && (person.user != user)
     end
     
     can :destroy, Person do |person|

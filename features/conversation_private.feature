@@ -8,6 +8,7 @@ Feature: Creating a private conversation
       | jordi  | jordi@teambox.com        | Jordi      | Romero    |
       | enric  | enric@teambox.com        | Enric      | Lluelles  |
     Given a project with users @mislav, @pablo, @jordi and @enric
+    And "mislav" is an administrator in the project
     And I am logged in as @mislav
 
   Scenario: All conversations are private

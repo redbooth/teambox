@@ -101,7 +101,7 @@ describe ApiV1::PeopleController do
       login_as @project.people.last.user
 
       put :update, :project_id => @project.permalink, :id => @project.people.first.id, :role => Person::ROLES[:observer]
-      response.status.should == 422
+      response.status.should == 401
       
       @project.people(true).length.should == 1
     end
@@ -141,7 +141,7 @@ describe ApiV1::PeopleController do
       login_as @project.people.last.user
 
       put :destroy, :project_id => @project.permalink, :id => @project.people.first.id
-      response.status.should == 422
+      response.status.should == 401
       
       @project.people(true).length.should == 1
     end

@@ -7,8 +7,8 @@ Feature: When I view the time tracking reports globally
     And I am a participant in the organization called "Teambox"
     And there is a project called "Teambox Accounting"
     And there is a project called "ACME Marketing"
-    And "mislav" is the owner of the project "Teambox Accounting"
-    And "mislav" is the owner of the project "ACME Marketing"
+    And "mislav" is an administrator in the project called "Teambox Accounting"
+    And "mislav" is an administrator in the project called "ACME Marketing"
     And the project "Teambox Accounting" belongs to "Teambox" organization
     And the project "ACME Marketing" belongs to "ACME" organization
     And the following task lists with associations exist:

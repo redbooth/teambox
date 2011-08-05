@@ -46,7 +46,7 @@ Feature: When I use Teambox community version, there is only one organization
   Scenario: Users can sign up with an invitation
     Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
-    And "mislav" is the owner of the project "Ruby Rockstars"
+    And "mislav" is an administrator in the project called "Ruby Rockstars"
     And "mislav" sent an invitation to "ed_bloom@spectre.com" for the project "Ruby Rockstars"
     And I log out
     When "ed_bloom@spectre.com" opens the email with subject "Ruby Rockstars"

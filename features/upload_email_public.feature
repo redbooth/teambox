@@ -4,7 +4,7 @@ Feature: Uploading a file
   Background: 
     Given a project exists with name: "Ruby Rockstars"
     And a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić"
-    And "mislav" is the owner of the project "Ruby Rockstars"
+    And "mislav" is an administrator in the project called "Ruby Rockstars"
     And "dragon.jpg" has been uploaded to the "Ruby Rockstars" project
     And I am logged in as @mislav
     And I am in the project called "Ruby Rockstars"
