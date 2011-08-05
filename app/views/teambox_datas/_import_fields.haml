@@ -12,14 +12,31 @@
     = f.file_field :processed_data, :size => 20
     .clear
 - elsif @data.status_name == :mapping
-  %p= t('.please_supply_user_map')
-  %table#map_users
-    %tr
-      %th= t('.user')
-      %th= t('.teambox_user')
-      %th
-    = map_table_for_data(@data)
-  .target_project.many_fields
-    %label{:for => 'teambox_data_organization_id'}= t('.in_organization')
-    = select_tag "teambox_data[organization_id]", options_for_select(options_for_organization, @data.organization_id)
-    = errors_for @data, "organization_id"
+  .import_choices
+    %p
+      = t('.mapping_users_action_required')
+    %p
+      %label{:for => 'teambox_can_create_users'}= t('.automatically_import_users')
+      = check_box_tag("teambox_data[can_create_users]", 1, true, :class => 'can_create_users')
+
+    - unless current_user.admin_organizations.empty?
+      %p
+        = t('.mapping_projects_action_required')
+        %label{:for => 'teambox_can_create_organizations'}= t('.automatically_import_organizations')
+        = check_box_tag("teambox_data[can_create_organizations]", 1, true, :class => 'can_create_organizations')
+    - else
+      = hidden_field_tag("teambox_data[can_create_organizations]", 1, :class => 'can_create_organizations')
+
+    .map_users{:style => 'display:none'}
+      %p= t('.please_supply_user_map')
+      %table#map_users
+        %tr
+          %th= t('.user')
+          %th= t('.teambox_user')
+          %th
+        = map_table_for_data(@data)
+    = unless current_user.admin_organizations.empty?
+      .target_project.many_fields{:style => 'display:none'}
+        %label{:for => 'teambox_data_organization_id'}= t('.in_organization')
+        = select_tag "teambox_data[organization_id]", options_for_select(options_for_organization, @data.organization_id)
+        = errors_for @data, "organization_id"

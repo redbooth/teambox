@@ -28,7 +28,7 @@ class TeamboxData
       users += organizations.map{|o| o.memberships.includes(:user).map(&:user)}.flatten
       base[:account][:organizations] = organizations.map{|o| o.to_api_hash(:include => [:members, :projects])}
     end
-    base[:account][:users] = users.compact.map{|u| u.to_api_hash(:include => [:email])}
+    base[:account][:users] = users.compact.map{|u| u.attributes}
     
     base
   end
@@ -67,7 +67,7 @@ class TeamboxData
   def users_lookup
     {}.tap do |u|
       metadata['users'].each do |user|
-        u[user['username']] = user
+        u[user['login']] = user
       end
     end
   end
@@ -88,8 +88,8 @@ class TeamboxData
     return nil if id.nil?
     user = @imported_users[id]
     if !user
-      need_user = ids_to_users[id] || {'username' => id}
-      add_unprocessed_object("users","User '#{need_user['username']}' not present. Please map it to an existing user or create it.")
+      need_user = ids_to_users[id] || {'login' => id}
+      add_unprocessed_object("users","User '#{need_user['login']}' not present. Please map it to an existing user or create it.")
     end
     user
   end
@@ -100,24 +100,36 @@ class TeamboxData
   end
   
   def import_log(object, remark="")
-    Rails.logger.warn "[IMPORT] Imported #{object}[id: #{object.id}] (#{remark})"
+    if object
+      logger.warn "[IMPORT] Imported #{object}[id: #{object.id}] (#{remark})"
+    else
+      add_unprocessed_object("nil class", "Trace: #{caller.join("\n")}")
+    end
   end
 
   def add_unprocessed_object(model, msg="")
     if model.kind_of?(ActiveRecord::Base)
-      @unprocessed_objects[model.klass.table_name] = model
+      @unprocessed_objects[model.class.table_name] = {:model => model, :errors => model.errors.full_messages}
     else
-      dummy = DummyObject.new
-      dummy.errors.add_to_base(msg)
-      @unprocessed_objects[model] = dummy
+      @unprocessed_objects[model] = {:model => nil, :errors => [msg]}
     end
   end
 
   def attempt_save(model)
     begin
-      model.save!
-      yield if block_given?
-    rescue ActiveRecordError => err
+      if model
+        logger.debug "[IMPORT]  attempt_save model: #{model.inspect}"
+        model.save!
+        yield if block_given?
+      else
+        add_unprocessed_object("nil class", "Trace: #{caller.join("\n")}")
+      end
+    rescue ActiveRecord::ActiveRecordError => err
+      if err.is_a?(ActiveRecordError::StatementInvalid)
+        raise err
+      end
+
+      logger.debug "[IMPORT] Caught exception: #{err.message} model: #{model.inspect} errors: #{model ? model.errors.full_messages.inspect : ''} trace: #{err.backtrace.join("\n")}"
       add_unprocessed_object(model)
       false
     end

@@ -67,3 +67,4 @@
 //= require <yahoo.color>
 //= require <watchers>
 //= require <watch_list>
+//= require <teambox_datas>

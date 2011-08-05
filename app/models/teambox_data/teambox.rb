@@ -1,22 +1,73 @@
 class TeamboxData
 
-  #Used to wrap non active record errors
-  class DummyObject; include ActiveRecord::Validations; end
-
   def unserialize_user(udata, can_create_users)
-    user_name = (@imported_users[udata['username']] || udata['username']).strip
+    logger.debug "====================> #{udata.inspect}"
+    user_name = @imported_users[udata['login']].try(:strip).presence
+    logger.debug "====================> looking up user with login: #{user_name}"
+    user_name ||= udata['login'].strip.presence
+    logger.debug "====================> looking up user with login: #{user_name}"
     user = User.find_by_login(user_name)
     if user.nil? and can_create_users
-      user = User.new(udata)
-      user.login = udata['username']
-      user.password = user.password_confirmation = udata['password'] || rand().to_s
+      user = User.new()
+
+      %w(login
+         email
+         first_name
+         last_name
+         biography
+         locale
+         time_zone
+         avatar_url
+         micro_avatar_url
+         crypted_password
+         salt
+         created_at
+         updated_at
+         remember_token
+         remember_token_expires_at
+         first_day_of_week
+         invitations_count
+         login_token
+         login_token_expires_at
+         rss_token
+         comments_count
+         notify_mentions
+         notify_conversations
+         notify_tasks
+         avatar_file_name
+         avatar_content_type
+         avatar_file_size
+         invited_by_id
+         invited_count
+         wants_task_reminder
+         recent_projects_ids
+         avatar_updated_at
+         visited_at
+         assigned_tasks_count
+         completed_tasks_count
+         splash_screen
+         settings
+         digest_delivery_hour
+         instant_notification_on_mention
+         default_digest
+         default_watch_new_task
+         default_watch_new_conversation
+         default_watch_new_page
+         notify_pages
+         google_calendar_url_token
+         auto_accept_invites
+         utc_offset).each do |key|
+        user.send("write_attribute", key, udata[key]) if user.respond_to?(key) && udata[key]
+      end
+
+      user.confirmed_user = true
       attempt_save(user)
     end
 
     if user && user.errors.empty?
       @imported_users[udata['id']] = user
       @processed_objects[:user] << user.id
-      import_log(user, "#{udata['username']} -> #{user_name}")
+      import_log(user, "#{udata['login']} -> #{user_name}")
     end
   end
 
@@ -47,7 +98,7 @@ class TeamboxData
       if can_create_organizations
         org = unpack_object(Organization.new, organization_data, [])
         org.permalink = organization_name
-        attempt_save(organization)
+        attempt_save(org)
       else
         add_unprocessed_object("organizations", "Organization could not be resolved DATA: #{organization_data.inspect}")
         return
@@ -57,7 +108,7 @@ class TeamboxData
     if org && org.errors.empty?
       @organization_map[organization_data['id']] = org
       @processed_objects[:organization] << org.id
-      import_log(organization)
+      import_log(org)
 
       Array(organization_data['members']).each do |member_data|
         org_user = resolve_user(member_data['user_id'])
@@ -71,6 +122,8 @@ class TeamboxData
   end
 
   def unserialize_teambox(dump, object_maps, opts={})
+    logger.warn "[IMPORT] Beginning import for Teambox service on behalf of '#{user}'"
+
     ActiveRecord::Base.transaction do
       @object_map = {
         'User' => {},
@@ -97,19 +150,26 @@ class TeamboxData
         @project.is_importing = true
         @project.import_activities = []
         @project.user = resolve_user(project_data['owner_user_id'])
-        @project.organization = @organization_map[project_data['organization_id']] || @project.user.organizations.first
+        @project.organization = @organization_map[project_data['organization_id']] || (@project.user ? @project.user.organizations.first : nil)
 
         attempt_save(@project) do
           import_log(@project)
 
           Array(project_data['people']).each do |person_data|
-            person = @project.add_user(resolve_user(person_data['user_id']), 
+            member = resolve_user(person_data['user_id'])
+            person = @project.add_user(member, 
                               :role => person_data['role'],
                               :source_user => user ? user : resolve_user(person_data['source_user_id']))
             if !person || (person && !person.errors.empty?)
-              add_unprocessed_object('people', "Person already exists in project: '#{@project.permalink} (#{@project.id})' OR unable to add person to project: #{person_data.inspect}")
+              unless @project.has_member?(member)
+                add_unprocessed_object('people', "Person already exists in project: '#{@project.permalink} (#{@project.id})' OR unable to add person to project: #{person_data.inspect} Errors: #{person ? person.errors.full_messages.inspect : "Person is nil!"}")
+              else
+                logger.warn "[IMPORT] WARNING! Person (#{member}) already exists in project: '#{@project.permalink} (#{@project.id})'"
+              end
+            else
+              import_log(person)
+              @imported_people[person_data['id']] = person
             end
-            @imported_people[person_data['id']] = person
           end
 
           # Note on commentable objects: callbacks may be invoked which may change their state. 
@@ -195,8 +255,8 @@ class TeamboxData
           end
 
           @processed_objects[:project] << @project.id
-          @project
         end
+        @project
       end
 
       self.projects = @processed_objects[:project]
@@ -228,16 +288,17 @@ class TeamboxData
 
       unless @unprocessed_objects.empty?
         logger.warn "[IMPORT] FAILURE! Some objects were not processed during this import."
-        @unprocessed_objects.each do |object|
-          if object.is_a?(DummyObject)
-            logger.warn "[IMPORT] [UNPROCESSED] Errors: * #{object.errors.full_messages.join("\n* ")}"
-          else
-            logger.warn "[IMPORT] [UNPROCESSED] [#{object.klass}##{object.id} - new?: #{object.new_record?}] Errors: * #{object.errors.full_messages.join("\n* ")}"
-          end
+
+        @unprocessed_objects.each do |key, hash|
+          object = hash[:model]
+          errors = hash[:errors]
+          object_info = object ? "[#{object.class}##{object.id} - new?: #{object.new_record?}]" : ""
+
+          logger.warn "[IMPORT] [UNPROCESSED] [#{key}] #{object_info} Errors: * #{errors.join("\n* ")}"
         end
 
         #Finally raise exception rolling back transaction. Time to check the logs and fix the export data.
-        raise "UnprocessedObjectsException"
+        raise ActiveRecord::Rollback
       end
     end
   end

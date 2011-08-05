@@ -1,12 +1,13 @@
 require 'open-uri'
 class TeamboxData < ActiveRecord::Base
   include Immortal
+  include EmailDeliveryControl
 
   belongs_to :user
   belongs_to :organization
   concerned_with :serialization, :attributes, :teambox, :basecamp, :validations
 
-  attr_accessible :project_ids, :type_name, :processed_data, :user_map, :target_organization, :service, :organization_id
+  attr_accessible :project_ids, :type_name, :processed_data, :user_map, :target_organization, :service, :organization_id, :can_create_users, :can_create_organizations
 
   has_attached_file :processed_data,
     :url  => "/:data_type/:id/:basename.:extension",
@@ -67,7 +68,7 @@ class TeamboxData < ActiveRecord::Base
           @dispatch = true
         else
           self.status_name = :processing
-          do_import(Teambox.config.import_options)
+          do_import
         end
       end
     else
@@ -89,23 +90,27 @@ class TeamboxData < ActiveRecord::Base
     Emailer.send_with_language("notify_#{type_name}", user.locale, self.id) if @dispatch_notification
   end
 
-  def do_import(options={})
+  def do_import
     self.processed_at = Time.now
     next_status = :imported
 
     begin
       org_map = {}
       organizations.each do |org|
-        org_map[org['permalink']] = organization.permalink
+        org_map[org['permalink']] = organization.permalink if organization
       end
 
       throw Exception.new("Import is invalid #{errors.full_messages}") if !valid?
 
-      unserialize({'User' => user_map, 'Organization' => org_map}, options)
+      without_emails(logger) do
+        unserialize({'User' => user_map, 'Organization' => org_map}, {
+          :create_users => self.can_create_users, 
+          :create_organizations => self.can_create_organizations})
+      end
 
     rescue Exception => e
       # Something went wrong?!
-      logger.warn "[IMPORT] #{user} imported an invalid dump (#{self.id}) #{e.inspect} #{self.errors.inspect}"
+      logger.warn "[IMPORT] #{user} imported an invalid dump (#{self.id}) #{e.inspect} #{self.errors.inspect} Trace: #{e.backtrace.join("\n")}"
       self.processed_at = nil
       next_status = :uploading
     end
@@ -137,7 +142,7 @@ class TeamboxData < ActiveRecord::Base
   end
   
   def self.delayed_import(data_id)
-    TeamboxData.find_by_id(data_id).try(:do_import, Teambox.config.import_options)
+    TeamboxData.find_by_id(data_id).try(:do_import)
   end
   
   def exported?
@@ -187,6 +192,10 @@ class TeamboxData < ActiveRecord::Base
     @logger ||= Logger.new(Rails.root.join("log/teambox_datas.log"))
     @logger.formatter = Logger::Formatter.new
     @logger
+  end
+
+  def logger
+    self.class.logger
   end
 
 end

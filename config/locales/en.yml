@@ -1235,7 +1235,11 @@ en:
     import_fields:
       select_file: Please choose a file containing your data.
       service: "Which service did you export your data from?"
+      mapping_users_action_required: "If you'd like to confirm which users correspond to an existing user in teambox, uncheck this!"
+      mapping_projects_action_required: "If you'd like to choose which organization to import all your projects into, uncheck this!"
       please_supply_user_map: We detected the following users in your import. Please confirm which users correspond to which user on Teambox.
+      automatically_import_users: "No, just import all users?"
+      automatically_import_organizations: "No, just use the original organization?"
       in_organization: "Put all projects in this organization"
       user: User
       teambox_user: Teambox user
@@ -1620,6 +1624,7 @@ en:
         export_failed: "Your data could not be exported"
         imported: "Your data has been imported"
         import_failed: "Your data could not be imported"
+        import: "import"
     confirm:
       subject: "Get started with Teambox"
       hey: "Hey, %{user_name}!"

@@ -49,6 +49,7 @@ class TeamboxDatasController < ApplicationController
     return redirect_to(@data) if @data.processing?
     unless @data.update_attributes(params[:teambox_data])
       flash.now[:error] = t('teambox_datas.show_import.import_error')
+      @data.logger.warn "[IMPORT] Error updating TeamboxData model. Errors: #{@data.errors.full_messages.inspect}"
     else
       #TODO: A lot more fine-grained error handling here
       flash.now[:error] = "There were errors with the information you supplied!" if !(@data.processing? || @data.imported? || @data.exported?)

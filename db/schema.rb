@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110725155921) do
+ActiveRecord::Schema.define(:version => 20110804225833) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -489,6 +489,8 @@ ActiveRecord::Schema.define(:version => 20110725155921) do
     t.boolean  "deleted",                     :default => false, :null => false
     t.integer  "organization_id"
     t.text     "user_map"
+    t.boolean  "can_create_users"
+    t.boolean  "can_create_organizations"
   end
 
   add_index "teambox_datas", ["deleted"], :name => "index_teambox_datas_on_deleted"
