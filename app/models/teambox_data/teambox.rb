@@ -215,11 +215,11 @@ class TeamboxData
                 rel_object = unpack_object(page.send(obj_type_map[slot_data['rel_object_type']]).build, slot_data['rel_object'])
                 rel_object.updated_by = page.user if rel_object.respond_to?(:updated_by)
 
-                attempt_save(rel_object, slot_data['rel_object']) do
+                validate = rel_object.is_a?(Upload) ? false : true
+                attempt_save(rel_object, slot_data['rel_object'], validate) do
                   rel_object.page_slot.position = slot_data['position']
 
-                  validate = rel_object.is_a?(Upload) ? false : true
-                  attempt_save(rel_object.page_slot, slot_data, validate) do
+                  attempt_save(rel_object.page_slot, slot_data) do
                     import_log(rel_object)
                   end
                 end
