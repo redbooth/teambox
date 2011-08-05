@@ -115,11 +115,11 @@ class TeamboxData
     end
   end
 
-  def attempt_save(model, old_data=nil)
+  def attempt_save(model, old_data=nil, validate=true)
     begin
       if model
         logger.info "[IMPORT]  Attempting save! on model: #{model.inspect}"
-        model.save!
+        model.save!(:validate => validate)
 
         #Record id mapping
         if old_data && old_data['id']
