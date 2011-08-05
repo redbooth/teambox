@@ -189,7 +189,7 @@ class TeamboxData < ActiveRecord::Base
   end
 
   def self.logger
-    @logger ||= Logger.new(Rails.root.join("log/teambox_datas.log"))
+    @logger ||= Logger.new(Rails.root.join("log/teambox_datas_#{Rails.env}.log"))
     @logger.formatter = Logger::Formatter.new
     @logger
   end
