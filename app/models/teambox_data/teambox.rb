@@ -10,6 +10,7 @@ class TeamboxData
     user = User.find_by_login(user_name)
 
     if user
+      log_mapping(user.class.name, udata['id'], user.id)
       logger.info "[IMPORT] Found existing user #{user} with login: #{user_name}"
     end
 
@@ -53,6 +54,11 @@ class TeamboxData
   def unserialize_organization(organization_data, can_create_organizations)
     organization_name = @organization_map[organization_data['permalink']] || organization_data['permalink']
     org = Organization.find_by_permalink(organization_name)
+
+    if org
+      log_mapping(org.class.name, organization_data['id'], org.id)
+      logger.info "[IMPORT] Found existing organization #{org} with permalink: #{organization_name}"
+    end
 
     if user and org and !org.is_admin?(user)
       add_unprocessed_object("users", "#{user} needs to be an admin of #{org}")
