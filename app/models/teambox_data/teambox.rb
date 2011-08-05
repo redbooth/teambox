@@ -208,12 +208,13 @@ class TeamboxData
             attempt_save(page, page_data) do
               import_log(page)
 
-              obj_type_map = {'Note' => :notes, 'Divider' => :dividers}
+              obj_type_map = {'Note' => :notes, 'Divider' => :dividers, 'Upload' => :uploads}
 
               Array(page_data['slots']).each do |slot_data|
                 next if obj_type_map[slot_data['rel_object_type']].nil? # not handled yet
                 rel_object = unpack_object(page.send(obj_type_map[slot_data['rel_object_type']]).build, slot_data['rel_object'])
                 rel_object.updated_by = page.user
+
                 attempt_save(rel_object, slot_data['rel_object']) do
                   rel_object.page_slot.position = slot_data['position']
                   attempt_save(rel_object.page_slot, slot_data) do
