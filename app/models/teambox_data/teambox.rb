@@ -371,7 +371,7 @@ class TeamboxData
       end
 
       #Save without validations on uploads as physical asset is missing
-      attempt_save(upload, upload_data, false) do
+      attempt_save(upload, upload_data) do
         import_log(upload)
       end
     end
