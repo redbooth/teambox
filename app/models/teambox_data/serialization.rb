@@ -129,7 +129,7 @@ class TeamboxData
         raise err
       end
 
-      logger.debug "[IMPORT] Caught exception: #{err.message} model: #{model.inspect} errors: #{model ? model.errors.full_messages.inspect : ''} trace: #{err.backtrace.join("\n")}"
+      logger.warn "[IMPORT] Caught exception: #{err.message} model: #{model.inspect} errors: #{model ? model.errors.full_messages.inspect : ''} trace: #{err.backtrace[0..10].join("\n")}"
       add_unprocessed_object(model)
       false
     end
