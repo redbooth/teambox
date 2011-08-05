@@ -227,6 +227,8 @@ class TeamboxData
           end
 
           @processed_objects[:project] << @project.id
+
+          unpack_uploads(@project, project_data['uploads'])
         end
         @project
       end
@@ -316,6 +318,34 @@ class TeamboxData
       comment.target = obj
       attempt_save(comment, comment_data) do
         import_log(comment)
+      end
+    end
+  end
+
+  #Unpacks Project and Comment Uploads
+  def unpack_uploads(project, uploads)
+    return if uploads.nil?
+
+    uploads.each do |upload_data|
+      upload = unpack_object(project.uploads.build, upload_data)
+
+      %w(Comment).each do |klass|
+        attribute = "#{klass.downcase}_id"
+        mapping = self.processed_data_mapping[klass]
+
+        unless upload_data[attribute].blank?
+          if mapping && mapping[upload_data[attribute].to_i]
+            upload.send("#{attribute}=", mapping[upload_data[attribute].to_i])
+          else
+            #Ignore upload if we can't find it's comment
+            logger.warn("[IMPORT] Unable to find old '#{attribute}' for upload: #{upload_data.inspect}")
+          end
+        end
+      end
+
+      #Save without validations on uploads as physical asset is missing
+      attempt_save(upload, upload_data, false) do
+        import_log(upload)
       end
     end
   end
