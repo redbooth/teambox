@@ -268,7 +268,7 @@ class TeamboxData
         @unprocessed_objects.each do |key, hash|
           object = hash[:model]
           errors = hash[:errors]
-          object_info = object ? "[#{object.class}##{object.id} - new?: #{object.new_record?}]" : ""
+          object_info = object ? "[#{object.class}##{object.id} - new?: #{object.new_record?}] Object: #{object.inspect}" : ""
 
           logger.warn "[IMPORT] [UNPROCESSED] [#{key}] #{object_info} Errors: * #{errors.join("\n* ")}"
         end
