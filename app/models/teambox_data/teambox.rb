@@ -16,6 +16,11 @@ class TeamboxData
 
     if user.nil? and can_create_users
       user = build_user(udata)
+    end
+
+    if user.new_record? || !user.avatar.exists?
+      avatar = asset_file('avatar', udata)
+      user.avatar = avatar if avatar
       attempt_save(user, udata)
     end
 
