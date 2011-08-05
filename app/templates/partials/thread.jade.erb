@@ -23,7 +23,7 @@
 
     - if (self.is_task)
       .task_summary
-        - if(self.status === 1)
+        - if(self.status === 1 && self.assigned)
           span.status.assigned= self.short_name(self.assigned.user, 'firstname')
         - else
           != self.status_transition()
