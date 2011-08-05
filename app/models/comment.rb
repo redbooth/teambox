@@ -52,7 +52,7 @@ class Comment < ActiveRecord::Base
   # validates_presence_of :target_id, :user_id, :project_id
   
   validate :check_duplicate, :if => lambda { |c| !@is_importing and !c.is_private_changed? and c.target_id? and not c.hours? }, :on => :create
-  validates_presence_of :body, :unless => lambda { |c| c.is_private_set or c.task_comment? or c.uploads.to_a.any? or c.google_docs.any? }
+  validates_presence_of :body, :unless => lambda { |c| c.is_private_set or c.task_comment? or c.uploads.to_a.any? or c.google_docs.any? or c.is_importing? }
 
   validates_presence_of :user
 
