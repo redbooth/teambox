@@ -118,13 +118,14 @@ class TeamboxData
   def attempt_save(model)
     begin
       if model
-        logger.debug "[IMPORT]  attempt_save model: #{model.inspect}"
+        logger.info "[IMPORT]  Attempting save! on model: #{model.inspect}"
         model.save!
         yield if block_given?
       else
         add_unprocessed_object("nil class", "Trace: #{caller.join("\n")}")
       end
     rescue ActiveRecord::ActiveRecordError => err
+      #Reraise StatementInvalid errors
       if err.is_a?(ActiveRecordError::StatementInvalid)
         raise err
       end
