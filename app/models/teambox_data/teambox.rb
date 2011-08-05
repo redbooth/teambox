@@ -213,7 +213,7 @@ class TeamboxData
               Array(page_data['slots']).each do |slot_data|
                 next if obj_type_map[slot_data['rel_object_type']].nil? # not handled yet
                 rel_object = unpack_object(page.send(obj_type_map[slot_data['rel_object_type']]).build, slot_data['rel_object'])
-                rel_object.updated_by = page.user
+                rel_object.updated_by = page.user if rel_object.respond_to?(:updated_by)
 
                 attempt_save(rel_object, slot_data['rel_object']) do
                   rel_object.page_slot.position = slot_data['position']
