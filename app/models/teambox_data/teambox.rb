@@ -340,12 +340,11 @@ class TeamboxData
 
   def log_mapping(klass, old_id, new_id)
     self.processed_data_mapping ||= {}
-    self.processed_data_mapping[klass] ||= []
+    self.processed_data_mapping[klass] ||= {}
 
-    entry = {old_id => new_id}
     mappings = self.processed_data_mapping[klass]
-    unless mappings.include?(entry)
-      mappings << entry
+    unless mappings.key?(old_id)
+      mappings[old_id] = new_id
     end
     logger.info "[IMPORT] Mapped '#{klass}' #{old_id} => #{new_id}"
     self.processed_data_mapping
