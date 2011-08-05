@@ -177,7 +177,7 @@ class TeamboxData
                 if task_data['comments'] && task_data['comments'].length > 0
                   first_comment = task_data['first_comment'] || task_data['comments'].sort_by {|c| c['id']}[0]
                   task.status = first_comment['previous_status'] if first_comment['previous_status']
-                  task.assigned_id = resolve_person(first_comment['previous_assigned_id']).id if first_comment['previous_assigned_id']
+                  task.assigned_id = resolve_person(first_comment['previous_assigned_id']).try(:id) if first_comment['previous_assigned_id']
                   task.due_on = first_comment['previous_due_on'] if first_comment['previous_due_on']
                 end
 
