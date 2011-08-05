@@ -415,4 +415,37 @@ class TeamboxData
     td.save
   end
 
+  def asset_file(type, data)
+    asset, target_file, mime_type, filename = nil, nil, nil, nil
+
+    case type
+    when 'asset'
+      mime_type = data['mime_type']
+      filename = data['filename']
+      target_file = "#{Rails.root}/tmp/assets/#{data['id']}/original/#{filename}"
+    when 'avatar'
+      target_file = "#{Rails.root}/tmp/avatars/#{data['id']}/original.png"
+      mime_type = data['avatar_content_type']
+      filename = data['avatar_file_name']
+    when 'logo'
+      target_file = "#{Rails.root}/tmp/logos/#{data['id']}/original.png"
+      mime_type = 'image/png'
+      filename = 'original.png'
+    end
+
+    if File.exists? target_file
+      file = File.new(target_file, 'rb')
+      asset = ActionDispatch::Http::UploadedFile.new(
+        { :type => mime_type,
+          :filename => filename,
+          :tempfile => file })
+    end
+
+    if asset
+      logger.info "[IMPORT] Found asset file for type: #{type} file: #{target_file}"
+    end
+
+    asset
+  end
+
 end
