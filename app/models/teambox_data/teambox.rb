@@ -247,7 +247,9 @@ class TeamboxData
 
           @processed_objects[:project] << @project.id
 
-          unpack_uploads(@project, project_data['uploads'])
+          if Teambox.config.import_options.create_uploads
+            unpack_uploads(@project, project_data['uploads'])
+          end
         end
         @project
       end
