@@ -40,7 +40,7 @@
 
       // Conversations always sorted by update time
       collections.conversations.comparator = function(conversation) {
-        return - conversation.get('updated_at');
+        return - Date.parse(conversation.get('updated_at'));
       }
 
       this.fetchData({
