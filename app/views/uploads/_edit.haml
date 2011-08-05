@@ -1,0 +1,11 @@
+= form_for @upload, 
+    :url => rename_project_upload_path(@current_project, @upload), :remote => :true, 
+    :html => {:method => :put, :id => "edit_upload_#{@upload.id}"} do |f|
+  .header
+    .icon
+      = file_icon_image(@upload, '16px')
+    .full_row
+      = f.text_field :asset_file_name
+      .actions
+        = link_to_function t('common.cancel'), "$('upload_#{@upload.id}').down('.header').down('.icon').down('img').setAttribute('src', #{file_icon_path(@upload, '16px').to_json}); $('upload_#{@upload.id}').show();$('edit_upload_#{@upload.id}').remove()", :class => 'close'
+        = f.submit t('common.save'), :class => 'button'

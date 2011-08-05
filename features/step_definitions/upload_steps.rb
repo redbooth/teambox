@@ -12,8 +12,19 @@ When /^(?:|I )attach a (\d+) ?MB file to "([^\"]*)"(?: within "([^\"]*)")?$/ do 
 end
 
 Given /^"([^\"]*)" has been uploaded to the "([^\"]*)" project$/ do |file_name, project_name|
-  project = Project.find_by_name(project_name)
-  Factory.create(:upload, :asset_file_name => file_name, :project => project)
+  project = Project.find_by_name!(project_name)
+  path = File.join(Rails.root, "spec/fixtures/#{file_name}")
+  if File.exists?(path)
+    Factory.create(:upload, {
+      :asset => open(path), 
+      :asset_file_name => file_name, 
+      :asset_file_size => nil, 
+      :asset_content_type => nil, 
+      :project => project,
+     })
+  else 
+    Factory.create(:upload, :asset_file_name => file_name, :project => project)
+  end
 end
 
 When /^I click upload list item for "([^\"]*)" file$/ do |filename|

@@ -1,5 +1,5 @@
 class UploadsController < ApplicationController
-  before_filter :find_upload, :only => [:destroy,:update,:thumbnail,:show]
+  before_filter :find_upload, :only => [:destroy, :update, :thumbnail, :show, :edit, :rename]
   skip_before_filter :load_project, :only => [:download]
   before_filter :set_page_title
   before_filter :load_folder, :only => :index
@@ -147,6 +147,34 @@ class UploadsController < ApplicationController
     end
   end
   
+  def edit
+    authorize! :update, @upload
+
+    respond_to do |f|
+      f.js { render :layout => false }
+      #f.any(:html, :m)
+    end
+  end
+
+  def rename
+    authorize! :update, @upload
+    @rename_successful = @upload.rename_asset((params[:upload] || {})[:asset_file_name])
+    
+    respond_to do |f|
+      f.js { render :layout => false }
+      f.any(:html, :m) do
+        if @rename_successful
+          flash[:notice] = t('uploads.rename.success')
+        else
+          flash[:error] =  [t('uploads.rename.error'), @upload.errors.full_messages.to_sentence].join('. ')
+        end
+        redirect_to @upload.parent_folder ? 
+          project_folder_path(@current_project, @upload.parent_folder) : 
+          project_uploads_path(@current_project)
+      end
+    end
+  end
+    
   private
 
     def check_private_download_access

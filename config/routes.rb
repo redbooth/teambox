@@ -167,6 +167,7 @@ Teambox::Application.routes.draw do
         member do
           get :public_download
           post :email_public
+          put :rename
         end
         collection do
           resources :folders, :except => [:show, :index, :new] do

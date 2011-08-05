@@ -22,7 +22,8 @@ class Upload < RoleRecord
   attr_accessible :asset,
                   :page_id,
                   :description,
-                  :parent_folder_id
+                  :parent_folder_id,
+                  :asset_file_name
                 
   attr_accessor :invited_user_email
 
@@ -47,6 +48,8 @@ class Upload < RoleRecord
                             :message => I18n.t('uploads.form.max_size', 
                                                :mb => Teambox.config.asset_max_file_size.to_i)
 
+  validates_format_of :asset_file_name, :with => /^[^\/]+$/, 
+    :allow_blank => false, :message => "Invalid filename"
   validates_format_of :invited_user_email, :with => /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, :allow_nil => true
   validates_attachment_presence :asset, :message => I18n.t('uploads.form.presence')
 
@@ -70,6 +73,31 @@ class Upload < RoleRecord
 
   def s3_url(style_name = nil)
     AWS::S3::S3Object.url_for(asset.path(style_name), asset.bucket_name, {:expires_in => Teambox.config.amazon_s3_expiration.to_i})
+  end
+  
+  def rename_asset(new_file_name)
+    styles = [:original] + self.asset.styles.keys
+    original_paths = Hash[styles.map { |style| [style, self.asset.path(style)] }]
+    if !styles.all? { |style| self.asset.exists?(style) }
+      self.errors.add(:base, "Cannot rename asset: original files not found")
+      false
+    elsif !self.update_attributes(:asset_file_name => new_file_name)
+      false
+    else
+      styles.each do |style|
+        path = original_paths[style]
+        new_path = File.join(File.dirname(path), new_file_name)
+        if Teambox.config.amazon_s3
+          AWS::S3::S3Object.rename(path, new_path, self.asset.bucket_name)
+        else
+          FileUtils.mv(path, new_path)    
+        end
+      end
+      true
+    end
+  rescue Errno::ENOENT, AWS::S3::S3Exception => exc
+    self.errors.add(:base, "Error renaming asset: [#{exc.class.name}] #{exc}")
+    false
   end
 
   def file_name
