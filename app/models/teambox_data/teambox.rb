@@ -1,66 +1,20 @@
 class TeamboxData
 
   def unserialize_user(udata, can_create_users)
-    logger.debug "====================> #{udata.inspect}"
+    logger.info "[IMPORT] Unserializing user with data: #{udata.inspect}"
+
     user_name = @imported_users[udata['login']].try(:strip).presence
-    logger.debug "====================> looking up user with login: #{user_name}"
     user_name ||= udata['login'].strip.presence
-    logger.debug "====================> looking up user with login: #{user_name}"
+
+    logger.info "[IMPORT] Looking up user with login: #{user_name}"
     user = User.find_by_login(user_name)
+
+    if user
+      logger.info "[IMPORT] Found existing user #{user} with login: #{user_name}"
+    end
+
     if user.nil? and can_create_users
-      user = User.new()
-
-      %w(login
-         email
-         first_name
-         last_name
-         biography
-         locale
-         time_zone
-         avatar_url
-         micro_avatar_url
-         crypted_password
-         salt
-         created_at
-         updated_at
-         remember_token
-         remember_token_expires_at
-         first_day_of_week
-         invitations_count
-         login_token
-         login_token_expires_at
-         rss_token
-         comments_count
-         notify_mentions
-         notify_conversations
-         notify_tasks
-         avatar_file_name
-         avatar_content_type
-         avatar_file_size
-         invited_by_id
-         invited_count
-         wants_task_reminder
-         recent_projects_ids
-         avatar_updated_at
-         visited_at
-         assigned_tasks_count
-         completed_tasks_count
-         splash_screen
-         settings
-         digest_delivery_hour
-         instant_notification_on_mention
-         default_digest
-         default_watch_new_task
-         default_watch_new_conversation
-         default_watch_new_page
-         notify_pages
-         google_calendar_url_token
-         auto_accept_invites
-         utc_offset).each do |key|
-        user.send("write_attribute", key, udata[key]) if user.respond_to?(key) && udata[key]
-      end
-
-      user.confirmed_user = true
+      user = build_user(udata)
       attempt_save(user)
     end
 
@@ -69,6 +23,17 @@ class TeamboxData
       @processed_objects[:user] << user.id
       import_log(user, "#{udata['login']} -> #{user_name}")
     end
+  end
+
+  def build_user(udata)
+    user = User.new()
+
+    User.column_names.reject {|attr| %w(id admin confirmed_user).include?(attr)}.each do |key|
+      user.send("write_attribute", key, udata[key]) if user.respond_to?(key) && udata[key]
+    end
+
+    user.confirmed_user = true
+    user
   end
 
   def unserialize_users(dump, opts)
