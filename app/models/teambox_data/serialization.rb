@@ -132,7 +132,7 @@ class TeamboxData
       end
     rescue ActiveRecord::ActiveRecordError => err
       #Reraise StatementInvalid errors
-      if err.is_a?(ActiveRecordError::StatementInvalid)
+      if err.is_a?(ActiveRecord::StatementInvalid)
         raise err
       end
 
