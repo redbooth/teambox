@@ -7,11 +7,10 @@
   Conversation.initialize = function (options) {
     _.bindAll(this, 'render');
     this.title = 'Conversation ' + this.name;
-    
-    
+
     this.model.bind('comment:added', this.addComment.bind(this));
     // this.model.bind('comment:added', this.updateThreadAttributes.bind(this));
-    
+
     var Views = Teambox.Views;
     this.convert_to_task = new Views.ConvertToTask({model: this.model});
     this.comment_form = new Views.CommentForm({
@@ -27,21 +26,17 @@
    */
   Conversation.render = function () {
     var self = this;
-    
     if(this.model.isLoaded()) {
-      
       var html = this.template(this.model.getAttributes());
       this.el.update(html);
-      
       var options = {
         conversation_id: this.model.id
       };
-      
       comments = new Teambox.Collections.Comments([], options);
-      
+
       // Show loader
       this.el.down('.comments').update("<img src='/images/loading.gif' alt='Loading' />");
-      
+
       comments.fetch({
         success: function (collection) {
           var html = '';

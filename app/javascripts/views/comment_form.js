@@ -24,6 +24,8 @@
     this.convert_to_task = options.convert_to_task;
     this.thread = options.thread;
     this.simple = options.simple;
+    this.url = options.url;
+    this.new_conversation = this.model.get('new_conversation');
 
     this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
     this.watchers = new Teambox.Views.Watchers({model: this.model});
@@ -39,7 +41,10 @@
     var self = this;
     var template = this.simple ? this.simple_template : this.template;
     this.el.update('');
-    this.el.insert({bottom: template(_.extend({view: this, editing: this.editing, comment_id: this.comment_id}, this.model.getAttributes()))});
+    this.el.insert({bottom: template(_.extend({
+      view: this
+    , editing: this.editing
+    , comment_id: this.comment_id}, this.model.getAttributes()))});
 
     this.form = this.el.down('form');
     this.delegateEventsTo(this.events, this.form);
@@ -135,11 +140,11 @@
     this.model.set(_.parseFromAPI(resp), {silent: true});
 
     if (this.simple) {
-      Teambox.collections.threads.add(this.model);
       // TODO: Investigate what we need to do here...
       // Teambox.collections.conversations.add(resp);
-    }
-    else {
+    } else if(this.new_conversation) {
+      Teambox.collections.conversations.add(resp);
+    } else {
       this.model.trigger('comment:added', comment_attributes, _.clone(Teambox.models.user), this.simple);
     }
   };
@@ -197,6 +202,7 @@
     this.model.save(_.extend(data, {type: this.model.className()}), {
       success: this.editing ? this.updateComment : this.addComment
     , error: this.handleError.bind(this)
+    , url: this.url
     });
 
     return false;

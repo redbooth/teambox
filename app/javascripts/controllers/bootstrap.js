@@ -33,10 +33,15 @@
       collections.threads  = this.my_threads  = new Teambox.Collections.Threads();
       collections.projects = this.my_projects = new Teambox.Collections.Projects();
       
-      // Threads allways sorted by update time
+      // Threads always sorted by update time
       collections.threads.comparator = function(thread) {
         return thread.get('updated_at');
       };
+
+      // Conversations always sorted by update time
+      collections.conversations.comparator = function(conversation) {
+        return - conversation.get('updated_at');
+      }
 
       this.fetchData({
         user: _loader.load()

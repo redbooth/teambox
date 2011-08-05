@@ -8,11 +8,22 @@
 
     var project_id = _.detect(Teambox.collections.projects.models, function(p) {
       return p.get('permalink') === project;
-    });
+    }).id;
 
     var collection = Teambox.collections.conversations;
-    var conversation = new Teambox.Models.Conversation({project_id: project_id});
-    var view = new Teambox.Views.ConversationList({collection: collection, conversation: conversation, project_id: project});
+    var conversation = new Teambox.Models.Conversation({
+      project_id: project_id
+    , simple: false
+    , user: Teambox.models.user.id
+    , new_conversation: true
+    });
+    var view = new Teambox.Views.ConversationList({
+      collection: collection
+    , conversation: conversation
+    , project_id: project
+    , newConversation: true
+    , controller: this
+    });
     $('content').update(view.render().el);
     $('view_title').update(I18n.translations.conversations.new.title);
   };

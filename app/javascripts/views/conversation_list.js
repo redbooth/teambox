@@ -12,25 +12,32 @@
   };
 
   ConversationList.initialize = function (options) {
-    _.bindAll(this, "render");
+    _.bindAll(this, 'render', 'addConversation' );
     this.collection.bind('add', this.addConversation);
     this.collection.bind('remove', this.removeConversation);
     this.collection.bind('refresh', this.reload);
-    
+
     // Get real complete name of project
     var project = Teambox.collections.projects.detect(function(model) {
       return model.get('permalink') === options.project_id;
     });
-    
+
     // TODO: use I18n (translations.conversations.index.title)
     this.title = 'Conversations in ' + project.get('name');
     this.project_id = options.project_id;
     this.conversation = options.conversation;
     this.showing_scrollbar = false;
+    this.controller = options.controller;
   };
 
   ConversationList.addConversation = function(conversation, collection) {
-    this.conversationList.insert({top: new Teambox.Views.Conversation({model:thread, root_view: this}).render().el});
+    var view = new Teambox.Views.ConversationListItem({model:conversation, root_view: this});
+    this.el
+      .down('.conversation_list')
+      .down('.header')
+      .insert({after: view.render().el});
+
+      Backbone.history.saveLocation(conversation.publicUrl(), false);
   };
 
   ConversationList.removeConversation = function(conversation, collection) {
@@ -63,6 +70,7 @@
     this.conversation_view = this.el.down('.conversation_view');
 
     this.reload(this.collection, this.project_id);
+
     if (this.conversation) {
       var view;
       if (this.conversation.id == null) {
@@ -74,7 +82,7 @@
     }
     return this;
   };
-  
+
   // When mouse over conversations list, show the scrollbar
   ConversationList.showScroll = function() {
     if(this.showing_scrollbar) return;
@@ -83,7 +91,7 @@
       "overflow-y": 'auto'
     });
   };
-  
+
   // When mouse out conversations list, hide the scrollbar
   ConversationList.hideScroll = function() {
     if(!this.showing_scrollbar) return;

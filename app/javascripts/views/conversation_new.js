@@ -12,6 +12,7 @@
           model: this.model
         , convert_to_task: this.convert_to_task
         , controller: this.controller
+        , url: this.model.postUrl()
     });
   },
 

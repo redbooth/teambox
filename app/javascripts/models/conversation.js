@@ -31,7 +31,11 @@
    * @return {String}
    */
   Conversation.publicUrl = function () {
-    return '/projects/' + this.get('project_id') + '/conversations/' + this.id;
+    return '/projects/' + this.get('project').permalink + '/conversations/' + this.id;
+  };
+
+  Conversation.postUrl = function () {
+    return 'api/1/conversations';
   };
 
   /**

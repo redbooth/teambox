@@ -8,6 +8,9 @@ form
   .field.text_area
     .marco_avatar
       a.micro_avatar.my_avatar
+    - if (self.new_conversation)
+      .title
+        input(name='name') 
     .textarea
       textarea(cols= '40', name='comments_attributes[0][body]', placeholder= '<%= t('comments.new.task') %>', rows= '20', autocomplete= 'off')
       .autocomplete(style= 'display: none')
