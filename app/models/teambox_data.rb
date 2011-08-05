@@ -102,7 +102,7 @@ class TeamboxData < ActiveRecord::Base
 
       throw Exception.new("Import is invalid #{errors.full_messages}") if !valid?
 
-      without_emails(logger) do
+      only_import_emails(logger) do
         unserialize({'User' => user_map, 'Organization' => org_map}, {
           :create_users => self.can_create_users, 
           :create_organizations => self.can_create_organizations})

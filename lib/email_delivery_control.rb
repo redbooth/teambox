@@ -24,7 +24,7 @@ module EmailDeliveryControl
   #despite a mailer's #deliver method being called
   #
   # 'disable' means the delivery method is set to 'test'
-  def without_emails(logger=Rails.logger, &block)
+  def only_import_emails(logger=Rails.logger, &block)
     Mail.register_interceptor(ImportMailInterceptor)
     block.call
     Mail.unregister_interceptor(ImportMailInterceptor)
