@@ -74,6 +74,10 @@ class TeamboxData
       if can_create_organizations
         org = unpack_object(Organization.new, organization_data, [])
         org.permalink = organization_name
+
+        logo = asset_file('logo', organization_data)
+        org.logo = logo if logo
+
         attempt_save(org, organization_data)
       else
         add_unprocessed_object("organizations", "Organization could not be resolved DATA: #{organization_data.inspect}")
