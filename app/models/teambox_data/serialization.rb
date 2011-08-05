@@ -115,11 +115,17 @@ class TeamboxData
     end
   end
 
-  def attempt_save(model)
+  def attempt_save(model, old_data=nil)
     begin
       if model
         logger.info "[IMPORT]  Attempting save! on model: #{model.inspect}"
         model.save!
+
+        #Record id mapping
+        if old_data && old_data['id']
+          log_mapping(model.class.name, old_data['id'], model.id)
+        end
+
         yield if block_given?
       else
         add_unprocessed_object("nil class", "Trace: #{caller.join("\n")}")

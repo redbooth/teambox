@@ -3,6 +3,7 @@ class TeamboxData
 
   serialize :project_ids
   serialize :processed_objects
+  serialize :processed_data_mapping
   serialize :user_map
 
   TYPE_LOOKUP = {:import => 0, :export => 1}

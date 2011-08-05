@@ -15,7 +15,7 @@ class TeamboxData
 
     if user.nil? and can_create_users
       user = build_user(udata)
-      attempt_save(user)
+      attempt_save(user, udata)
     end
 
     if user && user.errors.empty?
@@ -63,7 +63,7 @@ class TeamboxData
       if can_create_organizations
         org = unpack_object(Organization.new, organization_data, [])
         org.permalink = organization_name
-        attempt_save(org)
+        attempt_save(org, organization_data)
       else
         add_unprocessed_object("organizations", "Organization could not be resolved DATA: #{organization_data.inspect}")
         return
@@ -117,7 +117,7 @@ class TeamboxData
         @project.user = resolve_user(project_data['owner_user_id'])
         @project.organization = @organization_map[project_data['organization_id']] || (@project.user ? @project.user.organizations.first : nil)
 
-        attempt_save(@project) do
+        attempt_save(@project, project_data) do
           import_log(@project)
 
           Array(project_data['people']).each do |person_data|
@@ -143,13 +143,13 @@ class TeamboxData
             conversation = unpack_object(@project.conversations.build, conversation_data)
             conversation.is_importing = true
 
-            attempt_save(conversation) do
+            attempt_save(conversation, conversation_data) do
               import_log(conversation)
 
               unpack_comments(conversation, conversation_data['comments'])
 
               conversation_object = unpack_object(conversation, conversation_data)
-              attempt_save(conversation_object) do
+              attempt_save(conversation_object, conversation_data) do
                 import_log(conversation_object)
               end
             end
@@ -158,7 +158,7 @@ class TeamboxData
           Array(project_data['task_lists']).each do |task_list_data|
             task_list = unpack_object(@project.task_lists.build, task_list_data)
 
-            attempt_save(task_list) do
+            attempt_save(task_list, task_list_data) do
               import_log(task_list)
 
               unpack_comments(task_list, task_list_data['comments'])
@@ -180,7 +180,7 @@ class TeamboxData
                 #In legacy data status can be nil, we transform it to 0
                 task.status = task.status.to_i
 
-                attempt_save(task) do
+                attempt_save(task, task_data) do
                   import_log(task)
                   unpack_task_comments(task, task_data['comments'])
 
@@ -188,18 +188,18 @@ class TeamboxData
                   task.updating_user = task.user
                   task = unpack_object(task, task_data)
                   task.status = task.status.to_i
-                  attempt_save(task)
+                  attempt_save(task, task_data)
                 end
               end
 
               task_list_object = unpack_object(task_list, task_list_data)
-              attempt_save(task_list_object)
+              attempt_save(task_list_object, task_list_data)
             end
           end
 
           Array(project_data['pages']).each do |page_data|
             page = unpack_object(@project.pages.build, page_data)
-            attempt_save(page) do
+            attempt_save(page, page_data) do
               import_log(page)
 
               obj_type_map = {'Note' => :notes, 'Divider' => :dividers}
@@ -208,9 +208,9 @@ class TeamboxData
                 next if obj_type_map[slot_data['rel_object_type']].nil? # not handled yet
                 rel_object = unpack_object(page.send(obj_type_map[slot_data['rel_object_type']]).build, slot_data['rel_object'])
                 rel_object.updated_by = page.user
-                attempt_save(rel_object) do
+                attempt_save(rel_object, slot_data['rel_object']) do
                   rel_object.page_slot.position = slot_data['position']
-                  attempt_save(rel_object.page_slot) do
+                  attempt_save(rel_object.page_slot, slot_data) do
                     import_log(rel_object)
                   end
                 end
@@ -262,8 +262,14 @@ class TeamboxData
           logger.warn "[IMPORT] [UNPROCESSED] [#{key}] #{object_info} Errors: * #{errors.join("\n* ")}"
         end
 
+        #clear out mappings, we're rolling back
+        self.processed_data_mapping = nil
+
         #Finally raise exception rolling back transaction. Time to check the logs and fix the export data.
         raise ActiveRecord::Rollback
+      else
+        #Persist mapping record
+        self.class.save_mapping_without_callbacks(self)
       end
     end
   end
@@ -301,12 +307,12 @@ class TeamboxData
       comment.is_importing = true
       comment.assigned_id = resolve_person(comment_data['assigned_id']).try(:id) if data['assigned_id']
       comment.target = obj
-      attempt_save(comment) do
+      attempt_save(comment, comment_data) do
         import_log(comment)
       end
     end
   end
-  
+
   def unpack_task_comments(task, comments)
     # comments on tasks work differently. We need to UPDATE the task!
     return if comments.nil?
@@ -316,10 +322,34 @@ class TeamboxData
       comment.assigned_id = resolve_person(comment_data['assigned_id']).try(:id) if data['assigned_id']
       task.updating_user = comment.user
       task.updating_date = comment.created_at
-      attempt_save(task) do
+
+      attempt_save(comment, comment_data) do
         import_log(comment)
       end
+
+      attempt_save(task)
     end
+  end
+
+  def log_mapping(klass, old_id, new_id)
+    self.processed_data_mapping ||= {}
+    self.processed_data_mapping[klass] ||= []
+
+    entry = {old_id => new_id}
+    mappings = self.processed_data_mapping[klass]
+    unless mappings.include?(entry)
+      mappings << entry
+    end
+    logger.info "[IMPORT] Mapped '#{klass}' #{old_id} => #{new_id}"
+    self.processed_data_mapping
+  end
+
+  def self.save_mapping_without_callbacks(teambox_data)
+    klass = self.thin_model
+    klass.send(:serialize, :processed_data_mapping)
+    td = klass.find(teambox_data.id)
+    td.processed_data_mapping = teambox_data.processed_data_mapping
+    td.save
   end
 
 end
