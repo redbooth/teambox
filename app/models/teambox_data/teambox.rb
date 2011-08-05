@@ -217,7 +217,9 @@ class TeamboxData
 
                 attempt_save(rel_object, slot_data['rel_object']) do
                   rel_object.page_slot.position = slot_data['position']
-                  attempt_save(rel_object.page_slot, slot_data) do
+
+                  validate = rel_object.is_a?(Upload) ? false : true
+                  attempt_save(rel_object.page_slot, slot_data, validate) do
                     import_log(rel_object)
                   end
                 end
