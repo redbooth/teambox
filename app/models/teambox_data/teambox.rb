@@ -348,7 +348,13 @@ class TeamboxData
     return if uploads.nil?
 
     uploads.each do |upload_data|
+      asset = asset_file('asset', upload_data)
+
+      #Ignore upload if we can't find its asset
+      next unless asset
+
       upload = unpack_object(project.uploads.build, upload_data)
+      upload.asset = asset
 
       %w(Comment).each do |klass|
         attribute = "#{klass.downcase}_id"
