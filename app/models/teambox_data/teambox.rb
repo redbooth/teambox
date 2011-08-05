@@ -225,8 +225,15 @@ class TeamboxData
                 rel_object = unpack_object(page.send(obj_type_map[slot_data['rel_object_type']]).build, slot_data['rel_object'])
                 rel_object.updated_by = page.user if rel_object.respond_to?(:updated_by)
 
-                validate = rel_object.is_a?(Upload) ? false : true
-                attempt_save(rel_object, slot_data['rel_object'], validate) do
+                if rel_object.is_a?(Upload)
+                  asset = asset_file('asset', slot_data['rel_object'])
+                  next unless asset
+                  rel_object.asset = asset if asset
+                end
+
+                attempt_save(rel_object, slot_data['rel_object']) do
+                  rel_object.page = page
+                  rel_object.save_slot
                   rel_object.page_slot.position = slot_data['position']
 
                   attempt_save(rel_object.page_slot, slot_data) do
