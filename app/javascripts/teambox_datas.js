@@ -7,4 +7,13 @@ document.on('change', '.import_choices input[type=checkbox]', function(e, input)
   }
 });
 
+document.on('change', '.new_teambox_data input.toggle[type=checkbox]', function(e, input) {
+  input.up('form').select('.project input[type=checkbox]').each(function(input) {
+    input.checked = !input.checked;
+  })
+});
+
+
+
+
 

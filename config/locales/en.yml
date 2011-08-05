@@ -1245,6 +1245,7 @@ en:
       teambox_user: Teambox user
     new_export:
       title: "Export data"
+      select_all: "Select all"
       submit: Export data
     export_fields:
       description: "Please select which projects you wish to export."

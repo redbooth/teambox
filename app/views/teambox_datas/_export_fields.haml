@@ -5,6 +5,10 @@
     - for organization in current_user.admin_organizations
       - if organization.projects.any?
         %h3= h(organization.name)
+
+        = check_box_tag 'toggle_all', 1, false, :class => "toggle"
+        %label{:for => "toggle_all"}
+          %span.info= t('.select_all')
         - for project in organization.projects
           .project
             = check_box_tag 'teambox_data[project_ids][]', project.id, false, :id => "teambox_project_#{project.id}"
