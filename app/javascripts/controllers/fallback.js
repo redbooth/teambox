@@ -45,14 +45,15 @@
     }
   }
 
-Backbone.History.prototype.loadUrl = Backbone.History.prototype.loadUrl.wrap( 
-  function(proceed) {
 
+  // Polite method overwriting, like rails alias_chain_method but for prototype
+  Backbone.History.prototype.loadUrl = Backbone.History.prototype.loadUrl.wrap(function(proceed) {
+    // proceed() normally if it fail run FallbackController
     if (proceed() == false) {
       Teambox.Controllers.FallbackController.show();
       var matched = true;
     }
-
-    return false;
+    return matched;
   })
+
 }());
