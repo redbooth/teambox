@@ -154,7 +154,6 @@
 //= require <invitation>
 //= require <keyboard>
 //= require <toggleform>
-//= require <navigation_ajax>
 //= require <overlays>
 //= require <person>
 //= require <preview>
