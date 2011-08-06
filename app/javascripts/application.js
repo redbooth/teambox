@@ -56,6 +56,7 @@
 //= require <controllers/pages>
 //= require <controllers/users>
 //= require <controllers/search>
+//= require <controllers/fallback>
 //= require <models/base>
 //= require <models/comment>
 //= require <models/conversation>
