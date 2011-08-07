@@ -3,15 +3,15 @@ class TeamboxData
   def unserialize_user(udata, can_create_users)
     logger.info "[IMPORT] Unserializing user with data: #{udata.inspect}"
 
-    user_name = @imported_users[udata['login']].try(:strip).presence
-    user_name ||= udata['login'].strip.presence
+    user_email = @imported_users[udata['email']].try(:strip).presence
+    user_email ||= udata['email'].strip.presence
 
-    logger.info "[IMPORT] Looking up user with login: #{user_name}"
-    user = User.find_by_login(user_name)
+    logger.info "[IMPORT] Looking up user with email: #{user_email}"
+    user ||= User.find_by_email(user_email)
 
     if user
       log_mapping(user.class.name, udata['id'], user.id)
-      logger.info "[IMPORT] Found existing user #{user} with login: #{user_name}"
+      logger.info "[IMPORT] Found existing user #{user} with email: #{user_email} login: #{user.login} (exported login: #{udata['login']})"
     end
 
     if user.nil? and can_create_users
@@ -27,7 +27,7 @@ class TeamboxData
     if user && user.errors.empty?
       @imported_users[udata['id']] = user
       @processed_objects[:user] << user.id
-      import_log(user, "#{udata['login']} -> #{user_name}")
+      import_log(user, "#{udata['email']} -> #{user_email}")
     end
   end
 
