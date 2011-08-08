@@ -2,9 +2,12 @@
   .name
     %h2== #{user_link(person.user)} @#{person.user.login}
     %p
-      %strong= ".#{person.role_name}"
-      
-    %p= time_ago_in_words(person.user.updated_at)
+      %strong= t ".#{person.role_name}"
+    %p
+      - if person.user.updated_at > 1.month.ago
+        = time_ago_in_words(person.user.updated_at)
+      - else
+        = t('.not_logged_in_recently')
   - if request.format != :m and can?(:update, person)
     .actions
       = link_to t('people.link.edit'), '#edit'

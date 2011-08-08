@@ -1153,6 +1153,7 @@ en:
       transfer: Transfer Ownership
       leave_project: Leave Project
       confirm_delete: Are you sure you want to remove this person from the project?
+      not_logged_in_recently: Not logged in recently
     errors:
       user_or_email: "User not found. Enter his or her username or email."
       users_or_emails: "Invalid usernames or email addresses"
