@@ -333,7 +333,7 @@ Teambox::Application.routes.draw do
         end
       end
 
-      resources :users, :only => [:index, :show]
+      resources :users, :except => [:new, :edit]
 
       resources :tasks, :except => [:new, :edit, :create] do
         member do

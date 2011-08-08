@@ -1,5 +1,9 @@
 class ApiV1::UsersController < ApiV1::APIController
+  no_login_required :only => [ :create ]
+
+  skip_before_filter :confirmed_user?, :only => [ :create ]
   before_filter :find_user, :only => [ :show ]
+  before_filter :load_invitation, :only => [ :create ]
   skip_before_filter :load_project
   
   def index
@@ -24,7 +28,27 @@ class ApiV1::UsersController < ApiV1::APIController
       api_respond @user
     end
   end
-  
+
+  def create
+    logout_keeping_session!
+    @user = User.new(params)
+
+    @user.confirmed_user = (
+      (@invitation && @invitation.email == @user.email) or
+      !Teambox.config.email_confirmation_require)
+
+    if @user.save
+      self.current_user = @user
+
+      # Enable the tutorials box link
+      @user.write_setting 'show_tutorials', true
+
+      handle_api_success(@user, :is_new => true)
+    else
+      handle_api_error(@user)
+    end
+  end
+
   def current
     api_respond current_user, :include => api_include+[:email]
   end
@@ -34,6 +58,13 @@ class ApiV1::UsersController < ApiV1::APIController
   def find_user
     unless @user = (User.find_by_login(params[:id]) || User.find_by_id(params[:id]))
       api_error(:not_found, :type => 'ObjectNotFound', :message => t('not_found.user'))
+    end
+  end  
+
+  def load_invitation
+    if params[:invitation]
+      @invitation = Invitation.find_by_token(params[:invitation])
+      @invitation_token = params[:invitation] if @invitation
     end
   end
   

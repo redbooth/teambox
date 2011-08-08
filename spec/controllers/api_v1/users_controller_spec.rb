@@ -118,4 +118,27 @@ describe ApiV1::UsersController do
       response.status.should == 401
     end
   end
+  
+  describe "#create" do
+    it "should create a user" do
+      do_create
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      
+      data['type'].should == 'User'
+      user = User.find_by_id(data['id'])
+      user.login.should == 'testing'
+      user.email.should == 'testing@localhost.com'
+    end
+  end
+  
+  def do_create(options = {})
+    post :create, { :email       => 'testing@localhost.com',
+                    :login       => 'testing',
+                    :first_name  => 'Andrew',
+                    :last_name   => 'Wiggin',
+                    :password    => 'testing',
+                    :password_confirmation => 'testing'}.merge(options)
+  end
 end
