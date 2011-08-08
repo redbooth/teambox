@@ -107,11 +107,18 @@ class TeamboxData < ActiveRecord::Base
         :create_organizations => self.can_create_organizations})
 
     rescue Exception => e
+      logger.warn "[IMPORT] RESCUED EXCEPTION: #{e} FROM: #{e.backtrace.join("\n")}"
       # Something went wrong?!
       logger.warn "[IMPORT] #{user} imported an invalid dump (#{self.id}) #{e.inspect} #{self.errors.inspect} Trace: #{e.backtrace[0..10].join("\n")}"
       self.processed_at = nil
       next_status = :uploading
+
+      #Rollback parent transaction
+      logger.warn "[IMPORT] ABOUT TO RAISE runtime error!"
+      raise "Please rollback so I can get on with it"
     end
+
+    logger.warn "[IMPORT] MADE IT"
 
     self.status_name = next_status
     @dispatch_notification = true
@@ -140,8 +147,10 @@ class TeamboxData < ActiveRecord::Base
   end
   
   def self.delayed_import(data_id)
-    only_import_export_emails do
-      TeamboxData.find_by_id(data_id).try(:do_import)
+    ActiveRecord::Base.transaction do
+      only_import_export_emails do
+        TeamboxData.find_by_id(data_id).try(:do_import)
+      end
     end
   end
   

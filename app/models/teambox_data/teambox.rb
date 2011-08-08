@@ -104,39 +104,39 @@ class TeamboxData
   def unserialize_teambox(dump, object_maps, opts={})
     logger.warn "[IMPORT] Beginning import for Teambox service on behalf of '#{user}'"
 
-    ActiveRecord::Base.transaction do
-      @object_map = {
-        'User' => {},
-        'Organization' => {}
-      }.merge(object_maps)
+    @object_map = {
+      'User' => {},
+      'Organization' => {}
+    }.merge(object_maps)
 
-      @processed_objects = {}
-      @unprocessed_objects = {}
-      @imported_users = @object_map['User'].clone
-      @organization_map = @object_map['Organization'].clone
+    @processed_objects = {}
+    @unprocessed_objects = {}
+    @imported_users = @object_map['User'].clone
+    @organization_map = @object_map['Organization'].clone
 
-      unserialize_users dump, opts
+    unserialize_users dump, opts
 
-      unserialize_organizations dump, opts
+    unserialize_organizations dump, opts
 
-      @processed_objects[:project] = []
-      @imported_people = {}
-      @projects = (dump['projects']||[]).map do |project_data|
-        @project = Project.find_by_permalink(project_data['permalink'])
-        if @project
-          project_data['permalink'] += "-#{rand}"
-        end
-        @project = unpack_object(Project.new, project_data, [])
-        @project.is_importing = true
-        @project.import_activities = []
-        @project.user = resolve_user(project_data['owner_user_id'])
-        @project.organization = @organization_map[project_data['organization_id']] || (@project.user ? @project.user.organizations.first : nil)
+    @processed_objects[:project] = []
+    @imported_people = {}
+    @projects = (dump['projects']||[]).map do |project_data|
+      @project = Project.find_by_permalink(project_data['permalink'])
+      if @project
+        project_data['permalink'] += "-#{rand}"
+      end
+      @project = unpack_object(Project.new, project_data, [])
+      @project.is_importing = true
+      @project.import_activities = []
+      @project.user = resolve_user(project_data['owner_user_id'])
+      @project.organization = @organization_map[project_data['organization_id']] || (@project.user ? @project.user.organizations.first : nil)
 
-        attempt_save(@project, project_data) do
-          import_log(@project)
+      attempt_save(@project, project_data) do
+        import_log(@project)
 
-          Array(project_data['people']).each do |person_data|
-            member = resolve_user(person_data['user_id'])
+        Array(project_data['people']).each do |person_data|
+          member = resolve_user(person_data['user_id'])
+          if member
             person = @project.add_user(member, 
                               :role => person_data['role'],
                               :source_user => user ? user : resolve_user(person_data['source_user_id']))
@@ -151,156 +151,156 @@ class TeamboxData
               @imported_people[person_data['id']] = person
             end
           end
+        end
 
-          # Note on commentable objects: callbacks may be invoked which may change their state. 
-          # For now we will play dumb and re-assign all attributes after we have unpacked comments.
-          Array(project_data['conversations']).each do |conversation_data|
-            conversation = unpack_object(@project.conversations.build, conversation_data)
-            conversation.is_importing = true
+        # Note on commentable objects: callbacks may be invoked which may change their state. 
+        # For now we will play dumb and re-assign all attributes after we have unpacked comments.
+        Array(project_data['conversations']).each do |conversation_data|
+          conversation = unpack_object(@project.conversations.build, conversation_data)
+          conversation.is_importing = true
 
-            attempt_save(conversation, conversation_data) do
-              import_log(conversation)
+          attempt_save(conversation, conversation_data) do
+            import_log(conversation)
 
-              unpack_comments(conversation, conversation_data['comments'])
+            unpack_comments(conversation, conversation_data['comments'])
 
-              conversation_object = unpack_object(conversation, conversation_data)
-              attempt_save(conversation_object, conversation_data) do
-                import_log(conversation_object)
-              end
+            conversation_object = unpack_object(conversation, conversation_data)
+            attempt_save(conversation_object, conversation_data) do
+              import_log(conversation_object)
             end
           end
+        end
 
-          Array(project_data['task_lists']).each do |task_list_data|
-            task_list = unpack_object(@project.task_lists.build, task_list_data)
+        Array(project_data['task_lists']).each do |task_list_data|
+          task_list = unpack_object(@project.task_lists.build, task_list_data)
 
-            attempt_save(task_list, task_list_data) do
-              import_log(task_list)
+          attempt_save(task_list, task_list_data) do
+            import_log(task_list)
 
-              unpack_comments(task_list, task_list_data['comments'])
+            unpack_comments(task_list, task_list_data['comments'])
 
-              Array(task_list_data['tasks']).each do |task_data|
-                # Tasks automatically create comments, so we need to be careful!
-                task = unpack_object(task_list.tasks.build, task_data)
+            Array(task_list_data['tasks']).each do |task_data|
+              # Tasks automatically create comments, so we need to be careful!
+              task = unpack_object(task_list.tasks.build, task_data)
 
-                # To determine the initial state of the task, we need to look at the first comment
-                if task_data['comments'] && task_data['comments'].length > 0
-                  first_comment = task_data['first_comment'] || task_data['comments'].sort_by {|c| c['id']}[0]
-                  task.status = first_comment['previous_status'] if first_comment['previous_status']
-                  task.assigned_id = resolve_person(first_comment['previous_assigned_id']).try(:id) if first_comment['previous_assigned_id']
-                  task.due_on = first_comment['previous_due_on'] if first_comment['previous_due_on']
-                end
+              # To determine the initial state of the task, we need to look at the first comment
+              if task_data['comments'] && task_data['comments'].length > 0
+                first_comment = task_data['first_comment'] || task_data['comments'].sort_by {|c| c['id']}[0]
+                task.status = first_comment['previous_status'] if first_comment['previous_status']
+                task.assigned_id = resolve_person(first_comment['previous_assigned_id']).try(:id) if first_comment['previous_assigned_id']
+                task.due_on = first_comment['previous_due_on'] if first_comment['previous_due_on']
+              end
+
+              task.updating_date = task.created_at
+              task.updating_user = task.user
+              #In legacy data status can be nil, we transform it to 0
+              task.status = task.status.to_i
+
+              attempt_save(task, task_data) do
+                import_log(task)
+                unpack_task_comments(task, task_data['comments'])
 
                 task.updating_date = task.created_at
                 task.updating_user = task.user
-                #In legacy data status can be nil, we transform it to 0
+                task = unpack_object(task, task_data)
                 task.status = task.status.to_i
+                attempt_save(task, task_data)
+              end
+            end
 
-                attempt_save(task, task_data) do
-                  import_log(task)
-                  unpack_task_comments(task, task_data['comments'])
+            task_list_object = unpack_object(task_list, task_list_data)
+            attempt_save(task_list_object, task_list_data)
+          end
+        end
 
-                  task.updating_date = task.created_at
-                  task.updating_user = task.user
-                  task = unpack_object(task, task_data)
-                  task.status = task.status.to_i
-                  attempt_save(task, task_data)
-                end
+        Array(project_data['pages']).each do |page_data|
+          page = unpack_object(@project.pages.build, page_data)
+          attempt_save(page, page_data) do
+            import_log(page)
+
+            obj_type_map = {'Note' => :notes, 'Divider' => :dividers}
+            obj_type_map['Upload'] = :uploads if Teambox.config.import_options.create_uploads
+
+            Array(page_data['slots']).each do |slot_data|
+              next if obj_type_map[slot_data['rel_object_type']].nil? # not handled yet
+              rel_object = unpack_object(page.send(obj_type_map[slot_data['rel_object_type']]).build, slot_data['rel_object'])
+              rel_object.updated_by = page.user if rel_object.respond_to?(:updated_by)
+              rel_object.page_id = page.id
+
+              if rel_object.is_a?(Upload)
+                asset = asset_file('asset', slot_data['rel_object'])
+                next unless asset
+                rel_object.asset = asset if asset
               end
 
-              task_list_object = unpack_object(task_list, task_list_data)
-              attempt_save(task_list_object, task_list_data)
-            end
-          end
+              attempt_save(rel_object, slot_data['rel_object']) do
+                rel_object.save_slot
+                rel_object.page_slot.position = slot_data['position']
 
-          Array(project_data['pages']).each do |page_data|
-            page = unpack_object(@project.pages.build, page_data)
-            attempt_save(page, page_data) do
-              import_log(page)
-
-              obj_type_map = {'Note' => :notes, 'Divider' => :dividers}
-              obj_type_map['Upload'] = :uploads if Teambox.config.import_options.create_uploads
-
-              Array(page_data['slots']).each do |slot_data|
-                next if obj_type_map[slot_data['rel_object_type']].nil? # not handled yet
-                rel_object = unpack_object(page.send(obj_type_map[slot_data['rel_object_type']]).build, slot_data['rel_object'])
-                rel_object.updated_by = page.user if rel_object.respond_to?(:updated_by)
-
-                if rel_object.is_a?(Upload)
-                  asset = asset_file('asset', slot_data['rel_object'])
-                  next unless asset
-                  rel_object.asset = asset if asset
-                end
-
-                attempt_save(rel_object, slot_data['rel_object']) do
-                  rel_object.page = page
-                  rel_object.save_slot
-                  rel_object.page_slot.position = slot_data['position']
-
-                  attempt_save(rel_object.page_slot, slot_data) do
-                    import_log(rel_object)
-                  end
+                attempt_save(rel_object.page_slot, slot_data) do
+                  import_log(rel_object)
                 end
               end
-
             end
-          end
 
-          @processed_objects[:project] << @project.id
-
-          if Teambox.config.import_options.create_uploads
-            unpack_uploads(@project, project_data['uploads'])
           end
         end
-        @project
-      end
 
-      self.projects = @processed_objects[:project]
+        @processed_objects[:project] << @project.id
 
-      # Restore all activities
-      @projects.map(&:import_activities).flatten.sort_by{|a|a[:date]}.each do |activity|
-        if activity[:target_type] == Comment
-          # touch activity related to that comment's thread
-          Activity.last(:conditions => ["target_type = ? AND target_id = ?",
-                                        activity[:comment_target_type], activity[:comment_target_id]]).try(:touch)
+        if Teambox.config.import_options.create_uploads
+          unpack_uploads(@project, project_data['uploads'])
         end
-        act = Activity.new(
-          :project_id => activity[:project].id,
-          :target_id => activity[:target_id],
-          :target_type => activity[:target_class].to_s,
-          :action => activity[:action],
-          :user_id => activity[:creator_id],
-          :comment_target_type => activity[:comment_target_type],
-          :comment_target_id => activity[:comment_target_id])
-        act.created_at = activity[:date]
-        act.updated_at = activity[:date]
-        attempt_save(act)
+      end
+      @project
+    end
+
+    self.projects = @processed_objects[:project]
+
+    # Restore all activities
+    @projects.map(&:import_activities).flatten.sort_by{|a|a[:date]}.each do |activity|
+      if activity[:target_type] == Comment
+        # touch activity related to that comment's thread
+        Activity.last(:conditions => ["target_type = ? AND target_id = ?",
+                                      activity[:comment_target_type], activity[:comment_target_id]]).try(:touch)
+      end
+      act = Activity.new(
+        :project_id => activity[:project].id,
+        :target_id => activity[:target_id],
+        :target_type => activity[:target_class].to_s,
+        :action => activity[:action],
+        :user_id => activity[:creator_id],
+        :comment_target_type => activity[:comment_target_type],
+        :comment_target_id => activity[:comment_target_id])
+      act.created_at = activity[:date]
+      act.updated_at = activity[:date]
+      attempt_save(act)
+    end
+
+    @projects.each do |project|
+      project.is_importing = false
+      project.log_activity(self, 'create', user.id) if user
+    end
+
+    unless @unprocessed_objects.empty?
+      logger.warn "[IMPORT] FAILURE! Some objects were not processed during this import."
+
+      @unprocessed_objects.each do |key, hash|
+        object = hash[:model]
+        errors = hash[:errors]
+        object_info = object ? "[#{object.class}##{object.id} - new?: #{object.new_record?}] Object: #{object.inspect}" : ""
+
+        logger.warn "[IMPORT] [UNPROCESSED] [#{key}] #{object_info} Errors: * #{errors.join("\n* ")}"
       end
 
-      @projects.each do |project|
-        project.is_importing = false
-        project.log_activity(self, 'create', user.id) if user
-      end
+      #clear out mappings, we're rolling back
+      self.processed_data_mapping = nil
 
-      unless @unprocessed_objects.empty?
-        logger.warn "[IMPORT] FAILURE! Some objects were not processed during this import."
-
-        @unprocessed_objects.each do |key, hash|
-          object = hash[:model]
-          errors = hash[:errors]
-          object_info = object ? "[#{object.class}##{object.id} - new?: #{object.new_record?}] Object: #{object.inspect}" : ""
-
-          logger.warn "[IMPORT] [UNPROCESSED] [#{key}] #{object_info} Errors: * #{errors.join("\n* ")}"
-        end
-
-        #clear out mappings, we're rolling back
-        self.processed_data_mapping = nil
-
-        #Finally raise exception rolling back transaction. Time to check the logs and fix the export data.
-        raise ActiveRecord::Rollback
-      else
-        #Persist mapping record
-        self.class.save_mapping_without_callbacks(self)
-      end
+      #Finally raise exception rolling back transaction. Time to check the logs and fix the export data.
+      raise ActiveRecord::Rollback
+    else
+      #Persist mapping record
+      self.class.save_mapping_without_callbacks(self)
     end
   end
   
@@ -352,6 +352,8 @@ class TeamboxData
 
       #Ignore upload if we can't find its asset
       next unless asset
+      #Ignore upload rel_objects (imported by page)
+      next if upload_data['page_id']
 
       upload = unpack_object(project.uploads.build, upload_data)
       upload.asset = asset

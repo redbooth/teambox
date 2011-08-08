@@ -50,9 +50,21 @@ class TeamboxDatasController < ApplicationController
   def update
     #TODO: Refactor this mess, along with the model
     return redirect_to(@data) if @data.processing?
-    unless @data.update_attributes(params[:teambox_data])
+
+    updated = false
+
+    #wrap in transaction to ensure proper rollback
+    begin
+      TeamboxData.transaction do
+        updated = @data.update_attributes(params[:teambox_data])
+      end
+    rescue => err
+      @data.logger.warn "[TeamboxDatasController] RESCUING: #{err} #{err.backtrace.join("\n")}"
+    end
+
+    unless updated
       flash.now[:error] = t('teambox_datas.show_import.import_error')
-      @data.logger.warn "[IMPORT] Error updating TeamboxData model. Errors: #{@data.errors.full_messages.inspect}"
+      @data.logger.warn "[TeamboxDatasController] Error updating TeamboxData model. Errors: #{@data.errors.full_messages.inspect}"
     else
       #TODO: A lot more fine-grained error handling here
       flash.now[:error] = "There were errors with the information you supplied!" if !(@data.processing? || @data.imported? || @data.exported?)
