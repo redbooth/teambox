@@ -6,11 +6,12 @@ form
     input(type='hidden', name='comments_attributes[0][id]', value=self.comment_id)
 
   .field.text_area
-    .marco_avatar
-      a.micro_avatar.my_avatar
-    - if (self.new_conversation)
+    - if (!self.new_conversation)
+      .marco_avatar
+        a.micro_avatar.my_avatar
+    - else
       .title
-        input(name='name') 
+        input(name='name', placeholder= '<%= t('conversations.new.title_placeholder') %>') 
     .textarea
       textarea(cols= '40', name='comments_attributes[0][body]', placeholder= '<%= t('comments.new.task') %>', rows= '20', autocomplete= 'off')
       .autocomplete(style= 'display: none')

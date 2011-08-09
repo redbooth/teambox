@@ -37,7 +37,7 @@
       .down('.header')
       .insert({after: view.render().el});
 
-      Backbone.history.saveLocation(conversation.publicUrl(), false);
+    document.location.hash = '!/projects/' + this.project_id + '/conversations/' + conversation.id;
   };
 
   ConversationList.removeConversation = function(conversation, collection) {

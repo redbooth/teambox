@@ -17,13 +17,7 @@
     , user: Teambox.models.user.id
     , new_conversation: true
     });
-    var view = new Teambox.Views.ConversationList({
-      collection: collection
-    , conversation: conversation
-    , project_id: project
-    , newConversation: true
-    , controller: this
-    });
+    var view = new Teambox.Views.ConversationList({collection: collection, conversation: conversation, project_id: project, newConversation: true});
     $('content').update(view.render().el);
     $('view_title').update(I18n.translations.conversations.new.title);
   };
@@ -36,7 +30,7 @@
       model = new Teambox.Models.Conversation({ id: id });
       model.fetch();
     }
-    
+
     var collection = Teambox.collections.conversations;
     var view = new Teambox.Views.ConversationList({collection: collection, conversation: model, project_id: project});
 
