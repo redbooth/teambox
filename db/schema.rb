@@ -504,23 +504,10 @@ ActiveRecord::Schema.define(:version => 20110725155921) do
     t.integer  "asset_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
-<<<<<<< HEAD
-<<<<<<< HEAD
     t.boolean  "deleted",                          :default => false, :null => false
     t.boolean  "is_private",                       :default => false, :null => false
     t.integer  "parent_folder_id"
     t.string   "token",              :limit => 16
-=======
-    t.boolean  "deleted",            :default => false, :null => false
-    t.boolean  "is_private",         :default => false, :null => false
-    t.integer  "parent_folder_id"
->>>>>>> Introducing folders
-=======
-    t.boolean  "deleted",                          :default => false, :null => false
-    t.boolean  "is_private",                       :default => false, :null => false
-    t.integer  "parent_folder_id"
-    t.string   "token",              :limit => 16
->>>>>>> Download files from uploads with public link with token
   end
 
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
