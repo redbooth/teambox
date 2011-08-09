@@ -1,3 +1,4 @@
+@uploads
 Feature: Renaming a file upload
 
   Background:
