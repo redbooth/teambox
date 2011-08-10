@@ -1,3 +1,6 @@
-.body_classes== #{location_name} #{I18n.locale} #{Rails.env} controller_#{controller.controller_name}
-.content_part= yield
+.body_classes= "#{location_name} #{I18n.locale} #{Rails.env} controller_#{controller.controller_name}"
+.title_part= @page_title
+.content_part
+  - show_flash
+  = yield
 .column_part= yield :column
