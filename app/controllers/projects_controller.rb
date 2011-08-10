@@ -85,9 +85,9 @@ class ProjectsController < ApplicationController
   def edit
     authorize! :update, @current_project
     @sub_action = params[:sub_action] || 'settings'
-    
+
     respond_to do |f|
-      f.any(:html, :m)
+      f.any(:html, :m) { render :layout => 'parts' }
     end
   end
   
@@ -104,7 +104,7 @@ class ProjectsController < ApplicationController
     end
     
     respond_to do |f|
-      f.any(:html, :m) { render :edit }
+      f.any(:html, :m) { render :edit, :layout => 'parts' }
     end
   end
  
