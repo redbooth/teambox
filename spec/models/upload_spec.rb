@@ -28,6 +28,7 @@ describe Upload do
     it 'should fail when original names are not found' do
       @upload.asset.should_receive(:exists?).with(:original).and_return(false)
       @upload.asset.should_receive(:exists?).with(:thumb).and_return(false)
+      @upload.asset.should_receive(:exists?).with(:small).and_return(false)
       @upload.rename_asset("new_pic.png").should be_false
       @upload.errors[:base].first.should match(/no files found/)
     end     
@@ -60,6 +61,9 @@ describe Upload do
         FileUtils.should_receive(:mv).with(
           File.join(basepath, "thumb/pic.png"), 
           File.join(basepath, "thumb/new_pic.png"))
+        FileUtils.should_receive(:mv).with(
+          File.join(basepath, "small/pic.png"),
+          File.join(basepath, "small/new_pic.png"))
         @upload.rename_asset("new_pic.png").should be_true
         @upload.reload.asset_file_name.should == "new_pic.png"
       end
@@ -80,6 +84,9 @@ describe Upload do
         AWS::S3::S3Object.should_receive(:rename).with(
           File.join(basepath, "thumb/pic.png"),
           File.join(basepath, "thumb/new_pic.png"), "teambox")
+        AWS::S3::S3Object.should_receive(:rename).with(
+          File.join(basepath, "small/pic.png"),
+          File.join(basepath, "small/new_pic.png"), "teambox")
         @upload.rename_asset("new_pic.png").should be_true
         @upload.reload.asset_file_name.should == "new_pic.png"
       end
