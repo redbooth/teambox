@@ -4,7 +4,9 @@ class ProjectsController < ApplicationController
   before_filter :set_page_title
   before_filter :disallow_for_community, :only => [:new, :create]
   before_filter :load_pending_projects, :only => [:index, :show, :new, :create]
-  
+
+  layout 'parts'
+
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
       flash[:error] = t('common.not_allowed')

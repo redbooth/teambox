@@ -17,29 +17,29 @@
   };
 
   ProjectsController.projects_new = function () {
-    Teambox.Views.Sidebar.highlightSidebar('new_project_link');
-    $('content_header').update('');
-    $('content').update('new project');
+    Teambox.Controllers.FallbackController.show();
   };
 
   ProjectsController.projects_show = function (permalink) {
+    Views.Sidebar.highlightSidebar('project_' + permalink + '_activities');
+
     var project = collections.projects.getByPermalink(permalink)
       , threads = Teambox.helpers.projects.filterActivitiesByProject(project.id, Teambox.collections.threads);
 
-    Views.Sidebar.highlightSidebar('project_' + permalink + '_activities');
     $('view_title').update(project.get('name') + ' - Recent activity');
     $('content_header').update((new Teambox.Views.SimpleConversationForm()).render().el);
     $('content').update((new Teambox.Views.Activities({collection: threads})).render().el);
   };
 
   ProjectsController.task_lists = function (permalink) {
+    Teambox.Views.Sidebar.highlightSidebar('project_' + permalink + '_task_lists');
+
     var tasks = collections.tasks.filteredByProject(permalink)
       , project = collections.projects.getByPermalink(permalink)
       , task_lists = project.get('task_lists').setTasks(tasks)
       , view = new Views.TaskLists({collection: task_lists, project: project, el: $('content')});
 
     $('content_header').update('');
-    Teambox.Views.Sidebar.highlightSidebar('project_' + permalink + '_task_lists');
 
     // render
     view.render();

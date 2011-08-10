@@ -7,7 +7,7 @@
 %p=t '.explain1_html'
 %p=t '.explain2_html'
 
-= form_for @project do |f|
+= form_for @project, :html => {:'data-remote' => true} do |f|
   = project_fields(f,@project)
   .submit
     = f.submit t('.submit'), :'data-disable-with' => t('.sending')
