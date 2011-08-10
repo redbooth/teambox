@@ -4,7 +4,6 @@
                                      , '/projects/new'                 : 'projects_new'
                                      , '/projects/:id'                 : 'projects_show'
                                      , '/projects/:project/people'     : 'people_index'
-                                     , '/projects/:project/settings'   : 'project_edit'
                                      , '/projects/:project/task_lists' : 'task_lists'
                                      }
                            }
