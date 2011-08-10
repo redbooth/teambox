@@ -14,7 +14,8 @@
         %span= link_to "team collaboration", "http://teambox.com"
       #content
         = yield
-      #promo
-        %p This file is shared using Teambox, a collaboration platform for your projects.
-        %p Enjoy better task management, file sharing and group communication.
-        %p= link_to "Get started now for free", "http://teambox.com/signup"
+      - unless @current_user
+        #promo
+          %p This file is shared using Teambox, a collaboration platform for your projects.
+          %p Enjoy better task management, file sharing and group communication.
+          %p= link_to "Get started now for free", "http://teambox.com/signup"
