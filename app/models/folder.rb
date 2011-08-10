@@ -26,15 +26,6 @@ class Folder < RoleRecord
     !folders.empty?
   end
 
-  # TODO: Both methods below may be replaced by counter cache columns for better performance
-  def folders_count
-    folders.count
-  end
-
-  def uploads_count
-    uploads.count
-  end
-
   def has_parent?
     !parent_folder.nil?
   end
