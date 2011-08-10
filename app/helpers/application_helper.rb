@@ -1,6 +1,21 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  
+
+  def use_hash_bang_urls
+    use_hash_bang_url_was = @use_hash_bang_url
+    @use_hash_bang_url = true
+    yield
+    @use_hash_bang_url = use_hash_bang_url_was
+  end
+
+  def url_for(options = {})
+    url = super
+    if @use_hash_bang_url
+      url = '#!' + url if (url =~ /^#!/).nil?
+    end
+    url
+  end
+
   def content_for(*args)
     super unless args.first.to_sym == :column and mobile?
   end
