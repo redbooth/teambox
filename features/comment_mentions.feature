@@ -15,7 +15,7 @@ Feature: Notifications of comment mentions
     Given I am logged in as @balint
     When I go to the project page
     And I fill in the comment box with "Hey, check this out @jordi, @pablo and @james!"
-    And I press "Pubblica"
+    And I press "Salva"
     Then @pablo and @james should receive an email
     And @balint and @charles should receive no emails
     When @pablo opens the email
@@ -30,7 +30,7 @@ Feature: Notifications of comment mentions
     Given I am logged in as @balint
     When I go to the project page
     And I fill in the comment box with "Hey @all, check this out!"
-    And I press "Pubblica"
+    And I press "Salva"
     Then @pablo, @charles, @jordi and @james should receive an email
 
   Scenario: Mention all users by using @all in task
@@ -52,7 +52,7 @@ Feature: Notifications of comment mentions
     Given I am logged in as @balint
     When I go to the project page
     And I fill in the comment box with "Hey @all, check this out!"
-    And I press "Pubblica"
+    And I press "Salva"
     Then @pablo, @charles and @jordi should receive an email
     And @james should receive no emails
 

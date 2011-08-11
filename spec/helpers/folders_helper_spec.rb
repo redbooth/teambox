@@ -10,7 +10,7 @@ describe FoldersHelper do
 
   describe "folder_breadcrumbs" do
     it "should return proper breadcrumb" do
-      helper.folder_breadcrumbs.should match /<a href=\"\/projects\/pulp-fiction\/uploads\">Pulp Fiction<\/a> » <a href=\"\/projects\/pulp-fiction\/uploads\/folders\/22\">Vincent Vega<\/a> » Mia Vallace/
+      helper.folder_breadcrumbs.should match /<a href=\"\/projects\/pulp-fiction\/uploads\" data-remote=\"true\">Pulp Fiction<\/a> » <a href=\"\/projects\/pulp-fiction\/uploads\/folders\/22\" data-remote=\"true\">Vincent Vega<\/a> » Mia Vallace/
     end
   end
   

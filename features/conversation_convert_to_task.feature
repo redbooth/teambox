@@ -83,6 +83,7 @@ Feature: Converting a conversation to a task
     And I follow "Convert to task"
     And I wait for 2 seconds
     And I fill in "conversation_name" with "Give git course"
+    Then show me the page
     And I select "hold" from "conversation_status"
     And I select "Saimon Moore" from "conversation_assigned_id"
     Then I click on the date selector
