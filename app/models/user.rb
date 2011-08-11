@@ -77,7 +77,8 @@ class User < ActiveRecord::Base
                   :default_digest, 
                   :default_watch_new_task, :default_watch_new_conversation, :default_watch_new_page,
                   :people_attributes,
-                  :google_calendar_url_token
+                  :google_calendar_url_token,
+                  :auto_accept_invites
 
   attr_accessor   :activate, :old_password
 

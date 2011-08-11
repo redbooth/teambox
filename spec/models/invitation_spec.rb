@@ -52,7 +52,8 @@ describe Invitation do
     end
     
     it "should send an Invitation email to existing users with autoinvite disabled" do
-      user = Factory.create(:user, :auto_accept_invites => false)
+      user = Factory.create(:user)
+      user.update_attributes(:auto_accept_invites => false)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
       Emailer.should_receive(:send_with_language).once
       invitation.save
