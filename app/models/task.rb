@@ -24,14 +24,16 @@ class Task < RoleRecord
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| %w[is_private body hours human_hours uploads_attributes google_docs_attributes].all? { |k| comment[k].blank? } }
 
-  attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes, :user
+  attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes, :user, :task_list_id
 
   validates_presence_of :user
+  validates_presence_of :task_list
   validates_presence_of :name, :message => I18n.t('tasks.errors.name.cant_be_blank')
   validates_length_of   :name, :maximum => 255, :message => I18n.t('tasks.errors.name.too_long')
   validates_inclusion_of :status, :in => STATUSES.values, :message => "is not a valid status"
   
   validate :check_asignee_membership, :if => :assigned_id?
+  validate :check_task_list, :on => :update
   
   # set by controller to indicate user that's doing task updating
   attr_accessor :updating_user
@@ -275,6 +277,17 @@ class Task < RoleRecord
   def check_asignee_membership
     unless project.people.include?(assigned)
       errors.add :assigned, :doesnt_belong
+    end
+  end
+  
+  def check_task_list
+    if task_list_id_changed?
+      old_task_list = TaskList.find_by_id(task_list_id_was)
+      new_task_list = TaskList.find_by_id(task_list_id)
+      
+      if old_task_list.project_id != new_task_list.project_id
+        errors.add :task_list_id, "Task list belongs to a different project"
+      end
     end
   end
   

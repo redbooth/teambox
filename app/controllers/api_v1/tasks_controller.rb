@@ -1,5 +1,5 @@
 class ApiV1::TasksController < ApiV1::APIController
-  before_filter :load_task_list
+  before_filter :load_task_list, :only => [:index, :create, :show, :reorder]
   before_filter :load_task, :except => [:index, :create, :reorder]
   
   def index
@@ -40,10 +40,17 @@ class ApiV1::TasksController < ApiV1::APIController
   end
   
   def update
-    authorize! :update, @task
-    @task.updating_user = current_user
+    if can? :update, @task
+      @task.updating_user = current_user
+      success = @task.update_attributes params
+    elsif can? :comment, @task
+      @task.updating_user = current_user
+      success = @task.update_attributes(:comments_attributes => params['comments_attributes']||{})
+    else
+      authorize! :comment, @task
+    end
 
-    if @task.update_attributes(params)
+    if success
       handle_api_success(@task, :wrap_objects => true, :references => true, :include => [:user, :uploads, :google_docs])
     else
       handle_api_error(@task)
@@ -91,12 +98,9 @@ class ApiV1::TasksController < ApiV1::APIController
   protected
   
   def load_task
-    @task = if @current_project
-      (@task_list || @current_project).tasks.find_by_id(params[:id]) rescue nil
-    else
-      Task.where(:project_id => current_user.project_ids).find_by_id(params[:id])
-    end
-    api_error :not_found, :type => 'ObjectNotFound', :message => 'Task not found' unless @task
+    @task = Task.find_by_id(params[:id])
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Task not found' unless @task && (current_user.project_ids.include?(@task.project_id))
+    api_error :not_found, :type => 'ObjectNotFound', :message => 'Task not found' if @task_list && @task.task_list_id != @task_list.id
   end
   
   def api_scope

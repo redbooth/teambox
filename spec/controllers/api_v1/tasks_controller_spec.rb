@@ -295,6 +295,27 @@ describe ApiV1::TasksController do
       put :update, :project_id => @project.permalink, :id => @task.id, :name => 'Modified'
       response.status.should == 401
     end
+    
+    it "should not allow commenters to modify the task list" do
+      commenter = Factory.create(:confirmed_user)
+      @project.add_user(commenter, :role => Person::ROLES[:commenter])
+      
+      login_as commenter
+
+      put :update, :project_id => @project.permalink, :id => @task.id, :task_list_id => @other_list.id, :name => 'Modified'
+      response.should be_success
+
+      @task.reload.task_list_id.should == @task_list.id
+    end
+    
+    it "should allow users to modify the task list" do
+      login_as @user
+
+      put :update, :project_id => @project.permalink, :id => @task.id, :task_list_id => @other_list.id, :name => 'Modified'
+      response.should be_success
+
+      @task.reload.task_list_id.should == @other_list.id
+    end
 
     it "should return updated task and any references" do
       login_as @user
