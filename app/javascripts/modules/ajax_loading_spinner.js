@@ -7,7 +7,7 @@ Ajax.Responders.register({
     $("global_loading").show(); },
   onComplete: function() {
     window.activeRequests--;
-    if (window.activeRequests === 0) {
+    if (window.activeRequests < 1) {
       $("global_loading").hide(); } }
 });
 
