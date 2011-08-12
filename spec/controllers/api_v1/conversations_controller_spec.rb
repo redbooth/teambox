@@ -195,6 +195,15 @@ describe ApiV1::ConversationsController do
 
       post :create, :project_id => @project.permalink, :name => 'Created!', :body => 'Discuss...'
       response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+
+      conversation = Conversation.find_by_id(data['id'])
+      conversation.should_not == nil
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{conversation.user_id}_User").should == true
+      references.include?("#{conversation.comments.first.id}_Comment").should == true
 
       @project.conversations(true).length.should == 3
       @project.conversations.first.name.should == 'Created!'

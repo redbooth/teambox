@@ -245,6 +245,14 @@ describe ApiV1::TasksController do
 
       post :create, :project_id => @project.permalink, :id => @task_list.id, :task_list_id => @task_list.id, :name => 'Another TODO!'
       response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      task = Task.find_by_id(data['id'])
+      task.should_not == nil
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{task.user_id}_User").should == true
 
       @task_list.tasks(true).length.should == 2
       @task_list.tasks(true).last.name.should == 'Another TODO!'
