@@ -288,9 +288,9 @@ module TaskListsHelper
 
   def print_task_lists_link(project = nil)
     if project
-      link_to t('common.print'), project_task_lists_path(project, :format => :print), :class => :print_link
+      link_to t('common.print'), project_task_lists_path(project, :format => :print), :class => :print_link, :target => "_blank"
     else
-      link_to t('common.print'), task_lists_path(:format => :print), :class => :print_link
+      link_to t('common.print'), task_lists_path(:format => :print), :class => :print_link, :target => "_blank"
     end
   end
 
