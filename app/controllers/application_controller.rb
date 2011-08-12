@@ -297,4 +297,8 @@ class ApplicationController < ActionController::Base
         yield
       end
     end
+
+    def ajax_redirect(redirection_path)
+      render :text => "<div class=\"redirect\">#!#{redirection_path}</div>"
+    end
 end
