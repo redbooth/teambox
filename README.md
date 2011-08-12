@@ -10,8 +10,6 @@ to everywhere just using email.
 You can [try Teambox online][teambox] for free to see how it works. Teambox is open-source software, meaning you
 can also download it, change its code and host yourself.
 
-[![Preview of Teambox][preview]][tour]
-
 Project info
 ------------
 
