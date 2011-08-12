@@ -1,10 +1,3 @@
-class Upload
-  def gen_token
-    # Access private method
-    generate_token
-  end
-end
-
 class GenerateUploadTokensIfMissing < ActiveRecord::Migration
 
   def self.up
@@ -13,7 +6,7 @@ class GenerateUploadTokensIfMissing < ActiveRecord::Migration
 
     Upload.find_each do |upload|
       if upload.token.nil?
-        upload.gen_token
+        upload.send :generate_token
         upload.update_attribute :token, upload.token
       end
     end
