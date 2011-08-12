@@ -14,7 +14,7 @@
     = yield :stylesheet_includes
     = stylesheet_link_tag 'cucumber', :media => :screen if Rails.env.cucumber?
     = trimmer_include_tag
-    = sprockets_include_tag
+    = javascript_include_tag Rails.env.development? ? "/sprockets.js?#{Time.now.to_i}" : "/sprockets.js"
     = yield :js_includes
   %body{ :class => "loading folded_aux #{I18n.locale} #{Rails.env}" }
     = render 'shared/loading'
