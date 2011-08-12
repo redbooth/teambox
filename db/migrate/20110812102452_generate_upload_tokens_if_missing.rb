@@ -1,14 +1,15 @@
+class Upload
+  def gen_token
+    # Access private method
+    generate_token
+  end
+end
+
 class GenerateUploadTokensIfMissing < ActiveRecord::Migration
 
   def self.up
     return unless Upload.count > 0
 
-    class Upload
-      def gen_token
-        # Access private method
-        generate_token
-      end
-    end
 
     Upload.find_each do |upload|
       if upload.token.nil?
