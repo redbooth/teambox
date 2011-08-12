@@ -683,6 +683,7 @@
     _results = [];
     for (_i = 0, _len = selects.length; _i < _len; _i++) {
       select = selects[_i];
+      console.log(select);
       _results.push(new Chosen(select));
     }
     return _results;

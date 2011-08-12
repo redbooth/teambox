@@ -61,34 +61,63 @@ body.new_conversations, body.create_conversations
     p, ul
       margin-bottom: 10px
 
-$form_width: 470px
 .new_conversation form
   width: 100% !important
+  min-width: 450px
   margin-top: 0
   margin-left: 0
+  .title input, .textarea
+    width: 90% !important
+    margin: 0 10px
+    border: 0
+    font-size: 15px
   .title
-    padding: 5px 0
     border-bottom: 1px solid #e4e4e4
     width: auto
-  .title input, textarea
-    margin-left: 10px
-    width: $form_width - 10 !important
-    +rounded(3px)
-    border-color: #aaa
+    label
+      float: left
+      line-height: 35px
+      margin: 0 10px
+    input
+      padding: 8px 0
+  .title input
+    margin: 0
+  .textarea
+    width: 98% !important
+  .to
     width: 100%
-    font-size: 15px
+    margin: 3px 0
+    border: 1px solid #e4e4e4
+    border-right: 0
+    border-left: 0
+    label
+      float: left
+      line-height: 30px
+      margin: 0 10px
+    select
+      width: 100%
+    .chzn-choices
+      border: 0
+      background: transparent
+      +box-shadow(none)
+    .chzn-results li span
+      color: #aaa
+      &:before
+        content: '@'
+    .chzn-drop
+      border-top: 1px solid #aaa
+      +rounded(3px)
   textarea
-    margin-top: 10px
     width: 100%
     height: 140px
+    border: 0
     font-size: 13px
-  textarea:focus, .title input:focus
-    border-color: #0099c8
+  textarea:focus, input:focus
     outline: none
   .help
     display: none
   .new_extra
-    width: $form_width - 10 !important
+    width: 100%
     margin: 0 10px
     .submit
       margin-top: 0
@@ -148,7 +177,6 @@ $form_width: 470px
 
 
 $list_width: 271px
-
 .conversation_list
   float: left
   width: $list_width
@@ -198,7 +226,6 @@ $list_width: 271px
     .block .body
       width: auto
   .new_comment
-    width: $form_width - 10
     .field
       .textarea
         width: 300px

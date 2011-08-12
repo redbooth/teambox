@@ -11,12 +11,22 @@ form
         a.micro_avatar.my_avatar
     - else
       .title
+        label(for='name') Title:
         input(name='name', placeholder= '<%= t('conversations.new.title_placeholder') %>') 
     .textarea
       textarea(cols= '40', name='comments_attributes[0][body]', placeholder= '<%= t('comments.new.task') %>', rows= '20', autocomplete= 'off')
       .autocomplete(style= 'display: none')
     span.help
       a(href= '/text_styles', class= 'style_icon', rel= 'facebox', title= '<%= t('projects.show.text_styling')%>')
+    - if (self.new_conversation)
+      .to
+        label Notify:
+        select.chzn-select(title='+ Add an user', multiple, name='watcher_ids')
+          option(value='')
+          - each person in self.project_people
+            - var user = person.get('user')
+            - var p = user.first_name + ' ' + user.last_name + ' <span>' + user.username + '</span>'
+            option(value='#{person.id}')= p
   .clear
   .new_extra(style= 'display: none')
     - if (self.is_task)

@@ -40,15 +40,25 @@
   CommentForm.render = function () {
     var self = this;
     var template = this.simple ? this.simple_template : this.template;
+    if (this.new_conversation)
+      var people_in_project = Teambox.collections.projects.get(this.model.get('project_id')).get('people').models;
     this.el.update('');
-    this.el.insert({bottom: template(_.extend({
-      view: this
-    , editing: this.editing
-    , comment_id: this.comment_id}, this.model.getAttributes()))});
+    this.el.insert({
+      bottom: template(_.extend({
+        view: this
+      , editing: this.editing
+      , comment_id: this.comment_id
+      , project_people: _.select(people_in_project, function(person) {
+         return person.id !== Teambox.models.user.id
+        })
+      }
+      , this.model.getAttributes()
+      ))
+    });
 
     this.form = this.el.down('form');
     this.delegateEventsTo(this.events, this.form);
-    
+
     this.updateFormAttributes(this.model.get('project_id'));
 
     if (this.model.get('type') === 'Task') {
@@ -86,6 +96,14 @@
 
     // google docs
     this.form.insert({after: this.google_docs.render().el});
+
+    if (this.new_conversation) {
+      (function() {
+        new Chosen($$('.chzn-select')[0]);
+      }).defer();
+    }
+
+    if(this.new_conversation) this.form.down('.new_extra').show();
 
     return this;
   };
@@ -195,6 +213,8 @@
     }
 
     data = _.deparam(this.form.serialize(), true);
+
+    if(data.watchers) data.watchers = JSON.stringify(data.watchers.split(','));
 
     Teambox.helpers.forms.showDisabledInput(this.el);
 
