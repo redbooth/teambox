@@ -1,4 +1,4 @@
-%p=raw "A user is an account within Teambox. You currently cannot create or manipulate users using the API."
+%p=raw "A user is an account within Teambox."
 %p=raw "Users belong to projects via the #{link_to_doc_model(:person)} model."
 
 - doc_for :index,
@@ -9,8 +9,15 @@
           :example => @user.to_api_hash do
   %p=raw "Returns the data for a user."
   
-- ignore_doc_for :create
-- ignore_doc_for :update
+- doc_for :create,
+          :parameters => {:login => "login",:email => "user@email.com",:first_name => 'John',:last_name => 'Smith',:password => "password",:password_confirm => "password",:locale => 'en'},
+          :example => example_api_wrap(@user, :references => []) do
+  %p=raw "Registers a new user."
+
+- doc_for :update,
+          :parameters => {:first_name => 'John',:last_name => 'Smith',:password => "password",:password_confirm => "password",:locale => 'en'} do
+  %p=raw "Updates an existing user."
+
 - ignore_doc_for :destroy
 
 - doc_for :current,

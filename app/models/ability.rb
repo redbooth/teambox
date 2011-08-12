@@ -173,6 +173,10 @@ class Ability
       api_write?(user) && user.id == the_user.id
     end
     
+    can :update, User do |the_user|
+      api_write?(user) && the_user.id == user.id
+    end
+    
     can :observe, User do |the_user|
       user.observable?(the_user)
     end

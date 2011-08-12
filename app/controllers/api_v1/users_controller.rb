@@ -2,7 +2,7 @@ class ApiV1::UsersController < ApiV1::APIController
   no_login_required :only => [ :create ]
 
   skip_before_filter :confirmed_user?, :only => [ :create ]
-  before_filter :find_user, :only => [ :show ]
+  before_filter :find_user, :only => [ :show, :update ]
   before_filter :load_invitation, :only => [ :create ]
   skip_before_filter :load_project
   
@@ -44,6 +44,16 @@ class ApiV1::UsersController < ApiV1::APIController
       @user.write_setting 'show_tutorials', true
 
       handle_api_success(@user, :is_new => true)
+    else
+      handle_api_error(@user)
+    end
+  end
+
+  def update
+    authorize! :update, @user
+    
+    if @user.update_attributes(params)
+      handle_api_success(@user)
     else
       handle_api_error(@user)
     end

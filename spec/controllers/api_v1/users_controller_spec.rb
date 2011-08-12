@@ -131,6 +131,35 @@ describe ApiV1::UsersController do
       user.login.should == 'testing'
       user.email.should == 'testing@localhost.com'
     end
+    
+    it "should not create an invalid user" do
+      do_create :email => 'a'
+      response.should_not be_success
+      
+      data = JSON.parse(response.body)
+      
+      data['errors'].should_not == nil
+    end
+  end
+  
+  describe "#update" do
+    it "should update the specified user" do
+      login_as @user
+      
+      put :update, :id => @user.id, :first_name => 'Lololol'
+      response.should be_success
+      
+      @user.reload.first_name.should == 'Lololol'
+    end
+    
+    it "should not modify other users" do
+      login_as @user
+      
+      put :update, :id => @fred.id, :first_name => 'Lololol'
+      response.should_not be_success
+      
+      @fred.reload.first_name.should_not == 'Lololol'
+    end
   end
   
   def do_create(options = {})
