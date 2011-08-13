@@ -45,6 +45,8 @@
     show: function() {
       var fragment = Backbone.history.getFragment();
 
+      $$(".content")[0].update("<img src='/images/loading.gif'/> Loading...");
+
       new Ajax.Request(fragment, {
         method: "get",
         evalJS: false,
