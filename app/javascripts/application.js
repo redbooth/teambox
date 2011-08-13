@@ -56,6 +56,7 @@
 //= require <controllers/pages>
 //= require <controllers/users>
 //= require <controllers/search>
+//= require <controllers/chat>
 //= require <controllers/fallback>
 //= require <models/base>
 //= require <models/comment>
@@ -136,7 +137,6 @@
 //= require <autoresize>
 //= require <badges>
 //= require <banner>
-//= require <chat>
 //= require <comment>
 //= require <compact_mode>
 //= require <conversation>
