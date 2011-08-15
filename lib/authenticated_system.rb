@@ -23,7 +23,7 @@ module AuthenticatedSystem
   # Accesses the current user from the session.
   # Future calls avoid the database because nil is not equal to false.
   def current_user
-    @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie) unless @current_user == false
+    @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie || login_from_token) unless @current_user == false
   end
 
   protected
@@ -144,6 +144,15 @@ module AuthenticatedSystem
       if user && user.remember_token?
         self.current_user = user
         handle_remember_cookie! false # freshen cookie token (keeping date)
+        self.current_user
+      end
+    end
+    
+    # Called from #current_user.
+    def login_from_token
+      user = params[:utoken] ? User.find_by_email_login_token(params[:utoken]) : nil
+      if user && user.profile_needs_completing?
+        self.current_user = user
         self.current_user
       end
     end

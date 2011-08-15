@@ -7,12 +7,9 @@ class Invitation < RoleRecord
   validate :valid_user?
   validate :valid_role?
   validate :user_already_invited?
-  validate :email_valid?
-  validate :name_valid?
 
-  attr_reader :user_or_email
   attr_accessor :is_silent, :locale
-  attr_accessible :user_or_email, :role, :membership, :invited_user, :locale, :first_name, :last_name
+  attr_accessible :role, :membership, :invited_user
 
   before_create :generate_token
   before_save :copy_user_email, :if => :invited_user
@@ -30,12 +27,6 @@ class Invitation < RoleRecord
   
   def user
     @user ||= user_id ? User.find_with_deleted(user_id) : nil
-  end
-
-  def user_or_email=(value)
-    self.invited_user = User.find_by_username_or_email(value)
-    self.email = value unless self.invited_user
-    @user_or_email = value
   end
   
   def accept(current_user)
@@ -68,7 +59,6 @@ class Invitation < RoleRecord
       :invited_user_id => invited_user_id,
       :role => role,
       :membership => membership,
-      :email => email,
       :project => {
         :permalink => project.permalink,
         :name => project.name
@@ -86,21 +76,15 @@ class Invitation < RoleRecord
   end
 
   def send_email
-    return if @is_silent
-
-    if invited_user
-      # Existing users
-      if @autoaccepted
-        # This notifies the user that he's now in a new project
-        Emailer.send_with_language :project_membership_notification, invited_user.locale, self.id
-      else
-        # We ask the user to go to Teambox to accept the invite
-        Emailer.send_with_language :project_invitation, invited_user.locale , self.id
-      end
+    return if @is_silent or invited_user.nil?
+    
+    # Existing users
+    if @autoaccepted
+      # This notifies the user that he's now in a new project
+      Emailer.send_with_language :project_membership_notification, invited_user.locale, self.id
     else
-      # Users who don't have an account yet
-      # NOTE: User now created afterwards
-      #Emailer.send_with_language :signup_invitation, (self.locale || user.locale), self.id
+      # We ask the user to go to Teambox to accept the invite
+      Emailer.send_with_language :project_invitation, invited_user.locale , self.id
     end
   end
   
@@ -113,46 +97,17 @@ class Invitation < RoleRecord
   def valid_user?
     @errors.add(:base, 'Must belong to a valid user') if user.nil? or user.deleted?
   end
-  
+
   def valid_role?
     @errors.add(:base, 'Not authorized') if target.is_a?(Project) and user and !target.admin?(user)
   end
 
   def user_already_invited?
-    return unless invited_user
-
     if project and Person.exists?(:project_id => project_id, :user_id => invited_user.id)
-      @errors.add :user_or_email, 'is already a member of the project'
+      @errors.add :invited_user_id, 'is already a member of the project'
     elsif Invitation.exists?(:project_id => project_id, :invited_user_id => invited_user.id)
-      @errors.add :user_or_email, 'already has a pending invitation'
+      @errors.add :invited_user_id, 'already has a pending invitation'
     end
-  end
-
-  def email_valid?
-    return if invited_user
-    if valid_email?(email)
-      # One final check: do we have an invite for this email?
-      if Invitation.exists?(:project_id => project_id, :email => email)
-        @errors.add :user_or_email, 'already has a pending invitation'
-      end
-    else
-      @errors.add :user_or_email, 'is not a valid username or email'
-    end
-  end
-  
-  def generate_login
-    "#{first_name}_#{last_name}"
-  end
-  
-  def name_valid?
-    return if !invited_user.nil?
-    
-    temp_user = User.new(:first_name => first_name,
-                        :last_name => last_name,
-                        :email => email,
-                        :login => generate_login,
-                        :password => 'papapa', :password_confirmation => 'papapa')
-    @errors.add :user_or_email, 'could not be created' if !temp_user.valid?
   end
 
   def generate_token
@@ -165,26 +120,7 @@ class Invitation < RoleRecord
       @autoaccepted = true
       self.accept(invited_user)
       self.destroy
-    elsif invited_user.nil?
-      # Automagically make the user
-      @autoaccepted = true
-      @password = ActiveSupport::SecureRandom.hex(8)
-      self.invited_user = User.create(:first_name => first_name,
-                                 :last_name => last_name,
-                                 :email => email,
-                                 :login => generate_login,
-                                 :password => @password, :password_confirmation => @password)
-      self.accept(invited_user)
-      self.destroy
     end
-  end
-
-  def copy_user_email
-    self.email ||= invited_user.email
-  end
-
-  def valid_email?(value)
-    EmailValidator.check_address(value)
   end
 
   def update_user_stats

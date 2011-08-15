@@ -13,4 +13,10 @@ class User
     end
   end
 
+protected
+
+  def generate_email_login_token
+    ActiveSupport::SecureRandom.hex(20)
+  end
+
 end

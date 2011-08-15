@@ -80,7 +80,9 @@ class User < ActiveRecord::Base
                   :google_calendar_url_token,
                   :auto_accept_invites
 
-  attr_accessor   :activate, :old_password
+  attr_accessor   :activate, :old_password, :invited
+  
+  attr_accessible :invited
 
   before_validation :sanitize_name
   before_destroy :rename_as_deleted
@@ -92,7 +94,19 @@ class User < ActiveRecord::Base
   def update_token
     self.recent_projects_ids ||= []
     self.rss_token ||= generate_rss_token
+    self.email_login_token ||= generate_email_login_token
     self.visited_at ||= Time.now
+    
+    if @invited
+      set_setting 'incomplete_profile', true
+    else
+      set_setting 'incomplete_profile', false
+    end
+  end
+  
+  def profile_needs_completing?
+    change = settings['incomplete_profile']
+    change.nil? ? false : change
   end
 
   def init_user

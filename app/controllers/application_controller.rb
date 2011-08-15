@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
                 :load_project, 
                 :load_organizations,
                 :login_required, 
+                :profile_complete,
                 :touch_user,
                 :belongs_to_project?,
                 :load_community_organization,
@@ -84,6 +85,12 @@ class ApplicationController < ActionController::Base
             end
           end
         end
+      end
+    end
+    
+    def profile_complete
+      if current_user && controller_name != 'users' and current_user.profile_needs_completing?
+        redirect_to account_settings_path(:utoken => current_user.email_login_token)
       end
     end
 

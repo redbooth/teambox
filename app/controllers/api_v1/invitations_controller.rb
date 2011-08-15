@@ -25,15 +25,35 @@ class ApiV1::InvitationsController < ApiV1::APIController
     if @target != current_user
       if params[:email]
         # Single invite
-        invitation = @target.invitations.new(:user_or_email => params[:email].strip)
-        invitation.role = params[:role] || Person::ROLES[:participant]
-        invitation.locale = params[:locale] if params[:locale]
-        invitation.membership = params[:membership] || Membership::ROLES[:external]
-        invitation.user = current_user
-        invitation.first_name = params[:first_name]
-        invitation.last_name = params[:last_name]
-        @saved_count = invitation.save ? 1 : 0
-        @invitations = [invitation]
+        user = create_or_find_user_for_invite(params[:email],
+                                              :first_name => params[:first_name],
+                                              :last_name => params[:last_name])
+        unless user.new_record?
+          invitation = @target.invitations.new(:invited_user => user)
+          invitation.role = params[:role] || Person::ROLES[:participant]
+          invitation.locale = params[:locale] if params[:locale]
+          invitation.membership = params[:membership] || Membership::ROLES[:external]
+          invitation.user = current_user
+        else
+          invitation = nil
+        end
+        
+        @saved_count = invitation && invitation.save ? 1 : 0
+        @invitations = invitation ? [invitation] : []
+      elsif params[:invited_login]
+        user = User.find_by_login(params[:invited_login])
+        unless user.nil?
+          invitation = @target.invitations.new(:invited_user => user)
+          invitation.role = params[:role] || Person::ROLES[:participant]
+          invitation.locale = params[:locale] if params[:locale]
+          invitation.membership = params[:membership] || Membership::ROLES[:external]
+          invitation.user = current_user
+        else
+          invitation = nil
+        end
+        
+        @saved_count = invitation && invitation.save ? 1 : 0
+        @invitations = invitation ? [invitation] : []
       else
         user_or_email = params[:user_or_email]||''
         role = params[:role] || Person::ROLES[:participant]
@@ -89,6 +109,21 @@ class ApiV1::InvitationsController < ApiV1::APIController
     load_project
     
     @target = @current_project || current_user
+  end
+  
+  def create_user_for_invite(email, params)
+    password = ActiveSupport::SecureRandom.base64(15)
+    login = User.find_available_login(email.split("@").first)
+    user = User.create(params.merge(:login => login, :email => email, :password => password, :password_confirm => password, :invited => true))
+    user
+  end
+  
+  def create_or_find_user_for_invite(email, params)
+    if user = User.find_by_email(email)
+      user
+    else
+      create_user_for_invite(email, params)
+    end
   end
   
   def make_invitation(user_or_email, role, membership, locale)
