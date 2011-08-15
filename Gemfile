@@ -58,6 +58,7 @@ group :development do
   gem 'unicorn', '~> 3.6.1', :require => nil
   gem 'foreman'
   gem 'haml-rails'
+  gem 'active_reload'
 end
 
 group :test, :development do
