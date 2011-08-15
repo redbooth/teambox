@@ -1310,6 +1310,8 @@ en:
       max_upload_size: "Max upload size is %{mb} Mb"
       current_storage_size_html: "You can upload %{bytes} more in the organization %{organization_name}.<br/><br/><a href='%{url}'>Upgrade</a> your plan to store more documents."
       no_storage_left_html: "You have reached the storage limit for your organization.<br/><br/><a href='%{url}'>Upgrade</a> your plan now."
+      also: "Also"
+      view_google_docs: View %{count} Google Docs associated to this project
     new_folder:
       default_text: New folder name
       submit: Create folder
@@ -2071,6 +2073,12 @@ en:
     attach: Attach a Google Document
     search_placeholder: Search Google documents
     new_document_placeholder: New document title
+    index_project:
+      title: Google Docs mentioned in this project
+    google_doc:
+      view: Open online
+      lock: "Lock this document, preventing further edits"
+      embed: "Embedding options..."
   task_list_templates:
     title: Task List Template
     name: Template name

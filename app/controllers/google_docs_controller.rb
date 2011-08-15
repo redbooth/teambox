@@ -1,8 +1,8 @@
 require 'lib/google_docs'
 
 class GoogleDocsController < ApplicationController
-  before_filter :create_consumer 
-  before_filter :create_docs_instance, :except => [:show]
+  #before_filter :create_consumer 
+  #before_filter :create_docs_instance, :except => [:show]
   
   rescue_from 'GoogleDocs::RetrievalError' do |exception|
     Rails.logger.warn "#{exception.class.name} #{exception.message}"
@@ -10,8 +10,17 @@ class GoogleDocsController < ApplicationController
   end 
   
   def index
-    @list = @docs.list(:title => params[:q])
-    render :index, :layout => !request.xhr?
+    if params[:project_id]
+      # If we ask for /projects/xx/google_docs,
+      # then show all the GDocs for that project
+      @google_docs = @current_project.google_docs
+      render :index_project
+    else
+      # If no project is giving, list my personal GDocs
+      # for the popup window
+      @list = @docs.list(:title => params[:q])
+      render :index, :layout => !request.xhr?
+    end
   end
   
   def search

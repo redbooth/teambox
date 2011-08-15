@@ -12,4 +12,9 @@
 - else
   %p= t('.cant_create')
 
+- if @current_folder.nil? && @current_project.google_docs.count > 0
+  %p
+    = t('.also')
+    = link_to t('.view_google_docs', :count => @current_project.google_docs.count), project_google_docs_path(@current_project)
+
 = render :partial => "list"
