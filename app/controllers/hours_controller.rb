@@ -133,4 +133,8 @@ private
     @end_date = @start_date + 1.month
     true
   end
+
+  def set_page_title
+    @page_title = I18n.t('shared.navigation.time')
+  end
 end  
