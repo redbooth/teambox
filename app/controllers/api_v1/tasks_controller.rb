@@ -35,7 +35,7 @@ class ApiV1::TasksController < ApiV1::APIController
     if @task.new_record?
       handle_api_error(@task)
     else
-      handle_api_success(@task, :is_new => true, :references => true)
+      handle_api_success(@task, :is_new => true, :references => true, :include => [:uploads])
     end
   end
   
