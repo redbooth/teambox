@@ -79,8 +79,15 @@
    * @param {Event} evt
    */
   Search.showQuickResults = function (evt) {
-    var search_term = $('searchbox').value
-      , threads = Teambox.collections.threads
+    var search_term = $('searchbox').value;
+
+    // If text search is empty, hide the results box
+    if (search_term.length === 0) {
+      this.hideQuickResults();
+      return evt.stop();
+    }
+
+    var threads = Teambox.collections.threads
       , pages = Teambox.collections.pages
       , projects = Teambox.collections.projects
       , people = Teambox.collections.people
@@ -114,11 +121,6 @@
     if (evt.keyCode === Event.KEY_DOWN) {
       this.moveHighlight(1);
       return evt.stop();
-    }
-
-    // If text search is empty, hide the results box
-    if (search_term.length === 0) {
-      this.hideQuickResults();
     }
 
     // Display the dropdown menu with results
