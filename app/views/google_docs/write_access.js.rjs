@@ -1,0 +1,2 @@
+page << "writeLockConfirm('#{t("google_docs.google_doc.write_access.message.#{@access}")}')"
+page.replace "google_doc_#{@google_doc.id}_actions", render(:partial => "actions", :locals => {:google_doc => @google_doc})

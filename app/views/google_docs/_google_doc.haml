@@ -8,9 +8,4 @@
     .author
     .more
       [+]
-
-  .reference{ :style => 'display: none' }
-    = link_to t('.view'), project_google_doc_path(:project_id => google_doc.project, :id => google_doc), :target => :blank
-    -# TODO: If user can lock it..
-    = link_to t('.lock'), 'TODO: now implemented' 
-    = link_to t('.embed'), 'TODO: not implemented'
+  = render :partial => "actions", :locals => {:google_doc => google_doc}

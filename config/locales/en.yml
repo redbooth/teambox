@@ -2078,7 +2078,12 @@ en:
     google_doc:
       view: Open online
       lock: "Lock this document, preventing further edits"
+      unlock: "Unlock this document, to allow edit"
       embed: "Embedding options..."
+      write_access:
+        message:
+          lock: This document is now locked
+          unlock: This document is now unlocked
   task_list_templates:
     title: Task List Template
     name: Template name

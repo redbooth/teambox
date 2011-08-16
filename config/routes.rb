@@ -253,6 +253,10 @@ Teambox::Application.routes.draw do
         collection do
           :search
         end
+        member do
+          put :write_access, :path => "write_access/:access", :access => /lock|unlock/
+          get :embed
+        end
       end
     end
 
