@@ -2,7 +2,8 @@ require 'lib/google_docs'
 
 class GoogleDocsController < ApplicationController
   before_filter :create_consumer
-  before_filter :get_google_doc, :get_app_link, :get_doc_owner, :get_owner_link, :set_docs, :only => [:show, :write_access]
+  before_filter :get_google_doc, :only => [:show, :write_access, :embed]
+  before_filter :get_app_link, :get_doc_owner, :get_owner_link, :set_docs, :only => [:show, :write_access]
   before_filter :create_docs_instance, :except => [:show]
 
   respond_to :js, :only => :write_lock
@@ -77,6 +78,10 @@ class GoogleDocsController < ApplicationController
       }
     end
 
+  end
+
+  def embed
+    render :embed, :layout => !request.xhr?
   end
 
   protected
