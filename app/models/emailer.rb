@@ -93,6 +93,7 @@ class Emailer < ActionMailer::Base
     mail(
       :to         => @invitation.email,
       :from       => self.class.from_user(nil, @invitation.user),
+      :reply_to   => @invitation.user.email,
       :subject    => I18n.t("emailer.invitation.subject", 
                             :user => @invitation.user.name, 
                             :project => @invitation.project.name)
@@ -105,6 +106,7 @@ class Emailer < ActionMailer::Base
     @project    = @invitation.project
     mail(
       :to         => @invitation.email,
+      :reply_to   => @invitation.user.email,
       :subject    => I18n.t("emailer.invitation.subject", 
                             :user    => @invitation.user.name, 
                             :project => @invitation.project.name)
