@@ -199,7 +199,7 @@ class UploadsController < ApplicationController
       if folder_id = params[:folder_id] || params[:id]
         unless @current_folder = Folder.find_by_id(folder_id)
           flash[:error] = t('not_found.folder', :id => folder_id)
-          redirect_to project_uploads_path(@current_project)
+          redirect_to project_uploads_path(@current_project) and return
         end
         @parent_folder = @current_folder.parent_folder
       end

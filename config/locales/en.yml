@@ -87,6 +87,7 @@ en:
     project: "The project %{id} doesn't exist."
     page: "Page %{id} not found in this project."
     task_list: "Task list %{id} not found in this project."
+    folder: "Folder not found in this project."
     task: "Task %{id} not found in this project."
     data: "There was a problem locating your data."
   deleted:
