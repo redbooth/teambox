@@ -7,7 +7,7 @@
                    , files: []
                    };
 
-  UploadArea.events = {
+UploadArea.events = {
     'click .upload_file_button': 'showNewUpload'
   , 'change .upload_area input[type=file]': 'insertNewUpload'
   , 'click .uploads .upload .header': 'toggleReference'

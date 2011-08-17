@@ -1,0 +1,13 @@
+.privacy
+  label Privacy:
+  select(name="comments_attributes[0][all_private]")
+    option(value='false') Visible to everybody in this project
+    option(value='true') Visible to some people
+.people
+  label Visible to:
+  select.chzn-select(title='+ Add an user', multiple, name='watcher_ids')
+    option(value='')
+    - each person in self.people
+      - var user = person.get('user')
+      - var p = user.first_name + ' ' + user.last_name + ' <span>' + user.username + '</span>'
+      option(value='#{person.id}')= p

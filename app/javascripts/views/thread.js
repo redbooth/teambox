@@ -226,7 +226,9 @@
     this.convert_to_task.comment_form = this.comment_form;
 
     // Prepare the thread DOM element
-    this.el.update(this.template(this.model.getAttributes()));
+    var attributes = this.model.getAttributes();
+     attributes.recent_comments = attributes.recent_comments.reverse();
+    this.el.update(this.template(attributes));
 
     // Insert the comment form at bottom of the thread element
 

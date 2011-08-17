@@ -1,0 +1,6 @@
+label Upload:
+.files
+  ul
+  input(type='file', name='comments_attributes[0][uploads_attributes][' + self.number + '][asset]')
+  .fake_input + <%= t('uploads.new.select_a_file') %>
+.clear

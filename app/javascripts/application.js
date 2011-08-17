@@ -96,6 +96,8 @@
 //= require <views/upload_area>
 //= require <views/google_docs>
 //= require <views/private_elements>
+//= require <views/private_elements_conversation>
+//= require <views/upload_area_conversation>
 
 //= require <views/pages/page_list>
 //= require <views/pages/page_list_item>

@@ -27,9 +27,18 @@
     this.url = options.url;
     this.new_conversation = this.model.get('new_conversation');
 
-    this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
+    if(!this.new_conversation) {
+      this.upload_area = new Teambox.Views.UploadArea({comment_form: this});
+    } else {
+      this.upload_area = new Teambox.Views.UploadAreaConv();
+    }
     this.watchers = new Teambox.Views.Watchers({model: this.model});
-    this.private_elements = new Teambox.Views.PrivateElements({comment_form: this, model: this.model});
+    if(!this.new_conversation) {
+      this.private_elements = new Teambox.Views.PrivateElements({comment_form: this, model: this.model});
+    } else {
+      this.private_elements = new Teambox.Views.PrivateElementsConv({comment_form: this, model: this.model});
+    }
+
     this.google_docs = new Teambox.Views.GoogleDocs({comment_form: this});
   };
 
@@ -100,6 +109,7 @@
     if (this.new_conversation) {
       (function() {
         new Chosen($$('.chzn-select')[0]);
+        $(self.el).down('.to').setStyle({display: 'block'});
       }).defer();
     }
 

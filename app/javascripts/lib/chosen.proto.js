@@ -34,13 +34,11 @@
       return this.no_results_temp = new Template('<li class="no-results">No results match "<span>#{terms}</span>"</li>');
     };
     Chosen.prototype.set_up_html = function() {
-      var base_template, container_props, dd_top, dd_width, sf_width;
       this.container_id = this.form_field.id + "_chzn";
       this.f_width = this.form_field.getStyle("width") ? parseInt(this.form_field.getStyle("width"), 10) : this.form_field.getWidth();
       container_props = {
         'id': this.container_id,
-        'class': 'chzn-container',
-        'style': 'width: ' + this.f_width + 'px'
+        'class': 'chzn-container'
       };
       this.default_text = this.form_field.readAttribute('title') ? this.form_field.readAttribute('title') : this.default_text_default;
       base_template = this.is_multiple ? new Element('div', container_props).update(this.multi_temp.evaluate({
@@ -57,7 +55,6 @@
       dd_top = this.container.getHeight();
       dd_width = this.f_width - get_side_border_padding(this.dropdown);
       this.dropdown.setStyle({
-        "width": dd_width + "px",
         "top": dd_top + "px"
       });
       this.search_field = this.container.down('input');
@@ -71,9 +68,6 @@
         this.search_container = this.container.down('div.chzn-search');
         this.selected_item = this.container.down('.chzn-single');
         sf_width = dd_width - get_side_border_padding(this.search_container) - get_side_border_padding(this.search_field);
-        this.search_field.setStyle({
-          "width": sf_width + "px"
-        });
       }
       this.results_build();
       return this.set_tab_index();
@@ -683,7 +677,6 @@
     _results = [];
     for (_i = 0, _len = selects.length; _i < _len; _i++) {
       select = selects[_i];
-      console.log(select);
       _results.push(new Chosen(select));
     }
     return _results;

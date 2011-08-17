@@ -34,6 +34,7 @@
     var view = new Teambox.Views.ConversationListItem({model:conversation, root_view: this});
     this.el
       .down('.conversation_list')
+      .down('.conversation_list_inner')
       .down('.header')
       .insert({after: view.render().el});
 
@@ -58,7 +59,10 @@
 
       if(project_matches){
         var view = new Teambox.Views.ConversationListItem({model:conversation, root_view: self});
-        self.conversation_list.insert({bottom: view.render().el});
+        self.conversation_list
+          .down('.conversation_list_inner')
+          .down('.clear')
+          .insert({before: view.render().el});
       }
     });
   };

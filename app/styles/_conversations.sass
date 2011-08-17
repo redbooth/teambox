@@ -66,8 +66,10 @@ body.new_conversations, body.create_conversations
   min-width: 450px
   margin-top: 0
   margin-left: 0
+  .text_area
+    margin: 0
   .title input, .textarea
-    width: 90% !important
+    width: 90%
     margin: 0 10px
     border: 0
     font-size: 15px
@@ -83,9 +85,10 @@ body.new_conversations, body.create_conversations
   .title input
     margin: 0
   .textarea
-    width: 98% !important
+    width: auto !important
   .to
     width: 100%
+    display: none
     margin: 3px 0
     border: 1px solid #e4e4e4
     border-right: 0
@@ -96,17 +99,18 @@ body.new_conversations, body.create_conversations
       margin: 0 10px
     select
       width: 100%
-    .chzn-choices
-      border: 0
-      background: transparent
-      +box-shadow(none)
-    .chzn-results li span
-      color: #aaa
-      &:before
-        content: '@'
-    .chzn-drop
-      border-top: 1px solid #aaa
-      +rounded(3px)
+  .chzn-choices
+    border: 0 !important
+    background: transparent !important
+    +box-shadow(none !important)
+  .chzn-results li span
+    color: #aaa
+    &:before
+      content: '@'
+  .chzn-drop
+    border-top: 1px solid #aaa !important
+    +rounded(3px)
+    width: 100%
   textarea
     width: 100%
     height: 140px
@@ -118,9 +122,70 @@ body.new_conversations, body.create_conversations
     display: none
   .new_extra
     width: 100%
-    margin: 0 10px
     .submit
+      clear: both
       margin-top: 0
+    .subviews
+      float: none
+    .upload_area
+      margin: 0
+    .private_options
+      float: none
+      .privacy, .people
+        border-bottom: 1px solid #e4e4e4
+        label
+          float: left
+          font-weight: bold
+          margin: 0 10px
+          line-height: 30px
+      .privacy
+        height: 30px
+        line-height: 30px
+        select
+          background: transparent
+          border: 0
+          -webkit-appearance: none
+          color: #999
+          font-size: 12px
+          &:focus
+            outline: none
+      .people
+        select
+          width: 100%
+    .upload_area
+      border-bottom: 1px solid #e4e4e4
+      label
+        float: left
+        font-weight: bold
+        margin: 0 10px
+        line-height: 30px
+      .files
+        float: left
+        color: #999
+        position: relative
+        ul
+          margin: 0 0 5px
+          padding: 0
+          li
+            list-style: none
+            line-height: 30px
+            span.remove
+              display: inline
+              padding: 0 8px
+              height: 16px
+              background: #000
+              margin: 5px
+              &:hover
+                cursor: pointer
+        input
+          opacity: 0
+          position: relative
+          z-index: 2
+        .fake_input
+          position: absolute
+          bottom: 0
+          z-index: 1
+          line-height: 25px
   .watchers
     background: rgb(255, 255, 200)
     border: 1px rgb(220, 220, 150) solid
