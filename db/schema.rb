@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(:version => 20110812102452) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",       :default => false, :null => false
+    t.boolean  "write_lock",    :default => false
   end
 
   add_index "google_docs", ["comment_id"], :name => "index_google_docs_on_comment_id"
