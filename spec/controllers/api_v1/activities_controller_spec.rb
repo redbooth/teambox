@@ -216,6 +216,24 @@ describe ApiV1::ActivitiesController do
       objects.select{ |a| a['target_type'] == 'Conversation' }.should_not be_empty
       objects.select{ |a| a['target_type'] == 'Comment' }.should be_empty
     end
+
+    it "shows all the threads and correctly ordered" do
+      login_as @user
+
+      conversation = Factory(:conversation, :project => @project, :name => "Old conversation", :user => @user)
+      10.times { Factory(:conversation, :project => @project, :user => @user) }
+      Factory.create(:comment, :target => conversation, :project => @project)
+
+      get :index, :threads => true
+      response.should be_success
+
+      body = JSON.parse(response.body)
+
+      first_conv_activity = Activity.where(:target_type => 'Conversation', :target_id => conversation.id).first
+      body['objects'].first['id'].to_i.should == first_conv_activity.id
+      conversation_reference = body['references'].find { |r| r['type'] == 'Conversation' && r['id'] == conversation.id }
+      conversation_reference['name'].should == "Old conversation"
+    end
   end
 
   describe "#show" do

@@ -1,0 +1,5 @@
+%h2= t('.title', :project => @current_project)
+
+#uploads_list
+  .uploads
+    = render :collection => @google_docs, :partial => 'google_docs/google_doc', :as => :google_doc

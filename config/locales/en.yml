@@ -73,11 +73,13 @@ en:
     logged_out: You were logged out
     loading: Loading...
     download_as_csv: Download as CSV
+    pagination: "Showing results from: "
   confirm:
     delete_task_list: Are you sure you want to delete this task list?
     delete_task: Are you sure you want to delete this task?
     delete_page: Are you sure you want to delete this page?
     delete_upload: Are you sure you want to delete this file?
+    delete_folder: Are you sure you want to delete this folder?
     delete_group: Are you sure you want to delete this group?
   not_found:
     user: "User does not exist."
@@ -85,6 +87,7 @@ en:
     project: "The project %{id} doesn't exist."
     page: "Page %{id} not found in this project."
     task_list: "Task list %{id} not found in this project."
+    folder: "Folder not found in this project."
     task: "Task %{id} not found in this project."
     data: "There was a problem locating your data."
   deleted:
@@ -93,8 +96,14 @@ en:
     task_list: "Deleted %{name} task list"
     page: "Deleted %{name} page"
     upload: "Deleted %{name} file"
+    folder: "Deleted %{name} folder"
     person: "%{name} is no longer in the project"
+    failed_person: "%{name} could not be removed from the project"
     left_project: "You are no longer in this project"
+    failed_left_project: "You cannot leave this project"
+  public_downloads:
+    download:
+      download_file: "Download file:"
   activities:
     create_upload:
       title: "%{user} uploaded a file: %{file}"
@@ -253,6 +262,7 @@ en:
       agreement_html: "By signing up, you're accepting our %{terms} and %{privacy} conditions."
       terms: terms of use
       privacy: privacy
+      auto_accept_invites: "Accept invites to projects automatically (recommended)"
       subscription:
         new_org_name: Organization name
         card_number: Card number
@@ -478,8 +488,19 @@ en:
         title: Teambox projects overview
         description: Overview of all projects in Teambox
       archived: "Show %{count} Archived Projects..."
+      close_pane: Close projects view
+    new_project_suggestions:
+      add_people:
+        title: Add collaborators
+        content: This project is private. Invite anyone you would like to have access to it.
+      add_conversations:
+        title: Post a conversation
+        content: "Start a discussion with the group, it's as easy as sending an email."
+      add_tasks:
+        title: Create some tasks
+        content: Start planning your project with deadlines and deliverables by using tasks.
     primer:
-      empty: You don't own or belong to any projects yet.
+      empty: "You don't own or belong to any projects yet."
       create_first: Create your first project!
       define1_html: "Use projects to <b>collaborate</b> with groups of people: A website, organizing a party, client work..."
       define2_html: "You can create <b>as many projects as you wish</b> to share with different users online."
@@ -519,8 +540,6 @@ en:
       public_project_html: "Public project. <em>Anybody will be able to access it and join it at the <a href='/public'>public projects section</a>.</em>"
       archiving: "Archive this project"
       forever: "Delete this project forever"
-      owner: "Owner"
-      owner_description: "The owner is the main responsible for a project. He or she cannot be removed from the project before ownership is transferred to another user."
       name_html: "Project Name <em>Keep it short and descriptive, for example: Taggart Transcontinental.</em>"
       name_example: Project name
       permalink_html: "Permalink <em>Short identifier for the project</em>"
@@ -585,9 +604,6 @@ en:
       title_deletion: Archive or Delete project %{project}
       title_ownership: Ownership of %{project}
       submit: Save Changes
-      change_owner: Change owner
-      transferred: "Project ownership has been transferred."
-      invalid_transferred: "Project ownership could not be transferred, correct errors and try again."
       success: Project updated
       error: Couldn't change project settings
       deleted: You deleted the project
@@ -678,9 +694,10 @@ en:
       name_placeholder: Your organization
       permalink_html: Short organization code <em>No spaces allowed. Will be used for the web address.</em>
       domain_html: "Domain <em>You can use your own domain for your organization, check the <a href='http://help.teambox.com/knowledgebase/articles/10247-custom-domain' title='How to use your own domain for your organization in Teambox'>documentation</a>.</em>"
+      omit_email_processing_html: Do not process incoming emails
     appearance_fields:
       logo_html: Logo <em>Ideally should be 134x36 pixels</em>
-      description_html: HTML to be displayed on the entrance page <a href="http://help.teambox.com/faqs/more-ways-to-access-teambox/customize-organizations">Learn how to use this</a>
+      description_html: HTML to be displayed on the entrance page <a href="http://help.teambox.com/knowledgebase/articles/10249-customizing-your-login-page">Learn how to use this</a>
       delete_custom_logo: Delete custom logo (and revert back to the Teambox one)
     index:
       about:
@@ -1135,7 +1152,6 @@ en:
       participant: "Participant. Can do everything, but not invite users."
       admin: "Admin. Can invite users to the project, and delete comments."
     header:
-      owner: Project Owner
       observer: Observer
       commenter: Commenter
       participant: Participant
@@ -1144,6 +1160,7 @@ en:
       transfer: Transfer Ownership
       leave_project: Leave Project
       confirm_delete: Are you sure you want to remove this person from the project?
+      not_logged_in_recently: Not logged in recently
     errors:
       user_or_email: "User not found. Enter his or her username or email."
       users_or_emails: "Invalid usernames or email addresses"
@@ -1155,6 +1172,7 @@ en:
       contact_admins: "In this project, only %{admins} can invite new members."
       leaving: "Leaving the project"
       you_can_leave: "You can leave this project at any time. If you do, you won't be able to access its data anymore, and you will not receive further notifications. Others will still be able to access the project, and no data will be lost."
+      you_cannot_leave: "You cannot leave this project as you are the only administrator present."
       leave_project: "Leave this project"
       confirm_delete: Are you sure you want to leave this project?
       leave_project: Leave project
@@ -1303,11 +1321,18 @@ en:
     index:
       title: Files in %{project}
       new_file: Upload a File
+      new_folder: New Folder
       cant_create: "You don't have permission to upload files to this project"
       max_upload_size: "Max upload size is %{mb} Mb"
       current_storage_size_html: "You can upload %{bytes} more in the organization %{organization_name}.<br/><br/><a href='%{url}'>Upgrade</a> your plan to store more documents."
       no_storage_left_html: "You have reached the storage limit for your organization.<br/><br/><a href='%{url}'>Upgrade</a> your plan now."
+      also: "Also"
+      view_google_docs: View %{count} Google Docs associated to this project
+    new_folder:
+      default_text: New folder name
+      submit: Create folder
     form:
+      title: Upload a file
       presence: "You can't upload a blank file"
       max_size: "File size can't exceed %{mb} MB"
       select_file: Select file
@@ -1324,12 +1349,37 @@ en:
       item3_html: "<b>Always available</b>. Files stay in context in the project for future reference."
     upload:
       download: Download
-      uploaded_by: Uploaded by
       remove: Delete
-      on_: "on"
+    public_download:
+      share_outside_your_team: You can share this file with people outside your team.
+      enter_an_email: 'Enter an Email address to send a link to this file:'
+      share_link: 'Alternatively, you can share the following link to this file:'
+      security_clarification: Anybody with this link will be able to access this file and only this file. They will not be granted access to your projects or files.
+      link:
+        anchor: Send this file to somebody...
+        title: Share this file with people outside your team
+      email:
+        submit: Send link
+        sent: "We just sent a link to the file to %{email}"
+        not_sent: "Email has not been sent. %{error}"
     errors:
       exceeded_storage_plan_limit_html: "You have exceeded your storage quota for %{organization_name}. To increase your storage limits, <a href='%{url}'>upgrade your plan now</a>."
       general:  "There was an error uploading the file"
+  folders:
+    form:
+      default_text: Enter a folder name
+    new:
+      submit: Create folder
+      invalid_folder: Folder contain errors
+    edit:
+      submit: Save
+    parent_folder: Parent folder
+    remove: 
+      link: Remove
+    rename:
+      link: Rename
+      success: Folder name has been changed
+      error: Folder name has not been changed
   sessions:
     fields:
       username_or_email: Email or Username
@@ -1420,8 +1470,7 @@ en:
     project_settings_navigation:
       general: General Settings
       picture: Project Picture
-      deletion: Archival and Deletion
-      ownership: Ownership
+      deletion: Project Archiving/Deletion
     project_navigation:
       overview: Overview
       all_conversations: All Conversations
@@ -1663,6 +1712,11 @@ en:
           body: "%{name} edited the page %{page}."
     upload:
       file: "File:"
+    public_download:
+      subject: "%{user} wants to share a file with you on Teambox"
+      user_sent_you_a_link: "%{user} sent you a link to download %{filename}"
+      go_to_download_page: Download this file
+      plaintext_link: "If the above link doesn't work, copy and paste the following url into your browser bar: "
     bounce:
       subject: "Error sending email to Teambox"
       user_not_found_error: "This email address is not associated with any Teambox account."
@@ -2045,6 +2099,17 @@ en:
     attach: Attach a Google Document
     search_placeholder: Search Google documents
     new_document_placeholder: New document title
+    index_project:
+      title: Google Docs mentioned in this project
+    google_doc:
+      view: Open online
+      lock: "Lock this document, preventing further edits"
+      unlock: "Unlock this document, to allow edit"
+      lock_disabled: Only document owner can lock it
+      write_access:
+        message:
+          lock: This document is now locked
+          unlock: This document is now unlocked
   task_list_templates:
     title: Task List Template
     name: Template name

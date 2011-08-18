@@ -8,7 +8,7 @@ class Invitation < RoleRecord
   validate :valid_role?
   validate :user_already_invited?
   validate :email_valid?
-  
+
   attr_reader :user_or_email
   attr_accessor :is_silent, :locale
   attr_accessible :user_or_email, :role, :membership, :invited_user, :locale
@@ -40,8 +40,9 @@ class Invitation < RoleRecord
       project.add_user(current_user, {:role => role || 3, :source_user => user})
 
       # Notify the sender that the invitation has been accepted
-      Emailer.send_with_language :accepted_project_invitation, self.user.locale, current_user.id, self.id
-
+      unless @autoaccepted
+        Emailer.send_with_language :accepted_project_invitation, self.user.locale, current_user.id, self.id
+      end
     elsif target.is_a? Organization
       target.add_member(current_user, membership)
     end
@@ -79,14 +80,18 @@ class Invitation < RoleRecord
 
   def send_email
     return if @is_silent
+
     if invited_user
-      if belongs_to_organization?
+      # Existing users
+      if @autoaccepted
+        # This notifies the user that he's now in a new project
         Emailer.send_with_language :project_membership_notification, invited_user.locale, self.id
-        self.destroy
       else
+        # We ask the user to go to Teambox to accept the invite
         Emailer.send_with_language :project_invitation, invited_user.locale , self.id
       end
     else
+      # Users who don't have an account yet
       Emailer.send_with_language :signup_invitation, (self.locale || user.locale), self.id
     end
   end
@@ -104,9 +109,10 @@ class Invitation < RoleRecord
   def valid_role?
     @errors.add(:base, 'Not authorized') if target.is_a?(Project) and user and !target.admin?(user)
   end
-  
+
   def user_already_invited?
-    return if invited_user.nil?
+    return unless invited_user
+
     if project and Person.exists?(:project_id => project_id, :user_id => invited_user.id)
       @errors.add :user_or_email, 'is already a member of the project'
     elsif Invitation.exists?(:project_id => project_id, :invited_user_id => invited_user.id)
@@ -130,16 +136,17 @@ class Invitation < RoleRecord
     self.token ||= ActiveSupport::SecureRandom.hex(20)
   end
 
+  # Autoaccept the invite if the user has this setting
   def auto_accept
-    self.accept(invited_user) if belongs_to_organization?
+    if invited_user.try(:auto_accept_invites)
+      @autoaccepted = true
+      self.accept(invited_user)
+      self.destroy
+    end
   end
 
   def copy_user_email
     self.email ||= invited_user.email
-  end
-
-  def belongs_to_organization?
-    invited_user and target.respond_to?(:organization) and target.organization.try(:is_user?, invited_user)
   end
 
   def valid_email?(value)

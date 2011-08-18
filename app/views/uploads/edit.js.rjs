@@ -1,0 +1,3 @@
+edit_html = render :partial => 'uploads/edit'
+page.hide "upload_#{@upload.id}"
+page.insert_html :after, "upload_#{@upload.id}", edit_html

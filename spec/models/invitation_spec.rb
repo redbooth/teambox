@@ -51,21 +51,39 @@ describe Invitation do
       invitation.email.should == user.email
     end
     
-    it "should send an Invitation email to existing users" do
+    it "should send an Invitation email to existing users with autoinvite disabled" do
       user = Factory.create(:user)
+      user.update_attributes(:auto_accept_invites => false)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
       Emailer.should_receive(:send_with_language).once
       invitation.save
       user.invitations.length.should == 1
     end
 
+    it "should send an Invitation email to existing users with autoinvite enabled" do
+      user = Factory.create(:user)
+      invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
+      Emailer.should_receive(:send_with_language).once
+      invitation.save
+      user.invitations.length.should == 0
+    end
+
     it "should send a project membership notification email to users in the inviter's organization" do
       user = Factory.create(:user)
       @project.organization.add_member(user, :participant)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_receive(:send_with_language).twice #once for the membership notification and another one for the "user accepted invitation" notification
+      Emailer.should_receive(:send_with_language).once #once for the membership notification
       invitation.save
       user.invitations.length.should == 0
+    end
+
+    it "should send a project membership notification email to non-autoaccept users in the inviter's organization" do
+      user = Factory.create(:user, :auto_accept_invites => false)
+      @project.organization.add_member(user, :participant)
+      invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
+      Emailer.should_receive(:send_with_language).once #once for the membership notification
+      invitation.save
+      user.invitations.length.should == 1
     end
     
     it "should send a project membership notification email even when the invite is deleted" do
@@ -96,17 +114,27 @@ describe Invitation do
     end
 
     it "should not auto accept the invitation if the user is not in the inviter's organization" do
-      user = Factory.create(:user)
+      user = Factory.create(:user, :auto_accept_invites => false)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
       Invitation.should_not_receive(:accept)
       invitation.save
+    end
+
+    it "should not destroy itself when used with non-autoaccept users and having sent the project membership notification" do
+      user = Factory.create(:user, :auto_accept_invites => false)
+      @project.organization.add_member(user, :participant)
+      invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
+      Emailer.should_receive(:send_with_language).once #once for the membership notification
+      invitation.save
+      user.invitations.length.should == 1
+      invitation.should_not be_frozen
     end
 
     it "should destroy itself after autoaccepting and having sent the project membership notification" do
       user = Factory.create(:user)
       @project.organization.add_member(user, :participant)
       invitation = @project.new_invitation(@inviter, :user_or_email => user.login)
-      Emailer.should_receive(:send_with_language).twice #once for the membership notification and another one for the "user accepted invitation" notification
+      Emailer.should_receive(:send_with_language).once #once for the membership notification
       invitation.save
       user.invitations.length.should == 0
       invitation.should be_frozen
@@ -151,9 +179,17 @@ describe Invitation do
     end
     
     it "should not create duplicate invitations for a project" do
-      user = Factory.create(:user)
+      user = Factory.create(:user, :auto_accept_invites => false)
       invitation = @project.create_invitation(@inviter, :user_or_email => user.email)
       Invitation.count.should == 1
+      invitation = @project.new_invitation(@inviter, :user_or_email => user.email)
+      invitation.should_not be_valid
+      Invitation.delete_all
+      
+      # In the case of auto accept...
+      user.update_attribute(:auto_accept_invites, true)
+      invitation = @project.create_invitation(@inviter, :user_or_email => user.email)
+      Invitation.count.should == 0
       invitation = @project.new_invitation(@inviter, :user_or_email => user.email)
       invitation.should_not be_valid
     end

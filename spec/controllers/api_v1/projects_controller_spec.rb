@@ -112,26 +112,6 @@ describe ApiV1::ProjectsController do
     end
   end
 
-  describe "#transfer" do
-    it "should allow the owner to transfer the project" do
-      login_as @owner
-
-      put :transfer, :id => @project.permalink, :user_id => @user.id
-      response.should be_success
-
-      @project.reload.user.should == @user
-    end
-
-    it "should not allow non-owners to transfer the project" do
-      login_as @user
-
-      put :transfer, :id => @project.permalink, :user_id => @user.id
-      response.status.should == 401
-
-      @project.reload.user.should == @owner
-    end
-  end
-
   describe "#show" do
     it "shows a project with references" do
       login_as @user
@@ -187,8 +167,8 @@ describe ApiV1::ProjectsController do
       Project.count.should == 1
     end
 
-    it "should only allow the owner to destroy a project" do
-      login_as @admin
+    it "should only allow admins to destroy a project" do
+      login_as @observer
 
       Project.count.should == 2
       put :destroy, :id => @project.permalink

@@ -19,3 +19,11 @@ Feature: I navigate using the new sidebar
   Scenario: The links should work properly
     When I follow "My Tasks"
     Then I should see "View all tasks in my projects..."
+
+  Scenario: Anyo participant should see People & Permissions in project menu
+    Given @artur exists and is logged in
+    And I am in the project called "Ruby Rockstars"
+    When I go to the projects page
+    Then I should see the project "Ruby Rockstars"
+    When I follow "Ruby Rockstars"
+    Then I should see "People & Permissions" within "#my_projects_list"

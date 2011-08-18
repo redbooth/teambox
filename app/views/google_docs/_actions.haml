@@ -1,0 +1,7 @@
+.reference{ :style => 'display: none', :id => "google_doc_#{google_doc.id}_actions"}
+  = link_to t('google_docs.google_doc.view'), project_google_doc_path(:project_id => google_doc.project, :id => google_doc), :target => :blank
+  - if google_doc.user_id == current_user.id
+    = google_docs_write_access_link(google_doc)
+  - else
+    %span.gdoc_lock_disabled
+      = t('google_docs.google_doc.lock_disabled')

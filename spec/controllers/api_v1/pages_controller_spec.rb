@@ -151,6 +151,18 @@ describe ApiV1::PagesController do
     end
   end
 
+  describe "#create" do
+    it "should allow participants to create pages" do
+      login_as @user
+
+      post :create, :project_id => @project.permalink, :name => 'Important!'
+      response.should be_success
+
+      @project.pages.length.should == 2
+      @project.pages.first.name.should == 'Important!'
+    end
+  end
+
   describe "#update" do
     it "should allow participants to modify the page" do
       login_as @user
@@ -215,6 +227,32 @@ describe ApiV1::PagesController do
       response.status.should == 401
 
       @page.reload.watcher_ids.sort.should == [@page.user_id].sort
+    end
+  end
+
+  describe "#watch" do
+    it "should allow participants to watch pages" do
+      login_as @admin
+
+      put :watch, :project_id => @project.permalink, :id => @page.id
+      response.status.should == 200
+    end
+    
+    it "should not allow participants to watch private pages" do
+      @page.update_attribute(:is_private, true)
+      login_as @admin
+
+      put :watch, :project_id => @project.permalink, :id => @page.id
+      response.status.should == 401
+    end
+  end
+
+  describe "#unwatch" do
+    it "should allow participants to uwatch pages" do
+      login_as @user
+
+      put :unwatch, :project_id => @project.permalink, :id => @page.id
+      response.status.should == 200
     end
   end
 

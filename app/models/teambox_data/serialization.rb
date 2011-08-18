@@ -11,15 +11,15 @@ class TeamboxData
           
           p.to_api_hash(:include => [
           :tasks,
-          :task_lists,
+          :project_task_lists,
           :comments,
-          :conversations,
-          :invitations,
-          :pages,
-          :people,
+          :project_conversations,
+          :project_invitations,
+          :project_pages,
+          :project_people,
           :slots,
           :rel_object,
-          :uploads])
+          :project_uploads])
         }
       }
     }

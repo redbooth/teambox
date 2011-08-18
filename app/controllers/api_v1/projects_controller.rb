@@ -36,24 +36,6 @@ class ApiV1::ProjectsController < ApiV1::APIController
       handle_api_error(@current_project)
     end
   end
-  
-  def transfer
-    authorize! :transfer, @current_project
-    
-    # Grab new owner
-    user_id = params[:user_id] rescue nil
-    person = @current_project.people.find_by_user_id(user_id)
-    saved = false
-    
-    # Transfer!
-    saved = @current_project.transfer_to(person) unless person.nil?
-    
-    if saved
-      handle_api_success(@current_project)
-    else
-      handle_api_error(@current_project)
-    end
-  end
 
   def destroy
     authorize! :destroy, @current_project

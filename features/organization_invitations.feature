@@ -44,7 +44,6 @@ Feature: Joining organizations
     And I select "Admin. Can invite users to the project, and delete comments." from "invitation_role"
     And I select "Don't invite. User won't be able to create projects in this organization." from "invitation_membership"
     And I press "Invite"
-    When "jordi" accepts the invitation from "jordi@teambox.com"
     Then "jordi" should not belong to the organization "ACME"
     And "jordi" should belong to the project "Ruby Rockstars" as an admin
 
@@ -53,7 +52,6 @@ Feature: Joining organizations
     And I select "Admin. Can invite users to the project, and delete comments." from "invitation_role"
     And I select "As a participant. Will be able to create his own projects." from "invitation_membership"
     And I press "Invite"
-    When "jordi" accepts the invitation from "jordi@teambox.com"
     Then "jordi" should belong to the organization "ACME" as a participant
     And "jordi" should belong to the project "Ruby Rockstars" as an admin
 
@@ -62,7 +60,6 @@ Feature: Joining organizations
     And I select "Admin. Can invite users to the project, and delete comments." from "invitation_role"
     And I select "As an administrator. Will be able to add new users and manage the organization." from "invitation_membership"
     And I press "Invite"
-    When "jordi" accepts the invitation from "jordi@teambox.com"
     Then "jordi" should belong to the organization "ACME" as a admin
     And "jordi" should belong to the project "Ruby Rockstars" as an admin
 

@@ -28,8 +28,8 @@ class ApiV1::DividersController < ApiV1::APIController
   end
   
   def create
-    authorize! :update, @page
-    @divider = @page.build_divider(params)
+    authorize! :update, page
+    @divider = page.build_divider(params)
     @divider.updated_by = current_user
     calculate_position(@divider)
     @divider.save
@@ -37,22 +37,22 @@ class ApiV1::DividersController < ApiV1::APIController
     if @divider.new_record?
       handle_api_error(@divider)
     else
-      handle_api_success(@divider, :is_new => true)
+      handle_api_success(@divider, :is_new => true, :references => true)
     end
   end
   
   def update
-    authorize! :update, @page
+    authorize! :update, page
     @divider.updated_by = current_user
     if @divider.update_attributes(params)
-      handle_api_success(@divider)
+      handle_api_success(@divider, :wrap_objects => true, :references => true)
     else
       handle_api_error(@divider)
     end
   end
 
   def destroy
-    authorize! :update, @page
+    authorize! :update, page
     @divider.destroy
     handle_api_success(@divider)
   end
@@ -63,6 +63,10 @@ class ApiV1::DividersController < ApiV1::APIController
     @target ||= (@page || @current_project)
   end
   
+  def page
+    @page || @divider.try(:page)
+  end
+
   def load_divider
     @divider = if target
       target.dividers.find_by_id(params[:id])

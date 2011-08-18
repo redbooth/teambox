@@ -1,3 +1,4 @@
+@uploads
 Feature: Uploading a file
 
   Background: 

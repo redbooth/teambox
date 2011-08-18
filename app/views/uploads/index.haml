@@ -1,7 +1,8 @@
 - if can? :upload_files, @current_project
   - if @upload.errors.empty?
     .text_actions
-      = link_to content_tag(:span, t('.new_file')), new_project_upload_path(@current_project), :class => 'add_button', :id => 'upload_file_button'
+      = link_to content_tag(:span, t('.new_folder')), '#', :class => 'add_button', :id => 'new_folder_button'
+      = link_to content_tag(:span, t('.new_file')), '#', :class => 'add_button', :id => 'upload_file_button'
 
 %h2= t('.title', :project => @current_project)
 
@@ -11,6 +12,9 @@
 - else
   %p= t('.cant_create')
 
-.uploads
-  = render @uploads
+- if @current_folder.nil? && @current_project.google_docs.count > 0
+  %p
+    = t('.also')
+    = link_to t('.view_google_docs', :count => @current_project.google_docs.count), project_google_docs_path(@current_project)
 
+= render :partial => "list"

@@ -92,6 +92,12 @@ describe ApiV1::NotesController do
 
       post :create, :project_id => @project.permalink, :page_id => @page.id, :name => 'Important!'
       response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+
+      references.include?("#{@page.notes.last.project_id}_Project").should == true
+      references.include?("#{@page.notes.last.page_slot.id}_PageSlot").should == true
 
       @page.notes(true).length.should == 2
       @page.notes.last.name.should == 'Important!'
@@ -165,6 +171,12 @@ describe ApiV1::NotesController do
 
       put :update, :project_id => @project.permalink, :page_id => @page.id, :id => @note.id, :name => 'Modified'
       response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+
+      references.include?("#{@note.project_id}_Project").should == true
+      references.include?("#{@note.page_slot.id}_PageSlot").should == true
 
       @note.reload.name.should == 'Modified'
     end

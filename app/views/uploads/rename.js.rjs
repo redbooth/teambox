@@ -1,0 +1,7 @@
+if @rename_successful
+  page.hide "edit_upload_#{@upload.id}"
+  upload_html = render :partial => 'uploads/upload', :locals => {:upload => @upload}
+  page.replace "upload_#{@upload.id}", upload_html
+else
+  page.alert @upload.errors.full_messages.to_sentence
+end

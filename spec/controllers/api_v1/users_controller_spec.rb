@@ -101,13 +101,20 @@ describe ApiV1::UsersController do
   end
 
   describe "#current" do
+    it "should return the current api version" do
+      login_as @fred
+      
+      get :current
+      response.headers['X-Tbox-Version'].should == ApiV1::APIController::API_VERSION
+    end
+    
     it "should get the current user for oauth requests" do
       @token = access_token
 
       get :current, :access_token => @token.token
       response.should be_success
 
-      JSON.parse(response.body)['id'].to_i.should == @token.user_id
+      data = JSON.parse(response.body)['id'].to_i.should == @token.user_id
     end
 
     it "should not get the current user for expired oauth requests" do
@@ -117,5 +124,57 @@ describe ApiV1::UsersController do
       get :current, :access_token => @token.token
       response.status.should == 401
     end
+  end
+  
+  describe "#create" do
+    it "should create a user" do
+      do_create
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      
+      data['type'].should == 'User'
+      user = User.find_by_id(data['id'])
+      user.login.should == 'testing'
+      user.email.should == 'testing@localhost.com'
+    end
+    
+    it "should not create an invalid user" do
+      do_create :email => 'a'
+      response.should_not be_success
+      
+      data = JSON.parse(response.body)
+      
+      data['errors'].should_not == nil
+    end
+  end
+  
+  describe "#update" do
+    it "should update the specified user" do
+      login_as @user
+      
+      put :update, :id => @user.id, :first_name => 'Lololol'
+      response.should be_success
+      
+      @user.reload.first_name.should == 'Lololol'
+    end
+    
+    it "should not modify other users" do
+      login_as @user
+      
+      put :update, :id => @fred.id, :first_name => 'Lololol'
+      response.should_not be_success
+      
+      @fred.reload.first_name.should_not == 'Lololol'
+    end
+  end
+  
+  def do_create(options = {})
+    post :create, { :email       => 'testing@localhost.com',
+                    :login       => 'testing',
+                    :first_name  => 'Andrew',
+                    :last_name   => 'Wiggin',
+                    :password    => 'testing',
+                    :password_confirmation => 'testing'}.merge(options)
   end
 end

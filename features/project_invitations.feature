@@ -8,7 +8,7 @@ Feature: Invite a user to a project
     And a confirmed user exists with login: "mislav", first_name: "Mislav", last_name: "Marohnić", email: "mislav@teambox.com"
     And a confirmed user exists with login: "pablo", first_name: "Pablo", last_name: "Villalba", email: "pablo@teambox.com"
     And a confirmed user exists with login: "jordi", first_name: "Jordi", last_name: "Romero", email: "jordi@teambox.com"
-    And "mislav" is the owner of the project "Ruby Rockstars"
+    And "mislav" is an administrator in the project called "Ruby Rockstars"
     And "mislav" is an administrator in the organization called "ACME"
     And "pablo" is a participant in the organization called "ACME"
     And "jordi" is a participant in the organization called "ACME"
@@ -19,7 +19,6 @@ Feature: Invite a user to a project
     When I go to the people page of the "Ruby Rockstars" project
     Then I should see "Invite people to this project"
     And I should see "Mislav Marohnić"
-    And I should see "Project Owner"
     And I should not see "Remove from project"
     And I should not see "Transfer Ownership"
     When I fill in "invitation_user_or_email" with "invalid user"
@@ -68,9 +67,8 @@ Feature: Invite a user to a project
     And there is a project called "Teambox Roulette"
     When I go to the page of the "Teambox Roulette" project
     Then I should see the unauthorized private project message
-    Given the owner of the project "Teambox Roulette" sent an invitation to "mislav"
+    Given the first admin in the project "Teambox Roulette" sent an invitation to "mislav"
     When I go to the page of the "Teambox Roulette" project
-    And I press "Accept"
     Then I should see "Teambox Roulette"
 
   Scenario: Mislav invites a user who belongs to the project's organization

@@ -21,7 +21,7 @@ describe InvitationsController do
     before do
       @users = []
       @emails = "foo@localhost.com billg@microsoft.com fred@teambox.com"
-      5.times { @users << Factory(:user) }
+      5.times { @users << Factory(:user, :auto_accept_invites => false) }
       @project = Factory.create(:project)
     end
 

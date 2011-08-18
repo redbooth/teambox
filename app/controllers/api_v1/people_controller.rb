@@ -28,8 +28,11 @@ class ApiV1::PeopleController < ApiV1::APIController
 
   def destroy
     authorize! :destroy, @person
-    @person.destroy
-    handle_api_success(@person)
+    if @person.destroy
+      handle_api_success(@person)
+    else
+      handle_api_error(@person)
+    end
   end
 
   protected

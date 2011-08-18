@@ -1,0 +1,10 @@
+= form_for @folder, :url => rename_project_folder_path(@current_project, @folder), :remote => :true,
+:html => {:method => :put, :id => "edit_folder_#{@folder.id}"} do |f|
+  .header
+    .icon
+      = image_tag '/famfamfam/folder.png'
+    .full_row
+      = f.text_field :name
+      .actions
+        = link_to_function t('common.cancel'), "$('folder_#{@folder.id}').down('.header').down('.icon').down('img').setAttribute('src', '/famfamfam/folder.png'); $('folder_#{@folder.id}').show();$('edit_folder_#{@folder.id}').remove()", :class => 'close'
+        = f.submit t('folders.edit.submit'), :class => 'button'

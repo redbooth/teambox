@@ -88,7 +88,7 @@ describe Organization do
     end
     it "should list people in projects as external users" do
       project = Factory(:project, :organization => @organization)
-      @organization.users.should == [project.user]
+      @organization.users(true).should == [project.user]
       @organization.admins.should == [project.user]
       @organization.participants.should == []
       @organization.external_users.should == []
@@ -101,7 +101,7 @@ describe Organization do
       @organization.add_member(admin, :admin)
       project = Factory(:project, :organization => @organization)
       @organization.add_member(project.user, :participant)
-      @organization.users.should == [admin, project.user]
+      @organization.reload.user_ids.sort.should == [admin.id, project.user_id].sort
       @organization.admins.should == [admin]
       @organization.participants.should == [project.user]
       @organization.external_users.should == []

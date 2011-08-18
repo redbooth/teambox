@@ -69,6 +69,13 @@ Autocompleter.Base = Class.create({
             setHeight: false,
             offsetTop: element.offsetHeight
           });
+          //Hack to make autocompleter display correctly on IE we could apply it for all browsers
+          //but it's better to keep absolute position when it was already set and it's posible
+          if (Prototype.Browser.IE){
+            update.style.position = 'relative';
+            update.style.top = '0px';
+            update.style.left = '0px';
+          }
         }
         Effect.Appear(update,{duration:0.15});
       };

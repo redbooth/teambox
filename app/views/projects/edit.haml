@@ -5,7 +5,4 @@
 = form_for @current_project, :url => sub_params, :html => { :'data-remote' => true } do |f|
   = project_fields(f,@current_project,@sub_action)
   - unless @sub_action == 'deletion'
-    - if @sub_action == 'ownership'
-      = f.submit t('.change_owner')
-    - else
-      = f.submit t('.submit')
+    = f.submit t('.submit')

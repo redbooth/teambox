@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110623083525) do
+ActiveRecord::Schema.define(:version => 20110812102452) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -178,6 +178,16 @@ ActiveRecord::Schema.define(:version => 20110623083525) do
     t.datetime "created_on"
   end
 
+  create_table "folders", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.integer  "parent_folder_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "deleted",          :default => false, :null => false
+  end
+
   create_table "google_docs", :force => true do |t|
     t.integer  "project_id"
     t.integer  "user_id"
@@ -191,6 +201,7 @@ ActiveRecord::Schema.define(:version => 20110623083525) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",       :default => false, :null => false
+    t.boolean  "write_lock",    :default => false
   end
 
   add_index "google_docs", ["comment_id"], :name => "index_google_docs_on_comment_id"
@@ -496,8 +507,10 @@ ActiveRecord::Schema.define(:version => 20110623083525) do
     t.integer  "asset_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleted",            :default => false, :null => false
-    t.boolean  "is_private",         :default => false, :null => false
+    t.boolean  "deleted",                          :default => false, :null => false
+    t.boolean  "is_private",                       :default => false, :null => false
+    t.integer  "parent_folder_id"
+    t.string   "token",              :limit => 16
   end
 
   add_index "uploads", ["comment_id"], :name => "index_uploads_on_comment_id"
@@ -505,6 +518,7 @@ ActiveRecord::Schema.define(:version => 20110623083525) do
   add_index "uploads", ["is_private"], :name => "index_uploads_on_is_private"
   add_index "uploads", ["page_id", "asset_file_name"], :name => "index_uploads_on_page_id_and_asset_file_name"
   add_index "uploads", ["project_id", "deleted", "updated_at"], :name => "index_uploads_on_project_id_and_deleted_and_updated_at"
+  add_index "uploads", ["token"], :name => "index_uploads_on_token"
 
   create_table "users", :force => true do |t|
     t.string   "login",                           :limit => 40
@@ -557,6 +571,7 @@ ActiveRecord::Schema.define(:version => 20110623083525) do
     t.string   "authentication_token"
     t.boolean  "notify_pages",                                   :default => false
     t.string   "google_calendar_url_token"
+    t.boolean  "auto_accept_invites",                            :default => true
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_auth_token", :unique => true

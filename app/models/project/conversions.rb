@@ -33,27 +33,27 @@ class Project
     
     base[:type] = self.class.to_s if options[:emit_type]
     
-    if Array(options[:include]).include? :people
+    if Array(options[:include]).include? :project_people
       base[:people] = people.map {|p| p.to_api_hash(options)}
     end
     
-    if Array(options[:include]).include? :task_lists
+    if Array(options[:include]).include? :project_task_lists
       base[:task_lists] = task_lists.map {|p| p.to_api_hash(options)}
     end
     
-    if Array(options[:include]).include? :invitations
+    if Array(options[:include]).include? :project_invitations
       base[:invitations] = invitations.map {|p| p.to_api_hash(options)}
     end
     
-    if Array(options[:include]).include? :pages
+    if Array(options[:include]).include? :project_pages
       base[:pages] = pages.map {|p| p.to_api_hash(options)}
     end
     
-    if Array(options[:include]).include? :uploads
+    if Array(options[:include]).include? :project_uploads
       base[:uploads] = uploads.map {|p| p.to_api_hash(options)}
     end
     
-    if Array(options[:include]).include? :conversations
+    if Array(options[:include]).include? :project_conversations
       base[:conversations] = conversations.map {|p| p.to_api_hash(options)}
     end
     

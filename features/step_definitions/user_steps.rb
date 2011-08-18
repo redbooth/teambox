@@ -25,7 +25,7 @@ Given /^I am logged in as ([^@][^\"]*)$/ do |login|
     And "I go to the login page"
     And "I fill in \"Email or Username\" with \"#{login}\""
     And "I fill in \"Password\" with \"dragons\""
-    And "I press \"Login\""
+    And "I press \"Log in\""
 end
 
 Given /^I log out$/ do

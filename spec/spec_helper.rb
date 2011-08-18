@@ -168,6 +168,14 @@ def task_comment_rollback_example(project)
   @task.save!
 end
 
+def project_with_invites
+  Factory.create(:project,
+    :invite_users => [@user1.id, @user2.id],
+    :invite_emails => "#{@user2.email} #{@user3.email} richard.roe@law.uni",
+    :invite_role => Person::ROLES[:admin]
+  )
+end
+
 def decode_test_csv(body)
   CSV.parse(body)
 end

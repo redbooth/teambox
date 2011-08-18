@@ -1,5 +1,5 @@
 class ApiV1::PagesController < ApiV1::APIController
-  before_filter :load_page, :only => [:show, :update, :reorder, :destroy]
+  before_filter :load_page, :only => [:show, :update, :reorder, :watch, :unwatch, :destroy]
   
   def index
     authorize! :show, @current_project||current_user
@@ -25,7 +25,7 @@ class ApiV1::PagesController < ApiV1::APIController
     authorize! :make_pages, @current_project
     @page = @current_project.new_page(current_user,params)
     if @page.save
-      handle_api_success(@page, true)
+      handle_api_success(@page, :is_new => true)
     else
       handle_api_error(@page)
     end

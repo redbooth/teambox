@@ -100,6 +100,7 @@ class TeamboxData
         
           Array(task_list_data['tasks']).each do |task_data|
             # Tasks automatically create comments, so we need to be careful!
+            task_data.delete('task_list_id')
             task = unpack_object(task_list.tasks.build, task_data)
             
             # To determine the initial state of the task, we need to look at the first comment

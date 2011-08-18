@@ -25,14 +25,16 @@ class Task < RoleRecord
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| %w[is_private body hours human_hours uploads_attributes google_docs_attributes].all? { |k| comment[k].blank? } }
 
-  attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes, :user
+  attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes, :user, :task_list_id
 
   validates_presence_of :user
+  validates_presence_of :task_list
   validates_presence_of :name, :message => I18n.t('tasks.errors.name.cant_be_blank')
   validates_length_of   :name, :maximum => 255, :message => I18n.t('tasks.errors.name.too_long')
   validates_inclusion_of :status, :in => STATUSES.values, :message => "is not a valid status"
   
   validate :check_asignee_membership, :if => :assigned_id?
+  validate :check_task_list, :on => :update
   
   # set by controller to indicate user that's doing task updating
   attr_accessor :updating_user
@@ -283,6 +285,17 @@ class Task < RoleRecord
     end
   end
   
+  def check_task_list
+    if task_list_id_changed?
+      old_task_list = TaskList.find_by_id(task_list_id_was)
+      new_task_list = TaskList.find_by_id(task_list_id)
+      
+      if old_task_list.project_id != new_task_list.project_id
+        errors.add :task_list_id, "Task list belongs to a different project"
+      end
+    end
+  end
+  
   def set_comments_author # before_save
     comments.select(&:new_record?).each do |comment|
       comment.user = updating_user
@@ -360,7 +373,7 @@ class Task < RoleRecord
   
   def options_for_google_calendar_event
     {
-      :title => self.name,
+      :title => "#{self.name} (#{self.project.name} - #{self.task_list.name})",
       :details => "#{self.comments.first.try(:body)}\r\n\r\n#{"https://#{Teambox.config.app_domain}/projects/#{self.project.permalink}/tasks/#{self.id}"}",
       :start => self.due_on,
       :end => self.due_on

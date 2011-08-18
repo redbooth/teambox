@@ -127,7 +127,7 @@ describe ProjectsController do
 
       post :send_invites, :project_id => project.id, :project => invite_attributes
       response.should be_redirect
-      project.should have(2).invitations
+      project.invitations.with_deleted.count.should == 2
     end
 
   end
@@ -160,7 +160,7 @@ describe ProjectsController do
       post :send_invites, :project_id => project.id, :project => invite_attributes
       response.should be_redirect
 
-      project.should have(2).invitations
+      project.invitations.with_deleted.count.should == 2
     end
   end
   

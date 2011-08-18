@@ -12,6 +12,10 @@ Factory.sequence :name do |n|
   "Teambox ##{n}"
 end
 
+Factory.sequence :folder_name do |n|
+  "the files #{n}"
+end
+
 Factory.sequence :permalink do |n|
   "teambox#{n}"
 end
@@ -163,6 +167,12 @@ Factory.define :upload do |upload|
   upload.asset_content_type 'image/png'
   upload.association(:project)
   upload.association(:user)
+end
+
+Factory.define :folder do |folder|
+  folder.name {Factory.next(:folder_name)}
+  folder.association(:project)
+  folder.association(:user)
 end
 
 Factory.define :page do |page|

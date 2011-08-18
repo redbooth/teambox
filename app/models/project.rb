@@ -40,7 +40,17 @@ class Project < ActiveRecord::Base
 
   def log_later(target, action, creator_id)
     @import_activities ||= []
-    base = {:date => target.try(:created_at) || nil,
+    
+    date = case action
+    when 'create'
+      target.try(:created_at)
+    when 'edit'
+      target.try(:updated_at)
+    when 'delete'  
+      target.try(:deleted_at) || target.try(:updated_at)
+    end || target.try(:created_at)
+    
+    base = {:date => date,
             :project => self,
             :action => action,
             :creator_id => creator_id,
@@ -101,6 +111,14 @@ class Project < ActiveRecord::Base
     model_class.find(:all, :conditions => ["project_id = ?", id],
                            :order => 'id DESC',
                            :limit => limit)
+  end
+  
+  def can_search?
+    true
+  end
+  
+  def hook_user
+    users.first
   end
   
   def references

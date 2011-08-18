@@ -17,23 +17,27 @@ class Ability
     object.user == user
   end
 
+  def last_admin_in_project?(person)
+    person.role == Person::ROLES[:admin] && person.project.admins.length == 1
+  end
+
   def initialize(user)
-    
+
     # Comment & commentable permissions
-    
+
     can :update, Comment do |comment|
       return false unless api_write?(user)
       comment.user_id == user.id and
         Time.now < 15.minutes.since(comment.created_at)
     end
-    
+
     can :destroy, Comment do |comment|
       return false unless api_write?(user)
       comment.project.admin?(user) or
         ( comment.user_id == user.id and
           Time.now < 15.minutes.since(comment.created_at) )
     end
-    
+
     can :comment, [Task, Conversation] do |object, project|
       project ||= object.project
       api_write?(user) && project.commentable?(user) && private_access?(user, object)
@@ -61,6 +65,10 @@ class Ability
       target = object.try(:comment).try(:target)
       api_write?(user) && object.editable?(user) && private_access?(user, target)
     end
+
+    can :update, Folder do |object|
+      api_write?(user) && (object.owner?(user) or object.project.admin?(user))
+    end
     
     can :destroy, [Conversation, Task] do |object|
       api_write?(user) && (object.owner?(user) or object.project.admin?(user)) && private_access?(user, object)
@@ -69,6 +77,10 @@ class Ability
     can :destroy, Upload do |object|
       target = object.try(:comment).try(:target)
       api_write?(user) && (object.owner?(user) or object.project.admin?(user)) && private_access?(user, target)
+    end
+
+    can :destroy, Folder do |object|
+      api_write?(user) && (object.owner?(user) or object.project.admin?(user))
     end
     
     can :destroy, [TaskList, Page] do |object|
@@ -82,11 +94,11 @@ class Ability
     # Person permissions
     
     can :update, Person do |person|
-      api_write?(user) && (person.project.admin?(user) and !person.project.owner?(person.user))
+      api_write?(user) && person.project.admin?(user) && !last_admin_in_project?(person)# && (person.user != user)
     end
     
     can :destroy, Person do |person|
-      api_write?(user) && (!person.project.owner?(person.user) and (person.user == user or person.project.admin?(user)))
+      api_write?(user) && (person.user == user or person.project.admin?(user)) && !last_admin_in_project?(person)
     end
     
     # Invite permissions
@@ -120,26 +132,29 @@ class Ability
     can :upload_files, Project do |project|
       api_write?(user) && project.editable?(user)
     end
+
+    can :create_folders, Project do |project|
+      api_write?(user) && project.editable?(user)
+    end
     
     can :reorder_objects, Project do |project|
       api_write?(user) && project.editable?(user)
     end
     
-    # TODO: remove, this should be consolidated into the organization
-    can :transfer, Project do |project|
-      api_write?(user) && project.admin?(user)
+    can :reorder_objects, Project do |project|
+      api_write?(user) && project.editable?(user)
     end
     
     can :update, Project do |project|
-      api_write?(user) && (project.owner?(user) or project.admin?(user))
+      api_write?(user) && project.manage?(user)
     end
     
     can :destroy, Project do |project|
-      api_write?(user) && project.owner?(user)
+      api_write?(user) && project.manage?(user)
     end
     
     can :admin, Project do |project|
-      api_write?(user) && (project.owner?(user) or project.admin?(user))
+      api_write?(user) && project.admin?(user)
     end
     
     # Organization permissions
@@ -156,6 +171,10 @@ class Ability
     
     can :admin, User do |the_user|
       api_write?(user) && user.id == the_user.id
+    end
+    
+    can :update, User do |the_user|
+      api_write?(user) && the_user.id == user.id
     end
     
     can :observe, User do |the_user|

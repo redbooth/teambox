@@ -91,4 +91,17 @@ describe GoogleDocs do
     entry[:edit_url].should == "https://docs.google.com/feeds/default/private/full/folder%3A0B9kQLCiMjI4N2Y2/contents/spreadsheet%3A0AtkQLCU4Kem5sZy1WdXc"
     entry[:acl_url].should == "https://docs.google.com/feeds/default/private/full/spreadsheet%3A0AtkQLCU4Kem5sZy1WdXc/acl"
   end
+
+  it "should parse an atom_entry, from acl's list, correctly when sent #parse_acl_entry" do
+    atom = File.read(File.expand_path(File.join(File.dirname(__FILE__), '..', 'fixtures', 'google_docs_response_acl.atom')))
+    docs = GoogleDocs.new("key", "secret", nil)
+    list = docs.send(:parse_list, atom, :parse_acl_entry)
+    list.class.name.should == "Array"
+    entry = list.second
+    entry[:etag].should == 'W/"CUMFQnc4fip7ImA9WxRVGUo."'
+    entry[:role].should == "writer"
+    entry[:scope].should == "user"
+    entry[:user_email].should == "a.writer@example.com"
+  end
+
 end

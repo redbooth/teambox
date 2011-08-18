@@ -13,3 +13,9 @@ Feature: Update Project
     And I press "Save Changes"
     And I wait for 1 second
     Then I should see "This project is archived"
+    When I go to the project settings page
+    Then I should see "General Settings for Ruby Rockstars" in the title
+    When I uncheck "project_archived"
+    And I press "Save Changes"
+    And I wait for 1 second
+    Then I should not see "This project is archived"

@@ -1,0 +1,10 @@
+= form_for [@current_project,Folder.new], :html => {:style => 'display: none', :id => 'new_folder_form'} do |f|
+  = f.hidden_field :parent_folder_id, :value => @current_folder.id if @current_folder
+  .header
+    .icon
+      = image_tag '/famfamfam/folder.png'
+    .full_row
+      = f.text_field :name, :value => t('folders.form.default_text'), :id => 'new_folder_name'
+      .actions
+        = link_to t('common.cancel'), '#', :class => 'close'
+        = f.submit t('folders.new.submit'), :class => 'button'

@@ -20,6 +20,7 @@ class PageSlot < ActiveRecord::Base
   
   def to_api_hash(options = {})
     base = {
+      :id => id,
       :rel_object_id => rel_object_id,
       :rel_object_type => rel_object_type,
       :position => position

@@ -93,6 +93,7 @@ class Emailer < ActionMailer::Base
     mail(
       :to         => @invitation.email,
       :from       => self.class.from_user(nil, @invitation.user),
+      :reply_to   => @invitation.user.email,
       :subject    => I18n.t("emailer.invitation.subject", 
                             :user => @invitation.user.name, 
                             :project => @invitation.project.name)
@@ -105,6 +106,7 @@ class Emailer < ActionMailer::Base
     @project    = @invitation.project
     mail(
       :to         => @invitation.email,
+      :reply_to   => @invitation.user.email,
       :subject    => I18n.t("emailer.invitation.subject", 
                             :user    => @invitation.user.name, 
                             :project => @invitation.project.name)
@@ -246,6 +248,16 @@ class Emailer < ActionMailer::Base
       :to            => @recipient.email,
       :subject       => I18n.t("emailer.digest.title.#{@person.digest_type}", :project => @project.name)
     })
+  end
+
+  def public_download(upload_id, recipient)
+    @upload = Upload.find(upload_id)
+    @user   = @upload.user
+    mail(
+      :to         => recipient,
+      :from       => self.class.from_user(nil, @user),
+      :subject    => I18n.t("emailer.public_download.subject", :user => @user.name)
+    )
   end
 
   # requires data from rake db:seed

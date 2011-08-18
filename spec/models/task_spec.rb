@@ -292,6 +292,36 @@ describe Task do
     end
   end
   
+  describe "moving task lists" do
+    before do
+      @project = Factory(:project)
+      @user = Factory(:user)
+      @project.add_user(@user)
+      @task_list = @project.create_task_list(@user, :name => 'List')
+      @task = @project.create_task(@user, @task_list, :name => 'Moved task')
+    end
+    
+    it "should move between task lists" do
+      @old_task_list = @task.task_list
+      @new_task_list = @project.create_task_list(@user, :name => 'Other list')
+    
+      @task.task_list.should == @old_task_list
+      @task.update_attributes(:task_list_id => @new_task_list.id).should == true
+      @task.reload.task_list.should == @new_task_list
+    end
+    
+    it "should not move between task lists in different projects" do
+      @old_task_list = @task.task_list
+      @new_project = Factory(:project)
+      @new_project.add_user(@user)
+      @new_task_list = @new_project.create_task_list(@user, :name => 'Other list')
+    
+      @task.task_list.should == @old_task_list
+      @task.update_attributes(:task_list_id => @new_task_list.id).should == false
+      @task.reload.task_list.should == @old_task_list
+    end
+  end
+  
   describe "private tasks" do
     
     it "should mark all related activities as private when created as private" do
@@ -425,7 +455,7 @@ describe Task do
     it "should create a correctly formatted GoogleCalendar::Event when sent #to_google_calendar_event" do
       task = Factory(:task, :due_on => Date.today)
       google_event = task.send(:to_google_calendar_event)
-      google_event.title.should == task.name
+      google_event.title.should == "#{task.name} (#{task.project.name} - #{task.task_list.name})"
       google_event.details.strip.end_with?("/projects/#{task.project.to_param}/tasks/#{task.to_param}").should be_true
       google_event.start.should == Date.today
       google_event.end.should == Date.today
@@ -436,7 +466,7 @@ describe Task do
     it "should create a correctly formatted GoogleCalendar::Event when sent #to_google_calendar_event with a body" do
       task = Factory(:task, :comments => [Factory(:comment, :body => 'Do it by tomorrow')])
       google_event = task.send(:to_google_calendar_event)
-      google_event.title.should == task.name
+      google_event.title.should == "#{task.name} (#{task.project.name} - #{task.task_list.name})"
       google_event.details.start_with?("Do it by tomorrow").should be_true
       google_event.details.end_with?("/projects/#{task.project.to_param}/tasks/#{task.to_param}").should be_true
       google_event.start.should == task.due_on

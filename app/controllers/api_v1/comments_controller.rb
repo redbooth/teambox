@@ -31,7 +31,7 @@ class ApiV1::CommentsController < ApiV1::APIController
     @comment = @target.comments.create_by_user current_user, params
     
     if @comment.save
-      handle_api_success(@comment, :is_new => true)
+      handle_api_success(@comment, :is_new => true, :references => true, :include => [:uploads])
     else
       handle_api_error(@comment)
     end
@@ -41,7 +41,7 @@ class ApiV1::CommentsController < ApiV1::APIController
     authorize! :update, @comment
     
     if @comment.update_attributes params
-      handle_api_success(@comment, :is_new => true)
+      handle_api_success(@comment, :is_new => true, :references => true, :include => [:uploads])
     else
       handle_api_error(@comment)
     end

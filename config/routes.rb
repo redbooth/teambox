@@ -10,6 +10,7 @@ Teambox::Application.routes.draw do
   resources :sites, :only => [:show, :new, :create]
 
   match '/public' => 'public/projects#index', :as => :public_projects
+  match '/goodbye' => 'static_pages#goodbye', :as => :goodbye 
 
   namespace :public do
     match ':id' => 'projects#show', :as => :project
@@ -141,7 +142,6 @@ Teambox::Application.routes.draw do
       member do
         post :accept
         post :decline
-        put :transfer
         get :join
       end
 
@@ -163,7 +163,22 @@ Teambox::Application.routes.draw do
 
       match 'activities(.:format)' => 'activities#show', :as => :activities, :method => :get
       match 'activities/:id/show_more(.:format)' => 'activities#show_more', :as => :show_more, :method => :get
-      resources :uploads
+
+      resources :uploads do
+        member do
+          get :public_download
+          post :email_public
+          put :rename
+        end
+        collection do
+          resources :folders, :except => [:show, :index, :new] do
+            member do
+              put :rename
+            end
+          end
+        end
+      end
+      match 'uploads/folders/:id' => 'uploads#index', :via => :get
       match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
 
       match 'invite_people' => 'projects#invite_people', :as => :invite_people, :via => :get
@@ -239,6 +254,9 @@ Teambox::Application.routes.draw do
         collection do
           :search
         end
+        member do
+          put :write_access, :path => "write_access/:access", :access => /lock|unlock/
+        end
       end
     end
 
@@ -250,9 +268,6 @@ Teambox::Application.routes.draw do
     namespace :api_v1, :path => 'api/1' do
       resources :app_links, :except => [ :edit, :update ]
       resources :projects, :except => [:new, :edit] do
-        member do
-          put :transfer
-        end
 
         resources :activities, :only => [:index, :show]
 
@@ -327,7 +342,7 @@ Teambox::Application.routes.draw do
         end
       end
 
-      resources :users, :only => [:index, :show]
+      resources :users, :except => [:new, :edit]
 
       resources :tasks, :except => [:new, :edit, :create] do
         member do
@@ -378,9 +393,6 @@ Teambox::Application.routes.draw do
 
       resources :organizations, :except => [:new, :edit, :destroy] do
         resources :projects, :except => [:new, :edit] do
-          member do
-            put :transfer
-          end
         end
 
         resources :memberships, :except => [:new, :edit, :create]
@@ -404,6 +416,9 @@ Teambox::Application.routes.draw do
     match '/my_projects' => 'projects#list', :as => :all_projects
 
     match 'downloads/:id(/:style)/:filename' => 'uploads#download', :constraints => {:filename => /.*/}, :via => :get
+
+    match 'd/:token' => 'public_downloads#download', :via => :get, :as => :public_download_file
+    match 'send/:token' => 'public_downloads#download_send', :via => :get, :as => :public_send_file
 
   end
 

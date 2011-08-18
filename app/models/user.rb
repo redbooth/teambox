@@ -78,7 +78,8 @@ class User < ActiveRecord::Base
                   :default_digest, 
                   :default_watch_new_task, :default_watch_new_conversation, :default_watch_new_page,
                   :people_attributes,
-                  :google_calendar_url_token
+                  :google_calendar_url_token,
+                  :auto_accept_invites
 
   attr_accessor   :activate, :old_password
 
@@ -113,6 +114,15 @@ class User < ActiveRecord::Base
         invitation.destroy
       end
     end
+  end
+
+  # This should be a user setting in Settings
+  #
+  # We are auto-accepting all invites, which could lead to spam problems
+  # In the future we should add a per-user setting to not autoaccept invites
+  # (by default users will autoaccept invites)
+  def auto_accept_invites
+    self[:auto_accept_invites]
   end
 
   def self.find_by_username_or_email(login)
@@ -282,7 +292,12 @@ class User < ActiveRecord::Base
   def keyboard_shortcuts=(v)
     self.settings = { 'keyboard_shortcuts' => v == "1" }
   end
-  
+
+  def collapse_activities
+    # true if unset, true if true, false if false
+    settings["collapse_activities"] == false ? false : true
+  end
+
   def google_calendar(gcal = nil)
     gcal = gcal || get_calendar_app
     return nil if gcal.nil?

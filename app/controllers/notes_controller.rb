@@ -78,6 +78,7 @@ class NotesController < ApplicationController
         f.js   { render :layout => false }
       end
     else
+      @note = nil #so the template does what it should. Ugly hack but this will get deprecated and removed by teambox3.2
       respond_to do |f|
         f.any(:html, :m) { reload_page }
         f.js   { render :layout => false }

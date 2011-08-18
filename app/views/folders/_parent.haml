@@ -1,0 +1,8 @@
+%div.upload{ :class => cycle('alternate', '') }
+  .header
+    .icon
+      = image_tag '/famfamfam/arrow_turn_left.png'
+    .file
+      = link_to t('folders.parent_folder'), @parent_folder ? project_folder_path(@current_project, @parent_folder) : project_uploads_path(@current_project), :remote => true, :class => 'ajax'
+    .size
+    .author

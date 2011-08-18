@@ -245,6 +245,14 @@ describe ApiV1::TasksController do
 
       post :create, :project_id => @project.permalink, :id => @task_list.id, :task_list_id => @task_list.id, :name => 'Another TODO!'
       response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      task = Task.find_by_id(data['id'])
+      task.should_not == nil
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{task.user_id}_User").should == true
 
       @task_list.tasks(true).length.should == 2
       @task_list.tasks(true).last.name.should == 'Another TODO!'
@@ -325,6 +333,27 @@ describe ApiV1::TasksController do
 
       put :update, :project_id => @project.permalink, :id => @task.id, :name => 'Modified'
       response.status.should == 401
+    end
+    
+    it "should not allow commenters to modify the task list" do
+      commenter = Factory.create(:confirmed_user)
+      @project.add_user(commenter, :role => Person::ROLES[:commenter])
+      
+      login_as commenter
+
+      put :update, :project_id => @project.permalink, :id => @task.id, :task_list_id => @other_list.id, :name => 'Modified'
+      response.should be_success
+
+      @task.reload.task_list_id.should == @task_list.id
+    end
+    
+    it "should allow users to modify the task list" do
+      login_as @user
+
+      put :update, :project_id => @project.permalink, :id => @task.id, :task_list_id => @other_list.id, :name => 'Modified'
+      response.should be_success
+
+      @task.reload.task_list_id.should == @other_list.id
     end
 
     it "should return updated task and any references" do

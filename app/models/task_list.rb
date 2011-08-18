@@ -26,7 +26,7 @@ class TaskList < RoleRecord
     end
     
     task_list = self.find_by_name("Pivotal Tracker") || self.create! { |new_list|
-      new_list.user = new_list.project.user if new_list.project
+      new_list.user = new_list.project.hook_user if new_list.project
       new_list.name = "Pivotal Tracker"
       yield new_list if block_given?
     }

@@ -171,6 +171,7 @@ describe UploadsController do
       @project.uploads(true).length.should == 2
     end
   end
+
   describe "#destroy" do
     it "should allow participants to destroy uploads" do
       login_as @user
@@ -191,4 +192,77 @@ describe UploadsController do
       lambda { delete :destroy, :project_id => @project.permalink, :id => @upload.id }.should change(Activity, :count)
     end
   end
+
+  describe "#email_public" do
+    it "should send email with download link" do
+      login_as @user
+      recepient = 'this.is@valid.ema.il'
+
+      post :email_public, :project_id => @project.permalink, :id => @upload.id, :upload => {:invited_user_email => recepient}
+      response.should redirect_to(project_uploads_path)
+
+      last_email_sent.should deliver_to(recepient)
+
+    end
+  end
+
+  describe "#edit" do
+    it "should allow user to edit an upload" do
+      login_as @user
+      get :edit, :project_id => @project.permalink, :id => @upload.id, :format => :js
+      assert_select_rjs :insert_html, :after, "upload_#{@upload.id}"
+    end
+
+    it "should not allow users with no rights to update uploads" do
+      login_as Factory(:confirmed_user)
+      get :edit, :project_id => @project.permalink, :id => @upload.id, :format => :js
+      response.should_not be_success
+    end
+  end
+
+  describe "#rename" do
+    before do 
+      login_as @user
+      # until rspec gets any_instance
+      @uploads = mock(Object)
+      Project.stub!(:find_by_id_or_permalink).with(@project.id).and_return(@project)
+      @project.stub!(:uploads).and_return(@uploads)
+      @uploads.stub!(:find).and_return(@upload)
+    end
+    
+    describe "JS request" do
+      it "should allow user to rename an upload" do
+        @upload.should_receive(:rename_asset).with("new_pic.png").and_return(true)
+        put :rename, :project_id => @project.id, :id => @upload.id, :format => :js,
+          :upload => {:asset_file_name => "new_pic.png"}
+        assert_select_rjs :replace, "upload_#{@upload.id}"
+      end
+
+      it "should alert user on rename error" do
+        @upload.should_receive(:rename_asset).with("new_pic.png").and_return(false)
+        put :rename, :project_id => @project.id, :id => @upload.id, :format => :js,
+          :upload => {:asset_file_name => "new_pic.png"}
+        response.body.should match(/alert/)
+      end
+    end
+
+    describe "HTML request" do
+      it "should allow user to rename an upload" do
+        @upload.should_receive(:rename_asset).with("new_pic.png").and_return(true)
+        put :rename, :project_id => @project.id, :id => @upload.id,
+          :upload => {:asset_file_name => "new_pic.png"}
+        flash[:notice].should_not be_nil
+        response.should redirect_to(project_uploads_path(@project))
+      end
+
+      it "should notify user on rename error" do
+        @upload.should_receive(:rename_asset).with("new_pic.png").and_return(false)
+        put :rename, :project_id => @project.id, :id => @upload.id,
+          :upload => {:asset_file_name => "new_pic.png"}
+        flash[:error].should_not be_nil
+        response.should redirect_to(project_uploads_path(@project))
+      end
+    end
+  end
+
 end

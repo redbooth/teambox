@@ -1,13 +1,15 @@
 class Upload < RoleRecord
   include Immortal
   include PrivateElementMethods
+  include Tokenized
 
-  ICONS = %w(aac ai aiff avi bmp c cpp css dat dmg doc dotx dwg dxf eps exe flv gif h hpp html ics iso java jpg key mid mp3 mp4 mpg odf ods odt otp ots ott pdf php png ppt psd py qt rar rb rtf sql tga tgz tiff txt wav xls xlsx xml yml zip)
+  ICONS = %w(aac ai aiff avi bmp c cpp css dat dmg doc docx dotx dwg dxf eps exe flv gif h hpp html ics iso java jpg key mid mp3 mp4 mpg odf ods odt otp ots ott pdf php png ppt pptx psd py qt rar rb rtf sql tga tgz tiff txt wav xls xlsx xml yml zip)
     
   belongs_to :user
   belongs_to :comment, :touch => true, :counter_cache => true
   belongs_to :project
   belongs_to :page
+  belongs_to :parent_folder, :class_name => 'Folder'
 
   has_one        :page_slot, :as => :rel_object
   before_destroy :clear_slot
@@ -19,14 +21,19 @@ class Upload < RoleRecord
 
   attr_accessible :asset,
                   :page_id,
-                  :description
-  
+                  :description,
+                  :parent_folder_id,
+                  :asset_file_name
+                
+  attr_accessor :invited_user_email
+
+                
   include PageWidget
 
   DOWNLOADS_URL = "/downloads/:id/:style/:basename.:extension"
 
   has_attached_file :asset,
-    :styles => { :thumb => "150x150>" },
+    :styles => { :thumb => "150x150>", :small => "250x250>"},
     :url  => DOWNLOADS_URL,
     :path => Teambox.config.amazon_s3 ?
       "assets/:id/:style/:filename" :
@@ -41,6 +48,9 @@ class Upload < RoleRecord
                             :message => I18n.t('uploads.form.max_size', 
                                                :mb => Teambox.config.asset_max_file_size.to_i)
 
+  validates_format_of :asset_file_name, :with => /^[^\/]+$/, 
+    :allow_blank => false, :message => "Invalid filename"
+  validates_format_of :invited_user_email, :with => /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, :allow_nil => true
   validates_attachment_presence :asset, :message => I18n.t('uploads.form.presence')
 
   validate :check_page
@@ -63,6 +73,35 @@ class Upload < RoleRecord
 
   def s3_url(style_name = nil)
     AWS::S3::S3Object.url_for(asset.path(style_name), asset.bucket_name, {:expires_in => Teambox.config.amazon_s3_expiration.to_i})
+  end
+  
+  def rename_asset(new_file_name)
+    styles = [:original] + self.asset.styles.keys
+    original_paths = Hash[styles.map do |style|
+      if self.asset.exists?(style)
+        [style, self.asset.path(style)]
+       end 
+    end.compact]
+    
+    if original_paths.empty?
+      self.errors.add(:base, "Cannot rename asset: no files found")
+      false
+    elsif !self.update_attributes(:asset_file_name => new_file_name)
+      false
+    else
+      original_paths.each do |style, old_path|
+        new_path = File.join(File.dirname(old_path), new_file_name)
+        if Teambox.config.amazon_s3
+          AWS::S3::S3Object.rename(old_path, new_path, self.asset.bucket_name)
+        else
+          FileUtils.mv(old_path, new_path)    
+        end
+      end
+      true
+    end
+  rescue Errno::ENOENT, AWS::S3::S3Exception => exc
+    self.errors.add(:base, "Error renaming asset: [#{exc.class.name}] #{exc}")
+    false
   end
 
   def file_name
@@ -102,6 +141,11 @@ class Upload < RoleRecord
   def downloadable?(user)
     project.user_ids.include?(user.id) &&
     user_can_access_private_target?(user)
+  end
+
+  #TODO: do we need a flag like this ?
+  def public_downloadable?
+    true
   end
 
   def file_type
@@ -146,6 +190,7 @@ class Upload < RoleRecord
     base = {
       :id => id,
       :page_id => page_id,
+      :project_id => project_id,
       :slot_id => page_slot ? page_slot.id : nil,
       :filename => asset_file_name,
       :description => description,
@@ -162,6 +207,11 @@ class Upload < RoleRecord
     base[:type] = self.class.to_s if options[:emit_type]
     
     base
+  end
+
+  def send_public_download_email
+    return if @is_silent
+    Emailer.send_with_language :public_download, user.locale, self.id, self.invited_user_email
   end
 
   protected

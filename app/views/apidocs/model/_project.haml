@@ -21,12 +21,6 @@
           :role => [:admin, :owner] do
   %p=raw "Updates a project"
 
-- doc_for :transfer,
-          :parameters => {:user_id => 'id'  },
-          :status => :updated,
-          :role => [:owner] do
-  %p=raw "Transfers a project to the new owner"
-
 - doc_for :destroy,
           :status => :deleted,
           :role => [:owner] do

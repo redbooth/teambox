@@ -54,7 +54,7 @@ class SessionsController < ApplicationController
 
   def destroy
     logout_killing_session!
-    redirect_back_or_default root_path
+    redirect_back_or_default goodbye_path
   end
   
   # for cucumber testing only

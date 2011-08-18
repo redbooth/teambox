@@ -189,8 +189,14 @@ describe ApiV1::UploadsController do
              :page_id => @page.id,
              :position => {:slot => 0, :before => true})
       response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
 
-      uid = JSON.parse(response.body)['id']
+      references.include?("#{@project.uploads.last.project_id}_Project").should == true
+      references.include?("#{@project.uploads.last.page_slot.id}_PageSlot").should == true
+
+      uid = data['id']
       @page.slots(true).first.rel_object.id.should == uid
     end
 

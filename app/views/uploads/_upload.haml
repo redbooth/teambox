@@ -1,9 +1,7 @@
-%div[upload]{ :class => cycle('alternate', '') }
+%div[upload]{ :class => ['file_upload', cycle('alternate', '')] }
   .header
     .icon
-      - icon_name = Upload::ICONS.include?(upload.file_type) ? upload.file_type : '_blank'
-      - icon_path = "file_icons/16px/#{icon_name}.png"
-      = image_tag icon_path
+      = image_tag file_icon_path(upload, '16px')
     .file
       = link_to_upload upload, upload.file_name
     .size
@@ -15,7 +13,10 @@
 
   .reference{ :style => 'display: none' }
     = link_to_upload upload, t('.download'), {:rel => nil}
+    = link_to t('uploads.public_download.link.anchor'), public_download_project_upload_path(upload.project, upload), :rel => 'facebox', :title => t('uploads.public_download.link.title')
     - if can?(:update, upload) # and request.format != :m
       = link_to t('.remove'), [upload.project, upload], :'data-remote' => true,
         :'data-method' => 'delete', :'data-confirm' => t('confirm.delete_upload')
+      = link_to t('common.rename'), [:edit, upload.project, upload], :remote => true, 
+        :class => "link_rename"
 

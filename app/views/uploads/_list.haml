@@ -1,0 +1,12 @@
+#uploads_list
+  - if @current_folder
+    .breadcrumbs
+      = folder_breadcrumbs
+
+  .uploads
+    - if @current_folder
+      = render 'folders/parent', :folder => @parent_folder
+    = render 'folders/new'
+    = render :collection => @folders, :partial => 'folders/folder'
+
+    = render @uploads

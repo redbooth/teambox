@@ -80,6 +80,7 @@ When /^(?:|I )fill in the new conversation comment box with "([^\"]*)"?$/ do |va
 end
 
 When /^(?:|I )click the conversation's comment box(?: within "([^\"]*)")?$/ do |selector|
+  find("a.expanded_mode").click
   with_scope(selector) do
     find(:xpath, '//form[contains(@class,"edit_conversation")]//*[@name="comment[body]"]').click
   end

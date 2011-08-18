@@ -23,4 +23,10 @@ module GoogleDocsHelper
   def google_docs_image(document_type)
     image_tag "/images/google_docs/icon_6_#{document_type}.gif"
   end
+
+  def google_docs_write_access_link(google_doc)
+    access = google_doc.write_lock? ? :unlock : :lock
+    link_to t("google_docs.google_doc.#{access.to_s}"), write_access_project_google_doc_path(:project_id => google_doc.project, :id => google_doc, :access => access), :method => :put, :remote => true, :class => "google_doc_write_lock"
+  end
+
 end

@@ -14,6 +14,14 @@ class Person < ActiveRecord::Base
   
   after_create :log_create, :promote_to_admin
   after_destroy :log_delete, :cleanup_after
+  before_destroy :set_deleted_date
+  
+  before_destroy :validate_presence_of_at_least_one_admin, :if => lambda { |person|
+    person.role_name == :admin and !person.project.marked_for_destruction?
+  }
+  before_update :validate_presence_of_at_least_one_admin, :if => lambda { |person|
+    person.role_changed? and person.role_was == ROLES[:admin]
+  }
   
 #  validates_uniqueness_of :user, :scope => :project
   validates_presence_of :user, :project   # Make sure they both exist and are set
@@ -37,6 +45,7 @@ class Person < ActiveRecord::Base
   scope :in_alphabetical_order, :include => :user, :order => 'users.first_name ASC'
 
   attr_accessible :role, :permissions, :digest, :watch_new_task, :watch_new_conversation, :watch_new_page
+  attr_reader :deleted_at
 
   def owner?
     project.owner?(user)
@@ -61,6 +70,13 @@ class Person < ActiveRecord::Base
   def login
     user.login
   end
+
+  def validate_presence_of_at_least_one_admin
+    if project.admins.count == 1
+      errors.add(:base, "A project needs at least one administrator")
+      false
+    end
+  end
   
   def promote_to_admin
     # promote the project owner to admin
@@ -76,8 +92,36 @@ class Person < ActiveRecord::Base
     user_ids = Person.find(:all, :conditions => {:project_id => projects.map(&:id)}).map(&:user_id).uniq
     User.find(:all, :conditions => {:id => user_ids}, :select => 'id, login, first_name, last_name').sort_by(&:name)
   end
-  
-  def self.user_names_from_projects(projects, current_user = nil)
+
+  # Returns a hash with all the user's projects and the people in that project
+  # in the format project_id => [[person_id, login, full_name, user_id], ...]
+  def self.people_data_for_user(user)
+    return nil unless user
+    projects = user.projects.reject{ |p| p.new_record? }
+    return nil if projects.empty?
+
+    data = Person.people_in_projects(projects)
+
+    # user goes first
+    data.keys.each do |k|
+      index_current = data[k].index { |p| p[3].to_i == user.id }
+      person_current = data[k].delete_at(index_current)
+      data[k] = [person_current] + data[k]
+    end
+    data.as_json
+  end
+
+  def self.people_in_projects(projects)
+    data = {}
+    rows = Person.user_names_from_projects(projects)
+    rows.each do |project_id, login, first_name, last_name, person_id, user_id|
+      data[project_id] ||= []
+      data[project_id] << [person_id.to_s, login, "#{first_name} #{last_name}", user_id]
+    end
+    data
+  end
+
+  def self.user_names_from_projects(projects)
     project_ids = Array.wrap(projects).map(&:id)
     connection.select_rows(<<-SQL)
       SELECT people.project_id, users.login, users.first_name, users.last_name, people.id, users.id
@@ -86,7 +130,7 @@ class Person < ActiveRecord::Base
       INNER JOIN users ON users.id = people.user_id
       WHERE people.project_id IN (#{project_ids.join(',')})
         AND (people.deleted IS NULL OR people.deleted = #{connection.quoted_false})
-      ORDER BY users.id = #{current_user.try(:id).to_i} DESC, users.first_name, users.last_name
+      ORDER BY users.first_name, users.last_name
     SQL
   end
   
@@ -138,6 +182,10 @@ class Person < ActiveRecord::Base
   end
   
   protected
+  
+  def set_deleted_date
+    @deleted_at = Time.now
+  end
   
   def log_delete
     project.log_activity(self, 'delete')

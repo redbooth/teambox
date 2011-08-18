@@ -16,7 +16,6 @@ describe Project do
   it { should have_many(:activities) }
 
   it { should validate_presence_of(:user) }
-  # it { should validate_associated     :people }
   it { should validate_length_of(:name, :minimum => 3) }
   it { should validate_length_of(:permalink, :minimum => 5) }
 
@@ -26,13 +25,9 @@ describe Project do
       @project = Factory.create(:project, :user => @owner)
     end
 
-    it "should belong to its owner" do
-      @project.user.should == @owner
-      @project.owner?(@owner).should be_true
-      @project.users.should include(@owner)
+    it "should have at least 1 admin" do
       @project.people.first.role.should == Person::ROLES[:admin]
-      @owner.reload
-      @owner.projects.should include(@project)
+      @project.people.first.user.should == @owner
     end
   end
 
@@ -104,29 +99,34 @@ describe Project do
       @user1 = Factory.create(:user)
       @user2 = Factory.create(:user)
       @user3 = Factory.create(:user)
-      
-      @project = Factory.create(:project,
-        :invite_users => [@user1.id, @user2.id],
-        :invite_emails => "#{@user2.email} #{@user3.email} richard.roe@law.uni",
-        :invite_role => Person::ROLES[:admin]
-      )
     end
     
-    it "creates 4 invitations" do
+    it "creates 4 invitations if no user autoaccepts" do
+      [@user1, @user2, @user3].each { |u| u.update_attribute(:auto_accept_invites, false) }
+        @project = project_with_invites
       @project.should have(4).invitations
     end
     
-    it "doesn't invite same user twice" do
+    it "creates 1 invitation if every user autoaccepts" do
+      @project = project_with_invites
+      @project.should have(1).invitations
+    end
+    
+    it "doesn't invite same user twice if no user autoaccepts" do
+      [@user1, @user2, @user3].each { |u| u.update_attribute(:auto_accept_invites, false) }
+      @project = project_with_invites
       to_user2 = @project.invitations.select { |i| i.email == @user2.email }
       to_user2.size.should == 1
     end
     
     it "invites non-existing user" do
+      @project = project_with_invites
       to_richard = @project.invitations.find_by_email 'richard.roe@law.uni'
       to_richard.invited_user.should be_nil
     end
     
     it "invites using the correct role" do
+      @project = project_with_invites
       @project.invitations.each{|i| i.role.should == Person::ROLES[:admin]}
     end
   end
@@ -163,6 +163,11 @@ describe Project do
       @project.people(true).each do |person|
         person.user.recent_projects.should_not include(@project)
       end
+    end
+    
+    it "should ensure at least 1 admin remains in the project" do
+      @project.people.each{|p|p.destroy}
+      @project.reload.people.first.role.should == Person::ROLES[:admin]
     end
 
     it "make sure activities still work when the object is deleted"

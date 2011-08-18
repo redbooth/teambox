@@ -1,3 +1,16 @@
+// Show confirmation message in facebox after lock/unlock
+function writeLockConfirm(message) {
+    Prototype.Facebox.open(message, 'html write_lock_box', {
+        buttons: [
+        {
+            className: 'close',
+            href:'#close',
+            description: I18n.translations.common.close
+            }
+        ]
+    })
+}
+
 // Set the originator so we know which form opened this facebox and which form to add to
 document.on('click', '.google_docs_attachment a[rel="facebox"]', function(e, link){
   google_docs_originator = link.up('.google_docs_attachment')

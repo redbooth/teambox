@@ -1,0 +1,2 @@
+page.replace "uploads_list", render(:partial => "uploads/list")
+page.replace 'new_upload', render("uploads/form", :project => @current_project, :upload => Upload.new, :page => nil)

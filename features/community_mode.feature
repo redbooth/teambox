@@ -46,7 +46,7 @@ Feature: When I use Teambox community version, there is only one organization
   Scenario: Users can sign up with an invitation
     Given @mislav exists and is logged in
     And I am currently in the project ruby_rockstars
-    And "mislav" is the owner of the project "Ruby Rockstars"
+    And "mislav" is an administrator in the project called "Ruby Rockstars"
     And "mislav" sent an invitation to "ed_bloom@spectre.com" for the project "Ruby Rockstars"
     And I log out
     When "ed_bloom@spectre.com" opens the email with subject "Ruby Rockstars"
@@ -72,11 +72,11 @@ Feature: When I use Teambox community version, there is only one organization
     And I go to the login page
     When I fill in "login" with "mislav"
     And I fill in "password" with "wrong"
-    And I press "Login"
+    And I press "Log in"
     Then I should see "Couldn't log you in as mislav"
     When I fill in "login" with "mislav"
     And I fill in "password" with "dragons"
-    And I press "Login"
+    And I press "Log in"
     Then I should see "Organization"
 
   Scenario: I can't create a second organization

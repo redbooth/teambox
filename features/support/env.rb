@@ -62,3 +62,6 @@ Before do
   # Tests are written to target non-community version, except where noted (I am using the community version)
   Teambox.config.community = false
 end
+
+# Paperclip
+Upload.attachment_definitions[:asset][:path] = "tmp/cucumber/assets/:id/:style/:filename"

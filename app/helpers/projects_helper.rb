@@ -107,7 +107,7 @@ module ProjectsHelper
 
   def leave_project_link(project)
     person = current_user.people.detect { |p| p.project_id == project.id }
-    unless (project.user == current_user) || !person
+    unless !person
       link_to t('people.column.leave_project'),
         project_person_path(project, person),
         :method => :delete, :confirm => t('people.column.confirm_delete'), :class => :leave_link
@@ -124,10 +124,6 @@ module ProjectsHelper
       link_to t('projects.not_in_project.join'), join_project_path(project), :title => msg, :class => :public_link
     end
   end
-
-  def options_for_owner(people)
-    people.map {|person| [ person.name, person.user_id ]}
-  end
   
   def options_for_projects(projects)
     projects.map {|project| [ project.name, project.id ]}
@@ -138,15 +134,13 @@ module ProjectsHelper
   end
 
   def projects_people_data
-    projects = current_user.projects.reject{ |p| p.new_record? }
-    return nil if projects.empty?
-    data = {}
-    rows = Person.user_names_from_projects(projects, current_user)
-    rows.each do |project_id, login, first_name, last_name, person_id, user_id|
-      data[project_id] ||= []
-      data[project_id] << [person_id.to_s, login, "#{h first_name} #{h last_name}", user_id]
-    end
-    javascript_tag "_people = #{data.to_json}"
+    javascript_tag "_people = #{projects_people_data_json}"
+  end
+
+  def projects_people_data_json
+    Rails.cache.fetch "projects_people_data.#{current_user.id}" do
+      Person.people_data_for_user(current_user)
+    end.to_json
   end
 
   def project_link_with_overlay(project)

@@ -1,0 +1,3 @@
+edit_html = render :partial => 'folders/edit'
+page.hide "folder_#{@folder.id}"
+page.insert_html :after, "folder_#{@folder.id}", edit_html
