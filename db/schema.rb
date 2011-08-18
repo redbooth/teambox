@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110812102452) do
+ActiveRecord::Schema.define(:version => 20110815210253) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -569,6 +569,7 @@ ActiveRecord::Schema.define(:version => 20110812102452) do
     t.boolean  "notify_pages",                                   :default => false
     t.string   "google_calendar_url_token"
     t.boolean  "auto_accept_invites",                            :default => true
+    t.string   "email_login_token"
   end
 
   add_index "users", ["deleted"], :name => "index_users_on_deleted"
