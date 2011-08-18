@@ -31,7 +31,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     @conversation.is_private = (params[:conversation][:is_private]||false) if params[:conversation]
     
     if @conversation.save
-      handle_api_success(@conversation, :is_new => true, :references => true, :include => [:uploads])
+      handle_api_success(@conversation, :is_new => true, :references => true, :include => [:user, :uploads, :google_docs])
     else
       handle_api_error(@conversation)
     end
