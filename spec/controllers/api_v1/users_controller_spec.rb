@@ -101,13 +101,20 @@ describe ApiV1::UsersController do
   end
 
   describe "#current" do
+    it "should return the current api version" do
+      login_as @fred
+      
+      get :current
+      response.headers['X-Tbox-Version'].should == ApiV1::APIController::API_VERSION
+    end
+    
     it "should get the current user for oauth requests" do
       @token = access_token
 
       get :current, :access_token => @token.token
       response.should be_success
 
-      JSON.parse(response.body)['id'].to_i.should == @token.user_id
+      data = JSON.parse(response.body)['id'].to_i.should == @token.user_id
     end
 
     it "should not get the current user for expired oauth requests" do

@@ -60,7 +60,7 @@ class ApiV1::UsersController < ApiV1::APIController
   end
 
   def current
-    api_respond current_user, :include => api_include+[:email]
+    api_respond current_user, :include => api_include+[:email], :extra_fields => {:api_version => API_VERSION}
   end
 
   protected

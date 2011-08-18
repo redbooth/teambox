@@ -11,6 +11,7 @@ class ApiV1::APIController < ApplicationController
     API_LIMIT = 20
   end
   API_THROTTLE_LIMIT = 200
+  API_VERSION = '1.0'
 
   protected
 
@@ -108,6 +109,7 @@ class ApiV1::APIController < ApplicationController
   def api_respond(object, options={})
     content = {:json => api_wrap(object, options).to_json}
     content[:callback] = params[:callback] if request.format.js?
+    response.headers['X-Tbox-Version'] = API_VERSION
 
     respond_to do |f|
       f.any(:json, :js, :text) { render content }
@@ -117,6 +119,7 @@ class ApiV1::APIController < ApplicationController
   def api_status(status)
     content = {:json => {:status => status}.to_json, :status => status}
     content[:callback] = params[:callback] if request.format.js?
+    response.headers['X-Tbox-Version'] = API_VERSION
 
     respond_to do |f|
       f.any(:json, :js, :text) { render content }
@@ -214,6 +217,7 @@ class ApiV1::APIController < ApplicationController
     errors[:message] = opts[:message] if opts[:message]
     content = {:json => {:errors => errors}.to_json, :status => status_code}
     content[:callback] = params[:callback] if request.format.js?
+    response.headers['X-Tbox-Version'] = API_VERSION
 
     respond_to do |f|
       f.any(:json, :js, :text) { render content }
@@ -226,6 +230,7 @@ class ApiV1::APIController < ApplicationController
     errors[:message] = 'One or more fields were invalid'
     content = {:json => {:errors => errors}.to_json, :status => options.delete(:status) || :unprocessable_entity}
     content[:callback] = params[:callback] if request.format.js?
+    response.headers['X-Tbox-Version'] = API_VERSION
 
     respond_to do |f|
       f.any(:json, :js, :text) { render content }
@@ -235,6 +240,8 @@ class ApiV1::APIController < ApplicationController
   def handle_api_success(object,options={})
     is_new = options.delete(:is_new)
     status = options.delete(:status) || is_new ? :created : :ok
+    response.headers['X-Tbox-Version'] = API_VERSION
+    
     respond_to do |f|
       if is_new || options.delete(:wrap_objects)
         content = {:json => api_wrap(object, options).to_json, :status => status}
