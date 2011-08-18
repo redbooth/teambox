@@ -2080,7 +2080,6 @@ en:
       lock: "Lock this document, preventing further edits"
       unlock: "Unlock this document, to allow edit"
       lock_disabled: Only document owner can lock it
-      embed: "Embedding options..."
       write_access:
         message:
           lock: This document is now locked
