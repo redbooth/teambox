@@ -58,6 +58,7 @@
 //= require <controllers/search>
 //= require <controllers/chat>
 //= require <controllers/fallback>
+//= require <controllers/welcome>
 //= require <models/base>
 //= require <models/comment>
 //= require <models/conversation>
@@ -98,6 +99,7 @@
 //= require <views/private_elements>
 //= require <views/private_elements_conversation>
 //= require <views/upload_area_conversation>
+//= require <views/welcome>
 
 //= require <views/pages/page_list>
 //= require <views/pages/page_list_item>

@@ -2,8 +2,10 @@
   Overview
 .nav_links
   - use_hash_bang_urls do
+    .el#welcome_link= link_to t('.welcome'), '#!/welcome', :class => 'welcome backboned'
+
     -# Recent Activity
-    .el#activity_link= link_to t('.recent_activity'), '#!/', :class => 'recent_activity backboned'
+    .el#activity_link= link_to t('.recent_activity'), '#!/activities', :class => 'recent_activity backboned'
 
     -# My Tasks
     .el#today_link= link_to t('.today'), '#!/today', :class => 'today backboned'

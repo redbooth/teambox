@@ -1,6 +1,7 @@
 (function () {
 
-  var ProjectsController = { routes: { '/projects'                     : 'projects_index'
+  var ProjectsController = { routes: { '/activities'                   : 'activities' 
+                                     , '/projects'                     : 'projects_index'
                                      , '/projects/new'                 : 'projects_new'
                                      , '/projects/:id'                 : 'projects_show'
                                      , '/projects/:project/people'     : 'people_index'
@@ -18,6 +19,15 @@
 
   ProjectsController.projects_new = function () {
     Teambox.Controllers.FallbackController.show();
+  };
+
+  ProjectsController.activities = function () {
+    var threads = Teambox.collections.threads;
+
+    Views.Sidebar.highlightSidebar('activity_link');
+    $('view_title').update('Recent activity');
+    $('content_header').show().update((new Teambox.Views.SimpleConversationForm()).render().el);
+    $('content').update((new Teambox.Views.Activities({collection: threads})).render().el);
   };
 
   ProjectsController.projects_show = function (permalink) {

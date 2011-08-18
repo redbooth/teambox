@@ -15,15 +15,11 @@
     this.search_controller = new Controllers.SearchController({app: this});
     this.chat_controller = new Controllers.ChatController({app: this});
     this.pages_controller = new Controllers.PagesController({app: this});
+    this.welcome_controller = new Controllers.WelcomeController({app: this});
   };
 
   AppController.index = function () {
-    var threads = Teambox.collections.threads;
-
-    Views.Sidebar.highlightSidebar('activity_link');
-    $('view_title').update('Recent activity');
-    $('content_header').show().update((new Teambox.Views.SimpleConversationForm()).render().el);
-    $('content').update((new Teambox.Views.Activities({collection: threads})).render().el);
+    Backbone.history.saveLocation('#!/welcome');
   };
 
   // exports
