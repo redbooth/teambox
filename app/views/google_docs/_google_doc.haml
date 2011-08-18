@@ -6,6 +6,7 @@
       = link_to google_doc.title, project_google_doc_path(:project_id => google_doc.project, :id => google_doc), :target => :blank
     .size
     .author
+      = l google_doc.created_at, :format => "%b %d %Y"
     .more
       [+]
   = render :partial => "actions", :locals => {:google_doc => google_doc}

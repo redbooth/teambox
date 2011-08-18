@@ -17,7 +17,7 @@ class GoogleDocsController < ApplicationController
     if params[:project_id]
       # If we ask for /projects/xx/google_docs,
       # then show all the GDocs for that project
-      @google_docs = @current_project.google_docs
+      @google_docs = @current_project.google_docs.order("created_at DESC")
       render :index_project
     else
       # If no project is giving, list my personal GDocs
