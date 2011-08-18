@@ -81,6 +81,12 @@ class GoogleDocsController < ApplicationController
   end
 
   def embed
+    #monkey patch for missing document_id
+    if @google_doc.document_id.nil?
+      if /https\:\/\/docs.google.com\/document\/d\/([a-z0-9\-_]+)\//is =~ @google_doc.url
+        @google_doc.update_attribute :document_id, $1
+      end
+    end
     render :embed, :layout => !request.xhr?
   end
 
