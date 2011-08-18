@@ -87,10 +87,10 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    
+
     def profile_complete
-      if current_user && controller_name != 'users' and current_user.profile_needs_completing?
-        redirect_to account_settings_path(:utoken => current_user.email_login_token)
+      if current_user.try(:profile_needs_completing?)
+        redirect_to complete_profile_path
       end
     end
 
@@ -139,7 +139,7 @@ class ApplicationController < ActionController::Base
         s =~ LOCALES_REGEX && $&
       end
     end
-    
+
     def fragment_cache_key(key)
       super(key).tap { |str|
         str << "_#{I18n.locale}"
@@ -148,7 +148,7 @@ class ApplicationController < ActionController::Base
         end
       }
     end
-    
+
     def touch_user
       current_user.update_visited_at if logged_in?
     end
@@ -202,16 +202,16 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    
+
     def mobile?
       request.format == :m
     end
     helper_method :mobile?
-    
+
     def iframe?
       params[:iframe] == 'true'
     end
-    
+
     def output_errors_json(record)
       if request.xhr?
         response.content_type = Mime::JSON
@@ -221,7 +221,7 @@ class ApplicationController < ActionController::Base
         render :template => 'shared/iframe_error', :layout => false, :locals => { :data => record.errors.as_json }
       end
     end
-    
+
     def split_events_by_date(events, start_date=nil)
       start_date ||= Date.today.monday.to_date
       split_events = Array.new
@@ -233,7 +233,7 @@ class ApplicationController < ActionController::Base
       end
       split_events
     end
-    
+
     def calculate_position(obj)
       options = {}
       if pos = params[:position].presence
@@ -275,7 +275,7 @@ class ApplicationController < ActionController::Base
     def h(text)
       ERB::Util.h(text)
     end
-    
+
     def add_chrome_frame_header
       headers['X-UA-Compatible'] = 'chrome=1' if chrome_frame? && request.format == :html
     end
@@ -287,7 +287,7 @@ class ApplicationController < ActionController::Base
         redirect_to path
       end
     end
-    
+
     def chrome_frame?
       request.user_agent =~ /chromeframe/
     end

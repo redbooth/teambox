@@ -1,0 +1,17 @@
+%h1= t('.title')
+
+%p
+  = t('.explain1')
+  %br
+  = t('.explain2')
+
+= form_for current_user, :url => update_profile_path do |f|
+  = render 'users/form/new', :f => f, :user => f.object
+  .submit
+    .submit_button
+      = submit_tag t('.submit'), :tabindex => 300, :id => 'submit', :class => :button
+
+- content_for :column do
+  %p Teambox is a project collaboration platform.
+  %p Use it to share tasks with your team.
+

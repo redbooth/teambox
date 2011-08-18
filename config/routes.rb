@@ -110,6 +110,8 @@ Teambox::Application.routes.draw do
     post  '/account/badge/:badge/grant' => 'users#grant_badge'
     post  '/account/first_steps/hide' => 'users#hide_first_steps'
     post  '/account/tutorials/hide' => 'users#hide_tutorials'
+    get   '/account/complete_profile' => 'complete_profile#edit', :as => :complete_profile
+    match '/account/update_profile' => 'complete_profile#update', :as => :update_profile
 
     resources :teambox_datas, :path => '/datas' do
       member do

@@ -1,10 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  
-  def content_for(*args)
-    super unless args.first.to_sym == :column and mobile?
-  end
-  
+
   def logo_image
     logo = @organization ? @organization.logo(:top) : "header_logo_black.png"
     image_tag(logo, :alt => "Teambox")

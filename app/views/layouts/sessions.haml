@@ -16,8 +16,12 @@
           = yield
         .column
           #sidebar
-            = image_tag 'teambox-logo.gif', :alt => 'Teambox logo'
+            = image_tag 'teambox-logo.gif', :alt => 'Teambox logo', :class => 'logo'
             = yield :column
       .footer
-        %p.copyright Copyright &copy; 2011 Teambox. All rights reserved
+        %p.copyright
+          Copyright &copy; 2011 Teambox. All rights reserved
+          - if logged_in?
+            = " - "
+            = link_to "Log out", logout_path
 

@@ -101,6 +101,12 @@ en:
     failed_person: "%{name} could not be removed from the project"
     left_project: "You are no longer in this project"
     failed_left_project: "You cannot leave this project"
+  complete_profile:
+    edit:
+      title: Complete your Profile
+      explain1: Verify your details and choose a password so you can log in next time.
+      explain2: This will activate your account, so you can share tasks and projects.
+      submit: Go to my projects
   public_downloads:
     download:
       download_file: "Download file:"
