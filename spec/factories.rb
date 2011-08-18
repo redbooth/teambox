@@ -40,6 +40,11 @@ Factory.define :unconfirmed_user, :parent => :user do |user|
   user.confirmed_user false
 end
 
+Factory.define :invited_user, :parent => :user do |user|
+  user.splash_screen true
+  user.confirmed_user false
+end
+
 Factory.define :mislav, :parent => :user do |user|
   user.login 'mislav'
   user.email 'mislav@fuckingawesome.com'
@@ -191,6 +196,7 @@ Factory.define :invitation do |i|
   i.association(:project)
   i.user  { |i| i.project.user }
   i.email { Factory.next(:email) }
+  i.invited_user { |i| Factory.create(:invited_user) }
 end
 
 Factory.define :email_bounce do |f|

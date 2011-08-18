@@ -25,13 +25,20 @@ describe ApiV1::InvitationsController do
       @project = Factory.create(:project)
     end
 
-    it "accepts email addresses as email addresses" do
+    it "creates users for emails" do
       login_as @project.user
-      post :create, :project_id => @project.permalink, :user_or_email => @emails
+      
+      lambda {
+        post :create, :project_id => @project.permalink, :email => 'foo@localhost.com', :first_name => 'Joe', :last_name => 'Bloggs'
+      }.should change(User, :count)
+      
       response.should be_success
-
-      @project.invitations(true).length.should == 3
-      @project.invitations.each { |invite| invite.invited_user.should == nil }
+      
+      Invitation.count.should == 1
+      
+      user = User.order('id DESC').first
+      user.email.should == 'foo@localhost.com'
+      user.profile_needs_completing?.should == true
     end
 
     it "accepts usernames as existing users" do

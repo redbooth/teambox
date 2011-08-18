@@ -12,7 +12,6 @@ class Invitation < RoleRecord
   attr_accessible :role, :membership, :invited_user
 
   before_create :generate_token
-  before_save :copy_user_email, :if => :invited_user
   after_create :auto_accept, :send_email, :update_user_stats
 
   scope :pending_projects, :conditions => ['project_id IS NOT ?', nil]
@@ -95,7 +94,7 @@ class Invitation < RoleRecord
   protected
 
   def valid_user?
-    @errors.add(:base, 'Must belong to a valid user') if user.nil? or user.deleted?
+    @errors.add(:base, 'Must belong to a valid user') if user.nil? or user.deleted? or invited_user.nil? or invited_user.deleted?
   end
 
   def valid_role?
@@ -103,6 +102,7 @@ class Invitation < RoleRecord
   end
 
   def user_already_invited?
+    return if invited_user.nil?
     if project and Person.exists?(:project_id => project_id, :user_id => invited_user.id)
       @errors.add :invited_user_id, 'is already a member of the project'
     elsif Invitation.exists?(:project_id => project_id, :invited_user_id => invited_user.id)

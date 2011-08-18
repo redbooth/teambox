@@ -90,6 +90,7 @@ class User < ActiveRecord::Base
   before_create :init_user
   after_create :clear_invites
   before_save :update_token
+  before_update :activate_incomplete
 
   def update_token
     self.recent_projects_ids ||= []
@@ -101,6 +102,13 @@ class User < ActiveRecord::Base
       set_setting 'incomplete_profile', true
     else
       set_setting 'incomplete_profile', false
+    end
+  end
+  
+  def activate_incomplete
+    if profile_needs_completing?
+      set_setting 'incomplete_profile', false
+      invitations.all { |i| i.accept(self) }
     end
   end
   
