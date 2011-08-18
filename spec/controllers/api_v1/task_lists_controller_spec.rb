@@ -15,6 +15,8 @@ describe ApiV1::TaskListsController do
   describe "#index" do
     it "shows task lists in the project" do
       login_as @user
+      @project.create_task(@owner,@task_list,{:name => 'Something TODO'}).save!
+      @project.create_task(@owner,@other_task_list,{:name => 'Something Else TODO'}).save!
 
       get :index, :project_id => @project.permalink
       response.should be_success
@@ -22,10 +24,23 @@ describe ApiV1::TaskListsController do
       data = JSON.parse(response.body)
       references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
       data['objects'].length.should == 2
+      data['objects'].each{|o| o['tasks'].should == nil}
 
       references.include?("#{@project.id}_Project").should == true
       references.include?("#{@task_list.user_id}_User").should == true
       references.include?("#{@other_task_list.user_id}_User").should == true
+    end
+    
+    it "shows task lists with tasks with include=tasks" do
+      login_as @user
+      @project.create_task(@owner,@task_list,{:name => 'Something TODO'}).save!
+      @project.create_task(@owner,@other_task_list,{:name => 'Something Else TODO'}).save!
+
+      get :index, :project_id => @project.permalink, :include => 'tasks'
+      response.should be_success
+
+      data = JSON.parse(response.body)
+      data['objects'].each{|o| o['tasks'].length.should == 1}
     end
 
     it "shows task lists as JSON when requested with the :text format" do

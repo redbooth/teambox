@@ -15,7 +15,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
                           limit(api_limit).
                           order('task_lists.id DESC')
     
-    api_respond @task_lists, :references => true
+    api_respond @task_lists, :references => true, :include => api_include
   end
 
   def show
@@ -138,6 +138,6 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
   
   def api_include
-    [:tasks, :comments] & (params[:include]||{}).map(&:to_sym)
+    [:tasks, :unarchived_tasks, :archived_tasks] & (params[:include]||{}).map(&:to_sym)
   end
 end

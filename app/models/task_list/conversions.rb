@@ -39,6 +39,10 @@ class TaskList
     
     if Array(options[:include]).include? :tasks
       base[:tasks] = tasks.map {|t| t.to_api_hash(options)}
+    elsif Array(options[:include]).include? :unarchived_tasks
+      base[:tasks] = tasks.unarchived.map {|t| t.to_api_hash(options)}
+    elsif Array(options[:include]).include? :archived_tasks
+      base[:tasks] = tasks.archived.map {|t| t.to_api_hash(options)}
     end
     
     base
