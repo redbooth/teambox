@@ -15,6 +15,8 @@
     - active_projects = current_user.projects.select{|p| !p.archived} #we select them in ruby because the query is done in the header already
 
     .separator.with_margin Projects
+    .search_filter
+      %input{ :placeholder => "Filter projects..." }
     - for project in active_projects
       - next if project.new_record?
       .el= link_to project, project_path(project), :class => 'project'
@@ -36,16 +38,11 @@
               .el= link_to t('shared.project_settings_navigation.ownership'), project_ownership_path(project.permalink, :sub_action => 'ownership'), :class => 'ownership'
         - if can?(:admin, project)
           .el= link_to t('.people'), project_people_path(project), :class => 'people'
-    - if current_user.people.any?
-      .el#projects_link= link_to t('.show_all_projects'), '#!/projects', :class => 'more'
-    - if !Teambox.config.community || (Teambox.config.community && !@community_organization) || (@community_organization && @community_role)
-      .el#new_project_link.btn_new_project= link_to t('.new_project'), new_project_path, :class => 'more'
 
     .separator.with_margin More...
-    -# Organizations
     .el#my_organizations= link_to t('.organizations'), organizations_path, :class => 'organizations'
-    .contained#my_organizations_list
-      To be implemented...
-
     .el= link_to t('.time'), time_path, :class => 'time'
     .el#chat_link= link_to "Chat", "#!/chat", :class => 'chat'
+    .el#projects_link= link_to t('.show_all_projects'), '#!/projects', :class => 'more'
+    - if !Teambox.config.community || (Teambox.config.community && !@community_organization) || (@community_organization && @community_role)
+      .el#new_project_link.btn_new_project= link_to t('.new_project'), new_project_path, :class => 'more'
