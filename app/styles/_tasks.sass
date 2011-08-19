@@ -190,7 +190,7 @@ form.new_task, form.edit_task, .task_list_form
       padding-left: 4px
       .lock_icon
         display: none
-      span.assigned_date, span.assigned_user
+      span.assigned_date, span.assigned_user, span.urgent
         display: none
         color: rgb(100,100,100)
         padding: 1px 5px
@@ -223,6 +223,14 @@ form.new_task, form.edit_task, .task_list_form
           font-weight: bold
         span.assigned_date, span.assigned_user
           color: rgb(200,0,0)
+    &.urgent
+      .taskName
+        a.name
+          color: rgb(150,0,0)
+          font-weight: bold
+        span.urgent
+          color: rgb(150,0,0)
+          display: inline-block
   .task.status_open.mine
     background: rgb(255,255,210)
     .taskName
@@ -363,7 +371,7 @@ p.assigned_transition
     text-decoration: line-through
     color: #999
 
-.assigned_date
+.assigned_date, .comment span.urgent, .taskName span.urgent
   color: rgb(100,100,100)
   padding: 0px 5px
   margin-right: 5px
