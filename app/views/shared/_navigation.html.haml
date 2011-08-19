@@ -11,7 +11,7 @@
 
   -# My Tasks
   - near_tasks = current_user.nearest_pending_tasks
-  - today_tasks = near_tasks.select { |t| t.due_on && (t.due_on <= Time.now.to_date) }
+  - today_tasks = near_tasks.select { |t| t.urgent? || (t.due_on && (t.due_on <= Time.now.to_date)) }
   - late_tasks = near_tasks.select { |t| t.due_on && (t.due_on < Time.now.to_date) }
   - pending_tasks = near_tasks - today_tasks
   - if today_tasks.any?
