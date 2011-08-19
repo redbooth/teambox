@@ -49,6 +49,16 @@ describe ApiV1::CommentsController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
 
+    it "shows no comments for archived projects" do
+      login_as @user
+      @project.update_attribute :archived, true
+
+      get :index
+      response.should be_success
+
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
+
     it "shows comments created by a user" do
       login_as @user
 

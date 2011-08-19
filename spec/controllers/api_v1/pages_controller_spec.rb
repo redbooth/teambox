@@ -48,6 +48,16 @@ describe ApiV1::PagesController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
 
+    it "shows no pages for archived projects" do
+      login_as @user
+      @project.update_attribute :archived, true
+
+      get :index
+      response.should be_success
+
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
+
     it "shows pages created by a user" do
       login_as @user
 

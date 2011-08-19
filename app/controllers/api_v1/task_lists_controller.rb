@@ -7,7 +7,7 @@ class ApiV1::TaskListsController < ApiV1::APIController
     context = if @current_project
       @current_project.task_lists.where(api_scope)
     else
-      TaskList.where(:project_id => current_user.project_ids).where(api_scope)
+      TaskList.joins(:project).where(:project_id => current_user.project_ids, :projects => {:archived => false}).where(api_scope)
     end
     
     @task_lists = context.except(:order).

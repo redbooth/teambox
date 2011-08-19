@@ -55,6 +55,16 @@ describe ApiV1::ConversationsController do
       JSON.parse(response.body)['objects'].length.should == 3
     end
 
+    it "shows no conversations for archived projects" do
+      login_as @user
+      @project.update_attribute :archived, true
+
+      get :index
+      response.should be_success
+
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
+
     it "shows conversations created by a user" do
       login_as @user
 

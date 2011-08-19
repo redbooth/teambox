@@ -8,7 +8,7 @@ class ApiV1::UploadsController < ApiV1::APIController
     context = if target
       target.uploads.where(api_scope)
     else
-      Upload.where(:project_id => current_user.project_ids).where(api_scope)
+      Upload.joins(:project).where(:project_id => current_user.project_ids, :projects => {:archived => false}).where(api_scope)
     end
     
     @uploads = context.except(:order).

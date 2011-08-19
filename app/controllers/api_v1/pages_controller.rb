@@ -7,7 +7,7 @@ class ApiV1::PagesController < ApiV1::APIController
     context = if @current_project
       @current_project.pages.where(api_scope)
     else
-      Page.where(:project_id => current_user.project_ids).where(api_scope)
+      Page.joins(:project).where(:project_id => current_user.project_ids, :projects => {:archived => false}).where(api_scope)
     end
     
     @pages = context.except(:order).

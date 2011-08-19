@@ -27,6 +27,16 @@ describe ApiV1::TasksController do
       JSON.parse(response.body)['objects'].length.should == 2
     end
 
+    it "shows no tasks in archived projects" do
+      login_as @user
+      @project.update_attributes :archived => true
+
+      get :index
+      response.should be_success
+
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
+
     it "shows tasks with a JSONP callback" do
       login_as @user
 

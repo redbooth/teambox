@@ -8,7 +8,7 @@ class ApiV1::NotesController < ApiV1::APIController
     context = if target
       target.notes
     else
-      Note.where(:project_id => current_user.project_ids)
+      Note.joins(:project).where(:project_id => current_user.project_ids, :projects => {:archived => false})
     end.joins(:page)
     
     @notes = context.except(:order).

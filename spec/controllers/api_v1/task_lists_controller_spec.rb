@@ -74,6 +74,16 @@ describe ApiV1::TaskListsController do
       JSON.parse(response.body)['objects'].length.should == 3
     end
 
+    it "shows no task lists for archived projects" do
+      login_as @user
+      @project.update_attribute :archived, true
+
+      get :index
+      response.should be_success
+
+      JSON.parse(response.body)['objects'].length.should == 0
+    end
+
     it "shows task lists created by a user" do
       login_as @user
 

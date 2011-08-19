@@ -6,7 +6,7 @@ class ApiV1::CommentsController < ApiV1::APIController
     authorize! :show, @target||current_user
     
     context = @target ?  @target.comments.where(api_scope) : 
-                         Comment.where(:project_id => current_user.project_ids).where(api_scope)
+                         Comment.joins(:project).where(:project_id => current_user.project_ids, :projects => {:archived => false}).where(api_scope)
     
     @comments = context.except(:order).
                         where(api_range('comments')).

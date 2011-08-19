@@ -7,7 +7,7 @@ class ApiV1::ConversationsController < ApiV1::APIController
     context = if @current_project
       @current_project.conversations.where(api_scope)
     else
-      Conversation.where(:project_id => current_user.project_ids).where(api_scope)
+      Conversation.joins(:project).where(:project_id => current_user.project_ids, :projects => {:archived => false}).where(api_scope)
     end
     
     @conversations = context.except(:order).

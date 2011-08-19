@@ -8,7 +8,7 @@ class ApiV1::DividersController < ApiV1::APIController
     context = if target
       target.dividers
     else
-      Divider.where(:project_id => current_user.project_ids)
+      Divider.joins(:project).where(:project_id => current_user.project_ids, :projects => {:archived => false})
     end.joins(:page)
     
     @dividers = context.except(:order).
