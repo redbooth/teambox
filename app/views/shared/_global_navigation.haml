@@ -7,15 +7,13 @@
 
 #user_utilities.dropdown_navigation
   %h2
-    = link_to t('.settings'), account_settings_path
+    #username= link_to 'User', user_path(current_user)
   %a{:class=>"dropdown_arrow", :href=>"#"}
   %ol.global_navigation
-    %li#username= link_to t('.my_profile'), user_path(current_user)
+    -# if current_user.invitations.pending_projects.count > 0
+    -#  %li= link_to_unless_current t('.project_invitations', :count => current_user.invitations.count), user_invitations_path(:user_id => current_user.id)
     %li= link_to t('.settings'), account_settings_path
-    - if current_user.invitations.pending_projects.count > 0
-      %li= link_to_unless_current t('.project_invitations', :count => current_user.invitations.count),
-        user_invitations_path(:user_id => current_user.id)
-    %li= link_to t('.help'), "http://guide.teambox.com##{controller_name}", :target => "_blank"
+    %li= link_to t('.help'), "http://guide.teambox.com", :target => "_blank"
     %li= link_to t('.logout'), logout_path
 
 %img#global_loading{ :src => "/images/loading.gif", :style => 'display: none' }

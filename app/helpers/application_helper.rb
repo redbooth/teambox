@@ -181,14 +181,6 @@ module ApplicationHelper
       end
     end
   end
-  
-  def set_reload_url(path)
-    @reload_url = path
-  end
-  
-  def reload_url
-    @reload_url || url_for(request.path_parameters)
-  end
 
   def rss?
     request.format == :rss

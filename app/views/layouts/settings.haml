@@ -14,7 +14,7 @@
     = yield :js_includes
     = javascript_tag do
       = yield :js_templates
-  %body{ :class => "folded_aux #{location_name} #{I18n.locale} #{Rails.env} controller_#{controller.controller_name}", :reload_url => reload_url}
+  %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env} controller_#{controller.controller_name}" }
     #header_wrap
       = header
     #container.container
