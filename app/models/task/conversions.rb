@@ -12,6 +12,7 @@ class Task
       xml.tag! 'assigned-id',     assigned_id
       xml.tag! 'status',          status
       xml.tag! 'due-on',          due_on.to_s(:db) if due_on
+      xml.tag! 'urgent',          urgent?
       xml.tag! 'created-at',      created_at.to_s(:db)
       xml.tag! 'updated-at',      updated_at.to_s(:db)
       xml.tag! 'completed-at',    completed_at.to_s(:db) if completed_at
@@ -41,6 +42,7 @@ class Task
     
     base[:type] = self.class.to_s if options[:emit_type]
     base[:due_on] = due_on.to_s(:db) if due_on
+    base[:urgent] = urgent?
     base[:completed_at] = completed_at.to_s(:db) if completed_at
     
     if Array(options[:include]).include? :task_list
