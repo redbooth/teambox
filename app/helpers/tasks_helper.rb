@@ -9,6 +9,7 @@ module TasksHelper
       classes << 'due_3weeks' if task.due_in?(3.weeks)
       classes << 'due_month' if task.due_in?(1.months)
       classes << 'overdue' if task.overdue?
+      classes << 'urgent' if task.urgent?
       classes << 'unassigned_date' if task.due_on.nil?
       classes << "status_#{task.status_name}"
       classes << 'status_notopen' if !task.open?
@@ -27,7 +28,11 @@ module TasksHelper
   end
 
   def render_due_on(task,user)
-    content_tag(:span, due_on(task), :class => 'due_on')
+    if task.urgent?
+      content_tag(:span, "&#9733;".html_safe, :class => 'urgent')
+    else
+      content_tag(:span, due_on(task), :class => 'due_on')
+    end
   end
 
   def render_assignment(task,user)
@@ -51,15 +56,27 @@ module TasksHelper
   end
 
   def comment_task_due_on(comment)
-    if comment.due_on_change?
-      [].tap { |out|
-        if comment.due_on_transition?
-          out << span_for_due_date(comment.previous_due_on)
-          out << content_tag(:span, '&rarr;'.html_safe, :class => "arr due_on_arr")
-        end
-        out << span_for_due_date(comment.due_on)
-      }.join(' ').html_safe
-    end
+    if comment.urgent_change?
+      [
+        comment.urgent? ? span_for_due_date(comment.previous_due_on) : span_for_urgent(comment),
+        content_tag(:span, '&rarr;'.html_safe, :class => "arr due_on_arr"),
+        comment.urgent? ? span_for_urgent(comment) : span_for_due_date(comment.due_on) ,
+      ]
+    elsif comment.due_on_change?
+      [
+        ([
+          span_for_due_date(comment.previous_due_on), 
+          content_tag(:span, '&rarr;'.html_safe, :class => "arr due_on_arr"),
+        ] if comment.due_on_transition?),
+        span_for_due_date(comment.due_on),
+      ]
+    else
+      []
+    end.compact.flatten.join(' ').html_safe
+  end
+  
+  def span_for_urgent(comment)
+    content_tag(:span, t("tasks.urgent.caption"), :class => 'urgent')
   end
 
   def comment_task_urgent(comment)

@@ -451,14 +451,15 @@ describe User do
     end
     it "should list active tasks sorted by (urgent, due_on ASC)" do
       @task.assign_to(@user)
-      @task2 = Factory.create(:task, :due_on => 1.minute.from_now)
+      @task.update_attribute(:due_on, 1.minute.from_now)
+      @task2 = Factory.create(:task, :due_on => 10.minutes.from_now)
       @task3 = Factory.create(:task, :due_on => 2.days.from_now)
       @task4 = Factory.create(:task, :urgent => true)
       [@task2, @task3, @task4].each do |task|
         task.project.add_user(@user)
         task.assign_to(@user)
-      end      
-      @user.pending_tasks.should == [@task4, @task2, @task3, @task]
+      end
+      @user.pending_tasks.should == [@task, @task2, @task3, @task4]
     end
   end
 

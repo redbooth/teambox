@@ -54,7 +54,7 @@ DatePicker = {
       
       if (input_urgent.checked) {
         label.update(I18n.translations.date_picker.urgent.short);
-      } else {
+      } else if (user_action) { 
         date_picker.clearDate();
         date_picker.callback("onchange");
         label.update(I18n.translations.date_picker.no_date_assigned);

@@ -921,6 +921,7 @@ en:
       assigned_to: Who is responsible?
       assigned_to_nobody: Nobody
     urgent:
+      caption: Urgent
       set: Urgent flag set
       unset: Urgent flag unset      
     assigned:

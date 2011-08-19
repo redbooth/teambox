@@ -13,6 +13,8 @@
     .lock_icon
     = link_to h(task), [project, task], :class => :name
     %span.assigned_date= task.due_on ? due_on(task) : ''
+    - if task.urgent?
+      %span.urgent= t("tasks.urgent.caption")
     %span.assigned_user= task.assigned ? link_to(h(task.assigned.short_name), user_path(task.assigned.user)) : ''
     - unless @current_project
       .extended
