@@ -3,15 +3,15 @@ require 'spec_helper'
 describe HooksController do
   it "should route to hooks controller" do
     { :post => '/hooks/email' }.should route_to(:action => "create", 
-                                                :hook_name => "email", 
-                                                :controller => "hooks")
+      :hook_name => "email",
+      :controller => "hooks")
   end
 
   it "should route to hooks controller scoped under project" do
     { :post => '/projects/12/hooks/pivotal' }.should route_to(:action => "create", 
-                                                              :hook_name => "pivotal", 
-                                                              :controller => "hooks", 
-                                                              :project_id => "12")
+      :hook_name => "pivotal",
+      :controller => "hooks",
+      :project_id => "12")
   end
 
   describe "#create" do
@@ -22,9 +22,9 @@ describe HooksController do
     describe "emails" do
       it "should parse incoming emails to new conversation" do
         post_email_hook  @project.permalink,
-                                'Random latin text',
-                                'Lorem ipsum dolor sit amet, ...',
-                                false
+          'Random latin text',
+          'Lorem ipsum dolor sit amet, ...',
+          false
 
         response.should be_success
         conversation = @project.conversations.last(:order => 'id asc')
@@ -35,8 +35,8 @@ describe HooksController do
 
       it "should parse incoming emails with attachments to new conversation" do
         post_email_hook  @project.permalink,
-                                'Hey, check this awesome file!',
-                                'Lorem ipsum dolor sit amet, ...'
+          'Hey, check this awesome file!',
+          'Lorem ipsum dolor sit amet, ...'
 
         response.should be_success
         conversation = @project.conversations.last(:order => 'id asc')
@@ -97,8 +97,8 @@ describe HooksController do
         @task = Factory(:task, :project => @project)
         
         post_email_hook "#{@project.permalink}+task+#{@task.id}",
-                        '',
-                        'I would say something about this task'
+          '',
+          'I would say something about this task'
 
         comment = @task.comments(true).last
         comment.body.should == 'I would say something about this task'
@@ -109,8 +109,8 @@ describe HooksController do
         @conversation = Factory(:conversation, :project => @project)
         
         post_email_hook "#{@project.permalink}+conversation+#{@conversation.id}",
-                        '',
-                        'I would say something about this conversation'
+          '',
+          'I would say something about this conversation'
 
         comment = @conversation.comments(true).except(:order).last(:order => 'ID ASC')
         comment.body.should == 'I would say something about this conversation'
@@ -180,17 +180,17 @@ describe HooksController do
       end
       
       def post_options(to, subject, body, attachments = true)
-         {
-           :hook_name => 'email',
-           :method => :post,
-           :from => @project.user.email,
-           :to => "#{to}@#{Teambox.config.smtp_settings[:domain]}",
-           :text => body,
-           :subject => subject,
-           :attachments => attachments ? '2' : nil,
-           :attachment1 => upload_file("#{Rails.root}/spec/fixtures/tb-space.jpg", 'image/jpg'),
-           :attachment2 => upload_file("#{Rails.root}/spec/fixtures/teamboxdump.json", 'text/plain')
-         }
+        {
+          :hook_name => 'email',
+          :method => :post,
+          :from => @project.user.email,
+          :to => "#{to}@#{Teambox.config.smtp_settings[:domain]}",
+          :text => body,
+          :subject => subject,
+          :attachments => attachments ? '2' : nil,
+          :attachment1 => upload_file("#{Rails.root}/spec/fixtures/tb-space.jpg", 'image/jpg'),
+          :attachment2 => upload_file("#{Rails.root}/spec/fixtures/teamboxdump.json", 'text/plain')
+        }
       end
       
       def default_params(more = {})
@@ -206,7 +206,7 @@ describe HooksController do
     describe "Pivotal Tracker" do
       before do
         @payload_v2 = {"activity"=>
-          {"author"=>"James Kirk",
+            {"author"=>"James Kirk",
             "project_id"=>26,
             "occurred_at"=>Time.parse("Mon Dec 14 22:12:09 UTC 2009"),
             "id"=>1031,
@@ -214,15 +214,15 @@ describe HooksController do
             "description"=>'James Kirk accepted "More power to shields"',
             "event_type"=>"story_update",
             "stories"=>
-            {"story"=>
-              {"current_state"=>"accepted",
+              {"story"=>
+                {"current_state"=>"accepted",
                 "name"=>"More power to shields",
                 "accepted_at"=>Time.parse("Mon Dec 14 22:12:09 UTC 2009"),
                 "url"=>"https:///projects/26/stories/109",
                 "id"=>109}}}}
         
         @payload_v3 = {"activity"=>
-          {"author"=>"James Kirk",
+            {"author"=>"James Kirk",
             "project_id"=>26,
             "occurred_at"=>Time.parse("Mon Dec 14 22:12:09 UTC 2009"),
             "id"=>1031,
@@ -238,23 +238,23 @@ describe HooksController do
             ]
           }}
           
-          @payload_v3_new = {"activity"=>
+        @payload_v3_new = {"activity"=>
             {"author"=>"James Kirk",
-              "project_id"=>26,
-              "occurred_at"=>Time.parse("Mon Dec 14 22:12:09 UTC 2009"),
-              "id"=>1031,
-              "version"=>175,
-              "description"=>'James Kirk created "More power to shields"',
-              "event_type"=>"story_update",
-              "stories"=> [
-                {
-                  "name" => "More power to shields",
-                  "current_state"=>"unscheduled",
-                  "url"=>"https:///projects/26/stories/109",
-                  "id"=>109
-                }
-              ]
-            }}
+            "project_id"=>26,
+            "occurred_at"=>Time.parse("Mon Dec 14 22:12:09 UTC 2009"),
+            "id"=>1031,
+            "version"=>175,
+            "description"=>'James Kirk created "More power to shields"',
+            "event_type"=>"story_update",
+            "stories"=> [
+              {
+                "name" => "More power to shields",
+                "current_state"=>"unscheduled",
+                "url"=>"https:///projects/26/stories/109",
+                "id"=>109
+              }
+            ]
+          }}
       end
       
       def post(payload = @payload_v2, hook = 'pivotal')
@@ -348,6 +348,7 @@ describe HooksController do
     end
     
     describe "GitHub" do
+
       it "posts to the project timeline" do
         payload = <<-JSON
           {
@@ -427,6 +428,84 @@ Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee1
         
         conversation.comments.first.body.strip.should == expected.strip
       end
+      
+      it "matches task ids from commits message and creates comments for task" do
+
+        @mislav = Factory(:mislav)
+        @chris = Factory(:user, {:first_name => "Chris", :last_name => "Wanstrath"})
+
+        @project.add_user @chris
+        @project.add_user @mislav
+
+        @task_list = Factory(:task_list, :project => @project, :user => @mislav)
+
+        @task = Factory(:task, {:project => @project, :user => @mislav, :task_list => @task_list, :name => "Do something Chris"})
+        @task.assign_to @chris
+
+        @other_task = Factory(:task, {:project => @project, :user => @chris, :task_list => @task_list, :name => "Do something Mislav"})
+        @other_task.assign_to @mislav
+        
+        payload = <<-JSON
+          {
+            "before": "5aef35982fb2d34e9d9d4502f6ede1072793222d",
+            "repository": {
+              "url": "http://github.com/defunkt/github",
+              "name": "github",
+              "description": "You're lookin' at it.",
+              "watchers": 5, "forks": 2, "private": 1,
+              "owner": { "email": "chris@ozmm.org", "name": "defunkt" }
+            },
+            "commits": [
+              {
+                "id": "41a212ee83ca127e3c8cf465891ab7216a705f59",
+                "url": "http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59",
+                "author": { "email": "chris@ozmm.org", "name": "Chris Wanstrath" },
+                "message": "Check this file, task [#{@task.id}]}",
+                "timestamp": "2008-02-15T14:57:17-08:00",
+                "added": ["filepath.rb"]
+              },
+              {
+                "id": "de8251ff97ee194a289832576287d6f8ad74e3d0",
+                "url": "http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0",
+                "author": { "email": "chris@ozmm.org", "name": "Chris Wanstrath" },
+                "message": "Closing for task [close-#{@task.id}]",
+                "timestamp": "2008-02-15T14:36:34-08:00"
+              },
+              {
+                "id": "hju8251ff97ee194a289832576287d6f89ui7978h",
+                "url": "http://github.com/defunkt/github/commit/hju8251ff97ee194a289832576287d6f89ui7978h",
+                "author": { "email": "mislav@fuckingawesome.com", "name": "Mislav Marohnić" },
+                "message": "Commit for different task [#{@other_task.id}]",
+                "timestamp": "2008-02-16T12:66:37-07:00"
+              }
+            ],
+            "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
+            "ref": "refs/heads/master"
+          }
+        JSON
+
+        post :create, :payload => payload, :hook_name => 'github', :project_id => @project.id
+
+        first_comment = @task.recent_comments.first
+
+        first_comment.user.should == @chris
+        first_comment.target.should == @task
+
+        second_comment = @other_task.recent_comments.first
+
+        second_comment.user.should == @mislav
+        second_comment.target.should == @other_task
+
+        expected = (<<-HTML).strip
+        New code on <a href='http://github.com/defunkt/github'>github</a> refs/heads/master
+
+Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59'>Check this file, task [#{@task.id}]}</a><br>
+Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0'>update pricing a tad</a><br>
+        HTML
+
+        #conversation.comments.first.body.strip.should == expected.strip
+      end
+
     end
   end
 end
