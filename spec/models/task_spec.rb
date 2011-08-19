@@ -57,6 +57,14 @@ describe Task do
       task.status_name = 'silly'
     }.should raise_error(ArgumentError)
   end
+  
+  it "should nilizie due_on only when urgent flag is set" do
+    task1 = Factory(:task, :due_on => Time.now, :urgent => false)
+    task1.due_on.should_not be_nil
+
+    task2 = Factory(:task, :due_on => Time.now, :urgent => true)
+    task2.due_on.should be_nil
+  end
 
   describe "assigning tasks" do
     before do

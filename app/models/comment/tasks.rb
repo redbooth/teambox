@@ -5,7 +5,7 @@ class Comment
   end
   
   def transition?
-    status_transition? || assigned_transition? || due_on_change?
+    status_transition? || assigned_transition? || due_on_change? || urgent_change?
   end
 
   def initial_status?
@@ -18,6 +18,10 @@ class Comment
 
   def due_on_change?
     due_on != previous_due_on
+  end
+
+  def urgent_change?
+    urgent != previous_urgent
   end
 
   def assigned_transition?

@@ -449,6 +449,17 @@ describe User do
       @task.project.update_attribute :archived, true
       @user.pending_tasks.should be_empty
     end
+    it "should list active tasks sorted by (urgent, due_on ASC)" do
+      @task.assign_to(@user)
+      @task2 = Factory.create(:task, :due_on => 1.minute.from_now)
+      @task3 = Factory.create(:task, :due_on => 2.days.from_now)
+      @task4 = Factory.create(:task, :urgent => true)
+      [@task2, @task3, @task4].each do |task|
+        task.project.add_user(@user)
+        task.assign_to(@user)
+      end      
+      @user.pending_tasks.should == [@task4, @task2, @task3, @task]
+    end
   end
 
   describe "#assigned_tasks_count" do

@@ -260,7 +260,7 @@ class User < ActiveRecord::Base
     Rails.cache.fetch("pending_tasks.#{id}") do
       active_project_ids.empty? ? [] :
         Task.where(:status => Task::ACTIVE_STATUS_CODES).where(:assigned_id => active_project_ids).order('ID desc').includes(:project).
-             sort { |a,b| (a.due_on || 1.week.from_now.to_date) <=> (b.due_on || 1.year.from_now.to_date) }
+             sort { |a,b| [a.urgent? ? 0 : 1, (a.due_on || 1.week.from_now.to_date)] <=> [b.urgent? ? 0 : 1, (b.due_on || 1.year.from_now.to_date)] }
     end
   end
 

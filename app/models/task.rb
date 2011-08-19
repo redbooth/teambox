@@ -24,7 +24,7 @@ class Task < RoleRecord
   accepts_nested_attributes_for :comments, :allow_destroy => false,
     :reject_if => lambda { |comment| %w[is_private body hours human_hours uploads_attributes google_docs_attributes].all? { |k| comment[k].blank? } }
 
-  attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes, :user, :task_list_id
+  attr_accessible :name, :assigned_id, :status, :due_on, :comments_attributes, :user, :task_list_id, :urgent
 
   validates_presence_of :user
   validates_presence_of :task_list
@@ -49,6 +49,7 @@ class Task < RoleRecord
   before_save :save_completed_at
   before_validation :remember_comment_created, :on => :update
   before_save :update_google_calendar_event, :if => lambda {|t| t.assigned.try(:user) || !t.google_calendar_url_token.blank? }
+  before_validation :nilize_due_on_for_urgent_tasks
   
   def assigned
     @assigned ||= assigned_id ? Person.with_deleted.find_by_id(assigned_id) : nil
@@ -56,7 +57,7 @@ class Task < RoleRecord
   
   def track_changes?
     (new_record? and not status_new?) or
-    (updating_user and (status_changed? or assigned_id_changed? or due_on_changed?))
+    (updating_user and (status_changed? or assigned_id_changed? or due_on_changed? or urgent_changed?))
   end
 
   def archived?
@@ -299,7 +300,7 @@ class Task < RoleRecord
   end
   
   def remember_comment_created # before_update
-    @comment_created = comments.any?(&:new_record?) || assigned_id_changed? || status_changed? || due_on_changed?
+    @comment_created = comments.any?(&:new_record?) || assigned_id_changed? || status_changed? || due_on_changed? || urgent_changed?
     true
   end
   
@@ -329,6 +330,11 @@ class Task < RoleRecord
     if due_on_changed? or self.new_record?
       comment.due_on = self.due_on
       comment.previous_due_on = self.due_on_was if due_on_changed?
+    end
+
+    if urgent_changed? or self.new_record?
+      comment.urgent = self.urgent
+      comment.previous_urgent = self.urgent_was if urgent_changed?
     end
 
     @saved_changes_to_comment = true
@@ -465,4 +471,8 @@ class Task < RoleRecord
       self.google_calendar_url_token = nil
     end
   end
+
+  def nilize_due_on_for_urgent_tasks
+    self.due_on = nil if self.urgent?
+  end  
 end

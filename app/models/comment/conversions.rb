@@ -54,6 +54,8 @@ class Comment
       base[:status] = status
       base[:due_on] = due_on
       base[:previous_due_on] = previous_due_on
+      base[:urgent] = urgent
+      base[:previous_urgent] = previous_urgent
     end
     
     if Array(options[:include]).include?(:uploads) && uploads.any?

@@ -39,7 +39,7 @@ class Comment < ActiveRecord::Base
     :reject_if => lambda { |google_docs| google_docs['title'].blank? || google_docs['url'].blank? }
   
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
-                  :upload_ids, :uploads_attributes, :due_on, :google_docs_attributes, :private_ids, :is_private
+                  :upload_ids, :uploads_attributes, :due_on, :urgent, :google_docs_attributes, :private_ids, :is_private
 
   attr_accessor :is_importing
   attr_accessor :private_ids
@@ -246,6 +246,7 @@ class Comment < ActiveRecord::Base
     if @last_comment_in_task
       self.target.assigned_id = previous_assigned_id
       self.target.due_on = previous_due_on
+      self.target.urgent = previous_urgent
       self.target.status = previous_status || Task::STATUSES[:open]
       self.target.save!
     end
