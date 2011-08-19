@@ -19,3 +19,13 @@ Feature: Editing a task
     And I press "Update Task"
     And I wait for 1 second
     Then I should see "Fix minor bug" within the task header
+
+  Scenario: I set the urgent flag for the task
+    When I follow "Fix major bug"
+    And I wait for 1 second
+    And I click the element that contain "No date assigned" within ".task .date_picker"
+    And I check "Urgent, to be done as soon as possible" within ".calendar_date_select"
+    And I press "Save"
+    Then I should see "Urgent" within the task actions
+    And I should see "No due date" within "span.assigned_date"
+    And I should see "Urgent" within "span.urgent"

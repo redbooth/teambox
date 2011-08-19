@@ -26,6 +26,17 @@ Feature: Creating a task
     And I wait for 1 second
     And I should see "Ohhh upload" as a task name
 
+  Scenario: Mislav creates a valid task with urgent flag
+    When I go to the "Awesome Ruby Yahh" task list page of the "Ruby Rockstars" project
+    When I follow "+ Add Task"
+    And I fill in "Task title" with "Ohhh upload"
+    And I click the element that contain "No date assigned" within "#new_task"
+    And I check "Urgent, to be done as soon as possible" within ".calendar_date_select"
+    And I press "Add Task"
+    And I wait for 1 second
+    And I should see "Ohhh upload" as a task name
+    And I should see "Urgent" within "span.urgent"
+
   Scenario: Fails to create a task without a title
     When I go to the "Awesome Ruby Yahh" task list page of the "Ruby Rockstars" project
     And I follow "+ Add Task"
