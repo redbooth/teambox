@@ -29,7 +29,7 @@ module TasksHelper
 
   def render_due_on(task,user)
     if task.urgent?
-      content_tag(:span, "&#9733;".html_safe, :class => 'urgent')
+      content_tag(:span, "!".html_safe, :class => 'urgent')
     else
       content_tag(:span, due_on(task), :class => 'due_on')
     end
