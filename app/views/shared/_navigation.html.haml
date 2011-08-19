@@ -19,27 +19,7 @@
     .separator.with_margin Projects
     .search_filter
       %input{ :placeholder => "Filter projects..." }
-    - for project in active_projects
-      - next if project.new_record?
-      .el= link_to project, project_path(project), :class => 'project'
-      .contained
-        .el{:id => "project_#{project.permalink}_activities"}= link_to t('.recent_activity'), project_path(project), :class => ' recent_activity backboned'
-        .el{:id => "project_#{project.permalink}_conversations"}= link_to t('.conversations'), project_conversations_path(project), :class => '  conversations backbone'
-        .el{:id => "project_#{project.permalink}_task_lists"}
-          = link_to t('.tasks'), project_task_lists_path(project), :class => 'tasks backboned'
-        - if time_tracking_enabled? and project.tracks_time
-          .el= link_to t('.time'), project_time_path(project), :class => 'time'
-        .el{:id => "project_#{project.permalink}_pages"}= link_to t('.pages'), project_pages_path(project), :class => 'pages backbone'
-        .el= link_to t('.files'), project_uploads_path(project), :class => 'files'
-        - if can?(:update, project)
-          .el= link_to t('.settings'), project_settings_path(project), :class => 'settings'
-          .contained
-            .el= link_to t('shared.project_settings_navigation.general'), project_settings_path(project.permalink), :class => 'general_settings'
-            .el= link_to t('shared.project_settings_navigation.deletion'), project_deletion_path(project.permalink, :sub_action => 'deletion'), :class   => 'deletion'
-            - if project.owner?(current_user)
-              .el= link_to t('shared.project_settings_navigation.ownership'), project_ownership_path(project.permalink, :sub_action => 'ownership'), :class => 'ownership'
-        - if can?(:admin, project)
-          .el= link_to t('.people'), project_people_path(project), :class => 'people'
+    .projects_container
 
     .separator.with_margin More...
     .el#my_organizations= link_to t('.organizations'), organizations_path, :class => 'organizations'

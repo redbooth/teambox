@@ -1,0 +1,27 @@
+- each project in self.projects
+  .el: a.project(href= '#!/projects/' + project.permalink)= project.name
+  .contained(style= "display: none")
+    .el(id= "project_"+project.permalink+"_activities")
+      a.recent_activity.backboned(href= '#!/projects/'+project.permalink) <%= t('shared.navigation.recent_activity') %>
+    .el(id= "project_"+project.permalink+"_conversations")
+      a.conversations.backboned(href= '#!/projects/'+project.permalink+"/conversations") <%= t('shared.navigation.conversations') %>
+    .el(id= "project_"+project.permalink+"_task_lists")
+      a.tasks.backboned(href= '#!/projects/'+project.permalink+"/task_lists") <%= t('shared.navigation.tasks') %>
+    <%# if true // time_tracking_enabled? and project.tracks_time %>
+    .el
+      a.time(href= '#!/projects/'+project.permalink+'/time') <%= t('shared.navigation.time') %>
+    .el(id= "project_"+project.permalink+"_pages")
+      a.pages.backboned(href= '#!/projects/'+project.permalink+"/pages") <%= t('shared.navigation.pages') %>
+    .el(id= "project_"+project.permalink+"_files")
+      a.files.backboned(href= '#!/projects/'+project.permalink+"/files") <%= t('shared.navigation.files') %>
+    <%# if true //can?(:admin, project) %>
+    .el
+      a.people(href= '#!/projects/'+project.permalink+'/people') <%= t('shared.navigation.people') %>
+    <%# if can?(:update, project) %>
+    .el
+      a.settings(href= "#!/projects/"+project.permalink+'/settings') <%= t('shared.navigation.settings') %>
+    .contained(style= "display: none")
+      .el
+        a.general_settings(href= '#!/projects/'+project.permalink+'/settings') <%= t('shared.project_settings_navigation.general') %>
+      .el
+        a.deletion(href= '#!/projects/'+project.permalink+'/deletion') <%= t('shared.project_settings_navigation.deletion') %>

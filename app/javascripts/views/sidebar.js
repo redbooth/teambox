@@ -10,19 +10,29 @@
   Sidebar.initialize = function (options) {
     var current = SidebarStatic.detectSelectedSection(window.location.hash);
 
-    _.bindAll(this, 'renderTaskCounter');
+    _.bindAll(this, 'renderTaskCounter', 'renderProjects');
 
     // TODO: bind only to change
     Teambox.collections.tasks.bind('all', this.renderTaskCounter);
+    Teambox.collections.projects.bind('all', this.renderProjects);
 
-    // Hide folded navigation bar elements
-    $(this.el).select('.contained').invoke('hide');
+    // Render the projects if the view is initialized after loading the collection
+    this.renderProjects();
 
     // Select and expand the current element
     if (current) {
       this.toggleElement(current);
       this.showContainers(current);
     }
+  };
+
+  /* renders the projects
+   */
+  Sidebar.renderProjects = function() {
+    console.log('rendering projects');
+    var projects = Teambox.collections.projects.models.collect( function(p) { return p.attributes });
+    var html = Teambox.modules.ViewCompiler('sidebar.project')({ projects: projects });
+    this.$(".projects_container")[0].update(html);
   };
 
   /* renders the counters on the tasks sidebar
