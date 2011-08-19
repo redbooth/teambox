@@ -19,15 +19,15 @@
     _.bindAll(this, 'render');
 
     this.dragndrop = options.dragndrop;
-    this.model.set({task_list: Teambox.collections.tasks_lists.get(this.model.get('task_list_id'))}, {silent: true});
+    this.model.set(
+      { task_list: Teambox.collections.tasks_lists.get(this.model.get('task_list_id')) },
+      { silent: true });
     this.model.attributes.is_task = this.model.get('type') === 'Task';
     this.model.attributes.is_conversation = this.model.get('type') === 'Conversation';
 
     this.model.bind('change', this.render);
     this.model.get('task_list').bind('change', this.render);
-    this.model.bind('destroy', function () {
-      self.el.remove();
-    });
+    this.model.bind('destroy', function() { self.el.remove(); });
   };
 
   /**
@@ -36,21 +36,22 @@
    * @return self
    */
   Task.render = function () {
-    this.el.update(this.template(this.model.getAttributes()));
-    this.el.writeAttribute('id', 'task_' + this.model.id);
-    this.el.writeAttribute('data-task-id', this.model.id);
+    jQuery(this.el)
+      .html(this.template(this.model.getAttributes()))
+      .attr({ 'id': 'task_' + this.model.id
+            , 'data-task-id': this.model.id });
 
     if (this.dragndrop && !this.model.isArchived()) {
-      this.el.down('.taskStatus').insert({
-        top: new Element('img', {alt: 'Drag', 'class': 'task_drag', src: '/images/drag.png'})
-      });
+      this.$('.taskStatus').prepend(
+        "<img alt='Drag' class='task_drag' src='/images/drag.png'>"
+      );
     }
 
-    this.el.addClassName(this.model.getClasses());
-    this.el.down('.thread_child').insert({bottom: (new Teambox.Views.CommentForm({
+    jQuery(this.el).addClass(this.model.getClasses());
+    this.$('.thread_child').append( (new Teambox.Views.CommentForm({
       model: (new Teambox.Models.Thread(this.model.attributes))
     , controller: this.controller
-    })).render().el});
+    })).render().el );
 
     return this;
   };
@@ -61,51 +62,51 @@
    * @param {Event} evt
    */
   Task.toggleComments = function (evt) {
-    var thread_block = this.el.down('.thread_child'), foo;
+    var thread_block = this.$('.thread_child');
 
-    evt.stop();
+    evt.preventDefault();
 
-    if (this.el.hasClassName('expanded')) {
-      foo = new Effect.BlindUp(thread_block, {duration: 0.3});
-      foo = new Effect.Fade(this.el.down('.expanded_actions'), {duration: 0.3});
+    if (jQuery(this.el).hasClass('expanded')) {
+      thread_block.slideUp(300);
+      this.$('.expanded_actions').fadeOut(300);
     } else {
-      foo = new Effect.BlindDown(thread_block, {duration: 0.3});
-      foo = new Effect.Appear(this.el.down('.expanded_actions'), {duration: 0.3});
+      thread_block.slideDown(300);
+      this.$('.expanded_actions').fadeIn(300);
       Date.format_posted_dates();
 
       // TODO: ?
       // Task.insertAssignableUsers();
     }
 
-    this.el.toggleClassName('expanded');
+    jQuery(this.el).toggleClass('expanded');
   };
 
   // Edit task's title inline
   Task.editTitle = function (evt) {
-    $(this.el).select('a.name, form.edit_title').invoke('toggle');
-    $(this.el).down('form.edit_title input').focus();
-    return false;
+    this.$('a.name, form.edit_title').toggle();
+    this.$('form.edit_title input:first').focus();
+    evt.preventDefault();
   };
 
   // Save the edited title when pressing Enter
   Task.keyupTitle = function (evt) {
     if (evt.keyCode === 13) {
       this.updateTitle(evt);
-      return false;
+      evt.preventDefault();
     }
   };
 
   // Start an AJAX request to update the task's title
   Task.updateTitle = function(evt) {
     var self = this;
-    var element = $(this.el);
-    var title = element.down('a.name');
-    var old = element.down('a.name').innerHTML;
-    var input = element.down('form.edit_title input');
-    var now = input.value;
+    var element = jQuery(this.el);
+    var title = element.find('a.name');
+    var old = element.find('a.name').text();
+    var input = element.find('form.edit_title input');
+    var now = input.val();
 
     var toggleForm = function() {
-      element.select('a.name, form.edit_title').invoke('toggle');
+      element.find('a.name, form.edit_title').toggle();
     };
 
     // Update only if the title is dirty
@@ -113,27 +114,26 @@
       toggleForm();
       self.model.set({name: now});
 
-      title = element.down('a.name');
-      title.update(input.getAttribute('data-disable-with'));
-      title.addClassName('loading');
+      title = element.find('a.name');
+      title.html(input.attr('data-disable-with'));
+      title.addClass('loading');
 
       self.model.save(false, {
         success: function() {
-          title.removeClassName('loading');
+          title.removeClass('loading');
           self.model.change();
         },
         error: function(){
-          title.removeClassName('loading');
+          title.removeClass('loading');
           toggleForm();
         }
       });
     }
-    return false;
+    evt.preventDefault();
   };
 
   Task.disableFormSubmit = function (e) {
-    Event.stop(e);
-    return false;
+    e.preventDefault();
   };
 
   // exports
