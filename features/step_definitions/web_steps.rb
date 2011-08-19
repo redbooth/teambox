@@ -97,7 +97,7 @@ end
 
 When /^(?:|I )click the element that contain "([^\"]*)"(?: within "([^\"]*)")?$/ do |text, selector|
   with_css_scope(selector) do |node|
-    node.find(:xpath,"//*[.='#{text}']").click
+    node.find(:xpath,".//*[.='#{text}']").click
   end
 end
 
