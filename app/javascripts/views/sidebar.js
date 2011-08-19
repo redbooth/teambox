@@ -29,10 +29,9 @@
   /* renders the projects
    */
   Sidebar.renderProjects = function() {
-    console.log('rendering projects');
     var projects = Teambox.collections.projects.models.collect( function(p) { return p.attributes });
     var html = Teambox.modules.ViewCompiler('sidebar.project')({ projects: projects });
-    this.$(".projects_container")[0].update(html);
+    this.$(".projects_container").html(html);
   };
 
   /* renders the counters on the tasks sidebar
@@ -42,17 +41,17 @@
       , today = Teambox.collections.tasks.today()
       , late  = Teambox.collections.tasks.late();
 
-    $$('#my_tasks_link span, #today_link span').invoke('remove');
+    this.$('#my_tasks_link span, #today_link span').remove();
 
 
     if (mine && mine.length) {
-      $("my_tasks_link").insert({bottom: '<span>' + mine.length + '</span>'});
+      this.$("#my_tasks_link").append('<span>' + mine.length + '</span>');
     }
 
     if (today && today.length) {
-      $('today_link').insert({bottom: '<span>' + today.length + '</span>'});
-      if (late.length > 0) {
-        $$('#today_link span')[0].addClassName('red');
+      this.$('#today_link').append('<span>' + today.length + '</span>');
+      if (late.length) {
+        this.$('#today_link span').addClass('red');
       }
     }
   };
@@ -63,13 +62,12 @@
    * @param {Element} el
    */
   Sidebar.clickElement = function (e, el) {
+    var el = jQuery(e.currentTarget);
     // Adding this to handle highlight for backboned links
-    if (el.down('a.backboned')) {
-      return;
-    }
+    if (el.find('a.backboned').length) { return; }
 
     if (this.toggleElement(el, true)) {
-      e.stop();
+      e.preventDefault();
     }
   };
 
@@ -79,10 +77,10 @@
    */
   Sidebar.showContainers = function (element) {
     (function next(el) {
-      var container = el.up();
-      if (container.hasClassName('contained')) {
-        container.show().previous('.el').addClassName('expanded');
-      } else if (container.hasClassName('nav_links')) {
+      var container = el.parent();
+      if (container.hasClass('contained')) {
+        container.show().prev('.el').addClass('expanded');
+      } else if (container.hasClass('nav_links')) {
         return;
       }
       next(container);
@@ -98,63 +96,40 @@
    */
   Sidebar.toggleElement = function (element, effect) {
     var next = element.next()
-      , parent = element.up()
-      , visible_containers;
+      , parent = element.parent();
 
     // if next element is an expandable area..
-    if (next && next.hasClassName('contained')) {
-      if (element.hasClassName('expanded')) {
+    if (next && next.hasClass('contained')) {
+      if (element.hasClass('expanded')) {
         // contract it if it's open
-        element.removeClassName('expanded');
-        next.setStyle({height: ''});
-        if (effect) {
-          next.blindUp({ duration: 0.2 });
-        } else {
-          next.hide();
-        }
+        element.removeClass('expanded');
+        next.css({height: ''}).slideUp(effect ? 200 : 0);
       } else {
         // contract others if open
-        visible_containers = parent.select('.contained').select(function (e) {
-          return e.visible();
-        });
-
-        if (effect) {
-          visible_containers.invoke("blindUp", { duration: 0.2 });
-        } else {
-          visible_containers.invoke('hide');
-        }
-        parent.select('.el').invoke('removeClassName', 'expanded');
+        parent.find('.contained:visible').slideUp(effect ? 200 : 0);
+        parent.find('.el').removeClass('expanded');
 
         // expand the selected one
-        element.addClassName('expanded');
-        next.setStyle({height: ''});
-        if (effect) {
-          next.blindDown({ duration: 0.2 });
-        } else {
-          next.show();
-        }
+        element.addClass('expanded');
+        next.css({height: ''}).slideDown(effect ? 200 : 0);
       }
 
       return true;
     }
 
-    return element.hasClassName('selected');
+    return element.hasClass('selected');
   };
 
   // Highlight this element, clearing others
   Sidebar.selectElement = function (el) {
-    $(this.el).select('.el.selected')
-      .invoke('removeClassName', 'selected')
-      .invoke('removeClassName', 'children-selected');
+    this.$('.el.selected').removeClass('selected children-selected');
 
-    if (el) {
-      el.addClassName('selected');
-    }
+    el && el.addClass('selected');
   };
 
   // *class* methods
   SidebarStatic.highlightSidebar = function (id) {
-    Teambox.views.sidebar.selectElement($(id), true);
+    Teambox.views.sidebar.selectElement(jQuery("#"+id), true);
   };
 
   /* Selects the link in the sidebar according to the current url
@@ -169,21 +144,24 @@
    */
   SidebarStatic.detectSelectedSection = function (hash) {
     // Direct match
-    var links = $$('.nav_links a')
-      , link = links.select(function (e) {
-          return e.getAttribute('href') === hash;
-        }).last();
+    var links = jQuery('.nav_links a')
+      , link = jQuery(_(links).detect(function (e) {
+          return jQuery(e).attr('href') === hash;
+        }));
 
     if (link) {
-      return link.up('.el');
+      // return null if this link isn't contained inside a .el, or return the link
+      var parent = link.parent('.el');
+      return (parent.length === 0 ? null : parent);
     } else {
-      link = links.sortBy(function (e) {
-        return e.getAttribute('href').length;
-      }).select(function (e) {
-        return (hash.search(e.getAttribute('href')) > -1 && e.getAttribute('href') !== '/');
-      }).last();
+      link = _(links).chain()
+      .sortBy(function (e) { return jQuery(e).attr('href').length; })
+      .detect(function (e) {
+        return (hash.search(jQuery(e).attr('href')) > -1 && jQuery(e).attr('href') !== '/');
+      })
+      .value();
 
-      return link && link.up('.el');
+      return link && link.parent('.el').length;
     }
   };
 

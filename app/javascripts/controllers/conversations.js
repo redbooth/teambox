@@ -1,7 +1,7 @@
 (function () {
-  var ConversationsController = { routes: { '/projects/:project/conversations'     : 'index'
-                                          , '/projects/:project/conversations/new' : 'new'
-                                          , '/projects/:project/conversations/:id' : 'show'}};
+  var ConversationsController = { routes: { '!/projects/:project/conversations'     : 'index'
+                                          , '!/projects/:project/conversations/new' : 'new'
+                                          , '!/projects/:project/conversations/:id' : 'show'}};
 
   ConversationsController['new'] = function (project) {
     $('content_header').update('').hide();

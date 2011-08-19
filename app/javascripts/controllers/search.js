@@ -1,6 +1,6 @@
 (function () {
 
-  var SearchController = { routes: { '/search/:query' : 'search'}}
+  var SearchController = { routes: { '!/search/:query' : 'search'}}
     , Views = Teambox.Views
     , Controllers = Teambox.Controllers
     , views = Teambox.views;

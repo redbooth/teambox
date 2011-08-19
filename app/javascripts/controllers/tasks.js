@@ -1,9 +1,9 @@
 (function () {
-  var TasksController = { routes: { '/projects/:project/tasks'     : 'index'
-                                  , '/projects/:project/tasks/:id' : 'show'
-                                  , '/today'                       : 'today'
-                                  , '/my_tasks'                    : 'my_tasks'
-                                  , '/all_tasks'                   : 'all_tasks'
+  var TasksController = { routes: { '!/projects/:project/tasks'     : 'index'
+                                  , '!/projects/:project/tasks/:id' : 'show'
+                                  , '!/today'                       : 'today'
+                                  , '!/my_tasks'                    : 'my_tasks'
+                                  , '!/all_tasks'                   : 'all_tasks'
                                   }
                         }
 

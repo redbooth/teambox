@@ -8,7 +8,7 @@
 //= require <socket_io>
 //= require <juggernaut>
 //= require <lib/jquery>
-//= require <lib/backbone-prototype>
+//= require <lib/backbone>
 //= require <lib/backbone.paranoid>
 //= require <lib/chosen.proto>
 
@@ -57,7 +57,7 @@
 //= require <controllers/users>
 //= require <controllers/search>
 //= require <controllers/chat>
-//= require <controllers/fallback>
+//                //= require <controllers/fallback>
 //= require <controllers/welcome>
 //= require <models/base>
 //= require <models/comment>

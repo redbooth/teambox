@@ -1,11 +1,11 @@
 (function () {
 
-  var ProjectsController = { routes: { '/activities'                   : 'activities' 
-                                     , '/projects'                     : 'projects_index'
-                                     , '/projects/new'                 : 'projects_new'
-                                     , '/projects/:id'                 : 'projects_show'
-                                     , '/projects/:project/people'     : 'people_index'
-                                     , '/projects/:project/task_lists' : 'task_lists'
+  var ProjectsController = { routes: { '!/activities'                   : 'activities' 
+                                     , '!/projects'                     : 'projects_index'
+                                     , '!/projects/new'                 : 'projects_new'
+                                     , '!/projects/:id'                 : 'projects_show'
+                                     , '!/projects/:project/people'     : 'people_index'
+                                     , '!/projects/:project/task_lists' : 'task_lists'
                                      }
                            }
     , Views = Teambox.Views

@@ -1,7 +1,7 @@
 (function () {
-  var PagesController = { routes: {  '/projects/:project/pages'             : 'index'
-                                  ,  '/projects/:project/pages/new'         : 'new'
-                                  ,  '/projects/:project/pages/:id'         : 'show'}};
+  var PagesController = { routes: {  '!/projects/:project/pages'             : 'index'
+                                  ,  '!/projects/:project/pages/new'         : 'new'
+                                  ,  '!/projects/:project/pages/:id'         : 'show'}};
 
   PagesController['new'] = function(project_id) {
     var collection = Teambox.collections.conversations;

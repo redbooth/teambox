@@ -1,6 +1,6 @@
 (function () {
 
-  var ChatController = { routes: { '/chat' : 'room_show' } }
+  var ChatController = { routes: { '!/chat' : 'room_show' } }
     , Views = Teambox.Views
     , Controllers = Teambox.Controllers
     , views = Teambox.views;
