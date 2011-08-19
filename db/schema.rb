@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110812102452) do
+ActiveRecord::Schema.define(:version => 20110818091722) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -104,6 +104,8 @@ ActiveRecord::Schema.define(:version => 20110812102452) do
     t.integer  "uploads_count",        :default => 0
     t.boolean  "deleted",              :default => false, :null => false
     t.boolean  "is_private",           :default => false, :null => false
+    t.boolean  "urgent",               :default => false, :null => false
+    t.boolean  "previous_urgent",      :default => false, :null => false
   end
 
   add_index "comments", ["created_at"], :name => "index_comments_on_created_at"
@@ -466,6 +468,7 @@ ActiveRecord::Schema.define(:version => 20110812102452) do
     t.boolean  "deleted",                   :default => false, :null => false
     t.boolean  "is_private",                :default => false, :null => false
     t.string   "google_calendar_url_token"
+    t.boolean  "urgent",                    :default => false, :null => false
   end
 
   add_index "tasks", ["assigned_id"], :name => "index_tasks_on_assigned_id"
