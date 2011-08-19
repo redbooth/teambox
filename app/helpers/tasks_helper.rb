@@ -62,6 +62,13 @@ module TasksHelper
     end
   end
 
+  def comment_task_urgent(comment)
+    if comment.urgent_change?
+      text = comment.urgent? ? t('tasks.urgent.set') : t('tasks.urgent.unset')
+      content_tag(:p, text, :class => "urgent_transition")
+    end
+  end
+
   def task_status(task,status_type)
     status_for_column = status_type == :column ? "task_status_#{task.status_name}" : "task_counter"
     out = %(<span data-task-id=#{task.id} class='task_status #{status_for_column}'>)
@@ -127,12 +134,22 @@ module TasksHelper
   end
 
   def date_picker(f, field, options = {}, html_options = {})
-    selected_date = f.object.send(field.to_sym) ? localize(f.object.send(field.to_sym), :format => :long) : ''
-
-    content_tag :div, :class => "date_picker", :id => "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}" do
+    selected_date = f.object.send(field.to_sym) ? localize(f.object.send(field.to_sym), :format => :long) : ''    
+    show_urgent_flag = f.object.is_a?(Task)
+    datepicker_info = if show_urgent_flag && f.object.urgent?
+      t('date_picker.urgent.short')
+    elsif selected_date.blank? 
+      t('date_picker.no_date_assigned')
+    else 
+      selected_date
+    end
+    
+    classes = ["date_picker", ("show_urgent" if show_urgent_flag)].compact
+    content_tag :div, :class => classes.join(" "), :id => "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}" do 
       [ image_tag('/images/calendar_date_select/calendar.gif', :class => :calendar_date_select_popup_icon),
-        content_tag(:span, selected_date.blank? ? t('date_picker.no_date_assigned') : selected_date, :class => 'localized_date'),
-        f.hidden_field(field, html_options.reverse_merge!(:class => :datepicker))
+        content_tag(:span, datepicker_info, :class => 'datepicker_info'),
+        f.hidden_field(field, html_options.reverse_merge!(:class => :datepicker)),
+        (f.hidden_field("urgent", :class => "urgent") if show_urgent_flag),
       ].join.html_safe
     end
   end

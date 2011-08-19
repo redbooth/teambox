@@ -920,6 +920,9 @@ en:
       due_on_html: Needs to be done before... <i>optional</i>
       assigned_to: Who is responsible?
       assigned_to_nobody: Nobody
+    urgent:
+      set: Urgent flag set
+      unset: Urgent flag unset      
     assigned:
       assigned_to: "Assigned to %{user}"
       myself: "Assign to myself (%{user})"
@@ -2033,6 +2036,10 @@ en:
 
   date_picker:
     no_date_assigned: No date assigned
+    urgent:
+      long: "Urgent, to be done as soon as possible"
+      short: "Urgent"
+      info: Will show up on "tasks due for today" for the assigned user
 
   oauth:
     authentication_failure: Authentication failure, '%{message}'

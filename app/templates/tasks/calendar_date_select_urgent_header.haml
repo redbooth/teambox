@@ -1,0 +1,7 @@
+.urgent
+  %input.urgent{:type => 'checkbox', :value => '1', :id => 'task_{{task_id}}_urgent'}
+  %label{:for => 'task_{{task_id}}_urgent'}
+    =t('date_picker.urgent.long')
+  %a{:href => '#', :class => 'show-help text_actions'} [?]
+  .help{:style => 'display: none'}
+    =t('date_picker.urgent.info')

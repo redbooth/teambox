@@ -144,6 +144,7 @@ defaults: &defaults
   - "*.tasks"
   - "*.projects"
   - "*.conversations"
+  - "*.date_picker"
 
 development:
   <<: *defaults

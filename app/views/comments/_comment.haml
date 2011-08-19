@@ -30,6 +30,7 @@
               = t('tasks.assigned.assigned_to', :user => comment.assigned.user.name)
             - else
               = t('tasks.assigned.unassigned')
+        = comment_task_urgent(comment)
 
         ~raw comment.body_html
 
