@@ -176,6 +176,10 @@ Then /^I should see "([^"]*)" within the task header$/ do |text|
   Then %(I should see "#{text}" within ".task_header h2")
 end
 
+Then /^I should see "([^"]*)" within the task actions$/ do |text|
+  Then %(I should see "#{text}" within ".task .actions")
+end
+
 When /^(?:|I )select "([^\"]*)" in the "([^\"]*)" calendar?$/ do |number, calendar|
   with_css_scope("div[id$='_#{calender}_on']") do |node|
     find(:css,"table div[contains(#{number})]").click
