@@ -33,27 +33,24 @@
     var show_more = this.templates.show_more()
     ,  loading = this.templates.loading();
 
-    Element.replace('activity_paginate_link', loading);
+    jQuery('#activity_paginate_link').replaceWith(loading);
 
     this.collection.fetchNextPage(function (collection, response) {
-      Element.replace('activity_paginate_link', show_more);
-      var el = $('activity_paginate_link');
-      if (response.objects.length <= 50) {
-        el.hide();
-      }
+      jQuery('#activity_paginate_link').replaceWith(show_more);
+      // TODO: Hide the button if not enough activities to paginate
     });
   };
 
   Activities.appendActivity = function appendActivity(thread) {
     var template;
     if (thread.get('type') === "Conversation" || thread.get('type') === "Task") {
-      this.el.insert({top: (new Teambox.Views.Thread({controller: this.controller, model: thread})).render().el});
+      jQuery(this.el).prepend((new Teambox.Views.Thread({controller: this.controller, model: thread})).render().el);
     } else if (thread.get('type') === 'Page') {
-      this.el.insert({top: (new Teambox.Views.PageTeaser({model: thread})).render().el});
+      jQuery(this.el).prepend((new Teambox.Views.PageTeaser({model: thread})).render().el);
     } else {
-      template = (this.templates[thread.get('target_type').toLowerCase()] || {})[thread.get('action')]
-        || this.templates.raw_activity;
-      this.el.insert({ top: template(thread.getAttributes()) });
+      var template = this.templates[thread.get('target_type').toLowerCase()] || {}
+      template = template[thread.get('action')] || this.templates.raw_activity;
+      jQuery(this.el).prepend( template(thread.getAttributes()) );
     }
   };
 
@@ -62,9 +59,9 @@
    * @return self
    */
   Activities.render = function () {
-    this.el.update('');
+    jQuery(this.el).empty();
     this.collection.models.each(this.appendActivity.bind(this));
-    this.el.insert({bottom: this.templates.show_more()});
+    jQuery(this.el).append(this.templates.show_more());
 
     return this;
   };
@@ -74,15 +71,11 @@
    * @return self
    */
   Activities.removeActivity = function (thread) {
-    var el = this.el.down('.thread[data-class=' + thread.type() + '][data-id=' + thread.id + ']');
-
-    if (el) {
-      el.remove();
-    }
+    var selector = '.thread[data-class=' + thread.type() + '][data-id=' + thread.id + ']';
+    this.$(selector).remove();
 
     return this;
   };
-
 
 
   // exports

@@ -32,7 +32,7 @@
    */
   PrivateElements.render = function () {
     this.update();
-    this.el.hide();
+    jQuery(this.el).hide();
 
     return this;
   };
@@ -40,29 +40,29 @@
   /* Hide private elements area
    */
   PrivateElements.reset = function() {
-    this.el.hide();
+    jQuery(this.el).hide();
   };
 
   PrivateElements.updatePrivateUsers = function(event) {
     var el = event.target;
-    this.el.down('.private_users').select('.private_user input').each(function(fe){ fe.checked = el.checked; });
+    this.el.$('.private_users .private_user input').each(function(fe){ fe.checked = el.checked; });
   };
 
   PrivateElements.updateAllUsers = function(event) {
-    var users = this.el.down('.private_users');
-    users.down('.private_all input').checked = this.allUsersEnabled();
+    var users = this.el.$('.private_users');
+    users.find('.private_all input').checked = this.allUsersEnabled();
   };
 
   PrivateElements.toggle = function(event) {
-    event.stop();
-    var el = event.target
-    , options = this.el;
+    event.preventDefault();
+    var el = jQuery(event.currentTarget)
+    , options = jQuery(this.el);
 
     if (options.visible()) {
-      options.select('input').invoke('disable');
+      options.find('input').attr('disabled', true);
       options.hide();
     } else {
-      options.select('input').invoke('enable');
+      options.find('input').attr('disabled', false);
       options.show();
     }
   };
@@ -73,11 +73,12 @@
    */
   PrivateElements.activateForPages = function () {
 
-    if (document.body.hasClassName('edit_pages') || document.body.hasClassName('new_pages')) {
-      var form = $(document.body).down('.content').down('form');
+    var body = jQuery(document.body);
+    if (body.hasClass('edit_pages') || body.hasClass('new_pages')) {
+      var form = body.find('.content form');
       this.activate();
       this.update(form.down('div'));
-      form.down('.private_options').select('input').invoke('enable');
+      form.find('.private_options input').attr('disabled', false);
     }
 
     return this;
@@ -104,12 +105,12 @@
   };
 
   PrivateElements.handleOptionChange = function() {
-    var private_option = this.el.down('.option.private input')
+    var private_option = this.$('.option.private input')
     , i18n = I18n.translations;
 
     if (private_option) {
       var text = this.people().length == 1 ? i18n.comments['private']['private_foreveralone'] : i18n.comments['private']['private'];
-	    this.el.down('.option.private label').update(text);
+      this.$('.option.private label').html(text);
     }
 
     this.redrawBox();
@@ -118,7 +119,7 @@
   /* Update Private Elements selections
    */
   PrivateElements.update = function () {
-    this.el.update('');
+    jQuery(this.el).empty();
     this.activate();
 
     var watchers = this.watchers();
@@ -133,31 +134,32 @@
 
     this.handleOptionChange();
 
+    // TODO: Prototype
     if (this.el.visible()) {
-      this.el.select('input').invoke('enable');
+      jQuery(this.el).find('input').attr('disabled', false);
     }
 
     return this;
   };
 
   PrivateElements.allUsersEnabled = function() {
-	  var count = 0
-    , box = this.el
-    , private_users = box.down('.private_users')
-    , users = private_users.select('.private_user input');
+    var count = 0
+    , box = jQuery(this.el)
+    , private_users = box.find('.private_users')
+    , users = private_users.find('.private_user input');
 
     users.each(function(fe){ if (fe.checked) count += 1 })
     return count == users.length
   };
 
   PrivateElements.updateAllUsersEnabled = function() {
-    var box = this.el
-    , users = box.down('.private_users');
-    users.down('.private_all input').checked = this.allUsersEnabled();
+    var box = jQuery(this.el)
+    , users = box.find('.private_users');
+    users.find('.private_all input').checked = this.allUsersEnabled();
   };
 
   PrivateElements.findUser = function(user_id) {
-    return this.people().detect(function(person) {
+    return _(this.people()).detect(function(person) {
       return person.get('user_id') === user_id;
     });
   };
@@ -172,9 +174,8 @@
   };
 
   PrivateElements.redrawBox = function() {
-    var box = this.el;
-    box.select('.private_users').invoke('remove');
-    box.select('.readonly_warning').invoke('remove');
+    var box = jQuery(this.el);
+    box.find('.private_users, .readonly_warning').remove();
 
     var watcher_ids = this.model.get('watchers')
     , is_private = this.model.get('is_private')
@@ -183,36 +184,35 @@
 
     // Update buttons & people list
     // TODO: which form?
-    var watchers = this.comment_form.form.down('.watchers') // see new conversation form
-    , private_input = box.down('.option.private input')
-    , public_input = box.down('.option.normal input')
+    var watchers = this.comment_form.form.find('.watchers') // see new conversation form
+    , private_input = box.find('.option.private input')
+    , public_input = box.find('.option.normal input')
     , i18n = I18n.translations;
 
     if (private_input && private_input.checked) {
-      box.insert({ bottom: this.peopleHTML() });
+      box.append(this.peopleHTML());
       //TODO: What's this?
       if (watchers) {
-        watchers.select('input').invoke('disable');
+        watchers.find('input').attr('disabled', true);
         watchers.hide();
       }
 
       // Update All input
       this.updateAllUsersEnabled();
     } else if (private_input && watchers) {
-      watchers.select('input').invoke('enable');
+      watchers.find('input').attr('disabled', false);
       watchers.show();
     } else if (!private_input && is_private) {
-      box.insert({ bottom: this.peopleShowHTML() 
-      });
+      box.append(this.peopleShowHTML());
       var creator = this.findUser(creator_id);
       if (creator)
         var user = new Teambox.models.User(creator.get('user'))
         , warning = i18n.comments['private']['readonly_warning']
         , user_link = user.full_name_template(creator.get('user'));
 
-        box.insert({ 
-          bottom: '<p class="readonly_warning">' + I18n.t(warning, {user: user_link}) + '</p>'
-        });
+        box.append( 
+          '<p class="readonly_warning">' + I18n.t(warning, {user: user_link}) + '</p>'
+        );
     }
   };
 
@@ -221,28 +221,28 @@
     , private_set = this.model.get('is_private');
 
     if (can_modify) {
-      this.el.insert({bottom: this.private_box_template({
+      jQuery(this.el).append(this.private_box_template({
         object_prefix: this.model.prefix,
         object_type: this.model.type,
         is_public: I18n.translations.comments['private']['public'],
         is_private: I18n.translations.comments['private']['private']
-      })});
+      }));
 
       if (private_set)
-        this.el.down('.option.private input').checked = true;
+        this.$('.option.private input').checked = true;
       else
-        this.el.down('.option.normal input').checked = true;
+        this.$('.option.normal input').checked = true;
     } else {
       // readonly display of watchers
-      this.el.insert({bottom: this.private_box_readonly_template({
+      jQuery(this.el).append(this.private_box_readonly_template({
         is_public: I18n.translations.comments['private']['public'],
         is_private: I18n.translations.comments['private']['private_global']
-      })});
+      }));
 
       if (private_set)
-        this.el.down('.option.normal').hide();
+        this.$('.option.normal').hide();
       else
-        this.el.down('.option.private').hide();
+        this.$('.option.private').hide();
     }
   };
 

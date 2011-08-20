@@ -8,6 +8,8 @@
    * @return self
    */
   ViewsHelper.delegateEventsTo = function(events, el) {
+    console.log("delegateEventsTo is commented during the migration to jQuery");
+    return;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     var eventSplitter = /^(\w+)\s*(.*)$/;
 
     $(this.el).stopObserving();
@@ -40,8 +42,9 @@
     scrollable.scrollTop = old_position ? old_position : new_position;
   }
 
+  // TODO: Not used?
   ViewsHelper.scrollableElement = function(el) {
-    return $('container').down('.content_scroll');
+    return jQuery('#container .content_scroll');
   }
 
   // exports

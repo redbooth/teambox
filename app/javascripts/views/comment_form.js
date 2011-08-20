@@ -47,13 +47,16 @@
    * @returns self;
    */
   CommentForm.render = function () {
-    var self = this;
-    var template = this.simple ? this.simple_template : this.template;
-    if (this.new_conversation)
-      var people_in_project = Teambox.collections.projects.get(this.model.get('project_id')).get('people').models;
-    this.el.update('');
-    this.el.insert({
-      bottom: template(_.extend({
+    var self = this
+    ,   template = this.simple ? this.simple_template : this.template
+    ,   people_in_project;
+
+    if (this.new_conversation) {
+      people_in_project = Teambox.collections.projects.get(this.model.get('project_id')).get('people').models;
+    }
+
+    jQuery(this.el).html(
+      template(_.extend({
         view: this
       , editing: this.editing
       , comment_id: this.comment_id
@@ -63,9 +66,9 @@
       }
       , this.model.getAttributes()
       ))
-    });
+    );
 
-    this.form = this.el.down('form');
+    this.form = this.$('form');
     this.delegateEventsTo(this.events, this.form);
 
     this.updateFormAttributes(this.model.get('project_id'));
@@ -74,52 +77,47 @@
       var statusCollection = Teambox.Models.Task.status.status;
       var assignedCollection = Teambox.helpers.tasks.assignedIdCollection(this.model.get('project_id'));
 
-      var dropdown_task_status = new Teambox.Views.DropDown({
-          el: this.form.down('.dropdown_task_status')
-        , collection: statusCollection
-        , className: 'dropdown_task_status'
-        , selected: _.detect(statusCollection, function(stat) { return stat.value === self.model.get('status');})
-       }).render();
+      console.log('Commenting dropdown task status');
+//      var dropdown_task_status = new Teambox.Views.DropDown({
+//          el: this.form.find('.dropdown_task_status')
+//        , collection: statusCollection
+//        , className: 'dropdown_task_status'
+//        , selected: _.detect(statusCollection, function(stat) { return stat.value === self.model.get('status');})
+//       }).render();
 
-      var dropdown_task_assigned = new Teambox.Views.DropDown({
-          el: this.form.down('.dropdown_task_assigned_id')
-        , collection: assignedCollection
-        , className: 'dropdown_task_assigned_id'
-        , selected: _.detect(assignedCollection, function(stat) { return stat.value === self.model.get('assigned_id');})
-       }).render();
+//      var dropdown_task_assigned = new Teambox.Views.DropDown({
+//          el: this.form.find('.dropdown_task_assigned_id')
+//        , collection: assignedCollection
+//        , className: 'dropdown_task_assigned_id'
+//        , selected: _.detect(assignedCollection, function(stat) { return stat.value === self.model.get('assigned_id');})
+//       }).render();
     }
 
     if (/\d+$/.test(this.model.url())) {
-      this.form.insert({top: new Element('input', {type: 'hidden', name: '_method', value: 'put'})});
+      this.form.prepend( "<input type='hidden' name='_method' value='put'/>" );
     }
 
-    var actions = this.form.down('.subviews');
-    // upload area
-    actions.insert({bottom: this.upload_area.render().el})
+    var actions = this.form.find('.subviews');
 
-    // watchers box
-    actions.insert({bottom: this.watchers.render().el})
-
-    // private elements box
-    actions.insert({bottom: this.private_elements.render().el});
-
-    // google docs
-    this.form.insert({after: this.google_docs.render().el});
+    actions.append(this.upload_area.render().el);
+    actions.append(this.watchers.render().el);
+    actions.append(this.private_elements.render().el);
+    this.form.after(this.google_docs.render().el);
 
     if (this.new_conversation) {
       (function() {
         new Chosen($$('.chzn-select')[0]);
-        $(self.el).down('.to').setStyle({display: 'block'});
+        self.$('.to').css({display: 'block'});
       }).defer();
     }
 
-    if(this.new_conversation) this.form.down('.new_extra').show();
+    if(this.new_conversation) this.form.find('.new_extra').show();
 
     return this;
   };
 
   CommentForm.updateFormAttributes = function(project_id) {
-   this.form.writeAttribute({
+   this.form.attr({
       'accept-charset': 'UTF-8'
     , 'action': this.model.url()
     , 'data-project-id': project_id
@@ -128,7 +126,7 @@
     , 'id': this.simple ? 'new_conversation_form' : ''
     });
 
-    this.form.addClassName("new_comment edit_" + this.model.get('type').toLowerCase());
+    this.form.addClass("new_comment edit_" + this.model.get('type').toLowerCase());
   };
 
  
@@ -140,24 +138,19 @@
    */
   CommentForm.reset = function () {
     // clear comment and reset textarea height
-    this.form.down('textarea').update('').setStyle({height: ''}).value = '';
-    var preview = this.form.down('.preview');
-    if (preview) {
-      preview.remove();
-    }
+    this.form.find('textarea').empty().css({height: ''}).val('');
+    this.form.find('.preview').remove();
 
     if (this.model.className() === 'Task') {
-      this.form.down('.human_hours').value = '';
-      this.form.select('.hours_field').invoke('hide');
+      this.form.find('.human_hours').val('');
+      this.form.find('.hours_field').hide();
     }
 
     this.private_elements.reset();
 
-    this.form.select('.error').invoke('remove');
-    this.form.select('.x-pushsession-id').invoke('remove');
-
-    this.el.select('.google_docs_attachment_form_area .fields input').invoke('remove');
-    this.el.select('.google_docs_attachment_form_area .file_list li').invoke('remove');
+    this.form.find('.error, .x-pushsession-id').remove();
+    this.$('.google_docs_attachment_form_area .fields input').remove();
+    this.$('.google_docs_attachment_form_area .file_list li').remove();
   };
 
   CommentForm.addComment = function (m, resp, upload) {
@@ -188,13 +181,14 @@
   };
 
   CommentForm.handleError = function (m, resp) {
+    var error_container = this.form.find('textarea').parent('div');
     if (typeof resp === 'string') {
       var error = resp;
-      this.form.down('textarea').up('div').insertOrUpdate('p.error', error);
+      error_container.html("<p class='error'>"+error+"</p>");
     }
     else if (resp.errors && resp.errors.length) {
       resp.errors.each(function (error) {
-        this.form.down('textarea').up('div').insertOrUpdate('p.error', error.value);
+        error_container.html("<p class='error'>"+error.value+"</p>");
       });
     }
 
@@ -243,9 +237,7 @@
    * @param {Event} evt
    */
   CommentForm.toggleAttach = function (evt) {
-    if (evt) {
-      evt.stop();
-    }
+    evt && evt.preventDefault();
 
     //TODO: Find a better place to init the uploader
     //Currently, plupload checks for file list container in DOM sw we
@@ -253,7 +245,7 @@
     //Disabling plupload
     // this.initUploader();
 
-    var upload_area = $(this.el).down('.upload_area');
+    var upload_area = this.$('.upload_area');
     upload_area.toggle();
 
     // if (upload_area.visible()) {
@@ -286,8 +278,8 @@
    * @param {Event} evt
    */
   CommentForm.toggleHours = function (evt) {
-    evt.stop();
-    $(this.el).down('.hours_field').toggle().down('input').focus();
+    evt.preventDefault();
+    this.$('.hours_field').toggle().find('input').focus();
   };
 
   /* Toggle the convert to task area
@@ -303,8 +295,8 @@
    * @param {Event} evt
    */
   CommentForm.toggleWatchers = function (evt) {
-    evt.stop();
-    this.form.down('.add_watchers_box').toggle();
+    evt.preventDefault();
+    this.form.find('.add_watchers_box').toggle();
   };
 
   /* Displays the calendar
@@ -312,9 +304,9 @@
    * @param {Event} evt
    */
   CommentForm.showCalendar = function (evt, element) {
-    evt.stop();
+    evt.preventDefault();
 
-    new Teambox.modules.CalendarDateSelect(element.down('input'), element.down('span'), {
+    new Teambox.modules.CalendarDateSelect(element.find('input'), element.find('span'), {
       buttons: true
     , popup: 'force'
     , time: false
@@ -336,7 +328,7 @@
       , people = Teambox.collections.projects.get(this.model.get('project_id')).getAutocompleterUserNames()
       , container;
 
-    this.form.down('.new_extra').show();
+    this.form.find('.new_extra').show();
 
     if (this.autocompleter) {
       this.autocompleter.options.array = people;
@@ -361,25 +353,21 @@
   };
 
   CommentForm.toggleEditMode = function(event, comment_id) {
-    if (event) {
-      event.stop();
-    }
+    event && event.preventDefault();
 
     this.editing = !this.editing;
-    this.form.toggleClassName('editing');
+    this.form.toggleClass('editing');
     this.comment_id = comment_id;
     this.render();
   };
 
   CommentForm.editComment = function(comment) {
     this.toggleEditMode(false, comment.id);
-    var textarea = this.el.down('textarea')
+    var textarea = this.$('textarea')
     ,   comment_body = comment.get('body');
 
     this.focusTextarea(false, textarea);
-    textarea.focus();
-    textarea.setValue(comment_body);
-    textarea.select();
+    textarea.focus().val(comment_body).select();
     Teambox.helpers.views.scrollTo(textarea);
   };
 
@@ -388,4 +376,5 @@
 
   // exports
   Teambox.Views.CommentForm = Backbone.View.extend(CommentForm);
+
 }());

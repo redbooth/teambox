@@ -59,26 +59,28 @@
    * an entry in the collection.
    */
   DropDown.selectFirstEntry = function() {
-    var label = this.el.down('input[type=text]').value;
+    var label = this.$('input[type=text]').val();
 
     if (!label || !label.length) {
-      this.selectOption(_.toArray(this.collection).first());
+      this.selectOption(_.toArray(this.collection)[0]);
     }
     else if (!_.any(this.collection, function(entry){
       return entry.label.toLowerCase() === label.toLowerCase();
     })) {
-      this.selectOption(_.toArray(this.collection).first());
+      this.selectOption(_.toArray(this.collection)[0]);
     }
   };
 
   /* Show/hide dropdown on focus/blur
-   * On blue event, hide is triggered in a timeout
+   * On blur event, hide is triggered in a timeout
    * so as not to conflict with click event.
    * Will also call selectFirstEntry on blur event
    */
   DropDown.setupBlurFocusHandlers = function() {
-    this.el.down('input[type=text]').on('focus', this.showDropDown.bind(this));
-    this.el.down('input[type=text]').on('blur', function(event) {
+    console.log("setupBlurFocusHandlers commented out temporarily");
+    return;
+    this.$('input[type=text]').on('focus', this.showDropDown.bind(this));
+    this.$('input[type=text]').on('blur', function(event) {
       setTimeout(this.hideDropDown.bind(this), 1000)
       this.selectFirstEntry();
     }.bind(this));
@@ -89,10 +91,10 @@
    * @param {Object} event
    */
   DropDown.showDropDown = function(event) {
-    var dropDown = this.el.down('.dropdown_autocomplete');
-    if (dropDown.getStyle('display') === 'none') {
-      dropDown.setStyle({display: 'block'});
-      this.el.down('.dropdown_arrow').setStyle({'background-position': '-93px 0px'});
+    var dropDown = this.$('.dropdown_autocomplete');
+    if (dropDown.css('display') === 'none') {
+      dropDown.css({display: 'block'});
+      this.$('.dropdown_arrow').css({'background-position': '-93px 0px'});
     }
   };
 
@@ -101,10 +103,10 @@
    * @param {Object} event
    */
   DropDown.hideDropDown = function(event) {
-    var dropDown = this.el.down('.dropdown_autocomplete');
-    if (dropDown.getStyle('display') === 'block') {
-      dropDown.setStyle({display: 'none'});
-      this.el.down('.dropdown_arrow').setStyle({'background-position': '0px 0px'});
+    var dropDown = this.$('.dropdown_autocomplete');
+    if (dropDown.css('display') === 'block') {
+      dropDown.css({display: 'none'});
+      this.$('.dropdown_arrow').css({'background-position': '0px 0px'});
     }
   };
 
@@ -113,7 +115,7 @@
    * @param {Array} collection
    */
   DropDown.updateOptions = function(collection) {
-    this.el.down('.dropdown_autocomplete').update(_.reduce(collection, function (memo, entry) {
+    this.$('.dropdown_autocomplete').html(_.reduce(collection, function (memo, entry) {
       memo += '<li data-entry-id="'  + entry.value + '"><span class="entry">';
       memo += entry.label + '</span></li>';
       return memo;
@@ -125,8 +127,8 @@
    * @param {Object} entry
    */
   DropDown.selectOption = function(entry) {
-    this.el.down('input[type=hidden]').value = entry.value;
-    this.el.down('input[type=text]').value = entry.label;
+    this.$('input[type=hidden]').val(entry.value);
+    this.$('input[type=text]').val(entry.label);
     this.trigger('change:selection', entry.value);
   };
 
@@ -136,7 +138,7 @@
    * @param {Object} li
    */
   DropDown.selectEvent = function(event, li) {
-    event.stop();
+    event.preventDefault();
     li = li || event.target;
 
     var entry = _.detect(this.collection, function(e) { return e.value.toString() === li.getAttribute('data-entry-id');});
@@ -154,8 +156,8 @@
    */
   DropDown.selectElement = function(event, li) {
     li = event.target || li;
-    this.el.select('li').each(function(el) {el.removeClassName('selected');});
-    li.addClassName('selected');
+    this.$('li').removeClass('selected');
+    li.addClass('selected');
   };
 
   /* Rerender list with full collection
@@ -187,12 +189,12 @@
     }
     else if (event.keyCode === Event.KEY_RETURN) {
       event.stop();
-      var li = this.el.down('.dropdown_autocomplete li.selected');
+      var li = this.$('.dropdown_autocomplete li.selected');
       this.selectEvent(event, li);
       return false;
     }
     else {
-      var search_term = this.el.down('input[type=text]').value;
+      var search_term = this.$('input[type=text]').val();
 
       if (search_term.length) {
         this.updateOptions(_.select(this.collection, function(entry){
@@ -213,36 +215,35 @@
     this.showDropDown();
 
     if (event.keyCode === Event.KEY_RETURN) {
-      event.stop();
+      event.preventDefault();
       return false;
     }
     // Prevent up/down cursor actions on the input
     else if (event.keyCode === Event.KEY_UP) {
-      var li = this.el.down('.dropdown_autocomplete li.selected');
-      if (li) {
-        var prev = li.previous('li');
-        if (prev) {
-          li.removeClassName('selected');
-          prev.addClassName('selected');
+      var li = this.$('.dropdown_autocomplete li.selected');
+      if (li.length) {
+        var prev = li.prev('li');
+        if (prev.length) {
+          li.removeClass('selected');
+          prev.addClass('selected');
         }
       }
-      return event.stop();
+      return event.preventDefault();
     }
     else if (event.keyCode === Event.KEY_DOWN) {
-      var li = this.el.down('.dropdown_autocomplete li.selected');
-      if (!li) {
-        li = this.el.select('.dropdown_autocomplete li').first();
-        li.addClassName('selected');
+      var li = this.$('.dropdown_autocomplete li.selected');
+      if (!li.length) {
+        li = this.$('.dropdown_autocomplete li').eq().addClass('selected');
       }
       else {
         var next = li.next('li');
-        if (next) { 
-          li.removeClassName('selected');
-          next.addClassName('selected');
+        if (next.length) { 
+          li.removeClass('selected');
+          next.addClass('selected');
         }
       }
 
-      return event.stop();
+      return event.preventDefault();
     }
   };
 

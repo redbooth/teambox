@@ -51,16 +51,16 @@
    * @param {Event} evt
    */
   Thread.reloadComments = function (evt) {
-    evt.stop();
+    evt.preventDefault();
 
-    var el = evt.element()
+    var el = jQuery(evt.currentTarget)
       , self = this
       , options = {project_id: this.model.get('project_id')}
       , comments;
 
     options[this.model.get('type').toLowerCase() + '_id'] = this.model.id;
     comments = new Teambox.Collections.Comments([],options);
-    el.update("<img src='/images/loading.gif' alt='Loading' />");
+    el.html("<img src='/images/loading.gif' alt='Loading' />");
 
     comments.fetch({
       success: function (collection) {
@@ -68,7 +68,7 @@
         _.each(collection.models.reverse(), function (model) {
           html += self.comment_template(model.attributes);
         });
-        el.up('.comments').update(html).blindDown({duration: 0.5});
+        el.parent('.comments').html(html).slideDown(500);
       }
     });
   };
@@ -79,27 +79,27 @@
    * @param {Event} evt
    */
   Thread.editComment = function (event) {
-    var comment = $(event.target).up('.comment')
-    , comment_id = parseInt(comment.getAttribute('data-id'), 10)
+    var comment = jQuery(event.currentTarget).parent('.comment')
+    , comment_id = parseInt(comment.attr('data-id'), 10)
     , comment = this.comments.get(comment_id);
     this.comment_form.editComment(comment);
     this.toggleCommentEditMode(comment_id);
   };
 
   Thread.toggleCommentEditMode = function(comment_id) {
-    var comments = this.el.select('.comments .comment')
-    ,   comment = this.el.down('.comment[data-id=' + comment_id + ']');
+    var comments = this.$('.comments .comment')
+    ,   comment = this.$('.comment[data-id=' + comment_id + ']');
     _.each(comments, function(c) {
       if (c.getAttribute('data-id') !== comment_id.toString()) {
-        c.toggleClassName('editing');
+        c.toggleClass('editing');
       }
     });
   };
 
   Thread.cancelEditMode = function() {
-    var comments = this.el.select('.comments .comment');
+    var comments = this.$('.comments .comment');
     _.each(comments, function(c) {
-        c.removeClassName('editing');
+        c.removeClass('editing');
     });
   };
 
@@ -108,8 +108,8 @@
    * @param {Event} evt
    */
   Thread.deleteComment = function (evt) {
-    var element = evt.element().up('.comment')
-    , comment_id = parseInt(element.readAttribute('data-id'), 10)
+    var element = jQuery(evt.currentTarget).parent('.comment')
+    , comment_id = parseInt(element.attr('data-id'), 10)
     , comment;
 
     comment = this.comments.get(comment_id);
@@ -132,7 +132,7 @@
    * @param {Event} evt
    */
   Thread.setTargetBlank = function (evt) {
-    evt.element().writeAttribute('target', '_blank');
+    jQuery(evt.currentTarget).attr('target', '_blank');
   };
 
   /* adds a comment to the thread
@@ -141,23 +141,22 @@
    * @param {Object} user
    */
   Thread.addComment = function (comment, user, simple) {
-    if (simple)  return;
+    if (simple) return;
 
     if (user) comment.user = user.attributes;
 
     var el = this.comment_template(comment);
 
-    this.el.select('.comments')[0]
-      .insert({bottom: el})
-      .childElements()
-      .last()
-      .highlight({duration: 1});
+    //this.$('.comments')
+    //  .append(el)
+    //  .find(':last-child')
+    //  .highlight(1000);
 
     // update excerpt
-    var excerpt = this.el.down('.comment_header .excerpt');
+    var excerpt = this.$('.comment_header .excerpt');
     if (excerpt) {
-      excerpt.update('<strong>' + comment.user.first_name + ' ' + comment.user.last_name
-                   + '</strong> ' + comment.body);
+      excerpt.html('<strong>' + comment.user.first_name + ' ' + comment.user.last_name
+                  + '</strong> ' + comment.body);
     }
 
     this.comments.add(comment, {silent: true});
@@ -178,9 +177,9 @@
     }
 
     var markup = this.comment_template(comment)
-    ,   el = this.el.down('.comment[data-id=' + comment.id + ']');
+    ,   el = this.$('.comment[data-id=' + comment.id + ']');
 
-    el.replace(markup);
+    el.replaceWith(markup);
 
     this.toggleCommentEditMode(comment.id);
 
@@ -189,15 +188,15 @@
     model.set(comment, {silent: true});
 
     //Refind
-    el = this.el.down('.comment[data-id=' + comment.id + ']');
+    el = this.$('.comment[data-id=' + comment.id + ']');
     Teambox.helpers.views.scrollTo(el);
-    setTimeout(function() {el.highlight({duration: 1});}, 1000);
+    //setTimeout(function() {el.highlight({duration: 1});}, 1000);
 
     // update excerpt
-    var excerpt = this.el.down('.comment_header .excerpt');
+    var excerpt = this.$('.comment_header .excerpt');
     if (excerpt) {
-      excerpt.update('<strong>' + comment.user.first_name + ' ' + comment.user.last_name
-                   + '</strong> ' + comment.body);
+      excerpt.html('<strong>' + comment.user.first_name + ' ' + comment.user.last_name
+                  + '</strong> ' + comment.body);
     }
   };
 
@@ -208,7 +207,7 @@
   Thread.updateThreadAttributes = function(comment, user, simple) {
     if (simple) { return; }
     // Add data attributes to the DOM.
-    this.el.writeAttribute({
+    jQuery(this.el).attr({
       'className': this.model.get('is_private') ? 'thread private' : 'thread'
     , 'data-class': this.model.get('type').toLowerCase()
     , 'data-id': this.model.get('id')
@@ -227,43 +226,43 @@
 
     // Prepare the thread DOM element
     var attributes = this.model.getAttributes();
-     attributes.recent_comments = attributes.recent_comments.reverse();
-    this.el.update(this.template(attributes));
+    attributes.recent_comments = attributes.recent_comments.reverse();
+    jQuery(this.el).html(this.template(attributes));
 
     // Insert the comment form at bottom of the thread element
 
-    this.comment_form.el = this.el.down('div.new_comment_wrap');
+    this.comment_form.el = this.$('div.new_comment_wrap');
     this.comment_form.render();
+    return this;
     if (this.model.isConversation()) {
-      this.el.down('div.new_comment_wrap').insert({bottom: this.convert_to_task.render().el});
+      this.$('div.new_comment_wrap').append(this.convert_to_task.render().el);
     }
 
     return this;
   };
 
   Thread.applyCommentActionRules = function(event) {
-    var actions_menu = $(event.target);
-    if (!actions_menu.hasClassName('actions_menu')) {
-      actions_menu = actions_menu.up('.actions_menu');
+    var actions_menu = jQuery(event.currentTarget);
+    if (!actions_menu.hasClass('actions_menu')) {
+      actions_menu = actions_menu.parent('.actions_menu');
     }
 
-    var comment = actions_menu.up('.comment')
+    var comment = actions_menu.parent('.comment')
     ,   current_user = Teambox.models.user
     ,   projects = Teambox.collections.projects.models
-    ,   user_id = parseInt(comment.readAttribute('data-user'), 10)
-    ,   project_id = parseInt(comment.readAttribute('data-project'), 10)
-    ,   timestamp = parseInt(comment.readAttribute('data-editable-before'), 10);
+    ,   user_id = parseInt(comment.attr('data-user'), 10)
+    ,   project_id = parseInt(comment.attr('data-project'), 10)
+    ,   timestamp = parseInt(comment.attr('data-editable-before'), 10);
 
     // My own comments: I can modify them, a later filter will ensure that only for 15 minutes
     if(user_id == current_user.id) {
-      actions_menu.down('.edit').forceShow();
+      actions_menu.$('.edit').show();
     }
 
     // Projects where I'm admin: I can destroy comments at any time
     var projects_im_admin = Teambox.helpers.projects.getMyAdminProjects(current_user.id);
     if(projects_im_admin.include(project_id)) {
-      actions_menu.down('.edit').forceShow();
-      actions_menu.down('.delete').forceShow();
+      actions_menu.$('.edit, .delete').show();
     }
 
     // Disable editing comments 15 minutes after posting them
@@ -273,10 +272,10 @@
     if (now >= editableBefore) {
       _.each(['edit', 'delete'], function(className) {
 
-         var link = actions_menu.down('a.' + className);
+         var link = actions_menu.$('a.' + className);
          if (link) {
-           var message = link.readAttribute('data-un' + className + 'able-message');
-           link.replace(new Element('span').update(message).addClassName(className));
+           var message = link.attr('data-un' + className + 'able-message');
+           link.replaceWith("<span class="+className+">"+message+"</span>");
          }
       });
     }
