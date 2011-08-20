@@ -25,7 +25,7 @@
    * @return self
    */
   Search.render = function () {
-    this.el.update(this.template());
+    jQuery(this.el).html(this.template());
     return this;
   };
 
@@ -34,7 +34,7 @@
    * @param {Event} evt
    */
   Search.reset = function (evt) {
-    $('searchbox').value = '';
+    jQuery('searchbox').empty();
   }
 
   /* Keyboard navigation for quick results
@@ -47,30 +47,32 @@
       if (this.highlight_index === 0) {
         this.submitSearch();
       } else { // or navigate to the selected element
-        var a = $('quicksearch_results').down('li.selected a');
-        document.location = a.readAttribute('href');
+        var a = jQuery('#quicksearch_results li.selected a');
+        document.location = a.attr('href');
         this.hideQuickResults();
-        $('searchbox').blur();
+        jQuery('#searchbox').blur();
       }
-      evt.stop();
+      evt.preventDefault();
       return;
     }
 
     // Close the search box when clicking Esc
     if (evt.keyCode === Event.KEY_ESC) {
       this.hideQuickResults();
-      $('searchbox').blur();
-      evt.stop();
+      jQuery('#searchbox').blur();
+      evt.preventDefault();
       return;
     }
 
     // Prevent up/down cursor actions on the input
     if (evt.keyCode === Event.KEY_UP) {
-      return evt.stop();
+      evt.preventDefault();
+      return;
     }
 
     if (evt.keyCode === Event.KEY_DOWN) {
-      return evt.stop();
+      evt.preventDefault();
+      return;
     }
   };
 
@@ -79,12 +81,12 @@
    * @param {Event} evt
    */
   Search.showQuickResults = function (evt) {
-    var search_term = $('searchbox').value;
+    var search_term = jQuery('#searchbox').val();
 
     // If text search is empty, hide the results box
     if (search_term.length === 0) {
       this.hideQuickResults();
-      return evt.stop();
+      return evt.preventDefault();
     }
 
     var threads = Teambox.collections.threads
@@ -105,31 +107,32 @@
 
     // Ignore Enter and Esc, since they are already handled on keydown
     if (evt.keyCode === Event.KEY_RETURN) {
-      return evt.stop();
+      return evt.preventDefault();
     }
 
     if (evt.keyCode === Event.KEY_ESC) {
-      return evt.stop();
+      return evt.preventDefault();
     }
 
     // Move highlighted element up or down, if possible
     if (evt.keyCode === Event.KEY_UP) {
       this.moveHighlight(-1);
-      return evt.stop();
+      return evt.preventDefault();
     }
 
     if (evt.keyCode === Event.KEY_DOWN) {
       this.moveHighlight(1);
-      return evt.stop();
+      return evt.preventDefault();
     }
 
     // Display the dropdown menu with results
-    $$('#quicksearch_results').invoke('remove');
-    $(document.body).insert({top: this.quickresult_template({results: found, query: search_term})});
+    jQuery('#quicksearch_results').remove();
+    var html = this.quickresult_template({results: found, query: search_term});
+    jQuery(document.body).prepend(html);
     this.highlight_index = 0;
 
     // Highlight matches in results
-    $$('#quicksearch_results li a').each(function (a) {
+    jQuery('#quicksearch_results li a').each(function (i,a) {
       var regex = new RegExp(search_term, 'ig');
       a.innerHTML = a.innerHTML.replace(regex, "<b>$&</b>");
     });
@@ -140,31 +143,28 @@
    * @param {Integer} inc
    */
   Search.moveHighlight = function (inc) {
-    var lis = $('quicksearch_results').select('li');
+    var lis = jQuery('#quicksearch_results li');
 
-    if (!$('quicksearch_results')) {
-      return;
-    }
+    if (jQuery('#quicksearch_results').length === 0) { return; }
 
     this.highlight_index = (this.highlight_index + inc) || 0;
     this.highlight_index = [0, this.highlight_index].max();
     this.highlight_index = [lis.length - 1, this.highlight_index].min();
 
-    lis.invoke('removeClassName', 'selected');
-    lis[this.highlight_index].addClassName('selected');
+    lis.removeClass('selected');
+    lis.eq(this.highlight_index).addClass('selected');
   };
 
   /* Fade out the quick results dialog
    */
   Search.hideQuickResults = function () {
-    $$('#quicksearch_results').invoke('fade', { duration: 0.2 });
+    jQuery('#quicksearch_results').fadeOut(200);
   };
 
   /* Focus on the search box and select all
    */
   Search.focus = function () {
-    $('searchbox').focus();
-    $('searchbox').select();
+    jQuery('#searchbox').focus().select();
   };
 
   /* Send the search query through the controller, and fetch results
@@ -181,8 +181,8 @@
    */
   Search.getResults = function (query) {
     // Populate searchbox if it's empty (because we loaded a search URL)
-    if (!$('searchbox').value) {
-      $('searchbox').value = query;
+    if (!$('searchbox').val()) {
+      $('searchbox').val(query);
     }
 
     var self = this
@@ -192,20 +192,19 @@
       method: 'get'
     , onLoading: function (r) {
         // Display a placeholder for search
-        $('content').update(
-          self.loading_template({ query: query })
-        );
-        $('content').addClassName('search_results');
+        jQuery('#content')
+          .html(self.loading_template({ query: query }))
+          .addClass('search_results');
       }
     , onComplete: function (r) {
-        $('content').down('.loading').remove();
+        jQuery('#content .loading').remove();
       }
     , onSuccess: function (r) {
         var results = _.parseFromAPI(JSON.parse(r.responseText));
         self.displayResults(results);
       }
     , onFailure: function (r) {
-        $('search_result').update('<p>An error occurred, please try reloading the page.</p>');
+        jQuery('#search_result').html('<p>An error occurred, please try reloading the page.</p>');
       }
     });
   };
@@ -222,7 +221,7 @@
       r.name = (r.name || r.first_comment.stripTags()).truncate(65);
     });
 
-    $('search_results').update(
+    jQuery('#search_results').html(
       this.results_template({results: results, length: results.length})
     );
   };

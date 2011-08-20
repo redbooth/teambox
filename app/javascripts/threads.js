@@ -1,9 +1,9 @@
 Threads = {
   selectNext: function() {
-    Threads.move('next')
+    Threads.move('next');
   },
   selectPrevious: function() {
-    Threads.move('previous')
+    Threads.move('previous');
   },
   move: function(direction) {
     if (!$$('.thread').any()) { return true }
@@ -22,23 +22,25 @@ Threads = {
 
   },
   select: function(element) {
-    $$('.thread.selected').invoke('removeClassName','selected')
-    element.addClassName('selected')
+    jQuery('.thread.selected').removeClass('selected');
+    element.addClass('selected');
   },
   ensureVisible: function(element) {
-      var offsetTop = element.viewportOffset().top
-      if ( offsetTop < 0 || offsetTop + element.getHeight() > document.viewport.getHeight() )
-      {
-        Effect.ScrollTo(element, { duration: '0.4', offset: -40 })
-      }
+    console.log('Disabled ensureVisible');
+    return;
+    var offsetTop = element.viewportOffset().top
+    if ( offsetTop < 0 || offsetTop + element.getHeight() > document.viewport.getHeight() )
+    {
+      Effect.ScrollTo(element, { duration: '0.4', offset: -40 })
+    }
   },
   toggleSelected: function() {
-    ActivityFeed.toggle($$('.thread.selected').first())
+    ActivityFeed.toggle(jQuery('.thread.selected'));
   }
 }
 
 document.on('dom:loaded', function() {
-  Hotkeys.key('j', function() { Threads.selectNext() })
-  Hotkeys.key('k', function() { Threads.selectPrevious() })
-  Hotkeys.key('enter', function() { Threads.toggleSelected() })
+  Hotkeys.key('j', function() { Threads.selectNext(); })
+  Hotkeys.key('k', function() { Threads.selectPrevious(); })
+  Hotkeys.key('enter', function() { Threads.toggleSelected(); })
 });

@@ -97,10 +97,7 @@
   };
 
   Thread.cancelEditMode = function() {
-    var comments = this.$('.comments .comment');
-    _.each(comments, function(c) {
-        c.removeClass('editing');
-    });
+    var comments = this.$('.comments .comment').removeClass('editing');
   };
 
   /* alerts the user and deletes the comment if dangerous
@@ -116,13 +113,11 @@
     comment.set({parent_url: this.model.url()}, {silent: true});
     this.comments.remove(comment, {silent: true});
 
-    evt.stop();
+    evt.preventDefault();
 
     if (confirm('Are you sure?')) {
       comment.destroy({
-        success: function (model) {
-          element.hide();
-        }
+        success: function (model) { element.hide(); }
       });
     }
   };
