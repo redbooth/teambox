@@ -77,20 +77,19 @@
       var statusCollection = Teambox.Models.Task.status.status;
       var assignedCollection = Teambox.helpers.tasks.assignedIdCollection(this.model.get('project_id'));
 
-      console.log('Commenting dropdown task status');
-//      var dropdown_task_status = new Teambox.Views.DropDown({
-//          el: this.form.find('.dropdown_task_status')
-//        , collection: statusCollection
-//        , className: 'dropdown_task_status'
-//        , selected: _.detect(statusCollection, function(stat) { return stat.value === self.model.get('status');})
-//       }).render();
+      var dropdown_task_status = new Teambox.Views.DropDown({
+          el: this.form.find('.dropdown_task_status')
+        , collection: statusCollection
+        , className: 'dropdown_task_status'
+        , selected: _.detect(statusCollection, function(stat) { return stat.value === self.model.get('status');})
+       }).render();
 
-//      var dropdown_task_assigned = new Teambox.Views.DropDown({
-//          el: this.form.find('.dropdown_task_assigned_id')
-//        , collection: assignedCollection
-//        , className: 'dropdown_task_assigned_id'
-//        , selected: _.detect(assignedCollection, function(stat) { return stat.value === self.model.get('assigned_id');})
-//       }).render();
+      var dropdown_task_assigned = new Teambox.Views.DropDown({
+          el: this.form.find('.dropdown_task_assigned_id')
+        , collection: assignedCollection
+        , className: 'dropdown_task_assigned_id'
+        , selected: _.detect(assignedCollection, function(stat) { return stat.value === self.model.get('assigned_id');})
+       }).render();
     }
 
     if (/\d+$/.test(this.model.url())) {
@@ -106,7 +105,7 @@
 
     if (this.new_conversation) {
       (function() {
-        new Chosen($$('.chzn-select')[0]);
+        new Chosen(jQuery('.chzn-select'));
         self.$('.to').css({display: 'block'});
       }).defer();
     }
@@ -320,9 +319,7 @@
    * @param {Event} evt
    */
   CommentForm.focusTextarea = function (evt, element) {
-    if (this.simple) {
-      return;
-    }
+    if (this.simple) { return; }
 
     var textarea = evt ? evt.element() : element
       , people = Teambox.collections.projects.get(this.model.get('project_id')).getAutocompleterUserNames()
