@@ -10,7 +10,7 @@
 //= require <lib/jquery>
 //= require <lib/backbone>
 //= require <lib/backbone.paranoid>
-//= require <lib/chosen.proto>
+//= require <lib/chosen.jquery>
 
 //= require <lib/handlebars>
 //= require <lib/jade>

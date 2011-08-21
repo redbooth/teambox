@@ -105,8 +105,9 @@
 
     if (this.new_conversation) {
       (function() {
-        new Chosen(jQuery('.chzn-select'));
-        self.$('.to').css({display: 'block'});
+        console.log("commenting chosen");
+        //new Chosen(jQuery('.chzn-select'));
+        //self.$('.to').css({display: 'block'});
       }).defer();
     }
 

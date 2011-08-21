@@ -31,7 +31,8 @@
         .hide();
 
     (function() {
-      new Chosen(self.el.down('.chzn-select'));
+      console.log("commenting chosen");
+      //new Chosen(self.el.down('.chzn-select'));
     }).defer();
 
     return this;
