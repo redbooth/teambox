@@ -15,7 +15,7 @@
    * @return self
    */
   SearchResults.render = function () {
-    this.el.update(this.template(this.collection));
+    jQuery(this.el).html(this.template(this.collection));
     return this;
   };
 
