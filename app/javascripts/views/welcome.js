@@ -14,10 +14,10 @@
 
   WelcomeView.render = function () {
     var html = this.template();
-    this.el.update(html);
-    this.el.select('.section').invoke('hide');
+    jQuery(this.el).html(html);
+    this.$('.section').hide();
     this.currentPage = 0;
-    this.totalPages = this.el.select('.section').length;
+    this.totalPages = this.$('.section').length;
     this.updateNavigation();
     return this;
   };
@@ -39,9 +39,9 @@
   };
 
   WelcomeView.updateNavigation = function() {
-    this.el.down('span').update("Page "+(this.currentPage+1)+" / "+this.totalPages);
-    this.el.select('.section').invoke('hide');
-    this.el.select('.section')[this.currentPage].show();
+    this.$('span').html("Page "+(this.currentPage+1)+" / "+this.totalPages);
+    this.$('.section').hide();
+    this.$('.section').eq(this.currentPage).show();
   };
 
   // exports
