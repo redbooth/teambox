@@ -56,36 +56,17 @@ module TasksHelper
   end
 
   def comment_task_due_on(comment)
-    if comment.urgent_change?
+    if comment.urgent_change? || comment.due_on_change?
       [
-        comment.urgent? ? span_for_due_date(comment.previous_due_on) : span_for_urgent(comment),
+        comment.previous_urgent? ? span_for_urgent(comment) :
+          span_for_due_date(comment.previous_due_on),
         content_tag(:span, '&rarr;'.html_safe, :class => "arr due_on_arr"),
-        comment.urgent? ? span_for_urgent(comment) : span_for_due_date(comment.due_on) ,
-      ]
-    elsif comment.due_on_change?
-      [
-        ([
-          span_for_due_date(comment.previous_due_on), 
-          content_tag(:span, '&rarr;'.html_safe, :class => "arr due_on_arr"),
-        ] if comment.due_on_transition?),
-        span_for_due_date(comment.due_on),
-      ]
-    else
-      []
-    end.compact.flatten.join(' ').html_safe
-  end
-  
-  def span_for_urgent(comment)
-    content_tag(:span, t("tasks.urgent.caption"), :class => 'urgent')
-  end
-
-  def comment_task_urgent(comment)
-    if comment.urgent_change?
-      text = comment.urgent? ? t('tasks.urgent.set') : t('tasks.urgent.unset')
-      content_tag(:p, text, :class => "urgent_transition")
+        comment.urgent? ? span_for_urgent(comment) : 
+          span_for_due_date(comment.due_on),
+      ].join(' ').html_safe
     end
   end
-
+  
   def task_status(task,status_type)
     status_for_column = status_type == :column ? "task_status_#{task.status_name}" : "task_counter"
     out = %(<span data-task-id=#{task.id} class='task_status #{status_for_column}'>)
@@ -181,6 +162,10 @@ module TasksHelper
       content_tag(:span, task_due_on(due_date),
         :class => "assigned_date")
     end
+
+    def span_for_urgent(comment)
+      content_tag(:span, t("tasks.urgent.caption"), :class => 'urgent')
+    end    
     
     def span_for_thread_due_date(task)
       content_tag(:span, due_on(task),
