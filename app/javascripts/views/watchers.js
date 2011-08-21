@@ -31,7 +31,7 @@
    */
   Watchers.render = function () {
     this.update();
-    this.el.hide();
+    jQuery(this.el).hide();
     return this;
   };
 
@@ -49,7 +49,7 @@
       var users = _.map(this.project.get('people').models, function (person) {
             return person.get('user');
           });
-      this.el.update(this.template({users: users}));
+      jQuery(this.el).html(this.template({users: users}));
     }
   };
 
@@ -59,13 +59,14 @@
    * @return false
    */
   Watchers.addWatcher = function (evt) {
-    evt.stop();
+    evt.preventDefault();
 
     var el = evt.element()
-      , textarea = el.up("form").down("textarea")
-      , login = el.readAttribute('data-login');
+      , textarea = el.parent("form").find("textarea")
+      , login = el.attr('data-login');
 
-    if (textarea.value.length > 0 && textarea.value[textarea.value.length - 1] !== ' ') {
+    // Correct spaces
+    if (textarea.val().length && textarea.val()[textarea.val().length - 1] !== ' ') {
       textarea.value += " ";
     }
 
