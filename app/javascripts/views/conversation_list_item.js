@@ -15,19 +15,19 @@
     this.root_view = options.root_view;
     this.root_view.bind('change_selection', function(conversation){
       if (self.model.id == conversation.id)
-        self.el.addClassName('active');
+        jQuery(self.el).addClass('active');
       else
-        self.el.removeClassName('active');
+        jQuery(self.el).removeClass('active');
     });
     this.model.bind('change', this.render);
   };
-  
+
   ConversationListItem.setConversation = function() {
     this.root_view.setActive(this.model);
     document.location.hash = '!/projects/' + this.root_view.project_id + '/conversations/' + this.model.id;
   };
-  
-  
+
+
   // Shorten a string adding '...' at the end
   _shorten = function(comment, max_lenght) {
     if(comment.length > max_lenght) {
@@ -37,13 +37,13 @@
     }
     return comment;
   };
-  
+
   ConversationListItem.render = function () {	
     this.el.className = 'conversation';
     if(this.model.isLoaded()) {
-      
+
       var first_comment = _shorten(this.model.get('first_comment').body.stripTags(), 40);
-      
+
       // Generate commenters string
       var commenters = [];
       commenters.push(this.model.get('first_comment').user.username);
@@ -53,16 +53,16 @@
       commenters = _.uniq(commenters);
       var commenters_s = commenters[0];
       _.each(commenters.splice(1), function(commenter) { return commenters_s += ', ' + commenter});
-      
+
       var html = this.template({
         name: this.model.get('name')
       , first_comment: first_comment
       , commenters: commenters_s
       });
-      
-      this.el.update(html);
+
+      jQuery(this.el).html(html);
     } else {
-      this.el.update(loading());
+      jQuery(this.el).html(loading());
     }
     return this;
   };

@@ -22,12 +22,12 @@
    */
   ConversationNew.render = function () {
     var html = this.template(this.model.getAttributes());
-    this.el.update(html);
+    jQuery(this.el).html(html);
 
     // Render comment form
-    this.comment_form.el = this.el.down('div.new_conversation');
+    this.comment_form.el = this.$('div.new_conversation');
     this.comment_form.render();
-    //this.el.down('div.new_comment_wrap').insert({bottom: this.convert_to_task.render().el});
+    this.$('div.new_comment_wrap').append(this.convert_to_task.render().el);
 
     return this;
   }
