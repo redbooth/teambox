@@ -17,7 +17,7 @@
    * @return self
    */
   PageTeaser.render = function () {
-    this.el.update(this.template(this.model));
+    jQuery(this.el).html(this.template(this.model));
     return this;
   };
 
