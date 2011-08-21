@@ -32,11 +32,7 @@
 
   ConversationList.addConversation = function(conversation, collection) {
     var view = new Teambox.Views.ConversationListItem({model:conversation, root_view: this});
-    this.el
-      .down('.conversation_list')
-      .down('.conversation_list_inner')
-      .down('.header')
-      .insert({after: view.render().el});
+    this.$('.conversation_list .conversation_list_inner .header').after( view.render().el );
 
     document.location.hash = '!/projects/' + this.project_id + '/conversations/' + conversation.id;
   };
@@ -59,19 +55,16 @@
 
       if(project_matches){
         var view = new Teambox.Views.ConversationListItem({model:conversation, root_view: self});
-        self.conversation_list
-          .down('.conversation_list_inner')
-          .down('.clear')
-          .insert({before: view.render().el});
+        self.conversation_list.find('.conversation_list_inner .clear').before(view.render().el);
       }
     });
   };
 
   ConversationList.render = function () {
     var Views = Teambox.Views, self = this;
-    this.el.update(this.template({project_id: this.project_id}));
-    this.conversation_list = this.el.down('.conversation_list');
-    this.conversation_view = this.el.down('.conversation_view');
+    jQuery(this.el).html(this.template({project_id: this.project_id}));
+    this.conversation_list = this.$('.conversation_list');
+    this.conversation_view = this.$('.conversation_view');
 
     this.reload(this.collection, this.project_id);
 
@@ -82,7 +75,7 @@
       } else {
         view = new Teambox.Views.Conversation({model: this.conversation});
       }
-      this.conversation_view.update(view.render().el);
+      this.conversation_view.html(view.render().el);
     }
     return this;
   };
@@ -91,18 +84,14 @@
   ConversationList.showScroll = function() {
     if(this.showing_scrollbar) return;
     this.showing_scrollbar = true;
-    this.el.down('.conversation_list').setStyle({
-      "overflow-y": 'auto'
-    });
+    this.$('.conversation_list').css({ "overflow-y": 'auto' });
   };
 
   // When mouse out conversations list, hide the scrollbar
   ConversationList.hideScroll = function() {
     if(!this.showing_scrollbar) return;
     this.showing_scrollbar = false;
-    this.el.down('.conversation_list').setStyle({
-      "overflow-y": 'hidden'
-    });
+    this.$('.conversation_list').css({ "overflow-y": 'hidden' });
   };
 
   // exports

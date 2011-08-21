@@ -28,14 +28,14 @@
     var self = this;
     if(this.model.isLoaded()) {
       var html = this.template(this.model.getAttributes());
-      this.el.update(html);
+      jQuery(this.el).html(html);
       var options = {
         conversation_id: this.model.id
       };
       comments = new Teambox.Collections.Comments([], options);
 
       // Show loader
-      // this.el.down('.comments').update("<img src='/images/loading.gif' alt='Loading' />");
+      this.$('.comments').html("<img src='/images/loading.gif' alt='Loading' />");
 
       comments.fetch({
         success: function (collection) {
@@ -43,42 +43,38 @@
           _.each(collection.models.reverse(), function (model) {
             html += self.comment_template(model.attributes);
           });
-          self.el.down('.comments').update(html);
+          self.$('.comments').html(html);
           self.comment_form.el.show();
         },
         error: function(c, r) {
           self.showError.call(self, r);
         }
       });
-      
+
       // Render comment form
-      this.comment_form.el = this.el.down('div.new_comment_wrap').hide();
+      this.comment_form.el = this.$('div.new_comment_wrap').hide();
       this.comment_form.render();
-      this.el.down('div.new_comment_wrap').insert({bottom: this.convert_to_task.render().el});
-      
+      this.$('div.new_comment_wrap').append( this.convert_to_task.render().el );
+
     } else {
-      
+
       // TODO: loader() is not defined
-      this.el.update(loading());
+      jQuery(this.el).html(loading());
     }
     return this;
   };
-  
+
   Conversation.addComment = function(comment) {
     var el = this.comment_template(comment);
-    
-    this.el
-      .down('.comments')
-      .insert({ bottom: el })
-      .childElements()
-      .last()
-      .highlight({duration: 1});
+
+    this.$('.comments').append(el);
+      //.childElements().last().highlight({duration: 1});
   };
-  
+
   Conversation.showError = function(r) {
-    this.el.update('<div class="error">Error: ' + r.responseText.evalJSON().errors.message + '</div>');
+    jQuery(this.el).html('<div class="error">Error: ' + r.responseText.evalJSON().errors.message + '</div>');
   };
-  
+
   // exports
   Teambox.Views.Conversation = Backbone.View.extend(Conversation);
 }());
