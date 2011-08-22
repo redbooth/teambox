@@ -18,9 +18,8 @@ Search = {
     // Save the last query, and don't re-search if it's the same one we just fetched
     if (Search.lastQueryTyped == query) { return; }
     Search.lastQueryTyped = query;
-
     // Perform an API call to fetch search results
-    var url = "/api/1/search/?q="+escape(query) + (page ? '&page=' + page : '');
+    var url = "/api/1/search/?q="+encodeURIComponent(query) + (page ? '&page=' + page : '');
     Search.fetch(url, query, page);
   },
   fetch: function(url, query, page) {
@@ -34,7 +33,7 @@ Search = {
         // Display a placeholder for search
         Pane.replace(
           Mustache.to_html(Templates.search.loading, { query: query }),
-          "/search/?q="+escape(query) + (page ? '&page=' + page : '')
+          "/search/?q="+query + (page ? '&page=' + page : '')
         );
         $('content').addClassName('search_results');
         $('content').down('.pagination_links').hide();
@@ -97,7 +96,7 @@ Search = {
       };
 
       for (var i = 0; i < response.total_pages; i++) {
-        var url = "/api/1/search/?q="+escape(query) + '&page=' + (i + 1)
+        var url = "/api/1/search/?q="+encodeURIComponent(query) + '&page=' + (i + 1)
         , entry = new Element('li', {})
         , info = entry_info(i + 1
                             , response.per_page

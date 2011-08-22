@@ -3,7 +3,7 @@ class ApiV1::SearchController < ApiV1::APIController
 
   def index
     authorize! :show, current_user
-    @search_terms = params[:q]
+    @search_terms = CGI::unescape(params[:q])
 
     unless @search_terms.blank?
       @results = ThinkingSphinx.search @search_terms,
