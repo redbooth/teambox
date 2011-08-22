@@ -13,7 +13,6 @@
 
   ProjectsController.projects_index = function () {
     Views.Sidebar.highlightSidebar('projects_link');
-    $('content_header').update('');
     $('content').update((new Views.Projects({collection: collections.projects})).render().el);
   };
 
@@ -26,7 +25,6 @@
 
     Views.Sidebar.highlightSidebar('activity_link');
     $('view_title').update('Recent activity');
-    $('content_header').show().update((new Teambox.Views.SimpleConversationForm()).render().el);
     $('content').update((new Teambox.Views.Activities({collection: threads})).render().el);
   };
 
@@ -37,7 +35,6 @@
       , threads = Teambox.helpers.projects.filterActivitiesByProject(project.id, Teambox.collections.threads);
 
     $('view_title').update(project.get('name') + ' - Recent activity');
-    $('content_header').update((new Teambox.Views.SimpleConversationForm()).render().el);
     $('content').update((new Teambox.Views.Activities({collection: threads})).render().el);
   };
 
@@ -48,8 +45,6 @@
       , project = collections.projects.getByPermalink(permalink)
       , task_lists = project.get('task_lists').setTasks(tasks)
       , view = new Views.TaskLists({collection: task_lists, project: project, el: $('content')});
-
-    $('content_header').update('');
 
     // render
     view.render();

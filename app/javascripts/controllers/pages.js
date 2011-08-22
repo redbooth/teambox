@@ -7,7 +7,6 @@
     var collection = Teambox.collections.conversations;
     var page = new Teambox.Models.Page();
     var view = new Teambox.Views.PageList({collection: collection, page: page, project_id: project});
-    $('content_header').update('');
     $('content').update(view.render().el);
   };
 
@@ -23,7 +22,6 @@
 
     var collection = Teambox.collections.pages;
     var view = new Teambox.Views.PageList({collection: collection, page: model, project_id: project_id});
-    $('content_header').update('');
     $('content').update(view.render().el);
 
     view.setActive(model);
@@ -35,7 +33,6 @@
   PagesController.index = function(project_id) {
     var collection = Teambox.collections.pages;
     var view = new Teambox.Views.PageList({collection: collection, project_id: project_id});
-    $('content_header').update('');
     $('content').update(view.render().el);
 
     Teambox.Views.Sidebar.highlightSidebar('project_' + project_id + '_pages');
