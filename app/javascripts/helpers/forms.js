@@ -6,7 +6,7 @@
    * @return self
    */
   FormsHelper.showDisabledInput = function(form) {
-    var inputs = form.find("input[type=submit][data-disable-with]");
+    var inputs = jQuery(form).find("input[type=submit][data-disable-with]");
     inputs.each(function(i,input) {
       jQuery(input)
         .val(jQuery(input).attr('data-disable-with'))
@@ -21,7 +21,7 @@
    * @return self
    */
   FormsHelper.restoreDisabledInputs = function(form) {
-    var inputs = form.find("input[type=submit][disabled=true][data-disable-with]");
+    var inputs = jQuery(form).find("input[type=submit][disabled=true][data-disable-with]");
     inputs.each(function(i,input) {
       jQuery(input)
         .val(jQuery(input).attr('data-original-value'))

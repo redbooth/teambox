@@ -136,16 +136,15 @@
    * @param {Object} user
    */
   Thread.addComment = function (comment, user, simple) {
+    console.log("add comment");
     if (simple) return;
 
     if (user) comment.user = user.attributes;
 
     var el = this.comment_template(comment);
 
-    //this.$('.comments')
-    //  .append(el)
-    //  .find(':last-child')
-    //  .highlight(1000);
+    this.$('.comments').append(el);
+    //  el.highlight(1000);
 
     // update excerpt
     var excerpt = this.$('.comment_header .excerpt');

@@ -214,7 +214,7 @@
 
     Teambox.helpers.forms.showDisabledInput(this.el);
 
-    //Add the type if it's missing for valiate method
+    //Add the type if it's missing for validate method
     this.model.save(_.extend(data, {type: this.model.className()}), {
       success: this.editing ? this.updateComment : this.addComment
     , error: this.handleError.bind(this)
