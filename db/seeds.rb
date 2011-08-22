@@ -177,6 +177,7 @@ def seed_data
   earthworks = frank.projects.new(:name => "Earthworks Yoga",
                                   :permalink => "earthworks",
                                   :public => true).tap do |p| 
+    p.user = User.first
     p.organization = organization
     p.save!
   end
