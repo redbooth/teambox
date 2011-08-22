@@ -20,33 +20,32 @@
   ConvertToTask.render = function () {
     var select;
 
-    this.el.writeAttribute({
-      'accept-charset': 'UTF-8'
-    , 'action': this.model.convertToTaskUrl()
-    , 'method': 'POST'
-    });
-
-    this.el.hide();
-    this.el.update(this.template());
+    jQuery(this.el)
+      .attr({
+          'accept-charset': 'UTF-8'
+        , 'action': this.model.convertToTaskUrl()
+        , 'method': 'POST' })
+      .hide()
+      .html(this.template());
 
     var statusCollection = Teambox.Models.Task.status.status
     ,   assignedCollection = Teambox.helpers.tasks.assignedIdCollection(this.model.get('project_id'))
     ,   taskListCollection = Teambox.helpers.task_lists.taskListsCollection(this.model.get('project_id'));
 
     var dropdown_task_task_list = new Teambox.Views.DropDown({
-        el: this.el.down('.dropdown_conversation_task_list_id')
+        el: this.$('.dropdown_conversation_task_list_id')
       , collection: taskListCollection
       , className: 'dropdown_conversation_task_list_id'
      }).render();
 
     var dropdown_task_status = new Teambox.Views.DropDown({
-        el: this.el.down('.dropdown_conversation_status')
+        el: this.$('.dropdown_conversation_status')
       , collection: statusCollection
       , className: 'dropdown_conversation_status'
      }).render();
 
     var dropdown_task_assigned = new Teambox.Views.DropDown({
-        el: this.el.down('.dropdown_conversation_assigned_id')
+        el: this.$('.dropdown_conversation_assigned_id')
       , collection: assignedCollection
       , className: 'dropdown_conversation_assigned_id'
      }).render();
@@ -59,9 +58,9 @@
    * @param {Event} evt
    */
   ConvertToTask.toggle = function (evt) {
-    evt.stop();
+    evt.preventDefault();
 
-    this.el.toggle();
+    jQuery(this.el).toggle();
     this.comment_form.form.toggle();
   };
 
@@ -73,7 +72,7 @@
   ConvertToTask.convertToTask = function (evt) {
     var self = this;
 
-    evt.stop();
+    evt.preventDefault();
     this.model.convertToTask(
       this.el.serialize(true)
     , function onSuccess(transport) {
@@ -85,8 +84,8 @@
             Teambox.collections.threads.add(task);
 
             setTimeout(function() {
-              var el = $('activities').down('.thread[data-class=' + task.type() + '][data-id=' + task.id + ']');
-              if (el) { 
+              var el = jQuery('#activities .thread[data-class=' + task.type() + '][data-id=' + task.id + ']');
+              if (el.length) { 
                 Effect.ScrollTo(el, { duration: '0.4'});
               }
             }, 500);
@@ -104,11 +103,10 @@
     , function onError(transport) {
         var message = transport.responseJSON;
         message.errors.each(function (error) {
-          self.el.down('#conversation_name').insert({after: "<p class='error'>" + error.message + "</p>"});
+          self.$('#conversation_name').after("<p class='error'>" + error.message + "</p>");
         })
       }
     );
-    return false;
   };
 
   // exports
