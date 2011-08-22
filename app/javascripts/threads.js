@@ -23,7 +23,7 @@ Threads = {
   },
   select: function(element) {
     jQuery('.thread.selected').removeClass('selected');
-    element.addClass('selected');
+    jQuery(element).addClass('selected');
   },
   ensureVisible: function(element) {
     console.log('Disabled ensureVisible');
@@ -39,8 +39,11 @@ Threads = {
   }
 }
 
-document.on('dom:loaded', function() {
-  Hotkeys.key('j', function() { Threads.selectNext(); })
-  Hotkeys.key('k', function() { Threads.selectPrevious(); })
-  Hotkeys.key('enter', function() { Threads.toggleSelected(); })
+jQuery(function() {
+
+  jQuery(document)
+    .bind('keydown', 'j', function() { Threads.selectNext(); })
+    .bind('keydown', 'k', function() { Threads.selectPrevious(); })
+    .bind('keydown', 'enter', function() { Threads.toggleSelected(); })
+
 });

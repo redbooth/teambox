@@ -1,26 +1,26 @@
 Keyboard = {
   showHelp: function() {
-    if (!$('keyboard_shortcuts').visible()) {
-      Effect.Appear('keyboard_shortcuts', { duration: 0.4 });
+    if (!jQuery('#keyboard_shortcuts').is(":visible")) {
+      jQuery('#keyboard_shortcuts').fadeIn(400);
       setTimeout(function() { Keyboard.hideHelp(); }, 5000);
     }
   },
   hideHelp: function() {
-    Effect.Fade('keyboard_shortcuts', { duration: 0.4 });
+    jQuery('#keyboard_shortcuts').fadeOut(400);
   }
 };
 
-document.on('dom:loaded', function() {
-  // Help menu
-  Hotkeys.key('h', function() { Keyboard.showHelp(); });
-
-  // Map search
-  Hotkeys.key('s', function() { Teambox.views.search_view.focus(); });
-  Hotkeys.key('/', function() { Teambox.views.search_view.focus(); });
-
-  // Map navigation
-  Hotkeys.key('q', '#!/');
-  Hotkeys.key('w', '#!/today');
-  Hotkeys.key('e', '#!/my_tasks');
-  Hotkeys.key('r', '#!/all_tasks');
+jQuery(function() {
+  var go = function(href) { return function() { document.location = href; } };
+  jQuery(document)
+    // Help menu
+    .bind('keydown', 'h', Keyboard.showHelp)
+    // Map search
+    .bind('keydown', 'ctrl+s', function() { Teambox.views.search_view.focus(); })
+    .bind('keydown', '/', function() { Teambox.views.search_view.focus(); })
+    // Map navigation
+    .bind('keydown', 'ctrl+q', go('#!/activities'))
+    .bind('keydown', 'ctrl+w', go('#!/today'))
+    .bind('keydown', 'ctrl+e', go('#!/my_tasks'))
+    .bind('keydown', 'ctrl+r', go('#!/all_tasks'))
 });
