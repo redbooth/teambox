@@ -228,7 +228,7 @@
 
     this.comment_form.el = this.$('div.new_comment_wrap');
     this.comment_form.render();
-    return this;
+
     if (this.model.isConversation()) {
       this.$('div.new_comment_wrap').append(this.convert_to_task.render().el);
     }

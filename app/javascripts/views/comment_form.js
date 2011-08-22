@@ -14,7 +14,7 @@
   , 'click .date_picker'           : 'showCalendar'
   , 'click a.private_switch'       : 'togglePrivateElements'
   , 'click a.google_doc_icon'      : 'showGoogleDocs'
-  , 'focusin textarea'             : 'focusTextarea'
+  , 'focus textarea'               : 'focusTextarea'
   , 'click .cancel'                : 'cancelEditMode'
   };
 
