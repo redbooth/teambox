@@ -13,7 +13,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
       limit(api_limit(:hard => true))
 
     @activities = @activities.threads.except(:order).by_thread if params[:threads]
-    api_respond @activities, :references => true
+    api_respond @activities, :references => true, :include => api_include
   end
 
   def show
@@ -21,7 +21,7 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     authorize!(:show, @activity) if @activity
     
     if @activity
-      api_respond @activity, :references => true, :include => [:uploads]
+      api_respond @activity, :references => true, :include => api_include([:uploads])
     else
       api_error :not_found, :type => 'ObjectNotFound', :message => 'Not found'
     end
@@ -46,5 +46,9 @@ class ApiV1::ActivitiesController < ApiV1::APIController
     if params[:project_id] && @current_project.nil?
       api_error :not_found, :type => 'ObjectNotFound', :message => 'Target not found'
     end
+  end
+  
+  def api_include(default=[])
+    [:user, :google_docs, :uploads] & ((params[:include]||[])+default).map(&:to_sym)
   end
 end

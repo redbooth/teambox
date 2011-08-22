@@ -17,6 +17,42 @@ describe ApiV1::ActivitiesController do
 
       JSON.parse(response.body)['objects'].map{|a| a['id'].to_i}.sort.should == (@project.activity_ids+@other_project.activity_ids).sort
     end
+    
+    it "shows uploads in comments when requested" do
+      login_as @user
+      
+      @conversation = Factory.create(:conversation, :project => @project, :body => 'Test conversation')
+      @task = Factory.create(:conversation, :project => @project, :body => 'Test conversation')
+      @task.updating_user = @task.user
+      @task.update_attributes(:comments_attributes => {'0' => {'body' => 'Test'}})
+      
+      @upload = @project.uploads.new({:asset => mock_uploader('semicolons.js', 'application/javascript', "alert('what?!')")})
+      @upload.comment = @conversation.comments.first
+      @upload.user = @user
+      @upload.save!
+      
+      @other_upload = @project.uploads.new({:asset => mock_uploader('jquery.js', 'application/javascript', ";")})
+      @other_upload.comment = @task.comments(true).first
+      @other_upload.user = @user
+      @other_upload.save!
+
+      get :index, :include => [:uploads, :google_docs]
+      response.should be_success
+
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      references.include?("#{@upload.id}_Upload").should == true
+      references.include?("#{@other_upload.id}_Upload").should == true
+      
+      comment_ids = [@task.comments(true).first.id, @conversation.comments.first.id]
+      comments = data['references'].reject{ |o| !(o['type'] == 'Comment' && comment_ids.include?(o['id'])) }
+      comments.length.should == 2
+      
+      comments.each do |comment|
+        comment['uploads'].should_not == nil
+        comment['upload_ids'].should_not == nil
+      end
+    end
 
     it "shows activities as JSON when requested with :text format" do
       login_as @user
