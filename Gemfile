@@ -1,14 +1,21 @@
 source :rubygems
 
 group :rails do
-  gem 'rails', '~> 3.0.9'
-  gem 'builder', '~> 2.1.2'
+  gem 'rails', '~> 3.1.0.rc4'
+  #gem 'builder', '~> 2.1.2'
   gem 'memcache-client', '>= 1.7.4', :require => nil
   gem 'tzinfo', '~> 0.3.12'
   gem 'i18n', '>= 0.1.3'
   gem 'tmail', '~> 1.2.3'
   gem 'text-format', '>= 0.6.3', :require => 'text/format'
 end
+
+# Rails 3.1 - Asset Pipeline
+gem 'json'
+#gem 'coffee-script'
+gem 'uglifier'
+# Rails 3.1 - JavaScript
+#gem 'jquery-rails'
 
 #Temporary hack - Fix once this ticket: is resolved
 gem 'activesupport-i18n-patch', :git => 'git://github.com/teambox/activesupport-i18n-patch.git'
@@ -21,13 +28,13 @@ gem 'libxml-ruby', '1.1.3', :require => 'libxml'
 gem 'rdiscount', '~> 1.6.3'
 gem 'haml', '~> 3.1.2'
 gem 'sass', '~> 3.1.2'
-gem 'mysql2'
+gem 'mysql2' #, "0.3.2"
 #gem 'mysql', '~> 2.8.1', :require => nil, :group => 'mysql'
 gem 'pg', '~> 0.9.0', :require => nil, :group => 'pg'
 gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
 gem 'hpricot', '~> 0.8.2'
 gem 'json'
-gem 'oa-oauth', '= 0.2.3', :require => 'omniauth/oauth'
+gem 'oa-oauth' #, '= 0.2.3', :require => 'omniauth/oauth'
 gem 'hashie'
 gem 'tilt', '~> 1.2.2'
 gem 'choices', :git => "git://github.com/teambox/choices.git"
@@ -38,12 +45,12 @@ gem 'rabl'
 
 gem "will_paginate", :git=>"git://github.com/teambox/will_paginate.git"
 gem 'thinking-sphinx', '2.0.1', :require => 'thinking_sphinx'
-gem 'sprockets-rails', '~> 0.0.1'
 gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_versions'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.4.1'
-gem 'immortal', '~> 0.1.6', :git=>"git://github.com/teambox/immortal.git"
+#gem 'immortal', :git=>"git://github.com/micho/immortal.git"
+gem 'immortal', :path => "~/code/immortal"
 gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer' 
 gem 'jammit'
 gem 'juggernaut'
@@ -63,7 +70,7 @@ end
 
 group :test, :development do
   gem 'thin'
-  gem 'rspec-rails', '~> 2.3.1'
+  #gem 'rspec-rails', '~> 2.6.0'
   gem 'webrat'
   gem 'fuubar'
   gem 'faker', :require => nil
