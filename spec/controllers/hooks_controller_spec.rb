@@ -348,55 +348,6 @@ describe HooksController do
     end
     
     describe "GitHub" do
-
-      it "posts to the project timeline" do
-        payload = <<-JSON
-          {
-            "before": "5aef35982fb2d34e9d9d4502f6ede1072793222d",
-            "repository": {
-              "url": "http://github.com/defunkt/github",
-              "name": "github",
-              "description": "You're lookin' at it.",
-              "watchers": 5, "forks": 2, "private": 1,
-              "owner": { "email": "chris@ozmm.org", "name": "defunkt" }
-            },
-            "commits": [
-              {
-                "id": "41a212ee83ca127e3c8cf465891ab7216a705f59",
-                "url": "http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59",
-                "author": { "email": "chris@ozmm.org", "name": "Chris Wanstrath" },
-                "message": "okay i give in",
-                "timestamp": "2008-02-15T14:57:17-08:00",
-                "added": ["filepath.rb"]
-              },
-              {
-                "id": "de8251ff97ee194a289832576287d6f8ad74e3d0",
-                "url": "http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0",
-                "author": { "email": "chris@ozmm.org", "name": "Chris Wanstrath" },
-                "message": "update pricing a tad",
-                "timestamp": "2008-02-15T14:36:34-08:00"
-              }
-            ],
-            "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
-            "ref": "refs/heads/master"
-          }
-        JSON
-        
-        post :create, :payload => payload, :hook_name => 'github', :project_id => @project.id
-        
-        conversation = @project.conversations.first
-        conversation.should be_simple
-        conversation.name.should be_nil
-        
-        expected = (<<-HTML).strip
-        New code on <a href='http://github.com/defunkt/github'>github</a> refs/heads/master
-
-Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59'>okay i give in</a><br>
-Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0'>update pricing a tad</a><br>
-        HTML
-        
-        conversation.comments.first.body.strip.should == expected.strip
-      end
       
       it "accepts hooks without commits" do
         payload = <<-JSON
@@ -444,7 +395,7 @@ Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee1
 
         @other_task = Factory(:task, {:project => @project, :user => @chris, :task_list => @task_list, :name => "Do something Mislav"})
         @other_task.assign_to @mislav
-        
+      
         payload = <<-JSON
           {
             "before": "5aef35982fb2d34e9d9d4502f6ede1072793222d",
@@ -472,11 +423,25 @@ Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee1
                 "timestamp": "2008-02-15T14:36:34-08:00"
               },
               {
+                "id": "7gh251ff97ee194a289832576287d6f8ad74uiui6",
+                "url": "http://github.com/defunkt/github/commit/7gh251ff97ee194a289832576287d6f8ad74uiui6",
+                "author": { "email": "chris@ozmm.org", "name": "Chris Wanstrath" },
+                "message": "Not existing task [9999]",
+                "timestamp": "2008-02-15T16:39:34-08:00"
+              },
+              {
+                "id": "hj6251i97ee19tyr28ig676F76287d6f8ag5r5Y5",
+                "url": "http://github.com/defunkt/github/commit/hj6251i97ee19tyr28ig676F76287d6f8ag5r5Y5",
+                "author": { "email": "chris@ozmm.org", "name": "Chris Wanstrath" },
+                "message": "Forgot task id",
+                "timestamp": "2008-02-16T17:07:12-08:00"
+              },
+              {
                 "id": "hju8251ff97ee194a289832576287d6f89ui7978h",
                 "url": "http://github.com/defunkt/github/commit/hju8251ff97ee194a289832576287d6f89ui7978h",
                 "author": { "email": "mislav@fuckingawesome.com", "name": "Mislav Marohnić" },
                 "message": "Commit for different task [#{@other_task.id}]",
-                "timestamp": "2008-02-16T12:66:37-07:00"
+                "timestamp": "2008-02-16T12:66:37-08:00"
               }
             ],
             "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
@@ -486,6 +451,7 @@ Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee1
 
         post :create, :payload => payload, :hook_name => 'github', :project_id => @project.id
         @task.reload
+        @other_task.reload
 
         first_comment = @task.recent_comments.first
 
@@ -516,6 +482,9 @@ Posted on Github: <a href=\"http://github.com/defunkt/github\">github</a> refs/h
 
         @task.status_name.should equal :resolved
         @other_task.status_name.should_not equal :resolved
+
+        Comment.find_by_body('Forgot_task_id').should be nil
+        Comment.find_by_body('Not existing task [9999]').should be nil
 
       end
 

@@ -33,7 +33,7 @@ describe GithubIntegration  do
       "before"=>"5aef35982fb2d34e9d9d4502f6ede1072793222d"}
   end
 
-  it "should leave commits with task id and grouped them by it" do
+  it "should leave only commits with task id and group them by it" do
 
     payload_with_task_ids = GithubIntegration::Parser.commits_with_task_ids(@payload)
 
@@ -57,17 +57,6 @@ describe GithubIntegration  do
           "close" => true,
           "message"=>"Finish with task [close-123]"}
       ]}
-  end
-
-  it "should leave only commits which do not contain task id" do
-
-    payload_without_task_ids = GithubIntegration::Parser.commits_without_task_ids(@payload)
-
-    payload_without_task_ids["commits"].should == [{"timestamp"=>"2008-02-15T14:36:34-08:00",
-        "author"=>{"name"=>"Chris Wanstrath", "email"=>"chris@ozmm.org"},
-        "url"=>"http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0",
-        "id"=>"de8251ff97ee194a289832576287d6f8ad74e3d0", "message"=>"No task id in this message"
-      }]
   end
 
 end
