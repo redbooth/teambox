@@ -77,10 +77,8 @@
    * Will also call selectFirstEntry on blur event
    */
   DropDown.setupBlurFocusHandlers = function() {
-    console.log("setupBlurFocusHandlers commented out temporarily");
-    return;
-    this.$('input[type=text]').on('focus', this.showDropDown.bind(this));
-    this.$('input[type=text]').on('blur', function(event) {
+    this.$('input[type=text]').bind('focus', this.showDropDown.bind(this));
+    this.$('input[type=text]').bind('blur', function(event) {
       setTimeout(this.hideDropDown.bind(this), 1000)
       this.selectFirstEntry();
     }.bind(this));
@@ -155,9 +153,8 @@
    * @param {Object} li
    */
   DropDown.selectElement = function(event, li) {
-    li = event.target || li;
     this.$('li').removeClass('selected');
-    li.addClass('selected');
+    jQuery(event.target || li).addClass('selected');
   };
 
   /* Rerender list with full collection
