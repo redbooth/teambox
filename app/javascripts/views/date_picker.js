@@ -29,7 +29,7 @@
    * @return self
    */
   DatePicker.render = function () {
-    this.el.update(this.template(this.options));
+    jQuery(this.el).html(this.template(this.options));
     return this;
   };
 
@@ -39,12 +39,14 @@
    * @param {Event} evt
    * @param {DOM} element
    */
-  DatePicker.showCalendar = function (evt, element) {
-    evt.stop();
+  DatePicker.showCalendar = function (evt) {
+    evt.preventDefault();
+    var el = evt.currentTarget;
 
     new Teambox.modules.CalendarDateSelect(
-      element.down('input')
-    , element.down('span')
+      // TODO: Still prototypejs
+      el.down('input')
+    , el.down('span')
     , this.calendar_options);
   };
 

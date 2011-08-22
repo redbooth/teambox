@@ -303,10 +303,11 @@
    *
    * @param {Event} evt
    */
-  CommentForm.showCalendar = function (evt, element) {
+  CommentForm.showCalendar = function (evt) {
     evt.preventDefault();
+    var el = jQuery(evt.currentTarget);
 
-    new Teambox.modules.CalendarDateSelect(element.find('input'), element.find('span'), {
+    new Teambox.modules.CalendarDateSelect(el.find('input')[0], el.find('span')[0], {
       buttons: true
     , popup: 'force'
     , time: false
@@ -319,10 +320,10 @@
    *
    * @param {Event} evt
    */
-  CommentForm.focusTextarea = function (evt, element) {
+  CommentForm.focusTextarea = function (evt, el) {
     if (this.simple) { return; }
 
-    var textarea = evt ? evt.element() : element
+    var textarea = evt ? jQuery(evt.currentTarget) : el
       , people = Teambox.collections.projects.get(this.model.get('project_id')).getAutocompleterUserNames()
       , container;
 
@@ -331,9 +332,10 @@
     if (this.autocompleter) {
       this.autocompleter.options.array = people;
     } else {
-      container = new Element('div', {'class': 'autocomplete'}).hide();
-      textarea.insert({after: container});
-      this.autocompleter = new Autocompleter.Local(textarea, container, people, {tokens: [' ']});
+      container = jQuery("<div class='autocomplete' style='display:none'></div>");
+      textarea.after(container);
+      // Mixing prototype and jQuery because of the autocompleter...
+      this.autocompleter = new Autocompleter.Local(textarea[0], container[0], people, {tokens: [' ']});
     }
   };
 
