@@ -1,7 +1,7 @@
 // For sprockets:
 //
-//= require <json>
-//= require <socket_io>
+//= require json
+//= require socket_io
 
 if (typeof window != 'undefined'){
 	WEB_SOCKET_SWF_LOCATION = '/WebSocketMain.swf';
