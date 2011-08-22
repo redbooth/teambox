@@ -40,6 +40,18 @@ form
         - // .fields
         - // ul.file_list
 
+    - if (self.is_task)
+      .task_actions
+        != self.partial('partials.dropdown', {name: 'task_status', attr: 'status', placeholder: '', label_msg: '<%= t("activerecord.attributes.task.status") %>'})
+        != self.partial('partials.dropdown', {name: 'task_assigned_id', attr: 'assigned_id', placeholder: '', label_msg: '<%= t("comments.new.assigned_to") %>'})
+
+        label(for= 'task_due_on') <%= t('activerecord.attributes.task.due_on') %>
+        .date_picker
+          img(alt= 'Calendar', class= 'calendar_date_select_popup_icon', src= '/images/calendar_date_select/calendar.gif')
+          input(id= 'task_due_on', name= 'due_on', type= 'hidden')
+          span(class= 'localized_date')
+            i <%= t('date_picker.no_date_assigned') %>
+
     - if (self.is_conversation)
       a.button_gray.convert_to_task(href="#convert_to_task")
         span <%= t('comments.conversations.convert_to_task') %>
@@ -60,17 +72,5 @@ form
         a.btn_users(href= '#', class= 'add_watchers hoverable', title= '<%= t('shared.watchers.notify_people')%>')
       li
         a.btn_lock(href='#privacy', class='private_switch hoverable', title='<%=t("comments.private.control")%>')
-
-    - if (self.is_task)
-      .task_actions
-        != self.partial('partials.dropdown', {name: 'task_status', attr: 'status', placeholder: '', label_msg: '<%= t("activerecord.attributes.task.status") %>'})
-        != self.partial('partials.dropdown', {name: 'task_assigned_id', attr: 'assigned_id', placeholder: '', label_msg: '<%= t("comments.new.assigned_to") %>'})
-
-        label(for= 'task_due_on') <%= t('activerecord.attributes.task.due_on') %>
-        .date_picker
-          img(alt= 'Calendar', class= 'calendar_date_select_popup_icon', src= '/images/calendar_date_select/calendar.gif')
-          input(id= 'task_due_on', name= 'due_on', type= 'hidden')
-          span(class= 'localized_date')
-            i <%= t('date_picker.no_date_assigned') %>
 
       span.new(style= 'display: none') ← &nbsp;&nbsp; <%= t('comments.watchers.popup_note_html') %>

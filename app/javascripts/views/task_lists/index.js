@@ -46,7 +46,7 @@
       this.$('.filters').show();
       this.destroySortable();
     } else {
-      container.addClassName('reordering');
+      container.addClass('reordering');
       holder.addClass('reordering');
       this.$('#reorder_task_lists').swapVisibility('done_reordering_task_lists');
       this.$('.filters').hide();
