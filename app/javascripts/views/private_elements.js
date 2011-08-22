@@ -58,7 +58,7 @@
     var el = jQuery(event.currentTarget)
     , options = jQuery(this.el);
 
-    if (options.visible()) {
+    if (options.is(":visible")) {
       options.find('input').attr('disabled', true);
       options.hide();
     } else {

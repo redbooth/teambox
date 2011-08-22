@@ -53,11 +53,10 @@
       , watchers_update = this.comment_form.watchers.update
       , private_elements_update = this.comment_form.private_elements.update;
 
-    this.el.update('');
-    this.el.insert({bottom: this.comment_form.render().el});
+    jQuery(this.el).html(this.comment_form.render().el);
 
     var dropdown = new Teambox.Views.DropDown({
-        el: this.el.down('.dropdown_project')
+        el: this.$('.dropdown_project')
       , collection: projects
       , className: 'dropdown_project'
      });
