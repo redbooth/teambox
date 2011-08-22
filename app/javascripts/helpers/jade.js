@@ -118,6 +118,12 @@
       , before = status[this.previous_status]
       , now = status[this.status];
 
+    // Display user name if the task is open and assigned to somebody
+    if(this.status === 1 && this.assigned) {
+      var name = this.assigned.user.first_name + " " + this.assigned.user.last_name;
+      now = "<span class='task_status status task_status_open'>"+name+"</span>";
+    }
+
     return [before, now].compact().join('<span class="arr status_arr"> &rarr; </span>');
   };
 
