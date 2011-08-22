@@ -125,6 +125,24 @@ found at `app/javascripts/helpers/jade.js`.
 
 You can overwrite any _helper_ by passing a local with the same name.
 
+## Backbone, jQuery, Prototypejs and Underscore
+
+Teambox is going through a transition period, where Prototypejs and jQuery coexist in the codebase.
+
+The variables $ and $$ are owned by Prototypejs, and jQuery is running in noConflict mode.
+The whole functionality of jQuery can be accessed with the jQuery() function (what would usually be $()).
+
+Since Prototype is extending the DOM with objects, hybrid methods such as using Prototype methods on
+jQuery selectors will work, but should be avoided.
+
+Underscore is included and should be used for any enumerable operations, instead of Prototype.
+
+Backbone is using jQuery, and includes the method view.$() to select elements under the main element.
+
+All new code should be written using jQuery, and old code from Prototype should aim to remove the
+dependency so it can finally depend on jQuery only.
+
+
 ## Testing
 
 We use [jasmine](pivotal.github.com/jasmine/) + [phantomjs](code.google.com/p/phantomjs/) for testing.
