@@ -100,6 +100,8 @@ module Teambox
     end
     config.from_file 'teambox.yml'
 
+    config.assets.enabled = true
+
     config.generators do |g|
       g.template_engine :haml
       g.test_framework :rspec, :fixture => false, :views => false

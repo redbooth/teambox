@@ -9,6 +9,10 @@ Teambox::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  # Compress both stylesheets and JavaScripts
+  config.assets.js_compressor  = :uglifier
+  config.assets.css_compressor = :scss
+
   # RAILS3 investigate
   # config.action_view.cache_template_loading            = true
 
