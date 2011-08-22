@@ -18,11 +18,11 @@
   };
 
   PageList.addPage = function(page, collection) {
-    this.pageList.insert({top: new Teambox.Views.Page({model:page, root_view: this}).render().el});
+    this.page_list.prepend(new Teambox.Views.Page({model:page, root_view: this}).render().el);
   };
 
   PageList.removePage = function(page, collection) {
-    this.pageList.find('.page[data-class=page, data-id='+page.id+']').remove();
+    this.page_list.find('.page[data-class=page, data-id='+page.id+']').remove();
   };
 
   PageList.setActive = function(model) {
@@ -34,15 +34,15 @@
     var self = this;
     this.collection.each(function(model){
       var view = new Teambox.Views.PageListItem({model:model, root_view: self});
-      self.page_list.insert({bottom: view.render().el});
+      self.page_list.append(view.render().el);
     });
   };
 
   PageList.render = function () {
     var Views = Teambox.Views, self = this;
-    this.el.update(this.template({project_id: this.project_id}));
-    this.page_list = this.el.down('.page_list');
-    this.page_view = this.el.down('.page_view');
+    jQuery(this.el).html(this.template({project_id: this.project_id}));
+    this.page_list = this.$('.page_list');
+    this.page_view = this.$('.page_view');
     this.reload(this.collection);
     if (this.page) {
       var view;
@@ -51,7 +51,7 @@
       } else {
         view = new Teambox.Views.Page({model: this.page});
       }	
-      this.page_view.update(view.render().el);
+      this.page_view.html(view.render().el);
     }
     return this;
   };

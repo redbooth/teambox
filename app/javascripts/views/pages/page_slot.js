@@ -16,7 +16,7 @@
   
   PageSlot.render = function () {
     var html = this[this.slot.rel_object_type + '_template']({model: this.model});
-    this.el.update(html);
+    jQuery(this.el).html(html);
     return this;
   };
 

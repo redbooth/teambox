@@ -15,9 +15,9 @@
     this.root_view = options.root_view;
     this.root_view.bind('change_selection', function(conversation){
       if (self.model.id == conversation.id)
-        self.el.addClassName('active');
+        jQuery(self.el).addClass('active');
       else
-        self.el.removeClassName('active');
+        jQuery(self.el).removeClass('active');
     });
     this.model.bind('change', this.render);
   };
@@ -30,9 +30,9 @@
   PageListItem.render = function () {
     if(this.model.isLoaded()) {
       var html = this.template({model: this.model});
-      this.el.update(html);
+      jQuery(this.el).html(html);
     } else {
-      this.el.update(loading());
+      jQuery(this.el).html(loading());
     }
     return this;
   };
