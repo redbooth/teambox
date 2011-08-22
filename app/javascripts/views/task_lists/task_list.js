@@ -30,7 +30,7 @@
    * Callback triggered when the task_list is being destroyed
    */
   TaskList.onDestroy = function () {
-    this.el.remove();
+    jQuery(this.el).remove();
 
     _.each(this.model.get('tasks'), function (task) {
       task.trigger('destroy');
@@ -43,8 +43,10 @@
    * @param {Event} evt
    */
   TaskList.deleteTaskList = function (evt) {
-    evt.stop();
+    evt.preventDefault();
     if (confirm('Are you sure you want to delete this task list?')) {
+      console.log("Commented deleteTaskList when porting to jQuery");
+      return;
       var self = this
         , task_list_id = evt.element().ancestors()[3].readAttribute('data-task-list-id')
         , task_list = Teambox.collections.tasks_lists.get(task_list_id);
@@ -59,8 +61,10 @@
    * @param {Event} evt
    */
   TaskList.resolveTaskList = function (evt) {
-    evt.stop();
+    evt.preventDefault();
     if (confirm('Are you sure you want to resolve and archive this task list?')) {
+      console.log("Commented resolveTaskList when porting to jQuery");
+      return;
       var self = this
         , task_list_id = evt.element().ancestors()[3].readAttribute('data-task-list-id')
         , task_list = Teambox.collections.tasks_lists.get(task_list_id);
@@ -78,7 +82,7 @@
    * @param {Event} evt
    */
   TaskList.updateTaskList = function (evt) {
-    evt.stop();
+    evt.preventDefault();
     var data = _.deparam(evt.element().serialize(), true)
       , self = this
       , task_list = Teambox.collections.tasks_lists.get(data.task_list.id)
@@ -95,8 +99,8 @@
    * @param {Event} evt
    */
   TaskList.showComments = function (evt) {
-    evt.stop();
-    evt.element().up('.task').down('.thread').toggle();
+    evt.preventDefault();
+    jQuery(evt.currentTarget).parent('.task').find('.thread').toggle();
   };
 
   /**
@@ -105,12 +109,12 @@
    * @param {Event} evt
    */
   TaskList.showRename = function (evt) {
-    evt.stop();
-    var head = evt.element().up('.head');
+    evt.preventDefault();
+    var head = jQuery(evt.currentTarget).parent('.head');
 
-    head.down('.actions_menu').hide();
-    head.down('span.task_list_name').hide();
-    head.down('.task_list_form').show().down('.name.text_field').show();
+    head.find('.actions_menu').hide();
+    head.find('span.task_list_name').hide();
+    head.find('.task_list_form').show().find('.name.text_field').show();
   };
 
   /**
@@ -119,12 +123,12 @@
    * @param {Event} evt
    */
   TaskList.showSetDates = function (evt) {
-    evt.stop();
+    evt.preventDefault();
 
-    var head = evt.element().up('.head');
+    var head = jQuery(evt.currentTarget).parent('.head');
 
-    head.down('.actions_menu').hide();
-    head.down('.task_list_form').show().down('.date_fields').show();
+    head.find('.actions_menu').hide();
+    head.find('.task_list_form').show().find('.date_fields').show();
   };
 
   /**
@@ -133,17 +137,16 @@
    * @param {Event} evt
    */
   TaskList.hideTaskListForm = function (evt) {
-    evt.stop();
+    evt.preventDefault();
 
-    var head = evt.element().up('.head')
-      , task_list_form = head.down('.task_list_form');
+    var head = jQuery(evt.currentTarget).parent('.head')
+      , task_list_form = head.find('.task_list_form');
 
-    head.down('.actions_menu').show();
-    head.down('span.task_list_name').show();
+    head.find('.actions_menu, span.task_list_name').show();
 
-    task_list_form.hide();
-    task_list_form.down('.date_fields').hide();
-    task_list_form.down('.name.text_field').hide();
+    task_list_form
+      .hide()
+      .down('.date_fields, .name.text_field').hide();
   };
 
   /**
@@ -156,37 +159,37 @@
 
     this.el.id = 'task_list_' + this.model.id;
 
-    this.el.update(this.template({task_list: this.model}));
+    jQuery(this.el).html(this.template({task_list: this.model}));
     _.each(this.model.get('tasks'), function (el) {
-      self.el.down('.tasks').insert({top: (new Teambox.Views.Task({model: el, dragndrop: true})).render().el});
+      self.$('.tasks').prepend(
+        (new Teambox.Views.Task({model: el, dragndrop: true})).render().el
+      );
     });
 
-    this.el.down('.date_fields')
-      .insert({
-        bottom: (new Teambox.Views.DatePicker({
+    this.$('.date_fields')
+      .append(
+        (new Teambox.Views.DatePicker({
           model_name: 'task_list'
         , attribute: 'start_on'
         , label: 'Starts on <i>optional</i>'
         , current_date: this.model.get('start_on')
-        }).render().el)
-      })
-      .insert({
-        bottom: (new Teambox.Views.DatePicker({
+        }).render().el))
+      .append(
+        (new Teambox.Views.DatePicker({
           model_name: 'task_list'
         , attribute: 'finish_on'
         , label: 'End on <i>optional</i>'
         , current_date: this.model.get('finish_on')
-        }).render().el)
-      });
+        }).render().el));
 
     if (!this.model.get('archived')) {
-      this.el.down('.tasks').insert({after: (new Teambox.Views.TaskListsTaskForm({
+      this.$('.tasks').after((new Teambox.Views.TaskListsTaskForm({
         project: this.project
       , parent_view: this
       , task_list: this.model
-      })).render().el});
+      })).render().el);
     } else {
-      this.el.addClassName('archived');
+      this.el.addClass('archived');
     }
 
     return this;

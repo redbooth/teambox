@@ -26,8 +26,8 @@
    * @param {Event} evt
    */
   TaskListsForm.toggle = function (evt) {
-    if (evt) evt.stop();
-    this.el.toggle();
+    evt && evt.preventDefault();
+    jQuery(this.el).toggle();
   };
 
   /**
@@ -37,9 +37,9 @@
    * @param {DOM} element
    */
   TaskListsForm.showCalendar = function (evt, element) {
-    evt.stop();
+    evt.preventDefault();
 
-    new Teambox.modules.CalendarDateSelect(element.down('input'), element.down('span'), {
+    new Teambox.modules.CalendarDateSelect(element.$('input')[0], element.$('span')[0], {
       buttons: true
     , popup: 'force'
     , time: false
@@ -53,9 +53,9 @@
    * @param {Event} evt
    */
   TaskListsForm.postTaskList = function (evt) {
-    if (evt) evt.stop();
+    evt && evt.preventDefault();
 
-    var data = _.deparam(this.el.down('form').serialize(), true)
+    var data = _.deparam(this.$('form').serialize(), true)
       , self = this;
 
     (new Teambox.Models.TaskList()).save(data.task_list, {
@@ -77,7 +77,7 @@
    * @return self
    */
   TaskListsForm.render = function () {
-    this.el.update(this.template({project: this.project}));
+    jQuery(this.el).html(this.template({project: this.project}));
 
     return this;
   };

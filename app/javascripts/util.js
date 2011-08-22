@@ -3,6 +3,8 @@ Element.addMethods({
     return $(element).setStyle({ display: (display || 'block') })
   },
   swapVisibility: function(element, other) {
+    console.log("Commenting swapVisibility");
+    return;;;
     $(other).forceShow('inline-block')
     return $(element).hide()
   },

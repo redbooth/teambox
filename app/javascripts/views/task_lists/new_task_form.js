@@ -28,8 +28,8 @@
    * @param {Event} evt
    */
   TaskListsTaskForm.toggleNewTask = function (evt) {
-    evt.stop();
-    this.el.down('form').toggle();
+    evt.preventDefault();
+    this.$('form').toggle();
   };
 
   /**
@@ -38,10 +38,12 @@
    * @param {Event} evt
    * @param {DOM} element
    */
-  TaskListsTaskForm.showCalendar = function (evt, element) {
-    evt.stop();
+  TaskListsTaskForm.showCalendar = function (evt) {
+    evt.preventDefault();
+    var el = jQuery(evt.currentTarget);
 
-    new Teambox.modules.CalendarDateSelect(element.down('input'), element.down('span'), {
+    // Passing prototype style elements
+    new Teambox.modules.CalendarDateSelect(el.find('input')[0], el.find('span')[0], {
       buttons: true
     , popup: 'force'
     , time: false
@@ -55,18 +57,18 @@
    * @param {Event} evt
    */
   TaskListsTaskForm.postTask = function (evt) {
-    if (evt) evt.stop();
+    evt && evt.preventDefault();
 
     var self = this
-      , data = _.deparam(this.el.down('form').serialize(), true);
+      , data = _.deparam(this.$('form').serialize(), true);
 
     (new Teambox.Models.Task()).save(data.task, {
       success: function (model, response) {
-        self.parent_view.el.down('.tasks').insert({top: (new Teambox.Views.Task({model: model})).render().el});
+        self.parent_view.$('.tasks').prepend((new Teambox.Views.Task({model: model})).render().el);
         Teambox.collections.tasks.add(model, {at: 0});
         Teambox.collections.threads.add((new Teambox.Models.Thread(response)), {at: 0});
         self.task_list.get('tasks').push(model);
-        self.el.toggle();
+        jQuery(self.el).toggle();
       }
     });
   };
@@ -77,11 +79,11 @@
    * @return self
    */
   TaskListsTaskForm.render = function () {
-    this.el.update(this.template({task_list: this.task_list, project: this.project}));
+    jQuery(this.el).html(this.template({task_list: this.task_list, project: this.project}));
 
     // select assigned
     (new Teambox.Views.SelectAssigned({
-      el: this.el.down('#task_assigned_id')
+      el: this.$('#task_assigned_id')[0]
     , selected: null
     , project: this.project
     })).render();

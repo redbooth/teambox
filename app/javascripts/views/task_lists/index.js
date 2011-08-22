@@ -34,22 +34,22 @@
    * @param {Event} evt
    */
   TaskLists.toggleReorder = function (evt) {
-    if (evt) evt.stop();
+    evt && evt.preventDefault();
 
-    var holder = this.el.down('#task_lists')
-      , container = this.el.select('.task_list_container');
+    var holder = this.$('#task_lists')
+      , container = this.$('.task_list_container');
 
-    if (holder.hasClassName('reordering')) {
-      container.invoke('removeClassName', 'reordering');
-      holder.removeClassName('reordering');
-      this.el.down('#done_reordering_task_lists').swapVisibility('reorder_task_lists');
-      this.el.select('.filters').invoke('show');
+    if (holder.hasClass('reordering')) {
+      container.removeClass('reordering');
+      holder.removeClass('reordering');
+      this.$('#done_reordering_task_lists').swapVisibility('reorder_task_lists');
+      this.$('.filters').show();
       this.destroySortable();
     } else {
-      container.invoke('addClassName', 'reordering');
-      holder.addClassName('reordering');
-      this.el.down('#reorder_task_lists').swapVisibility('done_reordering_task_lists');
-      this.el.select('.filters').invoke('hide');
+      container.addClassName('reordering');
+      holder.addClass('reordering');
+      this.$('#reorder_task_lists').swapVisibility('done_reordering_task_lists');
+      this.$('.filters').hide();
       this.makeTaskListSortable();
     }
   };
@@ -62,12 +62,13 @@
   TaskLists.insertTaskList = function (model) {
     var el = (new Teambox.Views.TaskList({model: model, project: this.project})).render().el;
 
-    this.el
-      .down('#task_lists')
-      .insert(model.get('archived') ? {bottom: el}
-                                    : {top: el});
+    if (model.get('archived')) {
+      this.$('#task_lists').append(el);
+    } else {
+      this.$('#task_lists').prepend(el);
+    }
 
-    new Effect.Highlight(el, {duration:3});
+    //new Effect.Highlight(el, {duration:3});
   };
 
   /**
@@ -76,7 +77,7 @@
    * @param {Event} evt
    */
   TaskLists.toggleNewTaskListForm = function (evt) {
-    evt.stop();
+    evt && evt.preventDefault();
     this.new_task_list_form_view.toggle(evt);
   };
 
@@ -91,9 +92,8 @@
     }
 
     function onUpdate() {
-      var task_list_ids = self.current_draggable.up().select('div.task_list').map(function (task_list) {
-            return task_list.readAttribute('data-task-list-id');
-          });
+      var task_list_ids = _(self.current_draggable.parent().find('div.task_list')).map(
+        function (task_list) { return task_list.attr('data-task-list-id'); });
 
       new Ajax.Request(self.collection.url() + '/reorder', {
         method: 'put'
@@ -132,12 +132,13 @@
     }
 
     function onUpdate() {
-      var task_id = self.current_draggable.readAttribute('data-task-id')
-        , task_list = self.current_draggable.up('.task_list')
-        , task_list_id = task_list.readAttribute('data-task-list-id')
-        , task_ids = task_list.select('.tasks .task').collect(function (task) {
-            return task.readAttribute('data-task-id');
-          }).join(',');
+      var task_id = self.current_draggable.attr('data-task-id')
+        , task_list = self.current_draggable.parent('.task_list')
+        , task_list_id = task_list.attr('data-task-list-id')
+        , task_ids = _(task_list.find('.tasks .task')).chain()
+            .collect(function (task) {
+              return task.attr('data-task-id');
+            }).join(',').value();
 
       new Ajax.Request('/api/1/projects/' + self.project.id + '/tasks/' + task_id + '/reorder', {
         method: 'put',
@@ -161,7 +162,7 @@
    */
   TaskLists.makeAllTasksSortable = function () {
     var self = this
-      , sortable_ids = $$('.tasks.open').map(function (tasks_div) {
+      , sortable_ids = _(jQuery('.tasks.open')).map(function (tasks_div) {
           return tasks_div.identify();
         });
 
@@ -178,25 +179,20 @@
   TaskLists.render = function () {
     var self = this;
 
-    if (this.collection.length > 0) {
-      this.el.update(this.template({project: this.project}));
+    if (this.collection.length) {
+      jQuery(this.el).html(this.template({project: this.project}));
       this.collection.each(function (el) {
-        self.el.down('#task_lists')
-          .insert({bottom: (new Teambox.Views.TaskList({model: el, project: self.project})).render().el});
+        self.$('#task_lists')
+          .append((new Teambox.Views.TaskList({model: el, project: self.project})).render().el);
       });
     } else {
-      this.el.update(this.primer_template());
+      jQuery(this.el).html(this.primer_template());
     }
 
-    // insert new task lists form hidden
-    this.el.down('#task_lists').insert({
-      before: this.new_task_list_form_view.render().el.hide()
-    });
-
-    // filters
-    this.el.down('#task_lists').insert({
-      before: this.filters_view.render().el
-    });
+    // insert new task lists form hidden and filters
+    this.$('#task_lists')
+      .before( this.new_task_list_form_view.render().el.hide() )
+      .before( this.filters_view.render().el );
 
     return this;
   };
