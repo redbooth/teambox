@@ -24,6 +24,10 @@ class Comment
     urgent != previous_urgent
   end
 
+  def urgent_transition?
+    urgent? != previous_urgent? and previous_urgent?
+  end
+
   def assigned_transition?
     assigned_id != previous_assigned_id
   end

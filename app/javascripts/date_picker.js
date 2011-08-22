@@ -51,6 +51,7 @@ DatePicker = {
     // On urgent checkbox changes update task[urgent] and show/hide sections accordingly 
     var update_urgent_box = function (date_picker, input_urgent, user_action) { 
       urgent_field.value = input_urgent.checked ? "1" : "0";
+      urgent_field.removeAttribute("disabled");
       
       if (input_urgent.checked) {
         label.update(I18n.translations.date_picker.urgent.short);

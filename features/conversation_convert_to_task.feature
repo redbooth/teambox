@@ -109,3 +109,18 @@ Feature: Converting a conversation to a task
     And I wait for 3 seconds
     And I am going to the bookmarked link
     Then I should see "An exciting task for you" in the task thread title
+
+  Scenario: I can set the urgent flag for the task being created
+    Given I started a simple conversation
+    When I go to the home page
+    And I click the conversation's comment box
+    And I follow "Convert to task"
+    And I wait for 2 seconds
+    And I fill in "conversation_name" with "Give git course"
+    And I click the element that contain "No date assigned" within ".date_picker"
+    And I check "Urgent, to be done as soon as possible" within ".calendar_date_select"
+    Then I should see "Urgent" within ".fields"
+    When I press "Convert"
+    And I wait for 3 seconds
+    Then I should see "Give git course" in the task thread title
+    And I should see 'Urgent'

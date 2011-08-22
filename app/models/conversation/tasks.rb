@@ -1,7 +1,11 @@
 class Conversation
-  attr_accessor :due_on, :status, :assigned_id, :task_list_id
-  attr_accessible :due_on, :status, :assigned_id, :task_list_id
+  attr_accessor :due_on, :urgent, :status, :assigned_id, :task_list_id
+  attr_accessible :due_on, :urgent, :status, :assigned_id, :task_list_id
 
+  def urgent?
+    !!urgent
+  end
+  
   def convert_to_task!
     task_list = task_list_id.blank? ? nil : TaskList.find(task_list_id)
     task_list ||= TaskList.find_or_create_by_name_and_project_id_and_user_id('Inbox', project.id, user.id)
@@ -11,6 +15,7 @@ class Conversation
       t.name = name
       t.status = status.blank? ? 0 : status
       t.due_on = due_on
+      t.urgent = urgent || false
       t.user = user 
       t.updating_user = updating_user
       t.task_list = task_list

@@ -57,13 +57,14 @@ module TasksHelper
 
   def comment_task_due_on(comment)
     if comment.urgent_change? || comment.due_on_change?
-      [
-        comment.previous_urgent? ? span_for_urgent(comment) :
-          span_for_due_date(comment.previous_due_on),
-        content_tag(:span, '&rarr;'.html_safe, :class => "arr due_on_arr"),
-        comment.urgent? ? span_for_urgent(comment) : 
-          span_for_due_date(comment.due_on),
-      ].join(' ').html_safe
+      [].tap do |out|
+        if comment.due_on_transition? || comment.urgent_transition? 
+          out << (comment.previous_urgent? ? span_for_urgent(comment) :
+                 span_for_due_date(comment.previous_due_on))
+          out << content_tag(:span, '&rarr;'.html_safe, :class => "arr due_on_arr")
+        end
+        out << (comment.urgent? ? span_for_urgent(comment) : span_for_due_date(comment.due_on))
+      end.join(' ').html_safe
     end
   end
   
@@ -132,8 +133,8 @@ module TasksHelper
   end
 
   def date_picker(f, field, options = {}, html_options = {})
-    selected_date = f.object.send(field.to_sym) ? localize(f.object.send(field.to_sym), :format => :long) : ''    
-    show_urgent_flag = f.object.is_a?(Task)
+    selected_date = f.object.send(field.to_sym) ? localize(f.object.send(field.to_sym), :format => :long) : ''
+    show_urgent_flag = [Task, Conversation].include?(f.object.class)
     datepicker_info = if show_urgent_flag && f.object.urgent?
       t('date_picker.urgent.short')
     elsif selected_date.blank? 
@@ -146,8 +147,8 @@ module TasksHelper
     content_tag :div, :class => classes.join(" "), :id => "#{f.object.class.to_s.underscore}_#{f.object.id}_#{field}" do 
       [ image_tag('/images/calendar_date_select/calendar.gif', :class => :calendar_date_select_popup_icon),
         content_tag(:span, datepicker_info, :class => 'datepicker_info'),
-        f.hidden_field(field, html_options.reverse_merge!(:class => :datepicker)),
-        (f.hidden_field("urgent", :class => "urgent") if show_urgent_flag),
+        f.hidden_field(field, html_options.reverse_merge(:class => :datepicker)),
+        (f.hidden_field("urgent", html_options.reverse_merge(:class => :urgent)) if show_urgent_flag),
       ].join.html_safe
     end
   end
