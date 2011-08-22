@@ -12,7 +12,7 @@
   SelectStatus.render = function () {
     var self = this;
 
-    this.el.update(_.reduce(TasksModel.status.status, function (memo, stat) {
+    jQuery(this.el).html(_.reduce(TasksModel.status.status, function (memo, stat) {
       memo += '<option value="' + stat.value + '"' + (self.selected === stat.value ? ' selected="selected"' : '') + '>';
       memo += stat.label + '</option>';
       return memo;
