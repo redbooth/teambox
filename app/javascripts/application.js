@@ -19,12 +19,12 @@
 //= require <lib/plupload.html5>
 //= require <lib/plupload.flash>
 //= require <lib/plupload.html4>
+//= require <lib/cookie>
 
 //= require <rails>
 //= require <html5>
 
 //= require <hackz>
-//= require <cookie>
 //= require <teambox>
 
 //= require <modules/loader>
