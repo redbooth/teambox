@@ -16,7 +16,9 @@ module Teambox
       include ActionView::Helpers::TagHelper
       include ActionView::Helpers::AssetTagHelper
       include ActionView::Helpers::TranslationHelper
-      include ActionView::Helpers::RawOutputHelper
+      #include ActionView::Helpers::RawOutputHelper
+      #include ActionView::AssetPaths
+      #include ActionView::Helpers::AssetTagHelper
 
       def config
         @config ||= Config.new
