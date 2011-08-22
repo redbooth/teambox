@@ -10,6 +10,8 @@
   , 'click a.add_hours_icon'       : 'toggleHours'
   , 'click a.add_watchers'         : 'toggleWatchers'
   , 'submit .new_comment'          : 'postComment'
+  // TODO: Adding the next line because the previous one doesn't work on jQuery
+  , 'click .new_comment input[type=submit]'          : 'postComment'
   , 'click a.convert_to_task'      : 'toggleConvertToTask'
   , 'click .date_picker'           : 'showCalendar'
   , 'click a.private_switch'       : 'togglePrivateElements'
@@ -102,14 +104,6 @@
     actions.append(this.watchers.render().el);
     actions.append(this.private_elements.render().el);
     this.form.after(this.google_docs.render().el);
-
-    if (this.new_conversation) {
-      (function() {
-        console.log("commenting chosen");
-        //new Chosen(jQuery('.chzn-select'));
-        //self.$('.to').css({display: 'block'});
-      }).defer();
-    }
 
     if(this.new_conversation) this.form.find('.new_extra').show();
 
@@ -205,9 +199,7 @@
     var self = this
       , data;
 
-    if (evt) {
-      evt.stop();
-    }
+    evt.preventDefault();
 
     if (this.upload_area.hasFileUploads()) {
       //Uses Teambox.modules.Uploader
