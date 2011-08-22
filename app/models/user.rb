@@ -70,7 +70,6 @@ class User < ActiveRecord::Base
                   :notify_conversations,
                   :notify_tasks,
                   :notify_pages,
-                  :splash_screen,
                   :wants_task_reminder,
                   :keyboard_shortcuts,
                   :digest_delivery_hour,
@@ -102,7 +101,6 @@ class User < ActiveRecord::Base
       invitation.user.update_attribute :invited_count, (invitation.user.invited_count + 1)
     end
     self.card ||= build_card
-    self.splash_screen = true
   end
 
   def clear_invites

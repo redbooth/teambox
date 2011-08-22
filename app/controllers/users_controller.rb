@@ -223,11 +223,6 @@ class UsersController < ApplicationController
     redirect_to account_linked_accounts_path
   end
 
-  def disable_splash
-    current_user.update_attribute :splash_screen, false
-    head :ok
-  end
-
   def change_activities_mode
     @current_user.settings = { :collapse_activities => params[:collapsed] }
     @current_user.save!

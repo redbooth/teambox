@@ -162,7 +162,6 @@
 //= require <preview>
 //= require <quick_add_pane>
 //= require <sessions>
-//= require <splash>
 //= require <task_list_templates>
 //= require <threads>
 //= require <push>
