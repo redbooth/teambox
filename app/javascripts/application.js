@@ -160,7 +160,6 @@
 //= require <overlays>
 //= require <person>
 //= require <preview>
-//= require <quick_add_pane>
 //= require <sessions>
 //= require <task_list_templates>
 //= require <threads>
