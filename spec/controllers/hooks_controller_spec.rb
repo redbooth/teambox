@@ -460,7 +460,7 @@ Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee1
                 "id": "41a212ee83ca127e3c8cf465891ab7216a705f59",
                 "url": "http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59",
                 "author": { "email": "chris@ozmm.org", "name": "Chris Wanstrath" },
-                "message": "Check this file, task [#{@task.id}]}",
+                "message": "Check this file, task [#{@task.id}]",
                 "timestamp": "2008-02-15T14:57:17-08:00",
                 "added": ["filepath.rb"]
               },
@@ -485,6 +485,7 @@ Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee1
         JSON
 
         post :create, :payload => payload, :hook_name => 'github', :project_id => @project.id
+        @task.reload
 
         first_comment = @task.recent_comments.first
 
@@ -496,14 +497,26 @@ Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee1
         second_comment.user.should == @mislav
         second_comment.target.should == @other_task
 
-        expected = (<<-HTML).strip
-        New code on <a href='http://github.com/defunkt/github'>github</a> refs/heads/master
+        expected_first = (<<-HTML).strip
+         Chris Wanstrath - <a href=\"http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59\">Check this file, task [#{@task.id}]</a>\n
+Chris Wanstrath - <a href=\"http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0\">Closing for task [close-#{@task.id}]</a>
 
-Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59'>Check this file, task [#{@task.id}]}</a><br>
-Chris Wanstrath - <a href='http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0'>update pricing a tad</a><br>
+Posted on Github: <a href=\"http://github.com/defunkt/github\">github</a> refs/heads/master
         HTML
 
-        #conversation.comments.first.body.strip.should == expected.strip
+        first_comment.body.strip.should == expected_first.strip
+
+        expected_second = (<<-HTML).strip
+         Mislav Marohnić - <a href=\"http://github.com/defunkt/github/commit/hju8251ff97ee194a289832576287d6f89ui7978h\">Commit for different task [#{@other_task.id}]</a>
+
+Posted on Github: <a href=\"http://github.com/defunkt/github\">github</a> refs/heads/master
+        HTML
+
+        second_comment.body.strip.should == expected_second.strip
+
+        @task.status_name.should equal :resolved
+        @other_task.status_name.should_not equal :resolved
+
       end
 
     end

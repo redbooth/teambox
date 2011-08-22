@@ -21,13 +21,14 @@ class Comment < ActiveRecord::Base
        if task = Task.find_by_id(task_id)
          text = ''
          commits.each do |commit|
-            text << ("%s - <a href=\"%s\">%s</a> \n\n" % [commit['author']['name'], commit['url'], commit['message']])
             @author_name = commit['author']['name']
             @author_email = commit['author']['email']
-            @close = true if commit['close']
+            text << ("%s - <a href=\"%s\">%s</a>\n\n" % [@author_name, commit['url'], commit['message']])
+            task.update_attribute :status_name, :resolved if commit['close'] == true
          end
-         text << ("\n\nPosted on Github <a href='%s'>%s</a> %s" % [payload['repository']['url'], payload['repository']['name'], payload['ref']])
+         text << ("Posted on Github: <a href=\"%s\">%s</a> %s" % [payload['repository']['url'], payload['repository']['name'], payload['ref']])
 
+         #we try to find user by name or email from commit, if not found comment author will be user which is assigned to task
          author = task.project.users.detect { |u| u.name == @author_name || u.email == @author_email } || task.assigned.user
          task.comments.create_by_user author, {:body => text, :project_id => task.project_id}
 
