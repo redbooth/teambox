@@ -45,11 +45,11 @@
 
   PrivateElements.updatePrivateUsers = function(event) {
     var el = event.target;
-    this.el.$('.private_users .private_user input').each(function(fe){ fe.checked = el.checked; });
+    this.$('.private_users .private_user input').each(function(i,fe){ fe.checked = el.checked; });
   };
 
   PrivateElements.updateAllUsers = function(event) {
-    var users = this.el.$('.private_users');
+    var users = this.$('.private_users');
     users.find('.private_all input').checked = this.allUsersEnabled();
   };
 
@@ -77,7 +77,7 @@
     if (body.hasClass('edit_pages') || body.hasClass('new_pages')) {
       var form = body.find('.content form');
       this.activate();
-      this.update(form.down('div'));
+      this.update(form.find('div'));
       form.find('.private_options input').attr('disabled', false);
     }
 
@@ -155,7 +155,7 @@
   PrivateElements.updateAllUsersEnabled = function() {
     var box = jQuery(this.el)
     , users = box.find('.private_users');
-    users.find('.private_all input').checked = this.allUsersEnabled();
+    users.find('.private_all input').each( function(i,el) { el.checked = this.allUsersEnabled(); });
   };
 
   PrivateElements.findUser = function(user_id) {
@@ -229,9 +229,9 @@
       }));
 
       if (private_set)
-        this.$('.option.private input').checked = true;
+        this.$('.option.private input').each( function(i,el) { el.checked = true; } );
       else
-        this.$('.option.normal input').checked = true;
+        this.$('.option.normal input').each( function(i,el) { el.checked = true; } );
     } else {
       // readonly display of watchers
       jQuery(this.el).append(this.private_box_readonly_template({

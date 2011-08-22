@@ -22,18 +22,10 @@
     var project_id = this.model.get('project_id');
     var people = project_id ? Teambox.collections.projects.get(project_id).attributes.people.models : [];
 
-    this.el
+    jQuery(this.el)
       .hide()
-      .update(this.template({
-        people: people
-      }))
-      .down('.people')
-        .hide();
-
-    (function() {
-      console.log("commenting chosen");
-      //new Chosen(self.el.down('.chzn-select'));
-    }).defer();
+      .html(this.template({ people: people }))
+      .find('.people').hide();
 
     return this;
   };
@@ -52,7 +44,7 @@
   // Show or hide the 'Visible to' part
   PrivateElementsConv.updateVisibleTo = function(event) {
     var private = event.srcElement.value;
-    var visibleto_el = this.el.down('.people');
+    var visibleto_el = this.$('.people');
 
     if (private === 'true') {
       visibleto_el.show();
@@ -62,7 +54,7 @@
   };
 
   PrivateElementsConv.reset = function(event) {
-    this.el.hide;
+    jQuery(this.el).hide;
   }
 
   Teambox.Views.PrivateElementsConv = Backbone.View.extend(PrivateElementsConv);
