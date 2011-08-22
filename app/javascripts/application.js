@@ -144,7 +144,6 @@
 //= require <banner>
 //= require <comment>
 //= require <compact_mode>
-//= require <conversation>
 //= require <datas>
 //= require <oauth>
 //= require <i18n>
