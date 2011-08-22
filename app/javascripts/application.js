@@ -57,7 +57,7 @@
 //= require <controllers/users>
 //= require <controllers/search>
 //= require <controllers/chat>
-//                //= require <controllers/fallback>
+//= require <controllers/fallback>
 //= require <controllers/welcome>
 //= require <models/base>
 //= require <models/comment>
