@@ -43,7 +43,7 @@
 
   Teambox.Controllers.FallbackController = {
     show: function() {
-      var fragment = Backbone.history.getFragment();
+      var fragment = Backbone.history.getFragment().slice(2);
 
       $('content').update("<img src='/images/loading.gif'/> Loading...");
 

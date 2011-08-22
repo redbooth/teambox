@@ -129,7 +129,8 @@
 
   // *class* methods
   SidebarStatic.highlightSidebar = function (id) {
-    Teambox.views.sidebar.selectElement(jQuery("#"+id), true);
+    var el = (typeof id === "string") ? jQuery("#"+id) : jQuery(id);
+    Teambox.views.sidebar.selectElement(el, true);
   };
 
   /* Selects the link in the sidebar according to the current url
