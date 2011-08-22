@@ -15,7 +15,8 @@ class Conversation
       t.name = name
       t.status = status.blank? ? 0 : status
       t.due_on = due_on
-      t.urgent = urgent || false
+      t.urgent = urgent
+      t.urgent = t.urgent.nil? ? false : t.urgent
       t.user = user 
       t.updating_user = updating_user
       t.task_list = task_list
