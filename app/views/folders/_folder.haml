@@ -15,5 +15,6 @@
     - if true or can?(:update, folder)
       = link_to t('folders.remove.link'), [@current_project, folder], :remote => true, :method => :delete, :confirm => t('confirm.delete_folder')
       = link_to t('folders.rename.link'), edit_project_folder_path(@current_project, folder), :remote => true, :class => "link_rename"
+      = link_to t('uploads.moveable.move'), project_move_resource_path(@current_project, folder), :rel => 'facebox', :title => t('uploads.moveable.move')
 
   .actions_container

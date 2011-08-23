@@ -1338,6 +1338,9 @@ en:
     upload:
       download: Download
       remove: Delete
+    moveable:
+      move: Move to another folder
+      title: "Move to another folder:"
     public_download:
       share_outside_your_team: You can share this file with people outside your team.
       enter_an_email: 'Enter an Email address to send a link to this file:'
