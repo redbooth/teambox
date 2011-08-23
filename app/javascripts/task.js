@@ -26,6 +26,7 @@ document.on('ajax:success', '.task_header + form.edit_task', function(e, form) {
 })
 
 Task = {
+
   sortableChange: function(draggable) {
     this.currentDraggable = draggable
   },
@@ -344,3 +345,4 @@ document.on('ajax:success', '.task_list form.new_task', function(e, form) {
 
   Form.reset(form).focusFirstElement().up('.task_list').down('.tasks').insert(response)
 })
+

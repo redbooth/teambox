@@ -4,3 +4,4 @@
     = link_to_upload(upload, upload.file_name)
   %span.size
     = '(' + number_to_human_size(upload.size).to_s + ')'
+  = render :partial => "uploads/more", :locals => {:upload => upload}

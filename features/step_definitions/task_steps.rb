@@ -8,6 +8,28 @@ Given /^I have a task called "([^\"]*)"$/ do |name|
   @task = project.create_task(@current_user, task_list, {:name => name})
 end
 
+Given /^I have a task called "([^"]*)" with a comment including upload "([^"]*)"$/ do |task_name, file_name|
+
+  Given %(I have a task called "#{task_name}")
+  @comment = @task.comments.create :body => "Something to say"
+
+  path = File.join(Rails.root, "spec/fixtures/#{file_name}")
+  if File.exists?(path)
+    @upload = Factory.create(:upload, {
+      :asset => open(path),
+      :asset_file_name => file_name,
+      :asset_file_size => nil,
+      :asset_content_type => nil,
+      :project => @current_project,
+      :comment => @comment
+     })
+
+  else
+    Factory.create(:upload, :asset_file_name => file_name, :project => @current_project, :comment => @comment)
+  end
+
+end
+
 ## FIXME: it's better for 'givens' to set tasks up directly in the db:
 
 Given /^the following tasks? with associations exists?:?$/ do |table|
