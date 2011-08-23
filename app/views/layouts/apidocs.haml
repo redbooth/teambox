@@ -5,7 +5,7 @@
     = csrf_meta_tag
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title Teambox API documentation
-    = include_stylesheets :apidocs
+    = stylesheet_link_tag :apidocs
 
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
     .top{ :style => 'background-color: rgb(255,255,220); border-bottom: 1px solid rgb(200,200,150); width: 100%; display: block; font-size: 12px; padding: 10px 0; text-align: center' }

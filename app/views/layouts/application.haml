@@ -7,12 +7,12 @@
     = auto_discovery_link_by_context(current_user, @current_project)
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title= "#{@page_title} Teambox"
-    = include_stylesheets :application, :media => :screen
-    = include_stylesheets :print, :media => :print
+    = stylesheet_link_tag :application, :media => :screen
+    = stylesheet_link_tag :print, :media => :print
     = yield :stylesheet_includes
     = stylesheet_link_tag 'cucumber', :media => :screen if Rails.env.cucumber?
     = trimmer_include_tag
-    = sprockets_include_tag
+    = javascript_include_tag 'application'
     = javascript_include_tag 'development' if Rails.env.development?
     = yield :js_includes
     = javascript_tag do

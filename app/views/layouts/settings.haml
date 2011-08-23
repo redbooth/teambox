@@ -9,7 +9,7 @@
     = include_stylesheets :application, :media => :screen
     = yield :stylesheet_includes
     = trimmer_include_tag
-    = sprockets_include_tag
+    = javascript_include_tag 'application'
     = javascript_include_tag 'development' if Rails.env.development?
     = yield :js_includes
     = javascript_tag do

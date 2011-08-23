@@ -1,5 +1,5 @@
-//= require <prototype>
-//= require <effects>
-//= require <modernizr>
+//= require lib/prototype
+//= require lib/effects
+//= require modernizr
 
-//= require <util>
+//= require util

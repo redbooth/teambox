@@ -5,8 +5,8 @@
     = csrf_meta_tag
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title Teambox
-    = include_stylesheets :sessions
-    = sprockets_include_tag :public
+    = stylesheet_link_tag :sessions
+    = javascript_include_tag :public
 
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}
     .container

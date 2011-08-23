@@ -52,7 +52,6 @@ gem 'cancan', '~> 1.4.1'
 #gem 'immortal', :git=>"git://github.com/micho/immortal.git"
 gem 'immortal', :path => "~/code/immortal"
 gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer' 
-gem 'jammit'
 gem 'juggernaut'
 gem 'sentient_user'
 gem 'flash_cookie_session'

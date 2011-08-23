@@ -4,9 +4,9 @@
     %meta{ 'http-equiv' => "content-type", :content => "text/html;charset=utf-8" }
     %title
       = @page_title || 'Teambox'
-    = include_stylesheets :print, :media => :all
+    = stylesheet_link_tag :print, :media => :all
     = trimmer_include_tag
-    = sprockets_include_tag
+    = javascript_include_tag 'application'
     = load_javascript_user_data
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env}"}  
     %h1= @page_title

@@ -49,10 +49,6 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    POpen4 (0.1.4)
-      Platform (>= 0.4.0)
-      open4
-    Platform (0.4.0)
     SystemTimer (1.2.3)
     actionmailer (3.1.0.rc6)
       actionpack (= 3.1.0.rc6)
@@ -108,10 +104,6 @@ GEM
       ffi (~> 1.0.6)
     chronic (0.6.2)
     cocaine (0.2.0)
-    coffee-script (2.2.0)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.1.2)
     columnize (0.3.4)
     configuration (1.3.1)
     cucumber (1.0.2)
@@ -162,16 +154,11 @@ GEM
     hpricot (0.8.4)
     i18n (0.6.0)
     icalendar (1.1.6)
-    jammit (0.6.3)
-      yui-compressor (>= 0.9.3)
     jasmine (1.0.2.1)
       json_pure (>= 1.4.3)
       rack (>= 1.1)
       rspec (>= 1.3.1)
       selenium-webdriver (>= 0.1.3)
-    jquery-rails (1.0.13)
-      railties (~> 3.0)
-      thor (~> 0.14)
     json (1.5.3)
     json_pure (1.5.3)
     juggernaut (2.0.3)
@@ -211,7 +198,6 @@ GEM
     oauth2 (0.4.1)
       faraday (~> 0.6.1)
       multi_json (>= 0.0.5)
-    open4 (1.1.0)
     paperclip (2.3.16)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -321,8 +307,6 @@ GEM
     xml-simple (1.1.0)
     xpath (0.1.4)
       nokogiri (~> 1.3)
-    yui-compressor (0.9.6)
-      POpen4 (>= 0.1.4)
 
 PLATFORMS
   ruby
@@ -335,7 +319,6 @@ DEPENDENCIES
   cancan (~> 1.4.1)
   capybara (~> 0.4.0)
   choices!
-  coffee-script
   cucumber-rails (~> 0.3.2)
   database_cleaner (~> 0.5.0)
   factory_girl (~> 1.3.2)
@@ -350,9 +333,7 @@ DEPENDENCIES
   i18n (>= 0.1.3)
   icalendar (~> 1.1.3)
   immortal!
-  jammit
   jasmine
-  jquery-rails
   json
   juggernaut
   launchy (~> 0.3.7)
