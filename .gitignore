@@ -18,7 +18,7 @@ log/*.log
 log/*.pid
 tmp
 public/avatars
-public/api/**
+public/api
 public/logos
 public/jammit/*
 public/stylesheets
