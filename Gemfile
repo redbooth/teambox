@@ -1,49 +1,46 @@
 source :rubygems
 
-group :rails do
-  gem 'rails', '~> 3.1.0.rc4'
-  #gem 'builder', '~> 2.1.2'
-  gem 'memcache-client', '>= 1.7.4', :require => nil
-  gem 'tzinfo', '~> 0.3.12'
-  gem 'i18n', '>= 0.1.3'
-  gem 'tmail', '~> 1.2.3'
-  gem 'text-format', '>= 0.6.3', :require => 'text/format'
+
+gem 'rails', '~> 3.1.0.rc6'
+gem 'memcache-client', '>= 1.7.4', :require => nil
+#gem 'text-format', '>= 0.6.3', :require => 'text/format'
+
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails', "  ~> 3.1.0.rc"
+  gem 'coffee-rails', "~> 3.1.0.rc"
+  gem 'uglifier'
 end
 
-# Rails 3.1 - Asset Pipeline
 gem 'json'
 #gem 'coffee-script'
-gem 'uglifier'
-# Rails 3.1 - JavaScript
 #gem 'jquery-rails'
 
 #Temporary hack - Fix once this ticket: is resolved
 gem 'activesupport-i18n-patch', :git => 'git://github.com/teambox/activesupport-i18n-patch.git'
 
 gem 'nokogiri'
-gem 'SystemTimer', '~> 1.2.0', :require => 'system_timer'
 gem 'whenever', '~> 0.4.1', :require => nil
 gem 'icalendar', '~> 1.1.3'
-gem 'libxml-ruby', '1.1.3', :require => 'libxml'
+gem "libxml-ruby", "~> 1.1.4", :require => "libxml"
 gem 'rdiscount', '~> 1.6.3'
 gem 'haml', '~> 3.1.2'
-gem 'sass', '~> 3.1.2'
-gem 'mysql2' #, "0.3.2"
-#gem 'mysql', '~> 2.8.1', :require => nil, :group => 'mysql'
+#gem 'sass', '~> 3.1.2'
+gem 'mysql2', '~> 0.3.7'
 gem 'pg', '~> 0.9.0', :require => nil, :group => 'pg'
 gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
 gem 'hpricot', '~> 0.8.2'
 gem 'json'
 gem 'oa-oauth' #, '= 0.2.3', :require => 'omniauth/oauth'
 gem 'hashie'
-gem 'tilt', '~> 1.2.2'
 gem 'choices', :git => "git://github.com/teambox/choices.git"
 gem 'rack-staticifier', :git => "https://github.com/remi/rack-staticifier.git"
 gem 'rack-contrib', :require => 'rack/contrib'
 gem 'trimmer', :git => "https://github.com/teambox/trimmer.git"
 gem 'rabl'
 
-gem "will_paginate", :git=>"git://github.com/teambox/will_paginate.git"
+gem "will_paginate", '~> 3.0.0'
 gem 'thinking-sphinx', '2.0.1', :require => 'thinking_sphinx'
 gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_versions'
 gem 'paperclip', '~> 2.3.6'
@@ -57,19 +54,19 @@ gem 'sentient_user'
 gem 'flash_cookie_session'
 
 group :development do
-  gem 'sqlite3-ruby', '~> 1.2.5', :require => nil
-  gem 'ruby-debug', '~> 0.10.3', :require => nil
-  gem 'mongrel', '~> 1.1.5', :require => nil
-  gem 'jasmine'
-  gem 'unicorn', '~> 3.6.1', :require => nil
+  #gem 'sqlite3-ruby', '~> 1.2.5', :require => nil
+  #gem 'ruby-debug', '~> 0.10.3', :require => nil
+  #gem 'mongrel', '~> 1.1.5', :require => nil
+  #gem 'jasmine'
+  #gem 'unicorn', '~> 3.6.1', :require => nil
   gem 'foreman'
   gem 'haml-rails'
   gem 'active_reload'
 end
 
 group :test, :development do
-  gem 'thin'
-  #gem 'rspec-rails', '~> 2.6.0'
+  #gem 'thin'
+  gem 'rspec-rails', '~> 2.6.0'
   gem 'webrat'
   gem 'fuubar'
   gem 'faker', :require => nil
@@ -88,3 +85,9 @@ group :testing do
 end
 
 gem "rails_autolink", "~> 1.0.2"
+
+##
+# This should be the only difference between 1.8.7 and 1.9.2
+#
+
+gem 'SystemTimer', '~> 1.2.0', :require => 'system_timer'
