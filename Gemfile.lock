@@ -43,7 +43,7 @@ GIT
 PATH
   remote: ~/code/immortal
   specs:
-    immortal (0.2.0)
+    immortal (0.2.0.pre1)
       activerecord (~> 3.1.0.rc6)
 
 GEM
