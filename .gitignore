@@ -34,3 +34,4 @@ teambox2
 .git_fail_words
 .vagrant
 .gitignore
+vendor/gems
