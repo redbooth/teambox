@@ -298,7 +298,7 @@ Teambox::Application.routes.draw do
           resources :tasks, :except => [:new, :edit]
         end
 
-        resources :tasks, :except => [:new, :edit, :create] do
+        resources :tasks, :except => [:new, :edit] do
           member do
             put :watch
             put :unwatch

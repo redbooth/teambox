@@ -267,6 +267,25 @@ describe ApiV1::TasksController do
       @task_list.tasks(true).length.should == 2
       @task_list.tasks(true).last.name.should == 'Another TODO!'
     end
+    
+    it "should create an inbox in the desired project if no task list is specified" do
+      login_as @user
+
+      post :create, :project_id => @project.permalink, :id => @task_list.id, :name => 'Another TODO!'
+      response.should be_success
+      
+      data = JSON.parse(response.body)
+      references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+      
+      task = Task.find_by_id(data['id'])
+      task.should_not == nil
+      references.include?("#{@project.id}_Project").should == true
+      references.include?("#{task.user_id}_User").should == true
+      
+      task_list = TaskList.find_by_id(data['task_list_id'])
+      task_list.name.should == 'Inbox'
+      task_list.tasks.first.should == task
+    end
 
     it "should not allow observers to create tasks" do
       login_as @observer

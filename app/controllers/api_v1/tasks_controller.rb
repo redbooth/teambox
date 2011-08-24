@@ -1,5 +1,6 @@
 class ApiV1::TasksController < ApiV1::APIController
-  before_filter :load_task_list, :only => [:index, :create, :show, :reorder]
+  before_filter :load_task_list, :only => [:index, :show, :reorder]
+  before_filter :load_or_create_task_list, :only => [:create]
   before_filter :load_task, :except => [:index, :create, :reorder]
   
   def index
@@ -101,6 +102,15 @@ class ApiV1::TasksController < ApiV1::APIController
     @task = Task.find_by_id(params[:id])
     api_error :not_found, :type => 'ObjectNotFound', :message => 'Task not found' unless @task && (current_user.project_ids.include?(@task.project_id))
     api_error :not_found, :type => 'ObjectNotFound', :message => 'Task not found' if @task_list && @task.task_list_id != @task_list.id
+  end
+  
+  def load_or_create_task_list
+    if params[:task_list_id] or @current_project.nil?
+      load_task_list
+    else
+      # make or load inbox
+      @task_list = TaskList.find_or_create_by_name_and_project_id_and_user_id('Inbox', @current_project.id, @current_project.user_id)
+    end
   end
   
   def api_scope
