@@ -86,3 +86,5 @@ group :testing do
   gem 'capybara', '~> 0.4.0'
   gem 'launchy', '~> 0.3.7'
 end
+
+gem "rails_autolink", "~> 1.0.2"

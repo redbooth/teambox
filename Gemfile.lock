@@ -230,6 +230,8 @@ GEM
       activesupport (= 3.1.0.rc6)
       bundler (~> 1.0)
       railties (= 3.1.0.rc6)
+    rails_autolink (1.0.2)
+      rails (~> 3.1.0.a)
     railties (3.1.0.rc6)
       actionpack (= 3.1.0.rc6)
       activesupport (= 3.1.0.rc6)
@@ -351,6 +353,7 @@ DEPENDENCIES
   rack-ssl-enforcer
   rack-staticifier!
   rails (~> 3.1.0.rc4)
+  rails_autolink (~> 1.0.2)
   rcov
   rdiscount (~> 1.6.3)
   ruby-debug (~> 0.10.3)
