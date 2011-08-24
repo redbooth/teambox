@@ -90,25 +90,38 @@ class User < ActiveRecord::Base
   before_create :init_user
   after_create :clear_invites
   before_save :update_token
-  before_update :activate_incomplete
+  #before_update :activate_incomplete
 
   def update_token
     self.recent_projects_ids ||= []
     self.rss_token ||= generate_rss_token
-    self.email_login_token ||= generate_email_login_token
     self.visited_at ||= Time.now
-    
-    if @invited
-      set_setting 'incomplete_profile', true
-    else
-      set_setting 'incomplete_profile', false
-    end
   end
+  
+  def self.create_for_invite(email, attributes)
+    password = ActiveSupport::SecureRandom.base64(15)
+    login = User.find_available_login(email.split("@").first)
+    user = User.create(attributes.merge({
+      :login => login, 
+      :email => email, 
+      :password => password, 
+      :password_confirmation => password, 
+      :auto_accept_invites => false, 
+    }))
+    user.newsletter = false
+    user.email_login_token = generate_email_login_token
+    user.set_setting 'incomplete_profile', true
+    user.set_setting 'unconfirmed_email', true
+    user.save!
+    user.activate!
+    user
+  end
+  
   
   def activate_incomplete
     if profile_needs_completing?
       set_setting 'incomplete_profile', false
-      invitations.all { |i| i.accept(self) }
+      invitations.each { |i| i.accept(self) }
     end
   end
   

@@ -110,19 +110,12 @@ class ApiV1::InvitationsController < ApiV1::APIController
     
     @target = @current_project || current_user
   end
-  
-  def create_user_for_invite(email, params)
-    password = ActiveSupport::SecureRandom.base64(15)
-    login = User.find_available_login(email.split("@").first)
-    user = User.create(params.merge(:login => login, :email => email, :password => password, :password_confirmation => password, :invited => true, :auto_accept_invites => false))
-    user
-  end
-  
+    
   def create_or_find_user_for_invite(email, params)
     if user = User.find_by_email(email)
       user
     else
-      create_user_for_invite(email, params)
+      User.create_for_invite(email, params)
     end
   end
   

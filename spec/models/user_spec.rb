@@ -574,4 +574,38 @@ describe User do
       @user.people.first.watch_new_conversation.should == true
     end
   end
+  
+  describe "create_for_invite" do
+    before do 
+      @email = "test@test.org"
+      @attributes = {:first_name => "John", :last_name => "Smith"}
+    end
+    
+    it "should create new user" do
+      lambda do 
+        User.create_for_invite(@email, @attributes)
+      end.should change(User, :count).by(1)
+    end
+
+    it "should create user with incomplete profile and unconfirmed email" do      
+      user = User.create_for_invite(@email, @attributes)
+      user.settings["incomplete_profile"].should be_true
+      user.settings["unconfirmed_email"].should be_true      
+    end
+    
+    it "should create an activated user" do      
+      user = User.create_for_invite(@email, @attributes)
+      user.should be_is_active      
+    end
+    
+    it "should create user with email_login_token" do 
+      user = User.create_for_invite(@email, @attributes)
+      user.email_login_token.should_not be_nil
+    end
+    
+    it "should have newsletter disabled" do 
+      user = User.create_for_invite(@email, @attributes)
+      user.newsletter.should be_false
+    end
+  end
 end

@@ -15,7 +15,7 @@ class User
 
 protected
 
-  def generate_email_login_token
+  def self.generate_email_login_token
     ActiveSupport::SecureRandom.hex(20)
   end
 
