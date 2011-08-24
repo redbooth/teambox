@@ -70,6 +70,7 @@ DatePicker = {
           } 
         });
       }
+      date_picker.positionCalendarDiv();
     }
         
     var input_urgent = date_picker.top_div.down("input.urgent")
