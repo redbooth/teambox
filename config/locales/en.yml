@@ -723,7 +723,7 @@ en:
       external: external worker
       number_of_projects:
         one: One project
-        other: %{count} projects
+        other: "%{count} projects"
       more_users: "and %{count} more users"
       your_plan_is: "Your plan is %{plan}"
       upgrade: "Upgrade your plan!"
@@ -2025,14 +2025,62 @@ en:
       long: "%B %d, %Y"
       month_and_year: "%B %Y"
       month_and_day: "%B %d"
-    order: [ :day, :month, :year ]
+    order:
+      - :day
+      - :month
+      - :year
 
-    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
-    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+    day_names:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+    abbr_day_names:
+      - Sun
+      - Mon
+      - Tue
+      - Wed
+      - Thu
+      - Fri
+      - Sat
 
-    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
-    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
-    order: [ :year, :month, :day ]
+    month_names:
+      - ~
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+
+    abbr_month_names:
+      - ~
+      - Jan
+      - Feb
+      - Mar
+      - Apr
+      - May
+      - Jun
+      - Jul
+      - Aug
+      - Sep
+      - Oct
+      - Nov
+      - Dec
+
+    order:
+      - :year
+      - :month
+      - :day
 
   time:
     formats:
@@ -2153,4 +2201,3 @@ en:
       facebook:
         signup: "Join my Teambox so we can share projects and tasks online. Follow the link below this post on Facebook."
         project: "Join my '%{project}' project on Teambox so we can share tasks online. Follow the link below this post on Facebook"
-
