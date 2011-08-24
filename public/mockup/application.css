@@ -1164,7 +1164,7 @@ body.loading {
     height: 16px; }
 
 .loading_icon {
-  background-image: url("/images/loading.gif");
+  background-image: url("/assets/loading.gif");
   background-position: 0 0;
   background-repeat: no-repeat;
   display: inline-block;

@@ -35,7 +35,7 @@
       comments = new Teambox.Collections.Comments([], options);
 
       // Show loader
-      this.$('.comments').html("<img src='/images/loading.gif' alt='Loading' />");
+      this.$('.comments').html("<img src='/assets/loading.gif' alt='Loading' />");
 
       comments.fetch({
         success: function (collection) {

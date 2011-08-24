@@ -60,7 +60,7 @@
 
     options[this.model.get('type').toLowerCase() + '_id'] = this.model.id;
     comments = new Teambox.Collections.Comments([],options);
-    el.html("<img src='/images/loading.gif' alt='Loading' />");
+    el.html("<img src='/assets/loading.gif' alt='Loading' />");
 
     comments.fetch({
       success: function (collection) {

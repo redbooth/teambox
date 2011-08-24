@@ -43,7 +43,7 @@
       })
     },
     openLoading: function() {
-      var loading_img = '<img src="/images/loading.gif" class = "loading" style="inline-block"/>'
+      var loading_img = '<img src="/assets/loading.gif" class = "loading" style="inline-block"/>'
       this.open(loading_img + ' Loading ...', 'loading')
     },
     close: function() {

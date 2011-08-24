@@ -5,12 +5,12 @@ document.on('click', '#upload_file_button', function(e, button) {
 
 // Display spinner wheel when loading folders via AJAX
 document.on("click", ".upload .file a.ajax", function(e,el) {
-  el.up('.upload').down('img').setAttribute('src', '/images/loading.gif');
+  el.up('.upload').down('img').setAttribute('src', '/assets/loading.gif');
 });
 
 document.on("click", ".upload .reference a.link_rename", function(e,el) {
   el.up('.reference').hide();
-  el.up('.reference').up('.upload').down('.header').down('.icon').down('img').setAttribute('src', '/images/loading.gif');
+  el.up('.reference').up('.upload').down('.header').down('.icon').down('img').setAttribute('src', '/assets/loading.gif');
 });
 
 document.on('click', '#new_folder_button, #new_folder_form a.close', function(e, button) {
