@@ -19,8 +19,10 @@ UserSearchForm = {
     var invite_url = '/api/1/projects/' + current_project + '/invitations';
     var html = Mustache.to_html(
       Templates.invitations.invite_existing_user,
-      $H(user).merge({'invite_url': invite_url}).toObject()
-    );
+      $H(user).merge({
+        'invite_url': invite_url, 
+        'organization': this.current_organization().name
+      }).toObject());
     el.up('.invite_users').down('.results').update(html);
   },
   displayInvitation: function(el, invitation) {
@@ -38,8 +40,11 @@ UserSearchForm = {
     var html;
     if ((email || "").length > 0) {
       html = Mustache.to_html(
-        Templates.invitations.invite_new_user,
-        { email: email, invite_url: invite_url });
+        Templates.invitations.invite_new_user, { 
+          email: email, 
+          invite_url: invite_url, 
+          organization: this.current_organization().name 
+        });
     } else {
       html = "<p>No results found. <b>Type in your contact's email</b> to send an invitation to your project.</p>";
     }
@@ -53,6 +58,11 @@ UserSearchForm = {
   },
   loading: function(){
     return "<p class='loading'><img src='/images/loading.gif'/> Loading...</p>";
+  },
+  current_organization: function(){
+    return my_organizations.detect(function(o) { 
+      return o.id == my_projects[current_project].organization_id 
+    });
   }
 };
 

@@ -25,7 +25,7 @@
       <option value="2">Participant. Can do everything, but not invite users.</option>
       <option value="3" selected="selected">Admin. Can invite users to the project, and delete comments.</option></select>
     .text_field.half_row
-      = label_tag :membership, t('invitations.new.also_invite_to_organization', :organization => "ORGANIZATION NAME")
+      = label_tag :membership, t('invitations.new.also_invite_to_organization', :organization => "{{organization}}")
       -#= select_tag :membership, options_from_organization_roles
       <select id="invitation_membership" name="membership"><option value="10" selected="selected">Don't invite. User won't be able to create projects in this organization.</option>
       <option value="20">As a participant. Will be able to create his own projects.</option>
