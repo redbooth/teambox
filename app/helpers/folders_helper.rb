@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module FoldersHelper
 
   def folder_breadcrumbs
