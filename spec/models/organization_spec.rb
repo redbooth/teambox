@@ -7,7 +7,7 @@ describe Organization do
   it { should have_many(:task_list_templates) }
 
   #it { should validate_presence_of(:permalink) }
-  it { should validate_length_of(:name, :minimum => 4) }
+  it { should validate_length_of(:name, :minimum => 1) }
   it { should validate_length_of(:permalink, :minimum => 4) }
 
   describe "permalink" do
@@ -20,6 +20,36 @@ describe Organization do
         Factory.build(:organization, :permalink => sym).should be_valid
       end
     end
+  end
+
+  describe "validating length of name and permalink" do
+    it "should fail on create if the name is shorter than 1 chars" do
+      organization = Factory.build(:organization, :name => "")
+      organization.should be_invalid
+      organization.should have(1).error_on(:name)
+    end
+
+    it "should allow existent organizations to have a name at least 1 chars if they don't change it" do
+      organization = Factory.build(:organization, :name => "a", :permalink => "abcdefg")
+      organization.save(:validate => false)
+      organization.should be_valid
+    end
+    
+    it "should not allow permalinks with less than 4 chars" do
+      organization = Factory.build(:organization, :name => "a", :permalink => "abcdefg")
+      organization.save(:validate => false)
+      organization.should be_valid
+      organization.permalink = "2"
+      organization.save
+      (organization.reload.permalink.length >= 4).should == true
+    end
+
+    it "should fail if the name is updated and shorter than 1 chars" do
+      organization = Factory.create(:organization, :name => "abc123")
+      organization.name = ""
+      organization.should be_invalid
+    end
+
   end
 
   describe "domain" do

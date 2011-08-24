@@ -16,7 +16,7 @@ describe Project do
   it { should have_many(:activities) }
 
   it { should validate_presence_of(:user) }
-  it { should validate_length_of(:name, :minimum => 3) }
+  it { should validate_length_of(:name, :minimum => 1) }
   it { should validate_length_of(:permalink, :minimum => 5) }
 
   describe "creating a project" do
@@ -36,23 +36,30 @@ describe Project do
       @owner = Factory.create(:user)
     end
 
-    it "should fail on create if the name is shorter than 5 chars" do
-      project = Factory.build(:project, :user => @owner, :name => "abcd")
+    it "should fail on create if the name is shorter than 1 chars" do
+      project = Factory.build(:project, :user => @owner, :name => "")
       project.should be_invalid
       project.should have(1).error_on(:name)
     end
 
-    it "should allow existent projects to have a name between 3 and 5 chars if they don't change it" do
-      project = Factory.build(:project, :user => @owner, :name => "abcd", :permalink => "abcdefg")
+    it "should allow existent projects to have a name at least 1 chars if they don't change it" do
+      project = Factory.build(:project, :user => @owner, :name => "a", :permalink => "abcdefg")
       project.save(:validate => false)
       project.should be_valid
-      project.permalink = "#{project.permalink}2"
+    end
+    
+    it "should not allow permalinks with less than 5 chars" do
+      project = Factory.build(:project, :user => @owner, :name => "a", :permalink => "abcdefg")
+      project.save(:validate => false)
       project.should be_valid
+      project.permalink = "2"
+      project.save
+      (project.reload.permalink.length >= 5).should == true
     end
 
-    it "should fail if the name is updated and shorter than 5 chars" do
-      project = Factory.create(:project, :name => "abcde")
-      project.name = "abc"
+    it "should fail if the name is updated and shorter than 1 chars" do
+      project = Factory.create(:project, :name => "abc123")
+      project.name = ""
       project.should be_invalid
     end
 

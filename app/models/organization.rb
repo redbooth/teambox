@@ -13,7 +13,7 @@ class Organization < ActiveRecord::Base
 
   has_many :task_list_templates
 
-  validates_length_of     :name, :minimum => 4
+  validates_length_of     :name, :minimum => 1
 
   validates_presence_of   :permalink
   validates_uniqueness_of :permalink, :case_sensitive => false, :scope => :deleted
