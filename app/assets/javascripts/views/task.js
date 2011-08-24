@@ -43,7 +43,7 @@
 
     if (this.dragndrop && !this.model.isArchived()) {
       this.$('.taskStatus').prepend(
-        "<img alt='Drag' class='task_drag' src='/images/drag.png'>"
+        "<img alt='Drag' class='task_drag' src='/assets/drag.png'>"
       );
     }
 

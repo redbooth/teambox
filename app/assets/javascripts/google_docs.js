@@ -76,7 +76,7 @@ function addGoogleDocToForm(getFormValue){
   var doc_type = getFormValue('document_type') 
   var url = getFormValue('url')
   var gid = getFormValue('document_id')
-  var image = '<img src="/images/google_docs/icon_6_' + doc_type + '.gif" />'
+  var image = '<img src="/assets/google_docs/icon_6_' + doc_type + '.gif" />'
   var image_span = '<span class="file_icon google_icon">' + image + '</span>'
   var link = '<span class="filename"><a href="' + url + '">' + title + '</a></span>'
   form_area.down('.file_list').insert('<li data-gform="' + gid  + '">' + image_span + link + '</li>')

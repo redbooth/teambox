@@ -21,7 +21,7 @@ module GoogleDocsHelper
   end
 
   def google_docs_image(document_type)
-    image_tag "/images/google_docs/icon_6_#{document_type}.gif"
+    image_tag "/assets/google_docs/icon_6_#{document_type}.gif"
   end
 
   def google_docs_write_access_link(google_doc)

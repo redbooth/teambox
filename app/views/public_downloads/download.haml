@@ -3,7 +3,7 @@
 
 .file
   .fade
-  - if Rails.root.join("public/images/#{icon_path}").exist?
+  - if Rails.root.join("app/assets/images/#{icon_path}").exist?
     .info
       = link_to image_tag(icon_path), public_send_file_path(upload.token), :class => 'file_icon', :rel => (upload.image? ? 'facebox' : '')
 

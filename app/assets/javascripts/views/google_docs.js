@@ -157,7 +157,7 @@
     , doc_type = getFormValue('document_type')
     , url = getFormValue('url')
     , gid = getFormValue('document_id')
-    , image = '<img src="/images/google_docs/icon_6_' + doc_type + '.gif" />'
+    , image = '<img src="/assets/google_docs/icon_6_' + doc_type + '.gif" />'
     , image_span = '<span class="file_icon google_icon">' + image + '</span>'
     , link = '<span class="filename"><a href="' + url + '">' + title + '</a></span>';
 
