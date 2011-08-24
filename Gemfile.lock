@@ -43,8 +43,8 @@ GIT
 PATH
   remote: ~/code/immortal
   specs:
-    immortal (0.1.6)
-      activerecord
+    immortal (0.2.0)
+      activerecord (~> 3.1.0.rc6)
 
 GEM
   remote: http://rubygems.org/
