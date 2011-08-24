@@ -19,6 +19,6 @@ class User
   protected
   
     def generate_rss_token
-      ActiveSupport::SecureRandom.hex(20)
+      SecureRandom.hex(20)
     end
 end

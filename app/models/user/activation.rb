@@ -23,7 +23,7 @@ class User
   end
   
   def generate_login_code!
-    self.login_token = ActiveSupport::SecureRandom.hex(20)
+    self.login_token = SecureRandom.hex(20)
     self.login_token_expires_at = 1.month.from_now
     self.save(:validate => false)
   end

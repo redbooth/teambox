@@ -17,7 +17,7 @@ class User
 
   #user to authenticate users via redis
   def ensure_authentication_token
-    self.authentication_token ||= ActiveSupport::SecureRandom.hex(20)
+    self.authentication_token ||= SecureRandom.hex(20)
     @write_auth_token = self.authentication_token_changed?
     true
   end

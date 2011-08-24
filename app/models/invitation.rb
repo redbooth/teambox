@@ -133,7 +133,7 @@ class Invitation < RoleRecord
   end
 
   def generate_token
-    self.token ||= ActiveSupport::SecureRandom.hex(20)
+    self.token ||= SecureRandom.hex(20)
   end
 
   # Autoaccept the invite if the user has this setting

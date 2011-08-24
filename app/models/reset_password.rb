@@ -14,7 +14,7 @@ class ResetPassword < ActiveRecord::Base
   protected
   
   def create_code
-    self.reset_code = ActiveSupport::SecureRandom.hex(20)
+    self.reset_code = SecureRandom.hex(20)
     self.expiration_date = 2.weeks.from_now
   end
 end

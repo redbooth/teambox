@@ -310,7 +310,7 @@ class Emailer < ActionMailer::Base
     def signup_invitation
       invitation = Invitation.new do |i|
         i.email = 'test@teambox.com'
-        i.token = ActiveSupport::SecureRandom.hex(20)
+        i.token = SecureRandom.hex(20)
         i.user = User.first
         i.project = Project.first
       end
@@ -325,9 +325,9 @@ class Emailer < ActionMailer::Base
 
     def forgot_password
       password_reset = ResetPassword.create! do |passwd|
-        passwd.email = "reset#{ActiveSupport::SecureRandom.hex(20)}@example.com"
+        passwd.email = "reset#{SecureRandom.hex(20)}@example.com"
         passwd.user = User.first
-        passwd.reset_code = ActiveSupport::SecureRandom.hex(20)
+        passwd.reset_code = SecureRandom.hex(20)
       end
       ::Emailer.forgot_password(password_reset.id)
     end
@@ -344,7 +344,7 @@ class Emailer < ActionMailer::Base
 
     def project_invitation
       invitation = Invitation.new do |i|
-        i.token = ActiveSupport::SecureRandom.hex(20)
+        i.token = SecureRandom.hex(20)
         i.user = User.first
         i.invited_user = User.last
         i.project = Project.first
@@ -356,7 +356,7 @@ class Emailer < ActionMailer::Base
 
     def accepted_project_invitation
       invitation = Invitation.new do |i|
-        i.token = ActiveSupport::SecureRandom.hex(20)
+        i.token = SecureRandom.hex(20)
         i.user = User.first
         i.invited_user = User.last
         i.project = Project.first

@@ -246,7 +246,7 @@ class ApidocsController < ApplicationController
       if user = User.find_by_login(login)
         user
       else
-        pass = ActiveSupport::SecureRandom.hex(10)
+        pass = SecureRandom.hex(10)
         user = User.new(
           :login => login,
           :email => "#{login}@teambox.com",
