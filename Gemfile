@@ -18,7 +18,7 @@ gem 'json'
 #gem 'jquery-rails'
 
 #Temporary hack - Fix once this ticket: is resolved
-gem 'activesupport-i18n-patch', :git => 'git://github.com/teambox/activesupport-i18n-patch.git'
+gem 'activesupport-i18n-patch', :git => 'https://github.com/teambox/activesupport-i18n-patch.git'
 
 gem 'nokogiri'
 gem 'whenever', '~> 0.4.1', :require => nil
@@ -33,7 +33,7 @@ gem 'hpricot', '~> 0.8.2'
 gem 'json'
 gem 'oa-oauth' #, '= 0.2.3', :require => 'omniauth/oauth'
 gem 'hashie'
-gem 'choices', :git => "git://github.com/teambox/choices.git"
+gem 'choices', :git => "https://github.com/teambox/choices.git"
 gem 'rack-staticifier', :git => "https://github.com/remi/rack-staticifier.git"
 gem 'rack-contrib', :require => 'rack/contrib'
 gem 'trimmer', :git => "https://github.com/teambox/trimmer.git"
@@ -41,11 +41,11 @@ gem 'rabl'
 
 gem "will_paginate", '~> 3.0.0'
 gem 'thinking-sphinx', '2.0.1', :require => 'thinking_sphinx'
-gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_versions'
+gem 'vestal_versions', '~> 1.2.2', :git => 'https://github.com/adamcooper/vestal_versions.git'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.4.1'
-gem 'immortal', :git=>"git://github.com/micho/immortal.git"
+gem 'immortal', :git => "https://github.com/micho/immortal.git"
 #gem 'immortal', :path => "vendor/gems/immortal"
 #gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
 gem 'juggernaut'

@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/adamcooper/vestal_versions
+  remote: https://github.com/adamcooper/vestal_versions.git
   revision: 6273df533f85014062e346cb1807b0531a809ee2
   specs:
     vestal_versions (1.2.2)
@@ -7,30 +7,30 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: git://github.com/micho/immortal.git
+  remote: https://github.com/micho/immortal.git
   revision: ada04d9c4d8f567bbd601810760a061e282da83b
   specs:
     immortal (0.1.6)
       activerecord (~> 3.1.0rc4)
 
 GIT
-  remote: git://github.com/teambox/activesupport-i18n-patch.git
+  remote: https://github.com/remi/rack-staticifier.git
+  revision: 642ca9f4d8634270be031725077a748a1c8f6397
+  specs:
+    rack-staticifier (0.1.6)
+
+GIT
+  remote: https://github.com/teambox/activesupport-i18n-patch.git
   revision: 2e835783c0ea7062ad280b71b04060bd9b89e1a4
   specs:
     activesupport-i18n-patch (0.0.1)
 
 GIT
-  remote: git://github.com/teambox/choices.git
+  remote: https://github.com/teambox/choices.git
   revision: 93d0cfb4e5fd4ae03b421b379a69ee00721f337b
   specs:
     choices (0.2.4)
       hashie (>= 0.4.0)
-
-GIT
-  remote: https://github.com/remi/rack-staticifier.git
-  revision: 642ca9f4d8634270be031725077a748a1c8f6397
-  specs:
-    rack-staticifier (0.1.6)
 
 GIT
   remote: https://github.com/teambox/trimmer.git
