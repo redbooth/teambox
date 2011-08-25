@@ -1,7 +1,7 @@
 source :rubygems
 
-
 gem 'rails', '~> 3.1.0.rc6'
+#gem 'rails', :path => "vendor/gems/rails"
 gem 'memcache-client', '>= 1.7.4', :require => nil
 #gem 'text-format', '>= 0.6.3', :require => 'text/format'
 
@@ -26,7 +26,6 @@ gem 'icalendar', '~> 1.1.3'
 gem "libxml-ruby", "~> 1.1.4", :require => "libxml"
 gem 'rdiscount', '~> 1.6.3'
 gem 'haml', '~> 3.1.2'
-#gem 'sass', '~> 3.1.2'
 gem 'mysql2', '~> 0.3.7'
 gem 'pg', '~> 0.9.0', :require => nil, :group => 'pg'
 gem 'aws-s3', '~> 0.6.2', :require => 'aws/s3'
@@ -46,9 +45,9 @@ gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_v
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.4.1'
-#gem 'immortal', :git=>"git://github.com/micho/immortal.git"
-gem 'immortal', :path => "~/code/immortal"
-gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer' 
+gem 'immortal', :git=>"git://github.com/micho/immortal.git"
+#gem 'immortal', :path => "vendor/gems/immortal"
+gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
 gem 'juggernaut'
 gem 'sentient_user'
 gem 'flash_cookie_session'
@@ -62,15 +61,15 @@ group :development do
   gem 'foreman'
   gem 'haml-rails'
   gem 'active_reload'
+  gem 'rspec-rails', '~> 2.6.0'
 end
 
-group :test, :development do
-  #gem 'thin'
-  gem 'rspec-rails', '~> 2.6.0'
+group :test do
   gem 'webrat'
   gem 'fuubar'
   gem 'faker', :require => nil
   gem 'timecop', :require => 'timecop'
+  gem 'rspec-rails', '~> 2.6.0'
 end
 
 # we don't call the group :test because we don't want them auto-required
