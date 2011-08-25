@@ -82,6 +82,11 @@ var move_resource = function(project_id, resource_id, moveable_type) {
    hidden_moveable_type = new Element('input', { type: 'hidden', name: "moveable_type", value: moveable_type});
    form.appendChild(hidden_moveable_type);
 
+   if(typeof AUTH_TOKEN !== 'undefined') {
+     hidden_auth_token = new Element('input', { type: 'hidden', name: "authenticity_token", value: AUTH_TOKEN});
+     form.appendChild(hidden_auth_token);
+   }
+  
    var select = new Element('select', { name: "target_folder_id"});
    for (var id in target_folders) {
      if(!(moveable_type == 'folder' && resource_id == id)) {
