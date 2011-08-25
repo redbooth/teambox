@@ -18,3 +18,6 @@
     = link_to t('.view_google_docs', :count => @current_project.google_docs.count), project_google_docs_path(@current_project)
 
 = render :partial => "list"
+
+:javascript
+  #{target_folders_js}

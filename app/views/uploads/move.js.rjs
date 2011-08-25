@@ -1,0 +1,9 @@
+if @moveable.errors.empty?
+  item_id = "#{@moveable_type}_#{@moveable.id}"
+  page[item_id].dropOut
+  page.delay(3) do
+    page[item_id].remove
+  end
+else
+  page.insert_html :before, "uploads_list", content_tag(:p, flash.now[:error], :class => "flash flash-error")
+end

@@ -138,12 +138,16 @@ class Upload < RoleRecord
     file_name
   end
 
+  def moveable?
+    parent_folder or !project.folders.empty?
+  end
+
   def downloadable?(user)
     project.user_ids.include?(user.id) &&
     user_can_access_private_target?(user)
   end
 
-  #TODO: do we need a flag like this ?
+  #TODO do we need a flag like this ?
   def public_downloadable?
     true
   end

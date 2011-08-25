@@ -11,4 +11,16 @@ module FoldersHelper
     bc.reverse.join(" » ").html_safe
   end
 
+  def target_folders_js
+    folders = {}
+    if @current_folder
+      parent_folder_id = @parent_folder ? @parent_folder.id : nil
+      folders[parent_folder_id.to_s] = "Move to parent folder"
+    end
+    @folders.each do |f|
+      folders[f.id.to_s] = f.name
+    end
+    "target_folders = #{folders.to_json};" unless folders.empty?
+  end
+
 end
