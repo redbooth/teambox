@@ -145,7 +145,7 @@ module ApplicationHelper
   end
 
   def errors_for(model, field)
-    error = case errors = model.errors.on(field)
+    error = case errors = model.errors[field]
     when Array then errors.first
     when String then errors
     end
