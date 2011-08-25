@@ -139,7 +139,7 @@ class Upload < RoleRecord
   end
 
   def moveable?
-    parent_folder or !project.folders.empty?
+    parent_folder or !project.folders.where(:parent_folder_id => nil).empty?
   end
 
   def downloadable?(user)

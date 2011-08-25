@@ -40,7 +40,7 @@ class Folder < RoleRecord
   end
 
   def moveable?
-    has_parent? or project.folders.count > 1
+    has_parent? or project.folders.where(:parent_folder_id => nil).count > 1
   end
 
   protected
