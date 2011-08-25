@@ -1,4 +1,5 @@
-class ApiV2::ActivitiesController < ApiV2::APIController
+class ApiV2::ActivitiesController < ApiV2::BaseController
+
   def index
     authorize! :show, @current_project || current_user
 
@@ -19,5 +20,5 @@ class ApiV2::ActivitiesController < ApiV2::APIController
     @activity = Activity.find(params[:id])
     authorize!(:show, @activity) if @activity
   end
-end
 
+end

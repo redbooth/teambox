@@ -1,4 +1,4 @@
-class ApiV2::ThreadsController < ApiV2::APIController
+class ApiV2::ThreadsController < ApiV2::BaseController
   def index
     authorize! :show, @current_project || current_user
 
@@ -19,4 +19,3 @@ class ApiV2::ThreadsController < ApiV2::APIController
     authorize!(:show, @activity) if @activity
   end
 end
-

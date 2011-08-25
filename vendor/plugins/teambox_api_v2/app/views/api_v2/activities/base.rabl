@@ -14,4 +14,3 @@ end
 
 child(:user) { extends 'api_v2/users/base' }
 child(:project) { extends 'api_v2/projects/base' }
-

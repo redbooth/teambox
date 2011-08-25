@@ -1,4 +1,7 @@
-class ApiV2::APIController < ActionController::Base
+class ApiV2::BaseController < APIController
+
+  layout false
+
   include AuthenticatedSystem
   include Oauth::Controllers::ApplicationControllerMethods
   Oauth2Token = ::Oauth2Token
@@ -30,7 +33,6 @@ class ApiV2::APIController < ActionController::Base
       api_max_limit
     end
   end
-
 
   def api_range(table_name)
     since_id = params[:since_id]
@@ -65,8 +67,9 @@ class ApiV2::APIController < ActionController::Base
   end
 
   private
+
   def api_max_limit
     @api_max_limit ||= Rails.env.test? ? 10 : 20
   end
-end
 
+end
