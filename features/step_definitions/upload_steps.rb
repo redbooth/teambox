@@ -30,3 +30,7 @@ end
 When /^I click upload list item for "([^\"]*)" file$/ do |filename|
   page.find(:xpath, "//div[@class = 'header' and .//a[contains(text(),'#{filename}')]]").click
 end
+
+When /^I select "([^\"]*)" from target folders list$/ do |folder_name|
+  And %(I select "#{folder_name}" from "target_folder_id")
+end
