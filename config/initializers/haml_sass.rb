@@ -6,9 +6,12 @@ Haml::Template::options[:format] = :html5
 
 css_dir = Teambox.config.heroku? ? "tmp" : "public"
 
+require 'sass/plugin'
+
 Sass::Plugin.add_template_location(Rails.root + 'app/styles', Rails.root + css_dir + 'stylesheets')
 
 if Teambox.config.heroku?
+  require 'sass/plugin/rack'
   # add Rack middleware to serve compiled stylesheets from "tmp/stylesheets"
   Teambox::Application.config.middleware.delete 'Sass::Plugin::Rack'
   Teambox::Application.config.middleware.insert_after 'ActionDispatch::Static', 'Sass::Plugin::Rack'
