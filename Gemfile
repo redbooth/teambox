@@ -1,7 +1,7 @@
 source :rubygems
 
-gem 'rails', '~> 3.1.0.rc6'
-#gem 'rails', :path => "vendor/gems/rails"
+#gem 'rails', '~> 3.1.0.rc6'
+gem 'rails', :path => "vendor/gems/rails"
 gem 'memcache-client', '>= 1.7.4', :require => nil
 #gem 'text-format', '>= 0.6.3', :require => 'text/format'
 
@@ -45,8 +45,8 @@ gem 'thinking-sphinx', '2.0.5'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.4.1'
-gem 'immortal', :git => "https://github.com/micho/immortal.git"
-#gem 'immortal', :path => "vendor/gems/immortal"
+#gem 'immortal', :git => "https://github.com/micho/immortal.git"
+gem 'immortal', :path => "vendor/gems/immortal"
 #gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
 gem 'juggernaut'
 gem 'sentient_user'
