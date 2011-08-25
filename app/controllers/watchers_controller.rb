@@ -2,7 +2,10 @@ class WatchersController < ApplicationController
   skip_before_filter :load_project
 
   def index
-    @watch_list_by_project = current_user.watchers.includes(:watchable).group_by { |t| t.project.name }
+    @watch_list_by_project = current_user.watchers.includes(:watchable).reject { |t|
+	  t.project.nil? }.group_by { |t|
+	  t.project.name
+    }
   end
 
   def unwatch
@@ -10,4 +13,4 @@ class WatchersController < ApplicationController
     @watch.destroy
     head :ok
   end
-end
+end.nil?

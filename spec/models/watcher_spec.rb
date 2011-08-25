@@ -2,6 +2,21 @@ require 'spec_helper'
 
 describe Watcher do
 
+  describe "in projects" do
+    before do
+      @user = Factory.create(:confirmed_user)
+      @project = Factory.create(:project)
+    end
+
+    it "should destroy the watcher after project deletion" do
+      Watcher.create(:user => @user, :project => @project)
+
+      lambda {
+        @project.destroy
+      }.should change(Watcher, :count).by(-1)
+    end
+  end
+
   describe "in conversations" do
     before do
       @user1 = Factory.create(:confirmed_user)

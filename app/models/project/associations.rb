@@ -12,6 +12,7 @@ class Project
     delete.has_many :folders
     delete.has_many :notes
     delete.has_many :dividers
+    delete.has_many :watcher_tags, :class_name => 'Watcher'
     
     delete.with_options :order => 'id DESC' do |ordered|
       ordered.has_many :conversations
