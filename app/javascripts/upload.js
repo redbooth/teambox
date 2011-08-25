@@ -62,3 +62,36 @@ document.on('click', '.uploads .upload .header .file a', function(e, el) {
 document.on('click', '.uploads .upload .header', function(e, el) {
   toggle_task_row(el);
 });
+
+var move_resource = function(project_id, resource_id, moveable_type) {
+
+   var div =  new Element('div', { id: 'move_resource'});
+   div.innerHTML = 'Move to another folder:';
+
+   var form = new Element('form', {
+                         action: '/projects/' + project_id + '/move/' + resource_id,
+                         method: 'post',
+                         'data-remote': 'true',
+                         onsubmit: 'Facebox.close()'
+                       });
+   div.appendChild(form);
+
+   hidden_method = new Element('input', { type: 'hidden', name: "_method", value: "put"});
+   form.appendChild(hidden_method);
+
+   hidden_moveable_type = new Element('input', { type: 'hidden', name: "moveable_type", value: moveable_type});
+   form.appendChild(hidden_moveable_type);
+
+   var select = new Element('select', { name: "target_folder_id"});
+   for (var id in target_folders) {
+     if(!(moveable_type == 'folder' && resource_id == id)) {
+        select.options.add(new Option(target_folders[id], id));
+     }
+   }
+   form.appendChild(select);
+
+   var submit = new Element('input', { type: 'submit', value: "Move"});
+   form.appendChild(submit);
+
+   Facebox.open(div);
+};

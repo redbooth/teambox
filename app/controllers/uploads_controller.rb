@@ -1,8 +1,8 @@
 class UploadsController < ApplicationController
-  before_filter :find_upload, :only => [:destroy, :update, :thumbnail, :show, :edit, :rename, :move]
+  before_filter :find_upload, :only => [:destroy, :update, :thumbnail, :show, :edit, :rename]
   skip_before_filter :load_project, :only => [:download]
   before_filter :set_page_title
-  before_filter :load_folder, :only => :index
+  before_filter :load_folder, :only => [:index]
   before_filter :check_private_download_access, :only => :download
   before_filter :check_public_download_access, :only => :tokenized_download
   
@@ -14,9 +14,17 @@ class UploadsController < ApplicationController
     end
   end
 
-  def move_form
-    if @moveable = @current_project.uploads.find_by_id(params[:id]) || @current_project.folders.find_by_id(params[:id])
-      render :move, :layout => false
+  def move
+    @moveable_type = params[:moveable_type]
+    if @moveable = @current_project.send(@moveable_type.pluralize.to_sym).find_by_id(params[:id])
+       
+       unless @moveable.update_attribute :parent_folder_id, (params[:target_folder_id] || nil)
+         flash.now[:error] = t("uploads.moveable.error.#{@moveable_type}")
+       end
+    end
+    respond_to do |format|
+      format.js { render "move", :layout => false }
+      format.any(:html, :m) { render :index}
     end
   end
   

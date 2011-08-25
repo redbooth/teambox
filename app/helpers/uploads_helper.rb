@@ -44,5 +44,10 @@ module UploadsHelper
   def file_icon_path(upload, size='48px')
     icon_name = Upload::ICONS.include?(upload.file_type) ? upload.file_type : '_blank'
     "/images/file_icons/#{size}/#{icon_name}.png"
-  end  
+  end
+
+  def moveable?(resource)
+    parent_folder or (!resource.project.folders.empty?)
+  end
+
 end

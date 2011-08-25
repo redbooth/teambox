@@ -39,6 +39,10 @@ class Folder < RoleRecord
     uploads.count
   end
 
+  def moveable?
+    has_parent? or project.folders.count > 1
+  end
+
   protected
 
   def validate_unique_name
