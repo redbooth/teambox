@@ -4,7 +4,7 @@ class Note < RoleRecord
   belongs_to :page
   belongs_to :project
   has_one :page_slot, :as => :rel_object
-  versioned
+  #versioned
   
   include PageWidget
   

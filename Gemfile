@@ -41,7 +41,7 @@ gem 'rabl'
 
 gem "will_paginate", '~> 3.0.0'
 gem 'thinking-sphinx', '2.0.1', :require => 'thinking_sphinx'
-gem 'vestal_versions', '~> 1.2.2', :git => 'https://github.com/adamcooper/vestal_versions.git'
+#gem 'vestal_versions', '~> 1.2.2', :git => 'https://github.com/adamcooper/vestal_versions.git'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.4.1'

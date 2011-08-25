@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/adamcooper/vestal_versions.git
-  revision: 6273df533f85014062e346cb1807b0531a809ee2
-  specs:
-    vestal_versions (1.2.2)
-      activerecord (>= 3.0.0)
-      activesupport (>= 3.0.0)
-
-GIT
   remote: https://github.com/micho/immortal.git
   revision: ada04d9c4d8f567bbd601810760a061e282da83b
   specs:
@@ -335,7 +327,6 @@ DEPENDENCIES
   timecop
   trimmer!
   uglifier
-  vestal_versions (~> 1.2.2)!
   webrat
   whenever (~> 0.4.1)
   will_paginate (~> 3.0.0)
