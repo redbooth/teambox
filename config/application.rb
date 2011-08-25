@@ -112,7 +112,7 @@ module Teambox
 
     # Redirect http to https if secure_logins is true
     # https://github.com/tobmatth/rack-ssl-enforcer
-    config.middleware.use Rack::SslEnforcer if Teambox.config.secure_logins
+    #config.middleware.use Rack::SslEnforcer if Teambox.config.secure_logins
 
     config.middleware.use 'Rack::JSONP'
   end

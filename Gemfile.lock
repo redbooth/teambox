@@ -202,7 +202,6 @@ GEM
       rack (>= 1.0.0)
     rack-ssl (1.3.2)
       rack
-    rack-ssl-enforcer (0.2.3)
     rack-test (0.6.1)
       rack (>= 1.0)
     rails (3.1.0.rc6)
@@ -323,7 +322,6 @@ DEPENDENCIES
   pickle (~> 0.4.4)
   rabl
   rack-contrib
-  rack-ssl-enforcer
   rack-staticifier!
   rails (~> 3.1.0.rc6)
   rails_autolink (~> 1.0.2)

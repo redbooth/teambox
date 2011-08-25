@@ -47,7 +47,7 @@ gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.4.1'
 gem 'immortal', :git=>"git://github.com/micho/immortal.git"
 #gem 'immortal', :path => "vendor/gems/immortal"
-gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
+#gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
 gem 'juggernaut'
 gem 'sentient_user'
 gem 'flash_cookie_session'
