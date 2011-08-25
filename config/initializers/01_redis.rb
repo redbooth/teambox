@@ -1,11 +1,11 @@
-require 'yaml'
-rails_root = (defined?(Rails) && Rails.root) || ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/../..'
-rails_env = (defined?(Rails) && Rails.env) || ENV['RAILS_ENV'] || 'development'
+##
+# Redis Intro: http://jimneath.org/2011/03/24/using-redis-with-ruby-on-rails.html
+#
 
-if rails_env == 'production' or rails_env == 'staging'
-  redis_config = YAML.load_file(rails_root.to_s + '/config/database.yml')
-  $redis = Redis.new(:host => redis_config[rails_env]['host'])
-else
-  $redis = Redis.new
+if %w(staging production).include?(Rails.env)
+  config = Rails.root.join("config", "redis.yml")
+  redis_config = YAML.load_file(config)
+  settings = { :host => redis_config[Rails.env]['host'] }
 end
 
+$redis = Redis.new(settings || {})

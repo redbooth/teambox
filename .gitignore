@@ -35,3 +35,4 @@ teambox2
 .vagrant
 .gitignore
 vendor/gems
+config/redis.yml

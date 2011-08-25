@@ -51,6 +51,7 @@ gem 'immortal', :path => "vendor/gems/immortal"
 gem 'juggernaut'
 gem 'sentient_user'
 gem 'flash_cookie_session'
+gem "redis", "~> 2.2.2"
 
 group :development do
   #gem 'sqlite3-ruby', '~> 1.2.5', :require => nil

@@ -328,6 +328,7 @@ DEPENDENCIES
   rails_autolink (~> 1.0.2)
   rcov
   rdiscount (~> 1.6.3)
+  redis (~> 2.2.2)
   rspec-rails (~> 2.6.0)
   sass-rails (~> 3.1.0.rc)
   sentient_user
