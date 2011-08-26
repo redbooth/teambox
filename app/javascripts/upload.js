@@ -87,7 +87,7 @@ var move_resource = function(project_id, resource_id, moveable_type) {
      form.appendChild(hidden_auth_token);
    }
   
-   var select = new Element('select', { name: "target_folder_id"});
+   var select = new Element('select', { name: "target_folder_id", id: "target_folder_id"});
    for (var id in target_folders) {
      if(!(moveable_type == 'folder' && resource_id == id)) {
         select.options.add(new Option(target_folders[id], id));

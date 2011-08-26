@@ -287,7 +287,15 @@ Then /^the "([^\"]*)" checkbox(?: within "([^\"]*)")? should not be checked$/ do
     end
   end
 end
- 
+
+Then /^the "([^"]*)" select should contain the option "([^"]*)"$/ do |selector, value|
+  page.has_select?(selector, :options => [value])
+end
+
+Then /^the "([^"]*)" select should not contain the option "([^"]*)"$/ do |selector, value|
+  !page.has_select?(selector, :options => [value])
+end
+
 Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
   if current_path.respond_to? :should

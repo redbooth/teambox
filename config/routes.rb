@@ -171,13 +171,11 @@ Teambox::Application.routes.draw do
           get :public_download
           post :email_public
           put :rename
-          #put :move
         end
         collection do
           resources :folders, :except => [:show, :index, :new] do
             member do
               put :rename
-              #put :move
             end
           end
         end
