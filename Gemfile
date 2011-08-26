@@ -1,15 +1,14 @@
 source :rubygems
 
-#gem 'rails', '~> 3.1.0.rc6'
-gem 'rails', :path => "vendor/gems/rails"
+gem 'rails', '~> 3.1.0.rc6'
 gem 'memcache-client', '>= 1.7.4', :require => nil
 #gem 'text-format', '>= 0.6.3', :require => 'text/format'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', "  ~> 3.1.0.rc"
-  gem 'coffee-rails', "~> 3.1.0.rc"
+  gem 'sass-rails', "  ~> 3.1.0.rc6"
+  gem 'coffee-rails', "~> 3.1.0.rc6"
   gem 'uglifier'
 end
 
@@ -46,7 +45,6 @@ gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.4.1'
 gem 'immortal', :git => "https://github.com/teambox/immortal.git"
-#gem 'immortal', :path => "vendor/gems/immortal"
 #gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
 gem 'juggernaut'
 gem 'sentient_user'
