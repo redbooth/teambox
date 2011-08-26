@@ -416,6 +416,7 @@ Teambox::Application.routes.draw do
 
     match 'downloads/:id(/:style)/:filename' => 'uploads#download', :constraints => {:filename => /.*/}, :via => :get
 
+    match 'f/:token' => 'public_downloads#folder', :via => :get, :as => :public_download_folder
     match 'd/:token' => 'public_downloads#download', :via => :get, :as => :public_download_file
     match 'send/:token' => 'public_downloads#download_send', :via => :get, :as => :public_send_file
 

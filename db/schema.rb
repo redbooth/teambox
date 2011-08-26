@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110818091722) do
+ActiveRecord::Schema.define(:version => 20110826144729) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -188,7 +188,10 @@ ActiveRecord::Schema.define(:version => 20110818091722) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",          :default => false, :null => false
+    t.string   "token"
   end
+
+  add_index "folders", ["token"], :name => "index_folders_on_token"
 
   create_table "google_docs", :force => true do |t|
     t.integer  "project_id"

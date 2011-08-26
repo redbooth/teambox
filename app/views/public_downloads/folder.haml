@@ -1,0 +1,13 @@
+%h1= @folder 
+#file_list
+  - for folder in @folders
+    .upload{ :class => cycle('alternate', '') }
+      .icon= image_tag '/famfamfam/folder.png'
+      .file= link_to folder.name, public_download_folder_path(folder.token)
+      .size= pluralize (folder.uploads_count + folder.folders_count), 'file'
+  - for upload in @uploads
+    .upload.file_upload{ :class => cycle('alternate', '') }
+      .icon= image_tag file_icon_path(upload, '16px')
+      .file= link_to upload.asset_file_name, public_send_file_path(upload.token)
+      .size= number_to_human_size upload.size
+
