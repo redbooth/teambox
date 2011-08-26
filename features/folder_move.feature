@@ -19,6 +19,8 @@ Feature: Moving a folder
     And I enter "Pulp Fiction" folder
     And I click upload list item for "Mia Wallace" folder
     And I follow "Move to another folder"
+    And the "#target_folder_id" select should contain the option "Move to parent folder"
+    And the "#target_folder_id" select should not contain the option "Mia Wallace"
     And I select "Move to parent folder" from target folders list
     And I press "Move"
     Then I should not see "Mia Wallace" within ".upload"
