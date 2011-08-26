@@ -62,21 +62,3 @@ document.on('click', '.uploads .upload .header .file a', function(e, el) {
 document.on('click', '.uploads .upload .header', function(e, el) {
   toggle_task_row(el);
 });
-
-var toggle_upload_more = function(el) {
-  var reference = el.up('.upload_file') ? el.up('.upload_file').down('.reference') : el.up('.upload_thumbnail').down('.reference');
-  if(reference) {
-    if (reference.visible()) {
-      reference.hide();
-    } else {
-      $$('.upload_file .reference').invoke('hide');
-      $$('.upload_thumbnail .reference').invoke('hide');
-      reference.show();
-    }
-  }
-  return false;
-};
-
-document.on('click', '.more span', function(e, el) {
-  toggle_upload_more(el);
-});
