@@ -31,16 +31,62 @@ describe ApiV1::TaskListsController do
       references.include?("#{@other_task_list.user_id}_User").should == true
     end
     
-    it "shows task lists with tasks with include=tasks" do
-      login_as @user
-      @project.create_task(@owner,@task_list,{:name => 'Something TODO'}).save!
-      @project.create_task(@owner,@other_task_list,{:name => 'Something Else TODO'}).save!
+    describe "include" do
+      before do
+        login_as @user
+        @first_task = @project.create_task(@owner,@task_list,{:name => 'Something TODO', 
+                                                              :comments_attributes => {'0' => {'body' => 'First test comment'}}})
+        @second_task = @project.create_task(@owner,@other_task_list,{:name => 'Something Else TODO',
+                                                                     :assigned_id => @project.people.first.id,
+                                                                     :status => Task::STATUSES[:resolved],
+                                                                     :comments_attributes => {'0' => {'body' => 'Second test comment'}}})
+        
+        @task_list.archived_tasks.length.should == 0
+        @task_list.unarchived_tasks.length.should == 1
+        @other_task_list.archived_tasks.length.should == 1
+        @other_task_list.unarchived_tasks.length.should == 0
+      end
+      
+      it "shows task lists with tasks with include=tasks" do
+        get :index, :project_id => @project.permalink, :include => 'tasks'
+        response.should be_success
 
-      get :index, :project_id => @project.permalink, :include => 'tasks'
-      response.should be_success
+        data = JSON.parse(response.body)
+        references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
 
-      data = JSON.parse(response.body)
-      data['objects'].each{|o| o['tasks'].length.should == 1}
+        data['objects'].each{|o| o['task_ids'].length.should == 1}
+        data['references'].each{|o| o['type'].should_not == 'TaskList'}
+        data['references'].reject{|r|r['type'] != 'Task'}.length.should == 2
+
+        references.include?("#{@project.people.first.id}_Person").should == true
+        references.include?("#{@project.id}_Project").should == true
+        references.include?("#{@owner.id}_User").should == true
+        references.include?("#{@second_task.first_comment.id}_Comment").should == true
+      end
+
+      it "shows task lists with tasks with include=unarchived_tasks" do
+        get :index, :project_id => @project.permalink, :include => 'unarchived_tasks'
+        response.should be_success
+
+        data = JSON.parse(response.body)
+        references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+        
+        data['references'].reject{|r|r['type'] != 'Task'}.length.should == 1
+        references.include?("#{@first_task.id}_Task").should == true
+        references.include?("#{@first_task.first_comment.id}_Comment").should == true
+      end
+      
+      it "shows task lists with tasks with include=archived_tasks" do
+        get :index, :project_id => @project.permalink, :include => 'archived_tasks'
+        response.should be_success
+
+        data = JSON.parse(response.body)
+        references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+        
+        data['references'].reject{|r|r['type'] != 'Task'}.length.should == 1
+        references.include?("#{@second_task.id}_Task").should == true
+        references.include?("#{@second_task.first_comment.id}_Comment").should == true
+      end
     end
 
     it "shows task lists as JSON when requested with the :text format" do

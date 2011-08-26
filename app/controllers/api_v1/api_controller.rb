@@ -184,6 +184,9 @@ class ApiV1::APIController < ApplicationController
       when 'Task'
         tasks = Task.where(:id => values).includes(:first_comment).includes(:recent_comments).includes(:watchers).all
         tasks + tasks.collect(&:first_comment) + tasks.collect(&:recent_comments)
+      when 'TaskListTask' # light task
+        tasks = Task.where(:id => values).includes(:first_comment).includes(:recent_comments).includes(:watchers).all
+        tasks + tasks.map{|t| load_reference_hashes(t.task_list_references, user_ids, people_ids)}.flatten
       else
         ref_class.constantize.where(:id => values).all
       end
