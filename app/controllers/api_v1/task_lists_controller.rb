@@ -27,6 +27,14 @@ class ApiV1::TaskListsController < ApiV1::APIController
 
   def show
     authorize! :show, @task_list
+    
+    # figure out which tasks we should reference
+    task_includes = api_include & [:tasks, :unarchived_tasks, :archived_tasks]
+    unless task_includes.empty?
+      ref = "#{task_includes.first.to_s.singularize}_ids".to_sym
+      @task_list.reference_task_objects = ref
+    end
+    
     api_respond @task_list, :references => true, :include => (api_include+[:task_ids])
   end
 

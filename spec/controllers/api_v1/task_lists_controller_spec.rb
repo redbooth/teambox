@@ -87,6 +87,19 @@ describe ApiV1::TaskListsController do
         references.include?("#{@second_task.id}_Task").should == true
         references.include?("#{@second_task.first_comment.id}_Comment").should == true
       end
+
+      it "shows a task list with tasks with include=unarchived_tasks" do
+        get :show, :project_id => @project.permalink, :id => @task_list.id, :include => 'unarchived_tasks'
+        response.should be_success
+
+        data = JSON.parse(response.body)
+        references = data['references'].map{|r| "#{r['id']}_#{r['type']}"}
+        
+        data['task_ids'].length.should == 1
+        data['references'].reject{|r|r['type'] != 'Task'}.length.should == 1
+        references.include?("#{@first_task.id}_Task").should == true
+        references.include?("#{@first_task.first_comment.id}_Comment").should == true
+      end
     end
 
     it "shows task lists as JSON when requested with the :text format" do
