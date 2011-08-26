@@ -1,4 +1,4 @@
-require 'lib/google_docs'
+# require 'lib/google_docs'
 
 class GoogleDocsController < ApplicationController
   before_filter :create_consumer
