@@ -1,4 +1,4 @@
-@uploads
+@uploads @javascript
 Feature: Uploading a file
 
   Background: 
@@ -10,6 +10,7 @@ Feature: Uploading a file
     
   Scenario: Upload has more options in activity feed
     When I go to the project page
+    And I click the element that contain "Railscast Theme" within ".comment"
     And I click the element that contain "More..."
     Then I should see "Download" within ".reference"
     And I should see "Send this file to somebody..." within ".reference"
