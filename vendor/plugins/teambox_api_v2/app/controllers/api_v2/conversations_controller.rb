@@ -20,7 +20,20 @@ class ApiV2::ConversationsController < ApiV2::BaseController
                      order('conversations.id DESC')
   end
 
+  ##
+  # Paths:
+  #   - /api/2/conversations/:id
+  #
+  def show
+    authorize!(:show, @conversation)
+  end
+
   private
+
+  def load_conversation
+    scope = Conversation.where(:project_id => current_user.project_ids)
+    @conversation = scope.find(params[:id])
+  end
 
   def context
     @current_project || current_user
