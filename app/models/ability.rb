@@ -23,14 +23,6 @@ class Ability
 
   def initialize(user)
 
-    can :show, User do |object|
-      api_read?(user)
-    end
-
-  end
-
-  def initialize_old(user)
-
     # Comment & commentable permissions
 
     can :update, Comment do |comment|
@@ -188,13 +180,9 @@ class Ability
     can :observe, User do |the_user|
       user.observable?(the_user)
     end
-
-    can :show, User do |object|
-      api_read?(user)
-    end
-
+    
     # OAuth :read_projects show permission
-    can :show, [Invitation, Membership, Organization, Person, Project, TaskList] do |object|
+    can :show, [Invitation, Membership, Organization, Person, Project, TaskList, User] do |object|
       api_read?(user)
     end
     
