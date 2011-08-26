@@ -37,12 +37,14 @@ class TaskList
     base[:finish_on] = finish_on.to_s(:db) if finish_on
     base[:completed_at] = completed_at.to_s(:db) if completed_at
     
+    task_as_ids = Array(options[:include]).include? :task_ids
+    task_key = task_as_ids ? :task_ids : :tasks
     if Array(options[:include]).include? :tasks
-      base[:tasks] = tasks.map {|t| t.to_api_hash(options)}
+      base[task_key] = task_as_ids ? task_ids : tasks.map {|t| t.to_api_hash(options)}
     elsif Array(options[:include]).include? :unarchived_tasks
-      base[:tasks] = tasks.unarchived.map {|t| t.to_api_hash(options)}
+      base[task_key] = task_as_ids ? unarchived_task_ids : tasks.unarchived.map {|t| t.to_api_hash(options)}
     elsif Array(options[:include]).include? :archived_tasks
-      base[:tasks] = tasks.archived.map {|t| t.to_api_hash(options)}
+      base[task_key] = task_as_ids ? archived_task_ids : tasks.archived.map {|t| t.to_api_hash(options)}
     end
     
     base

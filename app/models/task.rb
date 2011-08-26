@@ -223,6 +223,13 @@ class Task < RoleRecord
     refs[:comment] = [first_comment.try(:id)] + recent_comment_ids
     refs
   end
+  
+  def task_list_references
+    refs = { :users => [user_id] }
+    refs[:people] = [assigned_id] if assigned_id
+    refs[:comment] = [first_comment.try(:id)] + recent_comment_ids
+    refs
+  end
 
   define_index do
     where Task.undeleted_clause_sql

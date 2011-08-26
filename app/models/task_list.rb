@@ -42,8 +42,13 @@ class TaskList < RoleRecord
     return task
   end
   
+  attr_accessor :reference_task_objects
+  
   def references
     refs = { :users => [user_id], :projects => [project_id] }
+    unless @reference_task_objects.nil?
+      refs[:task_list_task] = send(@reference_task_objects)
+    end
     refs
   end
 

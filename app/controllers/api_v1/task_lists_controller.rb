@@ -15,12 +15,19 @@ class ApiV1::TaskListsController < ApiV1::APIController
                           limit(api_limit).
                           order('task_lists.id DESC')
     
-    api_respond @task_lists, :references => true, :include => api_include
+    # figure out which tasks we should reference
+    task_includes = api_include & [:tasks, :unarchived_tasks, :archived_tasks]
+    unless task_includes.empty?
+      ref = "#{task_includes.first.to_s.singularize}_ids".to_sym
+      @task_lists.each {|list| list.reference_task_objects = ref}
+    end
+    
+    api_respond @task_lists, :references => true, :include => (api_include+[:task_ids])
   end
 
   def show
     authorize! :show, @task_list
-    api_respond @task_list, :references => true, :include => api_include
+    api_respond @task_list, :references => true, :include => (api_include+[:task_ids])
   end
 
   def create
@@ -138,6 +145,6 @@ class ApiV1::TaskListsController < ApiV1::APIController
   end
   
   def api_include
-    [:tasks, :unarchived_tasks, :archived_tasks] & (params[:include]||{}).map(&:to_sym)
+    [:tasks, :unarchived_tasks, :archived_tasks, :uploads] & (params[:include]||[]).map(&:to_sym)
   end
 end
