@@ -45,8 +45,8 @@ gem 'thinking-sphinx', '2.0.5'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.4.1'
-#gem 'immortal', :git => "https://github.com/micho/immortal.git"
-gem 'immortal', :path => "vendor/gems/immortal"
+gem 'immortal', :git => "https://github.com/teambox/immortal.git"
+#gem 'immortal', :path => "vendor/gems/immortal"
 #gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
 gem 'juggernaut'
 gem 'sentient_user'

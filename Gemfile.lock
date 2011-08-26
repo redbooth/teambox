@@ -18,6 +18,13 @@ GIT
       hashie (>= 0.4.0)
 
 GIT
+  remote: https://github.com/teambox/immortal.git
+  revision: 6b5502c2701eed07488578a610a252d0cccb7fb3
+  specs:
+    immortal (0.1.6)
+      activerecord (~> 3.1.0.rc6)
+
+GIT
   remote: https://github.com/teambox/trimmer.git
   revision: 22a43334e7ea5483e1673e35c464bb787a9a5b77
   specs:
@@ -25,12 +32,6 @@ GIT
       i18n (>= 0.5.0)
       rack (>= 0.9.1)
       tilt (>= 1.2.2)
-
-PATH
-  remote: vendor/gems/immortal
-  specs:
-    immortal (0.2.0.pre1)
-      activerecord (~> 3.1.0.rc6)
 
 PATH
   remote: vendor/gems/rails
