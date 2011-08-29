@@ -121,12 +121,7 @@ describe ApiV2::ConversationsController do
       response.should be_success
 
       data = JSON.parse(response.body)
-
-      data.first.include?('project').should == true
-      data.first.include?('first_comment').should == true
-      data.first.include?('recent_comments').should == true
-      data.first['recent_comments'].first.include?('body').should == true
-      data.first['recent_comments'].first.include?('project').should == true
+      conversation(data.first)
     end
 
     it "does not show unwatched private conversations in a project" do
