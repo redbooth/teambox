@@ -20,6 +20,7 @@ Feature: Moving a file upload
     And I select "Director" from target folders list
     And I follow "Move"
     Then I should not see "tb-space.jpg"
+    And I should see "2 files" within ".upload"
     When I enter "Director" folder
     Then I should see "tb-space.jpg" within ".file_upload"
     When I click upload list item for "tb-space.jpg" file

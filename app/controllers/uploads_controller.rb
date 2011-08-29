@@ -16,8 +16,8 @@ class UploadsController < ApplicationController
 
   def move
     @moveable_type = params[:moveable_type]
+    @target_folder = @current_project.folders.find_by_id(params[:target_folder_id]) unless params[:target_folder_id].nil?
     if @moveable = @current_project.send(@moveable_type.pluralize.to_sym).find_by_id(params[:id])
-       
        unless @moveable.update_attribute :parent_folder_id, (params[:target_folder_id] || nil)
          flash.now[:error] = t("uploads.moveable.error.#{@moveable_type}")
        end
