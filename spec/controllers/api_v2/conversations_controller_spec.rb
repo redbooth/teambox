@@ -41,4 +41,24 @@ describe ApiV2::ConversationsController do
 
   end
 
+  describe "#show" do
+
+    it "returns a nice 404 message from the API when not found" do
+      login_as @user
+
+      # TODO: Replace this by Rspec
+      assert_raise ActiveRecord::RecordNotFound do
+        get :show, :id => 'unexisting'
+      end
+    end
+
+    it "shows a conversation" do
+      login_as @user
+
+      get :show, :id => @conversation
+      response.should be_success
+    end
+
+  end
+
 end

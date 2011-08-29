@@ -59,9 +59,7 @@ class ApiV2::ConversationsController < ApiV2::BaseController
                             end
     end
 
-    unless params[:user_id].nil?
-      conditions[:user_id] = params[:user_id].to_i
-    end
+    conditions[:user_id] = params[:user_id].to_i if params[:user_id]
 
     conditions
   end
