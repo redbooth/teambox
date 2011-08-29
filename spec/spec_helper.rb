@@ -11,7 +11,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 require 'email_spec/helpers'
 require 'email_spec/matchers'
-require 'cancan/matchers'
+#require 'cancan/matchers'
 
 # require 'rack/test'
 require 'csv'
