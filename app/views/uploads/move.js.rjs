@@ -4,6 +4,12 @@ if @moveable.errors.empty?
   page.delay(3) do
     page[item_id].remove
   end
+  if @target_folder
+    target_folder_id = "folder_#{@target_folder.id}"
+    page << "alternate = $('#{target_folder_id}').hasClassName('alternate')"
+    page[target_folder_id].replace :partial => 'folders/folder', :locals => {:folder => @target_folder}
+    page << "if(alternate == false) {$('#{target_folder_id}').removeClassName('alternate');}"
+  end
 else
   page.alert(flash.now[:error])
 end
