@@ -141,23 +141,44 @@ describe ApiV2::ConversationsController do
   end
 
   describe "#show" do
-
-    it "returns a nice 404 message from the API when not found" do
+    it "shows a conversation with references" do
       login_as @user
 
-      # TODO: Replace this by Rspec
-      assert_raise ActiveRecord::RecordNotFound do
-        get :show, :id => 'unexisting'
-      end
-    end
-
-    it "shows a conversation" do
-      login_as @user
-
-      get :show, :id => @conversation
+      get :show, :project_id => @project.permalink, :id => @conversation.id
       response.should be_success
+
+      data = JSON.parse(response.body)
+      data['id'].to_i.should == @conversation.id
+
+      conversation(data)
     end
 
+    it "does not show private conversations unwatched by the user" do
+      login_as @user
+      @conversation.update_attribute(:is_private, true)
+
+      get :show, :project_id => @project.permalink, :id => @conversation.id
+      response.status.should == 401
+    end
+
+    it "shows private conversations watched by the user" do
+      login_as @user
+      @conversation.add_watcher(@user)
+      @conversation.update_attribute(:is_private, true)
+
+      get :show, :project_id => @project.permalink, :id => @conversation.id
+      response.should be_success
+
+      JSON.parse(response.body)['id'].to_i.should == @conversation.id
+    end
+  end
+
+  def conversation(data)
+    data.include?('project').should == true
+    data.include?('first_comment').should == true
+    data.include?('recent_comments').should == true
+    data['recent_comments'].first.include?('body').should == true
+    data['recent_comments'].first.include?('project').should == true
   end
 
 end
