@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/teambox/immortal.git
-  revision: 6b5502c2701eed07488578a610a252d0cccb7fb3
+  revision: 3f568829288213c6e692e1aa62d5d465b5d019ee
   specs:
     immortal (0.1.6)
       activerecord (~> 3.1.0.rc6)
