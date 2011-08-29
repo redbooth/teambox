@@ -1,0 +1,5 @@
+.more{:data => {:upload_id => upload.id}}
+  %a.label More...
+  .reference{ :style => 'display: none;', :id => "reference_more_#{upload.id}" }
+    = link_to t('uploads.public_download.link.anchor'), public_download_project_upload_path(upload.project, upload), :rel => 'facebox', :title => t('uploads.public_download.link.title')
+    = link_to_upload upload, t('uploads.upload.download')

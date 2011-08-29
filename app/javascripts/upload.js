@@ -1,3 +1,45 @@
+Upload = {
+
+  parseCurrentFoldersForMove: function() {
+    return my_current_folders;
+  },
+
+  renderMoveForm: function(upload_id) {
+    return Mustache.to_html(Templates.uploads.move, {
+        upload_id: upload_id,
+        path: '/projects/' + current_project + '/move/' + upload_id,
+        folders: Upload.parseCurrentFoldersForMove()
+    })
+  },
+
+  getIdFromElement: function(el) {
+    el_id = el.hasAttribute('id') ? el.getAttribute('id') : el.up('.upload').getAttribute('id');
+    arr = el_id.split('_');
+    return arr[1];
+  },
+
+  submitMoveForm: function() {
+    $('move_form').request({
+      method: 'put'
+    });
+  }
+
+}
+
+document.on('click', '.upload .reference a.move_resource', function(e, el){
+
+  e.preventDefault();
+  upload_id = Upload.getIdFromElement(el);
+  console.log(upload_id);
+  move_html = Upload.renderMoveForm(upload_id);
+        
+  Prototype.Facebox.open(move_html, 'html move_to_folder_box', {
+      buttons: [
+          {className: 'close', href: '#close', description: I18n.translations.common.cancel},
+          {className: 'confirm', href: 'javascript:Upload.submitMoveForm()', description: I18n.translations.common.move}]
+	});
+});
+
 document.on('click', '#upload_file_button', function(e, button) {
   e.preventDefault();
   $('new_upload').toggle();
@@ -63,6 +105,7 @@ document.on('click', '.uploads .upload .header', function(e, el) {
   toggle_task_row(el);
 });
 
+/*
 var move_resource = function(project_id, resource_id, moveable_type) {
 
    var div =  new Element('div', { id: 'move_resource'});
@@ -99,4 +142,4 @@ var move_resource = function(project_id, resource_id, moveable_type) {
    form.appendChild(submit);
 
    Facebox.open(div);
-};
+};*/

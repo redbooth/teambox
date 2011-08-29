@@ -60,6 +60,7 @@ en:
     save: Save
     saving: Saving
     show_more: Show more
+    move: Move
     print: Print this page
     prev: Previous
     next: Next
@@ -1339,8 +1340,7 @@ en:
       download: Download
       remove: Delete
     moveable:
-      move: Move to another folder
-      title: "Move to another folder:"
+      title: Move to another folder
       error:
         folder: Folder has not been moved
         upload: File has not been moved

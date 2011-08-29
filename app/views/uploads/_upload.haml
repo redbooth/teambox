@@ -16,5 +16,5 @@
     = link_to t('uploads.public_download.link.anchor'), public_download_project_upload_path(upload.project, upload), :rel => 'facebox', :title => t('uploads.public_download.link.title')
     - if can?(:update, upload) # and request.format != :m
       = link_to t('common.rename'), [:edit, upload.project, upload], :remote => true, :class => "link_rename"
-      = link_to_function t('uploads.moveable.move'), "move_resource(#{upload.project.id},#{upload.id},'upload')" if upload.moveable?
-      = link_to t('.remove'), [upload.project, upload], :'data-remote' => true, :method => 'delete', :'data-confirm' => t('confirm.delete_upload')
+      = link_to_function t('uploads.moveable.title'), project_move_resource_path(upload.project, upload), :class => "move_resource" if upload.moveable?
+      = link_to t('.remove'), [upload.project, upload], :remote => true, :method => 'delete', :confirm => t('confirm.delete_upload')

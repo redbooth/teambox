@@ -23,4 +23,9 @@ module FoldersHelper
     "target_folders = #{folders.to_json};" unless folders.empty?
   end
 
+  def json_current_folders
+     folders = @current_folder ? @current_folder.folders : @current_project.folders.where(:parent_folder_id => nil)
+     (folders.empty? ? {} : folders.map {|f| {:id => f.id, :name => f.name}}).to_json
+  end
+
 end
