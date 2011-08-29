@@ -22,21 +22,21 @@ Feature: Moving a folder
     And the "#target_folder_id" select should contain the option "Move to parent folder"
     And the "#target_folder_id" select should not contain the option "Mia Wallace"
     And I select "Move to parent folder" from target folders list
-    And I press "Move"
+    And I follow "Move"
     Then I should not see "Mia Wallace" within ".upload"
     When I follow "Parent folder"
     Then I should see "Mia Wallace" within ".upload"
     When I click upload list item for "Mia Wallace" folder
     And I follow "Move to another folder"
     And I select "Move to parent folder" from target folders list
-    And I press "Move"
+    And I follow "Move"
     Then I should not see "Mia Wallace" within ".upload"
     When I follow "Parent folder"
     Then I should see "Mia Wallace" within ".upload"
     When I click upload list item for "Mia Wallace" folder
     And I follow "Move to another folder"
     And I select "Tarantino" from target folders list
-    And I press "Move"
+    And I follow "Move"
     Then I should not see "Mia Wallace" within ".upload"
     When I enter "Tarantino" folder
     Then I should see "Mia Wallace" within ".upload"

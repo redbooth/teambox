@@ -1341,6 +1341,7 @@ en:
       remove: Delete
     moveable:
       title: Move to another folder
+      to_parent: Move to parent folder
       error:
         folder: Folder has not been moved
         upload: File has not been moved

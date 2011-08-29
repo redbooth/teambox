@@ -1,26 +1,45 @@
 Upload = {
 
-  parseCurrentFoldersForMove: function() {
-    return my_current_folders;
+  renderMoveForm: function(el) {
+
+    moveable_id = Upload.getIdFromElement(el);
+    moveable_type = Upload.getMoveableTypeFromElement(el);
+
+    return Mustache.to_html(Templates.uploads.move, {
+        moveable_id: moveable_id,
+        path: '/projects/' + current_project + '/move/' + moveable_id,
+        folders: Upload.parseTargetFolders(),
+        moveable_type: moveable_type
+    });
   },
 
-  renderMoveForm: function(upload_id) {
-    return Mustache.to_html(Templates.uploads.move, {
-        upload_id: upload_id,
-        path: '/projects/' + current_project + '/move/' + upload_id,
-        folders: Upload.parseCurrentFoldersForMove()
-    })
+  parseTargetFolders: function() {
+     if(moveable_type == 'folder') {
+       return target_folders.reject(function(f) { return f.id == moveable_id });
+     }
+     return target_folders;
+  },
+
+  splitElementId: function(el) {
+    el_id = el.hasAttribute('id') ? el.getAttribute('id') : el.up('.upload').getAttribute('id');
+    arr = el_id.split('_');
+    return arr;
   },
 
   getIdFromElement: function(el) {
-    el_id = el.hasAttribute('id') ? el.getAttribute('id') : el.up('.upload').getAttribute('id');
-    arr = el_id.split('_');
-    return arr[1];
+    splitted = Upload.splitElementId(el);
+    return splitted[1];
+  },
+
+  getMoveableTypeFromElement: function(el) {
+    splitted = Upload.splitElementId(el);
+    return splitted[0];
   },
 
   submitMoveForm: function() {
     $('move_form').request({
-      method: 'put'
+      method: 'put',
+      onSuccess: Facebox.close()
     });
   }
 
@@ -29,9 +48,7 @@ Upload = {
 document.on('click', '.upload .reference a.move_resource', function(e, el){
 
   e.preventDefault();
-  upload_id = Upload.getIdFromElement(el);
-  console.log(upload_id);
-  move_html = Upload.renderMoveForm(upload_id);
+  move_html = Upload.renderMoveForm(el);
         
   Prototype.Facebox.open(move_html, 'html move_to_folder_box', {
       buttons: [
