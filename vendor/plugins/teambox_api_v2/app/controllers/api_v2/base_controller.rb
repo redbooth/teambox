@@ -6,16 +6,12 @@ class ApiV2::BaseController < ActionController::Base
   include Oauth::Controllers::ApplicationControllerMethods
   Oauth2Token = ::Oauth2Token
 
-  before_filter :set_client, :load_project, :api_login
+  before_filter :load_project, :api_login
 
   protected
 
   rescue_from CanCan::AccessDenied do |exception|
     head(:unauthorized)
-  end
-
-  def set_client
-    request.format = :json unless request.format == :js
   end
 
   def load_project
