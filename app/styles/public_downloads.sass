@@ -1,5 +1,7 @@
 @import shared
 
+$upload_icon_width: 16px
+
 body
   background-color: #eee
   font-family: 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif
@@ -25,19 +27,19 @@ body
       &:hover
         color: black
 
-#content
+#download_file
   display: block
   background: white
   border: 1px solid #ccc
-  border-radius: 5px 5px
-  margin: 80px 0
+  +rounded(5px 5px)
+  margin: 10px 0 80px
   padding: 15px
-  height: 80px
+  height: 50px
   -webkit-user-select: none
   &:active
     position: relative
     bottom: -2px
-  .file
+  .file_pane
     position: relative
     .info
       display: inline-block
@@ -80,10 +82,58 @@ body
     cursor: pointer
     .fade
       display: none
-    .file
+    .file_pane
       .filename
         a, p
           color: white
+
+h1
+  font-size: 20px
+  margin: 50px 0 10px
+  text-shadow: white 1px 1px 1px
+
+#file_list
+  display: block
+  background: white
+  border: 1px solid #ccc
+  +rounded(5px 5px)
+  margin: 10px 0 80px
+  padding: 15px
+  -webkit-user-select: none
+
+  .upload
+    position: relative
+    font-size: 12px
+    padding: 4px 0 8px 5px
+    display: block
+    margin: 0
+    height: auto
+    &.alternate
+      background: lighten($navbar, 30)
+    &.selected
+      background-color: #ffe
+    .icon, .file, .size
+      display: inline-block
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+    .icon
+      width: $upload_icon_width
+      position: relative
+      top: 4px
+    .file
+      width: 290px
+      padding-left: 10px
+      a
+        color: black
+        text-decoration: none
+        &:hover
+          text-decoration: underline
+    .size
+      width: 75px
+      font-size: 10px
+      color: #777
+      margin: 0px 5px
 
 #promo
   text-align: center
