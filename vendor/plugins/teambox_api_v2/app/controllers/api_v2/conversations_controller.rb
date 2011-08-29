@@ -36,7 +36,7 @@ class ApiV2::ConversationsController < ApiV2::BaseController
   end
 
   def context
-    @current_project || current_user
+    @context = @current_project || current_user
   end
 
   def conversation_context
