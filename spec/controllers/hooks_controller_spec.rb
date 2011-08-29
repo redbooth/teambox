@@ -368,6 +368,7 @@ describe HooksController do
         payload = <<-JSON
           {
             "before": "5aef35982fb2d34e9d9d4502f6ede1072793222d",
+            "ref": "refs/heads/master",
             "repository": {
               "url": "http://github.com/defunkt/github",
               "name": "github",
@@ -436,7 +437,7 @@ describe HooksController do
          Chris Wanstrath - <a href=\"http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59\">Check this file, task [#{@task.id}]</a>\n
 Chris Wanstrath - <a href=\"http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0\">Closing for task [close-#{@task.id}]</a>
 
-Posted on Github: <a href=\"http://github.com/defunkt/github\">github</a> refs/heads/master
+Posted on Github: <a href=\"http://github.com/defunkt/github/tree/master\">github/refs/heads/master</a>
         HTML
 
         first_comment.body.strip.should == expected_first.strip
@@ -444,7 +445,7 @@ Posted on Github: <a href=\"http://github.com/defunkt/github\">github</a> refs/h
         expected_second = (<<-HTML).strip
          Mislav Marohnić - <a href=\"http://github.com/defunkt/github/commit/hju8251ff97ee194a289832576287d6f89ui7978h\">Commit for different task [#{@other_task.id}]</a>
 
-Posted on Github: <a href=\"http://github.com/defunkt/github\">github</a> refs/heads/master
+Posted on Github: <a href=\"http://github.com/defunkt/github/tree/master\">github/refs/heads/master</a>
         HTML
 
         second_comment.body.strip.should == expected_second.strip

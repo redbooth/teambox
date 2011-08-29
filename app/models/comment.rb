@@ -26,7 +26,19 @@ class Comment < ActiveRecord::Base
             text << ("%s - <a href=\"%s\">%s</a>\n\n" % [@author_name, commit['url'], commit['message']])
             task.update_attribute :status_name, :resolved if commit['close'] == true
          end
-         text << ("Posted on Github: <a href=\"%s\">%s</a> %s" % [payload['repository']['url'], payload['repository']['name'], payload['ref']])
+
+         anchor = payload['repository']['name']
+         url = payload['repository']['url']
+
+         if payload.has_key? 'ref'
+           ref = payload['ref']
+           anchor+= "/#{ref}"
+           matches = ref.split('/')
+           branch_name = matches.last
+           url+="/tree/#{branch_name}"
+         end
+
+         text << ("Posted on Github: <a href=\"%s\">%s</a>" % [url, anchor])
 
          #we try to find user by name or email from commit, if not found comment author will be user which is assigned to task
          author = task.project.users.detect { |u| u.name == @author_name || u.email == @author_email } || task.assigned.user
