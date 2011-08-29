@@ -10,22 +10,16 @@ module FoldersHelper
     bc << link_to(@current_project, project_uploads_path(@current_project), :remote => true)
     bc.reverse.join(" » ").html_safe
   end
-
-  def target_folders_js
-    folders = {}
-    if @current_folder
+  
+  def json_target_folders
+     target_folders = []
+     if @current_folder
       parent_folder_id = @parent_folder ? @parent_folder.id : nil
-      folders[parent_folder_id.to_s] = "Move to parent folder"
-    end
-    @folders.each do |f|
-      folders[f.id.to_s] = f.name
-    end
-    "target_folders = #{folders.to_json};" unless folders.empty?
-  end
-
-  def json_current_folders
+      target_folders = [{:id => parent_folder_id, :name => t('uploads.moveable.to_parent')}]
+     end
      folders = @current_folder ? @current_folder.folders : @current_project.folders.where(:parent_folder_id => nil)
-     (folders.empty? ? {} : folders.map {|f| {:id => f.id, :name => f.name}}).to_json
+     target_folders+= folders.empty? ? [] : folders.map {|f| {:id => f.id, :name => f.name}}
+     target_folders.to_json
   end
 
 end

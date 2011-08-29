@@ -1,4 +1,4 @@
 page.replace "uploads_list", render(:partial => "uploads/list")
 page.replace 'new_upload', render("uploads/form", :project => @current_project, :upload => Upload.new, :page => nil)
 
-page << "my_current_folders = #{json_current_folders}"
+page << "target_folders = #{json_target_folders}"

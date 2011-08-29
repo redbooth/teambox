@@ -5,5 +5,5 @@ if @moveable.errors.empty?
     page[item_id].remove
   end
 else
-  page.insert_html :before, "uploads_list", content_tag(:p, flash.now[:error], :class => "flash flash-error")
+  page.alert(flash.now[:error])
 end

@@ -1,13 +1,11 @@
-{{#upload_id}}
 %h2
   = t('uploads.moveable.title')
-%form{:action => '{{path}}', :remote => 'true', :method => :put, :id => 'move_form' }
+%form{:action => '{{path}}', :remote => 'true', :method => :put, :id => 'move_form',}
+
+  %input{:type => 'hidden', :name => 'moveable_type', :value => '{{moveable_type}}'}
   .full_row
     %select{:name => 'target_folder_id'}
       {{#folders}}
       %option{:value => '{{id}}'}
         {{name}}
       {{/folders}}
-  .actions
-    %input{:type => 'submit', :value => t('common.move'), :class => 'button'}
-{{/upload_id}}

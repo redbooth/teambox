@@ -18,14 +18,14 @@ Feature: Moving a file upload
     And I click upload list item for "tb-space.jpg" file
     And I follow "Move to another folder"
     And I select "Director" from target folders list
-    And I press "Move"
+    And I follow "Move"
     Then I should not see "tb-space.jpg"
     When I enter "Director" folder
     Then I should see "tb-space.jpg" within ".file_upload"
     When I click upload list item for "tb-space.jpg" file
     And I follow "Move to another folder"
     And I select "Move to parent folder" from target folders list
-    And I press "Move"
+    And I follow "Move"
     Then I should not see "tb-space.jpg"
     When I follow "Parent folder"
     Then I should see "tb-space.jpg" within ".file_upload"
