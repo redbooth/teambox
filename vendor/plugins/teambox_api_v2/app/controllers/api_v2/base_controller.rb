@@ -1,4 +1,4 @@
-class ApiV2::BaseController < APIController
+class ApiV2::BaseController < ActionController::Base
 
   layout false
 
