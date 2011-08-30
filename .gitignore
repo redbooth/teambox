@@ -3,6 +3,7 @@
 .idea
 .bundle
 .rvmrc
+.rbenv-version
 *.esproj
 .sass-cache
 /assets
