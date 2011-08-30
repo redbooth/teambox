@@ -9,7 +9,8 @@ Upload = {
         moveable_id: moveable_id,
         path: '/projects/' + current_project + '/move/' + moveable_id,
         folders: Upload.parseTargetFolders(),
-        moveable_type: moveable_type
+        moveable_type: moveable_type,
+        moveable: moveable_type + "_" + moveable_id
     });
   },
 
@@ -36,9 +37,15 @@ Upload = {
     return splitted[0];
   },
 
+  dropOutMoveableItem: function(moveable_id) {
+    var moveable = $(moveable_id);
+    $(moveable).dropOut();
+  },
+
   submitMoveForm: function() {
     $('move_form').request({
       method: 'put',
+      onLoading: function(transport) { Upload.dropOutMoveableItem(transport.request.parameters['moveable']); },
       onSuccess: Facebox.close()
     });
   }
@@ -121,42 +128,3 @@ document.on('click', '.uploads .upload .header .file a', function(e, el) {
 document.on('click', '.uploads .upload .header', function(e, el) {
   toggle_task_row(el);
 });
-
-/*
-var move_resource = function(project_id, resource_id, moveable_type) {
-
-   var div =  new Element('div', { id: 'move_resource'});
-   div.innerHTML = 'Move to another folder:';
-
-   var form = new Element('form', {
-                         action: '/projects/' + project_id + '/move/' + resource_id,
-                         method: 'post',
-                         'data-remote': 'true',
-                         onsubmit: 'Facebox.close()'
-                       });
-   div.appendChild(form);
-
-   hidden_method = new Element('input', { type: 'hidden', name: "_method", value: "put"});
-   form.appendChild(hidden_method);
-
-   hidden_moveable_type = new Element('input', { type: 'hidden', name: "moveable_type", value: moveable_type});
-   form.appendChild(hidden_moveable_type);
-
-   if(typeof AUTH_TOKEN !== 'undefined') {
-     hidden_auth_token = new Element('input', { type: 'hidden', name: "authenticity_token", value: AUTH_TOKEN});
-     form.appendChild(hidden_auth_token);
-   }
-  
-   var select = new Element('select', { name: "target_folder_id", id: "target_folder_id"});
-   for (var id in target_folders) {
-     if(!(moveable_type == 'folder' && resource_id == id)) {
-        select.options.add(new Option(target_folders[id], id));
-     }
-   }
-   form.appendChild(select);
-
-   var submit = new Element('input', { type: 'submit', value: "Move"});
-   form.appendChild(submit);
-
-   Facebox.open(div);
-};*/

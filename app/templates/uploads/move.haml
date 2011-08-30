@@ -3,8 +3,9 @@
 %form{:action => '{{path}}', :remote => 'true', :method => :put, :id => 'move_form',}
 
   %input{:type => 'hidden', :name => 'moveable_type', :value => '{{moveable_type}}'}
+  %input{:type => 'hidden', :name => 'moveable', :value => '{{moveable}}'}
   .full_row
-    %select{:name => 'target_folder_id'}
+    %select{:name => 'target_folder_id', :id => 'target_folder_id'}
       {{#folders}}
       %option{:value => '{{id}}'}
         {{name}}

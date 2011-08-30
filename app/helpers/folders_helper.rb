@@ -17,7 +17,7 @@ module FoldersHelper
       parent_folder_id = @parent_folder ? @parent_folder.id : nil
       target_folders = [{:id => parent_folder_id, :name => t('uploads.moveable.to_parent')}]
      end
-     folders = @current_folder ? @current_folder.folders : @current_project.folders.where(:parent_folder_id => nil)
+     folders = @current_folder ? @current_folder.folders.order('name ASC') : @current_project.folders.where(:parent_folder_id => nil).order('name ASC')
      target_folders+= folders.empty? ? [] : folders.map {|f| {:id => f.id, :name => f.name}}
      target_folders.to_json
   end
