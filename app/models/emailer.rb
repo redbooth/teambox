@@ -2,7 +2,7 @@ class Emailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper
   include Emailer::Incoming
 
-  helper :application
+  helper :application, :downloadable
 
   ANSWER_LINE = '-----------------------------==-----------------------------'
 
@@ -250,13 +250,14 @@ class Emailer < ActionMailer::Base
     })
   end
 
-  def public_download(upload_id, recipient)
-    @upload = Upload.find(upload_id)
-    @user   = @upload.user
+  def public_download(downloadable_id, recipient, downloadable_type)
+    @downloadable_type = downloadable_type
+    @downloadable = downloadable_type.classify.constantize.find(downloadable_id)
+    @user   = @downloadable.user
     mail(
       :to         => recipient,
       :from       => self.class.from_user(nil, @user),
-      :subject    => I18n.t("emailer.public_download.subject", :user => @user.name)
+      :subject    => I18n.t("emailer.public_download.#{downloadable_type}.subject", :user => @user.name)
     )
   end
 

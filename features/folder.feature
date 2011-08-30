@@ -1,3 +1,4 @@
+@folders
 Feature: Folders
 
   Background:

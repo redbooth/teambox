@@ -5,6 +5,8 @@ class UploadsController < ApplicationController
   before_filter :load_folder, :only => [:index]
   before_filter :check_private_download_access, :only => :download
   before_filter :check_public_download_access, :only => :tokenized_download
+
+  helper_method :downloadable_type, :localized_downloadable_type
   
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
@@ -62,22 +64,24 @@ class UploadsController < ApplicationController
   end
 
   def public_download
-    @upload = @current_project.uploads.find(params[:id])
+    downloadable_type = request.url =~ /folders/ ? 'folders' : 'uploads'
+    @downloadable = @current_project.send(downloadable_type.to_sym).find(params[:id])
     render :public_download, :layout => false
   end
 
   def email_public
-    @upload = @current_project.uploads.find(params[:id])
-    @upload.invited_user_email = params[:upload][:invited_user_email]
+    downloadable_type = params[:downloadable][:downloadable_type]
+    @downloadable = @current_project.send(downloadable_type.pluralize.to_sym).find(params[:id])
+    @downloadable.invited_user_email = params[:downloadable][:invited_user_email]
 
-    if @upload.valid?
-      @upload.send_public_download_email
-      flash[:notice] = t('uploads.public_download.email.sent', :email => @upload.invited_user_email)
+    if @downloadable.valid?
+      @downloadable.send_public_download_email
+      flash[:notice] = t('downloadable.email.sent', :downloadable => localized_downloadable_type(@downloadable),:email => @downloadable.invited_user_email)
     else
-      flash[:error] = t('uploads.public_download.email.not_sent', :error => @upload.errors.full_messages.to_sentence)
+      flash[:error] = t('downloadable.email.not_sent', :error => @downloadable.errors.full_messages.to_sentence)
     end
 
-    redirect_to @upload.parent_folder ? project_folder_path(@current_project, @upload.parent_folder) : project_uploads_path(@current_project)
+    redirect_to @downloadable.parent_folder ? project_folder_path(@current_project, @downloadable.parent_folder) : project_uploads_path(@current_project)
   end
 
   def index
@@ -189,7 +193,17 @@ class UploadsController < ApplicationController
       end
     end
   end
-    
+
+
+  def downloadable_type(downloadable)
+    downloadable.class.name.tableize.singularize
+  end
+
+  def localized_downloadable_type(downloadable)
+    t "downloadable.type.#{downloadable_type(downloadable)}"
+  end
+
+
   private
 
   def check_private_download_access
@@ -199,7 +213,6 @@ class UploadsController < ApplicationController
 
   def check_public_download_access
     head(:not_found) and return if (@upload = Upload.find_by_token(params[:token])).nil?
-    head(:forbidden) and return unless @upload.public_downloadable?
   end
 
   def find_upload

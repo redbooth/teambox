@@ -1,4 +1,4 @@
-<%= t('emailer.public_download.user_sent_you_a_link', :user => @user.name, :filename => @upload.file_name) %>
+<%= t "emailer.public_download.#{@downloadable_type}.user_sent_you_a_link", :user => @user.name, :name => downloadable_name(@downloadable) %>
 
-<%= t('emailer.public_download.go_to_download_page') %>:
-<%= public_download_file_url(@upload.token) %>
+<%= t("emailer.public_download.#{@downloadable_type}.go_to_download_page") %>:
+<%= downloadable_link(@downloadable) %>

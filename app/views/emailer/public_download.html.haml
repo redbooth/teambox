@@ -4,13 +4,13 @@
 
   .box{ :style => email_box }
     %p{ :style => email_text(:big) }
-      = t('emailer.public_download.user_sent_you_a_link', :user => @user.name, :filename => @upload.file_name)
+      = t("emailer.public_download.#{@downloadable_type}.user_sent_you_a_link", :user => @user.name, :name => downloadable_name(@downloadable))
     %h2{ :style => email_text(:big) }
-      = link_to t('emailer.public_download.go_to_download_page'), public_download_file_url(@upload.token)
+      = link_to t("emailer.public_download.#{@downloadable_type}.go_to_download_page"), downloadable_link(@downloadable)
   %p{ :style => email_text(:small) }
     = t('emailer.public_download.plaintext_link')
     %br
-    = link_to public_download_file_url(@upload.token), public_download_file_url(@upload.token)
+    = link_to downloadable_link(@downloadable), downloadable_link(@downloadable)
 
   .footer{ :style => email_text(:small) }
     %p= t('emailer.invitation.report_abuse')

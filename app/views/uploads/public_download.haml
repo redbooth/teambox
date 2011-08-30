@@ -1,12 +1,13 @@
-%p= t '.share_outside_your_team'
+%p= t 'downloadable.share_outside_your_team', :downloadable => localized_downloadable_type(@downloadable)
 
-= form_for @upload, :url => email_public_project_upload_path(@current_project, @upload), :html => {:method => :post} do |f|
+= form_for @downloadable, :as => :downloadable, :url => project_email_public_download_path(@current_project, @downloadable), :html => {:method => :post} do |f|
+  = f.hidden_field :downloadable_type, :value => downloadable_type(@downloadable)
   .text_field{ :style => 'display: inline-block' }
-    = f.label :invited_user_email, t('.enter_an_email')
+    = f.label :invited_user_email, t('downloadable.enter_an_email', :downloadable => localized_downloadable_type(@downloadable))
     = f.email_field :invited_user_email
-  = f.submit t('uploads.public_download.email.submit'), :'data-disable-with' => 'Sending...'
+  = f.submit t("downloadable.email.submit"), :'data-disable-with' => t('downloadable.sending')
 
-- link = public_download_file_url(:token => @upload.token)
-%p= t '.share_link'
+- link = downloadable_type(@downloadable) == 'upload' ? public_download_file_url(:token => @downloadable.token) : public_download_folder_url(:token => @downloadable.token)
+%p= t 'downloadable.share_link', :downloadable => localized_downloadable_type(@downloadable)
 %p= link_to link, link, :target => "_blank"
-%p= t '.security_clarification'
+%p= t 'downloadable.security_clarification', :downloadable_ext => t("downloadable.security_clarification_ext.#{localized_downloadable_type(@downloadable)}".html_safe)
