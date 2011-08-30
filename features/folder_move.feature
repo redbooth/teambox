@@ -41,3 +41,16 @@ Feature: Moving a folder
     When I enter "Tarantino" folder
     Then I should see "Mia Wallace" within ".upload"
 
+  Scenario: Mislav deletes folder and checks if it still appears on the target folders list
+    When there is a folder called "Rails 2.3.5" in a current project
+    And there is a folder called "Rails 2.3.8" in a current project
+    And there is a folder called "Rails 3.0.1" in a current project
+    And there is a folder called "Rails 3.1.0.rc8" in a current project
+    When I go to the uploads page of the "Ruby Rockstars" project
+    And I click upload list item for "Rails 2.3.5" folder
+    And I follow "Remove"
+    When I confirm alert message
+    Then I should not see "Rails 2.3.5" within ".upload"
+    When I click upload list item for "Rails 3.1.0.rc8" folder
+    And I follow "Move to another folder"
+    Then the "#target_folder_id" select should not contain the option "Rails 2.3.5"

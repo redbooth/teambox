@@ -350,6 +350,10 @@ When  /^(?:|I )drag the task "([^\"]*)" above "([^\"]*)"(?: within "([^\"]*)")?$
   end
 end
 
+When /^(?:|I )confirm alert message/ do
+  page.driver.browser.switch_to.alert.accept
+end
+
 When /^(.*) confirming with OK$/ do |main_task|
   if Capybara.current_driver == Capybara.javascript_driver
     page.evaluate_script("window.old_alert = window.alert")
