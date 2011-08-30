@@ -37,3 +37,4 @@ teambox2
 .gitignore
 vendor/gems
 config/redis.yml
+vendor/cache
