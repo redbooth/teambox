@@ -54,7 +54,8 @@ class FoldersController < ApplicationController
     @folder = @current_project.folders.find_by_id(params[:id])
     authorize! :destroy, @folder
 
-    @parent_folder = @folder.parent_folder
+    @current_folder = @folder.parent_folder
+    
     @folder.destroy
 
     respond_to do |f|
