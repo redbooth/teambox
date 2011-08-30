@@ -28,6 +28,18 @@ class ApiV2::ConversationsController < ApiV2::BaseController
     authorize!(:show, @conversation)
   end
 
+  def create
+    authorize!(:converse, @current_project)
+    @conversation = @current_project.conversations.new_by_user(current_user, params)
+    @conversation.is_private = (params[:conversation][:is_private] || false) if params[:conversation]
+
+    if @conversation.save
+      render 'show', :status => :created
+    else
+      render 'errors', :status => :unprocessable_entity
+    end
+  end
+
   private
 
   def load_conversation

@@ -168,6 +168,35 @@ describe ApiV2::ConversationsController do
     end
   end
 
+  describe "#create" do
+    it "should allow participants to create conversations" do
+      login_as @user
+
+      post :create, :project_id => @project.permalink, :name => 'Created!', :body => 'Discuss...'
+      response.status.should == 201
+
+      data = JSON.parse(response.body)
+      conversation(data)
+    end
+
+    it "should not allow participants to create conversation without a name" do
+      login_as @user
+      post :create, :project_id => @project.permalink, :name => "", :format => :json
+      response.status.should == 422
+      data = JSON.parse(response.body)
+      data['errors']['name'].include?('Please give this conversation a title.').should == true
+    end
+
+    it "should not allow observers to create conversations" do
+      login_as @observer
+
+      post :create, :project_id => @project.permalink, :name => 'Created!', :body => 'Discuss...'
+      response.status.should == 401
+
+      @project.conversations(true).length.should == 2
+    end
+  end
+
   def conversation(data)
     data.include?('project').should == true
     data.include?('first_comment').should == true
