@@ -42,7 +42,7 @@ module Teambox
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
+    config.filter_parameters += [:password, :rss_token, :access_token]
 
     # Allowed tags are: a, abbr, acronym, address, b, big, blockquote, br, cite, code, dd, 
     # del, dfn, dl, dt,  em, h1, h2, h3, h4, h5, h6, hr, i, img, ins, kbd, li, ol, p, pre,
