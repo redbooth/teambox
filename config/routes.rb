@@ -169,17 +169,20 @@ Teambox::Application.routes.draw do
       resources :uploads do
         member do
           get :public_download
-          post :email_public
           put :rename
         end
         collection do
           resources :folders, :except => [:show, :index, :new] do
             member do
+              get :public_download, :controller => 'uploads', :action => 'public_download'
               put :rename
             end
           end
         end
       end
+
+      match 'downloadable/:id/email_public' => "uploads#email_public", :via => :post, :as => :email_public_download
+      
       match 'uploads/folders/:id' => 'uploads#index', :via => :get
       match 'hooks/:hook_name' => 'hooks#create', :as => :hooks, :via => :post
 

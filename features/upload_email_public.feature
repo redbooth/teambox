@@ -1,5 +1,5 @@
-@public_downloads
-Feature: Uploading a file
+@public_downloads @javascript
+Feature: Sending email with a link to public download of a file
   
   Background: 
     Given a project exists with name: "Ruby Rockstars"
@@ -10,7 +10,7 @@ Feature: Uploading a file
     And I am in the project called "Ruby Rockstars"
     And I go to the uploads page of the "Ruby Rockstars" project
 
-  @javascript
+
   Scenario: Mislav sends public download link
     When I click upload list item for "dragon.jpg" file
     And I follow "Send this file to somebody..."
@@ -20,7 +20,6 @@ Feature: Uploading a file
     Then "quentin@example.com" should receive an email
     And I should see "We just sent a link to the file to quentin@example.com" within ".flash-notice"
 
-  @javascript
   Scenario: Mislav tries to send public download link but uses wrong email
     When I click upload list item for "dragon.jpg" file
     And I follow "Send this file to somebody..."

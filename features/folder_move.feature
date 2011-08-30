@@ -1,4 +1,4 @@
-@uploads @javascript @moveable
+@uploads @javascript @moveable @folders
 Feature: Moving a folder
 
   Background:

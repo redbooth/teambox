@@ -1,5 +1,6 @@
 class Folder < RoleRecord
   include Immortal
+  include Tokenized
 
   belongs_to :user
   belongs_to :project
@@ -16,6 +17,7 @@ class Folder < RoleRecord
   validates_length_of :name, :within => NAME_LENGTH
 
   #after_create  :log_create
+  attr_accessor :invited_user_email
 
   def to_s
     name
@@ -41,6 +43,11 @@ class Folder < RoleRecord
 
   def moveable?
     has_parent? or project.folders.where(:parent_folder_id => nil).count > 1
+  end
+
+  def send_public_download_email
+    return if @is_silent
+    Emailer.send_with_language :public_download, user.locale, self.id, self.invited_user_email, 'folder'
   end
 
   protected

@@ -147,11 +147,6 @@ class Upload < RoleRecord
     user_can_access_private_target?(user)
   end
 
-  #TODO do we need a flag like this ?
-  def public_downloadable?
-    true
-  end
-
   def file_type
     ext = File.extname(file_name).sub('.','')
     ext = '...' if ext == ''
@@ -215,7 +210,7 @@ class Upload < RoleRecord
 
   def send_public_download_email
     return if @is_silent
-    Emailer.send_with_language :public_download, user.locale, self.id, self.invited_user_email
+    Emailer.send_with_language :public_download, user.locale, self.id, self.invited_user_email, 'upload'
   end
 
   protected

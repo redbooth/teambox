@@ -9,7 +9,7 @@ module Tokenized
     t = read_attribute(:token)
     if t.nil? && !new_record?
       generate_token
-      update_attribute :token, t
+      t = update_attribute :token, token
     end
     t
   end
