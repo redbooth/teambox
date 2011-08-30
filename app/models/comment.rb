@@ -14,6 +14,40 @@ class Comment < ActiveRecord::Base
   has_many :notifications, :dependent => :destroy
   attr_accessor :do_rollback
 
+  def self.from_github(payload)
+
+    payload['commits'].each_pair do |task_id, commits|
+
+       if task = Task.find_by_id(task_id)
+         text = ''
+         commits.each do |commit|
+            @author_name = commit['author']['name']
+            @author_email = commit['author']['email']
+            text << ("%s - <a href=\"%s\">%s</a>\n\n" % [@author_name, commit['url'], commit['message']])
+            task.update_attribute :status_name, :resolved if commit['close'] == true
+         end
+
+         anchor = payload['repository']['name']
+         url = payload['repository']['url']
+
+         if payload.has_key? 'ref'
+           ref = payload['ref']
+           anchor+= "/#{ref}"
+           matches = ref.split('/')
+           branch_name = matches.last
+           url+="/tree/#{branch_name}"
+         end
+
+         text << ("Posted on Github: <a href=\"%s\">%s</a>" % [url, anchor])
+
+         #we try to find user by name or email from commit, if not found comment author will be user which is assigned to task
+         author = task.project.users.detect { |u| u.name == @author_name || u.email == @author_email } || task.assigned.user
+         task.comments.create_by_user author, {:body => text, :project_id => task.project_id}
+
+       end
+    end
+  end
+
   def task_comment?
     self.target_type == "Task"
   end
@@ -41,9 +75,7 @@ class Comment < ActiveRecord::Base
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
                   :upload_ids, :uploads_attributes, :due_on, :urgent, :google_docs_attributes, :private_ids, :is_private
 
-  attr_accessor :is_importing
-  attr_accessor :private_ids
-  attr_accessor :is_private_set
+  attr_accessor :is_importing, :private_ids, :is_private_set, :activity
 
   scope :by_user, lambda { |user| { :conditions => {:user_id => user} } }
   scope :latest, :order => 'id DESC'
@@ -67,8 +99,6 @@ class Comment < ActiveRecord::Base
 
   # must happen after copy_ownership_from_target
   formats_attributes :body
-
-  attr_accessor :activity
 
   def hours?
     hours and hours > 0

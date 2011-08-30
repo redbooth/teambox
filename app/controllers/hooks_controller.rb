@@ -26,7 +26,7 @@ class HooksController < ApplicationController
   def create
     case params[:hook_name]
     when 'github'
-      @current_project.conversations.from_github JSON.parse(params[:payload])
+      @current_project.comments.from_github GithubIntegration::Parser.commits_with_task_ids(JSON.parse(params[:payload]))
     when 'email'
       Emailer.receive_params(params)
     when 'pivotal', 'pivotal_v2'

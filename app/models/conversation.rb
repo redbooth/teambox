@@ -42,33 +42,6 @@ class Conversation < RoleRecord
     true
   end
 
-  def self.from_github(payload)
-    text = description_for_github_push(payload)
-
-    self.create!(:body => text, :simple => true) do |conversation|
-      author = payload['commits'].any? ? conversation.project.users.detect { |u| u.name == payload['commits'][0]['author']['name'] } : nil
-      conversation.user = author || conversation.project.hook_user
-      yield conversation if block_given?
-    end
-  end
-
-  def self.description_for_github_push(payload)
-    text = "New code on <a href='%s'>%s</a> %s\n\n" % [
-      payload['repository']['url'], payload['repository']['name'], payload['ref']
-    ]
-    
-    commits = payload["commits"]
-    
-    commits[0, 10].each do |commit|
-      author = commit['author']['name']
-      message = commit['message'].strip.split("\n").first
-      text << "#{author} - <a href='#{commit['url']}'>#{message}</a><br>\n"
-    end
-    
-    text << "And #{commits.size - 10} more commits" if commits.size > 10
-    return text
-  end
-
   def log_create
     project.log_activity(self,'create')
   end
