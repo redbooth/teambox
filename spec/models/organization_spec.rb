@@ -200,5 +200,22 @@ describe Organization do
       organization.projects.should be_empty
     end
   end
+  
+  describe "logo" do
+    before do
+      Teambox.config.amazon_s3 = false
+      @organization = Factory.create(:organization, :logo => upload_file("#{Rails.root}/spec/fixtures/tb-space.jpg", 'image/jpeg'))
+    end
+    
+    it "deletes the logo when delete_logo is set" do
+      @organization.update_attributes :delete_logo => '1'
+      @organization.logo_file_name.should == nil
+    end
+    
+    it "does not delete the logo when delete_logo is not set" do
+      @organization.update_attributes :delete_logo => '0'
+      @organization.logo_file_name.should_not == nil
+    end
+  end
 
 end

@@ -152,8 +152,8 @@ class Organization < ActiveRecord::Base
 
   protected
 
-    def delete_logo= value
-      logo.clear if value
+    def delete_logo=(value)
+      logo.clear if (value.to_i != 0)
     end
 
     def ensure_unicity_for_community_version
