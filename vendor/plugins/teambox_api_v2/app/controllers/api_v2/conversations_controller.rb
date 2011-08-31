@@ -40,6 +40,18 @@ class ApiV2::ConversationsController < ApiV2::BaseController
     end
   end
 
+  def update
+    authorize!(:update, @conversation)
+
+    @conversation.updating_user = current_user
+
+    if @conversation.update_attributes params
+      render 'show'
+    else
+      render 'errors', :status => :unprocessable_entity
+    end
+  end
+
   private
 
   def load_conversation

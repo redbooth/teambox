@@ -197,6 +197,84 @@ describe ApiV2::ConversationsController do
     end
   end
 
+  describe "#update" do
+    it "should allow participants to modify a conversation" do
+      login_as @user
+
+      put :update, :project_id => @project.permalink, :id => @conversation.id, :name => 'Modified'
+      response.should be_success
+
+      @conversation.reload.name.should == 'Modified'
+    end
+
+    it "should not allow observers to modify a conversation" do
+      login_as @observer
+
+      put :update, :project_id => @project.permalink, :id => @conversation.id, :name => 'Modified'
+      response.status.should == 401
+
+      @conversation.reload.name.should_not == 'Modified'
+    end
+
+    it "should not allow hacking the comment author" do
+      login_as @user
+
+      put :update, :project_id => @project.permalink, :id => @conversation.id, :name => 'Modified',
+          :comments_attributes => { 0 => { :body => 'modified....'}}, :user_id => @observer.id
+
+      response.should be_success
+
+      @conversation.reload.comments.size.should == 2
+      comment = @conversation.reload.recent_comments.detect { |c| c.body == 'modified....' }
+      comment.should_not be_nil
+      comment.user.id.should == @user.id
+    end
+
+    it "should not allow participants not watching to modify a private conversation" do
+      @conversation.update_attribute(:is_private, true)
+      login_as @user
+
+      put :update, :project_id => @project.permalink, :id => @conversation.id, :name => 'Modified'
+      response.status.should == 401
+    end
+
+    xit "should return updated conversation and any references" do
+      login_as @user
+
+      put :update, :project_id => @project.permalink, :id => @conversation.id,
+          :name => 'Modified',
+          :comments_attributes => { 0 => { :body => 'modified....',
+                                           :uploads_attributes => {
+                                             0 => {
+                                               :asset => mock_uploader("templates.txt", 'text/plain', "jade")
+                                             }
+                                           }
+                                         }
+                                   }
+
+      # response.should be_success
+
+      pp response.status
+
+      data = JSON.parse(response.body)
+      pp data
+      # objects = data
+      #objects.should_not be_empty
+      #last_comment_id = @conversation.recent_comments(true).detect {|c| c.body.include?('modified')}.id
+      #objects['recent_comment_ids'].should include(last_comment_id)
+      #
+      #references = data['references']
+      #references.should_not be_empty
+      #references.map{|r| "#{r['id'].to_s}_#{r['type']}"}.include?("#{last_comment_id}_Comment")
+      #comment = references.detect {|c| c['type'] == 'Comment' && c['id'] == last_comment_id}
+      #comment.key?('uploads').should be_true
+      #comment['uploads'].should_not be_empty
+      #comment['uploads'].first['download'].include?('templates.txt').should be_true
+      #comment['uploads'].first['mime_type'].should == 'text/plain'
+      #comment['uploads'].first['filename'].should == 'templates.txt'
+    end
+  end
+
   def conversation(data)
     data.include?('project').should == true
     data.include?('first_comment').should == true
