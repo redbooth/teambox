@@ -83,6 +83,12 @@ class ApiV2::ConversationsController < ApiV2::BaseController
     render :nothing => true
   end
 
+  def unwatch
+    authorize!(:update, @conversation)
+    @conversation.remove_watcher(current_user)
+    render :nothing => true
+  end
+
   private
 
   def load_conversation

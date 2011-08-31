@@ -362,6 +362,24 @@ describe ApiV2::ConversationsController do
     end
   end
 
+  describe "#unwatch" do
+    it "should allow users to unwatch conversations" do
+      login_as @user
+
+      put :unwatch, :project_id => @project.permalink, :id => @conversation.id
+      response.status.should == 200
+    end
+
+    it "should not allow users to unwatch private conversations" do
+      @conversation.update_attribute(:is_private, true)
+      login_as @user
+
+      put :unwatch, :project_id => @project.permalink, :id => @conversation.id
+      response.status.should == 401
+    end
+  end
+
+
   def conversation(data)
     data.include?('project').should == true
     data.include?('first_comment').should == true

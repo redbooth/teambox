@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       member do
         post :convert_to_task
         put :watch
+        put :unwatch
       end
     end
 
