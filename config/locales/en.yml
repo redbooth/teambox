@@ -107,6 +107,7 @@ en:
     promo_p2: Enjoy better task management, file sharing and group communication.
     download:
       download_file: "Download file:"
+    not_found: %{downloadable} not found. Verify the link you followed or request a new link in case of problem.
   activities:
     create_upload:
       title: "%{user} uploaded a file: %{file}"

@@ -15,11 +15,12 @@ module Downloads
 
     module InstanceMethods
 
-      def downloadable_type(downloadable)
+      def downloadable_type(downloadable = nil)
+        downloadable = @upload || @folder if downloadable.nil?
         downloadable.class.name.tableize.singularize
       end
 
-      def localized_downloadable_type(downloadable)
+      def localized_downloadable_type(downloadable = nil)
         t "downloadable.type.#{downloadable_type(downloadable)}"
       end
 
