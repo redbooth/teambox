@@ -19,13 +19,6 @@ class Comment < ActiveRecord::Base
     payload['commits'].each_pair do |task_id, commits|
 
        if task = Task.find_by_id(task_id)
-         text = ''
-         commits.each do |commit|
-            @author_name = commit['author']['name']
-            @author_email = commit['author']['email']
-            text << ("%s - <a href=\"%s\">%s</a>\n\n" % [@author_name, commit['url'], commit['message']])
-            task.update_attribute :status_name, :resolved if commit['close'] == true
-         end
 
          anchor = payload['repository']['name']
          url = payload['repository']['url']
@@ -38,10 +31,18 @@ class Comment < ActiveRecord::Base
            url+="/tree/#{branch_name}"
          end
 
-         text << ("Posted on Github: <a href=\"%s\">%s</a>" % [url, anchor])
+         text = ("Posted on Github: <a href=\"%s\">%s</a>\n\n" % [url, anchor])
 
-         #we try to find user by name or email from commit, if not found comment author will be user which is assigned to task
-         author = task.project.users.detect { |u| u.name == @author_name || u.email == @author_email } || task.assigned.user
+         commits.each do |commit|
+            @author_name = commit['author']['name']
+            @author_email = commit['author']['email']
+            message = commit['message'].gsub(GithubIntegration::Parser::TASK_ID_IN_MESSAGE_REGEXP, '')
+            text << ("%s - <a href=\"%s\">%s</a>\n\n" % [@author_name, commit['url'], message])
+            task.update_attribute :status_name, :resolved if commit['close'] == true
+         end
+
+         #find user by name or email of last commit' author, if not found comment author will be user which is assigned to the task
+         author = (task.project.users.detect { |u| u.name == @author_name || u.email == @author_email }) || task.assigned.user
          task.comments.create_by_user author, {:body => text, :project_id => task.project_id}
 
        end

@@ -2,7 +2,7 @@ module GithubIntegration
 
   module Parser
 
-    TASK_ID_IN_MESSAGE_REGEXP = /\[(?:close-)?(\d+)\]/
+    TASK_ID_IN_MESSAGE_REGEXP = /\s?\[(?:close-)?(\d+)\]/
 
     def self.commits_with_task_ids(p)
       payload = p.clone

@@ -348,7 +348,7 @@ describe HooksController do
     end
     
     describe "GitHub" do
-  
+
       it "matches task ids from commits message and creates comments for task" do
 
         @mislav = Factory(:mislav)
@@ -364,10 +364,11 @@ describe HooksController do
 
         @other_task = Factory(:task, {:project => @project, :user => @chris, :task_list => @task_list, :name => "Do something Mislav"})
         @other_task.assign_to @mislav
-      
+
         payload = <<-JSON
           {
             "before": "5aef35982fb2d34e9d9d4502f6ede1072793222d",
+            "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
             "ref": "refs/heads/master",
             "repository": {
               "url": "http://github.com/defunkt/github",
@@ -388,8 +389,8 @@ describe HooksController do
               {
                 "id": "de8251ff97ee194a289832576287d6f8ad74e3d0",
                 "url": "http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0",
-                "author": { "email": "chris@ozmm.org", "name": "Chris Wanstrath" },
-                "message": "Closing for task [close-#{@task.id}]",
+                "author": { "email": "#{@mislav.email}", "name": "#{@mislav.name}" },
+                "message": "Closing for task[close-#{@task.id}]",
                 "timestamp": "2008-02-15T14:36:34-08:00"
               },
               {
@@ -409,13 +410,11 @@ describe HooksController do
               {
                 "id": "hju8251ff97ee194a289832576287d6f89ui7978h",
                 "url": "http://github.com/defunkt/github/commit/hju8251ff97ee194a289832576287d6f89ui7978h",
-                "author": { "email": "mislav@fuckingawesome.com", "name": "Mislav Marohnić" },
+                "author": { "email": "#{@mislav.email}", "name": "#{@mislav.name}" },
                 "message": "Commit for different task [#{@other_task.id}]",
                 "timestamp": "2008-02-16T12:66:37-08:00"
               }
-            ],
-            "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
-            "ref": "refs/heads/master"
+            ]
           }
         JSON
 
@@ -425,7 +424,7 @@ describe HooksController do
 
         first_comment = @task.recent_comments.first
 
-        first_comment.user.should == @chris
+        first_comment.user.should == @mislav
         first_comment.target.should == @task
 
         second_comment = @other_task.recent_comments.first
@@ -434,18 +433,18 @@ describe HooksController do
         second_comment.target.should == @other_task
 
         expected_first = (<<-HTML).strip
-         Chris Wanstrath - <a href=\"http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59\">Check this file, task [#{@task.id}]</a>\n
-Chris Wanstrath - <a href=\"http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0\">Closing for task [close-#{@task.id}]</a>
+         Posted on Github: <a href=\"http://github.com/defunkt/github/tree/master\">github/refs/heads/master</a>
 
-Posted on Github: <a href=\"http://github.com/defunkt/github/tree/master\">github/refs/heads/master</a>
+Chris Wanstrath - <a href=\"http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59\">Check this file, task</a>\n
+Mislav Marohnić - <a href=\"http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0\">Closing for task</a>
         HTML
 
         first_comment.body.strip.should == expected_first.strip
 
         expected_second = (<<-HTML).strip
-         Mislav Marohnić - <a href=\"http://github.com/defunkt/github/commit/hju8251ff97ee194a289832576287d6f89ui7978h\">Commit for different task [#{@other_task.id}]</a>
+         Posted on Github: <a href=\"http://github.com/defunkt/github/tree/master\">github/refs/heads/master</a>
 
-Posted on Github: <a href=\"http://github.com/defunkt/github/tree/master\">github/refs/heads/master</a>
+Mislav Marohnić - <a href=\"http://github.com/defunkt/github/commit/hju8251ff97ee194a289832576287d6f89ui7978h\">Commit for different task</a>
         HTML
 
         second_comment.body.strip.should == expected_second.strip
