@@ -103,6 +103,8 @@ en:
     left_project: "You are no longer in this project"
     failed_left_project: "You cannot leave this project"
   public_downloads:
+    promo_p1: This %{downloadable} is shared using Teambox, a collaboration platform for your projects.
+    promo_p2: Enjoy better task management, file sharing and group communication.
     download:
       download_file: "Download file:"
   activities:

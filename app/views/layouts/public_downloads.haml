@@ -6,7 +6,6 @@
     %link{ :rel => "shortcut icon", :href => "/favicon.ico" }
     %title= @page_title || "Teambox"
     = stylesheet_link_tag 'public_downloads'
-    =# javascript_include_tag '/javascripts/prototype'
   %body{ :class => "#{location_name} #{I18n.locale} #{Rails.env} controller_#{controller.controller_name}"}
     #wrapper
       #logo
@@ -16,6 +15,6 @@
         = yield
       - unless @current_user
         #promo
-          %p This file is shared using Teambox, a collaboration platform for your projects.
-          %p Enjoy better task management, file sharing and group communication.
+          %p= t('public_downloads.promo_p1', :downloadable => localized_downloadable_type(@folder || @upload))
+          %p= t('public_downloads.promo_p2')
           %p= link_to "Get started now for free", "http://teambox.com/signup"
