@@ -290,6 +290,22 @@ describe ApiV2::ConversationsController do
       data['name'].should == 'Tasked'
       data['project']['name'].present?.should == true
     end
+
+
+    it "should return errors when conversation cannot be converted to task because name is not set" do
+      login_as @user
+
+      post :convert_to_task, :project_id => @project.permalink,
+                             :id => @another_conversation.id,
+                             :name => '', :comment => {:body => 'Converted!'},
+                             :status => 2, :assigned_id => @project.people.first.id
+
+      response.status.should == 422
+
+      data = JSON.parse(response.body)
+      data['errors']['name'].present?.should == true
+    end
+
   end
 
   def conversation(data)

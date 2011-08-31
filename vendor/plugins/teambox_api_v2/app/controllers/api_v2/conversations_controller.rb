@@ -64,7 +64,7 @@ class ApiV2::ConversationsController < ApiV2::BaseController
       if @task && @task.errors.empty?
         render 'api_v2/tasks/show'
       else
-        render 'tasks/errors', :status => :unprocessable_entity
+        render 'api_v2/tasks/errors', :status => :unprocessable_entity
       end
     else
       render 'errors', :status => :unprocessable_entity
