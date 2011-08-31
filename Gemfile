@@ -1,14 +1,14 @@
 source :rubygems
 
-gem 'rails', '~> 3.1.0.rc8'
+gem 'rails', '3.1.0'
 gem 'memcache-client', '>= 1.7.4', :require => nil
 #gem 'text-format', '>= 0.6.3', :require => 'text/format'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', "  ~> 3.1.0.rc"
-  gem 'coffee-rails', "~> 3.1.0.rc"
+  gem 'sass-rails', "  ~> 3.1.0"
+  gem 'coffee-rails', "~> 3.1.0"
   gem 'uglifier'
 end
 
