@@ -275,6 +275,43 @@ describe ApiV2::ConversationsController do
     end
   end
 
+  describe "#destroy" do
+    it "should allow admins to destroy a conversation" do
+      login_as @admin
+
+      put :destroy, :project_id => @project.permalink, :id => @conversation.id
+      response.status.should == 204
+
+      @project.conversations(true).length.should == 1
+    end
+
+    it "should allow the creator to destroy a conversation" do
+      login_as @conversation.user
+
+      put :destroy, :project_id => @project.permalink, :id => @conversation.id
+      response.status.should == 204
+
+      @project.conversations(true).length.should == 1
+    end
+
+    it "should not allow participants to destroy a conversation" do
+      login_as @user
+
+      put :destroy, :project_id => @project.permalink, :id => @conversation.id
+      response.status.should == 401
+
+      @project.conversations(true).length.should == 2
+    end
+
+    it "should not allow admins not watching to destroy a private conversation" do
+      @conversation.update_attribute(:is_private, true)
+      login_as @admin
+
+      put :destroy, :project_id => @project.permalink, :id => @conversation.id
+      response.status.should == 401
+    end
+  end
+
   describe "#convert_to_task" do
     it "should allow participants to convert a conversation to a task" do
       login_as @user

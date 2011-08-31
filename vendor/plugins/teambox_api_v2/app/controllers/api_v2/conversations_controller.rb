@@ -52,6 +52,12 @@ class ApiV2::ConversationsController < ApiV2::BaseController
     end
   end
 
+  def destroy
+    authorize!(:destroy, @conversation)
+    @conversation.destroy
+    render :nothing => true, :status => 204
+  end
+
   def convert_to_task
     authorize!(:update, @conversation)
 
