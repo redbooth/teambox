@@ -77,6 +77,12 @@ class ApiV2::ConversationsController < ApiV2::BaseController
     end
   end
 
+  def watch
+    authorize!(:update, @conversation)
+    @conversation.add_watcher(current_user)
+    render :nothing => true
+  end
+
   private
 
   def load_conversation

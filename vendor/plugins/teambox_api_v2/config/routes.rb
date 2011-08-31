@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :conversations, :only => [:index, :show, :create, :update, :destroy] do
       member do
         post :convert_to_task
+        put :watch
       end
     end
 
