@@ -15,7 +15,7 @@ module MyActiveRecordHacks
 end
 
 ActiveRecord::Relation.send(:include, MyActiveRecordHacks)
-ActiveRecord::Associations::AssociationCollection.send(:include, MyActiveRecordHacks)
+ActiveRecord::Associations::CollectionProxy.send(:include, MyActiveRecordHacks)
 
 class ActiveRecord::Base
 
