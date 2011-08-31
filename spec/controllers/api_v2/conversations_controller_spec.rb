@@ -275,6 +275,23 @@ describe ApiV2::ConversationsController do
     end
   end
 
+  describe "#convert_to_task" do
+    it "should allow participants to convert a conversation to a task" do
+      login_as @user
+
+      post :convert_to_task, :project_id => @project.permalink,
+                             :id => @another_conversation.id,
+                             :name => 'Tasked', :comment => {:body => 'Converted!'},
+                             :status => 2, :assigned_id => @project.people.first.id
+
+      response.should be_success
+
+      data = JSON.parse(response.body)
+      data['name'].should == 'Tasked'
+      data['project']['name'].present?.should == true
+    end
+  end
+
   def conversation(data)
     data.include?('project').should == true
     data.include?('first_comment').should == true

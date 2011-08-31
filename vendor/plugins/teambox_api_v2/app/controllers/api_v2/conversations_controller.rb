@@ -52,6 +52,25 @@ class ApiV2::ConversationsController < ApiV2::BaseController
     end
   end
 
+  def convert_to_task
+    authorize!(:update, @conversation)
+
+    @conversation.attributes = params
+    @conversation.updating_user = current_user
+    @conversation.comments_attributes = {"0" => params[:comment]} if params[:comment]
+
+    if @conversation.save
+      @task = @conversation.convert_to_task!
+      if @task && @task.errors.empty?
+        render 'api_v2/tasks/show'
+      else
+        render 'tasks/errors', :status => :unprocessable_entity
+      end
+    else
+      render 'errors', :status => :unprocessable_entity
+    end
+  end
+
   private
 
   def load_conversation
