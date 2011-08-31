@@ -6,8 +6,8 @@ class UploadsController < ApplicationController
   before_filter :check_private_download_access, :only => :download
   before_filter :check_public_download_access, :only => :tokenized_download
 
-  helper_method :downloadable_type, :localized_downloadable_type
-  
+  include Downloads::Downloading
+
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |f|
       error_message = "You are not allowed to do that!"
@@ -32,35 +32,11 @@ class UploadsController < ApplicationController
   end
   
   def tokenized_download
-    @extra_sendfile_options = {:disposition => 'inline'}
-    download
+    download_send_file(@upload, :send_file => {:disposition => 'inline'})
   end
 
   def download
-    
-    if !!Teambox.config.amazon_s3
-      unless @upload.asset.exists?(params[:style])
-        head(:bad_request)
-        raise "Unable to download file"
-      end
-      redirect_to @upload.s3_url(params[:style])
-    else
-      path = @upload.asset.path(params[:style])
-      unless File.exist?(path)
-        head(:bad_request)
-        raise "Unable to download file"
-      end  
-
-      mime_type = File.mime_type?(@upload.asset_file_name)
-
-      mime_type = 'application/octet-stream' if mime_type == 'unknown/unknown'
-
-      send_file_options = {:type => mime_type}.merge(@extra_sendfile_options || {})
-
-      response.headers['Cache-Control'] = 'private, max-age=31557600'
-
-      send_file(path, send_file_options)
-    end
+    download_send_file(@upload)
   end
 
   def public_download
@@ -193,17 +169,7 @@ class UploadsController < ApplicationController
       end
     end
   end
-
-
-  def downloadable_type(downloadable)
-    downloadable.class.name.tableize.singularize
-  end
-
-  def localized_downloadable_type(downloadable)
-    t "downloadable.type.#{downloadable_type(downloadable)}"
-  end
-
-
+  
   private
 
   def check_private_download_access
