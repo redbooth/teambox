@@ -34,12 +34,14 @@ class PublicDownloadsController < ApplicationController
 
   def get_upload_by_token
     unless @upload = Upload.find_by_token_and_deleted(params[:token], false)
+      @upload = Upload.new
       render :template => "public_downloads/not_found", :layout => "public_downloads", :status => :not_found and return
     end
   end
 
   def get_folder_by_token
     unless @folder = Folder.find_by_token_and_deleted(params[:token], false)
+      @folder = Folder.new
       render :template => "public_downloads/not_found", :layout => "public_downloads", :status => :not_found and return
     end
   end

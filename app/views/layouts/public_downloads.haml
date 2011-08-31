@@ -15,6 +15,6 @@
         = yield
       - unless @current_user
         #promo
-          %p= t('public_downloads.promo_p1', :downloadable => localized_downloadable_type(@folder || @upload))
+          %p= t('public_downloads.promo_p1', :downloadable => localized_downloadable_type)
           %p= t('public_downloads.promo_p2')
           %p= link_to "Get started now for free", "http://teambox.com/signup"
