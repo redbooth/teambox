@@ -21,6 +21,12 @@ module GithubIntegration
       payload
     end
 
+     def self.commits_without_task_ids(p)
+       payload = p.clone
+       payload["commits"].delete_if {|c| c["message"].match(TASK_ID_IN_MESSAGE_REGEXP) }
+       payload
+    end
+
   end
 
 end
