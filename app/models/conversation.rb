@@ -89,28 +89,21 @@ class Conversation < RoleRecord
   end
 
   def self.from_github(payload)
-     text = description_for_github_push(payload)
 
-    self.create!(:body => text, :simple => true) do |conversation|
-      author = payload['commits'].any? ? conversation.project.users.detect { |u| u.name == payload['commits'][0]['author']['name'] } : nil
+    commits = payload["commits"]
+    branch_name = GithubIntegration::Parser.get_branch_name_from_ref(payload['ref'])
+
+    body = GithubIntegration::Builder.comment_body_from_payload_commits(commits.first(10), payload)
+    body << "And #{commits.size - 10} more commits" if commits.size > 10
+
+    self.create!(:name => "New code on #{branch_name} branch", :body => body, :simple => true) do |conversation|
+      if commits.any?
+        author_name_and_email = GithubIntegration::Parser.get_author_from_commits(commits)
+        author = conversation.project.users.detect { |u| u.email == author_name_and_email[:email] || u.name == author_name_and_email[:name] }
+      end
       conversation.user = author || conversation.project.hook_user
       yield conversation if block_given?
     end
-  end
-
-  def self.description_for_github_push(payload)
-    text = "New code on <a href=\"%s\">%s</a> %s\n\n" % [payload['repository']['url'], payload['repository']['name'], payload['ref']]
-
-    commits = payload["commits"]
-
-    commits[0, 10].each do |commit|
-      author = commit['author']['name']
-      message = commit['message'].strip.split("\n").first
-      text << "#{author} - <a href=\"#{commit['url']}\">#{message}</a>\n\n"
-    end
-
-    text << "And #{commits.size - 10} more commits" if commits.size > 10
-    text
   end
 
   protected

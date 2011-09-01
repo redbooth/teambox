@@ -446,12 +446,11 @@ describe HooksController do
         @other_task.comments.count.should eql(1)
         
         conversation = @project.conversations.last
-        conversation.user.should == @chris
+        conversation.user.should == @mislav
         conversation.should be_simple
-        conversation.name.should be_nil
-
+        conversation.name.should eql "New code on master branch"
         expected = (<<-HTML).strip
-        New code on <a href=\"http://github.com/defunkt/github\">github</a> refs/heads/master
+Posted on Github: <a href=\"http://github.com/defunkt/github/tree/master\">github/refs/heads/master</a> <a href=\"https://github.com/teambox/teambox/compare/41a212e^...hju8251\">(compare)</a>
 
 Chris Wanstrath - <a href=\"http://github.com/defunkt/github/commit/hj6251i97ee19tyr28ig676F76287d6f8ag5r5Y5\">Forgot task id so it should appear under new conversation in old style</a>
 
@@ -490,10 +489,10 @@ Mislav Marohnić - <a href=\"http://github.com/defunkt/github/commit/fgh251i97ee
         conversation = @project.conversations.last
         conversation.user.should_not == nil
         conversation.should be_simple
-        conversation.name.should be_nil
+        conversation.name.should eql "New code on master branch"
 
         expected = (<<-HTML).strip
-         New code on <a href=\"http://github.com/defunkt/github\">github</a> refs/heads/master
+Posted on Github: <a href=\"http://github.com/defunkt/github/tree/master\">github/refs/heads/master</a>
         HTML
 
         conversation.comments.first.body.strip.should == expected.strip
