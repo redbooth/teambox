@@ -41,8 +41,15 @@ class Comment < ActiveRecord::Base
             task.update_attribute :status_name, :resolved if commit['close'] == true
          end
 
-         #find user by name or email of last commit' author, if not found comment author will be user which is assigned to the task
-         author = (task.project.users.detect { |u| u.name == @author_name || u.email == @author_email }) || task.assigned.user
+         #first try to detect author by pushed param
+         if payload.has_key? 'pusher'
+           author = task.project.users.detect { |u| u.email == payload['pusher']['email'] || u.name == payload['pusher']['name']}
+         end
+         #if not found find user by name or email of last commit' author, if not found comment author will be user which is assigned to the task
+         if author.nil?
+          author = (task.project.users.detect { |u| u.name == @author_name || u.email == @author_email }) || task.assigned.user
+         end
+
          task.comments.create_by_user author, {:body => text, :project_id => task.project_id}
 
        end

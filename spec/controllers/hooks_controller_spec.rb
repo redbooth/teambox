@@ -359,9 +359,11 @@ describe HooksController do
 
         @mislav = Factory(:mislav)
         @chris = Factory(:user, {:first_name => "Chris", :last_name => "Wanstrath"})
+        @frank = Factory(:user, {:email => "frank@teambox.com"})
 
         @project.add_user @chris
         @project.add_user @mislav
+        @project.add_user @frank
 
         @task_list = Factory(:task_list, :project => @project, :user => @mislav)
 
@@ -376,6 +378,7 @@ describe HooksController do
             "before": "5aef35982fb2d34e9d9d4502f6ede1072793222d",
             "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
             "ref": "refs/heads/master",
+            "pusher": {"email":"frank@teambox.com","name":"frank"},
             "repository": {
               "url": "http://github.com/defunkt/github",
               "name": "github",
@@ -507,12 +510,12 @@ Mislav Marohnić - <a href=\"http://github.com/defunkt/github/commit/fgh251i97ee
 
         first_comment = @task.recent_comments.first
 
-        first_comment.user.should == @mislav
+        first_comment.user.should == @frank
         first_comment.target.should == @task
 
         second_comment = @other_task.recent_comments.first
 
-        second_comment.user.should == @mislav
+        second_comment.user.should == @frank
         second_comment.target.should == @other_task
 
         expected_first = (<<-HTML).strip
