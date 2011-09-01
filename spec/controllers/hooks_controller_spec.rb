@@ -13,6 +13,12 @@ describe HooksController do
       :controller => "hooks",
       :project_id => "12")
   end
+  
+  it "should route to hooks controller scoped under project" do
+    { :post => '/hooks/github'}.should route_to(:action => "create",
+      :hook_name => "github",
+      :controller => "hooks")
+  end
 
   describe "#create" do
     before do
@@ -348,8 +354,8 @@ describe HooksController do
     end
     
     describe "GitHub" do
-
-      it "matches task ids from commits message and creates comments for task" do
+      
+      before do
 
         @mislav = Factory(:mislav)
         @chris = Factory(:user, {:first_name => "Chris", :last_name => "Wanstrath"})
@@ -365,7 +371,7 @@ describe HooksController do
         @other_task = Factory(:task, {:project => @project, :user => @chris, :task_list => @task_list, :name => "Do something Mislav"})
         @other_task.assign_to @mislav
 
-        payload = <<-JSON
+        @payload = <<-JSON
           {
             "before": "5aef35982fb2d34e9d9d4502f6ede1072793222d",
             "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
@@ -404,8 +410,15 @@ describe HooksController do
                 "id": "hj6251i97ee19tyr28ig676F76287d6f8ag5r5Y5",
                 "url": "http://github.com/defunkt/github/commit/hj6251i97ee19tyr28ig676F76287d6f8ag5r5Y5",
                 "author": { "email": "chris@ozmm.org", "name": "Chris Wanstrath" },
-                "message": "Forgot task id",
+                "message": "Forgot task id so it should appear under new conversation in old style",
                 "timestamp": "2008-02-16T17:07:12-08:00"
+              },
+              {
+                "id": "fgh251i97ee19tyr28ig676F76287d6f8ag5rghy",
+                "url": "http://github.com/defunkt/github/commit/fgh251i97ee19tyr28ig676F76287d6f8ag5rghy",
+                "author": { "email": "#{@mislav.email}", "name": "#{@mislav.name}" },
+                "message": "Here forgot task id as well",
+                "timestamp": "2008-02-16T17:09:12-08:00"
               },
               {
                 "id": "hju8251ff97ee194a289832576287d6f89ui7978h",
@@ -417,8 +430,66 @@ describe HooksController do
             ]
           }
         JSON
+      end
 
-        post :create, :payload => payload, :hook_name => 'github', :project_id => @project.id
+      it "posts comments as the new conversation" do
+
+        post :create, :payload => @payload, :hook_name => 'github', :project_id => @project.id
+
+        conversation = @project.conversations.first
+        conversation.should be_simple
+        conversation.name.should be_nil
+
+        expected = (<<-HTML).strip
+        New code on <a href=\"http://github.com/defunkt/github\">github</a> refs/heads/master
+
+Chris Wanstrath - <a href=\"http://github.com/defunkt/github/commit/hj6251i97ee19tyr28ig676F76287d6f8ag5r5Y5\">Forgot task id so it should appear under new conversation in old style</a>
+
+Mislav Marohnić - <a href=\"http://github.com/defunkt/github/commit/fgh251i97ee19tyr28ig676F76287d6f8ag5rghy\">Here forgot task id as well</a>
+        HTML
+
+        conversation.comments.first.body.strip.should == expected.strip
+      end
+
+       it "accepts hooks without commits" do
+
+         @other_task = Factory(:task, {:project => @project, :user => @chris, :task_list => @task_list, :name => "Do something Mislav"})
+         @other_task.assign_to @mislav
+
+         payload_wc = <<-JSON
+            {
+            "before": "5aef35982fb2d34e9d9d4502f6ede1072793222d",
+            "repository": {
+              "url": "http://github.com/defunkt/github",
+              "name": "github",
+              "description": "You're lookin' at it.",
+              "watchers": 5, "forks": 2, "private": 1,
+              "owner": { "email": "chris@ozmm.org", "name": "defunkt" }
+            },
+            "commits": [],
+            "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
+            "ref": "refs/heads/master"
+          }
+         JSON
+
+         post :create, :payload => payload_wc, :hook_name => 'github', :project_id => @project.id
+
+         conversation = @project.conversations.first
+         conversation.user.should_not == nil
+         conversation.should be_simple
+         conversation.name.should be_nil
+
+         expected = (<<-HTML).strip
+         New code on <a href=\"http://github.com/defunkt/github\">github</a> refs/heads/master
+         HTML
+
+         conversation.comments.first.body.strip.should == expected.strip
+
+       end
+
+      it "matches task ids from commits message and creates comments for task" do
+
+        post :create, :payload => @payload, :hook_name => 'github', :project_id => @project.id
         @task.reload
         @other_task.reload
 
