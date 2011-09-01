@@ -31,7 +31,8 @@ class Comment < ActiveRecord::Base
            url+="/tree/#{branch_name}"
          end
 
-         text = ("Posted on Github: <a href=\"%s\">%s</a>\n\n" % [url, anchor])
+         compare = payload.has_key?('compare') ? (" <a href=\"%s\">(compare)</a>" % payload['compare']) : ''
+         text = ("Posted on Github: <a href=\"%s\">%s</a>%s\n\n" % [url, anchor, compare])
 
          commits.each do |commit|
             @author_name = commit['author']['name']
