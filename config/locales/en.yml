@@ -680,7 +680,7 @@ en:
       current_plan: Your current plan
       downgrade: Downgrade
       cancel: Cancel subscription
-      billing_area_html: "You can access your invoices, downgrade or change your billing options at any time from the <a href='%{link}'>billing area</a>."
+      billing_area_html: "You can downgrade or change your billing options at any time from the <a href='%{link}'>billing area</a>."
       suggested_upgrade:
         upgrade_to: "Upgrade to %{plan}"
         for_only: "for $%{price} more a month"

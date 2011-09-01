@@ -1189,7 +1189,7 @@ ca:
       last_activity: "darrera activitat a %{date}"
       title: "Projectes arxivats"
     billing: 
-      billing_area_html: "Podeu accedir a les vostres factures, actualitzar la vostra subscripció o canviar les vostres opcions de pagament a l'<a href='%{link}'>àrea de facturació</a>."
+      billing_area_html: "Podeu actualitzar la vostra subscripció o canviar les vostres opcions de pagament a l'<a href='%{link}'>àrea de facturació</a>."
       billing_email_html: "Email de facturació <em>Enviarem les factures a aquesta adreça</em>"
       cancel: "Cancel·lar la subscripció"
       current_plan: "El seu pla actual"

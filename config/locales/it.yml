@@ -1324,7 +1324,7 @@ it:
       last_activity: "Ultimo aggiornamento il %{date}"
       title: "Progetti archiviati"
     billing: 
-      billing_area_html: "Puoi accedere alle tue fatture, realizzare un downgrade o cambiare le tue opzioni di fatturazione in qualsiasi momento dall' <a href='%{link}'>area billing</a>. "
+      billing_area_html: "Puoi realizzare un downgrade o cambiare le tue opzioni di fatturazione in qualsiasi momento dall' <a href='%{link}'>area billing</a>. "
       billing_email_html: "E-mail di fatturazione <em>Invieremo le fatture a questo indirizzo</em>\n"
       cancel: "Cancella abbonamento"
       current_plan: "Il tuo piano attuale"
