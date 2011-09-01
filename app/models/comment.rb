@@ -18,42 +18,24 @@ class Comment < ActiveRecord::Base
 
     payload['commits'].each_pair do |task_id, commits|
 
-       if task = Task.find_by_id(task_id)
+      if task = Task.find_by_id(task_id)
 
-         anchor = payload['repository']['name']
-         url = payload['repository']['url']
+        body = GithubIntegration::Builder.comment_body_from_payload_commits(commits, payload)
+        task.update_attribute(:status_name, :resolved) if GithubIntegration::Parser.task_close_in_any_commit?(commits)
 
-         if payload.has_key? 'ref'
-           ref = payload['ref']
-           anchor+= "/#{ref}"
-           matches = ref.split('/')
-           branch_name = matches.last
-           url+="/tree/#{branch_name}"
-         end
+        #first try to detect author by pushed param
+        if payload.has_key? 'pusher'
+          author = task.project.users.detect { |u| u.email == payload['pusher']['email'] || u.name == payload['pusher']['name']}
+        end
+        #if not found find user by name or email of last commit' author, if not found comment author will be user which is assigned to the task
+        if author.nil?
+          author_name_and_email = GithubIntegration::Parser.get_author_from_commits(commits)
+          author = (task.project.users.detect { |u| u.email == author_name_and_email[:email] || u.name == author_name_and_email[:name] }) || task.assigned.user
+        end
 
-         compare = payload.has_key?('compare') ? (" <a href=\"%s\">(compare)</a>" % payload['compare']) : ''
-         text = ("Posted on Github: <a href=\"%s\">%s</a>%s\n\n" % [url, anchor, compare])
+        task.comments.create_by_user author, {:body => body, :project_id => task.project_id}
 
-         commits.each do |commit|
-            @author_name = commit['author']['name']
-            @author_email = commit['author']['email']
-            message = commit['message'].gsub(GithubIntegration::Parser::TASK_ID_IN_MESSAGE_REGEXP, '')
-            text << ("%s - <a href=\"%s\">%s</a>\n\n" % [@author_name, commit['url'], message])
-            task.update_attribute :status_name, :resolved if commit['close'] == true
-         end
-
-         #first try to detect author by pushed param
-         if payload.has_key? 'pusher'
-           author = task.project.users.detect { |u| u.email == payload['pusher']['email'] || u.name == payload['pusher']['name']}
-         end
-         #if not found find user by name or email of last commit' author, if not found comment author will be user which is assigned to the task
-         if author.nil?
-          author = (task.project.users.detect { |u| u.name == @author_name || u.email == @author_email }) || task.assigned.user
-         end
-
-         task.comments.create_by_user author, {:body => text, :project_id => task.project_id}
-
-       end
+      end
     end
   end
 
@@ -82,7 +64,7 @@ class Comment < ActiveRecord::Base
     :reject_if => lambda { |google_docs| google_docs['title'].blank? || google_docs['url'].blank? }
   
   attr_accessible :body, :status, :assigned, :hours, :human_hours, :billable,
-                  :upload_ids, :uploads_attributes, :due_on, :urgent, :google_docs_attributes, :private_ids, :is_private
+    :upload_ids, :uploads_attributes, :due_on, :urgent, :google_docs_attributes, :private_ids, :is_private
 
   attr_accessor :is_importing, :private_ids, :is_private_set, :activity
 
