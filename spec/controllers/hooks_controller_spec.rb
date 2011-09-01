@@ -432,11 +432,17 @@ describe HooksController do
         JSON
       end
 
-      it "posts comments as the new conversation" do
+      it "creates both new conversation and tasks comments when param conversations passed" do
 
-        post :create, :payload => @payload, :hook_name => 'github', :project_id => @project.id
+        lambda do
+          post :create, :payload => @payload, :hook_name => 'github', :project_id => @project.id, :conversations => true
+        end.should change(Conversation, :count).by(1)
 
-        conversation = @project.conversations.first
+        @task.comments.count.should eql(1)
+        @other_task.comments.count.should eql(1)
+        
+        conversation = @project.conversations.last
+        conversation.user.should == @chris
         conversation.should be_simple
         conversation.name.should be_nil
 
@@ -449,14 +455,15 @@ Mislav Marohnić - <a href=\"http://github.com/defunkt/github/commit/fgh251i97ee
         HTML
 
         conversation.comments.first.body.strip.should == expected.strip
+
       end
 
-       it "accepts hooks without commits" do
+      it "accepts hooks without commits" do
 
-         @other_task = Factory(:task, {:project => @project, :user => @chris, :task_list => @task_list, :name => "Do something Mislav"})
-         @other_task.assign_to @mislav
+        @other_task = Factory(:task, {:project => @project, :user => @chris, :task_list => @task_list, :name => "Do something Mislav"})
+        @other_task.assign_to @mislav
 
-         payload_wc = <<-JSON
+        payload_wc = <<-JSON
             {
             "before": "5aef35982fb2d34e9d9d4502f6ede1072793222d",
             "repository": {
@@ -470,26 +477,31 @@ Mislav Marohnić - <a href=\"http://github.com/defunkt/github/commit/fgh251i97ee
             "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
             "ref": "refs/heads/master"
           }
-         JSON
+        JSON
+        
+        lambda do
+          post :create, :payload => payload_wc, :hook_name => 'github', :project_id => @project.id, :conversations => true
+        end.should change(Conversation, :count).by(1)
 
-         post :create, :payload => payload_wc, :hook_name => 'github', :project_id => @project.id
+        conversation = @project.conversations.last
+        conversation.user.should_not == nil
+        conversation.should be_simple
+        conversation.name.should be_nil
 
-         conversation = @project.conversations.first
-         conversation.user.should_not == nil
-         conversation.should be_simple
-         conversation.name.should be_nil
-
-         expected = (<<-HTML).strip
+        expected = (<<-HTML).strip
          New code on <a href=\"http://github.com/defunkt/github\">github</a> refs/heads/master
-         HTML
+        HTML
 
-         conversation.comments.first.body.strip.should == expected.strip
+        conversation.comments.first.body.strip.should == expected.strip
 
-       end
+      end
 
-      it "matches task ids from commits message and creates comments for task" do
+      it "post only task comments as default behaviour" do
 
-        post :create, :payload => @payload, :hook_name => 'github', :project_id => @project.id
+        lambda do
+          post :create, :payload => @payload, :hook_name => 'github', :project_id => @project.id
+        end.should_not change(Conversation, :count)
+        
         @task.reload
         @other_task.reload
 
