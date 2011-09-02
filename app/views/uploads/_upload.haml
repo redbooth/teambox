@@ -18,3 +18,4 @@
       = link_to t('common.rename'), [:edit, upload.project, upload], :remote => true, :class => "link_rename"
       = link_to t('uploads.moveable.title'), project_move_resource_path(upload.project, upload), :class => "move_resource" if upload.moveable?
       = link_to t('common.delete'), [upload.project, upload], :remote => true, :method => 'delete', :confirm => t('confirm.delete_upload')
+

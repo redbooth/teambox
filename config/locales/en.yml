@@ -55,6 +55,7 @@ en:
     rename: Rename
     accept: Accept
     decline: Decline
+    download: Download
     cancel: Cancel
     close: Close
     save: Save
@@ -1339,9 +1340,6 @@ en:
       item1_html: "<b>Bigger files</b>. Upload files of any size and forget about email limitations."
       item2_html: "<b>Versioning</b>. Upload new versions of a file and keep track of changes."
       item3_html: "<b>Always available</b>. Files stay in context in the project for future reference."
-    upload:
-      download: Download
-      remove: Delete
     moveable:
       title: Move to another folder
       to_parent: Move to parent folder
@@ -1364,10 +1362,7 @@ en:
     edit:
       submit: Save
     parent_folder: Parent folder
-    remove: 
-      link: Remove
     rename:
-      link: Rename
       success: Folder name has been changed
       error: Folder name has not been changed
     public_download:
