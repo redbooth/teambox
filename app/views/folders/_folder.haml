@@ -14,7 +14,7 @@
   .reference{ :style => 'display: none' }
     - if true or can?(:update, folder)
       = link_to t('folders.public_download.link.anchor'), public_download_project_folder_path(folder.project, folder), :rel => 'facebox', :title => t('folders.public_download.link.title')
-      = link_to t('folders.rename.link'), edit_project_folder_path(@current_project, folder), :remote => true, :class => "link_rename"
+      = link_to t('common.rename'), edit_project_folder_path(@current_project, folder), :remote => true, :class => "link_rename"
       = link_to t('uploads.moveable.title'), project_move_resource_path(folder.project, folder), :class => "move_resource" if folder.moveable?
-      = link_to t('folders.remove.link'), [@current_project, folder], :remote => true, :method => :delete, :confirm => t('confirm.delete_folder')
+      = link_to t('common.delete'), [@current_project, folder], :remote => true, :method => :delete, :confirm => t('confirm.delete_folder')
   .actions_container

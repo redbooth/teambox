@@ -48,7 +48,7 @@ Feature: Moving a folder
     And there is a folder called "Rails 3.1.0.rc8" in a current project
     When I go to the uploads page of the "Ruby Rockstars" project
     And I click upload list item for "Rails 2.3.5" folder
-    And I follow "Remove"
+    And I follow "Delete"
     When I confirm alert message
     Then I should not see "Rails 2.3.5" within ".upload"
     When I click upload list item for "Rails 3.1.0.rc8" folder
