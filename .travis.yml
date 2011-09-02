@@ -1,0 +1,8 @@
+before_script:
+  - "cp config/database{.example,}.yml"
+  - "bundle exec rake db:drop db:create db:schema:load"
+script: "bundle exec rake spec"
+notifications:
+  recipients:
+    - jordi@teambox.com
+
