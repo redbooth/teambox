@@ -27,7 +27,7 @@ class HooksController < ApplicationController
     case params[:hook_name]
     when 'github'
       @current_project.comments.from_github GithubIntegration::Parser.commits_with_task_ids(JSON.parse(params[:payload]))
-      if params[:conversations] == true
+      if params[:conversations]
         @current_project.conversations.from_github GithubIntegration::Parser.commits_without_task_ids(JSON.parse(params[:payload]))
       end
     when 'email'
