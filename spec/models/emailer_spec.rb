@@ -114,7 +114,7 @@ describe Emailer do
         recipient = 'some@valid.email.com'
         
         with_locale(locale) do
-          lambda { Emailer.public_download(@upload.id, recipient) }.should_not raise_error
+          lambda { Emailer.public_download(@upload.id, recipient, 'upload') }.should_not raise_error
         end
       end
 
