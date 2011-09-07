@@ -1,19 +1,20 @@
-%table{ :style => "border-spacing: 5px 0"}
+%table{ :style => "border-spacing: 5px 0", :border => 0 }
   %thead
     %th{ :colspan => "2", :style => "text-align: left"}= header_text
   %tbody
     - tasks.each do |task|
-      %tr
-        %td{ :style => "width:30px"}
-          %span{ :style => task_status_style(task) }= task.comments_count
-        %td{ :style => "width:570px"}
+      %tr{ :style => "height: 50px" }
+        %td{ :style => "width:70px; font-size: 13px;" }
           - if task.due_on
-            %span{ :style => task_due_on_style(task) }
+            %span{ :style => task_due_on_style(task, :late => task.overdue?) }
               = due_on(task)
-          = link_to h(task.name), project_task_url(task.project, task)
-          == [#{link_to h(task.project), project_url(task.project)}]
-          - comment = task.comments.first
-          - if comment
-            .span{ :style => email_text(:normal) + 'border-bottom: 1px #555' }
-              ~raw comment.body_html
-
+        %td{ :style => "width:530px; font-size: 12px;" }
+          %table{ :style => "border-spacing: 5px 0", :border => 0 }
+            %tr
+              %td
+                = link_to task.name, project_task_url(task.project, task), :style => task_style
+            %tr
+              %td
+                = link_to task.project, project_url(task.project), :style => task_project_style
+%br
+%br

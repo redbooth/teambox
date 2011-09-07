@@ -107,12 +107,20 @@ module EmailerHelper
     styles.join(";")
   end
 
-  def task_due_on_style(task)
+  def task_due_on_style(task, options)
     styles = []
-    # styles << "font-size: 11px"
+    styles << "font-size: 12px"
     styles << "display: table-cell"
-    styles << "color: rgb(200,0,0)"
+    styles << "color: rgb(200,0,0)" if options[:late]
     styles.join(";")
+  end
+
+  def task_style
+    "font-size: 14px; font-weight: bold; color: #005; text-decoration: none;"
+  end
+
+  def task_project_style
+    "font-size: 12px; color: #777; text-decoration: none;"
   end
 
   def email_navigation
