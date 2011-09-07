@@ -26,8 +26,8 @@ class User
   def tasks_for_daily_reminder_email
     tasks = assigned_tasks.due_sooner_than_two_weeks.all(:order => 'tasks.due_on')
     tasks_by_dueness = Hash.new { |h, k| h[k] = Array.new }
-    
-    tasks.each_with_object(tasks_by_dueness) do |task, all|
+
+    tasks_with_date = tasks.each_with_object(tasks_by_dueness) do |task, all|
       due_identifier = if Date.today == task.due_on
         :today
       elsif Date.today + 1 == task.due_on
@@ -37,8 +37,10 @@ class User
       else
         :for_next_two_weeks
       end
-      
+
       all[due_identifier] << task
     end
+    tasks_with_date[:urgent] = assigned_tasks.urgent
+    tasks_with_date
   end
 end

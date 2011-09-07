@@ -8,6 +8,9 @@
           - if task.due_on
             %span{ :style => task_due_on_style(task, :late => task.overdue?) }
               = due_on(task)
+          - elsif task.urgent?
+            %span{ :style => task_due_on_style(task) }
+              = t('emailer.daily_task_reminder_email.urgent')
         %td{ :style => "width:530px; font-size: 12px;" }
           %table{ :style => "border-spacing: 5px 0", :border => 0 }
             %tr

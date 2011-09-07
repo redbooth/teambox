@@ -1,6 +1,7 @@
 .email{ :style => email_global }
   %p= t('users.daily_task_reminder_email.daily_task_reminder_from_teambox')
 
+  = tasks_for_daily_reminder(@tasks[:urgent], @user, t('users.daily_task_reminder_email.urgent_tasks'))
   = tasks_for_daily_reminder(@tasks[:late], @user, t('users.daily_task_reminder_email.late_tasks'))
   = tasks_for_daily_reminder(@tasks[:today], @user, t('users.daily_task_reminder_email.tasks_for_today'))
   = tasks_for_daily_reminder(@tasks[:tomorrow], @user, t('users.daily_task_reminder_email.tasks_for_tomorrow'))

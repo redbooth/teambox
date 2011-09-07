@@ -434,8 +434,10 @@ en:
       wrong_email_html: "Wrong address? If you mistyped your email address, <a href='%{link}'>you can change it now</a>."
       problems_html: "If you're still having problems, please contact us at %{support}"
     daily_task_reminder_email:
+      urgent: Urgent
       daily_task_reminder: "Daily task reminder"
       daily_task_reminder_from_teambox: "This is the daily task reminder email from Teambox"
+      urgent_tasks: "Urgent tasks"
       late_tasks: "Late tasks"
       tasks_for_today: "Tasks for today"
       tasks_for_tomorrow: "Tasks for tomorrow"

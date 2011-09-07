@@ -107,7 +107,7 @@ module EmailerHelper
     styles.join(";")
   end
 
-  def task_due_on_style(task, options)
+  def task_due_on_style(task, options={})
     styles = []
     styles << "font-size: 12px"
     styles << "display: table-cell"
