@@ -18,6 +18,7 @@ class Upload < RoleRecord
 
   before_create :copy_ownership_from_comment
   after_create  :log_create
+  before_save   :inherit_privacy
 
   attr_accessible :asset,
                   :page_id,
@@ -222,7 +223,13 @@ class Upload < RoleRecord
     end
     true
   end
-  
+
+  def inherit_privacy
+    if comment_id
+      self.is_private = comment.is_private
+    end
+  end
+
   def update_comment_to_show_delete
     if self.comment && self.comment.body.blank? && self.comment.uploads.count == 1
       self.comment.update_attributes(:body => "File deleted")
