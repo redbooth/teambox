@@ -17,10 +17,17 @@ Given /^I started a simple conversation(?: in the "([^\"]*)" project)?$/ do |pro
   Factory(:conversation, :user => @current_user, :project => (project_name ? Project.find_by_name(project_name) : @current_project), :name => nil, :simple => true)
 end
 
-Given /^(@.+) started a (p[a-z]+ )?conversation named "([^\"]+)"(?: in the "([^\"]*)" project)?$/ do |user_name, priv_type, conversation_name, project_name|
+Given /^(@.+) started a (p[a-z]+ )?conversation named "([^\"]+)"(?: in the "([^\"]*)" project)?(?: with an attached (file))?$/ do |user_name, priv_type, conversation_name, project_name, file|
   is_private = (priv_type||'').strip == 'private'
+  project = (project_name ? Project.find_by_name(project_name): @current_project)
   user = User.find_by_login(user_name.gsub('@',''))
-  Factory(:conversation, :user => user, :is_private => is_private, :project => (project_name ? Project.find_by_name(project_name) : @current_project), :name => conversation_name)
+  conversation = Factory(:conversation, :user => user, :is_private => is_private, :project => project, :name => conversation_name)
+  if file
+    upload = Factory :upload, :user => user, :project => project, :asset_file_name => "#{is_private ? "Private" : "Normal"} document at #{conversation_name}.png"
+    comment = conversation.comments.last
+    comment.uploads << upload
+    comment.save!
+  end
 end
 
 Given /^the conversation "([^\"]+)" is watched by (@.+)$/ do |name, users|

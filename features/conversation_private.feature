@@ -7,9 +7,11 @@ Feature: Creating a private conversation
       | pablo  | pablo@teambox.com        | Pablo      | Villalba  |
       | jordi  | jordi@teambox.com        | Jordi      | Romero    |
       | enric  | enric@teambox.com        | Enric      | Lluelles  |
-    Given a project with users @mislav, @pablo, @jordi and @enric
+    And a project exists with name: "Ruby Rockstars"
+    And @mislav exists and is logged in
+    And I am in the project called "Ruby Rockstars"
     And "mislav" is an administrator in the project
-    And I am logged in as @mislav
+    And @pablo, @jordi and @enric is currently in the project "Ruby Rockstars"
 
   Scenario: All conversations are private
     Given @pablo started a private conversation named "Roflcopter"
@@ -110,4 +112,13 @@ Feature: Creating a private conversation
     Then I should not see "fire Jordi"
     When I go to the project page
     Then I should not see "fire Jordi"
+
+  Scenario: Files in private conversations are private
+    Given @jordi started a private conversation named "Look at this private document @mislav can't see" in the "Ruby Rockstars" project with an attached file
+    And @mislav started a private conversation named "Look at this other private document" in the "Ruby Rockstars" project with an attached file
+    And I go to the conversations page
+    Then I should see "Look at this other private document"
+    And I go to the uploads page
+    Then I should see "Private document at Look at this other private document"
+    Then I should not see "Private document at Look at this private document"
 

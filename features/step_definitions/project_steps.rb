@@ -65,8 +65,8 @@ end
 
 Given /I am in the project called "([^\"]*)"$/ do |name|
   Given %(there is a project called "#{name}")
-  project = Project.find_by_name(name)
-  project.add_user(@current_user)
+  @current_project = Project.find_by_name(name)
+  @current_project.add_user(@current_user)
 end
 
 Given /I am a commenter in the project called "([^\"]*)"$/ do |name|
