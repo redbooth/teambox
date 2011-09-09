@@ -356,6 +356,7 @@ es:
     next: Siguiente
     not_allowed: "No tienes permiso para hacer eso"
     or: o
+    pagination: "Mostrando resultados desde:"
     prev: Anterior
     print: "Imprimir esta página"
     rename: Renombrar
@@ -364,6 +365,7 @@ es:
     show_more: "Ver más"
     signup: Identificarse
   confirm: 
+    delete_folder: "¿Estás seguro que deseas eliminar esta carpeta?"
     delete_group: "¿Estás seguro de que quieres borrar este grupo?"
     delete_page: "¿Seguro que quieres borrar esta página?"
     delete_task: "¿Seguro que quieres borrar esta tarea?"
@@ -755,6 +757,9 @@ es:
     yesterday: Ayer
   date_picker: 
     no_date_assigned: "Sin fecha asignada"
+    urgent: 
+      long: "Urgente, debe realizarse lo antes posible"
+      short: Urgente
   datetime: 
     distance_in_words: 
       about_x_hours: 
@@ -802,6 +807,9 @@ es:
     time_ago: "Hace %{time_ago_in_words}"
   deleted: 
     conversation: "Se ha borrado la conversación %{name}"
+    failed_left_project: "No puedes dejar este proyecto"
+    failed_person: "%{name} no puede eliminarse del proyecto\n"
+    folder: "Eliminar %{name} carpeta"
     left_project: "Has dejado el proyecto"
     page: "Se ha borrado la página %{name}"
     person: "%{name} ya no pertenece al proyecto"
@@ -882,6 +890,7 @@ es:
       comment: "Comentario en la pared del proyecto: "
       comments: "%{number} comentarios"
       conversation: "Conversación:"
+      digest_reply_text: "Ir a %{reply_online}."
       digest_title_html: "Resumen de actividad para  %{project_link} "
       due_on: "Fecha límite: %{date}"
       my_tasks: "Otras tareas tuyas en %{project}"
@@ -905,6 +914,11 @@ es:
       project_link: "Haz click en el siguiente para empezar a colaborar en %{project} ahora"
       subject: "%{user} comparte [%{project}] contigo"
       you_have_been_added_to: "Ahora eres un miembro del proyecto %{project}"
+    public_download: 
+      go_to_download_page: "Descarga este archivo"
+      plaintext_link: "Si el enlace anterior no funciona, copia y pega la siguiente dirección url en la barra de tu navegador:"
+      subject: "%{user} quiere compartir un archivo contigo en Teambox"
+      user_sent_you_a_link: "%{user} te ha enviado un enlace para descargar  %{filename}"
     reset_password: 
       follow_this_link: "con el fin de %{new_password} para Teambox, es necesario que inicies sesión en el siguiente link:"
       hey: "¡Hola, %{user_name}!"
@@ -954,6 +968,21 @@ es:
       header: 
         one: "1 error prohibió que este %{model} fuera guardado"
         other: "%{count} errores prohibieron que este %{model} fuera guardado"
+  folders: 
+    edit: 
+      submit: Guardar
+    form: 
+      default_text: "Introduce el nombre de la carpeta"
+    new: 
+      invalid_folder: "La carpeta contiene errores"
+      submit: "Crea una carpeta"
+    parent_folder: "Carpeta principal"
+    remove: 
+      link: Quitar
+    rename: 
+      error: "El nombre de la carpeta no ha sido cambiado"
+      link: Renombrar
+      success: "El nombre de la carpeta ha sido cambiado"
   form: 
     cancel: Cancelar
   friends: 
@@ -991,6 +1020,17 @@ es:
     create: Crear
     create_new: "Crear un Documento Nuevo"
     creating: Creando...
+    google_doc: 
+      lock: "Bloquea este documento para prevenir futuras modificaciones"
+      lock_disabled: "Sólo el dueño puede modificar el documento"
+      unlock: "Desbloquea este documento para realizar modificaciones"
+      view: "Abrir online"
+      write_access: 
+        message: 
+          lock: "El documento ha sido bloqueado"
+          unlock: "El documento ha sido desbloqueado"
+    index_project: 
+      title: "Google Docs mencionado en este proyecto"
     new_document_placeholder: "Título del documento nuevo"
     search_placeholder: "Busca documentos de Google"
   helpers: 
@@ -1191,6 +1231,7 @@ es:
   not_found: 
     conversation: "No se encontró la conversación %{id} en este proyecto."
     data: "Hubo un problema al localizar tus datos."
+    folder: "La carpeta no se ha encontrado en este proyecto"
     page: "No se encontró la página %{id} en este proyecto."
     project: "El proyecto %{id} no existe."
     task: "No se encontró la tarea %{id} en este proyecto."
@@ -1382,6 +1423,7 @@ es:
       domain_html: "Dominio <em>Puedes utilizar tu propio dominio para tu organización, compruébalo en la <a href='http://help.teambox.com/knowledgebase/articles/10247-custom-domain' title='Cómo utilizar tu propio dominio para tu organización en Teambox'>documentación</a>.</em>"
       name_html: "Nombre de la organización"
       name_placeholder: "Tu organización"
+      omit_email_processing_html: "No enviar futuros emails"
       permalink_html: "Código de la organización corto <em>No se permiten espacios. Será utilizado para la dirección web.</em>"
     index: 
       about: 
@@ -1525,6 +1567,7 @@ es:
       only_admins_can_invite: "Sólo un administrador puede invitar personas al proyecto."
       select_project: "Selecciona un proyecto"
       you_can_leave: "Puedes dejar este proyecto en cualquier momento. Si lo haces, no podrás acceder a él ni recibirás notificaciones de actividad. El resto del equipo podrá acceder al proyecto, y no se perderá ninguna información."
+      you_cannot_leave: "No puedes dejar este proyecto ya que eres el único administrador presente."
     edit: 
       submit: Modificar
     errors: 
@@ -1541,8 +1584,8 @@ es:
       commenter: Comentador
       confirm_delete: "¿Seguro que quieres borrar a esta persona del proyecto?"
       leave_project: "Dejar el Proyecto"
+      not_logged_in_recently: "No se ha registrado recientemente"
       observer: Observador
-      owner: "Propietario del proyecto"
       participant: Participante
       remove: Expulsar
       transfer: "Transferir el proyecto"
@@ -1576,17 +1619,14 @@ es:
       you_can_now_create: "Puedes crear hasta %{projects} proyectos. "
   projects: 
     edit: 
-      change_owner: "Cambiar propietario"
       deleted: "Has eliminado el proyecto"
       error: "No puedes cambiar la configuración del proyecto"
-      invalid_transferred: "No se ha podido transferir el proyecto. Revisa los errores e inténtalo de nuevo."
       submit: "Guardar cambios"
       success: "Proyecto actualizado"
       title_deletion: "Archivar o Borrar proyecto %{project}"
       title_ownership: "Propietario de %{project}"
       title_picture: "Logotipo del Proyecto %{project} "
       title_settings: "Preferencias Generales de %{project}"
-      transferred: "Se ha transferido el proyecto al nuevo propietario."
     fields: 
       archived_html: "Archivar este Proyecto <em>Así será accesible para sus miembros, pero no se podrá escribir nunca más.</em>"
       archiving: "Archivar este proyecto"
@@ -1612,8 +1652,6 @@ es:
         organization_has_too_many_project_in: "Esta organización tiene demasiados proyectos para su plan."
         upgrade: actualización
         upgrade_organization: "Ahora debes actualizar esta organización."
-      owner: Propietario
-      owner_description: "El propietario es el máximo responsable de un proyecto. No puede expulsarse del proyecto, a menos que otro usuario sea nombrado propietario."
       permalink_description: "Esto formará la dirección web de tu proyecto. Mantenla breve. No se permiten espacios"
       permalink_html: "Permalink: <em>Un código para el proyecto</em>"
       public_project_html: "Proyecto público. <em>Cualquiera podrá acceder a él desde la sección de <a href=\"/public\">proyectos públicos</a>.</em>"
@@ -1666,6 +1704,16 @@ es:
         one: "Puedes crear un proyecto más con tu cuenta."
         other: "Puedes crear %{count} proyectos más con tu cuenta."
         zero_html: "No puedes crear más proyectos.<br/>Sólo puedes tener %{max} proyectos con tu cuenta."
+    new_project_suggestions: 
+      add_conversations: 
+        content: "Comenzar una conversación con un grupo es tan fácil como enviar un correo electrónico."
+        title: "Publica una conversación"
+      add_people: 
+        content: "Este proyecto es privado. Invita a los usuarios que te gustaría que tengan acceso a este proyecto."
+        title: "Añade colaboradores"
+      add_tasks: 
+        content: "Comienza a utilizar las tareas para planificar tus proyectos con fecha límite de entrega."
+        title: "Crea algunas tareas"
     not_in_project: 
       explain_admin_html: "Para ver este proyecto, debes unirte a él. Así tendrás acceso a las conversaciones, tareas, páginas y archivos. Puedes hacerlo porque eres administrador de la organización <b>%{organization}</b>."
       explain_public_html: "Para ver este proyecto, debes unirte a él. Así tendrás acceso a las conversaciones, tareas, páginas y archivos. Puedes hacerlo porque es un <b>proyecto público</b>."
@@ -1708,6 +1756,9 @@ es:
       tip: "Si mencionas el @usuario de alguien, recibirán un email con tu mensaje"
       title: "Actividad reciente en %{project}"
       update_your_status: "¿Qué estás haciendo?"
+  public_downloads: 
+    download: 
+      download_file: "Descarga un archivo:"
   reset_passwords: 
     create: 
       invalid_html: "La URL de cambio de contraseña a la que has accedido no es válida o ha caducado. Intenta utilizar He Olvidado mi Contraseña de nuevo en la página de inicio.<br/>Si eso no funciona, contacta con nosotros en %{support}"
@@ -1835,7 +1886,6 @@ es:
     project_settings_navigation: 
       deletion: "Archivar o borrar proyecto"
       general: "Datos del proyecto"
-      ownership: Propietario
       picture: "Imagen de proyecto"
     public_navigation: 
       community: Comunidad
@@ -1941,6 +1991,7 @@ es:
     fields: 
       finish_on_html: "Termina el día... <i>opcional</i>"
       name_html: "Elige un nombre para esta Lista de Tareas <i>ej. Preparar un Prototipo</i>"
+      no_templates_yet_html: "Aún no has creado una plantilla para la lista de tareas. Ve a tu organización %{link}"
       optional: "Si marcas fechas, esta tarea se mostrará en el diagrama Gantt."
       or_from_scratch: "O crea una lista de tareas a partir de cero"
       or_from_template: "o crea una lista de tareas desde una plantilla"
@@ -2065,6 +2116,10 @@ es:
       reopen: "Reabrir esta tarea"
       task_is_closed: "Esta tarea está cerrada y archivada"
       unarchive: "Recuperar como una tarea activa"
+    urgent: 
+      caption: Urgente
+      set: "Marcar como urgente"
+      unset: "Marcar como no urgente"
   teambox_datas: 
     column: 
       description: "Aquí puedes mover los datos dentro y fuera de Teambox."
@@ -2123,18 +2178,25 @@ es:
       max_upload_size: "El tamaño máximo de subida es %{mb} Mb"
       presence: "No puedes subir un archivo vacío"
       select_file: "Seleccionar archivo"
+      title: "Descarga un archivo"
       upload: "Subir archivo"
     index: 
+      also: También
       cant_create: "No tienes permiso para subir archivos a este proyecto."
       current_storage_size_html: "Puedes subir %{bytes} más en la organización %{organization_name}.<br/><br/><a href='%{url}'>Actualiza</a> tu plan para almacenar más documentos."
       max_upload_size: "El tamaño máximo de archivo es de %{mb} Mb"
       new_file: "Subir un archivo"
+      new_folder: "Nueva carpeta"
       no_storage_left_html: "Has rebasado el límite de capacidad para tu organización.<br/><br/><a href='%{url}'>Actualiza</a> tu plan ahora."
       title: "Archivos en %{project}"
+      view_google_docs: "Ver %{count} los documentos de Google asociados a este proyecto"
     new: 
       select_a_file: "Selecciona un archivo para subir a Teambox"
       storage_remaining: "Puedes subir %{bytes} más con tu plan actual.<a href='%{url}'>Actualiza</a> para obtener más capacidad."
       uploading: Subiendo
+    new_folder: 
+      default_text: "Nuevo nombre de carpeta"
+      submit: "Crea una carpeta"
     primer: 
       create_first: "¡Sube el primer archivo!"
       define1_html: "¿Alguna vez has tenido problemas al compartir un archivo? Con Teambox vuelve a ser fácil."
@@ -2143,12 +2205,22 @@ es:
       item1_html: "<b>Más capacidad</b>. Sube archivos de cualquier tamaño y olvida las limitaciones del email."
       item2_html: "<b>Versiones</b>. Sube versiones nuevas de archivos y guarda el histórico."
       item3_html: "<b>Siempre disponibles</b>. Los archivos permanecen en Teambox para que puedas consultarlos en el futuro."
+    public_download: 
+      email: 
+        not_sent: "El email no ha sido enviado. %{error}"
+        sent: "Hemos enviado un enlace al archivo de  %{email}"
+        submit: "Envía un enlace"
+      enter_an_email: "Introduce una dirección de Email para enviar un enlace a este archivo:"
+      link: 
+        anchor: "Envíale este archivo a alguien...."
+        title: "Comparte este archivo con personas que se encuentran fuera de tu equipo"
+      security_clarification: "Cualquier persona que posea este enlace podrá acceder unicamente a este archivo. No se les permitirá el acceso al resto de tus proyectos y/o archivos."
+      share_link: "Como alternativa, puedes compartir el enlace del siguiente archivo:"
+      share_outside_your_team: "Puedes compartir el archivo con personas que se encuentran fuera de tu equipo. "
     tooltip: "Subir fichero"
     upload: 
       download: Descargar
-      on_: en
       remove: Eliminar
-      uploaded_by: "Subido por"
   users: 
     activation: 
       activated: "¡Hemos activado tu cuenta! Bienvenido a Teambox :)"
@@ -2217,6 +2289,8 @@ es:
       your_feeds: "Tus feeds de noticias"
     form: 
       agreement_html: "Registrándote, aceptas nuestros %{terms} y condiciones de %{privacy}"
+      auto_accept_invites: "Aceptar automáticamente invitaciones para los proyectos (recomendado)"
+      badges: "Activar Badges y logros"
       betatester: "Utilizar las funciones beta (menos estables) antes de que sean liberadas a la comunidad"
       biography: Biografía
       change_password: "Cambiar contraseña"
@@ -2228,6 +2302,7 @@ es:
         organization: 
           steps_before_1: "No puedes borrar tu cuenta si eres el último administrador de una organización de pago."
           steps_before_2: "Para eliminar su cuenta, necesita dar privilegios de administrador a al menos otro miembro de la organización o cambiar el plan de la organización a un plan gratuito."
+          steps_before_3: "Asigna a otro usuario con rol de administrador o cambia tu organización a un tipo de cuenta menor y vuelve a esta página para borrar tu cuenta."
         project: 
           steps_before_1: "Para eliminar tu cuenta de Teambox primero tendrás que dejar o eliminar todos tus proyectos actuales."
           steps_before_2: "Esto asegurará que los demás usuarios no  perderán los datos de sus proyectos cuando tu elimines la cuenta."
@@ -2397,6 +2472,8 @@ es:
       formatted_address: "%{street}, %{city} (%{country})"
       remove_from_project: "Borrar del proyecto"
   watchers: 
+    index: 
+      title: "Tu lista de lectores"
     watcher: 
       remove: eliminar
   weakling: 
