@@ -96,14 +96,15 @@ class UploadsController < ApplicationController
     @upload.user = current_user
     @page = @upload.page
     calculate_position(@upload) if @page
-    
-    @upload.save!
+
+    error =  !@upload.save
+    previous_url = @upload.parent_folder_id ? project_folder_path(@current_project, @upload.parent_folder_id) : [@current_project, :uploads]
 
     respond_to do |wants|
       wants.any(:html, :m) {
-        if @upload.new_record?
-          flash.now[:error] = "There was an error uploading the file"
-          render :new
+        if error
+          flash[:error] = t('uploads.errors.general')
+          redirect_to previous_url
         elsif @upload.page
           if iframe?
             code = render_to_string 'create.js.rjs', :layout => false
@@ -112,7 +113,7 @@ class UploadsController < ApplicationController
             redirect_to [@current_project, @upload.page]
           end
         else
-          redirect_to(@upload.parent_folder_id ? project_folder_path(@current_project, @upload.parent_folder_id) : [@current_project, :uploads])
+          redirect_to previous_url
         end
       }
     end
