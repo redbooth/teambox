@@ -224,10 +224,11 @@ class Upload < RoleRecord
     true
   end
 
-  def inherit_privacy
+  def inherit_privacy # before_save
     if comment_id
       self.is_private = comment.is_private
     end
+    true
   end
 
   def update_comment_to_show_delete
