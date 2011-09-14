@@ -25,7 +25,7 @@
     {{#has_archived_projects}}
     %p
       %a.show_archived{ :href => '#' }
-        Show {{count}} archived projects
+        = t('projects.list.show_archived', :count =>0).gsub("0", "{{count}}")
     .archived_projects{ :style => 'display: none' }
       {{#projects}}
       %p.project
