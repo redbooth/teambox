@@ -7,4 +7,4 @@ require 'rake'
 Teambox::Application.load_tasks
 
 # Gem tasks
-require 'thinking_sphinx/tasks'
+require 'thinking_sphinx/tasks' if Teambox.config.allow_search
