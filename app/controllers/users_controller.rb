@@ -81,9 +81,6 @@ class UsersController < ApplicationController
     if @user && @user.save
       self.current_user = @user
 
-      # Enable the tutorials box link
-      @user.write_setting 'show_tutorials', true
-
       if app_link
         app_link.user = @user
         app_link.save
@@ -246,11 +243,6 @@ class UsersController < ApplicationController
 
   def hide_first_steps
     @current_user.write_setting 'show_first_steps', false
-    head :ok
-  end
-
-  def hide_tutorials
-    @current_user.write_setting 'show_tutorials', false
     head :ok
   end
 

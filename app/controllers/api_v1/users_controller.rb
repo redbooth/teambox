@@ -40,9 +40,6 @@ class ApiV1::UsersController < ApiV1::APIController
     if @user.save
       self.current_user = @user
 
-      # Enable the tutorials box link
-      @user.write_setting 'show_tutorials', true
-
       handle_api_success(@user, :is_new => true)
     else
       handle_api_error(@user)

@@ -63,7 +63,6 @@
 //= require <tasks_inline>
 //= require <threads>
 //= require <upload>
-//= require <videos>
 //= require <yahoo.color>
 //= require <watchers>
 //= require <watch_list>
