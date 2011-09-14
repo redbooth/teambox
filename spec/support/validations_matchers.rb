@@ -1,5 +1,3 @@
-require 'rspec/expectations'
-
 module RSpec
   module Rails
     module Matchers
