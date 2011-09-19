@@ -124,7 +124,7 @@ describe Task do
     
     it "gets correct tasks" do
       tasks = Task.active.assigned_to(@user).order('name').all
-      tasks.map(&:name).should == ["Feed the dog", "Feed the cat"]
+      tasks.map(&:name).sort.should == ["Feed the dog", "Feed the cat"].sort
     end
   end
   
