@@ -2,8 +2,9 @@ require 'spec_helper'
 describe TeamboxData do
   before do
     Teambox.config.delay_data_processing = false
+    FileUtils.mkdir_p(%w( tmp ))
   end
-  
+
   describe "unserialize" do
     it "should unserialize data" do
       make_the_teambox_dump
