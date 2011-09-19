@@ -1,7 +1,7 @@
 if ENV['BUILD_NUMBER'].present? # Jenkins sets this
   require 'headless'
 
-  headless = Headless.new(:display => SERVER_PORT) # This allows concurrency
+  headless = Headless.new(:display => ENV['SERVER_PORT']) # This allows concurrency
   headless.start
 
   at_exit do
