@@ -372,6 +372,18 @@ class Emailer < ActionMailer::Base
       user = User.first
       ::Emailer.confirm_email(user.id)
     end
+
+
+    def public_download
+      upload = Upload.new do |u|
+        u.asset_file_name = 'Somefile.txt'
+        u.user = User.first
+        u.project = Project.first
+      end
+      upload.save!
+
+      ::Emailer.public_download(upload.id, 'someone@teambox.com', 'upload')
+    end
   end
 
   private
