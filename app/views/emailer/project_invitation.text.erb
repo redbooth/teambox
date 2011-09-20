@@ -7,6 +7,6 @@
 <%= t('emailer.invitation.accept_the_invitation') %>:
 <%= projects_url(:invitation => @invitation.token) %>
 
-<%= t('emailer.invitation.current_users') %> <%= @project.people.collect { |p| h(p.name) }.to_sentence %>
+<%= t('emailer.invitation.current_users') %> <%= @project.users_with_invited.collect(&:name).to_sentence %>
 
 <%= t('emailer.invitation.report_abuse') %>

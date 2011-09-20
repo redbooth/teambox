@@ -310,6 +310,13 @@ class Emailer < ActionMailer::Base
     end
 
     def signup_invitation
+      other_invitation = Invitation.new do |i|
+        i.invited_user = User.create!(:login => "pepito", :password => "papapa", :password_confirmation => "papapa", :first_name => "Pepito", :last_name => "Delospalotes", :email => "pepito@teambox.com") rescue User.find_by_login('pepito')
+        i.token = ActiveSupport::SecureRandom.hex(20)
+        i.user = User.first
+        i.project = Project.first
+      end
+      other_invitation.save!(false)
       invitation = Invitation.new do |i|
         i.email = 'test@teambox.com'
         i.token = ActiveSupport::SecureRandom.hex(20)

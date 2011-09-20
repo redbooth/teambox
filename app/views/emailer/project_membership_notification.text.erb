@@ -5,6 +5,6 @@
 <%= t('emailer.project_membership_notification.project_link', :project => h(@project.name)) %>:
 <%= project_url(@project) %>
 
-<%= t('emailer.invitation.current_users') %> <%= @project.people.collect { |p| h(p.name) }.to_sentence %>
+<%= t('emailer.invitation.current_users') %> <%= @project.users_with_invited.collect(&:name).to_sentence %>
 
 <%= t('emailer.invitation.report_abuse') %>

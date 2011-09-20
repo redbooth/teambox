@@ -12,7 +12,7 @@
     %p
       %strong
         = t('emailer.invitation.current_users')
-      = @project.people.collect { |p| p.name }.to_sentence
+      = @project.users_with_invited.collect(&:name).to_sentence
 
   .footer{ :style => email_text(:small) }
     %p

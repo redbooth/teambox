@@ -35,4 +35,8 @@ class Project
     end
   end
 
+  def users_with_invited
+    (users + invitations.collect(&:invited_user).compact).uniq
+  end
+
 end
