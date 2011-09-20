@@ -61,6 +61,11 @@ describe Organization do
       Factory(:organization, :domain => '')
       Factory.build(:organization, :domain => '').should be_valid
     end
+    it "shouldn't take a deleted organization's domain as busy" do
+      o = Factory(:organization, :domain => 'mofo.teambox.dev')
+      o.destroy
+      Factory.build(:organization, :domain => 'mofo.teambox.dev').should be_valid
+    end
   end
 
   it "should not be destroyed if it has any projects" do
