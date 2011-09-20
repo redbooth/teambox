@@ -63,6 +63,12 @@ describe Project do
       project.should be_invalid
     end
 
+    it "should automatically create a random permalink if it doesn't validate" do
+      project = Factory.build(:project)
+      project.name = "s"
+      project.should be_valid
+    end
+
   end
 
   describe "inviting users" do

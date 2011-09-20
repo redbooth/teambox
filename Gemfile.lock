@@ -256,7 +256,7 @@ GEM
     sprockets-rails (0.0.1)
       sprockets (>= 1.0.2)
     sqlite3-ruby (1.2.5)
-    teambox-permalink_fu (1.0.1)
+    teambox-permalink_fu (1.0.2)
     term-ansicolor (1.0.5)
     text-format (1.0.0)
       text-hyphen (~> 1.0.0)

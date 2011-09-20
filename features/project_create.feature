@@ -16,7 +16,8 @@ Feature: Creating a project
       | name                  | response          | flash           |
       | Title with ()_+&-     | Title with ()_+&- | Invite people   |
       | Ruby Rockstars        | Ruby Rockstars    | Invite people   |
-      | Mine                  | Invalid project   | Invalid project |
+      | S                     | S                 | Invite people   |
+      | S                     | S                 | Invite people   |
 
   Scenario: I don't fill in an organization name
     When I fill in "Name" with "Some project"
