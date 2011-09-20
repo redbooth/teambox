@@ -36,7 +36,28 @@ describe Page do
       Divider.count.should == 0
       Note.count.should == 0
     end
-    
+
+    it "should destroy all page slots when objects are destroyed" do
+      upload = @page.uploads.create(:asset_file_name => "SomeFile.txt") do |u|
+        u.project_id = @page.project_id
+        u.page_id = @page.id
+        u.user_id = @page.user_id
+      end
+      upload.save
+
+      lambda {
+        upload.destroy
+      }.should change(PageSlot, :count)
+
+      lambda {
+        @divider.destroy
+      }.should change(PageSlot, :count)
+
+      lambda {
+        @note.destroy
+      }.should change(PageSlot, :count)
+    end
+
     it "should destroy all page slots and objects when the project is destroyed" do
       @page.project.destroy
       
