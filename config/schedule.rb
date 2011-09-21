@@ -20,5 +20,5 @@ every 15.minutes do
 end
 
 every 30.minutes do
-  rake "ts:rebuild", :environment => :production
+  rake "ts:reindex", :environment => :production
 end
