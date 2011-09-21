@@ -1,4 +1,9 @@
-set :output, "#{Rails.root}/log/cron.log"
+# When running Whenever, the environment should be specified with --set environment
+ENV['RAILS_ENV'] = environment || 'production'
+
+require File.join(File.dirname(__FILE__), "environment")
+
+set :output, File.join(Rails.root, "log", "cron.log")
 
 every 1.hour do
   rake "mail:reminders", :environment => :production
