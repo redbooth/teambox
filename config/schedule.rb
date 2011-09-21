@@ -9,8 +9,10 @@ every 1.hour do
   rake "mail:reminders", :environment => :production
 end
 
-every 1.minutes do
-  rake "mail:inbox", :environment => :production
+if Teambox.config.allow_incoming_email and Teambox.config.incoming_email_settings[:type].downcase != 'pipe'
+  every 1.minutes do
+    rake "mail:inbox", :environment => :production
+  end
 end
 
 every 30.minutes do
