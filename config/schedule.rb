@@ -16,5 +16,5 @@ if Teambox.config.allow_incoming_email and Teambox.config.incoming_email_setting
 end
 
 every 30.minutes do
-  rake "ts:rebuild", :environment => :production
+  rake "ts:reindex", :environment => :production
 end
