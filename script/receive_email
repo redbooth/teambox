@@ -1,15 +1,19 @@
 #!/usr/bin/env ruby
 # This script can be used to process an incoming e-mail, e.g. by configuring Postfix to pipe it here
 
-ENV['RAILS_ENV'] = ENV['RAILS_ENV'] || 'production'
-log_file = File.dirname(__FILE__) + '/../log/' + ENV['RAILS_ENV'] + '.log'
+Dir.chdir File.join(File.dirname(__FILE__), '..') do
 
-# Send output to the log so we don't generate a bounce message
-$stderr.reopen(log_file, 'a')
-$stderr.sync = true
-$stdout.reopen(log_file, 'a')
-$stderr.sync = true
+  ENV['RAILS_ENV'] = ENV['RAILS_ENV'] || 'production'
+  log_file = File.dirname(__FILE__) + '/../log/' + ENV['RAILS_ENV'] + '.log'
 
-require File.dirname(__FILE__) + '/../config/environment'
+  # Send output to the log so we don't generate a bounce message
+  $stderr.reopen(log_file, 'a')
+  $stderr.sync = true
+  $stdout.reopen(log_file, 'a')
+  $stderr.sync = true
 
-Emailer.receive(STDIN.read)
+  require File.dirname(__FILE__) + '/../config/environment'
+
+  Emailer.receive(STDIN.read)
+
+end
