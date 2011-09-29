@@ -87,7 +87,7 @@ module Watchable
   end
 
   def create_watchers
-    if !self.try(:is_private)
+    unless self.try(:is_private?) or (self.respond_to? :comments and comments.first.try(:is_private?))
       users = project.people.where("watch_new_#{self.class.to_s.downcase}".to_sym => true).map(&:user)
       add_watchers(users)
     end
