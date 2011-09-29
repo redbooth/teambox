@@ -11,7 +11,7 @@ describe GithubIntegration  do
           "author"=>{"name"=>"Chris Wanstrath", "email"=>"chris@ozmm.org"},
           "url"=>"http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59",
           "id"=>"41a212ee83ca127e3c8cf465891ab7216a705f59",
-          "message"=>"Check this file, task [123]"
+          "message"=>"Check this file, task number [123]"
         },
         {"timestamp"=>"2008-02-15T14:36:34-08:00",
           "author"=>{"name"=>"Chris Wanstrath", "email"=>"chris@ozmm.org"},
