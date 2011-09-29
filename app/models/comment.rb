@@ -214,34 +214,49 @@ class Comment < ActiveRecord::Base
     @activity = project.log_activity(self, 'create') if project_id?
     return if target.nil?
 
+    self.add_target_watchers!
+    self.touch_target_without_callback!
+    true
+  end
+
+  def touch_target_without_callback!
+    if target.respond_to?(:updated_at)
+      target.updated_at = self.created_at
+    end
+
+    target.save(:validate => false)
+  end
+
+  def target_belongs_to_commenter?
+    self.user_id == target.user_id
+  end
+
+  def add_mentions_to_watchers!
+    new_watchers = defined?(@mentioned) ? @mentioned.to_a : []
+    new_watchers << self.user if self.user
+    target.add_watchers new_watchers
+  end
+
+  def add_target_watchers!
     if target.respond_to?(:add_watchers)
       can_mention_watchers = true
       
       # Allow the owner to change the privacy status
       if target.respond_to?(:is_private)
-        can_change_private = self.user_id == target.user_id
-        target.is_private = self.is_private if can_change_private && @is_private_set
-        if target.is_private && can_change_private && @private_ids && @is_private_set
+        target.is_private = self.is_private if target_belongs_to_commenter? && @is_private_set
+        if target.is_private && target_belongs_to_commenter? && @private_ids && @is_private_set
           target.set_private_watchers(@private_ids)
         elsif target.is_private
           target.add_watchers([target.user])
         end
-      end
-      
-      if !target.is_private
-        new_watchers = defined?(@mentioned) ? @mentioned.to_a : []
-        new_watchers << self.user if self.user
-        target.add_watchers new_watchers
+
+        if !target.is_private
+          add_mentions_to_watchers!
+        end
       end
     end
-    
-    if target.respond_to?(:updated_at)
-      target.updated_at = self.created_at
-    end
-    
-    target.save(:validate => false)
   end
-  
+
   def cleanup_activities # after_destroy
     Activity.destroy_all :target_type => self.class.name, :target_id => self.id
   end
