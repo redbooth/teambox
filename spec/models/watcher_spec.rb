@@ -44,9 +44,9 @@ describe Watcher do
       conversation = true
 
       lambda {
-        conversation = Factory.create(:conversation, :project => @project, :user => @project.user, :is_private => true)
+        conversation = Factory.create(:conversation, :project => @project, :user => @project.user, :comments_attributes => [{ :body => "Hello there motherfucker", :is_private => true }])
       }.should change(Watcher, :count).by(1)
-
+      conversation.watchers.should include(@project.user)
       conversation.watchers.should_not include(@user1)
     end
 
