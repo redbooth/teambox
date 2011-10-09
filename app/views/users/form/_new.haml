@@ -47,10 +47,10 @@
     = f.password_field :password_confirmation, :autocomplete => 'off'
     = errors_for user, :password_confirmation
 
-/ - build_user_phone_number(user)
-/ - f.fields_for :card do |card|
-/   - card.fields_for :phone_numbers do |phone|
-/     .phone_number.text_field
-/       = phone.label :name, t('users.form.phone')
-/       = phone.text_field :name
-/       .field_note= t('users.form.phone_for_integration')
+  - build_user_phone_number(user)
+  = f.fields_for :card do |card|
+    = card.fields_for :phone_numbers do |phone|
+      .phone_number.text_field
+        = phone.label :name, t('users.form.phone')
+        = phone.text_field :name
+        .field_note= t('users.form.phone_for_integration')

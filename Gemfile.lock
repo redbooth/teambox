@@ -121,7 +121,7 @@ GEM
     faraday (0.6.1)
       addressable (~> 2.2.4)
       multipart-post (~> 1.1.0)
-      rack (< 2, >= 1.1.0)
+      rack (>= 1.1.0, < 2)
     fastthread (1.0.7)
     ffi (1.0.9)
     foreman (0.19.0)
