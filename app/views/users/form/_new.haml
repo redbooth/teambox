@@ -28,6 +28,20 @@
   = f.label :time_zone, t('users.form.time_zone')
   = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"
 
+- if !@invitation
+  - user.organizations.build
+  = f.fields_for :organization do |organization|
+    %fieldset.account
+      %legend= t('.organization.title')
+      %p
+        = t('.organization.explain1')
+        %br
+        = t('.organization.explain2')
+      .login.text_field
+        = organization.label :name, t('.organization.label')
+        = organization.text_field :name
+        .field_note= t('.organization.field_note')
+
 %fieldset.account
   %legend= t('.account.title')
   %p
@@ -38,6 +52,7 @@
     = f.label :login, t('users.form.login')
     = f.text_field :login
     = errors_for user, :login
+    .field_note= t('.account.field_note')
   .password.text_field
     = f.label :password, t('users.form.password')
     = f.password_field :password, :autocomplete => 'off'

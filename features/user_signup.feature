@@ -17,7 +17,7 @@ Feature: Signing up
     When I open the email
     Then I should see "Hey, Mislav Marohnić!" in the email body
     When I follow "Log into Teambox now!" in the email
-    Then I should see "Welcome"
+    Then I should see "Create a Project"
     And I should not see "confirm your account"
 
   Scenario Outline: User tries to sign up with a reserved username
@@ -54,3 +54,32 @@ Feature: Signing up
     When I follow "Log into Teambox now!" in the email
     Then I should see "Welcome"
     And I should not see "confirm your account"
+
+  Scenario: User signs up and creates an organization and project
+    When I go to the signup page
+    And I fill in the following:
+      | Username          | mislav                    |
+      | First name        | Mislav                    |
+      | Last name         | Marohnić                  |
+      | Email             | mislav@fuckingawesome.com |
+      | Password          | dragons                   |
+      | Confirm password  | dragons                   |
+      | Organization name | Le Game                   |
+    And I press "Create account"
+    Then show me the page
+    Then I should see "Invite people to Le Game"
+
+  Scenario: User signs up and gives a short name for an organization
+    When I go to the signup page
+    And I fill in the following:
+      | Username          | mislav                    |
+      | First name        | Mislav                    |
+      | Last name         | Marohnić                  |
+      | Email             | mislav@fuckingawesome.com |
+      | Password          | dragons                   |
+      | Confirm password  | dragons                   |
+      | Organization name | XY                        |
+    And I press "Create account"
+    Then show me the page
+    Then I should see "Invite people to XY"
+

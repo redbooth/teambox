@@ -38,7 +38,7 @@ module UsersHelper
     card = user.card || user.build_card
     card.phone_numbers.build unless card.phone_numbers.any?
   end
-  
+
   def load_javascript_user_data
     javascript_tag %(
       my_user = #{json_user};

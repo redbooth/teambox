@@ -332,6 +332,13 @@ en:
           title: Your Teambox account
           choose_username: Choose a username so people can find you. You will use it to log in.
           validations: Must be all lowercase, no spaces allowed. You can use underscores.
+          field_note: This is what other users will use to refer to you
+        organization:
+          title: Your Organization
+          explain1: Your organization will be a private space for all your projects.
+          explain2: You can create more workspaces later. Choose a brief name for it.
+          label: Organization name
+          field_note: We will create a workspace with this name for you
     new:
       title: Create an Account
       submit: Create account

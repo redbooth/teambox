@@ -94,10 +94,13 @@ class UsersController < ApplicationController
           redirect_to projects_path
         end
       else
-        redirect_back_or_default root_path
-      end
+        # If the form sent a parameter for org's name,
+        # we will create an organization and project
+        name = params[:user][:organization][:name] rescue nil
+        project = create_initial_organization_and_project(name)
 
-      flash[:success] = t('users.create.thanks')
+        redirect_to project ? project_invite_people_path(project) : root_path
+      end
     else
       respond_to do |f|
         f.any(:html, :m) { render :action => :new, :layout => 'sessions' }
@@ -289,6 +292,20 @@ class UsersController < ApplicationController
       unless @invitation || signups_enabled?
         flash[:error] = t('users.new.no_public_signup')
         return redirect_to Teambox.config.community ? login_path : root_path
+      end
+    end
+
+    def create_initial_organization_and_project(name)
+      return if (name || "").length <= 1
+      begin
+        permalink = PermalinkFu.escape(name)
+        org = @user.organizations.new(:name => name, :permalink => permalink)
+        org.save!
+        project = org.projects.new(:name => name, :permalink => permalink)
+        project.user = @user
+        project.save!
+        return project
+      rescue
       end
     end
 end
