@@ -99,7 +99,7 @@ fr:
         conversation: 
           attributes: 
             name: 
-              no_title: "S’il vous plaît donnez un titre de cette conversation"
+              no_title: "S’il vous plaît, donnez un titre à cette conversation"
     models: 
       address: Adresse
       card: Carte
@@ -155,7 +155,7 @@ fr:
       title: "%{user} a uploadé le fichier %{file}"
     delete_person: 
       by: par
-      delete_person: "a été éliminé du projet"
+      delete_person: "a été éliminé(e) du projet"
       left: "a quitté le projet"
       title: "%{person} a quitté le projet %{project}"
     edit_note: 
@@ -174,7 +174,7 @@ fr:
   affiliate: 
     area: "Page d'affiliation"
     index: 
-      addresses: adresse
+      addresses: adresses
       credits_earned: "Crédit gagné"
       desc_1_html: "Grâce à notre programme d'affiliation, vous pouvez utiliser <strong>gratuitement</strong> Teambox ou <strong>gagner de l'argent</strong> en invitant d'autres utilisateurs."
       desc_2_html: "Invitez de nouveaux utilisateurs, et gagnez un <strong> %{percent}% du revenu</strong> généré par l'utilisateur référencé."
@@ -201,7 +201,7 @@ fr:
       tracking1: "Quand vous invitez des utilisateurs de Teambox, ils doivent s'enregistrer sur une page avec des paramètres spécifiques."
       tracking2: "Ce paramètre est unique pour vous, et il nous permet de suivre vos utilisateurs."
       tracking3: "Une fois qu'un utilisateur suit le lien, il sera notifié que vous l'avez référencé."
-      tracking4: "Même s'ils naviguent loin de la page et viennent plus tard, nous stockons les données dans leur session et quand ils s'enregistrent nous nous souvenons qu'ils viennent de vous."
+      tracking4: "Même s'ils surfent sur d'autres pages et viennent plus tard, nous stockons les données dans leur session et quand ils s'enregistrent nous nous souvenons qu'ils viennent de vous."
       tracking5: "Votre page spéciale pour enregistrer est"
       tracking6: "Postez ce lien sur Facebook, Twitter, sur votre propre site, ou envoyez par courriel à un ami. Une fois enregistré, vous recevez un courriel de confirmation."
       twitter: Twitter
@@ -209,7 +209,7 @@ fr:
       use_money: "Vous pouvez utiliser cet argent pour avoir"
       use_money_cash: "ou pour gagner de l'argent réel."
       use_tracking_code: "Vous devez utiliser un code de tracking et nous saurons quel utilisateur vient de vous."
-      website: "Partagez le sur votre site internet,"
+      website: "Partagez-le sur votre site internet,"
     notification: 
       accepted_subscription: "%{name} (%{email}) juste enregistré sur Teambox en utilisant votre code référant."
       check_your_earnings: "Consultez vos gains de référant sur Teambox "
@@ -297,7 +297,7 @@ fr:
       tooltip: "Ajouter des heures à cette tâche"
     new: 
       assigned_to: "Assigné à:"
-      assigned_to_nobody: "Assignée à personne"
+      assigned_to_nobody: "Assigné à personne"
       comment_on_project: "Commenter sur:"
       conversation: "Envoyer un message au reste du groupe."
       project: "Que faites‑vous? Partagez des idées, liens, mises à jour."
@@ -876,7 +876,7 @@ fr:
     recent: 
       invite: "Inviter %{username}"
     resend: 
-      resent: "Nous avons renvoyé une invitation à %{recipient}. S’il ne trouve pas ce mail dans sa boîte de réception, il faut s’assurer qu’il n’a pas été classé dans les courriels indésirable."
+      resent: "Nous avons renvoyé une invitation à %{recipient}. S’il ne trouve pas ce mail dans sa boîte de réception, il faut s’assurer qu’il n’a pas été classé dans les courriels indésirables."
       return: "Revenir à la page précédente"
     search: 
       help: Aide
@@ -996,18 +996,18 @@ fr:
       format: 
         delimiter: "."
   oauth: 
-    account_linked: "Votre profil a été associté."
-    already_linked_to_your_account: "Ce profil est déjà associer avec votre compte Teambox. Vous pouvez l'utilisé pour vous connecter."
-    already_taken_by_other_account: "Ce profil est déjà associer avec un autre compte dans le système."
+    account_linked: "Votre profil a été associé."
+    already_linked_to_your_account: "Ce profil est déjà associé avec votre compte Teambox. Vous pouvez l'utilisé pour vous connecter."
+    already_taken_by_other_account: "Ce profil est déjà associé avec un autre compte dans le système."
     app_unlinked: "Profil dissocié"
     auth_status: "OAuth Auth"
     auth_status_link: "Associer ce profil avec votre compte"
     auth_status_linked: "Ce profil est associé avec votre compte"
-    link_account: "Associé le profil."
-    logged_in: "Connexion réussi"
-    not_linked: "Ce profil n'est pas associer avec votre compte Teambox."
+    link_account: "Associer le profil."
+    logged_in: "Connexion réussie"
+    not_linked: "Ce profil n'est pas associé avec votre compte Teambox."
     signup_for_a_new_account: "cliquer ici pour vous inscrire"
-    this_account_will_be_linked_to: "Ce compte va être associté avec votre profil %{provider}"
+    this_account_will_be_linked_to: "Ce compte va être associé avec votre profil %{provider}"
     unlink_account: "Dissocier le profil."
     user_already_exists_by_email: "Associer '%{email}' avec votre compte Teambox"
     user_already_exists_by_login: "Le nom d'utilisateur '%{login}' est déjà utilisé"
@@ -1018,12 +1018,12 @@ fr:
     your_account_is_not_linked_html: "Votre profil %{provider} est <strong>n'est pas associé</strong> avec Teambox."
   organizations: 
     fields: 
-      name_placeholder: "Votre organization"
+      name_placeholder: "Votre organisation"
   page_title: 
     archived_task_lists: "Tâches archivées"
     create_uploads: "Ajouter un fichier"
     create_users: "Créer un compte"
-    edit_projects: "Modifier Projet"
+    edit_projects: "Modifier les projets"
     edit_users: Modifier
     index_conversations: "Mes conversations"
     index_pages: "Mes pages"
@@ -1109,7 +1109,7 @@ fr:
     header: 
       admin: Administrateur
       commenter: Commentateur
-      confirm_delete: "Êtes‑vous sûr de vouloir éliminer cette personne du projet?"
+      confirm_delete: "Êtes‑vous sûr de vouloir retirer cette personne du projet?"
       leave_project: "Quitter le projet"
       observer: Observateur
       owner: "Propiétaire du projet"
@@ -1142,18 +1142,18 @@ fr:
     fields: 
       archived: "Archiver ce projet"
       archiving: "Archiver ce projet"
-      confirm_delete: "Êtes‑vous certain de vouloir supprimer définitivement ce projet? Le project sera effacé pour toujours, vous ne pourez plus y accèder. Si vous voulez conserver votre projet, utilisez plutôt 'Archiver ce Projet'."
+      confirm_delete: "Êtes‑vous certain de vouloir supprimer définitivement ce projet? Le project sera définitivement effacé, vous ne pourez plus y accèder. Si vous voulez conserver votre projet, utilisez plutôt 'Archiver ce Projet'."
       forever: "Supprimer ce projet de façon définitive"
       name: Nom
       new: 
         time_tracking_docs: "En savoir plus."
       owner: Propriétaire
-      owner_description: "Le propriétaire du projet est la seule personne qui peut modifier les paramètres de ce projet. Une fois que vous aurez transférer le projet à quelqu’un d’autre, vous ne serez plus autorisé à modifier certain paramètres du projet."
+      owner_description: "Le propriétaire du projet est la seule personne qui peut modifier les paramètres de ce projet. Une fois que vous aurez transféré le projet à quelqu’un d’autre, vous ne serez plus autorisé à modifier certains paramètres du projet."
       permalink_html: Lien permanant
       permalink_description: "Ceci sera l’adresse internet de votre projet. Choisissez une adresse concise et sans espace."
       public_project_html: "Projet public. <em>Tout le monde peut accéder et rejoindre le project depuis la <a href='/public'>section des projets publics</a>.</em>"
       settings: 
-        upgrade_html: "Pour sauvegarder ce projet et pouvoir le modifier, vous devez <a href='%{link}'>vous abonnez à un plan suppérieur</a> pour obtenir plus de stockage et de fonctionalité, ou archiver d'autre projets."
+        upgrade_html: "Pour sauvegarder ce projet et pouvoir le modifier, vous devez <a href='%{link}'>vous abonner à un plan suppérieur</a> pour obtenir plus de stockage et de fonctionalité, ou archiver d'autre projets."
         you_cant_unarchive: "Vous avez %{active} projets actifs, et votre plan actuel permet seulement %{max} projets"
       tracks_time_html: "Activer le suivi du temps"
     index: 
@@ -1161,9 +1161,9 @@ fr:
       new_project: "Nouveau projet"
       projects: "Mes projets"
       rss: 
-        description: "Activitées dans tous vos projets"
+        description: "Activités dans tous vos projets"
         title: Teambox
-      subscribe: "Souscrivez au fil d’activitées"
+      subscribe: "Souscrivez au fil d’activités"
     new: 
       active_projects: 
         one: "Vous avez un projet actif."
@@ -1171,7 +1171,7 @@ fr:
         zero: "Vous n'avez pas de projet actif"
       invalid_project: "Projet non valide, corrigez les erreurs et essayez de nouveau."
       new_project: "Nouveau projet"
-      not_allowed: "Vous ne pouvez pas à créer des projets avec votre compte actuel."
+      not_allowed: "Vous ne pouvez pas à créer de projet avec votre compte actuel."
       submit: "Créer un projet et commencer à inviter des utilisateurs"
       title: "Créer un projet"
       upgrade: 
@@ -1222,10 +1222,10 @@ fr:
       submit: "Envoyez‑moi un courriel pour réinitialiser mon mot de passe"
       title: "Vous avez oublié votre mot de passe?"
     reset: 
-      submit: "Réinitialisé mon mot de passe"
-      title: "Vous pouvez maintenant réinitialisé votre mot de passe"
+      submit: "Réinitialiser mon mot de passe"
+      title: "Vous pouvez maintenant réinitialiser votre mot de passe"
     sent: 
-      follow_the_link_html: "Suivez le lien qui se trouve dans le courriel pour entrer dans Teambox ! Si vous ne trouvez pas le courriel dans votre boîte de réception, vérifiez qu’il ne se trouve pas dans les courriels indésirable. "
+      follow_the_link_html: "Suivez le lien qui se trouve dans le courriel pour entrer dans Teambox ! Si vous ne trouvez pas le courriel dans votre boîte de réception, vérifiez qu’il ne se trouve pas dans les courriels indésirables. "
       login_link_sent: "Nous vous avons envoyé un courriel à %{email} pour que vous puissiez changer votre mot de passe."
       title: "Réinitialisation du mot de passe"
   search: 
@@ -1264,7 +1264,7 @@ fr:
     instructions: 
       send_email: "Envoyez un nouveau commentaire par courriel..."
       send_email_conversations: "Envoyez une nouvelle conversation par courriel..."
-      send_email_help_conversation_html: "Pour envoyez un nouveau commentaire dans cette conversation, envoyez un courriel à  <a href=\"mailto:%{email}\">%{email}</a>. Seuls les membres du projet peuvent écrire sur la conversation."
+      send_email_help_conversation_html: "Pour envoyer un nouveau commentaire dans cette conversation, envoyez un courriel à  <a href=\"mailto:%{email}\">%{email}</a>. Seuls les membres du projet peuvent écrire sur la conversation."
       send_email_help_conversations_html: "Pour créer une nouvelle conversation envoyez un courriel à <a href=\"mailto:%{email}\">%{email}</a> avec le Sujet pour le titre et le Corps pour le commentaire. Seuls les membres du projet peuvent créer une nouvelle conversation."
       send_email_help_project_html: "Pour envoyez un nouveau commentaire sur le mur d'activités de projet, envoyez un courriel à <a href=\"mailto:%{email}\">%{email}</a>. Seuls les membres du projet peuvent poster sur le mur."
       send_email_help_task_html: "Pour poster un nouveau commentaire à cette tâche, envoyez un courriel à  <a href=\"mailto:%{email}\">%{email}</a>. Seuls les membres du projet peuvent commenter cette tâche."
@@ -1308,7 +1308,7 @@ fr:
     task_navigation: 
       all_tasks: Toutes
       everybodys_tasks: "Tâches de tout le monde"
-      hide_archived_tasks: "Ne plus montrer archivées"
+      hide_archived_tasks: "Masquer les tâches archivées"
       my_assigned_tasks: "Uniquement les tâches qui me sont assignées"
       my_tasks: 
         one: "Ma tâche"
@@ -1348,7 +1348,7 @@ fr:
   task_lists: 
     actions: 
       archive: "Archiver cette liste de tâches"
-      confirm_resolve_and_archive: "Êtes‑vous certain(e)s de vouloir résoudre et archiver cette list de tâches?"
+      confirm_resolve_and_archive: "Êtes‑vous certain(e) de vouloir résoudre et archiver cette list de tâches?"
       rename: "Renommer cette liste de tâches"
       resolve_and_archive: "Résoudre toutes les tâches puis archiver "
       set_dates: "Définir les dates de début et fin"
@@ -1362,7 +1362,7 @@ fr:
       title: "Toutes les tâches archivées"
     column: 
       cant_create: "Vous n'avez pas la permission de créer des tâches dans ce projet"
-      gantt_view: "Projet de Gantt et calendrier"
+      gantt_view: "Diagramme de Gantt et calendrier"
       new_task_list: "Nouvelle liste de tâches"
       other_views: "Autres vues"
       subscribe: "Souscrivez à ces tâches"
@@ -1418,7 +1418,7 @@ fr:
       empty: "Ce projet ne contient pour l’instant aucune conversation."
       footer1_html: "C’est une façon simple et habile de <b>faire les choses</b> et de le garder les autres informé."
       footer2_html: "Il est maintenant temps d’oublier les plannifications sur Excel et les diagrammes de Gantt trop complexes!"
-      item1_html: "<b>Planifiez</b>. Créez des tâches à l’intérieur de chaque liste et assignez‑les à vos aux membre du project."
+      item1_html: "<b>Planifiez</b>. Créez des tâches à l’intérieur de chaque liste et assignez‑les à vos aux membre du projet."
       item2_html: "<b>Informez</b>. Publiez des commentaires pour chaque tâche avec les avancées. Joignez des fichiers. Demandez l'avis des autres."
       item3_html: "<b>Tenez‑vous à jour</b>. Recevez des notifications pour les tâches qui vous concernent."
       item4_html: "<b>Revoyez</b>. Une tâche terminée ne s’efface pas, de façon à ce que vous puissiez ensuite revoir ce qui a été fait."
@@ -1449,7 +1449,7 @@ fr:
     fields: 
       assigned_to: "Qui est responsable?"
       assigned_to_nobody: Personne
-      optional: "Vous pouvez donner de plus amples instructions pour cette tâche ci-dessous"
+      optional: "Vous pouvez donner de plus amples instructions pour la tâche ci-dessous"
       task: "Choisir une tâche à effectuer. Plus c'est précis, mieux c'est."
       title: "Nouvelle tâche"
     link: 
@@ -1593,7 +1593,7 @@ fr:
       login: "Nom d’utilisateur"
       monday: Lundi
       new: 
-        use_this_email: "Vous avez été invité(e) à utiliser Teambox avec cette adresse email. Si vous voulez accéder aux projets de la personne qui vous a invité(e), ne changez pas l’adresse email. Vous pourrez changer d’adresse email par la suite, une fois enregistré(e) dans Teambox."
+        use_this_email: "Vous avez été invité(e) à utiliser Teambox avec cette adresse email. Si vous voulez accéder aux projets de la personne qui vous a invité, ne changez pas l’adresse email. Vous pourrez changer d’adresse email par la suite, une fois enregistré(e) dans Teambox."
       notifications: 
         notify_conversations: "Envoyez‑moi une notification lorsque je regarde une conversation"
         notify_tasks: "Envoyez‑moi une notification lorsque je regarde une tâche"
@@ -1605,17 +1605,17 @@ fr:
       sunday: Dimanche
       time_zone: "Fuseau horaire"
     new: 
-      existing_user_html: "Si vous avez déjà un compte, <a href='%{login_url}'>identifiez‑vous</a> ou <a href='%{forgot_url}'>réinitialisé votre mot de passe</a>."
+      existing_user_html: "Si vous avez déjà un compte, <a href='%{login_url}'>identifiez‑vous</a> ou <a href='%{forgot_url}'>réinitialisez votre mot de passe</a>."
       no_public_signup: "Le publique n’est pas autorisé à s’inscrire sur ce système."
       submit: "Créer le compte"
       title: "Créer un compte"
-      you_already_have_an_account_html: "Vous avez déjà un compte Teambox pour l’adresse %{email}. <a href='%{login_link}'>Connecté vous avec cet adresse</a> ou <a href='%{reset_password_link}'>réinitialisé votre mot de passe</a> si vous l’avez oublié."
+      you_already_have_an_account_html: "Vous avez déjà un compte Teambox pour l’adresse %{email}. <a href='%{login_link}'>Connectez vous avec cet adresse</a> ou <a href='%{reset_password_link}'>réinitialisez votre mot de passe</a> si vous l’avez oublié."
       you_are_logged_in: "Vous avez déjà un compte sur Teambox. Si vous voulez vous enregistrer comme autre utilisateur, fermez la session et essayez de nouveau."
     show: 
-      pending_invite: "%{name} a une invitation en attente pour un de vos projets. Vous ne serez pas en mesure d’accéder à plus d’information d’ici à ce que l’invitation soit accepté."
+      pending_invite: "%{name} a une invitation en attente pour un de vos projets. Vous ne serez pas en mesure d’accéder à plus d’information avant que l’invitation soit acceptée."
       profile: Profil
       projects: Projets
-      recent_activity_for: "Activitées récente de %{user_name}"
+      recent_activity_for: "Activités récentes de %{user_name}"
     text_styles: 
       block_of_code: "Coller le code indenté avec 4 espaces ou tabs retourne un bloc de code html"
       enter_this: 
@@ -1626,7 +1626,7 @@ fr:
         link: "[Un lien](http://teambox.com)"
         ordered_list: |-
             1. liste ordonnée
-            2. quittez les lignes vides!
+            2. retirez les lignes vides!
         smaller_header: "En-tête plus petit"
         title: Entrer
         unordered_list: |-
