@@ -8,13 +8,13 @@
    when Task -%>
 <%= render 'task', :task => target %>
 <%= emailer_list_comments(target.comments, @comments) -%>
-<%  email = "#{@project.permalink}+task+#{target.id}@#{Rails.configuration[:app_domain]}" 
+<%  email = "#{@project.permalink}+task+#{target.id}@#{Rails.configuration[:smtp_settings][:domain]}"
     link = project_task_url(@project, target) -%>
 <% when Conversation -%>
 <%= render 'conversation', :conversation => target %>
 <%= emailer_list_comments(target.comments, @comments) -%>
 <%  link = project_conversation_url(@project, target)
-    email = "#{@project.permalink}+conversation+#{target.id}@#{Rails.configuration[:app_domain]}" -%>
+    email = "#{@project.permalink}+conversation+#{target.id}@#{Rails.configuration[:smtp_settings][:domain]}" -%>
 <% when Activity %>
 <%= render 'activity', :activity => target %>
 <%  page = target.target.is_a?(Page) ? target.target : target.target.page

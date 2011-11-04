@@ -21,11 +21,11 @@
       %p
         - case target
         - when Task
-          - email = "#{@project.permalink}+task+#{target.id}@#{Rails.configuration[:app_domain]}" 
+          - email = "#{@project.permalink}+task+#{target.id}@#{Rails.configuration[:smtp_settings][:domain]}"
           - stop_watch = link_to t('emailer.notify.stop_watch'), project_task_url(@project, target)
           = link_to t('emailer.notify.reply_online'), project_task_url(@project, target), :style => email_button
         - when Conversation
-          - email = "#{@project.permalink}+conversation+#{target.id}@#{Rails.configuration[:app_domain]}"
+          - email = "#{@project.permalink}+conversation+#{target.id}@#{Rails.configuration[:smtp_settings][:domain]}"
           - stop_watch = link_to t('emailer.notify.stop_watch'), project_conversation_url(@project, target)
           = link_to t('emailer.notify.reply_online'), project_conversation_url(@project, target), :style => email_button
         - when Activity
