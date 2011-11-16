@@ -10,7 +10,7 @@ Dir.chdir File.join(File.dirname(__FILE__), '..') do
   $stderr.reopen(log_file, 'a')
   $stderr.sync = true
   $stdout.reopen(log_file, 'a')
-  $stderr.sync = true
+  $stdout.sync = true
 
   require File.dirname(__FILE__) + '/../config/environment'
 
