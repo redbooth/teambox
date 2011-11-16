@@ -221,7 +221,17 @@ module Emailer::Incoming
     @body    = strip_responses(@body).strip_tags.to_s.strip
     @subject = email.subject.to_s.gsub(REPLY_REGEX, "").strip
     @files   = email.attachments || []
-    
+
+    # Format attachments for processing by Paperclip
+    @files.collect! do |attachment|
+      file = StringIO.new(attachment.decoded)
+      file.class.class_eval { attr_accessor :original_filename, :content_type }
+      file.original_filename = attachment.filename
+      file.content_type = attachment.mime_type
+
+      file
+    end
+
     Rails.logger.info "#{@user.name} <#{@user.email}> sent '#{@subject}' to #{@to}"
   end
   
