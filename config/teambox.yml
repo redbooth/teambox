@@ -87,9 +87,13 @@ defaults: &defaults
   incoming_email_settings:
     :type:      POP
     :address:   mail.example.com
+    :port:      110
     :user_name: USER
     :password:  PASSWORD
 
+  # Set to true when using Gmail
+  enable_pop_ssh: false
+  
   # Allow teambox.com to gather statistics about this installation
   tracking_enabled: true
 

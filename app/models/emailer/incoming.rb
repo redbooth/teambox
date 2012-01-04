@@ -36,6 +36,9 @@ module Emailer::Incoming
   end
 
   def self.fetch_pop(settings)
+    if Teambox.config.enable_pop_ssh 
+      Net::POP3.enable_ssl(OpenSSL::SSL::VERIFY_NONE)
+    end
     Net::POP3.start(settings[:address], settings[:port], settings[:user_name], settings[:password]) do |pop|
       pop.mails.each do |email|
         begin
