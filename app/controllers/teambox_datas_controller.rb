@@ -13,6 +13,8 @@ class TeamboxDatasController < ApplicationController
   end
   
   def show
+    head(:forbidden) and return unless @data.downloadable?(current_user)
+
     respond_to do |f|
       if @data.type_name == :import and @data.need_data? and @data.data == nil
         @data.status_name = :uploading
