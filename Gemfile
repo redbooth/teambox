@@ -37,7 +37,7 @@ gem 'trimmer', :git => "https://github.com/teambox/trimmer.git"
 gem "will_paginate", :git=>"git://github.com/teambox/will_paginate.git"
 gem 'thinking-sphinx', '2.0.1', :require => 'thinking_sphinx'
 gem 'sprockets-rails', '~> 0.0.1'
-gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_versions'
+gem 'vestal_versions', '~> 1.2.2', :git => 'git://github.com/adamcooper/vestal_versions.git'
 gem 'paperclip', '~> 2.3.6'
 gem 'teambox-permalink_fu', :require => 'permalink_fu'
 gem 'cancan', '~> 1.4.1'
