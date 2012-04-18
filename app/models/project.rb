@@ -135,7 +135,7 @@ class Project < ActiveRecord::Base
           dtstart.ical_params  = {"VALUE" => "DATE"}
           dtend.ical_params    = {"VALUE" => "DATE"}
           if projects.is_a?(Array) && projects.size > 1
-            summary "#{task} (#{task.project})"
+            summary "#{task.project}: #{task}"
           else
             summary task.name
           end
