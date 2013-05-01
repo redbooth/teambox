@@ -1,21 +1,17 @@
 # Teambox
 ## Collaboration just got better
 
-[Teambox is project management software][teambox] built on Ruby on Rails with a focus on collaboration.
+[Teambox is collaboration and  project management software][teambox] built on Ruby on Rails.
 
-Teambox workflow is project-centered; each project being visible only to people invited to it.
-Projects have a status wall, conversations, tasks, shared pages and file uploads. You can even post
-to everywhere just using email.
+Teambox workflow is project-centered; with each project visible only to the people invited to it. 
+Projects have a status wall, conversations, tasks, shared pages and file uploads. 
+You can even post to Teambox by email.
 
 ## NOTICE
 
-**This repository is for Teambox v3**. Teambox.com is running v4, which is a cloud-only service,
-[not available for download](http://teambox.com/open-source).
+**This repository is for the leagcy version of Teambox (v3**). Teambox.com is running v4, which is available as a [cloud service] and [on-premise].
 
-If you would like to host your own instance of Teambox v4, [get in touch with us](mailto:help@teambox.com).
-
-
-You can [try Teambox online][teambox] for free to see how it works.
+[Try Teambox online][teambox] for free to see how it works.
 
 
 Project info
@@ -26,7 +22,7 @@ Project info
 - v3: License: [GNU Affero GPL 3][license]
 - v3: Open-source contributors: <http://github.com/teambox/teambox/contributors>
 - v4: Try it online at <https://teambox.com/>
-- v4: If you need to host your own server, [get in touch with us](mailto:help@teambox.com).
+- v4: On-premise version at <http://teambox.com/on-premise>
 
 Installation
 ------------
@@ -35,7 +31,9 @@ Hop to [our wiki](http://wiki.github.com/teambox/teambox/ "Teambox wiki") to get
 installing Teambox.
 
 [teambox]: http://teambox.com
+[cloud service]: http://teambox.com
 [tour]: http://teambox.com/tour
+[on-premise]: http://www.teambox.com/on-premise
 [license]: http://www.gnu.org/licenses/agpl-3.0.html
 
 Thanks to the many Ruby projects we're using and the Famfamfam icon collection.
