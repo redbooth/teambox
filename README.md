@@ -9,7 +9,7 @@ You can even post to Teambox by email.
 
 ## NOTICE
 
-**This repository is for the leagcy version of Teambox (v3**). Teambox.com is running v4, which is available as a [cloud service] and [on-premise].
+**This repository is for the legacy version of Teambox (v3**). Teambox.com is running v4, which is available as a [cloud service] and [on-premise].
 
 [Try Teambox online][teambox] for free to see how it works.
 
