@@ -14,7 +14,7 @@ trimmer_static_cache_block = Proc.new do |env,res|
     else
       false
     end
-    should_cache = false unless Teambox::Application.config.action_controller.perform_caching
+    should_cache = false unless Teambox::Application.config.action_controller.perform_caching && !Teambox.config.heroku?
     should_cache
 end 
 
