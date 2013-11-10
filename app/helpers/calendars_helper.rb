@@ -64,7 +64,7 @@ module CalendarsHelper
 
       cell_text = "<div class=\"cd\">#{cur.mday}</div>"
       cell_attrs = {}
-      cell_attrs[:class] = "day this_month cal_wd#{cur.wday} #{'today' if (cur == Time.current.to_date)} "
+      cell_attrs[:class] = "day this_month cal_wd#{cur.wday} #{'today' if (cur == Time.current.in_time_zone(current_user.time_zone).to_date)} "
       cell_attrs[:id] = "day_#{cur.month}_#{cur.mday}"
 
       #if markable?(calendar,marked,year,month,cell_text)
