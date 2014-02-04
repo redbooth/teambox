@@ -1,5 +1,5 @@
 .email{ :style =>  "#{email_global}" }
-  %h1= link_to logo_image, projects_url(@project)
+  %h1= link_to logo_image_abs, project_url(@project)
   %h2{ :style => email_text(:normal) }
     - project_link =  link_to(@project.name, project_url(@project))
     = t('emailer.notify.digest_title_html', :project_link => project_link)

@@ -10,6 +10,14 @@ module ApplicationHelper
     image_tag(logo, :alt => "Teambox")
   end
 
+  def logo_image_abs
+    logo = @organization ? @organization.logo(:top) : "/header_logo_black.png"
+    unless logo =~ /\Ahttp/
+      logo = "http://#{Teambox.config.app_domain}#{logo}"
+    end
+    image_tag(logo, :alt => @organization ? @organization.name : "Teambox")
+  end
+
   def archived_project_strip(project)
     if project.try(:archived)
       render 'shared/strip', :project => project
