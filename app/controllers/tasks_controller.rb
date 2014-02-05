@@ -33,6 +33,7 @@ class TasksController < ApplicationController
     authorize! :make_tasks, @current_project
     @task = @task_list.tasks.build_by_user(current_user, params[:task])
     @task.is_private = (params[:task][:is_private]||false) if params[:task]
+    @task.updating_user = current_user
     @task.save
     
     respond_to do |f|
