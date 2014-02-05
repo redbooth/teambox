@@ -1,4 +1,4 @@
-unless Teambox.config.heroku?
+begin
   require 'cucumber/rake/task'
   require 'rspec/core/rake_task'
 
@@ -22,5 +22,11 @@ unless Teambox.config.heroku?
       Rake::Task["rcov:cucumber_run"].invoke
       Rake::Task["rcov:rspec_run"].invoke
     end
+  end
+
+rescue LoadError
+  desc 'RCov rake tasks not available (Cucumber or RSpec not installed)'
+  task :rcov do
+    abort 'RCov tasks are not available. Make sure Cucumber and RSpec are installed.'
   end
 end
