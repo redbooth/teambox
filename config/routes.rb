@@ -193,6 +193,7 @@ Teambox::Application.routes.draw do
           put :reorder
           put :watch
           put :unwatch
+          get :e_unwatch
         end
 
         resources :comments
@@ -234,6 +235,7 @@ Teambox::Application.routes.draw do
           put :convert_to_task
           put :watch
           put :unwatch
+          get :e_unwatch
         end
 
         resources :comments

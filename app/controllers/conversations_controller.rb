@@ -109,7 +109,11 @@ class ConversationsController < ApplicationController
       f.any(:html, :m) { redirect_to current_conversation }
     end
   end
-  
+
+  def e_unwatch
+    unwatch
+  end
+
   def convert_to_task
     authorize! :update, @conversation
 
