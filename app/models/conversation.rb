@@ -97,7 +97,7 @@ class Conversation < RoleRecord
   end
 
   define_index do
-    where "`conversations`.`deleted` = 0"
+    where '"conversations"."deleted" = FALSE'
 
     indexes name, :sortable => true
 

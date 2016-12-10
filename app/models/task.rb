@@ -199,7 +199,7 @@ class Task < RoleRecord
   end
 
   define_index do
-    where "`tasks`.`deleted` = 0"
+    where '"tasks"."deleted" = FALSE'
 
     indexes name, :sortable => true
 
